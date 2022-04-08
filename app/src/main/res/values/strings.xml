@@ -3,12 +3,12 @@
     <string name="title_feed">Feed</string>
     <string name="title_add_recipe">Add recipe</string>
     <string name="title_user_profile">Profile</string>
+    <string name="title_welcome_to">WELCOME TO</string>
+    <string name="title_fatbook_activity_login">FatBook</string>
+    <string name="title_button_login_googleplay">LOG IN</string>
+    <string name="tagline_fatbook">get your forks ready</string>
+    <string name="tag_copyrigh">PotatoCorpⒸ2022</string>
 
-    <string name="welcome_to">WELCOME TO</string>
-    <string name="fatbook">FatBook</string>
-    <string name="log_in">LOG IN</string>
-    <string name="FatBook_tagline">get your forks ready</string>
-    <string name="copyrigh">PotatoCorpⒸ2022</string>
     <string name="login">LOGIN</string>
     <string name="cat_dialog">Hello, Im Kuzya! \n How can I call you??</string>
     <string name="fill_username">Username</string>

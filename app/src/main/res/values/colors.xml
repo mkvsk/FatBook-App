@@ -8,11 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primary_pink">#FF4081</color>
-    <color name="primary_dark">#B0BEC5</color>
-    <color name="primary_light">#ECEFF1</color>
-    <color name="accent_lime">#CDDC39</color>
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#B0BEC5</color>
-    <color name="divider">#BDBDBD</color>
+    <color name="color_pink_a200">#FF4081</color>
+    <color name="color_blue_grey_50">#ECEFF1</color>
+    <color name="color_blue_grey_200">#B0BEC5</color>
+    <color name="color_lime_500">#CDDC39</color>
+    <color name="color_grey_900">#212121</color>
+
 </resources>
