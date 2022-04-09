@@ -78,7 +78,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:elevation="10dp"
-        android:contentDescription="@string/login"
+        android:contentDescription="@string/title_button_login_googleplay"
         app:layout_constraintBottom_toBottomOf="@id/button_LogInWithGoogle"
         app:layout_constraintLeft_toLeftOf="@id/button_LogInWithGoogle"
         app:layout_constraintTop_toTopOf="@id/button_LogInWithGoogle"
