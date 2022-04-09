@@ -4,6 +4,156 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_blue_grey_50"
     tools:context=".ui.activity.login.LoginActivity">
+
+    <TextView
+        android:id="@+id/textView_login_introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_light"
+        android:paddingTop="88dp"
+        android:text="@string/title_login_introduce"
+        android:textColor="@color/color_grey_900"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_fatbook_introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:text="@string/title_fatbook_introduce"
+        android:textColor="@color/color_pink_a200"
+        android:textSize="45sp"
+        android:fontFamily="@font/roboto_regular"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_login_introduce" />
+
+    <TextView
+        android:id="@+id/textView_cat_dialog_introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:paddingTop="70dp"
+        android:text="@string/text_dialog_introduce"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:fontFamily="@font/roboto_light"
+        app:layout_constraintBottom_toTopOf="@id/imageView_cat_dialog_introduce"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_cat_dialog_introduce"
+        app:layout_constraintRight_toRightOf="@id/imageView_cat_dialog_introduce"
+        app:layout_constraintTop_toTopOf="@id/imageView_cat_dialog_introduce" />
+
+    <ImageView
+        android:id="@+id/imageView_cat_dialog_introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dialog"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_fatbook_introduce" />
+
+    <ImageView
+        android:id="@+id/imageView_kuzya_introduce"
+        android:layout_width="180dp"
+        android:layout_height="260dp"
+        android:src="@drawable/kuzya_login"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView_cat_dialog_introduce" />
+
+    <ImageView
+        android:id="@+id/imageView_icon_accepted_introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_accepted"
+        app:layout_constraintRight_toRightOf="@id/editText_username_introduce"
+        app:layout_constraintTop_toTopOf="@id/editText_username_introduce"
+        app:layout_constraintBottom_toBottomOf="@id/editText_username_introduce"
+        android:layout_margin="10dp"
+        android:elevation="8dp"
+        android:translationZ="6dp"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/editText_username_introduce"
+        android:layout_width="234dp"
+        android:layout_height="45dp"
+        android:background="@drawable/round_corner_edittext"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/hint_username_introduce"
+        android:autofillHints="@null"
+        android:inputType="text"
+        android:maxLength="16"
+        android:textAlignment="center"
+        android:textColor="@color/color_grey_900"
+        android:textSize="16sp"
+        android:elevation="6dp"
+        android:translationZ="4dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView_kuzya_introduce" />
+
+    <TextView
+        android:id="@+id/username_description_introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_requirements_introduce"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="9sp"
+        android:textColor="@color/color_blue_grey_200"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_username_introduce"
+        android:paddingTop="10dp" />
+
+    <ImageView
+        android:id="@+id/icon_arrow_next_introduce"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/arrow_next"
+        app:layout_constraintRight_toRightOf="@id/button_next_introduce"
+        app:layout_constraintTop_toTopOf="@+id/button_next_introduce"
+        app:layout_constraintBottom_toBottomOf="@id/button_next_introduce"
+        android:layout_margin="10dp"
+        android:elevation="6dp"
+        android:translationZ="6dp" />
+
+    <Button
+        android:id="@+id/button_next_introduce"
+        android:layout_width="234dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/color_blue_grey_200"
+        android:elevation="6dp"
+        android:fontFamily="@font/roboto_light"
+        android:stateListAnimator="@null"
+        android:text="@string/text_button_next_introduce"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:translationZ="4dp"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username_description_introduce" />
+
+    <TextView
+        android:id="@+id/textView_copyrigh_introduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tag_copyrigh_introduce"
+        android:textColor="@color/color_blue_grey_200"
+        android:textSize="11sp"
+        android:fontFamily="@font/roboto_regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="10dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

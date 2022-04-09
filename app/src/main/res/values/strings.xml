@@ -1,31 +1,45 @@
 <resources>
+    ///login
     <string name="app_name">FatBook</string>
     <string name="title_feed">Feed</string>
     <string name="title_add_recipe">Add recipe</string>
     <string name="title_user_profile">Profile</string>
+    <string name="title_welcome_to">WELCOME TO</string>
+    <string name="title_fatbook_activity_login">FatBook</string>
+    <string name="title_button_login_googleplay">LOG IN</string>
+    <string name="tagline_fatbook">get your forks ready</string>
+    <string name="tag_copyrigh">PotatoCorpⒸ2022</string>
 
-    <string name="welcome_to">WELCOME TO</string>
-    <string name="fatbook">FatBook</string>
-    <string name="log_in">LOG IN</string>
-    <string name="FatBook_tagline">get your forks ready</string>
-    <string name="copyrigh">PotatoCorpⒸ2022</string>
-    <string name="login">LOGIN</string>
-    <string name="cat_dialog">Hello, Im Kuzya! \n How can I call you??</string>
-    <string name="fill_username">Username</string>
-    <string name="username_description">*Allows only letters and numbers, max length 16 chars</string>
-    <string name="next_step_btn">NEXT</string>
-    <string name="new_cook_in">NEW COOK IN</string>
-    <string name="first_meet">Nice to meet you, USERNAME!\n Do you want to tell about \n yourself?</string>
-    <string name="yeah_go">YEAH, GO!</string>
-    <string name="no_later">LATER</string>
-    <string name="username">Username</string>
-    <string name="firstname">First Name</string>
-    <string name="secondname">Second Name</string>
-    <string name="bday">Birthday</string>
-    <string name="sex">Sex</string>
-    <string name="bio">Bio</string>
-    <string name="save">SAVE</string>
+    ///introduce
+    <string name="title_login_introduce">LOGIN</string>
+    <string name="title_fatbook_introduce">FatBook</string>
+    <string name="text_dialog_introduce">Hello, Im Kuzya! \n How can I call you??</string>
+    <string name="hint_username_introduce">Username</string>
+    <string name="text_requirements_introduce">*Allows only letters and numbers, max length 16 chars</string>
+    <string name="text_button_next_introduce">NEXT</string>
+    <string name="tag_copyrigh_introduce">PotatoCorpⒸ2022</string>
+
+    ///skip additional info
+    <string name="title_new_cook_in_skip_add">NEW COOK IN</string>
+    <string name="title_fatbook_skip_add">FatBook</string>
+    <string name="text_dialog_skip_add">Nice to meet you, USERNAME!\n Do you want to tell about \n yourself?</string>
+    <string name="text_button_yeah_go_skip_add">YEAH, GO!</string>
+    <string name="text_button_no_later_skip_add">LATER</string>
+    <string name="tag_copyrigh_skip_add">PotatoCorpⒸ2022</string>
+
+    ///fill additional info
+    <string name="title_username_fill_add_info">Username</string>
+    <string name="hint_firstname_fill_add_info">First Name</string>
+    <string name="hint_secondname_fill_add_info">Second Name</string>
+    <string name="hint_bday_fill_add_info">Birthday</string>
+    <string name="hint_bio_fill_add_info">Bio</string>
+    <string name="text_button_save_fill_add_info">SAVE</string>
+    <string name="tag_copyrigh_fill_add_info">PotatoCorpⒸ2022</string>
+
+    ///fat user profile
     <string name="fullname">Firstname Secondname</string>
-    <string name="tmp_bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur feugiat commodo nunc, eu dictum nisi gravida eu. Pellentesque molestie ante sit amet urna hendrerit, vitae luctus ligula placerat. In volutpat varius finibus. Morbi vitae leo at.</string>
-    <string name="search">search...</string>
+
+    ///feed
+    <string name="title_fatbook_feed">FatBook</string>
+    <string name="hint_search_recipe_feed">search...</string>
 </resources>
