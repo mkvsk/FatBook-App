@@ -19,7 +19,6 @@ public class FeedFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         Toast.makeText(getContext(), "all recipes here", Toast.LENGTH_LONG).show();
 
         FeedViewModel viewModel = new ViewModelProvider(this).get(FeedViewModel.class);
