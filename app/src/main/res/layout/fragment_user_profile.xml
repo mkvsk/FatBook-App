@@ -8,7 +8,7 @@
     tools:context=".ui.fragment.user_profile.UserProfileFragment">
 
     <TextView
-        android:id="@+id/textView_username_profile"
+        android:id="@+id/textView_profile_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_username_profile"
@@ -22,7 +22,7 @@
         android:textColor="@color/color_pink_a200"/>
 
     <ImageView
-        android:id="@+id/imageView_user_photo_profile"
+        android:id="@+id/imageView_profile_photo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/default_profile_photo_light"
@@ -31,17 +31,17 @@
         android:translationZ="2dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_username_profile"
+        app:layout_constraintTop_toBottomOf="@id/textView_profile_username"
         android:layout_margin="20dp"/>
 
     <TextView
-        android:id="@+id/textView_fullname_profile"
+        android:id="@+id/textView_profile_full_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lines="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_user_photo_profile"
+        app:layout_constraintTop_toBottomOf="@id/imageView_profile_photo"
         android:text="@string/text_fullname_profile"
         android:layout_marginTop="15dp"
         android:textSize="12sp"
@@ -50,12 +50,12 @@
         android:textAlignment="center"/>
 
     <TextView
-        android:id="@+id/textView_bio"
+        android:id="@+id/textView_profile_bio"
         android:layout_width="300dp"
         android:layout_height="75dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_fullname_profile"
+        app:layout_constraintTop_toBottomOf="@id/textView_profile_full_name"
         android:layout_marginTop="15dp"
         android:textAlignment="center"
         android:textSize="12sp"
@@ -72,7 +72,7 @@
         android:src="@drawable/rectangle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_bio"
+        app:layout_constraintTop_toBottomOf="@id/textView_profile_bio"
         android:layout_marginTop="20dp"
         android:elevation="2dp"
         android:translationZ="1dp"
