@@ -4,16 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_blue_grey_50"
     tools:context=".ui.fragment.user_profile.UserProfileFragment">
 
     <TextView
+        android:id="@+id/textView_username_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_user_profile"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/title_username_profile"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="60dp"
+        android:textSize="20sp"
+        android:fontFamily="@font/roboto_regular"
+        android:textAlignment="center"
+        android:textColor="@color/color_pink_a200"/>
+
+    <ImageView
+        android:id="@+id/imageView_user_photo_profile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/default_profile_photo_light"
+        android:elevation="4dp"
+        android:background="@drawable/round"
+        android:translationZ="2dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_username_profile"
+        android:layout_margin="20dp"/>
+
+    <TextView
+        android:id="@+id/textView_fullname_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView_user_photo_profile"
+        android:text="@string/text_fullname_profile"
+        android:layout_marginTop="15dp"
+        android:textSize="12sp"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/color_grey_900"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/textView_bio"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_fullname_profile"
+        android:layout_marginTop="15dp"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:fontFamily="@font/roboto_light"
+        android:textColor="@color/color_grey_900"
+        android:text="@string/text_bio_profile"
+        android:lines="6"
+        />
+
+    <ImageView
+        android:id="@+id/imageView_divider"
+        android:layout_width="350dp"
+        android:layout_height="1dp"
+        android:src="@drawable/rectangle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_bio"
+        android:layout_marginTop="20dp"
+        android:elevation="2dp"
+        android:translationZ="1dp"
+        android:background="@color/color_grey_900"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

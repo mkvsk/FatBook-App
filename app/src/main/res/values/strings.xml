@@ -37,7 +37,9 @@
     <string name="tag_copyrigh_fill_add_info">PotatoCorpⒸ2022</string>
 
     ///fat user profile
-    <string name="fullname">Firstname Secondname</string>
+    <string name="title_username_profile">Username</string>
+    <string name="text_fullname_profile">Firstname Secondname</string>
+    <string name="text_bio_profile">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur feugiat commodo nunc, eu dictum nisi gravida eu. Pellentesque molestie ante sit amet urna hendrerit, vitae luctus ligula placerat. In volutpat varius finibus. Morbi vitae leo at.</string>
 
     ///feed
     <string name="title_fatbook_feed">FatBook</string>

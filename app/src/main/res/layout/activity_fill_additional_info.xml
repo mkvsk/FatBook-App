@@ -165,7 +165,8 @@
         android:inputType="text"
         android:hint="@string/hint_bio_fill_add_info"
         android:fontFamily="@font/roboto_regular"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:maxLength="245"/>
 
     <Button
         android:id="@+id/button_save_fill_add_info"
