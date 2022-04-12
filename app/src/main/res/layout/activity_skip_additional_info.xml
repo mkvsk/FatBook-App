@@ -8,7 +8,7 @@
     tools:context=".ui.activity.login.LoginActivity">
 
     <TextView
-        android:id="@+id/textView_new_cook_in_skip_add"
+        android:id="@+id/textView_skip_add_info_new_cook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_light"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_fatbook_skip_add"
+        android:id="@+id/textView_skip_add_app_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
@@ -31,10 +31,10 @@
         android:fontFamily="@font/roboto_regular"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_new_cook_in_skip_add" />
+        app:layout_constraintTop_toBottomOf="@id/textView_skip_add_info_new_cook" />
 
     <TextView
-        android:id="@+id/textView_cat_dialog_skip_add"
+        android:id="@+id/textView_skip_add_cat_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="10dp"
@@ -44,31 +44,31 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:fontFamily="@font/roboto_light"
-        app:layout_constraintBottom_toTopOf="@id/imageView_cat_dialog_skip_add"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_cat_dialog_skip_add"
-        app:layout_constraintRight_toRightOf="@id/imageView_cat_dialog_skip_add"
-        app:layout_constraintTop_toTopOf="@id/imageView_cat_dialog_skip_add" />
+        app:layout_constraintBottom_toTopOf="@id/imageView_skip_add_cat_dialog"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_skip_add_cat_dialog"
+        app:layout_constraintRight_toRightOf="@id/imageView_skip_add_cat_dialog"
+        app:layout_constraintTop_toTopOf="@id/imageView_skip_add_cat_dialog" />
 
     <ImageView
-        android:id="@+id/imageView_cat_dialog_skip_add"
+        android:id="@+id/imageView_skip_add_cat_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/dialog"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_fatbook_skip_add" />
+        app:layout_constraintTop_toBottomOf="@id/textView_skip_add_app_label" />
 
     <ImageView
-        android:id="@+id/ImageView_kuzya_talk_skip_add"
+        android:id="@+id/ImageView_skip_add_kuzya_talks"
         android:layout_width="180dp"
         android:layout_height="260dp"
         android:src="@drawable/kuzya_new_cook"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_cat_dialog_skip_add" />
+        app:layout_constraintTop_toBottomOf="@id/imageView_skip_add_cat_dialog" />
 
     <Button
-        android:id="@+id/button_yeah_go_skip_add"
+        android:id="@+id/button_skip_add_fill_add_info"
         android:layout_width="234dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -83,10 +83,10 @@
         android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ImageView_kuzya_talk_skip_add" />
+        app:layout_constraintTop_toBottomOf="@id/ImageView_skip_add_kuzya_talks" />
 
     <Button
-        android:id="@+id/button_next_skip_add"
+        android:id="@+id/button_skip_add_skip_add_info"
         android:layout_width="234dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -101,13 +101,13 @@
         android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_yeah_go_skip_add" />
+        app:layout_constraintTop_toBottomOf="@id/button_skip_add_fill_add_info" />
 
     <TextView
-        android:id="@+id/textView_copyrigh_skip_add"
+        android:id="@+id/textView_skip_add_copyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tag_copyrigh_skip_add"
+        android:text="@string/tag_copyright"
         android:textColor="@color/color_blue_grey_200"
         android:textSize="11sp"
         android:fontFamily="@font/roboto_regular"

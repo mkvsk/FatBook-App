@@ -8,7 +8,7 @@
     <string name="title_fatbook_activity_login">FatBook</string>
     <string name="title_button_login_googleplay">LOG IN</string>
     <string name="tagline_fatbook">get your forks ready</string>
-    <string name="tag_copyrigh">PotatoCorpⒸ2022</string>
+    <string name="tag_copyright">PotatoCorpⒸ2022</string>
 
     ///introduce
     <string name="title_login_introduce">LOGIN</string>
@@ -17,7 +17,6 @@
     <string name="hint_username_introduce">Username</string>
     <string name="text_requirements_introduce">*Allows only letters and numbers, max length 16 chars</string>
     <string name="text_button_next_introduce">NEXT</string>
-    <string name="tag_copyrigh_introduce">PotatoCorpⒸ2022</string>
 
     ///skip additional info
     <string name="title_new_cook_in_skip_add">NEW COOK IN</string>
@@ -25,7 +24,6 @@
     <string name="text_dialog_skip_add">Nice to meet you, USERNAME!\n Do you want to tell about \n yourself?</string>
     <string name="text_button_yeah_go_skip_add">YEAH, GO!</string>
     <string name="text_button_no_later_skip_add">LATER</string>
-    <string name="tag_copyrigh_skip_add">PotatoCorpⒸ2022</string>
 
     ///fill additional info
     <string name="title_username_fill_add_info">Username</string>
@@ -34,7 +32,6 @@
     <string name="hint_bday_fill_add_info">Birthday</string>
     <string name="hint_bio_fill_add_info">Bio</string>
     <string name="text_button_save_fill_add_info">SAVE</string>
-    <string name="tag_copyrigh_fill_add_info">PotatoCorpⒸ2022</string>
 
     ///fat user profile
     <string name="title_username_profile">Username</string>

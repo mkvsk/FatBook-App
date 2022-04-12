@@ -19,13 +19,17 @@ public class AddRecipeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        Toast.makeText(getContext(), "add new fat recipe", Toast.LENGTH_LONG).show();
-
         AddRecipeViewModel viewModel = new ViewModelProvider(this).get(AddRecipeViewModel.class);
 
         binding = FragmentAddRecipeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Toast.makeText(getContext(), "add new fat recipe", Toast.LENGTH_LONG).show();
     }
 
     @Override

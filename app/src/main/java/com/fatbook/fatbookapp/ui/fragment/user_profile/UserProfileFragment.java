@@ -19,14 +19,18 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        Toast.makeText(getContext(), "FatUser profile", Toast.LENGTH_LONG).show();
-
         UserProfileViewModel viewModel =
                 new ViewModelProvider(this).get(UserProfileViewModel.class);
 
         binding = FragmentUserProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Toast.makeText(getContext(), "FatUser profile", Toast.LENGTH_LONG).show();
     }
 
     @Override
