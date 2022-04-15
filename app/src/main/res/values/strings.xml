@@ -41,6 +41,9 @@
     ///feed
     <string name="title_fatbook_feed">FatBook</string>
     <string name="hint_search_recipe_feed">search...</string>
+    <string name="title_categories_feed">Categories:</string>
+    <string name="title_best_recipes_feed">Best recipes:</string>
+    <string name="title_all_recipes_feed">All:</string>
 
     <string name="title_recipe_card_large">Recipe title</string>
     <string name="title_recipe_card_large_author">Author</string>
