@@ -41,4 +41,15 @@
     ///feed
     <string name="title_fatbook_feed">FatBook</string>
     <string name="hint_search_recipe_feed">search...</string>
+
+    <string name="title_recipe_card_large">Recipe title</string>
+    <string name="title_recipe_card_large_author">Author</string>
+    <string name="text_recipe_card_large_forks">forks ready:</string>
+    <string name="value_total_forks_card_large">123456</string>
+    <string name="title_category_lunch">Lunch</string>
+
+    <string name="text_recipe_card_small_forks">forks ready:</string>
+    <string name="value_total_forks_card_small">654321</string>
+
+
 </resources>
