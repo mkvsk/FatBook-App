@@ -14,7 +14,7 @@
         android:fontFamily="@font/roboto_light"
         android:paddingTop="88dp"
         android:text="@string/title_welcome_to"
-        android:textColor="@color/color_grey_900"
+        android:textColor="@color/color_blue_grey_600"
         android:textSize="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

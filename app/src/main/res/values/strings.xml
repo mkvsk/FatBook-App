@@ -39,17 +39,13 @@
     <string name="text_bio_profile">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur feugiat commodo nunc, eu dictum nisi gravida eu. Pellentesque molestie ante sit amet urna hendrerit, vitae luctus ligula placerat. In volutpat varius finibus. Morbi vitae leo at.</string>
 
     ///feed
-    <string name="title_fatbook_feed">FatBook</string>
+    <string name="title_recipes_feed">Recipes</string>
     <string name="hint_search_recipe_feed">search...</string>
 
-    <string name="title_recipe_card_large">Recipe title</string>
-    <string name="title_recipe_card_large_author">Author</string>
-    <string name="text_recipe_card_large_forks">forks ready:</string>
-    <string name="value_total_forks_card_large">123456</string>
-    <string name="title_category_lunch">Lunch</string>
-
-    <string name="text_recipe_card_small_forks">forks ready:</string>
-    <string name="value_total_forks_card_small">654321</string>
+    <string name="title_recipe_preview_rv">Recipe title</string>
+    <string name="title_recipe_preview_author">Author: Neshik</string>
+    <string name="text_recipe_preview_tags">#pastries #desserts</string>
+    <string name="value_recipe_preview_forks_avg">1339</string>
 
 
 </resources>
