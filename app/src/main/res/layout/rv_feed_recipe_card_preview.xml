@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="375dp"
+    android:layout_height="140dp"
+    android:layout_marginBottom="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/rv_card_preview_bgr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/round_corner_rect_white"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView_rv_card_preview_photo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/cookies"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/textView_card_preview_recipe_title"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/title_recipe_preview_rv"
+        android:textColor="@color/color_blue_grey_600"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toRightOf="@id/imageView_rv_card_preview_photo"
+        app:layout_constraintTop_toTopOf="@id/imageView_rv_card_preview_photo"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/textView_card_preview_recipe_author"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        app:layout_constraintTop_toBottomOf="@id/textView_card_preview_recipe_title"
+        app:layout_constraintLeft_toLeftOf="@id/textView_card_preview_recipe_title"
+        android:text="@string/title_recipe_preview_author"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="11sp"
+        android:textColor="@color/color_blue_grey_600"/>
+
+    <ImageView
+        android:id="@+id/imageView_card_preview_divider"
+        android:layout_width="220dp"
+        android:layout_height="1dp"
+        app:layout_constraintLeft_toLeftOf="@id/textView_card_preview_recipe_author"
+        app:layout_constraintTop_toBottomOf="@id/textView_card_preview_recipe_author"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/rect_for_edittext"/>
+
+    <TextView
+        android:id="@+id/textView_card_preview_tags"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_card_preview_divider"
+        app:layout_constraintTop_toBottomOf="@id/imageView_card_preview_divider"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_preview_photo"
+        android:text="@string/text_recipe_preview_tags"
+        android:textColor="@color/color_pink_a200"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="11sp"/>
+
+    <ImageView
+        android:id="@+id/imageView_card_preview_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/imageView_rv_card_preview_photo"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/icon_add_fav_grey"/>
+
+    <ImageView
+        android:id="@+id/imageView_card_preview_fork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="@id/imageView_card_preview_fav"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_card_preview_fav"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_preview_photo"
+        android:src="@drawable/icon_fork_pink"/>
+
+    <TextView
+        android:id="@+id/textView_card_preview_recipe_forks_avg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        app:layout_constraintRight_toLeftOf="@id/imageView_card_preview_fork"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_preview_photo"
+        android:layout_marginRight="5dp"
+        android:text="@string/value_recipe_preview_forks_avg"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="9sp"
+        android:textColor="@color/color_blue_grey_200"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
