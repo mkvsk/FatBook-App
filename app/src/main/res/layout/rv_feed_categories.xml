@@ -16,8 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:backgroundTint="@color/white"
-        android:text="@string/title_category_lunch"
-        android:textColor="@color/color_blue_grey_600"
+        android:text="asd"        android:textColor="@color/color_blue_grey_600"
         android:textSize="11sp"
         android:fontFamily="@font/roboto_medium"
         />

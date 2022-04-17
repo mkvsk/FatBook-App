@@ -14,7 +14,7 @@
         app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_previev_card_photo_large"
         app:layout_constraintTop_toTopOf="@id/imageView_recipe_previev_card_photo_large"
         app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_previev_card_photo_large"
-        android:text="@string/title_recipe_card_large"
+        android:text="asd"
         android:textColor="@color/white"
         android:fontFamily="@font/roboto_medium"
         android:textSize="16sp"
@@ -32,8 +32,7 @@
         app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_previev_card_photo_large"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:text="@string/title_recipe_card_large_author"
-        android:textColor="@color/white"
+        android:text="asd"        android:textColor="@color/white"
         android:fontFamily="@font/roboto_regular"
         android:textSize="12sp"
         android:textAlignment="textStart"
@@ -41,8 +40,8 @@
 
     <ImageView
         android:id="@+id/imageView_recipe_previev_card_fork_lagre"
-        android:layout_width="6dp"
-        android:layout_height="20dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:elevation="6dp"
         android:src="@drawable/fork"
         app:layout_constraintTop_toBottomOf="@id/textView_recipe_card_author_large"
@@ -51,35 +50,21 @@
         android:layout_marginTop="10dp" />
 
     <TextView
-        android:id="@+id/textView_recipe_card_forks_text"
+        android:id="@+id/textView_forks_counter_card_lagre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="6dp"
         app:layout_constraintLeft_toRightOf="@id/imageView_recipe_previev_card_fork_lagre"
         app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_previev_card_fork_lagre"
-        android:text="@string/text_recipe_card_large_forks"
-        android:textColor="@color/white"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="8sp"
-        android:layout_marginLeft="5dp" />
-
-    <TextView
-        android:id="@+id/textView_forks_counter_card_lagre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="6dp"
-        app:layout_constraintLeft_toRightOf="@id/textView_recipe_card_forks_text"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_previev_card_fork_lagre"
         android:layout_marginLeft="5dp"
-        android:text="@string/value_total_forks_card_large"
-        android:textColor="@color/white"
+        android:text="asd"        android:textColor="@color/white"
         android:textSize="8sp"
         android:fontFamily="@font/roboto_regular"/>
 
     <ImageView
         android:id="@+id/imageView_icon_add_to_fav_card_large"
-        android:layout_width="17dp"
-        android:layout_height="17dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:elevation="6dp"
         app:layout_constraintRight_toRightOf="@id/imageView_recipe_previev_card_photo_large"
         app:layout_constraintBottom_toBottomOf="@id/textView_forks_counter_card_lagre"

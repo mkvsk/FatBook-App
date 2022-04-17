@@ -4,7 +4,7 @@
     android:layout_height="155dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/feed_recipe_previev_card_large"
-    android:layout_marginRight="15dp">
+    android:layout_marginEnd="15dp">
 
 
     <ImageView
@@ -15,34 +15,21 @@
         android:src="@drawable/fork"
         app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_previev_card_photo_small"
         app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_previev_card_photo_small"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginBottom="10dp" />
-
-    <TextView
-        android:id="@+id/textView_recipe_card_small_forks_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="6dp"
-        app:layout_constraintLeft_toRightOf="@id/imageView_recipe_previev_card_fork_small"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_previev_card_fork_small"
-        android:text="@string/text_recipe_card_small_forks"
-        android:textColor="@color/white"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="8sp"
-        android:layout_marginLeft="5dp" />
 
     <TextView
         android:id="@+id/textView_forks_counter_card_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:elevation="6dp"
-        app:layout_constraintLeft_toRightOf="@id/textView_recipe_card_small_forks_text"
-        app:layout_constraintBottom_toBottomOf="@id/textView_recipe_card_small_forks_text"
-        android:layout_marginLeft="5dp"
-        android:text="@string/value_total_forks_card_small"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/title_recipes_feed"
         android:textColor="@color/white"
         android:textSize="8sp"
-        android:fontFamily="@font/roboto_regular"/>
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_recipe_previev_card_fork_small"
+        app:layout_constraintLeft_toRightOf="@id/imageView_recipe_previev_card_fork_small" />
 
     <ImageView
         android:id="@+id/imageView_icon_add_to_fav_card_large"
