@@ -7,9 +7,19 @@
         android:title="@string/title_feed" />
 
     <item
+        android:id="@+id/navigation_ingredients"
+        android:icon="@drawable/icon_feed"
+        android:title="ingredients" />
+
+    <item
         android:id="@+id/navigation_add_recipe"
         android:icon="@drawable/icon_add_new_recipe"
         android:title="@string/title_add_recipe" />
+
+    <item
+        android:id="@+id/navigation_bookmarks"
+        android:icon="@drawable/icon_feed"
+        android:title="bookmarks" />
 
     <item
         android:id="@+id/navigation_user_profile"

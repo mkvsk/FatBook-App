@@ -7,6 +7,26 @@
     android:background="@color/color_blue_grey_50"
     tools:context=".ui.fragment.user_profile.UserProfileFragment">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout_bookmarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_blue_grey_50"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_bookmarks"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_blue_grey_200"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="User profile"
+            app:titleTextColor="@color/color_blue_grey_600" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <TextView
         android:id="@+id/textView_profile_username"
         android:layout_width="wrap_content"
@@ -34,7 +54,8 @@
         app:layout_constraintTop_toBottomOf="@id/textView_profile_username"
         android:layout_margin="20dp"/>
 
-    <TextView
+    <EditText
+        android:focusable="false"
         android:id="@+id/textView_profile_full_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

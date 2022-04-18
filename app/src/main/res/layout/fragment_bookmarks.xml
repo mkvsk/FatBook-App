@@ -5,25 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
-    tools:context=".ui.fragment.feed.FeedFragment">
+    tools:context=".ui.fragment.bookmarks.BookmarksFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout_feed"
+        android:id="@+id/appBarLayout_bookmarks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_blue_grey_50"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_feed"
+            android:id="@+id/toolbar_bookmarks"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/color_blue_grey_200"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="Recipes"
-            app:titleTextColor="@color/color_blue_grey_600">
+            app:title="Bookmarks"
+            app:titleTextColor="@color/color_blue_grey_600" >
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="70dp"
@@ -32,12 +32,12 @@
                 android:layout_height="70dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:src="@drawable/kuzya_welcome"/>
+                android:src="@drawable/kuzya_new_cook"/>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
         <EditText
-            android:id="@+id/editText_search_feed"
+            android:id="@+id/editText_search_bookmarks"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/round_feed_search"
@@ -51,13 +51,13 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView_feed"
+        android:id="@+id/scrollView_bookmarks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_feed"
+            android:id="@+id/rv_bookmarks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"

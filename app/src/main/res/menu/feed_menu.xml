@@ -8,10 +8,6 @@
         android:title="Search"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/menu_feed_search_close"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"
-        android:title="Search"
-        app:showAsAction="ifRoom" />
+
 
 </menu>

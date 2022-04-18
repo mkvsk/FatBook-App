@@ -1,27 +1,37 @@
-package com.fatbook.fatbookapp.ui.fragment.add_recipe;
+package com.fatbook.fatbookapp.ui.fragment.bookmarks;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fatbook.fatbookapp.databinding.FragmentAddRecipeBinding;
+import com.fatbook.fatbookapp.R;
+import com.fatbook.fatbookapp.databinding.FragmentBookmarksBinding;
+import com.google.android.material.snackbar.Snackbar;
 
-public class AddRecipeFragment extends Fragment {
+public class BookmarksFragment extends Fragment {
 
-    private FragmentAddRecipeBinding binding;
+    private FragmentBookmarksBinding binding;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        AddRecipeViewModel viewModel = new ViewModelProvider(this).get(AddRecipeViewModel.class);
+        BookmarksViewModel viewModel = new ViewModelProvider(this).get(BookmarksViewModel.class);
 
-        binding = FragmentAddRecipeBinding.inflate(inflater, container, false);
+        binding = FragmentBookmarksBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+
+
         return root;
     }
 
