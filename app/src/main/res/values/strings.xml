@@ -47,5 +47,18 @@
     <string name="text_recipe_preview_tags">#pastries #desserts</string>
     <string name="value_recipe_preview_forks_avg">1339</string>
 
+    ///add recipe
+    <string name="hint_add_recipe_title">Recipe title</string>
+    <string name="title_add_recipe_category">Recipe categories:</string>
+    <string name="hint_add_recipe_categories">#foodcategorytag</string>
+    <string name="title_add_recipe_photo">Tasty photo:</string>
+    <string name="title_add_recipe_ingredients">Ingredients:</string>
+    <string name="title_add_recipe_description">Recipe:</string>
+    <string name="hint_add_recipe_description">Сooking method</string>
+    <string name="text_add_recipe_button_save">SAVE</string>
+
+    ///rv add recipe ingredients
+    <string name="hint_rv_add_new_recipe_ingredient">Milk</string>
+    <string name="hint_rv_add_new_recipe_ingredient_quantity">100 ml</string>
 
 </resources>
