@@ -17,6 +17,8 @@ import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
 import com.google.android.material.snackbar.Snackbar;
 
+import retrofit2.Retrofit;
+
 public class UserProfileFragment extends Fragment {
 
     private FragmentUserProfileBinding binding;
@@ -96,6 +98,11 @@ public class UserProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.btnUpload.setOnClickListener(view1 -> {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://localhost:8080/api/user/upload/")
+                    .build();
+        });
     }
 
     @Override

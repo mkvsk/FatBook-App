@@ -31,73 +31,80 @@
         android:id="@+id/textView_profile_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/roboto_regular"
         android:text="@string/title_username_profile"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textAlignment="center"
+        android:textColor="@color/color_pink_a200"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="60dp"
-        android:textSize="20sp"
-        android:fontFamily="@font/roboto_regular"
-        android:textAlignment="center"
-        android:textColor="@color/color_pink_a200"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView_profile_photo"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/default_profile_photo_light"
-        android:elevation="4dp"
+        android:layout_margin="20dp"
         android:background="@drawable/round"
+        android:elevation="4dp"
+        android:src="@drawable/default_profile_photo_light"
         android:translationZ="2dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_profile_username"
-        android:layout_margin="20dp"/>
+        app:layout_constraintTop_toBottomOf="@id/textView_profile_username" />
 
     <EditText
-        android:focusable="false"
         android:id="@+id/textView_profile_full_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:focusable="false"
+        android:fontFamily="@font/roboto_regular"
         android:lines="1"
+        android:text="@string/text_fullname_profile"
+        android:textAlignment="center"
+        android:textColor="@color/color_grey_900"
+        android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_profile_photo"
-        android:text="@string/text_fullname_profile"
-        android:layout_marginTop="15dp"
-        android:textSize="12sp"
-        android:fontFamily="@font/roboto_regular"
-        android:textColor="@color/color_grey_900"
-        android:textAlignment="center"/>
+        app:layout_constraintTop_toBottomOf="@id/imageView_profile_photo" />
 
     <TextView
         android:id="@+id/textView_profile_bio"
         android:layout_width="300dp"
         android:layout_height="75dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/roboto_light"
+        android:lines="6"
+        android:text="@string/text_bio_profile"
+        android:textAlignment="center"
+        android:textColor="@color/color_grey_900"
+        android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_profile_full_name"
-        android:layout_marginTop="15dp"
-        android:textAlignment="center"
-        android:textSize="12sp"
-        android:fontFamily="@font/roboto_light"
-        android:textColor="@color/color_grey_900"
-        android:text="@string/text_bio_profile"
-        android:lines="6"
-        />
+        app:layout_constraintTop_toBottomOf="@id/textView_profile_full_name" />
 
     <ImageView
         android:id="@+id/imageView_divider"
         android:layout_width="350dp"
         android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/color_grey_900"
+        android:elevation="2dp"
         android:src="@drawable/rectangle"
+        android:translationZ="1dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_profile_bio"
-        android:layout_marginTop="20dp"
-        android:elevation="2dp"
-        android:translationZ="1dp"
-        android:background="@color/color_grey_900"
-        />
+        app:layout_constraintTop_toBottomOf="@id/textView_profile_bio" />
+
+    <Button
+        android:id="@+id/btn_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="upload"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView_divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
