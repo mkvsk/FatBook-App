@@ -62,7 +62,7 @@ public class UserProfileFragment extends Fragment {
                 confirmEdit();
                 return true;
             case R.id.menu_user_profile_cancel:
-                Snackbar.make(binding.getRoot(), "Canceled", Snackbar.LENGTH_SHORT)
+                Snackbar.make(binding.getRoot(), "End edit", Snackbar.LENGTH_SHORT)
                         .setAnchorView(getActivity().findViewById(R.id.nav_view)).show();
                 cancelEdit();
                 return true;
