@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_user_profile_edit"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@drawable/icon_edit_user_info"
         android:title="Edit"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_user_profile_save"
-        android:icon="@android:drawable/checkbox_on_background"
+        android:icon="@drawable/icon_save_changes"
         android:title="Confirm"
         android:visible="false"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_user_profile_cancel"
-        android:icon="@android:drawable/ic_delete"
+        android:icon="@drawable/icon_cancel"
         android:title="Cancel"
         android:visible="false"
         app:showAsAction="ifRoom" />
