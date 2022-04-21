@@ -61,7 +61,9 @@
     ///rv add recipe ingredients
     <string name="hint_rv_add_new_recipe_ingredient">Milk</string>
     <string name="hint_rv_add_new_recipe_ingredient_quantity">100 ml</string>
-
+    
+    ///rv add new ingredient
+    <string name="text_existing_ingredient">Existing Ingredient</string>
     ///bottom nav menu
     <string name="nav_feed">Feed</string>
     <string name="nav_new_ingredient">Ingredients</string>

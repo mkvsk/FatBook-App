@@ -2,21 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="360dp"
     android:layout_height="45dp"
-    android:background="@color/color_blue_grey_600"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="10dp">
 
-    <EditText
+    <TextView
+        android:id="@+id/textView_existing_ingredients"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingLeft="10dp"
-        android:hint="@string/hint_rv_add_new_recipe_ingredient"
+        android:padding="5dp"
+        android:text="@string/text_existing_ingredient"
         android:fontFamily="@font/roboto_regular"
         android:textSize="16sp"
         android:lines="1"
+        android:gravity="left"
         android:textColor="@color/color_blue_grey_600"
         android:background="@drawable/round_corner_rect_white"/>
 
