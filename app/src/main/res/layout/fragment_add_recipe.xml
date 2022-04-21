@@ -48,24 +48,12 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="80dp">
 
-            <ImageView
-                android:id="@+id/imageView_add_recipe_title_bgr"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="25dp"
-                android:src="@drawable/round_corner_rect_white"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <EditText
                 android:id="@+id/editText_add_recipe_title"
-                android:layout_width="360dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:autofillHints="@null"
-                android:background="@null"
+                android:background="@drawable/round_corner_rect_white"
                 android:fontFamily="@font/roboto_medium"
                 android:hint="@string/hint_add_recipe_title"
                 android:maxLines="2"
@@ -73,9 +61,13 @@
                 android:padding="10dp"
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_add_recipe_title_bgr"
-                app:layout_constraintRight_toRightOf="@id/imageView_add_recipe_title_bgr"
-                app:layout_constraintTop_toTopOf="@id/imageView_add_recipe_title_bgr" />
+                android:gravity="left"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="25dp"/>
 
             <TextView
                 android:id="@+id/textView_add_recipe_categories_title"
@@ -86,34 +78,28 @@
                 android:text="@string/title_add_recipe_category"
                 android:textColor="@color/color_blue_grey_200"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_add_recipe_title_bgr"
-                app:layout_constraintTop_toBottomOf="@id/imageView_add_recipe_title_bgr" />
+                app:layout_constraintLeft_toLeftOf="@id/editText_add_recipe_title"
+                app:layout_constraintTop_toBottomOf="@id/editText_add_recipe_title" />
 
-            <ImageView
-                android:id="@+id/imageView_add_recipe_categories_bgr"
-                android:layout_width="250dp"
-                android:layout_height="84dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/round_corner_rect_white"
-                app:layout_constraintLeft_toLeftOf="@id/textView_add_recipe_categories_title"
-                app:layout_constraintTop_toBottomOf="@id/textView_add_recipe_categories_title" />
 
             <EditText
                 android:id="@+id/editText_add_recipe_categories"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:background="@null"
+                android:layout_height="85dp"
+                android:background="@drawable/round_corner_rect_white"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="left"
                 android:hint="@string/hint_add_recipe_categories"
                 android:lines="4"
+                android:maxLines="4"
                 android:padding="11dp"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_pink_a200"
                 android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_add_recipe_categories_bgr"
-                app:layout_constraintRight_toRightOf="@id/imageView_add_recipe_categories_bgr"
-                app:layout_constraintTop_toTopOf="@id/imageView_add_recipe_categories_bgr" />
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toLeftOf="@id/textView_add_recipe_categories_title"
+                app:layout_constraintRight_toRightOf="@id/textView_add_recipe_categories_title"
+                app:layout_constraintTop_toBottomOf="@id/textView_add_recipe_categories_title" />
 
             <ImageButton
                 android:id="@+id/button_add_recipe_photo"
@@ -123,8 +109,8 @@
                 android:elevation="6dp"
                 android:foreground="@drawable/icon_add_recipe_photo"
                 android:translationZ="4dp"
-                app:layout_constraintRight_toRightOf="@id/imageView_add_recipe_title_bgr"
-                app:layout_constraintTop_toTopOf="@id/imageView_add_recipe_categories_bgr" />
+                app:layout_constraintRight_toRightOf="@id/editText_add_recipe_title"
+                app:layout_constraintTop_toTopOf="@id/editText_add_recipe_categories" />
 
             <TextView
                 android:id="@+id/textView_add_recipe_photo_title"
@@ -146,8 +132,8 @@
                 android:text="@string/title_add_recipe_ingredients"
                 android:textColor="@color/color_blue_grey_200"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_add_recipe_categories_bgr"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_add_recipe_categories_bgr" />
+                app:layout_constraintLeft_toLeftOf="@id/editText_add_recipe_categories"
+                app:layout_constraintTop_toBottomOf="@+id/editText_add_recipe_categories" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_add_recipe_ingredients"
@@ -186,8 +172,10 @@
 
             <EditText
                 android:id="@+id/editText_add_recipe_description"
-                android:layout_width="360dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/round_corner_rect_white"
                 android:fontFamily="@font/roboto_light"
@@ -208,7 +196,7 @@
                 android:layout_width="220dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/round_corner_rect_pink"
+                android:background="@drawable/round_corner_rect_lime"
                 android:elevation="6dp"
                 android:fontFamily="@font/roboto_regular"
                 android:text="@string/text_add_recipe_button_save"

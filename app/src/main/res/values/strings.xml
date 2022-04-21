@@ -42,6 +42,7 @@
     <string name="title_recipes_feed">Recipes</string>
     <string name="hint_search_recipe_feed">search...</string>
 
+    ///rv feed recipe card preview
     <string name="title_recipe_preview_rv">Recipe title</string>
     <string name="title_recipe_preview_author">Author: Neshik</string>
     <string name="text_recipe_preview_tags">#pastries #desserts</string>
@@ -60,5 +61,12 @@
     ///rv add recipe ingredients
     <string name="hint_rv_add_new_recipe_ingredient">Milk</string>
     <string name="hint_rv_add_new_recipe_ingredient_quantity">100 ml</string>
+
+    ///bottom nav menu
+    <string name="nav_feed">Feed</string>
+    <string name="nav_new_ingredient">Ingredients</string>
+    <string name="nav_add_recipe">Add recipe</string>
+    <string name="nav_bookmarks">Bookmarks</string>
+    <string name="nav_user_profile">Profile</string>
 
 </resources>
