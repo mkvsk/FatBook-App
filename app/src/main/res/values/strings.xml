@@ -44,7 +44,7 @@
 
     ///rv feed recipe card preview
     <string name="title_recipe_preview_rv">Recipe title</string>
-    <string name="title_recipe_preview_author">Author: Neshik</string>
+    <string name="title_recipe_preview_author">by</string>
     <string name="text_recipe_preview_tags">#pastries #desserts</string>
     <string name="value_recipe_preview_forks_avg">1339</string>
 
