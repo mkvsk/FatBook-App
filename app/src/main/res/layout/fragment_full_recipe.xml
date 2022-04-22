@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_blue_grey_50">
+
+    <ImageView
+        android:id="@+id/imageView_full_recipe_card_bgr"
+        android:layout_width="match_parent"
+        android:layout_height="390dp"
+        android:background="@drawable/round_corner_rect_white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp" />
+
+    <ImageView
+        android:id="@+id/imageView_full_recipe_icon_add_to_fav"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/icon_add_fav_grey"
+        app:layout_constraintTop_toTopOf="@id/imageView_full_recipe_card_bgr"
+        app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_card_bgr"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/imageView_full_recipe_header_title"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_card_bgr"
+        app:layout_constraintTop_toTopOf="@id/imageView_full_recipe_icon_add_to_fav"
+        android:text="@string/hint_add_recipe_title"
+        android:textSize="20sp"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/color_blue_grey_600"
+        android:textAlignment="textStart"
+        android:layout_marginLeft="10dp"
+        android:lines="2"
+        android:maxLines="2" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shapeable_full_recipe_photo"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:src="@drawable/kit_waiting_eat"
+        android:scaleType="fitXY"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent"
+        app:layout_constraintTop_toBottomOf="@id/imageView_full_recipe_header_title"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_card_bgr"
+        app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_card_bgr"
+        />
+
+    <TextView
+        android:id="@+id/textView_title_full_recipe_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_full_recipe_by"
+        app:layout_constraintLeft_toLeftOf="@id/shapeable_full_recipe_photo"
+        app:layout_constraintTop_toBottomOf="@id/shapeable_full_recipe_photo"
+        android:textColor="@color/color_blue_grey_600"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="14sp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/textView_title_full_recipe_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/textView_title_full_recipe_by"
+        app:layout_constraintBottom_toBottomOf="@id/textView_title_full_recipe_by"
+        android:textColor="@color/color_blue_grey_600"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="14sp"
+        android:text="@string/title_full_recipe_username"
+        android:layout_marginStart="5dp"/>
+
+    <ImageView
+        android:id="@+id/imageView_full_recipe_icon_fork"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/icon_fork_grey"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_card_bgr"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_icon_add_to_fav"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_icon_add_to_fav" />
+
+    <TextView
+        android:id="@+id/textView_full_recipe_forks_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@id/imageView_full_recipe_icon_fork"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_icon_fork"
+        android:textColor="@color/color_blue_grey_200"
+        android:textSize="9sp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/full_recipe_forks_quantity"/>
+    
+    <TextView
+        android:id="@+id/textView_full_recipe_tags"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="@id/textView_title_full_recipe_by"
+        app:layout_constraintRight_toLeftOf="@id/imageView_full_recipe_icon_fork"
+        app:layout_constraintTop_toBottomOf="@id/textView_title_full_recipe_by"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_card_bgr"
+        android:text="@string/full_recipe_tags"
+        android:textSize="11sp"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/color_pink_a200"
+        android:maxLines="2"
+        android:layout_marginTop="10dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

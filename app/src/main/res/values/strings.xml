@@ -64,6 +64,14 @@
     
     ///rv add new ingredient
     <string name="text_existing_ingredient">Existing Ingredient</string>
+
+    ///fragment full recipe
+    <string name="title_full_recipe_header">Recipe title</string>
+    <string name="title_full_recipe_by">By:</string>
+    <string name="title_full_recipe_username">Username</string>
+    <string name="full_recipe_tags">#foodcategorytag #testtesttest #testtesttest #testtesttest #testtesttest #testtesttest #testtesttest #testtesttest</string>
+    <string name="full_recipe_forks_quantity">123456</string>
+
     ///bottom nav menu
     <string name="nav_feed">Feed</string>
     <string name="nav_new_ingredient">Ingredients</string>
