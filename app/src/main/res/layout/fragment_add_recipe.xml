@@ -124,7 +124,7 @@
                 app:layout_constraintTop_toTopOf="@id/textView_add_recipe_categories_title" />
 
             <TextView
-                android:id="@+id/textView_add_recipe_ingredients_title"
+                android:id="@+id/textView_recipe_view_ingredients_title"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -141,9 +141,9 @@
                 android:layout_height="90dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
-                app:layout_constraintLeft_toLeftOf="@id/textView_add_recipe_ingredients_title"
+                app:layout_constraintLeft_toLeftOf="@id/textView_recipe_view_ingredients_title"
                 app:layout_constraintRight_toRightOf="@id/button_add_recipe_photo"
-                app:layout_constraintTop_toBottomOf="@id/textView_add_recipe_ingredients_title"
+                app:layout_constraintTop_toBottomOf="@id/textView_recipe_view_ingredients_title"
                 tools:listitem="@layout/rv_add_new_recipe_ingredients" />
 
             <ImageButton
