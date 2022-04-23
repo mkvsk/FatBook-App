@@ -27,7 +27,7 @@
 
     ///fill additional info
     <string name="title_username_fill_add_info">Username</string>
-    <string name="hint_firstname_fill_add_info">First Name</string>
+    <string name="hint_name_fill_add_info">Name</string>
     <string name="hint_secondname_fill_add_info">Second Name</string>
     <string name="hint_bday_fill_add_info">Birthday</string>
     <string name="hint_bio_fill_add_info">Bio</string>
@@ -44,7 +44,7 @@
 
     ///rv feed recipe card preview
     <string name="title_recipe_preview_rv">Recipe title</string>
-    <string name="title_recipe_preview_author">Author: Neshik</string>
+    <string name="title_recipe_preview_author">by</string>
     <string name="text_recipe_preview_tags">#pastries #desserts</string>
     <string name="value_recipe_preview_forks_avg">1339</string>
 

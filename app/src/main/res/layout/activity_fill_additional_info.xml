@@ -34,7 +34,7 @@
         android:layout_margin="20dp" />
 
     <ImageView
-        android:id="@+id/imageView_fill_add_rect_first_name"
+        android:id="@+id/imageView_fill_add_rect_name"
         android:layout_width="310dp"
         android:layout_height="55dp"
         android:src="@drawable/rect_for_edittext"
@@ -45,61 +45,61 @@
         />
 
     <ImageView
-        android:id="@+id/imageView_fill_add_first_name"
+        android:id="@+id/imageView_fill_add_name"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/icon_name"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_fill_add_rect_first_name"
-        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_first_name"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_first_name"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_fill_add_rect_name"
+        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_name"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_name"
         android:layout_marginTop="10dp"
         />
 
     <EditText
-        android:id="@+id/editText_fill_add_first_name"
+        android:id="@+id/editText_fill_add_name"
         android:layout_width="270dp"
         android:layout_height="50dp"
-        app:layout_constraintRight_toRightOf="@id/imageView_fill_add_rect_first_name"
-        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_first_name"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_first_name"
+        app:layout_constraintRight_toRightOf="@id/imageView_fill_add_rect_name"
+        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_name"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_name"
         android:textColor="@color/color_grey_900"
-        android:hint="@string/hint_firstname_fill_add_info"
+        android:hint="@string/hint_name_fill_add_info"
         android:fontFamily="@font/roboto_regular"
         android:textSize="16sp"
         />
 
-    <ImageView
-        android:id="@+id/imageView_fill_add_rect_second_name"
-        android:layout_width="310dp"
-        android:layout_height="55dp"
-        android:src="@drawable/rect_for_edittext"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_fill_add_rect_first_name"
-        android:layout_marginTop="10dp"
-        />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView_fill_add_rect_second_name"-->
+<!--        android:layout_width="310dp"-->
+<!--        android:layout_height="55dp"-->
+<!--        android:src="@drawable/rect_for_edittext"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/imageView_fill_add_rect_first_name"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        />-->
 
-    <ImageView
-        android:id="@+id/imageView_fill_add_second_name"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/icon_name"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_fill_add_rect_second_name"
-        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_second_name"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_second_name"
-        android:layout_marginTop="10dp" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView_fill_add_second_name"-->
+<!--        android:layout_width="24dp"-->
+<!--        android:layout_height="24dp"-->
+<!--        android:src="@drawable/icon_name"-->
+<!--        app:layout_constraintLeft_toLeftOf="@id/imageView_fill_add_rect_second_name"-->
+<!--        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_second_name"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_second_name"-->
+<!--        android:layout_marginTop="10dp" />-->
 
-    <EditText
-        android:id="@+id/editText_fill_add_second_name"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
-        app:layout_constraintRight_toRightOf="@id/imageView_fill_add_rect_second_name"
-        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_second_name"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_second_name"
-        android:textColor="@color/color_grey_900"
-        android:hint="@string/hint_secondname_fill_add_info"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="16sp" />
+<!--    <EditText-->
+<!--        android:id="@+id/editText_fill_add_second_name"-->
+<!--        android:layout_width="270dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:layout_constraintRight_toRightOf="@id/imageView_fill_add_rect_second_name"-->
+<!--        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_second_name"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_second_name"-->
+<!--        android:textColor="@color/color_grey_900"-->
+<!--        android:hint="@string/hint_secondname_fill_add_info"-->
+<!--        android:fontFamily="@font/roboto_regular"-->
+<!--        android:textSize="16sp" />-->
 
     <ImageView
         android:id="@+id/imageView_fill_add_rect_birthday"
@@ -108,7 +108,7 @@
         android:src="@drawable/rect_for_edittext"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_fill_add_rect_second_name"
+        app:layout_constraintTop_toBottomOf="@id/editText_fill_add_name"
         android:layout_marginTop="10dp" />
 
     <ImageView
