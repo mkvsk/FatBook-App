@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,10 +15,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fatbook.fatbookapp.R;
+import com.fatbook.fatbookapp.core.Role;
+import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
+import com.fatbook.fatbookapp.retrofit.EndpointsAPI;
+import com.fatbook.fatbookapp.retrofit.RetrofitAPI;
 import com.google.android.material.snackbar.Snackbar;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserProfileFragment extends Fragment {
 
@@ -99,9 +108,41 @@ public class UserProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.btnUpload.setOnClickListener(view1 -> {
+            User user = new User(null, "Moonya", "moonya", null, "privet, ya Moonya", null, Role.ADMIN);
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://localhost:8080/api/user/upload/")
+                    .baseUrl(EndpointsAPI.URL)
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
+//           save(user, retrofit.create(RetrofitAPI.class));
+            get(162, retrofit.create(RetrofitAPI.class));
+        });
+    }
+
+    private void get(long pid, RetrofitAPI api) {
+        api.getUser(pid).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                Toast.makeText(getContext(), response.body().getLogin(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(getContext(), "FAILURE", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void save(User user, RetrofitAPI api) {
+        api.saveUser(user).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getContext(), "FAILURE", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

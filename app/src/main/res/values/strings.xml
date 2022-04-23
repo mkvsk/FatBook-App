@@ -27,7 +27,7 @@
 
     ///fill additional info
     <string name="title_username_fill_add_info">Username</string>
-    <string name="hint_firstname_fill_add_info">First Name</string>
+    <string name="hint_name_fill_add_info">Name</string>
     <string name="hint_secondname_fill_add_info">Second Name</string>
     <string name="hint_bday_fill_add_info">Birthday</string>
     <string name="hint_bio_fill_add_info">Bio</string>

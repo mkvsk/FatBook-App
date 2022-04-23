@@ -9,18 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fatbook.fatbookapp.databinding.FragmentAddRecipeBinding;
+import com.fatbook.fatbookapp.databinding.FragmentRecipeAddBinding;
 
 public class AddRecipeFragment extends Fragment {
 
-    private FragmentAddRecipeBinding binding;
+    private FragmentRecipeAddBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         AddRecipeViewModel viewModel = new ViewModelProvider(this).get(AddRecipeViewModel.class);
 
-        binding = FragmentAddRecipeBinding.inflate(inflater, container, false);
+        binding = FragmentRecipeAddBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;
     }

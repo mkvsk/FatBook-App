@@ -3,68 +3,70 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/arrow_next.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/card_gradient_large.xml" value="0.3775" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/default_profile_photo_light.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/dialog.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/feed_recipe_previev_card_large.xml" value="0.3775" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/fork.xml" value="0.307" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/fork_like.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/ic_feed_search.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_accepted.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_add_fav_grey.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_add_fav_pink.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_add_new_recipe.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_add_recipe_photo.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_comments.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_edit_user_info.xml" value="0.251" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_feed.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_feed_home.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_feed_search.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_fork_grey.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_fork_pink.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_minus.xml" value="0.379" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_new_ingredient.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_new_recipe.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_plus.xml" value="0.379" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_profile.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_save_changes.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/icon_user_page.xml" value="0.426" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/imagebutton_add_ingredient.xml" value="0.379" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/imagebutton_food_photo.xml" value="0.379" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/imagebutton_remove_ingredient.xml" value="0.379" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/ic_feed_search.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_feed_search.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_plus.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_search.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/imagebutton_add_ingredient.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/imagebutton_food_photo.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/kuzya_eating.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/kuzya_login.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/kuzya_new_cook.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/kuzya_welcome.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/round_corner_edittext.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/round_corner_rect_blue_grey_50.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/round_corner_rect_lime.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/round_corner_rect_white.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/round_feed_search.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout-v23/fragment_add_recipe.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_fill_additional_info.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_introduce.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_skip_additional_info.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/content_fragment_feed.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_add_recipe.xml" value="0.6208112874779541" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_add_recipe222.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_bookmarks.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_favourites.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_feed.xml" value="0.34594594594594597" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_feed_200.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_feed_alpha.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_feed_beta.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_feed_recipes.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_ingredients.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_recipe_add.xml" value="0.33" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_recipes_all.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_recipes_favourites.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_user_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_add_new_recipe_ingredients.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_existing_ingredients.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_feed_best_recipes.xml" value="1.1" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_feed_categories.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_feed_item.xml" value="0.67" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_feed_recipe_card_preview.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/bookmarks_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/feed_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/user_profile_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/app/src/main/res/layout/activity_introduce.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/app/src/main/res/layout/fragment_feed.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/app/src/main/res/layout/rv_feed_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/rect_for_edittext.xml" value="0.373" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/rectangle.xml" value="0.373" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/round.xml" value="0.373" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/round_corner_edittext.xml" value="0.373" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/round_corner_rect.xml" value="0.373" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/round_corner_rect_blue_grey_50.xml" value="0.4415" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/round_corner_rect_lime.xml" value="0.25" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/round_corner_rect_pink.xml" value="0.379" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/round_corner_rect_white.xml" value="0.406" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/round_corners_rect_pink.xml" value="0.379" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/activity_fill_additional_info.xml" value="0.33" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/activity_introduce.xml" value="0.33" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/activity_login.xml" value="0.5" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/activity_main.xml" value="0.67" />
+        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/activity_skip_additional_info.xml" value="0.33" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/fragment_add_recipe.xml" value="0.33" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/fragment_feed.xml" value="0.3997078870496592" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/fragment_feed_v2.xml" value="0.4276041666666667" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/fragment_ingredients.xml" value="0.31614583333333335" />
+        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/fragment_feed.xml" value="0.5" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/fragment_user_profile.xml" value="0.33" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/rv_add_new_recipe_ingredients.xml" value="0.33" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/rv_all_ingredients.xml" value="0.390625" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/rv_existing_ingredients.xml" value="0.3067708333333333" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/rv_feed_best_recipes.xml" value="0.75" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/rv_feed_categories.xml" value="0.5" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/rv_feed_category_buttons.xml" value="0.30364583333333334" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/rv_feed_item.xml" value="0.5" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/rv_feed_recipe_card_preview.xml" value="0.33" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/menu/feed_menu.xml" value="0.4276041666666667" />
-        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/menu/user_profile_menu.xml" value="0.33" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.222" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.222" />
         <entry key="..\:/dev/projects/FatBook/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.236" />
