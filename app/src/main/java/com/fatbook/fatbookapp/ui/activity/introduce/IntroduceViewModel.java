@@ -1,16 +1,35 @@
 package com.fatbook.fatbookapp.ui.activity.introduce;
 
+import android.app.Application;
+import android.content.Intent;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+
+import com.fatbook.fatbookapp.retrofit.EndpointsAPI;
+import com.fatbook.fatbookapp.retrofit.RetrofitAPI;
+import com.fatbook.fatbookapp.ui.activity.skip_additional_info.SkipAdditionalInfoActivity;
 
 import java.util.Map;
 
-public class IntroduceViewModel extends ViewModel {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.internal.EverythingIsNonNull;
+
+public class IntroduceViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Map<String, Object>> mMap;
 
-    public IntroduceViewModel() {
+    private boolean resultCheckAvailableLogin;
+
+    public IntroduceViewModel(@NonNull Application application) {
+        super(application);
         mMap = new MutableLiveData<>();
         fillData(mMap);
     }
@@ -21,5 +40,36 @@ public class IntroduceViewModel extends ViewModel {
 
     public LiveData<Map<String, Object>> getMap() {
         return mMap;
+    }
+
+    public boolean isLoginAvailable(String login) {
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(EndpointsAPI.URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            retrofit.create(RetrofitAPI.class).checkAvailableLogin(login).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                    Void body = response.body();
+                    System.out.println();
+                }
+
+                @Override
+                public void onFailure(@EverythingIsNonNull Call<Void> call, Throwable t) {
+                    resultCheckAvailableLogin = false;
+                }
+            });
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public void goToAdditionalInfo(View view, String login) {
+        Intent intent = new Intent(getApplication(), SkipAdditionalInfoActivity.class);
+        intent.putExtra("login", login);
+        view.getContext().startActivity(intent);
+
     }
 }

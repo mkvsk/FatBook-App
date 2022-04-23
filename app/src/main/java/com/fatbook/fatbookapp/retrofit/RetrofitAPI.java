@@ -19,4 +19,7 @@ public interface RetrofitAPI {
 
     @GET("get-by-login")
     Call<User> getUser(@Query(value = "login") String login);
+
+    @GET("check-available-login")
+    Call<Void> checkAvailableLogin(@Query(value = "login") String login);
 }
