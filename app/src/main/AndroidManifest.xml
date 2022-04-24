@@ -12,8 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FatBook"
         android:usesCleartextTraffic="true">
+        <activity android:name=".MainActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.SplashActivity" />
         <activity
             android:name=".ui.activity.introduce.IntroduceActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.activity.skip_additional_info.SkipAdditionalInfoActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.activity.fill_additional_info.FillAdditionalInfoActivity"
             android:windowSoftInputMode="adjustResize" />
 
         <meta-data

@@ -18,7 +18,7 @@ import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
-import com.fatbook.fatbookapp.retrofit.EndpointsAPI;
+import com.fatbook.fatbookapp.retrofit.RetrofitUtil;
 import com.fatbook.fatbookapp.retrofit.RetrofitAPI;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -108,9 +108,10 @@ public class UserProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.btnUpload.setOnClickListener(view1 -> {
-            User user = new User(null, "Moonya", "moonya", null, "privet, ya Moonya", null, Role.ADMIN);
+            User user = new User(null, "Moonya", "moonya", null, "privet, ya Moonya", null,
+                    Role.ADMIN, "");
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(EndpointsAPI.URL)
+                    .baseUrl(RetrofitUtil.URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 //           save(user, retrofit.create(RetrofitAPI.class));
@@ -133,17 +134,17 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void save(User user, RetrofitAPI api) {
-        api.saveUser(user).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getContext(), "FAILURE", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        api.createNewUser(user, null).enqueue(new Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {
+//                Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {
+//                Toast.makeText(getContext(), "FAILURE", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override

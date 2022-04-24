@@ -61,14 +61,14 @@
     <ImageView
         android:id="@+id/ImageView_skip_add_kuzya_talks"
         android:layout_width="180dp"
-        android:layout_height="260dp"
+        android:layout_height="150dp"
         android:src="@drawable/kuzya_new_cook"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView_skip_add_cat_dialog" />
 
     <Button
-        android:id="@+id/button_skip_add_fill_add_info"
+        android:id="@+id/button_skip_add_fill"
         android:layout_width="234dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -86,7 +86,7 @@
         app:layout_constraintTop_toBottomOf="@id/ImageView_skip_add_kuzya_talks" />
 
     <Button
-        android:id="@+id/button_skip_add_skip_add_info"
+        android:id="@+id/button_skip_add_skip"
         android:layout_width="234dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -101,7 +101,7 @@
         android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_skip_add_fill_add_info" />
+        app:layout_constraintTop_toBottomOf="@id/button_skip_add_fill" />
 
     <TextView
         android:id="@+id/textView_skip_add_copyright"

@@ -9,9 +9,12 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.fatbook.fatbookapp.retrofit.EndpointsAPI;
+import com.fatbook.fatbookapp.core.Role;
+import com.fatbook.fatbookapp.core.User;
+import com.fatbook.fatbookapp.retrofit.RetrofitUtil;
 import com.fatbook.fatbookapp.retrofit.RetrofitAPI;
 import com.fatbook.fatbookapp.ui.activity.skip_additional_info.SkipAdditionalInfoActivity;
+import com.fatbook.fatbookapp.util.UserUtil;
 
 import java.util.Map;
 
@@ -45,7 +48,7 @@ public class IntroduceViewModel extends AndroidViewModel {
     public boolean isLoginAvailable(String login) {
         try {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(EndpointsAPI.URL)
+                    .baseUrl(RetrofitUtil.URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             retrofit.create(RetrofitAPI.class).checkAvailableLogin(login).enqueue(new Callback<Void>() {
@@ -63,13 +66,16 @@ public class IntroduceViewModel extends AndroidViewModel {
         } catch (Exception e) {
             System.out.println(e);
         }
-        return false;
+        return true;
     }
 
     public void goToAdditionalInfo(View view, String login) {
         Intent intent = new Intent(getApplication(), SkipAdditionalInfoActivity.class);
-        intent.putExtra("login", login);
+        User user = new User();
+        user.setLogin(login);
+        user.setRole(Role.USER);
+//        user.setRegDate(new Date());
+        intent.putExtra(UserUtil.USER, user);
         view.getContext().startActivity(intent);
-
     }
 }

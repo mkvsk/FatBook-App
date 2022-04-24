@@ -1,7 +1,7 @@
 package com.fatbook.fatbookapp.retrofit;
 
 
-public abstract class EndpointsAPI {
+public abstract class RetrofitUtil {
 
     private static final String HTTP = "http://";
     private static final String ADDRESS = "10.0.2.2:8080";

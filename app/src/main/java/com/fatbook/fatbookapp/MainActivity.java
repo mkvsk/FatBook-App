@@ -11,6 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.fatbook.fatbookapp.databinding.ActivityMainBinding;
 import com.fatbook.fatbookapp.ui.activity.SplashActivity;
+import com.fatbook.fatbookapp.ui.fragment.feed.FeedViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

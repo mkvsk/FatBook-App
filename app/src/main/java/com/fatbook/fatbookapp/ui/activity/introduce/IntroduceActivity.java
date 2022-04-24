@@ -36,17 +36,25 @@ public class IntroduceActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (viewModel.isLoginAvailable(binding.editTextIntroduceUsername.getText().toString())) {
-                    binding.imageViewIntroduceIconAccepted.setVisibility(View.VISIBLE);
-                } else {
-                    binding.imageViewIntroduceIconAccepted.setVisibility(View.GONE);
-                }
+                isLoginAvailable(binding.editTextIntroduceUsername.getText().toString());
             }
         });
 
-        binding.buttonIntroduceNext.setOnClickListener(view ->
-                viewModel.goToAdditionalInfo(binding.getRoot(), binding.editTextIntroduceUsername.getText().toString())
-        );
+        binding.buttonIntroduceNext.setOnClickListener(view -> {
+            if (isLoginAvailable(binding.editTextIntroduceUsername.getText().toString())) {
+                viewModel.goToAdditionalInfo(binding.getRoot(), binding.editTextIntroduceUsername.getText().toString());
+            }
+        });
+    }
+
+    private boolean isLoginAvailable(String login) {
+        if (viewModel.isLoginAvailable(binding.editTextIntroduceUsername.getText().toString())) {
+            binding.imageViewIntroduceIconAccepted.setVisibility(View.VISIBLE);
+            return true;
+        } else {
+            binding.imageViewIntroduceIconAccepted.setVisibility(View.GONE);
+            return false;
+        }
     }
 
     @Override
