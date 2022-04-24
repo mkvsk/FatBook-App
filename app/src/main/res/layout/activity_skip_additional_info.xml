@@ -14,7 +14,7 @@
         android:fontFamily="@font/roboto_light"
         android:paddingTop="88dp"
         android:text="@string/title_new_cook_in_skip_add"
-        android:textColor="@color/color_grey_900"
+        android:textColor="@color/color_blue_grey_600"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

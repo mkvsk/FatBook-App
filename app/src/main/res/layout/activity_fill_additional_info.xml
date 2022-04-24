@@ -20,11 +20,13 @@
         app:layout_constraintTop_toTopOf="parent"
         android:paddingTop="60dp" />
 
-    <ImageView
-        android:id="@+id/imageView_fill_add_user_image"
+
+    <ImageButton
+        android:id="@+id/imagebutton_fill_add_user_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/default_profile_photo_light"
+        android:scaleType="fitCenter"
         android:elevation="4dp"
         android:background="@drawable/round"
         android:translationZ="2dp"
@@ -34,139 +36,101 @@
         android:layout_margin="20dp" />
 
     <ImageView
-        android:id="@+id/imageView_fill_add_rect_name"
-        android:layout_width="310dp"
-        android:layout_height="55dp"
-        android:src="@drawable/rect_for_edittext"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_fill_add_user_image"
-        android:layout_marginTop="20dp"
-        />
-
-    <ImageView
         android:id="@+id/imageView_fill_add_name"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/icon_name"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_fill_add_rect_name"
-        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_name"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_name"
-        android:layout_marginTop="10dp"
-        />
+        app:layout_constraintLeft_toLeftOf="@id/editText_fill_add_name"
+        app:layout_constraintTop_toTopOf="@id/editText_fill_add_name"
+        app:layout_constraintBottom_toBottomOf="@id/editText_fill_add_name"
+        android:elevation="6dp"
+        android:translationZ="4dp"
+        android:layout_marginLeft="10dp" />
 
     <EditText
         android:id="@+id/editText_fill_add_name"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
-        app:layout_constraintRight_toRightOf="@id/imageView_fill_add_rect_name"
-        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_name"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_name"
-        android:textColor="@color/color_grey_900"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imagebutton_fill_add_user_image"
+        android:background="@drawable/round_corner_rect_white"
+        android:textColor="@color/color_blue_grey_600"
         android:hint="@string/hint_name_fill_add_info"
         android:fontFamily="@font/roboto_regular"
         android:textSize="16sp"
-        />
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView_fill_add_rect_second_name"-->
-<!--        android:layout_width="310dp"-->
-<!--        android:layout_height="55dp"-->
-<!--        android:src="@drawable/rect_for_edittext"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/imageView_fill_add_rect_first_name"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView_fill_add_second_name"-->
-<!--        android:layout_width="24dp"-->
-<!--        android:layout_height="24dp"-->
-<!--        android:src="@drawable/icon_name"-->
-<!--        app:layout_constraintLeft_toLeftOf="@id/imageView_fill_add_rect_second_name"-->
-<!--        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_second_name"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_second_name"-->
-<!--        android:layout_marginTop="10dp" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/editText_fill_add_second_name"-->
-<!--        android:layout_width="270dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        app:layout_constraintRight_toRightOf="@id/imageView_fill_add_rect_second_name"-->
-<!--        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_second_name"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_second_name"-->
-<!--        android:textColor="@color/color_grey_900"-->
-<!--        android:hint="@string/hint_secondname_fill_add_info"-->
-<!--        android:fontFamily="@font/roboto_regular"-->
-<!--        android:textSize="16sp" />-->
+        android:paddingLeft="50dp"
+        android:lines="1"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="30dp"/>
 
     <ImageView
-        android:id="@+id/imageView_fill_add_rect_birthday"
-        android:layout_width="310dp"
-        android:layout_height="55dp"
-        android:src="@drawable/rect_for_edittext"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editText_fill_add_name"
-        android:layout_marginTop="10dp" />
-
-    <ImageView
-        android:id="@+id/imageView_fill_add_birthday"
+        android:id="@+id/imageView_fill_add_bday"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/icon_bday"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_fill_add_rect_birthday"
-        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_birthday"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_birthday"
-        android:layout_marginTop="10dp" />
+        app:layout_constraintLeft_toLeftOf="@id/editText_fill_add_bday"
+        app:layout_constraintTop_toTopOf="@id/editText_fill_add_bday"
+        app:layout_constraintBottom_toBottomOf="@id/editText_fill_add_bday"
+        android:elevation="6dp"
+        android:translationZ="4dp"
+        android:layout_marginLeft="10dp" />
 
     <EditText
-        android:id="@+id/editText_fill_add_birthday"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
-        app:layout_constraintRight_toRightOf="@id/imageView_fill_add_rect_birthday"
-        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_birthday"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_birthday"
-        android:textColor="@color/color_grey_900"
-        android:inputType="date"
+        android:id="@+id/editText_fill_add_bday"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_fill_add_name"
+        android:background="@drawable/round_corner_rect_white"
+        android:textColor="@color/color_blue_grey_600"
         android:hint="@string/hint_bday_fill_add_info"
         android:fontFamily="@font/roboto_regular"
-        android:textSize="16sp" />
-
-    <ImageView
-        android:id="@+id/imageView_fill_add_rect_bio"
-        android:layout_width="310dp"
-        android:layout_height="55dp"
-        android:src="@drawable/rect_for_edittext"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_fill_add_rect_birthday"
-        android:layout_marginTop="10dp" />
+        android:textSize="16sp"
+        android:paddingLeft="50dp"
+        android:inputType="date"
+        android:lines="1"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="30dp"/>
 
     <ImageView
         android:id="@+id/imageView_fill_add_bio"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/icon_bio"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_fill_add_rect_bio"
-        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_bio"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_bio"
-        android:layout_marginTop="10dp" />
+        app:layout_constraintLeft_toLeftOf="@id/editText_fill_add_bio"
+        app:layout_constraintTop_toTopOf="@id/editText_fill_add_bio"
+        android:elevation="6dp"
+        android:translationZ="4dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/editText_fill_add_bio"
-        android:layout_width="270dp"
-        android:layout_height="50dp"
-        app:layout_constraintRight_toRightOf="@id/imageView_fill_add_rect_bio"
-        app:layout_constraintTop_toTopOf="@id/imageView_fill_add_rect_bio"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_fill_add_rect_bio"
-        android:textColor="@color/color_grey_900"
-        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_fill_add_bday"
+        android:background="@drawable/round_corner_rect_white"
+        android:textColor="@color/color_blue_grey_600"
         android:hint="@string/hint_bio_fill_add_info"
         android:fontFamily="@font/roboto_regular"
         android:textSize="16sp"
-        android:maxLength="245"/>
+        android:paddingStart="50dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="10dp"
+        android:inputType="date"
+        android:minLines="2"
+        android:maxLines="6"
+        android:maxLength="254"
+        android:gravity="left"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="30dp"/>
 
     <Button
         android:id="@+id/button_fill_add_save"
@@ -182,8 +146,9 @@
         android:fontFamily="@font/roboto_light"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="120dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/editText_fill_add_bio"
+        android:layout_marginTop="30dp"
+        />
 
     <TextView
         android:id="@+id/textView_fill_add_copyright"
