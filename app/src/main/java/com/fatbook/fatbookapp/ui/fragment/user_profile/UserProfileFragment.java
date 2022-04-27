@@ -18,8 +18,8 @@ import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
-import com.fatbook.fatbookapp.retrofit.RetrofitUtil;
-import com.fatbook.fatbookapp.retrofit.RetrofitAPI;
+import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
+import com.fatbook.fatbookapp.retrofit.NetworkInfoService;
 import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
@@ -47,7 +47,7 @@ public class UserProfileFragment extends Fragment {
     private void setupMenu() {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         assert activity != null;
-        activity.setSupportActionBar(binding.toolbarBookmarks);
+        activity.setSupportActionBar(binding.toolbarUserProfile);
         setHasOptionsMenu(true);
     }
 
@@ -99,27 +99,27 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void changeMenuItemsVisibility(boolean edit, boolean save, boolean cancel) {
-        binding.toolbarBookmarks.getMenu().findItem(R.id.menu_user_profile_edit).setVisible(edit);
-        binding.toolbarBookmarks.getMenu().findItem(R.id.menu_user_profile_save).setVisible(save);
-        binding.toolbarBookmarks.getMenu().findItem(R.id.menu_user_profile_cancel).setVisible(cancel);
+        binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_edit).setVisible(edit);
+        binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_save).setVisible(save);
+        binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_cancel).setVisible(cancel);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.btnUpload.setOnClickListener(view1 -> {
-            User user = new User(null, "Moonya", "moonya", null, "privet, ya Moonya", null,
-                    Role.ADMIN, "");
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(RetrofitUtil.URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-//           save(user, retrofit.create(RetrofitAPI.class));
-            get(162, retrofit.create(RetrofitAPI.class));
-        });
+//        binding.btnUpload.setOnClickListener(view1 -> {
+//            User user = new User(null, "Moonya", "moonya", null, "privet, ya Moonya", null,
+//                    Role.ADMIN, "", null);
+//            Retrofit retrofit = new Retrofit.Builder()
+//                    .baseUrl(RetrofitFactory.URL)
+//                    .addConverterFactory(GsonConverterFactory.create())
+//                    .build();
+////           save(user, retrofit.create(RetrofitAPI.class));
+//            get(162, retrofit.create(NetworkInfoService.class));
+//        });
     }
 
-    private void get(long pid, RetrofitAPI api) {
+    private void get(long pid, NetworkInfoService api) {
         api.getUser(pid).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -133,7 +133,7 @@ public class UserProfileFragment extends Fragment {
         });
     }
 
-    private void save(User user, RetrofitAPI api) {
+    private void save(User user, NetworkInfoService api) {
 //        api.createNewUser(user, null).enqueue(new Callback<Void>() {
 //            @Override
 //            public void onResponse(Call<Void> call, Response<Void> response) {

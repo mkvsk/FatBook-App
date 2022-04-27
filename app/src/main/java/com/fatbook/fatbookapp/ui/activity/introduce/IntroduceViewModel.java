@@ -11,8 +11,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
-import com.fatbook.fatbookapp.retrofit.RetrofitUtil;
-import com.fatbook.fatbookapp.retrofit.RetrofitAPI;
+import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
+import com.fatbook.fatbookapp.retrofit.NetworkInfoService;
 import com.fatbook.fatbookapp.ui.activity.skip_additional_info.SkipAdditionalInfoActivity;
 import com.fatbook.fatbookapp.util.UserUtil;
 
@@ -48,10 +48,10 @@ public class IntroduceViewModel extends AndroidViewModel {
     public boolean isLoginAvailable(String login) {
         try {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(RetrofitUtil.URL)
+                    .baseUrl(RetrofitFactory.URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-            retrofit.create(RetrofitAPI.class).checkAvailableLogin(login).enqueue(new Callback<Void>() {
+            retrofit.create(NetworkInfoService.class).checkAvailableLogin(login).enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                     Void body = response.body();

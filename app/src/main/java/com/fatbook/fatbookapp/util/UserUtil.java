@@ -1,38 +1,65 @@
 package com.fatbook.fatbookapp.util;
 
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.view.View;
+
 import com.fatbook.fatbookapp.core.User;
-import com.fatbook.fatbookapp.retrofit.RetrofitAPI;
-import com.fatbook.fatbookapp.retrofit.RetrofitUtil;
+import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
+import lombok.SneakyThrows;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserUtil {
 
     public static final String USER = "user";
 
-    public static User createNewUser(User user) {
-        File file = new File(user.getPhoto());
+    @SneakyThrows
+    public static User createNewUser(View view, User user, File image) {
+//        File file = new File(user.getUri().getPath());
         RequestBody requestFile =
                 RequestBody.create(
-                        MediaType.parse("image/jpg"),
-                        file
+                        MediaType.parse("image/*"),
+                        image
                 );
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("files[0]", file.getName(), requestFile);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(RetrofitUtil.URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        retrofit.create(RetrofitAPI.class).createNewUser(user, body).enqueue(new Callback<Void>() {
+//        MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+
+//        try {
+//            Bitmap bitmap = MediaStore.Images.Media.getBitmap(view.getContext().getContentResolver(), user.getUri());
+//            System.out.println();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        RequestBody user1 = RequestBody.create(MediaType.parse("text/plain"), user.getLogin());
+//        RequestBody file1 = RequestBody.create(MediaType.parse("image/jpeg"), image);
+//
+//        ContextWrapper contextWrapper = new ContextWrapper(view.getContext());
+//        File images = contextWrapper.getDir("Images", Context.MODE_PRIVATE);
+//        images = new File(images, "asdfasdf.jpg");
+//        InputStream in = new FileInputStream(image);
+//        byte[] buf;
+//        buf = new byte[in.available()];
+//        while (in.read(buf) != -1) ;
+//        RequestBody requestBody = RequestBody.create(MediaType.parse("application/octet-stream"), buf);
+//        Call<Void> voidCall = RetrofitFactory.infoServiceClient().uploadPic(requestBody);
+
+        MultipartBody.Part file = MultipartBody.Part.createFormData("file", image.getName(), requestFile);
+
+        Call<Void> newUser = RetrofitFactory.infoServiceClient().createNewUser(file);
+        newUser.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 System.out.println();

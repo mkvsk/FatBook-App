@@ -18,6 +18,7 @@ import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivityFillAdditionalInfoBinding;
 import com.fatbook.fatbookapp.util.UserUtil;
 
+import java.io.File;
 import java.util.Map;
 
 public class FillAdditionalInfoViewModel extends AndroidViewModel {
@@ -38,11 +39,11 @@ public class FillAdditionalInfoViewModel extends AndroidViewModel {
         return mMap;
     }
 
-    public void saveUser(View view, User user) {
+    public void saveUser(View view, User user, File image) {
         Intent intent = new Intent(getApplication(), MainActivity.class);
         //TODO save user with retrofit
-        user = UserUtil.createNewUser(user);
-        intent.putExtra(UserUtil.USER, user);
-        view.getContext().startActivity(intent);
+        user = UserUtil.createNewUser(view, user, image);
+//        intent.putExtra(UserUtil.USER, user);
+//        view.getContext().startActivity(intent);
     }
 }
