@@ -97,7 +97,8 @@
         app:layout_constraintTop_toTopOf="@id/imageView_rv_card_my_recipe_photo"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="10dp"
-        android:src="@drawable/icon_add_fav_grey"/>
+        android:src="@drawable/icon_add_fav_grey"
+        android:visibility="invisible"/>
 
     <ImageView
         android:id="@+id/imageView_card_my_recipe_fork"
@@ -120,7 +121,5 @@
         android:fontFamily="@font/roboto_medium"
         android:textSize="9sp"
         android:textColor="@color/color_blue_grey_200"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
