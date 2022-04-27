@@ -8,7 +8,7 @@
     tools:context=".ui.fragment.bookmarks.BookmarksFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout_bookmarks"
+        android:id="@+id/appBarLayout_user_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_blue_grey_50"
@@ -28,11 +28,10 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="70dp"
                 android:layout_gravity="end"
-                android:rotationY="180"
                 android:layout_height="70dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:src="@drawable/kuzya_new_cook"/>
+                android:src="@drawable/kuzya_bookmarks"/>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
