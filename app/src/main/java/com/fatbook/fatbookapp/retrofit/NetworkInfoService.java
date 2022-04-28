@@ -21,21 +21,19 @@ public interface NetworkInfoService {
 //            @Part("image") MultipartBody.Part file, @Part User user);
 
     @Multipart
-    @POST("upload")
+    @POST("test/upload")
     Call<Void> createNewUser(@Part MultipartBody.Part image);
 
 //    @Part image: MultipartBody.Part,
 //    @Part("desc") desc: RequestBody
 
-    @GET("get-by-pid")
+    @GET("user/get-by-pid")
     Call<User> getUser(@Query(value = "pid") Long pid);
 
-    @GET("get-by-login")
+    @GET("user/get-by-login")
     Call<User> getUser(@Query(value = "login") String login);
 
-    @GET("check-available-login")
+    @GET("user/check-available-login")
     Call<Void> checkAvailableLogin(@Query(value = "login") String login);
 
-    @POST("upload")
-    Call<Void> uploadPic(@Body RequestBody photo);
 }

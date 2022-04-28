@@ -14,7 +14,7 @@ import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.retrofit.NetworkInfoService;
 import com.fatbook.fatbookapp.ui.activity.skip_additional_info.SkipAdditionalInfoActivity;
-import com.fatbook.fatbookapp.util.UserUtil;
+import com.fatbook.fatbookapp.util.UserUtils;
 
 import java.util.Map;
 
@@ -47,11 +47,7 @@ public class IntroduceViewModel extends AndroidViewModel {
 
     public boolean isLoginAvailable(String login) {
         try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(RetrofitFactory.URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            retrofit.create(NetworkInfoService.class).checkAvailableLogin(login).enqueue(new Callback<Void>() {
+           RetrofitFactory.infoServiceClient().checkAvailableLogin(login).enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                     Void body = response.body();
@@ -75,7 +71,7 @@ public class IntroduceViewModel extends AndroidViewModel {
         user.setLogin(login);
         user.setRole(Role.USER);
 //        user.setRegDate(new Date());
-        intent.putExtra(UserUtil.USER, user);
+        intent.putExtra(UserUtils.USER, user);
         view.getContext().startActivity(intent);
     }
 }

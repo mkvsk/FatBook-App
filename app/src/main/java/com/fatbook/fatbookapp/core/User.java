@@ -1,7 +1,5 @@
 package com.fatbook.fatbookapp.core;
 
-import android.net.Uri;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,9 +26,7 @@ public class User implements Serializable {
 
     private Role role;
 
-    private String photo;
-
-    private Uri uri;
+    private String image;
 
 //    private List<Recipe> recipes;
 

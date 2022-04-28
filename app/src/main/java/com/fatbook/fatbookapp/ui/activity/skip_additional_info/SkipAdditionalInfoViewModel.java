@@ -12,7 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.fatbook.fatbookapp.MainActivity;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.ui.activity.fill_additional_info.FillAdditionalInfoActivity;
-import com.fatbook.fatbookapp.util.UserUtil;
+import com.fatbook.fatbookapp.util.UserUtils;
 
 import java.util.Map;
 
@@ -36,7 +36,7 @@ public class SkipAdditionalInfoViewModel extends AndroidViewModel {
 
     public void fillAddInfo(View view, User user) {
         Intent intent = new Intent(getApplication(), FillAdditionalInfoActivity.class);
-        intent.putExtra(UserUtil.USER, user);
+        intent.putExtra(UserUtils.USER, user);
         view.getContext().startActivity(intent);
     }
 

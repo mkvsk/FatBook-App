@@ -25,14 +25,6 @@
             app:title="Username"
             app:titleTextColor="@color/color_blue_grey_600" >
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="70dp"
-            android:layout_gravity="end"
-            android:layout_height="70dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:rotationY="180"
-            android:src="@drawable/kuzya_login"/>
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -77,11 +69,11 @@
         app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo"
         android:layout_marginLeft="25dp"/>
 
-    <TextView
+    <EditText
         android:id="@+id/textView_profile_bio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:focusable="false"
         android:fontFamily="@font/roboto_regular"
         android:lines="6"
         android:text="@string/text_bio_profile"

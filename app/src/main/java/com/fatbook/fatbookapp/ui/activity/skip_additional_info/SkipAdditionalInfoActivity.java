@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivitySkipAdditionalInfoBinding;
-import com.fatbook.fatbookapp.util.UserUtil;
+import com.fatbook.fatbookapp.util.UserUtils;
 
 public class SkipAdditionalInfoActivity extends AppCompatActivity {
 
@@ -22,7 +22,7 @@ public class SkipAdditionalInfoActivity extends AppCompatActivity {
 
         SkipAdditionalInfoViewModel viewModel = new ViewModelProvider(this).get(SkipAdditionalInfoViewModel.class);
 
-        User user = (User) getIntent().getSerializableExtra(UserUtil.USER);
+        User user = (User) getIntent().getSerializableExtra(UserUtils.USER);
 
         binding.buttonSkipAddSkip.setOnClickListener(view -> {
             viewModel.skipAddInfo(binding.getRoot(), user);
