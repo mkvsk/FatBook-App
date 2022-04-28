@@ -7,17 +7,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
-import com.fatbook.fatbookapp.databinding.FragmentBookmarksBinding;
 import com.fatbook.fatbookapp.databinding.FragmentIngredientsBinding;
-import com.fatbook.fatbookapp.ui.fragment.bookmarks.BookmarksViewModel;
-import com.google.android.material.snackbar.Snackbar;
+import com.fatbook.fatbookapp.ui.adapters.IngredientAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

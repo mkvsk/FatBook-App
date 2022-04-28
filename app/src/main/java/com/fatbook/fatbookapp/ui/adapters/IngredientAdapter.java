@@ -1,4 +1,4 @@
-package com.fatbook.fatbookapp.ui.fragment.ingredients;
+package com.fatbook.fatbookapp.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
-import com.fatbook.fatbookapp.databinding.FragmentIngredientsBinding;
 
 import java.util.List;
 
@@ -36,6 +35,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Ingredient ingredient = list.get(position);
         holder.tvName.setText(ingredient.getName());
+
     }
 
     @Override
@@ -43,7 +43,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView tvName;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
