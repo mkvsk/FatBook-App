@@ -12,6 +12,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.internal.EverythingIsNonNull;
 
 public class UserUtils {
 
@@ -26,6 +27,7 @@ public class UserUtils {
         return true;
     }
 
+    @SneakyThrows
     private static String uploadUserProfileImage(File image) {
         RequestBody requestFile =
                 RequestBody.create(
@@ -35,16 +37,17 @@ public class UserUtils {
 
         MultipartBody.Part file = MultipartBody.Part.createFormData("file", image.getName(), requestFile);
 
-        Call<Void> newUser = RetrofitFactory.infoServiceClient().createNewUser(file);
-        newUser.enqueue(new Callback<Void>() {
+        Call<String> newUser = RetrofitFactory.infoServiceClient().createNewUser(file);
+        newUser.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                imageURL = "fatbook.online/bla.jpg";
-                System.out.println();
+            @EverythingIsNonNull
+            public void onResponse(Call<String> call, Response<String> response) {
+                imageURL = response.body();
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            @EverythingIsNonNull
+            public void onFailure(Call<String> call, Throwable t) {
                 System.out.println();
             }
         });

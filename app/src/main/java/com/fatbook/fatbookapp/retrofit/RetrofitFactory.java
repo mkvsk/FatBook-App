@@ -1,6 +1,9 @@
 package com.fatbook.fatbookapp.retrofit;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -11,10 +14,14 @@ public abstract class RetrofitFactory {
     private static final String ENDPOINT = "/api/";
     private static final String URL = HTTP + ADDRESS + ENDPOINT;
 
+    private static final Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
+
     public static NetworkInfoService infoServiceClient() {
         return new Retrofit.Builder()
                 .baseUrl(RetrofitFactory.URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build().create(NetworkInfoService.class);
     }
 

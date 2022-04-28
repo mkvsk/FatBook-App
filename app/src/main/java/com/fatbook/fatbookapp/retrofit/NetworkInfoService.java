@@ -22,7 +22,11 @@ public interface NetworkInfoService {
 
     @Multipart
     @POST("test/upload")
-    Call<Void> createNewUser(@Part MultipartBody.Part image);
+    Call<String> createNewUser(@Part MultipartBody.Part image);
+
+    @Multipart
+    @POST("test/upload")
+    Call<User> createNewUser(@Part RequestBody user, @Part MultipartBody.Part image);
 
 //    @Part image: MultipartBody.Part,
 //    @Part("desc") desc: RequestBody
