@@ -29,33 +29,48 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+<!--    Glide.with(this).load(R.drawable.demo)-->
+<!--    .bitmapTransform(new BlurTransformation(context))-->
+<!--    .into((ImageView) findViewById(R.id.image));-->
     <ImageView
-        android:id="@+id/user_profile_info_bgr"
+        android:id="@+id/user_profile_photo_bgr"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:src="@drawable/round_corner_rect_white"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="370dp"
+        android:src="@drawable/shrek"
+        android:scaleType="fitXY"
+        android:alpha="0.8"
+        android:background="@color/color_blue_grey_50"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout_user_profile"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:background="@drawable/round_corner_rect_white"/>
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:layout_constraintTop_toTopOf="@id/imageView_profile_photo"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_profile_photo"
+        app:layout_constraintRight_toRightOf="@id/imageView_profile_photo"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo"
+        android:background="@color/color_blue_grey_200"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent"
+        />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView_profile_photo"
-        android:layout_width="74dp"
-        android:layout_height="74dp"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent"
         android:scaleType="fitXY"
-        android:src="@drawable/kit_waiting_eat"
-        app:layout_constraintLeft_toLeftOf="@id/user_profile_info_bgr"
-        app:layout_constraintTop_toTopOf="@id/user_profile_info_bgr"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="25dp" />
-
+        android:src="@drawable/shrek"
+        app:layout_constraintLeft_toLeftOf="@id/user_profile_photo_bgr"
+        app:layout_constraintRight_toRightOf="@id/user_profile_photo_bgr"
+        app:layout_constraintTop_toTopOf="@id/user_profile_photo_bgr"
+        android:layout_marginTop="30dp"/>
 
     <EditText
         android:id="@+id/textView_profile_full_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:layout_marginTop="15dp"
         android:focusable="false"
         android:fontFamily="@font/roboto_medium"
@@ -64,10 +79,29 @@
         android:textAlignment="center"
         android:textColor="@color/color_blue_grey_600"
         android:textSize="12sp"
-        app:layout_constraintLeft_toRightOf="@id/imageView_profile_photo"
-        app:layout_constraintTop_toTopOf="@id/imageView_profile_photo"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo"
-        android:layout_marginLeft="25dp"/>
+        android:background="@drawable/round_corner_rect_white"
+        android:padding="5dp"
+        app:layout_constraintTop_toBottomOf="@id/imageView_profile_photo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/textView_profile_birthday"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:focusable="false"
+        android:fontFamily="@font/roboto_medium"
+        android:lines="1"
+        android:text="@string/title_birthday"
+        android:textAlignment="center"
+        android:textColor="@color/color_blue_grey_600"
+        android:textSize="12sp"
+        android:background="@drawable/round_corner_rect_white"
+        android:padding="5dp"
+        app:layout_constraintTop_toBottomOf="@id/textView_profile_full_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/textView_profile_bio"
@@ -75,15 +109,18 @@
         android:layout_height="wrap_content"
         android:focusable="false"
         android:fontFamily="@font/roboto_regular"
-        android:lines="6"
+        android:maxLines="6"
         android:text="@string/text_bio_profile"
         android:textColor="@color/color_blue_grey_600"
         android:textSize="12sp"
-        app:layout_constraintLeft_toLeftOf="@id/user_profile_info_bgr"
-        app:layout_constraintRight_toRightOf="@id/user_profile_info_bgr"
-        app:layout_constraintTop_toBottomOf="@id/imageView_profile_photo"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"/>
+        android:background="@drawable/round_corner_rect_white"
+        app:layout_constraintLeft_toLeftOf="@id/user_profile_photo_bgr"
+        app:layout_constraintRight_toRightOf="@id/user_profile_photo_bgr"
+        app:layout_constraintTop_toBottomOf="@id/textView_profile_birthday"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
+        android:padding="10dp"/>
 
     <TextView
         android:id="@+id/textView_profile_recipes_title"
@@ -93,7 +130,7 @@
         android:text="@string/title_my_recipes_profile"
         android:textColor="@color/color_blue_grey_200"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/user_profile_info_bgr"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_photo_bgr"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="25dp"
         android:layout_marginTop="30dp"/>
