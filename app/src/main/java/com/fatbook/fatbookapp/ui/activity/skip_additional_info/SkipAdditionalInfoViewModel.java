@@ -35,7 +35,7 @@ public class SkipAdditionalInfoViewModel extends AndroidViewModel {
     }
 
     public void fillAddInfo(View view, User user) {
-        Intent intent = new Intent(getApplication(), FillAdditionalInfoActivity.class);
+        Intent intent = new Intent(getApplication(), MainActivity.class);
         intent.putExtra(UserUtils.USER, user);
         view.getContext().startActivity(intent);
     }

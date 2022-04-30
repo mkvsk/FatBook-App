@@ -1,6 +1,7 @@
 package com.fatbook.fatbookapp.ui.fragment.feed;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,15 @@ public class FeedFragment extends Fragment {
         RecipeAdapter adapter = new RecipeAdapter(binding.getRoot().getContext(), recipes);
 
         recyclerView.setAdapter(adapter);
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener((view1, i, keyEvent) -> {
+            if (i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                getActivity().finish();
+            }
+            return false;
+        });
     }
 
     private void getRecipeList(List<Recipe> recipes) {

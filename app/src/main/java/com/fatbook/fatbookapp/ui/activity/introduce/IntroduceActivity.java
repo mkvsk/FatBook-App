@@ -43,6 +43,7 @@ public class IntroduceActivity extends AppCompatActivity {
         binding.buttonIntroduceNext.setOnClickListener(view -> {
             if (isLoginAvailable(binding.editTextIntroduceUsername.getText().toString())) {
                 viewModel.goToAdditionalInfo(binding.getRoot(), binding.editTextIntroduceUsername.getText().toString());
+                finish();
             }
         });
     }

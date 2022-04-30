@@ -26,10 +26,12 @@ public class SkipAdditionalInfoActivity extends AppCompatActivity {
 
         binding.buttonSkipAddSkip.setOnClickListener(view -> {
             viewModel.skipAddInfo(binding.getRoot(), user);
+            finish();
         });
 
         binding.buttonSkipAddFill.setOnClickListener(view -> {
             viewModel.fillAddInfo(binding.getRoot(), user);
+            finish();
         });
     }
 }
