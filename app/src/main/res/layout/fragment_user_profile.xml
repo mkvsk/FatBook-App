@@ -29,16 +29,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-<!--    Glide.with(this).load(R.drawable.demo)-->
-<!--    .bitmapTransform(new BlurTransformation(context))-->
-<!--    .into((ImageView) findViewById(R.id.image));-->
     <ImageView
         android:id="@+id/user_profile_photo_bgr"
         android:layout_width="match_parent"
         android:layout_height="370dp"
         android:src="@drawable/shrek"
         android:scaleType="fitXY"
-        android:alpha="0.8"
+        android:alpha="0.7"
         android:background="@color/color_blue_grey_50"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout_user_profile"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -52,8 +49,7 @@
         app:layout_constraintRight_toRightOf="@id/imageView_profile_photo"
         app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo"
         android:background="@color/color_blue_grey_200"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent"
-        />
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView_profile_photo"

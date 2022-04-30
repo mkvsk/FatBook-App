@@ -47,10 +47,10 @@
     <Button
         android:id="@+id/button_login_log_in_with_google"
         android:layout_width="234dp"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:backgroundTint="@color/color_pink_a200"
-        android:elevation="6dp"
-        android:translationZ="4dp"
+        android:elevation="4dp"
+        android:translationZ="6dp"
         android:stateListAnimator="@null"
         android:text="@string/title_button_login_googleplay"
         android:textColor="@color/white"
