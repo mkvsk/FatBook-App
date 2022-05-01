@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,16 +17,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.fatbook.fatbookapp.R;
+import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserProfileFragment extends Fragment {
 
     private FragmentUserProfileBinding binding;
+    private User user;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +41,29 @@ public class UserProfileFragment extends Fragment {
         binding = FragmentUserProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         setupMenu();
+
+        user = new User (1339L, "Tatyana Mayakovskaya", "hewix", null,
+                "Gradle – является отличным выбором в качестве систем сборки проектов. Подтверждением тому является то, что его используют разработчики таких известных проектов, как Spring и Hibernate. " +
+                        "Выше были рассмотрены лишь самые базовые вещи. За ними скрыт миллион особенностей и возможностей, которые появляются 123456",
+                null, Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album");
+        fillUserProfile();
+
         return root;
+    }
+
+    private void fillUserProfile() {
+        binding.toolbarUserProfile.setTitle(user.getLogin());
+        binding.textViewProfileFullName.setText(user.getName());
+        binding.textViewProfileBio.setText(user.getBio());
+        Glide
+                .with(getLayoutInflater().getContext())
+                .load(user.getImage())
+                .into(binding.imageViewProfilePhoto);
+
+        Glide
+                .with(getLayoutInflater().getContext())
+                .load(user.getImage())
+                .into(binding.imageViewUserProfilePhotoBgr);
     }
 
     private void setupMenu() {
