@@ -8,13 +8,18 @@
     android:layout_marginBottom="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/rv_card_recipe_bgr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@drawable/round_corner_rect_white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/white"
+        android:stateListAnimator="@null"
+        android:elevation="4dp"
+        android:translationZ="2dp"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -27,7 +32,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:elevation="4dp"
+        android:translationZ="2dp"/>
 
     <TextView
         android:id="@+id/textView_rv_card_recipe_title"
@@ -40,7 +47,9 @@
         android:textSize="16sp"
         app:layout_constraintLeft_toRightOf="@id/imageView_rv_card_recipe_photo"
         app:layout_constraintTop_toTopOf="@id/imageView_rv_card_recipe_photo"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="10dp"
+        android:elevation="6dp"
+        android:translationZ="4dp"/>
 
     <TextView
         android:id="@+id/textView_rv_card_recipe_author_by"
@@ -52,7 +61,9 @@
         android:text="@string/title_recipe_preview_author"
         android:fontFamily="@font/roboto_regular"
         android:textSize="11sp"
-        android:textColor="@color/color_blue_grey_600"/>
+        android:textColor="@color/color_blue_grey_600"
+        android:elevation="6dp"
+        android:translationZ="4dp"/>
 
     <TextView
         android:id="@+id/textView_rv_card_recipe_author"
@@ -65,7 +76,9 @@
         android:text="Neshik"
         android:fontFamily="@font/roboto_regular"
         android:textSize="11sp"
-        android:textColor="@color/color_blue_grey_600"/>
+        android:textColor="@color/color_blue_grey_600"
+        android:elevation="6dp"
+        android:translationZ="4dp"/>
 
 
     <ImageView
@@ -75,7 +88,9 @@
         app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_author_by"
         app:layout_constraintTop_toBottomOf="@id/textView_rv_card_recipe_author_by"
         android:layout_marginTop="5dp"
-        android:src="@drawable/rect_for_edittext"/>
+        android:src="@drawable/rect_for_edittext"
+        android:elevation="6dp"
+        android:translationZ="4dp"/>
 
     <TextView
         android:id="@+id/textView_rv_card_recipe_tags"
@@ -88,7 +103,9 @@
         android:text="@string/text_recipe_preview_tags"
         android:textColor="@color/color_pink_a200"
         android:fontFamily="@font/roboto_regular"
-        android:textSize="11sp"/>
+        android:textSize="11sp"
+        android:elevation="6dp"
+        android:translationZ="4dp"/>
 
     <ImageView
         android:id="@+id/imageView_rv_card_recipe_fav"
@@ -97,7 +114,9 @@
         app:layout_constraintTop_toTopOf="@id/imageView_rv_card_recipe_photo"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="10dp"
-        android:src="@drawable/icon_add_fav_grey"/>
+        android:src="@drawable/icon_add_fav_grey"
+        android:elevation="6dp"
+        android:translationZ="4dp"/>
 
     <ImageView
         android:id="@+id/imageView_rv_card_recipe_fork"
@@ -106,7 +125,9 @@
         app:layout_constraintRight_toRightOf="@id/imageView_rv_card_recipe_fav"
         app:layout_constraintLeft_toLeftOf="@id/imageView_rv_card_recipe_fav"
         app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo"
-        android:src="@drawable/icon_fork_grey"/>
+        android:src="@drawable/icon_fork_grey"
+        android:elevation="6dp"
+        android:translationZ="4dp"/>
 
     <TextView
         android:id="@+id/textView_rv_card_recipe_forks_avg"
@@ -119,8 +140,8 @@
         android:text="@string/value_recipe_preview_forks_avg"
         android:fontFamily="@font/roboto_medium"
         android:textSize="9sp"
-        android:textColor="@color/color_blue_grey_200"/>
-
-
+        android:textColor="@color/color_blue_grey_200"
+        android:elevation="6dp"
+        android:translationZ="4dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

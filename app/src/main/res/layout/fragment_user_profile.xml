@@ -61,7 +61,7 @@
         app:layout_constraintLeft_toLeftOf="@id/user_profile_photo_bgr"
         app:layout_constraintRight_toRightOf="@id/user_profile_photo_bgr"
         app:layout_constraintTop_toTopOf="@id/user_profile_photo_bgr"
-        android:layout_marginTop="30dp"/>
+        app:layout_constraintBottom_toTopOf="@id/textView_profile_full_name"/>
 
     <EditText
         android:id="@+id/textView_profile_full_name"
