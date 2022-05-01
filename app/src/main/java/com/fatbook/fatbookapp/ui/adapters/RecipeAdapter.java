@@ -41,10 +41,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         holder.tvAuthor.setText(recipe.getAuthor().getLogin());
         holder.tvForks.setText(recipe.getForks().toString());
 
-//        Glide
-//                .with(inflater.getContext())
-//                .load(recipe.getImage())
-//                .into(holder.image);
+        Glide
+                .with(inflater.getContext())
+                .load(recipe.getImage())
+                .into(holder.image);
     }
 
     @Override
