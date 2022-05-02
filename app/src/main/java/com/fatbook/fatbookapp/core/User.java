@@ -18,15 +18,15 @@ public class User implements Serializable {
 
     private String login;
 
-    private Date birthday;
+    private String birthday;
 
     private String bio;
-
-    private Date regDate;
 
     private Role role;
 
     private String image;
+
+//    private Date regDate;
 
 //    private List<Recipe> recipes;
 

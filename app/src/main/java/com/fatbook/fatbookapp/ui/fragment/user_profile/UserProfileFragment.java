@@ -1,6 +1,5 @@
 package com.fatbook.fatbookapp.ui.fragment.user_profile;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -8,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +19,6 @@ import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class UserProfileFragment extends Fragment {
 
@@ -42,11 +36,13 @@ public class UserProfileFragment extends Fragment {
         View root = binding.getRoot();
         setupMenu();
 
-        user = new User (1339L, "Tatyana Mayakovskaya", "hewix", null,
+        user = new User (1339L, "Tatyana Mayakovskaya", "hewix", "15 June",
                 "Gradle – является отличным выбором в качестве систем сборки проектов. Подтверждением тому является то, что его используют разработчики таких известных проектов, как Spring и Hibernate. " +
                         "Выше были рассмотрены лишь самые базовые вещи. За ними скрыт миллион особенностей и возможностей, которые появляются 123456",
-                null, Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album");
+                Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album");
+
         fillUserProfile();
+        editMode(false);
 
         return root;
     }
@@ -55,6 +51,7 @@ public class UserProfileFragment extends Fragment {
         binding.toolbarUserProfile.setTitle(user.getLogin());
         binding.textViewProfileFullName.setText(user.getName());
         binding.textViewProfileBio.setText(user.getBio());
+        binding.textViewProfileBirthday.append(user.getBirthday());
         Glide
                 .with(getLayoutInflater().getContext())
                 .load(user.getImage())
@@ -86,20 +83,43 @@ public class UserProfileFragment extends Fragment {
                 Snackbar.make(binding.getRoot(), "Edit", Snackbar.LENGTH_SHORT)
                         .setAnchorView(getActivity().findViewById(R.id.nav_view)).show();
                 changeMenuItemsVisibility(false, true, true);
+                editMode(true);
                 return true;
             case R.id.menu_user_profile_save:
                 Snackbar.make(binding.getRoot(), "Saved", Snackbar.LENGTH_SHORT)
                         .setAnchorView(getActivity().findViewById(R.id.nav_view)).show();
                 confirmEdit();
+                editMode(false);
+                changeUserData();
                 return true;
             case R.id.menu_user_profile_cancel:
                 Snackbar.make(binding.getRoot(), "End edit", Snackbar.LENGTH_SHORT)
                         .setAnchorView(getActivity().findViewById(R.id.nav_view)).show();
                 cancelEdit();
+                editMode(false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void editMode(boolean allow) {
+        if (allow) {
+            binding.textViewProfileFullName.setEnabled(true);
+            binding.textViewProfileBirthday.setEnabled(true);
+            binding.textViewProfileBio.setEnabled(true);
+        }
+        else {
+            binding.textViewProfileFullName.setEnabled(false);
+            binding.textViewProfileBirthday.setEnabled(false);
+            binding.textViewProfileBio.setEnabled(false);
+        }
+    }
+
+    private void changeUserData() {
+        user.setName(binding.textViewProfileFullName.getText().toString());
+        user.setBirthday(binding.textViewProfileBirthday.getText().toString());
+        user.setBio(binding.textViewProfileBio.getText().toString());
     }
 
     private void confirmEdit() {
