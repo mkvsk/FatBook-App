@@ -6,7 +6,7 @@
     android:paddingTop="10dp">
 
     <TextView
-        android:id="@+id/textView_existing_ingredients"
+        android:id="@+id/editText_dialog_add_ingredient"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         app:layout_constraintLeft_toLeftOf="parent"

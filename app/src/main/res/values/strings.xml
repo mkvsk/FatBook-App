@@ -77,6 +77,7 @@
     <string name="title_full_recipe_instruction">Recipe:</string>
     <string name="text_full_recipe_instruction">1)Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at neque et neque malesuada ultrices sit amet nec lectus. Proin scelerisque feugiat tincidunt. Suspendisse vel.</string>
     <string name="text_potatocorp_suggestion">If you liked this recipe, don\'t forget to thank the author. Press on fork</string>
+
     ///rv recipe view ingredient
     <string name="title_recipe_view_ingredient">Ingredient</string>
 
@@ -86,5 +87,9 @@
     <string name="nav_add_recipe">Add recipe</string>
     <string name="nav_bookmarks">Bookmarks</string>
     <string name="nav_user_profile">Profile</string>
+
+    ///dialog_add_ingredient
+    <string name="hint_dialog_add_ingredient">Suggest ingredient</string>
+    <string name="title_dialog_add_ingredient">Add ingredient:</string>
 
 </resources>

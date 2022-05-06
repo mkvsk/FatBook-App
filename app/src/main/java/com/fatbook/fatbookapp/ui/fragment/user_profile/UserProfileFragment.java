@@ -18,6 +18,7 @@ import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 public class UserProfileFragment extends Fragment {

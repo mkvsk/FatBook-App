@@ -47,7 +47,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         final TextView tvName;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.textView_existing_ingredients);
+            tvName = itemView.findViewById(R.id.editText_dialog_add_ingredient);
         }
     }
 }
