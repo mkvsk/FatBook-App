@@ -209,13 +209,23 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:translationZ="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="@id/editText_recipe_add_description"
-                app:layout_constraintRight_toRightOf="@id/editText_recipe_add_description"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editText_recipe_add_description" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/imageView_recipe_add_kuzya_bgr"
+        android:src="@drawable/kuzya_eating"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:rotationY="180"
+        android:elevation="-1dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

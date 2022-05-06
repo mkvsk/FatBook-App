@@ -64,4 +64,14 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <ImageView
+        android:id="@+id/imageView_bookmarks_kuzya_bgr"
+        android:src="@drawable/kuzya_bookmarks"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:elevation="-1dp"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

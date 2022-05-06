@@ -66,4 +66,14 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <ImageView
+        android:id="@+id/imageView_feed_kuzya_bgr"
+        android:src="@drawable/kuzya_welcome"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:rotationY="180"
+        android:elevation="-1dp"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
