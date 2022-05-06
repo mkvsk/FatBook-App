@@ -50,7 +50,12 @@ public class FeedFragment extends Fragment {
 
         RecyclerView recyclerView = binding.rvFeed;
 
-        RecipeAdapter adapter = new RecipeAdapter(binding.getRoot().getContext(), recipes);
+        RecipeAdapter adapter = new RecipeAdapter(binding.getRoot().getContext(), recipes, new RecipeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                System.out.println();
+            }
+        });
 
         recyclerView.setAdapter(adapter);
 

@@ -108,6 +108,7 @@
         android:translationZ="4dp"/>
 
     <ImageView
+        android:tag="nofav"
         android:id="@+id/imageView_rv_card_recipe_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -119,8 +120,9 @@
         android:translationZ="4dp"/>
 
     <ImageView
+        android:tag="nofork"
         android:id="@+id/imageView_rv_card_recipe_fork"
-        android:layout_width="wrap_content"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="@id/imageView_rv_card_recipe_fav"
         app:layout_constraintLeft_toLeftOf="@id/imageView_rv_card_recipe_fav"

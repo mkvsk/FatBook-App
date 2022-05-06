@@ -37,7 +37,7 @@ public class UserProfileFragment extends Fragment {
         View root = binding.getRoot();
         setupMenu();
 
-        user = new User (1339L, "Tatyana Mayakovskaya", "hewix", "15 June",
+        user = new User(1339L, "Tatyana Mayakovskaya", "hewix", "15 June",
                 "Gradle – является отличным выбором в качестве систем сборки проектов. Подтверждением тому является то, что его используют разработчики таких известных проектов, как Spring и Hibernate. " +
                         "Выше были рассмотрены лишь самые базовые вещи. За ними скрыт миллион особенностей и возможностей, которые появляются 123456",
                 Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album");
@@ -52,7 +52,8 @@ public class UserProfileFragment extends Fragment {
         binding.toolbarUserProfile.setTitle(user.getLogin());
         binding.textViewProfileFullName.setText(user.getName());
         binding.textViewProfileBio.setText(user.getBio());
-        binding.textViewProfileBirthday.append(user.getBirthday());
+        String birthday = getString(R.string.text_birthday) + user.getBirthday();
+        binding.textViewProfileBirthday.setText(birthday);
         Glide
                 .with(getLayoutInflater().getContext())
                 .load(user.getImage())
@@ -98,6 +99,7 @@ public class UserProfileFragment extends Fragment {
                         .setAnchorView(getActivity().findViewById(R.id.nav_view)).show();
                 cancelEdit();
                 editMode(false);
+                revertUserData();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -105,16 +107,13 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void editMode(boolean allow) {
-        if (allow) {
-            binding.textViewProfileFullName.setEnabled(true);
-            binding.textViewProfileBirthday.setEnabled(true);
-            binding.textViewProfileBio.setEnabled(true);
-        }
-        else {
-            binding.textViewProfileFullName.setEnabled(false);
-            binding.textViewProfileBirthday.setEnabled(false);
-            binding.textViewProfileBio.setEnabled(false);
-        }
+        binding.textViewProfileFullName.setEnabled(allow);
+        binding.textViewProfileBirthday.setEnabled(allow);
+        binding.textViewProfileBio.setEnabled(allow);
+    }
+
+    private void revertUserData() {
+       fillUserProfile();
     }
 
     private void changeUserData() {
