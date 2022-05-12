@@ -18,7 +18,7 @@ public class User implements Serializable {
 
     private String login;
 
-    private String birthday;
+    private Date birthday;
 
     private String bio;
 
@@ -26,7 +26,7 @@ public class User implements Serializable {
 
     private String image;
 
-//    private Date regDate;
+    private Date regDate;
 
 //    private List<Recipe> recipes;
 

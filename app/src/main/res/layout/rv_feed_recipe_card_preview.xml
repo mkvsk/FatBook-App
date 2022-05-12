@@ -28,7 +28,7 @@
         android:layout_height="120dp"
         android:src="@drawable/cookies"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -131,11 +131,12 @@
         android:layout_marginTop="30dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_feed"
+            android:id="@+id/rv_user_recipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/textView_profile_recipes_title"
             android:paddingTop="15dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/rv_profile_my_recipes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
