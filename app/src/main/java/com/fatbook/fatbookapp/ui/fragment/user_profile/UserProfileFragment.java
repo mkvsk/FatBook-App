@@ -26,7 +26,6 @@ public class UserProfileFragment extends Fragment {
     private FragmentUserProfileBinding binding;
     private User user;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
