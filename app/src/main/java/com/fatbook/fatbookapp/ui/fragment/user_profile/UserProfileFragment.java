@@ -12,14 +12,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fatbook.fatbookapp.R;
+import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
+import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class UserProfileFragment extends Fragment {
 
@@ -148,6 +155,36 @@ public class UserProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        List<Recipe> recipes = new ArrayList<>();
+
+        getRecipeList(recipes);
+
+        RecyclerView recyclerView = binding.rvUserRecipe;
+
+        RecipeAdapter adapter = new RecipeAdapter(binding.getRoot().getContext(), recipes, new RecipeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                System.out.println();
+            }
+        });
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void getRecipeList(List<Recipe> recipes) {
+        recipes.add(new Recipe(1L, "PotatoChips", "qqqqq", user, Collections.emptyList(),
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339));
+        recipes.add(new Recipe(2L, "Potato", "qqqqq", user, Collections.emptyList(),
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345));
+        recipes.add(new Recipe(13L, "fried PotatoChips", "qqqqq", user, Collections.emptyList(),
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----1.jpg", 0));
+        recipes.add(new Recipe(11L, "creamy Potato", "sssss", user, Collections.emptyList(),
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8));
+        recipes.add(new Recipe(1L, "Potatoes with kotletki", "asasasasasas", user, Collections.emptyList(),
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----6.jpg", 133349));
+        recipes.add(new Recipe(1L, "Potato so smetanka", "kkkkk", user, Collections.emptyList(),
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----4.jpg", 324));
     }
 
     @Override

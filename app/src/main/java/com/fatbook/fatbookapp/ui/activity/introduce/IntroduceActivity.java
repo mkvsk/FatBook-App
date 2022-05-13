@@ -8,6 +8,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.databinding.ActivityIntroduceBinding;
 
 public class IntroduceActivity extends AppCompatActivity {

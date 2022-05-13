@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
@@ -43,6 +44,16 @@ public class IngredientsFragment extends Fragment {
 
         binding = FragmentIngredientsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        binding.swipeRefreshBookmarks.setColorSchemeColors(
+                getResources().getColor(R.color.color_pink_a200));
+        binding.swipeRefreshBookmarks.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(binding.getRoot().getContext(), "refreshed", Toast.LENGTH_SHORT).show();
+                binding.swipeRefreshBookmarks.setRefreshing(false);
+            }
+        });
 
         return root;
     }

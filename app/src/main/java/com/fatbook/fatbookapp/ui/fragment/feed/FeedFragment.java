@@ -5,12 +5,15 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
@@ -33,6 +36,16 @@ public class FeedFragment extends Fragment {
 
         binding = FragmentFeedBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        binding.swipeRefreshBookmarks.setColorSchemeColors(
+                getResources().getColor(R.color.color_pink_a200));
+        binding.swipeRefreshBookmarks.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(binding.getRoot().getContext(), "refreshed", Toast.LENGTH_SHORT).show();
+                binding.swipeRefreshBookmarks.setRefreshing(false);
+            }
+        });
 
         return root;
     }
