@@ -7,6 +7,17 @@
     android:background="@color/color_blue_grey_50"
     tools:context=".ui.fragment.feed.FeedFragment">
 
+    <ImageView
+        android:id="@+id/imageView_feed_kuzya_bgr"
+        android:src="@drawable/kuzya_welcome"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:rotationY="180"
+        android:elevation="-1dp"/>
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_feed"
         android:layout_width="match_parent"
@@ -50,12 +61,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView_feed"
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/swipe_refresh_bookmarks"
         android:layout_marginBottom="50dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_feed"
@@ -63,18 +75,10 @@
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:paddingTop="15dp"
+            android:clipToPadding="false"
             tools:listitem="@layout/rv_feed_recipe_card_preview" />
 
-    </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <ImageView
-        android:id="@+id/imageView_feed_kuzya_bgr"
-        android:src="@drawable/kuzya_welcome"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.4"
-        android:rotationY="180"
-        android:elevation="-1dp"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

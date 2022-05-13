@@ -5,7 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
+    android:orientation="vertical"
     tools:context=".ui.fragment.bookmarks.BookmarksFragment">
+
+
+
+    <ImageView
+        android:id="@+id/imageView_bookmarks_kuzya_bgr"
+        android:src="@drawable/kuzya_bookmarks"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:elevation="-1dp"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_user_profile"
@@ -44,34 +57,30 @@
             android:hint="@string/hint_search_recipe_feed"
             android:lines="1"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="@color/color_blue_grey_600"
             android:textSize="16sp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView_bookmarks"
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:id="@+id/swipe_refresh_bookmarks"
+        android:layout_marginBottom="50dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_bookmarks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/rv_feed_recipe_card_preview" />
 
-    </androidx.core.widget.NestedScrollView>
-
-    <ImageView
-        android:id="@+id/imageView_bookmarks_kuzya_bgr"
-        android:src="@drawable/kuzya_bookmarks"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.4"
-        android:elevation="-1dp"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
