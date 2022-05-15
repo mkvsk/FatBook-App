@@ -17,7 +17,7 @@ import java.util.List;
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
-    private final List<Ingredient> list;
+    private List<Ingredient> list;
 
     public IngredientAdapter(Context context, List<Ingredient> list) {
         this.list = list;
@@ -36,6 +36,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         Ingredient ingredient = list.get(position);
         holder.tvName.setText(ingredient.getName());
 
+    }
+
+    public void setData(List<Ingredient> list) {
+        this.list = list;
     }
 
     @Override

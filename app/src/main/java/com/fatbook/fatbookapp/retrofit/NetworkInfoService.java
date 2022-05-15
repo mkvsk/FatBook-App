@@ -1,6 +1,9 @@
 package com.fatbook.fatbookapp.retrofit;
 
+import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.User;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -39,5 +42,16 @@ public interface NetworkInfoService {
 
     @GET("user/check-available-login")
     Call<Void> checkAvailableLogin(@Query(value = "login") String login);
+
+    /**
+     *
+     * @param ingredient
+     *
+     */
+    @POST("ingredient/add")
+    Call<Void> addIngredient(@Body Ingredient ingredient);
+
+    @GET("ingredient/get-all")
+    Call<List<Ingredient>> getAllIngredients();
 
 }

@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivityMainBinding;
+import com.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.UserUtils;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private RecipeViewModel recipeViewModel;
 
     private UserViewModel userViewModel;
+
+    private IngredientViewModel ingredientViewModel;
 
     private NavController navController;
 
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         recipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
 
         loadUser();
 //        loadSplash();
