@@ -1,17 +1,22 @@
 package com.fatbook.fatbookapp.ui.activity.skip_additional_info;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.fatbook.fatbookapp.MainActivity;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivitySkipAdditionalInfoBinding;
+import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.UserUtils;
 
 public class SkipAdditionalInfoActivity extends AppCompatActivity {
 
     private ActivitySkipAdditionalInfoBinding binding;
+
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,18 +25,22 @@ public class SkipAdditionalInfoActivity extends AppCompatActivity {
         binding = ActivitySkipAdditionalInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SkipAdditionalInfoViewModel viewModel = new ViewModelProvider(this).get(SkipAdditionalInfoViewModel.class);
+        user = (User) getIntent().getSerializableExtra(UserUtils.USER);
 
-        User user = (User) getIntent().getSerializableExtra(UserUtils.USER);
-
-        binding.buttonSkipAddSkip.setOnClickListener(view -> {
-            viewModel.skipAddInfo(binding.getRoot(), user);
-            finish();
+        binding.buttonSkip.setOnClickListener(view -> {
+            navigateToMainActivity(false);
         });
 
-        binding.buttonSkipAddFill.setOnClickListener(view -> {
-            viewModel.fillAddInfo(binding.getRoot(), user);
-            finish();
+        binding.buttonFill.setOnClickListener(view -> {
+           navigateToMainActivity(true);
         });
+    }
+
+    private void navigateToMainActivity(boolean fill) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(UserUtils.USER, user);
+        intent.putExtra(UserUtils.FILL_ADDITIONAL_INFO, fill);
+        startActivity(intent);
+        finish();
     }
 }

@@ -1,4 +1,4 @@
-package com.fatbook.fatbookapp.ui.fragment.feed;
+package com.fatbook.fatbookapp.ui.fragment;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -7,54 +7,50 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentFeedBinding;
+import com.fatbook.fatbookapp.ui.OnRecipeClickListener;
+import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FeedFragment extends Fragment {
+public class FeedFragment extends Fragment implements OnRecipeClickListener {
 
     private FragmentFeedBinding binding;
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    private List<Recipe> recipes;
 
-        FeedViewModel viewModel = new ViewModelProvider(this).get(FeedViewModel.class);
-
-        binding = FragmentFeedBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        binding.swipeRefreshBookmarks.setColorSchemeColors(
-                getResources().getColor(R.color.color_pink_a200));
-        binding.swipeRefreshBookmarks.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Toast.makeText(binding.getRoot().getContext(), "refreshed", Toast.LENGTH_SHORT).show();
-                binding.swipeRefreshBookmarks.setRefreshing(false);
-            }
-        });
-
-        return root;
-    }
+    private RecipeViewModel recipeViewModel;
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<Recipe> recipes = new ArrayList<>();
+        recipeViewModel = new ViewModelProvider(getActivity()).get(RecipeViewModel.class);
+
+
+        binding.swipeRefreshBookmarks.setColorSchemeColors(
+                getResources().getColor(R.color.color_pink_a200));
+
+        binding.swipeRefreshBookmarks.setOnRefreshListener(() -> {
+            Toast.makeText(binding.getRoot().getContext(), "refreshed", Toast.LENGTH_SHORT).show();
+            binding.swipeRefreshBookmarks.setRefreshing(false);
+        });
+
+        recipes = new ArrayList<>();
 
         getRecipeList(recipes);
         getRecipeList(recipes);
@@ -63,23 +59,10 @@ public class FeedFragment extends Fragment {
 
         RecyclerView recyclerView = binding.rvFeed;
 
-        RecipeAdapter adapter = new RecipeAdapter(binding.getRoot().getContext(), recipes, new RecipeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                System.out.println();
-            }
-        });
+        RecipeAdapter adapter = new RecipeAdapter(binding.getRoot().getContext(), recipes);
+        adapter.setClickListener(this);
 
         recyclerView.setAdapter(adapter);
-
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener((view1, i, keyEvent) -> {
-            if (i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                getActivity().finish();
-            }
-            return false;
-        });
     }
 
     private void getRecipeList(List<Recipe> recipes) {
@@ -101,8 +84,33 @@ public class FeedFragment extends Fragment {
     }
 
     @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+
+        binding = FragmentFeedBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onRecipeClick(int position) {
+        Recipe recipe = recipes.get(position);
+        recipeViewModel.selectRecipe(recipe);
+        NavHostFragment.findNavController(this).navigate(R.id.navigation_view_recipe);
+    }
+
+    @Override
+    public void onBookmarksClick(int position, boolean add) {
+        //TODO api
+    }
+
+    @Override
+    public void onForkClicked(int position, boolean fork) {
+        //TODO api
     }
 }

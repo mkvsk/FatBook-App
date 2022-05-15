@@ -1,28 +1,23 @@
-package com.fatbook.fatbookapp.ui.fragment.ingredients;
+package com.fatbook.fatbookapp.ui.fragment;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.databinding.FragmentIngredientsBinding;
+import com.fatbook.fatbookapp.ui.viewmodel.IngredientsViewModel;
 import com.fatbook.fatbookapp.ui.adapters.IngredientAdapter;
 
 import org.apache.commons.lang3.StringUtils;
@@ -43,19 +38,16 @@ public class IngredientsFragment extends Fragment {
         IngredientsViewModel viewModel = new ViewModelProvider(this).get(IngredientsViewModel.class);
 
         binding = FragmentIngredientsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
 
         binding.swipeRefreshBookmarks.setColorSchemeColors(
                 getResources().getColor(R.color.color_pink_a200));
-        binding.swipeRefreshBookmarks.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Toast.makeText(binding.getRoot().getContext(), "refreshed", Toast.LENGTH_SHORT).show();
-                binding.swipeRefreshBookmarks.setRefreshing(false);
-            }
+
+        binding.swipeRefreshBookmarks.setOnRefreshListener(() -> {
+            Toast.makeText(binding.getRoot().getContext(), "refreshed", Toast.LENGTH_SHORT).show();
+            binding.swipeRefreshBookmarks.setRefreshing(false);
         });
 
-        return root;
+        return binding.getRoot();
     }
 
     @Override
@@ -78,24 +70,16 @@ public class IngredientsFragment extends Fragment {
 
             alert.setView(container);
 
-            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    String name = editTextName.getText().toString();
-                    if (StringUtils.isNotEmpty(name)) {
-                        ingredientToAdd = new Ingredient();
-                        ingredientToAdd.setName(name);
-                        //TODO call api POST new ingredient
-                    }
-                    Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
+            alert.setPositiveButton("OK", (dialogInterface, i) -> {
+                String name = editTextName.getText().toString();
+                if (StringUtils.isNotEmpty(name)) {
+                    ingredientToAdd = new Ingredient();
+                    ingredientToAdd.setName(name);
+                    //TODO call #API POST new ingredient
                 }
+                Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
             });
-            alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                }
-            });
+            alert.setNegativeButton("CANCEL", (dialogInterface, i) -> dialogInterface.cancel());
             alert.show();
         });
 

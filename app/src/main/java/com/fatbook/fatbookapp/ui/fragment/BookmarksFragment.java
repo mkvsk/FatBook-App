@@ -1,4 +1,4 @@
-package com.fatbook.fatbookapp.ui.fragment.bookmarks;
+package com.fatbook.fatbookapp.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,8 +22,7 @@ import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentBookmarksBinding;
-import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
-import com.google.android.material.snackbar.Snackbar;
+import com.fatbook.fatbookapp.ui.adapters.BookmarkAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,22 +36,15 @@ public class BookmarksFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        BookmarksViewModel viewModel = new ViewModelProvider(this).get(BookmarksViewModel.class);
-
         binding = FragmentBookmarksBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
         binding.swipeRefreshBookmarks.setColorSchemeColors(
                 getResources().getColor(R.color.color_pink_a200));
-        binding.swipeRefreshBookmarks.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Toast.makeText(binding.getRoot().getContext(), "refreshed", Toast.LENGTH_SHORT).show();
-                binding.swipeRefreshBookmarks.setRefreshing(false);
-            }
+        binding.swipeRefreshBookmarks.setOnRefreshListener(() -> {
+            Toast.makeText(binding.getRoot().getContext(), "refreshed", Toast.LENGTH_SHORT).show();
+            binding.swipeRefreshBookmarks.setRefreshing(false);
         });
 
-        return root;
+        return binding.getRoot();
     }
 
     @Override
@@ -68,12 +60,7 @@ public class BookmarksFragment extends Fragment {
 
         RecyclerView recyclerView = binding.rvBookmarks;
 
-        RecipeAdapter adapter = new RecipeAdapter(binding.getRoot().getContext(), recipes, new RecipeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                System.out.println();
-            }
-        });
+        BookmarkAdapter adapter = new BookmarkAdapter(binding.getRoot().getContext(), recipes);
 
         recyclerView.setAdapter(adapter);
     }

@@ -92,4 +92,6 @@
     <string name="hint_dialog_add_ingredient">Suggest ingredient</string>
     <string name="title_dialog_add_ingredient">Add ingredient:</string>
 
+    <string name="title_view_recipe">View recipe</string>
+
 </resources>

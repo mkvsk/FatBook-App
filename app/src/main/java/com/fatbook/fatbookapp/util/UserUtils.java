@@ -16,6 +16,8 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class UserUtils {
 
+    public static final String FILL_ADDITIONAL_INFO = "fill_additional_info";
+
     public static final String USER = "user";
 
     private static String imageURL = "";

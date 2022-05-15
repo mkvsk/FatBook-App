@@ -108,19 +108,19 @@
         android:translationZ="4dp"/>
 
     <ImageView
-        android:tag="nofav"
+        android:tag="tag_not_added_to_bookmarks"
         android:id="@+id/imageView_rv_card_recipe_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/imageView_rv_card_recipe_photo"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:src="@drawable/icon_add_fav_grey"
         android:elevation="6dp"
         android:translationZ="4dp"/>
 
     <ImageView
-        android:tag="nofork"
+        android:tag="tag_not_forked"
         android:id="@+id/imageView_rv_card_recipe_fork"
         android:layout_width="25dp"
         android:layout_height="wrap_content"

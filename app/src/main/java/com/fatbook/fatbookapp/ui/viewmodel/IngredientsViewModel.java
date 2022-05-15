@@ -1,4 +1,4 @@
-package com.fatbook.fatbookapp.ui.fragment.user_profile;
+package com.fatbook.fatbookapp.ui.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.Map;
 
-public class UserProfileViewModel extends ViewModel {
+public class IngredientsViewModel extends ViewModel {
 
     private final MutableLiveData<Map<String, Object>> mMap;
 
-    public UserProfileViewModel() {
+    public IngredientsViewModel(){
         mMap = new MutableLiveData<>();
         fillData(mMap);
     }
@@ -22,4 +22,5 @@ public class UserProfileViewModel extends ViewModel {
     public LiveData<Map<String, Object>> getMap() {
         return mMap;
     }
+
 }

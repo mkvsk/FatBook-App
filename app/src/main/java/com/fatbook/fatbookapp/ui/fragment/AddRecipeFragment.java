@@ -1,4 +1,4 @@
-package com.fatbook.fatbookapp.ui.fragment.add_recipe;
+package com.fatbook.fatbookapp.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,11 +18,8 @@ public class AddRecipeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        AddRecipeViewModel viewModel = new ViewModelProvider(this).get(AddRecipeViewModel.class);
-
         binding = FragmentRecipeAddBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        return root;
+        return binding.getRoot();
     }
 
     @Override

@@ -7,31 +7,37 @@
 
     <fragment
         android:id="@+id/navigation_feed"
-        android:name="com.fatbook.fatbookapp.ui.fragment.feed.FeedFragment"
+        android:name="com.fatbook.fatbookapp.ui.fragment.FeedFragment"
         android:label="@string/title_feed"
         tools:layout="@layout/fragment_feed" />
 
     <fragment
         android:id="@+id/navigation_ingredients"
-        android:name="com.fatbook.fatbookapp.ui.fragment.ingredients.IngredientsFragment"
+        android:name="com.fatbook.fatbookapp.ui.fragment.IngredientsFragment"
         android:label="@string/title_add_recipe"
         tools:layout="@layout/fragment_ingredients" />
 
     <fragment
         android:id="@+id/navigation_add_recipe"
-        android:name="com.fatbook.fatbookapp.ui.fragment.add_recipe.AddRecipeFragment"
+        android:name="com.fatbook.fatbookapp.ui.fragment.AddRecipeFragment"
         android:label="@string/title_add_recipe"
         tools:layout="@layout/fragment_recipe_add" />
 
     <fragment
         android:id="@+id/navigation_bookmarks"
-        android:name="com.fatbook.fatbookapp.ui.fragment.bookmarks.BookmarksFragment"
+        android:name="com.fatbook.fatbookapp.ui.fragment.BookmarksFragment"
         android:label="@string/title_feed"
         tools:layout="@layout/fragment_bookmarks" />
 
     <fragment
         android:id="@+id/navigation_user_profile"
-        android:name="com.fatbook.fatbookapp.ui.fragment.user_profile.UserProfileFragment"
+        android:name="com.fatbook.fatbookapp.ui.fragment.UserProfileFragment"
         android:label="@string/title_user_profile"
         tools:layout="@layout/fragment_user_profile" />
+
+    <fragment
+        android:id="@+id/navigation_view_recipe"
+        android:name="com.fatbook.fatbookapp.ui.fragment.ViewRecipeFragment"
+        android:label="@string/title_view_recipe"
+        tools:layout="@layout/fragment_recipe_view" />
 </navigation>

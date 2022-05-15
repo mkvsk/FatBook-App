@@ -1,4 +1,4 @@
-package com.fatbook.fatbookapp.ui.fragment.user_profile;
+package com.fatbook.fatbookapp.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,10 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavHostController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -20,8 +24,8 @@ import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
-import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.fatbook.fatbookapp.ui.adapters.UserRecipeAdapter;
+import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -31,16 +35,17 @@ import java.util.List;
 public class UserProfileFragment extends Fragment {
 
     private FragmentUserProfileBinding binding;
+
     private User user;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    private UserViewModel userViewModel;
 
-        UserProfileViewModel viewModel =
-                new ViewModelProvider(this).get(UserProfileViewModel.class);
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        binding = FragmentUserProfileBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        userViewModel = new ViewModelProvider(getActivity()).get(UserViewModel.class);
+
         setupMenu();
 
         user = new User(1339L, "Tatyana Mayakovskaya", "hewix", null,
@@ -48,10 +53,16 @@ public class UserProfileFragment extends Fragment {
                         "Выше были рассмотрены лишь самые базовые вещи. За ними скрыт миллион особенностей и возможностей, которые появляются 123456",
                 Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album", null);
 
+//        user = userViewModel.getUser().getValue();
+
         fillUserProfile();
         editMode(false);
 
-        return root;
+        List<Recipe> recipes = new ArrayList<>();
+        getRecipeList(recipes);
+        RecyclerView recyclerView = binding.rvUserRecipe;
+        UserRecipeAdapter adapter = new UserRecipeAdapter(binding.getRoot().getContext(), recipes);
+        recyclerView.setAdapter(adapter);
     }
 
     private void fillUserProfile() {
@@ -119,7 +130,7 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void revertUserData() {
-       fillUserProfile();
+        fillUserProfile();
     }
 
     private void changeUserData() {
@@ -152,25 +163,7 @@ public class UserProfileFragment extends Fragment {
         binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_cancel).setVisible(cancel);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-        List<Recipe> recipes = new ArrayList<>();
-
-        getRecipeList(recipes);
-
-        RecyclerView recyclerView = binding.rvUserRecipe;
-
-        RecipeAdapter adapter = new RecipeAdapter(binding.getRoot().getContext(), recipes, new RecipeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                System.out.println();
-            }
-        });
-
-        recyclerView.setAdapter(adapter);
-    }
 
     private void getRecipeList(List<Recipe> recipes) {
         recipes.add(new Recipe(1L, "PotatoChips", "qqqqq", user, Collections.emptyList(),
@@ -191,5 +184,12 @@ public class UserProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+
+        binding = FragmentUserProfileBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 }

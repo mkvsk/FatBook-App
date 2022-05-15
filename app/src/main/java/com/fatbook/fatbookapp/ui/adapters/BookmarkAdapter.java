@@ -30,7 +30,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.fragment_bookmarks, parent, false);
+        View view = inflater.inflate(R.layout.rv_feed_recipe_card_preview, parent, false);
         return new ViewHolder(view);
     }
 
