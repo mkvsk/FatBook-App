@@ -70,8 +70,8 @@
     <Button
         android:id="@+id/button_fill"
         style="@style/pinkButton"
-        android:layout_marginTop="10dp"
         android:text="@string/text_button_yeah_go_skip_add"
+        android:layout_marginTop="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ImageView_skip_add_kuzya_talks" />

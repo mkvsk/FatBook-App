@@ -10,6 +10,9 @@
     <string name="tagline_fatbook">get your forks ready</string>
     <string name="tag_copyright">PotatoCorpⒸ2022</string>
 
+    <string name="hint_password">Password</string>
+    <string name="text_dialog_password">Set the password for the account. \n Just do not forget it!</string>
+
     ///introduce
     <string name="title_login_introduce">LOGIN</string>
     <string name="title_fatbook_introduce">FatBook</string>
