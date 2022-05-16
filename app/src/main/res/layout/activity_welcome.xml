@@ -45,37 +45,33 @@
         android:paddingBottom="20dp" />
 
     <Button
-        android:id="@+id/button_login_log_in_with_google"
+        android:id="@+id/button_register"
         style="@style/pinkButton"
-        android:text="@string/title_button_login_googleplay"
+        android:text="Register"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView_login_catChef" />
+
+    <Button
+        android:id="@+id/button_log_in"
+        android:text="@string/title_button_login_googleplay"
+        style="@style/greyButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_register" />
 
     <TextView
         android:id="@+id/textView_login_tagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
         android:text="@string/tagline_fatbook"
         android:textColor="@color/color_blue_grey_200"
+        android:layout_marginBottom="23dp"
         android:textSize="14sp"
-        android:fontFamily="@font/roboto_regular"
+        app:layout_constraintBottom_toTopOf="@+id/textView_login_copyright"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_login_log_in_with_google"
-        android:layout_marginTop="23dp" />
-
-    <ImageView
-        android:id="@+id/imageView_login_google_play"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:elevation="10dp"
-        android:contentDescription="@string/title_button_login_googleplay"
-        app:layout_constraintBottom_toBottomOf="@id/button_login_log_in_with_google"
-        app:layout_constraintLeft_toLeftOf="@id/button_login_log_in_with_google"
-        app:layout_constraintTop_toTopOf="@id/button_login_log_in_with_google"
-        android:layout_marginStart="24dp"
-        app:srcCompat="@drawable/icon_googleplay" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/textView_login_copyright"

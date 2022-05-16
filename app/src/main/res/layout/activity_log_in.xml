@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_blue_grey_50"
+    tools:context=".ui.activity.login.LoginActivity">
+
+    <TextView
+        android:id="@+id/textView_login_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_light"
+        android:paddingTop="88dp"
+        android:text="@string/title_welcome_to"
+        android:textColor="@color/color_blue_grey_600"
+        android:textSize="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_login_app_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
+        android:paddingBottom="60dp"
+        android:text="@string/title_fatbook_introduce"
+        android:textColor="@color/color_pink_a200"
+        android:textSize="45sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_login_welcome" />
+
+    <ImageView
+        android:id="@+id/imageView_login_catChef"
+        android:layout_width="191dp"
+        android:layout_height="149dp"
+        android:contentDescription="@null"
+        android:paddingBottom="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_login_app_label"
+        app:srcCompat="@drawable/kuzya_welcome" />
+
+    <EditText
+        android:id="@+id/editText_login"
+        style="@style/pinkButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView_login_catChef" />
+
+    <EditText
+        android:id="@+id/editText_password"
+        style="@style/greyButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_login" />
+
+    <Button
+        android:id="@+id/button_log_in"
+        android:text="@string/title_button_login_googleplay"
+        style="@style/pinkButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editText_password" />
+
+    <TextView
+        android:id="@+id/textView_login_tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/tagline_fatbook"
+        android:textColor="@color/color_blue_grey_200"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_login_copyright"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView_login_google_play"-->
+    <!--        android:layout_width="24dp"-->
+    <!--        android:layout_height="24dp"-->
+    <!--        android:elevation="10dp"-->
+    <!--        android:contentDescription="@string/title_button_login_googleplay"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/button_login_log_in_with_google"-->
+    <!--        app:layout_constraintLeft_toLeftOf="@id/button_login_log_in_with_google"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/button_login_log_in_with_google"-->
+    <!--        android:layout_marginStart="24dp"-->
+    <!--        app:srcCompat="@drawable/icon_googleplay" />-->
+
+    <TextView
+        android:id="@+id/textView_login_copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tag_copyright"
+        android:textColor="@color/color_blue_grey_200"
+        android:textSize="11sp"
+        android:fontFamily="@font/roboto_regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="10dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
