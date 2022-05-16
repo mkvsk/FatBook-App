@@ -1,12 +1,20 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,13 +33,20 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import lombok.extern.apachecommons.CommonsLog;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@Log
 public class IngredientsFragment extends Fragment {
 
     private FragmentIngredientsBinding binding;
@@ -71,7 +86,7 @@ public class IngredientsFragment extends Fragment {
 
         ingredientViewModel.getRefreshFailed().observe(getViewLifecycleOwner(), bool -> {
             if (bool) {
-                Toast.makeText(binding.getRoot().getContext(), "failed to load data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(binding.getRoot().getContext(), getResources().getString(R.string.ingredient_load_failed), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -96,14 +111,12 @@ public class IngredientsFragment extends Fragment {
             RetrofitFactory.infoServiceClient().addIngredient(ingredientToAdd).enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                    if (response.code() == HttpsURLConnection.HTTP_CREATED) {
-                        Toast.makeText(getContext(), "Created", Toast.LENGTH_SHORT).show();
-                    }
+                    log.log(Level.INFO, "ingredient save: SUCCESS");
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                    Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                    log.log(Level.INFO, "ingredient save: FAILED");
                 }
             });
         } catch (Exception e) {
@@ -119,26 +132,28 @@ public class IngredientsFragment extends Fragment {
                     public void onResponse(@NonNull Call<List<Ingredient>> call, @NonNull Response<List<Ingredient>> response) {
                         ingredientViewModel.setIngredientList(response.body());
                         ingredientViewModel.setRefreshFailed(false);
+                        log.log(Level.INFO, "ingredient list load: SUCCESS");
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<List<Ingredient>> call, @NonNull Throwable t) {
                         ingredientViewModel.setIngredientList(loadFakeData());
                         ingredientViewModel.setRefreshFailed(true);
+                        log.log(Level.INFO, "ingredient list load: FAILED");
                     }
                 });
             } catch (Exception e) {
+                log.log(Level.INFO, "ingredient list load: FAILED " + e);
                 e.printStackTrace();
             }
         }).start();
     }
 
     private void configureAlertDialog() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-        alert.setTitle("Add ingredient");
-
         final EditText editTextName = new EditText(getContext());
         editTextName.setSingleLine();
+        editTextName.setHintTextColor(getResources().getColor(R.color.color_blue_grey_200));
+        editTextName.setTextColor(getResources().getColor(R.color.color_blue_grey_600));
 
         FrameLayout container = new FrameLayout(getContext());
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -147,20 +162,33 @@ public class IngredientsFragment extends Fragment {
         editTextName.setLayoutParams(params);
         container.addView(editTextName);
 
-        alert.setView(container);
+        View title = LayoutInflater.from(getContext()).inflate(R.layout.alert_dialog_title, null);
 
-        alert.setPositiveButton("OK", (dialogInterface, i) -> {
-            String name = editTextName.getText().toString();
-            if (StringUtils.isNotEmpty(name)) {
-                ingredientToAdd = new Ingredient();
-                ingredientToAdd.setName(name);
-                saveIngredient();
-            } else {
-                //TODO продумать логику если ничего не введено
-            }
+        final AlertDialog dialog = new AlertDialog.Builder(getContext())
+                .setView(container)
+                .setCustomTitle(title)
+                .setPositiveButton(getResources().getString(R.string.alert_dialog_btn_ok), null)
+                .setNegativeButton(getResources().getString(R.string.alert_dialog_btn_cancel), (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                })
+                .create();
+
+        dialog.setOnShowListener(dialogInterface -> {
+            Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(view -> {
+                String name = editTextName.getText().toString();
+                if (StringUtils.isNotEmpty(name) && name.length() >= 3) {
+                    ingredientToAdd = new Ingredient();
+                    ingredientToAdd.setName(name);
+                    saveIngredient();
+                    dialog.dismiss();
+                } else {
+                    editTextName.setText(StringUtils.EMPTY);
+                    editTextName.setHint(getResources().getString(R.string.alert_dialog_suggest_ingredient));
+                }
+            });
         });
-        alert.setNegativeButton("CANCEL", (dialogInterface, i) -> dialogInterface.cancel());
-        alert.show();
+        dialog.show();
     }
 
     private List<Ingredient> loadFakeData() {

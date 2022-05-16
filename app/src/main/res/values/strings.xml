@@ -97,4 +97,13 @@
 
     <string name="title_view_recipe">View recipe</string>
 
+    //alert dialog
+    <string name="alert_dialog_btn_ok">OK</string>
+    <string name="alert_dialog_btn_cancel">Cancel</string>
+    <string name="alert_dialog_suggest_ingredient">Suggest another ingredient</string>
+
+    //ingredient
+    <string name="ingredient_load_failed">Connection error</string>
+
+
 </resources>

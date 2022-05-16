@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.fatbook.fatbookapp.core.Ingredient;
-import com.fatbook.fatbookapp.core.Recipe;
 
 import java.util.List;
 
