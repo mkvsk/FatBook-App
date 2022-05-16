@@ -46,16 +46,8 @@
 
     <Button
         android:id="@+id/button_login_log_in_with_google"
-        android:layout_width="234dp"
-        android:layout_height="45dp"
-        android:backgroundTint="@color/color_pink_a200"
-        android:elevation="4dp"
-        android:translationZ="6dp"
-        android:stateListAnimator="@null"
+        style="@style/pinkButton"
         android:text="@string/title_button_login_googleplay"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:fontFamily="@font/roboto_light"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView_login_catChef" />

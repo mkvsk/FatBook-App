@@ -69,36 +69,18 @@
 
     <Button
         android:id="@+id/button_fill"
-        android:layout_width="234dp"
-        android:layout_height="45dp"
+        style="@style/pinkButton"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/color_pink_a200"
-        android:elevation="4dp"
-        android:fontFamily="@font/roboto_light"
-        android:stateListAnimator="@null"
         android:text="@string/text_button_yeah_go_skip_add"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:translationZ="2dp"
-        android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ImageView_skip_add_kuzya_talks" />
 
     <Button
         android:id="@+id/button_skip"
-        android:layout_width="234dp"
-        android:layout_height="45dp"
+        style="@style/greyButton"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/color_blue_grey_200"
-        android:elevation="4dp"
-        android:fontFamily="@font/roboto_light"
-        android:stateListAnimator="@null"
         android:text="@string/text_button_no_later_skip_add"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:translationZ="2dp"
-        android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_fill" />

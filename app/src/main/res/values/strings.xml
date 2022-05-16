@@ -75,7 +75,7 @@
     <string name="full_recipe_forks_quantity">123456</string>
     <string name="title_full_recipe_ingredients">Ingredients:</string>
     <string name="title_full_recipe_instruction">Recipe:</string>
-    <string name="text_full_recipe_instruction">1)Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at neque et neque malesuada ultrices sit amet nec lectus. Proin scelerisque feugiat tincidunt. Suspendisse vel.</string>
+    <string name="text_full_recipe_instruction">1)Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at neque et neque malesuada ultrices sit amet nec lectus. Proin scelerisque feugiat tincidunt. Suspendisse vel. 2)Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at neque et neque malesuada ultrices sit amet nec lectus. Proin scelerisque feugiat tincidunt. Suspendisse vel.</string>
     <string name="text_potatocorp_suggestion">If you liked this recipe, don\'t forget to thank the author. Press on fork</string>
 
     ///rv recipe view ingredient
