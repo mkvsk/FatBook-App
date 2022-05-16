@@ -35,10 +35,9 @@
 
     <ImageView
         android:id="@+id/imageView_login_catChef"
-        android:layout_width="191dp"
-        android:layout_height="149dp"
+        android:layout_width="180dp"
+        android:layout_height="150dp"
         android:contentDescription="@null"
-        android:paddingBottom="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_login_app_label"
@@ -46,14 +45,36 @@
 
     <EditText
         android:id="@+id/editText_login"
-        style="@style/pinkButton"
+        android:layout_width="234dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="25dp"
+        android:autofillHints="@null"
+        android:background="@drawable/round_corner_edittext"
+        android:fontFamily="@font/roboto_regular"
+        android:hint="@string/hint_username_introduce"
+        android:inputType="text"
+        android:maxLength="16"
+        android:textAlignment="center"
+        android:textColor="@color/color_grey_900"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView_login_catChef" />
 
     <EditText
         android:id="@+id/editText_password"
-        style="@style/greyButton"
+        android:layout_width="234dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:autofillHints="@null"
+        android:background="@drawable/round_corner_edittext"
+        android:fontFamily="@font/roboto_regular"
+        android:hint="@string/hint_password"
+        android:inputType="text"
+        android:maxLength="16"
+        android:textAlignment="center"
+        android:textColor="@color/color_grey_900"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editText_login" />
@@ -62,6 +83,7 @@
         android:id="@+id/button_log_in"
         android:text="@string/title_button_login_googleplay"
         style="@style/pinkButton"
+        android:layout_marginTop="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editText_password" />

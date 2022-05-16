@@ -10,7 +10,8 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView_introduce"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_gravity="center"
@@ -93,19 +94,17 @@
                 <EditText
                     android:id="@+id/editText_introduce_username"
                     android:layout_width="234dp"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="15dp"
                     android:autofillHints="@null"
                     android:background="@drawable/round_corner_edittext"
-                    android:elevation="6dp"
-                    android:fontFamily="@font/roboto_light"
+                    android:fontFamily="@font/roboto_regular"
                     android:hint="@string/hint_username_introduce"
                     android:inputType="text"
                     android:maxLength="16"
                     android:textAlignment="center"
                     android:textColor="@color/color_grey_900"
                     android:textSize="16sp"
-                    android:translationZ="4dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
