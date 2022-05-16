@@ -2,6 +2,7 @@ package com.fatbook.fatbookapp.core;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,9 +29,11 @@ public class User implements Serializable {
 
     private Date regDate;
 
-//    private List<Recipe> recipes;
+    private List<Recipe> recipes;
 
-//    private List<Recipe> recipesForked;
+    private List<Recipe> recipesForked;
 
-//    private List<Recipe> recipesSaved;
+    private List<Recipe> recipesSaved;
+
+    private List<Recipe> forkedRecipes;
 }

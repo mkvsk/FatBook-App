@@ -67,7 +67,8 @@ public class BookmarksFragment extends Fragment {
 
     private void getRecipeList(List<Recipe> recipes) {
         User user = new User(1L, "qwe", "Kuzya", null, "Kuzya the cat",
-                Role.USER, "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", null);
+                Role.USER, "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg",
+                null, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
         recipes.add(new Recipe(1L, "PotatoChips", "qqqqq", user, Collections.emptyList(),
                 "https://i.pinimg.com/564x/db/62/c6/db62c6b63a86c17cc6f95389c99ea2e7.jpg", 1339));

@@ -8,14 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.NavHostController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -51,7 +47,8 @@ public class UserProfileFragment extends Fragment {
         user = new User(1339L, "Tatyana Mayakovskaya", "hewix", null,
                 "Gradle – является отличным выбором в качестве систем сборки проектов. Подтверждением тому является то, что его используют разработчики таких известных проектов, как Spring и Hibernate. " +
                         "Выше были рассмотрены лишь самые базовые вещи. За ними скрыт миллион особенностей и возможностей, которые появляются 123456",
-                Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album", null);
+                Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album",
+                null, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
 //        user = userViewModel.getUser().getValue();
 
@@ -162,7 +159,6 @@ public class UserProfileFragment extends Fragment {
         binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_save).setVisible(save);
         binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_cancel).setVisible(cancel);
     }
-
 
 
     private void getRecipeList(List<Recipe> recipes) {

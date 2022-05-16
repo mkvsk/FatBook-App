@@ -20,7 +20,7 @@ public class Recipe implements Serializable {
 
     private User author;
 
-    private List<Ingredient> ingredients;
+    private List<RecipeIngredient> ingredients;
 
     private String image;
 

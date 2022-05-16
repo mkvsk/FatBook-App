@@ -15,7 +15,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
+import com.fatbook.fatbookapp.core.Ingredient;
+import com.fatbook.fatbookapp.core.IngredientUnit;
 import com.fatbook.fatbookapp.core.Recipe;
+import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentFeedBinding;
@@ -67,7 +70,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener {
 
     private void getRecipeList(List<Recipe> recipes) {
         User user = new User(1L, "qwe", "Moonya", null, "Kuzya the cat",
-                Role.USER, "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", null);
+                Role.USER, "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", null, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
         recipes.add(new Recipe(1L, "PotatoChips", "qqqqq", user, Collections.emptyList(),
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339));
