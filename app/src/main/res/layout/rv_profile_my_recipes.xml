@@ -77,19 +77,6 @@
         android:layout_marginTop="5dp"
         android:src="@drawable/rect_for_edittext"/>
 
-    <TextView
-        android:id="@+id/textView_rv_card_recipe_tags"
-        android:layout_width="205dp"
-        android:layout_height="wrap_content"
-        android:lines="2"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_rv_card_recipe_divider"
-        app:layout_constraintTop_toBottomOf="@id/imageView_rv_card_recipe_divider"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo"
-        android:text="@string/text_recipe_preview_tags"
-        android:textColor="@color/color_pink_a200"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="11sp"/>
-
     <ImageView
         android:id="@+id/imageView_rv_card_recipe_fav"
         android:layout_width="wrap_content"

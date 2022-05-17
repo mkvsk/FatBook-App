@@ -70,39 +70,6 @@
                 android:layout_marginEnd="25dp"/>
 
             <TextView
-                android:id="@+id/textView_recipe_add_categories_label"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/roboto_medium"
-                android:text="@string/title_add_recipe_category"
-                android:textColor="@color/color_blue_grey_600"
-                android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@id/editText_recipe_add_title"
-                app:layout_constraintTop_toBottomOf="@id/editText_recipe_add_title" />
-
-            <EditText
-                android:id="@+id/editText_recipe_add_categories"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/round_corner_rect_white"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="left"
-                android:hint="@string/hint_add_recipe_categories"
-                android:lines="2"
-                android:maxLines="3"
-                android:padding="11dp"
-                android:textAlignment="gravity"
-                android:textColor="@color/color_pink_a200"
-                android:textSize="12sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                app:layout_constraintLeft_toLeftOf="@id/textView_recipe_add_categories_label"
-                app:layout_constraintRight_toRightOf="@id/textView_recipe_add_categories_label"
-                app:layout_constraintTop_toBottomOf="@id/textView_recipe_add_categories_label" />
-
-            <TextView
                 android:id="@+id/textView_recipe_add_photo_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,7 +77,7 @@
                 android:text="@string/title_add_recipe_photo"
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/editText_recipe_add_categories"
+                app:layout_constraintTop_toBottomOf="@id/editText_recipe_add_title"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="30dp"
                 android:layout_marginStart="25dp" />
