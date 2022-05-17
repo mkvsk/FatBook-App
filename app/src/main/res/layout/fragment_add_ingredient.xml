@@ -56,6 +56,16 @@
             tools:listitem="@layout/rv_ingredient_to_recipe" />
 
         <View
+            android:id="@+id/view_0"
+            android:layout_width="match_parent"
+            android:background="@drawable/select_ingredient_bgr"
+            app:layout_constraintBottom_toTopOf="@id/view_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="50dp"/>
+
+        <View
+            android:id="@+id/view_1"
             android:layout_width="match_parent"
             android:background="@color/color_blue_grey_200"
             app:layout_constraintBottom_toBottomOf="parent"
