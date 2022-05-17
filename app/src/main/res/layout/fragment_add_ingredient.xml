@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_blue_grey_200"
+    android:background="@color/color_blue_grey_50"
     tools:context=".ui.fragment.RecipeAddIngredientFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -38,6 +38,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="55dp">
@@ -51,10 +52,34 @@
             android:paddingTop="10dp"
             android:paddingBottom="20dp"
             android:layout_marginBottom="220dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:ignore="MissingConstraints"
+            android:overScrollMode="never"
             tools:listitem="@layout/rv_ingredient_to_recipe" />
+
+<!--        <View-->
+<!--            android:id="@+id/view_1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:background="@drawable/rounded_corner"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:layout_height="220dp"-->
+<!--            android:elevation="2dp"-->
+<!--            android:translationZ="6dp"/>-->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/view_1"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardElevation="6dp"
+            app:cardCornerRadius="30dp"
+            android:background="@color/white"/>
 
         <TextView
             android:id="@+id/textView_selected_ingredient"
@@ -63,29 +88,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="select ingredient"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:fontFamily="@font/roboto_medium"
-            android:textColor="@color/white"
-            android:elevation="5dp"
+            android:textColor="@color/color_pink_a200"
             android:translationZ="6dp"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
-        <View
-            android:id="@+id/view_1"
-            android:layout_width="match_parent"
-            android:background="@color/color_blue_grey_200"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_height="220dp"/>
 
         <Button
             android:id="@+id/btn_add_ingredient_to_recipe"
             style="@style/pinkButton"
             android:text="@string/text_add"
             android:layout_marginBottom="65dp"
+            android:elevation="2dp"
+            android:translationZ="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
@@ -102,6 +119,7 @@
             android:textAlignment="center"
             android:textColor="@color/color_blue_grey_600"
             android:textSize="15sp"
+            android:translationZ="6dp"
             app:layout_constraintBottom_toTopOf="@id/btn_add_ingredient_to_recipe"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/picker_ingredient_unit" />
@@ -114,9 +132,11 @@
             android:fontFamily="@font/roboto_medium"
             android:textAlignment="center"
             android:textSize="15sp"
+            android:translationZ="6dp"
             app:layout_constraintBottom_toBottomOf="@id/editText_ingredient_quantity"
             app:layout_constraintLeft_toRightOf="@id/editText_ingredient_quantity"
             app:layout_constraintRight_toRightOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

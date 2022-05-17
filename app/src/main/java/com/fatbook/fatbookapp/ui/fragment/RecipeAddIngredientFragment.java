@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
+import com.fatbook.fatbookapp.core.IngredientUnit;
 import com.fatbook.fatbookapp.databinding.FragmentAddIngredientBinding;
 import com.fatbook.fatbookapp.ui.adapters.IngredientAdapter;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAddIngredientAdapter;
@@ -26,6 +28,8 @@ public class RecipeAddIngredientFragment extends Fragment {
     private FragmentAddIngredientBinding binding;
 
     private RecipeAddIngredientAdapter adapter;
+
+    String unitData[] = new String[]{"tbs", "tsp", "g", "pcs"};
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
