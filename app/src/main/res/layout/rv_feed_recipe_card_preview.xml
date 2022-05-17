@@ -94,7 +94,7 @@
 
     <ImageView
         android:tag="tag_not_added_to_bookmarks"
-        android:id="@+id/imageView_rv_card_recipe_fav"
+        android:id="@+id/imageView_rv_card_recipe_bookmarks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/imageView_rv_card_recipe_photo"
@@ -109,8 +109,8 @@
         android:id="@+id/imageView_rv_card_recipe_fork"
         android:layout_width="25dp"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="@id/imageView_rv_card_recipe_fav"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_rv_card_recipe_fav"
+        app:layout_constraintRight_toRightOf="@id/imageView_rv_card_recipe_bookmarks"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_rv_card_recipe_bookmarks"
         app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo"
         android:src="@drawable/icon_fork_grey"
         android:elevation="6dp"

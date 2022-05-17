@@ -27,6 +27,6 @@
         android:scaleType="fitXY"
         android:backgroundTint="@color/white"
         android:elevation="2dp"
-        android:translationZ="4dp"/>
+        android:translationZ="6dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

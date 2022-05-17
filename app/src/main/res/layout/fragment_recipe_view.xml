@@ -61,7 +61,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView_full_recipe_icon_add_to_fav"
+                android:tag="tag_not_added_to_bookmarks"
+                android:id="@+id/imageView_full_recipe_icon_bookmarks"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_margin="10dp"
@@ -82,7 +83,7 @@
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_card_bgr"
-                app:layout_constraintTop_toTopOf="@id/imageView_full_recipe_icon_add_to_fav" />
+                app:layout_constraintTop_toTopOf="@id/imageView_full_recipe_icon_bookmarks" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView_full_recipe_image"
@@ -123,14 +124,15 @@
                 app:layout_constraintLeft_toRightOf="@id/textView_full_recipe_by_label" />
 
             <ImageView
-                android:id="@+id/imageView_full_recipe_icon_fork"
+                android:tag="tag_not_forked"
+                android:id="@+id/imageView_full_recipe_fork"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginBottom="10dp"
                 android:src="@drawable/icon_fork_grey"
                 app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_card_bgr"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_icon_add_to_fav"
-                app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_icon_add_to_fav" />
+                app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_icon_bookmarks"
+                app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_icon_bookmarks" />
 
             <TextView
                 android:id="@+id/textView_full_recipe_forks_quantity"
@@ -140,8 +142,8 @@
                 android:text="@string/full_recipe_forks_quantity"
                 android:textColor="@color/color_blue_grey_200"
                 android:textSize="9sp"
-                app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_icon_fork"
-                app:layout_constraintRight_toLeftOf="@id/imageView_full_recipe_icon_fork" />
+                app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_fork"
+                app:layout_constraintRight_toLeftOf="@id/imageView_full_recipe_fork" />
 
             <TextView
                 android:id="@+id/textView_full_recipe_view_label"

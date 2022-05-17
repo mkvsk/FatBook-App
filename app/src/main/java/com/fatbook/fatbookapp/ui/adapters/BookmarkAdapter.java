@@ -67,7 +67,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
             tvAuthor = itemView.findViewById(R.id.textView_rv_card_recipe_author);
             tvForks = itemView.findViewById(R.id.textView_rv_card_recipe_forks_avg);
             image = itemView.findViewById(R.id.imageView_rv_card_recipe_photo);
-            bookmarks = itemView.findViewById(R.id.imageView_rv_card_recipe_fav);
+            bookmarks = itemView.findViewById(R.id.imageView_rv_card_recipe_bookmarks);
             fork = itemView.findViewById(R.id.imageView_rv_card_recipe_fork);
             btnRecipe = itemView.findViewById(R.id.rv_card_recipe_bgr);
         }
