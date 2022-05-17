@@ -21,14 +21,14 @@
         android:elevation="-1dp"/>
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout_user_profile"
+        android:id="@+id/appBarLayout_add_ingredient_to_recipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_blue_grey_50"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_bookmarks"
+            android:id="@+id/toolbar_add_ingredient_to_recipe"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/color_blue_grey_200"
@@ -49,7 +49,7 @@
         </com.google.android.material.appbar.MaterialToolbar>
 
         <EditText
-            android:id="@+id/editText_search_bookmarks"
+            android:id="@+id/editText_search_ingredient_to_recipe"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/round_feed_search"
