@@ -66,7 +66,9 @@
     ///rv add recipe ingredients
     <string name="hint_rv_add_new_recipe_ingredient">Milk</string>
     <string name="hint_rv_add_new_recipe_ingredient_quantity">100 ml</string>
-    
+    <string name="title_add_ingredients_and_qtt">Add ingredient</string>
+    <string name="text_add">add</string>
+    <string name="hint_qqt">ingredient quantity</string>
     ///rv add new ingredient
     <string name="text_existing_ingredient">Existing Ingredient</string>
 

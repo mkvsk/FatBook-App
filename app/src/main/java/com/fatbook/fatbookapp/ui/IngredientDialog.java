@@ -17,7 +17,7 @@ public class IngredientDialog {
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_ingredient_quantity);
+        //dialog.setContentView(R.layout.dialog_ingredient_quantity);
 
 
     }
