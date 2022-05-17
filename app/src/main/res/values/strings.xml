@@ -69,6 +69,8 @@
     <string name="title_add_ingredients_and_qtt">Add ingredient</string>
     <string name="text_add">add</string>
     <string name="hint_qqt">ingredient quantity</string>
+    <string name="text_select_ingredient">Select ingredient</string>
+
     ///rv add new ingredient
     <string name="text_existing_ingredient">Existing Ingredient</string>
 
