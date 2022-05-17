@@ -40,4 +40,10 @@
         android:name="com.fatbook.fatbookapp.ui.fragment.ViewRecipeFragment"
         android:label="@string/title_view_recipe"
         tools:layout="@layout/fragment_recipe_view" />
+
+    <fragment
+        android:id="@+id/navigation_add_ingredient"
+        android:name="com.fatbook.fatbookapp.ui.fragment.RecipeAddIngredientFragment"
+        android:label="@string/title_add_ingredients_and_qtt"
+        tools:layout="@layout/fragment_add_ingredient" />
 </navigation>

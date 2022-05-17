@@ -4,16 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
+import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
-import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.databinding.FragmentAddIngredientBinding;
-import com.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding;
-import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,14 @@ public class RecipeAddIngredientFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        MaterialToolbar toolbar = view.findViewById(R.id.toolbar_add_ingredient_to_recipe);
+        toolbar.setNavigationOnClickListener(view1 -> {
+            NavHostFragment.findNavController(this).navigateUp();
+        });
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        binding.btnAddIngredientToRecipe.setOnClickListener(view1 -> {
+            NavHostFragment.findNavController(this).navigateUp();
+        });
     }
 
     @Override

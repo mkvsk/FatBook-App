@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavHostController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
@@ -63,7 +65,6 @@ public class AddRecipeFragment extends Fragment {
         recipeViewModel.setIngredients(new ArrayList<>());
 
         binding.buttonRecipeAddSave.setOnClickListener(_view -> {
-
             recipe.setName(binding.editTextRecipeAddTitle.getText().toString());
             recipe.setDescription(binding.editTextRecipeAddDescription.getText().toString());
             recipe.setAuthor(userViewModel.getUser().getValue());
@@ -73,7 +74,7 @@ public class AddRecipeFragment extends Fragment {
         });
 
         binding.buttonRecipeAddIngredientAdd.setOnClickListener(_view -> {
-//            recipeViewModel.addIngredient();
+            NavHostFragment.findNavController(this).navigate(R.id.navigation_add_ingredient);
         });
 
         setupAdapter();
