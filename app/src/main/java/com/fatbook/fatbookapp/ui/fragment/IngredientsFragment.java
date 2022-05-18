@@ -67,7 +67,7 @@ public class IngredientsFragment extends Fragment {
             configureAlertDialog();
         });
 
-        ingredientViewModel = new ViewModelProvider(getActivity()).get(IngredientViewModel.class);
+        ingredientViewModel = new ViewModelProvider(requireActivity()).get(IngredientViewModel.class);
 
         ingredientList = new ArrayList<>();
         setupAdapter();

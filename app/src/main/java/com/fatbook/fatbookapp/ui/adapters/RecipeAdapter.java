@@ -57,47 +57,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 .with(inflater.getContext())
                 .load(recipe.getImage())
                 .into(holder.image);
-
-        holder.bookmarks.setOnClickListener(_view -> {
-            String tag = (String) holder.bookmarks.getTag();
-            switch (tag) {
-                case RecipeUtils.TAG_ADDED_TO_BOOKMARKS:
-                    holder.bookmarks.setImageResource(R.drawable.icon_add_fav_grey);
-                    holder.bookmarks.setTag(RecipeUtils.TAG_NOT_ADDED_TO_BOOKMARKS);
-                    listener.onBookmarksClick(position, false);
-
-                    Toast.makeText(_view.getContext(), "removed from favourites", Toast.LENGTH_SHORT).show();
-                    break;
-                case RecipeUtils.TAG_NOT_ADDED_TO_BOOKMARKS:
-                    holder.bookmarks.setImageResource(R.drawable.icon_add_fav_pink);
-                    holder.bookmarks.setTag(RecipeUtils.TAG_ADDED_TO_BOOKMARKS);
-                    listener.onBookmarksClick(position, true);
-
-                    Toast.makeText(_view.getContext(), "added to favourites", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-
-        });
-
-        holder.fork.setOnClickListener(_view -> {
-            String tag = (String) holder.fork.getTag();
-            switch (tag) {
-                case RecipeUtils.TAG_FORKED:
-                    holder.fork.setImageResource(R.drawable.icon_fork_grey);
-                    holder.fork.setTag(RecipeUtils.TAG_NOT_FORKED);
-                    listener.onForkClicked(position, false);
-
-                    Toast.makeText(_view.getContext(), "no forked FAK U", Toast.LENGTH_SHORT).show();
-                    break;
-                case RecipeUtils.TAG_NOT_FORKED:
-                    holder.fork.setImageResource(R.drawable.icon_fork_pink);
-                    holder.fork.setTag(RecipeUtils.TAG_FORKED);
-                    listener.onForkClicked(position, true);
-
-                    Toast.makeText(_view.getContext(), "forked", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        });
     }
 
     @Override
@@ -125,6 +84,47 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             btnRecipe = itemView.findViewById(R.id.rv_card_recipe_bgr);
 
             btnRecipe.setOnClickListener(view -> listener.onRecipeClick(getAdapterPosition()));
+
+            bookmarks.setOnClickListener(_view -> {
+                String tag = (String) bookmarks.getTag();
+                switch (tag) {
+                    case RecipeUtils.TAG_ADDED_TO_BOOKMARKS:
+                        bookmarks.setImageResource(R.drawable.icon_bookmarks_unchecked);
+                        bookmarks.setTag(RecipeUtils.TAG_NOT_ADDED_TO_BOOKMARKS);
+                        listener.onBookmarksClick(getAdapterPosition(), false);
+
+                        Toast.makeText(_view.getContext(), "removed from favourites", Toast.LENGTH_SHORT).show();
+                        break;
+                    case RecipeUtils.TAG_NOT_ADDED_TO_BOOKMARKS:
+                        bookmarks.setImageResource(R.drawable.icon_bookmarks_checked);
+                        bookmarks.setTag(RecipeUtils.TAG_ADDED_TO_BOOKMARKS);
+                        listener.onBookmarksClick(getAdapterPosition(), true);
+
+                        Toast.makeText(_view.getContext(), "added to favourites", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+            });
+
+            fork.setOnClickListener(_view -> {
+                String tag = (String) fork.getTag();
+                switch (tag) {
+                    case RecipeUtils.TAG_FORKED:
+                        fork.setImageResource(R.drawable.icon_fork_unchecked);
+                        fork.setTag(RecipeUtils.TAG_NOT_FORKED);
+                        listener.onForkClicked(getAdapterPosition(), false);
+
+                        Toast.makeText(_view.getContext(), "no forked FAK U", Toast.LENGTH_SHORT).show();
+                        break;
+                    case RecipeUtils.TAG_NOT_FORKED:
+                        fork.setImageResource(R.drawable.icon_fork_checked);
+                        fork.setTag(RecipeUtils.TAG_FORKED);
+                        listener.onForkClicked(getAdapterPosition(), true);
+
+                        Toast.makeText(_view.getContext(), "forked", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            });
         }
     }
 }

@@ -42,7 +42,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recipeViewModel = new ViewModelProvider(getActivity()).get(RecipeViewModel.class);
+        recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
 
 
         binding.swipeRefreshBookmarks.setColorSchemeColors(
@@ -70,7 +70,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener {
 
     private void getRecipeList(List<Recipe> recipes) {
         User user = new User(1L, "qwe", "Moonya", null, "Kuzya the cat",
-                Role.USER, "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", null, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
+                Role.USER, "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", null, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
         recipes.add(new Recipe(1L, "PotatoChips", "qqqqq", user, Collections.emptyList(),
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339));

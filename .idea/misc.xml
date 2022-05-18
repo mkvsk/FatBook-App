@@ -6,6 +6,7 @@
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/ic_feed_search.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_add_fav_grey.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_add_fav_pink.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_add_recipe_photo.xml" value="0.4185" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_feed_search.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_plus.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_search.xml" value="0.2985" />
@@ -29,6 +30,7 @@
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/content_fragment_feed.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_add_ingredient.xml" value="0.5541666666666667" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_add_recipe.xml" value="0.6208112874779541" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_add_recipe222.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_bookmarks.xml" value="0.36666666666666664" />

@@ -59,8 +59,8 @@ public class AddRecipeFragment extends Fragment {
         recipe = new Recipe();
         ingredients = new ArrayList<>();
 
-        userViewModel = new ViewModelProvider(getActivity()).get(UserViewModel.class);
-        recipeViewModel = new ViewModelProvider(getActivity()).get(RecipeViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
 
         recipeViewModel.setIngredients(new ArrayList<>());
 

@@ -66,7 +66,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/icon_add_fav_grey"
+                android:src="@drawable/icon_bookmarks_unchecked"
                 app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_card_bgr"
                 app:layout_constraintTop_toTopOf="@id/imageView_full_recipe_card_bgr" />
 
@@ -129,7 +129,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/icon_fork_grey"
+                android:src="@drawable/icon_fork_unchecked"
                 app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_card_bgr"
                 app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_icon_bookmarks"
                 app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_icon_bookmarks" />
@@ -158,7 +158,7 @@
                 app:layout_constraintTop_toBottomOf="@id/imageView_full_recipe_card_bgr" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_recipe_view_ingredient_collection"
+                android:id="@+id/rv_recipe_view_ingredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
@@ -180,7 +180,7 @@
                 android:textColor="@color/color_blue_grey_200"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="@id/textView_full_recipe_view_label"
-                app:layout_constraintTop_toBottomOf="@id/rv_recipe_view_ingredient_collection" />
+                app:layout_constraintTop_toBottomOf="@id/rv_recipe_view_ingredients" />
 
             <TextView
                 android:id="@+id/textView_full_recipe_description"

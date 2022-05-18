@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
-import com.fatbook.fatbookapp.core.IngredientUnit;
+import com.fatbook.fatbookapp.ui.OnAddIngredientItemClickListener;
 
 import java.util.List;
 
@@ -22,16 +22,17 @@ public class RecipeAddIngredientAdapter  extends RecyclerView.Adapter<RecipeAddI
     private final LayoutInflater inflater;
     private List<Ingredient> list;
 
-    private Context context;
-    private int lastClickedPosition;
-    private int selectedItem;
+    private int selectedItem = -1;
+
+    private OnAddIngredientItemClickListener listener;
 
     public RecipeAddIngredientAdapter(Context context, List<Ingredient> list) {
-        this.context = context;
-        selectedItem = -1;
-
         this.list = list;
         this.inflater = LayoutInflater.from(context);
+    }
+
+    public void setClickListener(OnAddIngredientItemClickListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -46,25 +47,10 @@ public class RecipeAddIngredientAdapter  extends RecyclerView.Adapter<RecipeAddI
         Ingredient ingredient = list.get(position);
         holder.tvIngredient.setText(ingredient.getName());
 
-        holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.white));
+        holder.cardView.setCardBackgroundColor(inflater.getContext().getResources().getColor(R.color.white));
         if (selectedItem == position) {
-            holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_lime_500));
+            holder.cardView.setCardBackgroundColor(inflater.getContext().getResources().getColor(R.color.color_lime_500));
         }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int previousItem = selectedItem;
-                selectedItem = position;
-
-               // lastClickedPosition = selectedItem;
-
-                notifyItemChanged(previousItem);
-                notifyItemChanged(position);
-            }
-        });
-
-       // holder.tvSelectedIngredient.setText();
     }
 
     @Override
@@ -75,12 +61,15 @@ public class RecipeAddIngredientAdapter  extends RecyclerView.Adapter<RecipeAddI
     public class ViewHolder extends RecyclerView.ViewHolder {
         final TextView tvIngredient;
         final CardView cardView;
-        final TextView tvSelectedIngredient;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvIngredient = itemView.findViewById(R.id.textView_ingredient_to_recipe);
             cardView = itemView.findViewById(R.id.rv_item_card);
-            tvSelectedIngredient = itemView.findViewById(R.id.textView_selected_ingredient);
+            itemView.setOnClickListener(view -> {
+                int previousItem = selectedItem;
+                selectedItem = getAdapterPosition();
+                listener.onIngredientClick(previousItem, selectedItem, list.get(getAdapterPosition()));
+            });
         }
     }
 }

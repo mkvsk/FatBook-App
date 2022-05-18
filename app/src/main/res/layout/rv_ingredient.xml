@@ -6,7 +6,7 @@
     android:paddingTop="10dp">
 
     <TextView
-        android:id="@+id/textView_ingredient_to_recipe"
+        android:id="@+id/textView_ingredients_name"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         app:layout_constraintLeft_toLeftOf="parent"

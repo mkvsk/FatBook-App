@@ -40,7 +40,7 @@ public class UserProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        userViewModel = new ViewModelProvider(getActivity()).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         setupMenu();
 
@@ -48,7 +48,7 @@ public class UserProfileFragment extends Fragment {
                 "Gradle – является отличным выбором в качестве систем сборки проектов. Подтверждением тому является то, что его используют разработчики таких известных проектов, как Spring и Hibernate. " +
                         "Выше были рассмотрены лишь самые базовые вещи. За ними скрыт миллион особенностей и возможностей, которые появляются 123456",
                 Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album",
-                null, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
+                null, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
 //        user = userViewModel.getUser().getValue();
 
@@ -97,20 +97,20 @@ public class UserProfileFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.menu_user_profile_edit:
                 Snackbar.make(binding.getRoot(), "Edit", Snackbar.LENGTH_SHORT)
-                        .setAnchorView(getActivity().findViewById(R.id.nav_view)).show();
+                        .setAnchorView(requireActivity().findViewById(R.id.nav_view)).show();
                 changeMenuItemsVisibility(false, true, true);
                 editMode(true);
                 return true;
             case R.id.menu_user_profile_save:
                 Snackbar.make(binding.getRoot(), "Saved", Snackbar.LENGTH_SHORT)
-                        .setAnchorView(getActivity().findViewById(R.id.nav_view)).show();
+                        .setAnchorView(requireActivity().findViewById(R.id.nav_view)).show();
                 confirmEdit();
                 editMode(false);
                 changeUserData();
                 return true;
             case R.id.menu_user_profile_cancel:
                 Snackbar.make(binding.getRoot(), "End edit", Snackbar.LENGTH_SHORT)
-                        .setAnchorView(getActivity().findViewById(R.id.nav_view)).show();
+                        .setAnchorView(requireActivity().findViewById(R.id.nav_view)).show();
                 cancelEdit();
                 editMode(false);
                 revertUserData();

@@ -5,32 +5,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.IngredientUnit;
+import com.fatbook.fatbookapp.core.Recipe;
+import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.databinding.FragmentAddIngredientBinding;
-import com.fatbook.fatbookapp.ui.adapters.IngredientAdapter;
+import com.fatbook.fatbookapp.ui.OnAddIngredientItemClickListener;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAddIngredientAdapter;
+import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeAddIngredientFragment extends Fragment {
+public class RecipeAddIngredientFragment extends Fragment implements OnAddIngredientItemClickListener {
 
     private FragmentAddIngredientBinding binding;
 
     private RecipeAddIngredientAdapter adapter;
 
-    String unitData[] = new String[]{"tbs", "tsp", "g", "pcs"};
+    private RecipeViewModel recipeViewModel;
 
+    private Ingredient selectedIngredient;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,15 +48,38 @@ public class RecipeAddIngredientFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
+
         MaterialToolbar toolbar = view.findViewById(R.id.toolbar_add_ingredient_to_recipe);
         toolbar.setNavigationOnClickListener(view1 -> {
             NavHostFragment.findNavController(this).navigateUp();
         });
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         binding.btnAddIngredientToRecipe.setOnClickListener(view1 -> {
-            NavHostFragment.findNavController(this).navigateUp();
+            if (StringUtils.isNotEmpty(binding.editTextIngredientQuantity.getText().toString())) {
+                RecipeIngredient recipeIngredient = new RecipeIngredient();
+                recipeIngredient.setIngredient(selectedIngredient);
+                recipeIngredient.setQuantity(Double.parseDouble(binding.editTextIngredientQuantity.getText().toString()));
+                recipeIngredient.setUnit(IngredientUnit.values()[binding.pickerIngredientUnit.getValue()]);
+            } else {
+                //TODO OBRABOTAT' 0wibka
+            }
         });
         setupAdapter();
+        setupUnitPicker();
+    }
+
+    private void setupUnitPicker() {
+        String[] unitData = new String[]{
+                IngredientUnit.GRAM.getDisplayName(),
+                IngredientUnit.TABLE_SPOON.getDisplayName(),
+                IngredientUnit.TEA_SPOON.getDisplayName(),
+                IngredientUnit.PCS.getDisplayName()
+        };
+        binding.pickerIngredientUnit.setMinValue(0);
+        binding.pickerIngredientUnit.setMaxValue(unitData.length - 1);
+        binding.pickerIngredientUnit.setDisplayedValues(unitData);
     }
 
     @Override
@@ -62,6 +91,7 @@ public class RecipeAddIngredientFragment extends Fragment {
     private void setupAdapter() {
         RecyclerView rv = binding.rvAddIngredientToRecipe;
         adapter = new RecipeAddIngredientAdapter(binding.getRoot().getContext(), loadFakeData());
+        adapter.setClickListener(this);
         rv.setAdapter(adapter);
     }
 
@@ -102,5 +132,13 @@ public class RecipeAddIngredientFragment extends Fragment {
         ingredients.add(new Ingredient(8L, "beans", "pppp", 98));
         ingredients.add(new Ingredient(9L, "broccoli", "rat", 28));
         ingredients.add(new Ingredient(10L, "cabbage", "swift", 56));
+    }
+
+    @Override
+    public void onIngredientClick(int previousItem, int selectedItem, Ingredient ingredient) {
+        selectedIngredient = ingredient;
+        binding.textViewSelectedIngredient.setText(ingredient.getName());
+        adapter.notifyItemChanged(previousItem);
+        adapter.notifyItemChanged(selectedItem);
     }
 }

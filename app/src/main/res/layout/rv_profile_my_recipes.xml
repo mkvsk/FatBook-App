@@ -84,7 +84,7 @@
         app:layout_constraintTop_toTopOf="@id/imageView_rv_card_recipe_photo"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="10dp"
-        android:src="@drawable/icon_add_fav_grey"
+        android:src="@drawable/icon_bookmarks_unchecked"
         android:visibility="invisible"/>
 
     <ImageView
@@ -94,7 +94,7 @@
         app:layout_constraintRight_toRightOf="@id/imageView_rv_card_recipe_bookmarks"
         app:layout_constraintLeft_toLeftOf="@id/imageView_rv_card_recipe_bookmarks"
         app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo"
-        android:src="@drawable/icon_fork_pink"/>
+        android:src="@drawable/icon_fork_checked"/>
 
     <TextView
         android:id="@+id/textView_rv_card_recipe_forks_avg"

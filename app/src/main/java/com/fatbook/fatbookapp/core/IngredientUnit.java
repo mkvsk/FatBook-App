@@ -6,9 +6,9 @@ import lombok.Data;
 @AllArgsConstructor
 public enum IngredientUnit {
 
+    GRAM("Gram", "Gram", "g"),
     TABLE_SPOON("Table spoon", "Table spoons", "tbs"),
     TEA_SPOON("Tea spoon", "Tea spoons", "tsp"),
-    GRAM("Gram", "Gram", "g"),
     PCS("Piece", "Pieces", "pcs");
 
     private final String singleNaming;
