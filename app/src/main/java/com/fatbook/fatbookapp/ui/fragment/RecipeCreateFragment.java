@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CreateRecipeFragment extends Fragment {
+public class RecipeCreateFragment extends Fragment {
 
     private FragmentRecipeCreateBinding binding;
 

@@ -25,7 +25,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.List;
 
-public class ViewRecipeFragment extends Fragment {
+public class RecipeViewFragment extends Fragment {
 
     private FragmentRecipeViewBinding binding;
 

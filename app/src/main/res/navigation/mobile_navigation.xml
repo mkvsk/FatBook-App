@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_add_recipe"
-        android:name="com.fatbook.fatbookapp.ui.fragment.CreateRecipeFragment"
+        android:name="com.fatbook.fatbookapp.ui.fragment.RecipeCreateFragment"
         android:label="@string/title_add_recipe"
         tools:layout="@layout/fragment_recipe_create" />
 
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/navigation_view_recipe"
-        android:name="com.fatbook.fatbookapp.ui.fragment.ViewRecipeFragment"
+        android:name="com.fatbook.fatbookapp.ui.fragment.RecipeViewFragment"
         android:label="@string/title_view_recipe"
         tools:layout="@layout/fragment_recipe_view" />
 
