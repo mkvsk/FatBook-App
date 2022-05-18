@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        recipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
+        loadUser();
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -46,11 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        recipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
 
-        loadUser();
+
 //        loadSplash();
     }
 

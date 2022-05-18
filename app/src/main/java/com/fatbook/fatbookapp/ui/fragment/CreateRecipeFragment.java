@@ -1,31 +1,20 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavHostController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
-import com.fatbook.fatbookapp.core.IngredientUnit;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
-import com.fatbook.fatbookapp.databinding.FragmentRecipeAddBinding;
+import com.fatbook.fatbookapp.databinding.FragmentRecipeCreateBinding;
 import com.fatbook.fatbookapp.ui.adapters.AddRecipeAdapter;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
@@ -34,9 +23,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AddRecipeFragment extends Fragment {
+public class CreateRecipeFragment extends Fragment {
 
-    private FragmentRecipeAddBinding binding;
+    private FragmentRecipeCreateBinding binding;
 
     private UserViewModel userViewModel;
 
@@ -49,7 +38,7 @@ public class AddRecipeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentRecipeAddBinding.inflate(inflater, container, false);
+        binding = FragmentRecipeCreateBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

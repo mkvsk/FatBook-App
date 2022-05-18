@@ -75,7 +75,8 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
                 IngredientUnit.GRAM.getDisplayName(),
                 IngredientUnit.TABLE_SPOON.getDisplayName(),
                 IngredientUnit.TEA_SPOON.getDisplayName(),
-                IngredientUnit.PCS.getDisplayName()
+                IngredientUnit.PCS.getDisplayName(),
+                IngredientUnit.ML.getDisplayName()
         };
         binding.pickerIngredientUnit.setMinValue(0);
         binding.pickerIngredientUnit.setMaxValue(unitData.length - 1);

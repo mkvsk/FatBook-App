@@ -94,7 +94,7 @@
         android:translationZ="4dp"/>
 
     <ImageView
-        android:tag="tag_not_added_to_bookmarks"
+        android:tag="tag_bookmarks_unchecked"
         android:id="@+id/imageView_rv_card_recipe_bookmarks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
         android:translationZ="4dp"/>
 
     <ImageView
-        android:tag="tag_not_forked"
+        android:tag="tag_fork_unchecked"
         android:id="@+id/imageView_rv_card_recipe_fork"
         android:layout_width="25dp"
         android:layout_height="wrap_content"

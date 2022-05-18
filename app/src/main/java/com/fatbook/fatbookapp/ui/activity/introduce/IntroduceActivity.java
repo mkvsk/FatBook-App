@@ -18,6 +18,9 @@ import com.fatbook.fatbookapp.ui.activity.skip_additional_info.SkipAdditionalInf
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.UserUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import okhttp3.internal.annotations.EverythingIsNonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,6 +98,9 @@ public class IntroduceActivity extends AppCompatActivity {
         User user = new User();
         user.setLogin(login);
         user.setRole(Role.USER);
+        user.setRecipes(new ArrayList<>());
+        user.setRecipesForked(new ArrayList<>());
+        user.setRecipesBookmarked(new ArrayList<>());
 //        user.setRegDate(new Date());
         intent.putExtra(UserUtils.USER, user);
         view.getContext().startActivity(intent);

@@ -44,13 +44,13 @@ public class UserProfileFragment extends Fragment {
 
         setupMenu();
 
-        user = new User(1339L, "Tatyana Mayakovskaya", "hewix", null,
-                "Gradle – является отличным выбором в качестве систем сборки проектов. Подтверждением тому является то, что его используют разработчики таких известных проектов, как Spring и Hibernate. " +
-                        "Выше были рассмотрены лишь самые базовые вещи. За ними скрыт миллион особенностей и возможностей, которые появляются 123456",
-                Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album",
-                null, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
+//        user = new User(1339L, "Tatyana Mayakovskaya", "hewix", null,
+//                "Gradle – является отличным выбором в качестве систем сборки проектов. Подтверждением тому является то, что его используют разработчики таких известных проектов, как Spring и Hibernate. " +
+//                        "Выше были рассмотрены лишь самые базовые вещи. За ними скрыт миллион особенностей и возможностей, которые появляются 123456",
+//                Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album",
+//                null, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
-//        user = userViewModel.getUser().getValue();
+        user = userViewModel.getUser().getValue();
 
         fillUserProfile();
         editMode(false);
@@ -63,20 +63,20 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void fillUserProfile() {
-        binding.toolbarUserProfile.setTitle(user.getLogin());
-        binding.textViewProfileFullName.setText(user.getName());
-        binding.textViewProfileBio.setText(user.getBio());
-        String birthday = getString(R.string.text_birthday) + user.getBirthday();
-        binding.textViewProfileBirthday.setText(birthday);
-        Glide
-                .with(getLayoutInflater().getContext())
-                .load(user.getImage())
-                .into(binding.imageViewProfilePhoto);
-
-        Glide
-                .with(getLayoutInflater().getContext())
-                .load(user.getImage())
-                .into(binding.imageViewUserProfilePhotoBgr);
+//        binding.toolbarUserProfile.setTitle(user.getLogin());
+//        binding.textViewProfileFullName.setText(user.getName());
+//        binding.textViewProfileBio.setText(user.getBio());
+//        String birthday = getString(R.string.text_birthday) + user.getBirthday();
+//        binding.textViewProfileBirthday.setText(birthday);
+//        Glide
+//                .with(getLayoutInflater().getContext())
+//                .load(user.getImage())
+//                .into(binding.imageViewProfilePhoto);
+//
+//        Glide
+//                .with(getLayoutInflater().getContext())
+//                .load(user.getImage())
+//                .into(binding.imageViewUserProfilePhotoBgr);
     }
 
     private void setupMenu() {

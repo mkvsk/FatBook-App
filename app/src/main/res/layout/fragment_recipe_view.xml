@@ -40,6 +40,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -51,7 +52,7 @@
             <ImageView
                 android:id="@+id/imageView_full_recipe_card_bgr"
                 android:layout_width="match_parent"
-                android:layout_height="430dp"
+                android:layout_height="440dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="25dp"
@@ -61,7 +62,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:tag="tag_not_added_to_bookmarks"
+                android:tag="tag_bookmarks_unchecked"
                 android:id="@+id/imageView_full_recipe_icon_bookmarks"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
@@ -125,7 +126,7 @@
                 app:layout_constraintLeft_toRightOf="@id/textView_full_recipe_by_label" />
 
             <ImageView
-                android:tag="tag_not_forked"
+                android:tag="tag_fork_unchecked"
                 android:id="@+id/imageView_full_recipe_fork"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
@@ -159,17 +160,16 @@
                 app:layout_constraintTop_toBottomOf="@id/imageView_full_recipe_card_bgr" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:overScrollMode="never"
                 android:id="@+id/rv_recipe_view_ingredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="25dp"
-                android:paddingEnd="25dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:clipToPadding="false"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textView_full_recipe_view_label"
-                tools:listitem="@layout/rv_recipe_view_ingredient" />
+                tools:listitem="@layout/rv_add_new_recipe_ingredients" />
 
             <TextView
                 android:id="@+id/textView_full_recipe_instruction_label"
@@ -184,6 +184,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rv_recipe_view_ingredients" />
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/textView_full_recipe_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

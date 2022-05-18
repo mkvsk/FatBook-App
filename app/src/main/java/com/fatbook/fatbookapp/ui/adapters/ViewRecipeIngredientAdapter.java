@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,7 @@ public class ViewRecipeIngredientAdapter extends RecyclerView.Adapter<ViewRecipe
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.rv_recipe_view_ingredient, parent, false);
+        View view = inflater.inflate(R.layout.rv_add_new_recipe_ingredients, parent, false);
         return new ViewHolder(view);
     }
 
@@ -36,8 +37,9 @@ public class ViewRecipeIngredientAdapter extends RecyclerView.Adapter<ViewRecipe
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RecipeIngredient ingredient = list.get(position);
         holder.name.setText(ingredient.getIngredient().getName());
-//        String quantityName = ingredient.getQuantity() + ingredient.getUnit().getDisplayName();
-//        holder.quantity.setText(quantityName);
+        String quantityName = ingredient.getQuantity() + " " + ingredient.getUnit().getDisplayName();
+        holder.quantity.setText(quantityName);
+//        holder.btnRemove.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -47,14 +49,14 @@ public class ViewRecipeIngredientAdapter extends RecyclerView.Adapter<ViewRecipe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final TextView name;
-//        final TextView quantity;
-//        final Button btnRemove;
+        final TextView quantity;
+        final ImageButton btnRemove;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.textView_recipe_view_ingredient);
-//            quantity = itemView.findViewById(R.id.editText_rv_add_recipe_ingredient_quantity);
-//            btnRemove = itemView.findViewById(R.id.btn_rv_add_recipe_ingredient_remove);
+            name = itemView.findViewById(R.id.textView_ingredient_in_recipe);
+            quantity = itemView.findViewById(R.id.textView_rv_add_recipe_ingredient_quantity);
+            btnRemove = itemView.findViewById(R.id.btn_rv_add_recipe_ingredient_remove);
 //            btnRemove.setOnClickListener(view -> {
 //                System.out.println();
 //            });

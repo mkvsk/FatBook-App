@@ -20,6 +20,7 @@ import com.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding;
 import com.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
+import com.fatbook.fatbookapp.util.RecipeUtils;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.List;
@@ -55,32 +56,43 @@ public class ViewRecipeFragment extends Fragment {
         loadData();
         showData();
 
-//        binding.imageViewFullRecipeIconBookmarks.setImageDrawable();
+        binding.imageViewFullRecipeFork.setOnClickListener(view1 -> {
+                    String tag = (String) binding.imageViewFullRecipeFork.getTag();
+                    switch (tag) {
+                        case RecipeUtils.TAG_FORK_CHECKED:
+                            toggleForks(false);
+                            user.getRecipesForked().remove(recipe);
+//                            listener.onForkClicked(position, false);
+                            break;
+                        case RecipeUtils.TAG_FORK_UNCHECKED:
+                            toggleForks(true);
+                            user.getRecipesForked().add(recipe);
+//                            listener.onForkClicked(position, true);
+                            break;
+                    }
+                }
+        );
 
-//        String tag = (String) holder.fork.getTag();
-//        switch (tag) {
-//            case RecipeUtils.TAG_FORKED:
-//                holder.fork.setImageResource(R.drawable.icon_fork_grey);
-//                holder.fork.setTag(RecipeUtils.TAG_NOT_FORKED);
-//                listener.onForkClicked(position, false);
-//
-//                Toast.makeText(_view.getContext(), "no forked FAK U", Toast.LENGTH_SHORT).show();
-//                break;
-//            case RecipeUtils.TAG_NOT_FORKED:
-//                holder.fork.setImageResource(R.drawable.icon_fork_pink);
-//                holder.fork.setTag(RecipeUtils.TAG_FORKED);
-//                listener.onForkClicked(position, true);
-//
-//                Toast.makeText(_view.getContext(), "forked", Toast.LENGTH_SHORT).show();
-//                break;
-//        }
-
+        binding.imageViewFullRecipeIconBookmarks.setOnClickListener(view1 -> {
+                    String tag = (String) binding.imageViewFullRecipeIconBookmarks.getTag();
+                    switch (tag) {
+                        case RecipeUtils.TAG_BOOKMARKS_CHECKED:
+                            toggleBookmarks(false);
+                            user.getRecipesBookmarked().remove(recipe);
+                            break;
+                        case RecipeUtils.TAB_BOOKMARKS_UNCHECKED:
+                            toggleBookmarks(true);
+                            user.getRecipesBookmarked().add(recipe);
+                            break;
+                    }
+                }
+        );
     }
 
     private void loadData() {
-        if (recipe != null) {
-            recipe = recipeViewModel.getSelectedRecipe().getValue();
-        } else {
+        recipe = recipeViewModel.getSelectedRecipe().getValue();
+        user = userViewModel.getUser().getValue();
+        if (recipe == null) {
             recipe = new Recipe();
         }
     }
@@ -106,19 +118,23 @@ public class ViewRecipeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void toggleBookmarks(boolean selected) {
-        if (selected) {
+    private void toggleBookmarks(boolean check) {
+        if (check) {
             binding.imageViewFullRecipeIconBookmarks.setImageResource(R.drawable.icon_bookmarks_checked);
+            binding.imageViewFullRecipeIconBookmarks.setTag(RecipeUtils.TAG_BOOKMARKS_CHECKED);
         } else {
             binding.imageViewFullRecipeIconBookmarks.setImageResource(R.drawable.icon_bookmarks_unchecked);
+            binding.imageViewFullRecipeIconBookmarks.setTag(RecipeUtils.TAB_BOOKMARKS_UNCHECKED);
         }
     }
 
     private void toggleForks(boolean selected) {
         if (selected) {
             binding.imageViewFullRecipeFork.setImageResource(R.drawable.icon_fork_checked);
+            binding.imageViewFullRecipeFork.setTag(RecipeUtils.TAG_FORK_CHECKED);
         } else {
             binding.imageViewFullRecipeFork.setImageResource(R.drawable.icon_fork_unchecked);
+            binding.imageViewFullRecipeFork.setTag(RecipeUtils.TAG_FORK_UNCHECKED);
         }
     }
 

@@ -88,16 +88,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             bookmarks.setOnClickListener(_view -> {
                 String tag = (String) bookmarks.getTag();
                 switch (tag) {
-                    case RecipeUtils.TAG_ADDED_TO_BOOKMARKS:
+                    case RecipeUtils.TAB_BOOKMARKS_UNCHECKED:
                         bookmarks.setImageResource(R.drawable.icon_bookmarks_unchecked);
-                        bookmarks.setTag(RecipeUtils.TAG_NOT_ADDED_TO_BOOKMARKS);
+                        bookmarks.setTag(RecipeUtils.TAG_BOOKMARKS_CHECKED);
                         listener.onBookmarksClick(getAdapterPosition(), false);
 
                         Toast.makeText(_view.getContext(), "removed from favourites", Toast.LENGTH_SHORT).show();
                         break;
-                    case RecipeUtils.TAG_NOT_ADDED_TO_BOOKMARKS:
+                    case RecipeUtils.TAG_BOOKMARKS_CHECKED:
                         bookmarks.setImageResource(R.drawable.icon_bookmarks_checked);
-                        bookmarks.setTag(RecipeUtils.TAG_ADDED_TO_BOOKMARKS);
+                        bookmarks.setTag(RecipeUtils.TAB_BOOKMARKS_UNCHECKED);
                         listener.onBookmarksClick(getAdapterPosition(), true);
 
                         Toast.makeText(_view.getContext(), "added to favourites", Toast.LENGTH_SHORT).show();
@@ -109,16 +109,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             fork.setOnClickListener(_view -> {
                 String tag = (String) fork.getTag();
                 switch (tag) {
-                    case RecipeUtils.TAG_FORKED:
+                    case RecipeUtils.TAG_FORK_CHECKED:
                         fork.setImageResource(R.drawable.icon_fork_unchecked);
-                        fork.setTag(RecipeUtils.TAG_NOT_FORKED);
+                        fork.setTag(RecipeUtils.TAG_FORK_UNCHECKED);
                         listener.onForkClicked(getAdapterPosition(), false);
 
                         Toast.makeText(_view.getContext(), "no forked FAK U", Toast.LENGTH_SHORT).show();
                         break;
-                    case RecipeUtils.TAG_NOT_FORKED:
+                    case RecipeUtils.TAG_FORK_UNCHECKED:
                         fork.setImageResource(R.drawable.icon_fork_checked);
-                        fork.setTag(RecipeUtils.TAG_FORKED);
+                        fork.setTag(RecipeUtils.TAG_FORK_CHECKED);
                         listener.onForkClicked(getAdapterPosition(), true);
 
                         Toast.makeText(_view.getContext(), "forked", Toast.LENGTH_SHORT).show();
