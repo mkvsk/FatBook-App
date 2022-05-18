@@ -87,8 +87,14 @@ public class RecipeViewFragment extends Fragment {
                     }
                 }
         );
+
+        editMode(false);
     }
 
+    private void editMode (boolean allow) {
+        binding.textViewFullRecipeName.setEnabled(allow);
+        binding.textViewFullRecipeDescription.setEnabled(allow);
+    }
     private void loadData() {
         recipe = recipeViewModel.getSelectedRecipe().getValue();
         user = userViewModel.getUser().getValue();
