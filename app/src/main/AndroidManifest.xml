@@ -43,12 +43,18 @@
             </intent-filter>
         </activity>
 
-
-        <activity
-            android:name=".ui.activity.introduce.IntroduceActivity"
+        <activity android:name=".ui.activity.WelcomeActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.activity.LogInActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.activity.skip_additional_info.SkipAdditionalInfoActivity"
+            android:name=".ui.activity.IntroduceActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.activity.PasswordActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.activity.SkipAdditionalInfoActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.fill_additional_info.FillAdditionalInfoActivity"

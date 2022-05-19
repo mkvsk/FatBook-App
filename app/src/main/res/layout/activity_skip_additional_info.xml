@@ -5,33 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
-    tools:context=".ui.activity.login.LoginActivity">
+    tools:context=".ui.activity.SkipAdditionalInfoActivity">
 
     <TextView
         android:id="@+id/textView_skip_add_info_new_cook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_light"
-        android:paddingTop="88dp"
         android:text="@string/title_new_cook_in_skip_add"
         android:textColor="@color/color_blue_grey_600"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_skip_add_app_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        />
 
     <TextView
         android:id="@+id/textView_skip_add_app_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
+        android:layout_marginBottom="120dp"
+        android:fontFamily="@font/roboto_regular"
         android:text="@string/title_fatbook_skip_add"
         android:textColor="@color/color_pink_a200"
         android:textSize="45sp"
-        android:fontFamily="@font/roboto_regular"
+        app:layout_constraintBottom_toTopOf="@+id/ImageView_skip_add_kuzya_talks"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_skip_add_info_new_cook" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/textView_skip_add_cat_dialog"
@@ -54,48 +54,76 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/dialog"
+        app:layout_constraintBottom_toTopOf="@+id/ImageView_skip_add_kuzya_talks"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_skip_add_app_label" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/ImageView_skip_add_kuzya_talks"
         android:layout_width="180dp"
-        android:layout_height="150dp"
+        android:layout_height="220dp"
+        android:layout_marginBottom="130dp"
         android:src="@drawable/kuzya_new_cook"
+        app:layout_constraintBottom_toTopOf="@+id/button_skip"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_skip_add_cat_dialog" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/button_fill"
         style="@style/pinkButton"
+        android:layout_marginBottom="15dp"
         android:text="@string/text_button_yeah_go_skip_add"
-        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_skip"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ImageView_skip_add_kuzya_talks" />
+         />
 
     <Button
         android:id="@+id/button_skip"
         style="@style/greyButton"
-        android:layout_marginTop="10dp"
         android:text="@string/text_button_no_later_skip_add"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_skip_add_tagline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_fill" />
+        />
+
+    <TextView
+        android:id="@+id/textView_skip_add_tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/tagline_fatbook"
+        android:textColor="@color/color_blue_grey_200"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_skip_add_copyright"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/textView_skip_add_copyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
         android:text="@string/tag_copyright"
         android:textColor="@color/color_blue_grey_200"
         android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@id/textView_skip_add_version"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_skip_add_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
+        android:paddingBottom="10dp"
+        android:text="@string/tag_version"
+        android:textColor="@color/color_blue_grey_200"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:paddingBottom="10dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

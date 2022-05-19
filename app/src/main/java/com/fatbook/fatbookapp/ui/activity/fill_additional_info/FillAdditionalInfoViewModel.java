@@ -38,7 +38,7 @@ public class FillAdditionalInfoViewModel extends AndroidViewModel {
     public void saveUser(View view, User user, File image) {
         Intent intent = new Intent(getApplication(), MainActivity.class);
         if (UserUtils.createNewUser(user, image)) {
-            intent.putExtra(UserUtils.USER, user);
+            intent.putExtra(UserUtils.TAG_USER, user);
             view.getContext().startActivity(intent);
         } else {
             Toast.makeText(getApplication(), "ERROR CREATING USER", Toast.LENGTH_SHORT).show();

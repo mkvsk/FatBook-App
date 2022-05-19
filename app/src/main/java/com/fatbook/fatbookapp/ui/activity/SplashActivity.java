@@ -6,9 +6,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.fatbook.fatbookapp.MainActivity;
 import com.fatbook.fatbookapp.databinding.ActivitySplashBinding;
-import com.fatbook.fatbookapp.ui.activity.introduce.IntroduceActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -26,9 +24,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onResume();
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            startActivity(new Intent(this, IntroduceActivity.class));
+            startActivity(new Intent(this, WelcomeActivity.class));
             finish();
-//            startActivity(new Intent(this, MainActivity.class));
         }, 1);
     }
 }

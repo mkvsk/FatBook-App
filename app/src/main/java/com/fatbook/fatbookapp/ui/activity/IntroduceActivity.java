@@ -1,27 +1,21 @@
-package com.fatbook.fatbookapp.ui.activity.introduce;
+package com.fatbook.fatbookapp.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivityIntroduceBinding;
 import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
-import com.fatbook.fatbookapp.ui.activity.skip_additional_info.SkipAdditionalInfoActivity;
-import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.UserUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import okhttp3.internal.annotations.EverythingIsNonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,7 +51,16 @@ public class IntroduceActivity extends AppCompatActivity {
 
         binding.buttonIntroduceNext.setOnClickListener(view -> {
             if (checkLoginAvailable()) {
-                navigateToSkipAdditionalInfo(binding.getRoot(), binding.editTextIntroduceUsername.getText().toString());
+                Intent intent = new Intent(getApplication(), PasswordActivity.class);
+                User user = new User();
+//                user.setLogin(login);
+                user.setRole(Role.USER);
+                user.setRecipes(new ArrayList<>());
+                user.setRecipesForked(new ArrayList<>());
+                user.setRecipesBookmarked(new ArrayList<>());
+//        user.setRegDate(new Date());
+                intent.putExtra(UserUtils.TAG_USER, user);
+                startActivity(intent);
             }
         });
     }
@@ -91,34 +94,5 @@ public class IntroduceActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return checkLoginResult;
-    }
-
-    private void navigateToSkipAdditionalInfo(View view, String login) {
-        Intent intent = new Intent(getApplication(), SkipAdditionalInfoActivity.class);
-        User user = new User();
-        user.setLogin(login);
-        user.setRole(Role.USER);
-        user.setRecipes(new ArrayList<>());
-        user.setRecipesForked(new ArrayList<>());
-        user.setRecipesBookmarked(new ArrayList<>());
-//        user.setRegDate(new Date());
-        intent.putExtra(UserUtils.USER, user);
-        view.getContext().startActivity(intent);
-        finish();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-//        binding.scrollViewIntroduce.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-//            int heightDiff = binding.scrollViewIntroduce.getRootView().getHeight() - binding.scrollViewIntroduce.getHeight();
-//
-//            if (heightDiff > 100) { // Value should be less than keyboard's height
-//                binding.scrollViewIntroduce.smoothScrollBy(0, binding.textViewIntroduceCopyright.getScrollY());
-//            } else {
-//                System.out.println();
-//            }
-//        });
     }
 }

@@ -198,36 +198,36 @@ public class IngredientsFragment extends Fragment {
     }
 
     private void fillFakeList(List<Ingredient> ingredients) {
-        ingredients.add(new Ingredient(1L, "potato", "qwer", 256));
-        ingredients.add(new Ingredient(2L, "potato2", "qweqe", 62));
-        ingredients.add(new Ingredient(3L, "potato3", "qweeeer", 101));
-        ingredients.add(new Ingredient(4L, "milk", "r", 60));
-        ingredients.add(new Ingredient(5L, "juice", "eeeeee", 45));
-        ingredients.add(new Ingredient(6L, "tea", "kkk", 1));
-        ingredients.add(new Ingredient(7L, "coffee", "apb", 2));
-        ingredients.add(new Ingredient(8L, "banana", "pppp", 98));
-        ingredients.add(new Ingredient(9L, "tomato", "rat", 28));
-        ingredients.add(new Ingredient(10L, "apple", "swift", 56));
-        ingredients.add(new Ingredient(1L, "potato", "qwer", 256));
-        ingredients.add(new Ingredient(2L, "potato2", "qweqe", 62));
-        ingredients.add(new Ingredient(3L, "potato3", "qweeeer", 101));
-        ingredients.add(new Ingredient(4L, "milk", "r", 60));
-        ingredients.add(new Ingredient(5L, "juice", "eeeeee", 45));
-        ingredients.add(new Ingredient(6L, "tea", "kkk", 1));
-        ingredients.add(new Ingredient(7L, "coffee", "apb", 2));
-        ingredients.add(new Ingredient(8L, "banana", "pppp", 98));
-        ingredients.add(new Ingredient(9L, "tomato", "rat", 28));
-        ingredients.add(new Ingredient(10L, "apple", "swift", 56));
-        ingredients.add(new Ingredient(1L, "potato", "qwer", 256));
-        ingredients.add(new Ingredient(2L, "potato2", "qweqe", 62));
-        ingredients.add(new Ingredient(3L, "potato3", "qweeeer", 101));
-        ingredients.add(new Ingredient(4L, "milk", "r", 60));
-        ingredients.add(new Ingredient(5L, "juice", "eeeeee", 45));
-        ingredients.add(new Ingredient(6L, "tea", "kkk", 1));
-        ingredients.add(new Ingredient(7L, "coffee", "apb", 2));
-        ingredients.add(new Ingredient(8L, "banana", "pppp", 98));
-        ingredients.add(new Ingredient(9L, "tomato", "rat", 28));
-        ingredients.add(new Ingredient(10L, "apple", "swift", 56));
+        ingredients.add(new Ingredient(1L, "potato"));
+        ingredients.add(new Ingredient(2L, "potato2"));
+        ingredients.add(new Ingredient(3L, "potato3"));
+        ingredients.add(new Ingredient(4L, "milk"));
+        ingredients.add(new Ingredient(5L, "juice"));
+        ingredients.add(new Ingredient(6L, "tea"));
+        ingredients.add(new Ingredient(7L, "coffee"));
+        ingredients.add(new Ingredient(8L, "banana"));
+        ingredients.add(new Ingredient(9L, "tomato"));
+        ingredients.add(new Ingredient(10L, "apple"));
+        ingredients.add(new Ingredient(1L, "potato"));
+        ingredients.add(new Ingredient(2L, "potato2"));
+        ingredients.add(new Ingredient(3L, "potato3"));
+        ingredients.add(new Ingredient(4L, "milk"));
+        ingredients.add(new Ingredient(5L, "juice"));
+        ingredients.add(new Ingredient(6L, "tea"));
+        ingredients.add(new Ingredient(7L, "coffee"));
+        ingredients.add(new Ingredient(8L, "banana"));
+        ingredients.add(new Ingredient(9L, "tomato"));
+        ingredients.add(new Ingredient(10L, "apple"));
+        ingredients.add(new Ingredient(1L, "potato"));
+        ingredients.add(new Ingredient(2L, "potato2"));
+        ingredients.add(new Ingredient(3L, "potato3"));
+        ingredients.add(new Ingredient(4L, "milk"));
+        ingredients.add(new Ingredient(5L, "juice"));
+        ingredients.add(new Ingredient(6L, "tea"));
+        ingredients.add(new Ingredient(7L, "coffee"));
+        ingredients.add(new Ingredient(8L, "banana"));
+        ingredients.add(new Ingredient(9L, "tomato"));
+        ingredients.add(new Ingredient(10L, "apple"));
     }
 
     @Override

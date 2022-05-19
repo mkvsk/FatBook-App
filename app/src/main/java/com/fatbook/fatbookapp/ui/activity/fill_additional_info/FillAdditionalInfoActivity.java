@@ -45,7 +45,7 @@ public class FillAdditionalInfoActivity extends AppCompatActivity {
                 new ViewModelProvider(this).get(FillAdditionalInfoViewModel.class);
 
         Intent introduceIntent = getIntent();
-        user = (User) introduceIntent.getSerializableExtra(UserUtils.USER);
+        user = (User) introduceIntent.getSerializableExtra(UserUtils.TAG_USER);
 
         binding.buttonFillAddSave.setOnClickListener(view -> {
             user.setName(binding.editTextFillAddName.getText().toString());

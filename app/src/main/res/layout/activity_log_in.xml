@@ -5,42 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
-    tools:context=".ui.activity.login.LoginActivity">
+    tools:context=".ui.activity.LogInActivity">
 
     <TextView
         android:id="@+id/textView_login_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_light"
-        android:paddingTop="88dp"
-        android:text="@string/title_welcome_to"
+        android:text="@string/title_welcome_back_to"
         android:textColor="@color/color_blue_grey_600"
-        android:textSize="24dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_login_app_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        />
 
     <TextView
         android:id="@+id/textView_login_app_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
-        android:paddingBottom="60dp"
+        android:layout_marginBottom="120dp"
         android:text="@string/title_fatbook_introduce"
         android:textColor="@color/color_pink_a200"
         android:textSize="45sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_login_catChef"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_login_welcome" />
+        />
 
     <ImageView
         android:id="@+id/imageView_login_catChef"
         android:layout_width="180dp"
-        android:layout_height="150dp"
+        android:layout_height="220dp"
+        android:layout_marginBottom="130dp"
         android:contentDescription="@null"
+        app:layout_constraintBottom_toTopOf="@+id/button_log_in"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_login_app_label"
         app:srcCompat="@drawable/kuzya_welcome" />
 
     <EditText
@@ -49,7 +51,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="25dp"
         android:autofillHints="@null"
-        android:background="@drawable/round_corner_edittext"
+        android:background="@drawable/round_corner_edittext_login"
         android:fontFamily="@font/roboto_regular"
         android:hint="@string/hint_username_introduce"
         android:inputType="text"
@@ -57,61 +59,64 @@
         android:textAlignment="center"
         android:textColor="@color/color_grey_900"
         android:textSize="16sp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/editText_password"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_login_catChef" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/editText_password"
+        android:layout_marginBottom="20dp"
         android:layout_width="234dp"
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
         android:autofillHints="@null"
-        android:background="@drawable/round_corner_edittext"
+        android:background="@drawable/round_corner_edittext_login"
         android:fontFamily="@font/roboto_regular"
         android:hint="@string/hint_password"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:maxLength="16"
         android:textAlignment="center"
         android:textColor="@color/color_grey_900"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_log_in"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editText_login" />
+        />
 
     <Button
         android:id="@+id/button_log_in"
-        android:text="@string/title_button_login_googleplay"
         style="@style/pinkButton"
-        android:layout_marginTop="25dp"
+        android:text="@string/title_button_login_googleplay"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_login_tagline"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editText_password" />
+        app:layout_constraintRight_toRightOf="parent" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView_login_google_play"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:elevation="10dp"-->
+<!--            android:contentDescription="@string/title_button_login_googleplay"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/button_login_log_in_with_google"-->
+<!--            app:layout_constraintLeft_toLeftOf="@id/button_login_log_in_with_google"-->
+<!--            app:layout_constraintTop_toTopOf="@id/button_login_log_in_with_google"-->
+<!--            android:layout_marginStart="24dp"-->
+<!--            app:srcCompat="@drawable/icon_googleplay" />-->
 
     <TextView
         android:id="@+id/textView_login_tagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="23dp"
+        android:layout_marginBottom="15dp"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/tagline_fatbook"
         android:textColor="@color/color_blue_grey_200"
-        android:textSize="14sp"
+        android:textSize="13sp"
         app:layout_constraintBottom_toTopOf="@+id/textView_login_copyright"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/imageView_login_google_play"-->
-    <!--        android:layout_width="24dp"-->
-    <!--        android:layout_height="24dp"-->
-    <!--        android:elevation="10dp"-->
-    <!--        android:contentDescription="@string/title_button_login_googleplay"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@id/button_login_log_in_with_google"-->
-    <!--        app:layout_constraintLeft_toLeftOf="@id/button_login_log_in_with_google"-->
-    <!--        app:layout_constraintTop_toTopOf="@id/button_login_log_in_with_google"-->
-    <!--        android:layout_marginStart="24dp"-->
-    <!--        app:srcCompat="@drawable/icon_googleplay" />-->
 
     <TextView
         android:id="@+id/textView_login_copyright"
@@ -121,9 +126,21 @@
         android:textColor="@color/color_blue_grey_200"
         android:textSize="11sp"
         android:fontFamily="@font/roboto_regular"
+        app:layout_constraintBottom_toTopOf="@+id/textView_login_version"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_login_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
+        android:paddingBottom="10dp"
+        android:text="@string/tag_version"
+        android:textColor="@color/color_blue_grey_200"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:paddingBottom="10dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

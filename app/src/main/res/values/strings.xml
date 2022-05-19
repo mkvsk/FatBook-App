@@ -5,10 +5,12 @@
     <string name="title_add_recipe">Add recipe</string>
     <string name="title_user_profile">Profile</string>
     <string name="title_welcome_to">WELCOME TO</string>
+    <string name="title_welcome_back_to">WELCOME BACK TO</string>
     <string name="title_fatbook_activity_login">FatBook</string>
     <string name="title_button_login_googleplay">LOG IN</string>
     <string name="tagline_fatbook">get your forks ready</string>
     <string name="tag_copyright">PotatoCorpⒸ2022</string>
+    <string name="tag_version">v 1.0.0</string>
 
     <string name="hint_password">Password</string>
     <string name="text_dialog_password">Set the password for the account. \n Just do not forget it!</string>
@@ -16,7 +18,7 @@
     ///introduce
     <string name="title_login_introduce">LOGIN</string>
     <string name="title_fatbook_introduce">FatBook</string>
-    <string name="text_dialog_introduce">Hello, Im Kuzya! \n How can I call you??</string>
+    <string name="text_dialog_introduce">Hello, Im Kuzya! \n How can I call you?</string>
     <string name="hint_username_introduce">Username</string>
     <string name="text_requirements_introduce">*Allows only letters and numbers, max length 16 chars</string>
     <string name="text_button_next_introduce">NEXT</string>
@@ -90,8 +92,8 @@
 
     ///bottom nav menu
     <string name="nav_feed">Feed</string>
-    <string name="nav_new_ingredient">Ingredients</string>
-    <string name="nav_add_recipe">Add recipe</string>
+    <string name="nav_ingredients">Ingredients</string>
+    <string name="nav_recipe_create">Create recipe</string>
     <string name="nav_bookmarks">Bookmarks</string>
     <string name="nav_user_profile">Profile</string>
 

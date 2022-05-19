@@ -15,8 +15,4 @@ public class Ingredient implements Serializable {
 
     private String name;
 
-    private String description;
-
-    private Integer kcal;
-
 }

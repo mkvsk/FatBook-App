@@ -78,11 +78,11 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener {
 
     private void getRecipeList(List<Recipe> recipes) {
         List<RecipeIngredient> ingredientList = new ArrayList<>();
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(1L, "potato", "", 0), IngredientUnit.PCS, 1.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(2L, "milk", "", 0), IngredientUnit.ML, 500.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(3L, "eggs", "", 0), IngredientUnit.PCS, 2.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(4L, "bread", "", 0), IngredientUnit.PCS, 3.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(5L, "cheese", "", 0), IngredientUnit.GRAM, 250.0));
+        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(1L, "potato"), IngredientUnit.PCS, 1.0));
+        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(2L, "milk"), IngredientUnit.ML, 500.0));
+        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(3L, "eggs"), IngredientUnit.PCS, 2.0));
+        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(4L, "bread"), IngredientUnit.PCS, 3.0));
+        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(5L, "cheese"), IngredientUnit.GRAM, 250.0));
 
         recipes.add(new Recipe(1L, "PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), user, ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339));

@@ -5,86 +5,100 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
-    tools:context=".ui.activity.login.LoginActivity">
+    tools:context=".ui.activity.WelcomeActivity">
 
     <TextView
         android:id="@+id/textView_login_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_light"
-        android:paddingTop="88dp"
         android:text="@string/title_welcome_to"
         android:textColor="@color/color_blue_grey_600"
-        android:textSize="24dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_login_app_label"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
+        android:layout_marginBottom="120dp"
         android:id="@+id/textView_login_app_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
-        android:paddingBottom="60dp"
         android:text="@string/title_fatbook_introduce"
         android:textColor="@color/color_pink_a200"
         android:textSize="45sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_login_catChef"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_login_welcome" />
+         />
 
     <ImageView
         android:id="@+id/imageView_login_catChef"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        app:srcCompat="@drawable/kuzya_welcome"
+        android:layout_width="180dp"
+        android:layout_height="220dp"
         android:contentDescription="@null"
+        android:layout_marginBottom="130dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_log_in"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_login_app_label"
-        android:paddingBottom="20dp" />
+        app:srcCompat="@drawable/kuzya_welcome" />
 
     <Button
         android:id="@+id/button_register"
         style="@style/pinkButton"
         android:text="Register"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_log_in"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView_login_catChef" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/button_log_in"
-        android:text="@string/title_button_login_googleplay"
         style="@style/greyButton"
-        android:layout_marginTop="10dp"
+        android:text="@string/title_button_login_googleplay"
+        app:layout_constraintBottom_toTopOf="@+id/textView_welcome_tagline"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="30dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_register" />
+        />
 
     <TextView
-        android:id="@+id/textView_login_tagline"
+        android:id="@+id/textView_welcome_tagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/tagline_fatbook"
         android:textColor="@color/color_blue_grey_200"
-        android:layout_marginBottom="23dp"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_login_copyright"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_welcome_copyright"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/textView_login_copyright"
+        android:id="@+id/textView_welcome_copyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tag_copyright"
         android:textColor="@color/color_blue_grey_200"
         android:textSize="11sp"
         android:fontFamily="@font/roboto_regular"
+        app:layout_constraintBottom_toTopOf="@+id/textView_welcome_version"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_welcome_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
+        android:paddingBottom="10dp"
+        android:text="@string/tag_version"
+        android:textColor="@color/color_blue_grey_200"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:paddingBottom="10dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

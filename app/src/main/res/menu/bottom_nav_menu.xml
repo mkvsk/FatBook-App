@@ -9,12 +9,12 @@
     <item
         android:id="@+id/navigation_ingredients"
         android:icon="@drawable/icon_new_ingredient"
-        android:title="@string/nav_new_ingredient" />
+        android:title="@string/nav_ingredients" />
 
     <item
-        android:id="@+id/navigation_add_recipe"
+        android:id="@+id/navigation_recipe_create"
         android:icon="@drawable/icon_new_recipe"
-        android:title="@string/nav_add_recipe" />
+        android:title="@string/nav_recipe_create" />
 
     <item
         android:id="@+id/navigation_bookmarks"
