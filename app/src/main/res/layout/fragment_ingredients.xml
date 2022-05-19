@@ -64,6 +64,7 @@
         android:layout_marginBottom="50dp"
         android:clipToPadding="false"
         android:paddingBottom="10dp"
+        android:overScrollMode="never"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/rv_ingredient" />

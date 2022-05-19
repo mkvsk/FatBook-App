@@ -2,10 +2,4 @@
 <resources>
     <style name="ShapeAppearanceOverlay.App.CornerSize4Percent" parent=""><item name="cornerSize">4%</item></style>
     <style name="ShapeAppearanceOverlay.App.CornerSize20Percent" parent=""><item name="cornerSizeTopLeft">20%</item> <item name="cornerSizeTopRight">20%</item></style>
-
-    <style name="NumberPickerCustomText">
-        <item name="android:fontFamily">@font/roboto_medium</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/color_blue_grey_600</item>
-    </style>
 </resources>

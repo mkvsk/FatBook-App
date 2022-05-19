@@ -28,9 +28,18 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+    }
 }
 
 dependencies {
+
+    implementation 'io.github.ShawnLin013:number-picker:2.4.13'
+
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
 //    implementation "android.arch.lifecycle:extensions:1.1.1"
