@@ -1,12 +1,17 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -50,6 +55,8 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
         super.onViewCreated(view, savedInstanceState);
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
 
+        binding.btnAddIngredientToRecipe.setEnabled(false);
+
         MaterialToolbar toolbar = view.findViewById(R.id.toolbar_add_ingredient_to_recipe);
         toolbar.setNavigationOnClickListener(view1 -> {
             NavHostFragment.findNavController(this).navigateUp();
@@ -62,21 +69,42 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
                 recipeIngredient.setIngredient(selectedIngredient);
                 recipeIngredient.setQuantity(Double.parseDouble(binding.editTextIngredientQuantity.getText().toString()));
                 recipeIngredient.setUnit(IngredientUnit.values()[binding.pickerIngredientUnit.getValue()]);
+
+
             } else {
                 //TODO OBRABOTAT' 0wibka
+
             }
         });
+
+        binding.editTextIngredientQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+               activateButtonSave();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         setupAdapter();
         setupUnitPicker();
     }
 
     private void setupUnitPicker() {
         String[] unitData = new String[]{
-                IngredientUnit.GRAM.getDisplayName(),
-                IngredientUnit.TABLE_SPOON.getDisplayName(),
-                IngredientUnit.TEA_SPOON.getDisplayName(),
-                IngredientUnit.PCS.getDisplayName(),
-                IngredientUnit.ML.getDisplayName()
+                IngredientUnit.GRAM.getMultiplyNaming(),
+                IngredientUnit.TABLE_SPOON.getMultiplyNaming(),
+                IngredientUnit.TEA_SPOON.getMultiplyNaming(),
+                IngredientUnit.PCS.getMultiplyNaming(),
+                IngredientUnit.ML.getMultiplyNaming()
         };
         binding.pickerIngredientUnit.setMinValue(0);
         binding.pickerIngredientUnit.setMaxValue(unitData.length - 1);
@@ -141,5 +169,16 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
         binding.textViewSelectedIngredient.setText(ingredient.getName());
         adapter.notifyItemChanged(previousItem);
         adapter.notifyItemChanged(selectedItem);
+        activateButtonSave();
+    }
+
+    private void activateButtonSave( ) {
+        if (StringUtils.isEmpty(binding.editTextIngredientQuantity.getText().toString()) || selectedIngredient == null) {
+            binding.btnAddIngredientToRecipe.setEnabled(false);
+            binding.btnAddIngredientToRecipe.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(),R.color.color_blue_grey_200));
+        } else {
+            binding.btnAddIngredientToRecipe.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(),R.color.color_pink_a200));
+            binding.btnAddIngredientToRecipe.setEnabled(true);
+        }
     }
 }
