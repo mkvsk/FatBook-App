@@ -51,7 +51,7 @@ public class RecipeCreateFragment extends Fragment {
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
 
-        recipeViewModel.setIngredients(new ArrayList<>());
+        recipeViewModel.setSelectedRecipeIngredients(new ArrayList<>());
 
         binding.buttonRecipeAddSave.setOnClickListener(_view -> {
             recipe.setName(binding.editTextRecipeAddTitle.getText().toString());

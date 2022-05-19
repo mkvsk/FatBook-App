@@ -11,27 +11,27 @@ import java.util.List;
 
 public class RecipeViewModel extends ViewModel {
 
-    private final MutableLiveData<Recipe> selectedItem = new MutableLiveData<Recipe>();
+    private final MutableLiveData<Recipe> recipe = new MutableLiveData<Recipe>();
 
-    private final MutableLiveData<List<RecipeIngredient>> ingredients = new MutableLiveData<>();
+    private final MutableLiveData<List<RecipeIngredient>> selectedRecipeIngredients = new MutableLiveData<>();
 
-    public void selectRecipe(Recipe recipe) {
-        selectedItem.setValue(recipe);
+    public void setRecipe(Recipe recipe) {
+        this.recipe.setValue(recipe);
     }
 
     public LiveData<Recipe> getSelectedRecipe() {
-        return selectedItem;
+        return recipe;
     }
 
-    public void setIngredients(List<RecipeIngredient> ingredients) {
-        this.ingredients.setValue(ingredients);
+    public void setSelectedRecipeIngredients(List<RecipeIngredient> selectedRecipeIngredients) {
+        this.selectedRecipeIngredients.setValue(selectedRecipeIngredients);
     }
 
-    public LiveData<List<RecipeIngredient>> getIngredients() {
-        return ingredients;
+    public LiveData<List<RecipeIngredient>> getSelectedRecipeIngredients() {
+        return selectedRecipeIngredients;
     }
 
     public void addIngredient(RecipeIngredient ingredient) {
-        ingredients.getValue().add(ingredient);
+        selectedRecipeIngredients.getValue().add(ingredient);
     }
 }

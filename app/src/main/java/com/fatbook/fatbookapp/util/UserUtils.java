@@ -30,6 +30,11 @@ public class UserUtils {
     }
 
     @SneakyThrows
+    public static void getFeedRecipeList() {
+        //TODO feed load
+    }
+
+    @SneakyThrows
     private static String uploadUserProfileImage(File image) {
         RequestBody requestFile =
                 RequestBody.create(
@@ -39,7 +44,7 @@ public class UserUtils {
 
         MultipartBody.Part file = MultipartBody.Part.createFormData("file", image.getName(), requestFile);
 
-        Call<String> newUser = RetrofitFactory.infoServiceClient().createNewUser(file);
+        Call<String> newUser = RetrofitFactory.apiServiceClient().createNewUser(file);
         newUser.enqueue(new Callback<String>() {
             @Override
             @EverythingIsNonNull

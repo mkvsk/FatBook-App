@@ -1,20 +1,13 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,14 +27,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import javax.net.ssl.HttpsURLConnection;
-
-import lombok.extern.apachecommons.CommonsLog;
 import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -108,7 +95,7 @@ public class IngredientsFragment extends Fragment {
 
     private void saveIngredient() {
         try {
-            RetrofitFactory.infoServiceClient().addIngredient(ingredientToAdd).enqueue(new Callback<Void>() {
+            RetrofitFactory.apiServiceClient().addIngredient(ingredientToAdd).enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                     log.log(Level.INFO, "ingredient save: SUCCESS");
@@ -127,7 +114,7 @@ public class IngredientsFragment extends Fragment {
     private void loadIngredients() {
         new Thread(() -> {
             try {
-                RetrofitFactory.infoServiceClient().getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
+                RetrofitFactory.apiServiceClient().getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<Ingredient>> call, @NonNull Response<List<Ingredient>> response) {
                         ingredientViewModel.setIngredientList(response.body());

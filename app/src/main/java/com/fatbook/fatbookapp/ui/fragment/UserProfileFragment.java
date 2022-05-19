@@ -14,10 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
-import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
 import com.fatbook.fatbookapp.ui.adapters.UserRecipeAdapter;
@@ -97,20 +95,20 @@ public class UserProfileFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.menu_user_profile_edit:
                 Snackbar.make(binding.getRoot(), "Edit", Snackbar.LENGTH_SHORT)
-                        .setAnchorView(requireActivity().findViewById(R.id.nav_view)).show();
+                        .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
                 changeMenuItemsVisibility(false, true, true);
                 editMode(true);
                 return true;
             case R.id.menu_user_profile_save:
                 Snackbar.make(binding.getRoot(), "Saved", Snackbar.LENGTH_SHORT)
-                        .setAnchorView(requireActivity().findViewById(R.id.nav_view)).show();
+                        .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
                 confirmEdit();
                 editMode(false);
                 changeUserData();
                 return true;
             case R.id.menu_user_profile_cancel:
                 Snackbar.make(binding.getRoot(), "End edit", Snackbar.LENGTH_SHORT)
-                        .setAnchorView(requireActivity().findViewById(R.id.nav_view)).show();
+                        .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
                 cancelEdit();
                 editMode(false);
                 revertUserData();

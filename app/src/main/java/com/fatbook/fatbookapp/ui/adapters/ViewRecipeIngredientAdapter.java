@@ -21,6 +21,8 @@ public class ViewRecipeIngredientAdapter extends RecyclerView.Adapter<ViewRecipe
     private final LayoutInflater inflater;
     private final List<RecipeIngredient> list;
 
+    private boolean isEditAvailable = false;
+
     public ViewRecipeIngredientAdapter(Context context, List<RecipeIngredient> list) {
         this.inflater = LayoutInflater.from(context);
         this.list = list;
@@ -39,12 +41,20 @@ public class ViewRecipeIngredientAdapter extends RecyclerView.Adapter<ViewRecipe
         holder.name.setText(ingredient.getIngredient().getName());
         String quantityName = ingredient.getQuantity() + " " + ingredient.getUnit().getDisplayName();
         holder.quantity.setText(quantityName);
-//        holder.btnRemove.setVisibility(View.INVISIBLE);
+        if (isEditAvailable) {
+            holder.btnRemove.setVisibility(View.VISIBLE);
+        } else {
+            holder.btnRemove.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void setEditMode(boolean allow) {
+        isEditAvailable = allow;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

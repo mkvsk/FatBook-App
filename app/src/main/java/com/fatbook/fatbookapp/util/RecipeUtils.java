@@ -1,6 +1,8 @@
 package com.fatbook.fatbookapp.util;
 
-import org.apache.commons.lang3.StringUtils;
+import com.fatbook.fatbookapp.core.Recipe;
+
+import lombok.SneakyThrows;
 
 public class RecipeUtils {
 
@@ -15,4 +17,14 @@ public class RecipeUtils {
 //
 //        }
 //    }
+
+    @SneakyThrows
+    public static void saveRecipe(Recipe recipe) {
+        //TODO save recipe
+    }
+
+    @SneakyThrows
+    public static void deleteRecipe(Recipe recipe) {
+        //TODO save recipe
+    }
 }

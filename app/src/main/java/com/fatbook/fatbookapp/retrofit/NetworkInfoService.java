@@ -1,6 +1,7 @@
 package com.fatbook.fatbookapp.retrofit;
 
 import com.fatbook.fatbookapp.core.Ingredient;
+import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.User;
 
 import java.util.List;
@@ -53,5 +54,8 @@ public interface NetworkInfoService {
 
     @GET("ingredient/get-all")
     Call<List<Ingredient>> getAllIngredients();
+
+    @GET("feed")
+    Call<List<Recipe>> getFeedRecipeList();
 
 }

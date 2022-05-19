@@ -78,7 +78,7 @@ public class IntroduceActivity extends AppCompatActivity {
 
     private boolean isLoginAvailable(String login) {
         try {
-            RetrofitFactory.infoServiceClient().checkAvailableLogin(login).enqueue(new Callback<Void>() {
+            RetrofitFactory.apiServiceClient().checkAvailableLogin(login).enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                     Void body = response.body();

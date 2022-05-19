@@ -1,6 +1,5 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -20,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.IngredientUnit;
-import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.databinding.FragmentAddIngredientBinding;
 import com.fatbook.fatbookapp.ui.OnAddIngredientItemClickListener;
@@ -45,7 +42,6 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         binding = FragmentAddIngredientBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -57,12 +53,12 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
         binding.btnAddIngredientToRecipe.setEnabled(false);
 
-        MaterialToolbar toolbar = view.findViewById(R.id.toolbar_add_ingredient_to_recipe);
-        toolbar.setNavigationOnClickListener(view1 -> {
-            NavHostFragment.findNavController(this).navigateUp();
+        binding.toolbarAddIngredientToRecipe.setNavigationOnClickListener(view1 -> {
+            NavHostFragment.findNavController(this).popBackStack();
         });
 
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         binding.btnAddIngredientToRecipe.setOnClickListener(view1 -> {
             if (StringUtils.isNotEmpty(binding.editTextIngredientQuantity.getText().toString())) {
                 RecipeIngredient recipeIngredient = new RecipeIngredient();

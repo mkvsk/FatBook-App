@@ -18,7 +18,7 @@ public abstract class RetrofitFactory {
             .setLenient()
             .create();
 
-    public static NetworkInfoService infoServiceClient() {
+    public static NetworkInfoService apiServiceClient() {
         return new Retrofit.Builder()
                 .baseUrl(RetrofitFactory.URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))

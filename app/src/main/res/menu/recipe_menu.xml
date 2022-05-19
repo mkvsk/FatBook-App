@@ -2,22 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_user_profile_edit"
+        android:id="@+id/menu_recipe_edit"
         android:icon="@drawable/icon_edit_user_info"
-        android:title="@string/menu_user_profile_edit"
+        android:title="@string/menu_recipe_edit"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_user_profile_save"
+        android:id="@+id/menu_recipe_save"
         android:icon="@drawable/icon_save_changes"
-        android:title="@string/menu_user_profile_confirm"
+        android:title="@string/menu_recipe_confirm"
         android:visible="false"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_user_profile_cancel"
+        android:id="@+id/menu_recipe_cancel"
         android:icon="@drawable/icon_cancel"
-        android:title="@string/menu_user_profile_cancel"
+        android:title="@string/menu_recipe_cancel"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_recipe_delete"
+        android:icon="@drawable/icon_delete"
+        android:title="@string/menu_recipe_delete"
         android:visible="false"
         app:showAsAction="ifRoom" />
 </menu>

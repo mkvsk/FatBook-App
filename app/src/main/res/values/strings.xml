@@ -110,6 +110,14 @@
 
     //ingredient
     <string name="ingredient_load_failed">Connection error</string>
+    <string name="menu_recipe_delete">Delete</string>
+    <string name="menu_recipe_cancel">Cancel</string>
+    <string name="menu_recipe_confirm">Confirm</string>
+    <string name="menu_recipe_edit">Edit</string>
+    <string name="menu_user_profile_edit">Edit</string>
+    <string name="menu_user_profile_confirm">Confirm</string>
+    <string name="menu_user_profile_cancel">Cancel</string>
+    <string name="undo_string">Undo</string>
 
 
 </resources>

@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
+import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.ui.OnRecipeClickListener;
 import com.fatbook.fatbookapp.util.RecipeUtils;
@@ -24,7 +25,7 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
-    private final List<Recipe> list;
+    private List<Recipe> list;
 
     private OnRecipeClickListener listener;
 
@@ -35,6 +36,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     public void setClickListener(OnRecipeClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setData(List<Recipe> list) {
+        this.list = list;
     }
 
     @NonNull

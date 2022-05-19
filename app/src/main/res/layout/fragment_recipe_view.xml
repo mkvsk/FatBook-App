@@ -20,14 +20,15 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/color_blue_grey_200"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="Full recipe"
             app:navigationIcon="@drawable/arrow_left"
             app:navigationIconTint="@color/color_blue_grey_600"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Full recipe"
             app:titleTextColor="@color/color_blue_grey_600">
 
             <com.google.android.material.imageview.ShapeableImageView
+                android:visibility="gone"
+                android:id="@+id/kuzya_recipe_view"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="end"
@@ -41,9 +42,9 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
-        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,29 +64,29 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:tag="tag_bookmarks_unchecked"
                 android:id="@+id/imageView_full_recipe_icon_bookmarks"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_margin="10dp"
                 android:src="@drawable/icon_bookmarks_unchecked"
+                android:tag="tag_bookmarks_unchecked"
                 app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_card_bgr"
                 app:layout_constraintTop_toTopOf="@id/imageView_full_recipe_card_bgr" />
 
             <EditText
-                android:background="@null"
-                android:id="@+id/textView_full_recipe_name"
+                android:id="@+id/editText_full_recipe_name"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:background="@null"
                 android:fontFamily="@font/roboto_bold"
+                android:gravity="start"
                 android:lines="2"
                 android:maxLines="2"
                 android:text="@string/hint_add_recipe_title"
                 android:textAlignment="textStart"
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="20sp"
-                android:gravity="left"
                 app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_card_bgr"
                 app:layout_constraintTop_toTopOf="@id/imageView_full_recipe_icon_bookmarks"
                 tools:ignore="RtlCompat" />
@@ -97,12 +98,12 @@
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="35dp"
+                android:background="@color/color_blue_grey_50"
                 android:scaleType="centerCrop"
                 android:src="@drawable/image_recipe_default"
-                android:background="@color/color_blue_grey_50"
                 app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_card_bgr"
                 app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_card_bgr"
-                app:layout_constraintTop_toBottomOf="@id/textView_full_recipe_name"
+                app:layout_constraintTop_toBottomOf="@id/editText_full_recipe_name"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent" />
 
             <TextView
@@ -114,8 +115,8 @@
                 android:text="@string/title_full_recipe_by"
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_image"
-                app:layout_constraintBottom_toBottomOf ="@id/textView_full_recipe_forks_quantity" />
+                app:layout_constraintBottom_toBottomOf="@id/textView_full_recipe_forks_quantity"
+                app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_image" />
 
             <TextView
                 android:id="@+id/textView_full_recipe_username"
@@ -130,12 +131,12 @@
                 app:layout_constraintLeft_toRightOf="@id/textView_full_recipe_by_label" />
 
             <ImageView
-                android:tag="tag_fork_unchecked"
                 android:id="@+id/imageView_full_recipe_fork"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginBottom="10dp"
                 android:src="@drawable/icon_fork_unchecked"
+                android:tag="tag_fork_unchecked"
                 app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_card_bgr"
                 app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_icon_bookmarks"
                 app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_icon_bookmarks" />
@@ -164,12 +165,12 @@
                 app:layout_constraintTop_toBottomOf="@id/imageView_full_recipe_card_bgr" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:overScrollMode="never"
                 android:id="@+id/rv_recipe_view_ingredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:clipToPadding="false"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textView_full_recipe_view_label"
@@ -188,25 +189,25 @@
                 app:layout_constraintTop_toBottomOf="@id/rv_recipe_view_ingredients" />
 
             <EditText
-                android:layout_marginTop="10dp"
-                android:id="@+id/textView_full_recipe_description"
+                android:id="@+id/editText_full_recipe_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
+                android:layout_marginBottom="100dp"
                 android:background="@drawable/round_corner_rect_white"
                 android:fontFamily="@font/roboto_light"
+                android:gravity="start"
                 android:maxLines="30"
                 android:padding="15dp"
                 android:text="@string/text_full_recipe_instruction"
+                android:textAlignment="gravity"
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="16sp"
-                android:gravity="left"
-                android:textAlignment="gravity"
-                app:layout_constraintLeft_toLeftOf="@id/textView_full_recipe_instruction_label"
-                app:layout_constraintTop_toBottomOf="@id/textView_full_recipe_instruction_label"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="100dp"/>
+                app:layout_constraintLeft_toLeftOf="@id/textView_full_recipe_instruction_label"
+                app:layout_constraintTop_toBottomOf="@id/textView_full_recipe_instruction_label" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
