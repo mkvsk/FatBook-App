@@ -23,7 +23,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="Full recipe"
-            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:navigationIcon="@drawable/arrow_left"
             app:navigationIconTint="@color/color_blue_grey_600"
             app:titleTextColor="@color/color_blue_grey_600">
 
