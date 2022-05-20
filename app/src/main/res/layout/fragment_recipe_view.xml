@@ -82,7 +82,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="start"
                 android:minLines="1"
-                android:maxLines="3"
+                android:maxLines="2"
                 android:text="@string/hint_add_recipe_title"
                 android:textAlignment="textStart"
                 android:textColor="@color/color_blue_grey_600"
