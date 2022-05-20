@@ -71,7 +71,7 @@
                 android:background="@drawable/edit_mode_bgr"
                 android:fontFamily="@font/roboto_medium"
                 android:hint="@string/hint_add_recipe_title"
-                android:maxLines="3"
+                android:maxLines="2"
                 android:minLines="1"
                 android:padding="10dp"
                 android:textColor="@color/color_blue_grey_600"
