@@ -177,6 +177,14 @@ public class RecipeViewFragment extends Fragment {
         changeMenuItemsVisibility(!allow, allow, allow, allow);
         adapter.setEditMode(allow);
         adapter.notifyDataSetChanged();
+
+        if (allow) {
+            binding.editTextFullRecipeName.setBackgroundResource(R.drawable.edit_mode_bgr);
+            binding.editTextFullRecipeDescription.setBackgroundResource(R.drawable.edit_mode_bgr);
+        } else {
+            binding.editTextFullRecipeName.setBackgroundResource(R.drawable.round_corner_rect_white);
+            binding.editTextFullRecipeDescription.setBackgroundResource(R.drawable.round_corner_rect_white);
+        }
     }
 
     private void confirmEdit() {
