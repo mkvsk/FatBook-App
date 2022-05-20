@@ -62,10 +62,10 @@ public class UserProfileFragment extends Fragment {
 
     private void fillUserProfile() {
 //        binding.toolbarUserProfile.setTitle(user.getLogin());
-//        binding.textViewProfileFullName.setText(user.getName());
-//        binding.textViewProfileBio.setText(user.getBio());
+//        binding.editTextProfileFullName.setText(user.getName());
+//        binding.editTextProfileBio.setText(user.getBio());
 //        String birthday = getString(R.string.text_birthday) + user.getBirthday();
-//        binding.textViewProfileBirthday.setText(birthday);
+//        binding.editTextProfileBirthday.setText(birthday);
 //        Glide
 //                .with(getLayoutInflater().getContext())
 //                .load(user.getImage())
@@ -119,9 +119,24 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void editMode(boolean allow) {
-        binding.textViewProfileFullName.setEnabled(allow);
-        binding.textViewProfileBirthday.setEnabled(allow);
-        binding.textViewProfileBio.setEnabled(allow);
+
+
+        binding.editTextProfileFullName.setEnabled(allow);
+        binding.editTextProfileBirthday.setEnabled(allow);
+        binding.editTextProfileBio.setEnabled(allow);
+        if(allow) {
+            binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
+            binding.editTextProfileFullName.setBackgroundResource(R.drawable.edit_mode_bgr);
+            binding.editTextProfileBirthday.setBackgroundResource(R.drawable.edit_mode_bgr);
+            binding.editTextProfileBio.setBackgroundResource(R.drawable.edit_mode_bgr);
+        }
+        else {
+            binding.buttonUserProfileAddPhoto.setVisibility(View.GONE);
+            binding.editTextProfileFullName.setBackgroundResource(R.drawable.round_corner_rect_white);
+            binding.editTextProfileBirthday.setBackgroundResource(R.drawable.round_corner_rect_white);
+            binding.editTextProfileBio.setBackgroundResource(R.drawable.round_corner_rect_white);
+        }
+
     }
 
     private void revertUserData() {
@@ -129,9 +144,9 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void changeUserData() {
-        user.setName(binding.textViewProfileFullName.getText().toString());
+        user.setName(binding.editTextProfileFullName.getText().toString());
 //        user.setBirthday(binding.textViewProfileBirthday.getText().toString());
-        user.setBio(binding.textViewProfileBio.getText().toString());
+        user.setBio(binding.editTextProfileBio.getText().toString());
     }
 
     private void confirmEdit() {

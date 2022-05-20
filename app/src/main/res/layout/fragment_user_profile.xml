@@ -57,18 +57,32 @@
         android:layout_height="115dp"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent"
         android:scaleType="centerCrop"
-        android:src="@drawable/icon_add_photo"
-        android:backgroundTint="@color/color_lime_500"
+        android:src="@drawable/image_recipe_default"
         android:background="@color/color_blue_grey_200"
         android:elevation="2dp"
         android:translationZ="4dp"
         app:layout_constraintLeft_toLeftOf="@id/imageView_user_profile_photo_bgr"
         app:layout_constraintRight_toRightOf="@id/imageView_user_profile_photo_bgr"
         app:layout_constraintTop_toTopOf="@id/imageView_user_profile_photo_bgr"
-        app:layout_constraintBottom_toTopOf="@id/textView_profile_full_name"/>
+        app:layout_constraintBottom_toTopOf="@id/editText_profile_full_name"/>
+
+    <ImageButton
+        android:id="@+id/button_user_profile_add_photo"
+        android:layout_width="110dp"
+        android:layout_height="114dp"
+        android:backgroundTint="@color/color_blue_grey_50"
+        android:src="@drawable/icon_add_recipe_photo"
+        android:elevation="6dp"
+        android:scaleType="centerCrop"
+        android:translationZ="4dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/imageView_profile_photo"
+        app:layout_constraintLeft_toLeftOf="@id/imageView_profile_photo"
+        app:layout_constraintRight_toRightOf="@id/imageView_profile_photo"
+        app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo" />
 
     <EditText
-        android:id="@+id/textView_profile_full_name"
+        android:id="@+id/editText_profile_full_name"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:fontFamily="@font/roboto_medium"
@@ -79,13 +93,13 @@
         android:textSize="12sp"
         android:background="@drawable/round_corner_rect_white"
         android:padding="5dp"
-        app:layout_constraintBottom_toTopOf="@id/textView_profile_birthday"
+        app:layout_constraintBottom_toTopOf="@id/editText_profile_birthday"
         app:layout_constraintTop_toBottomOf="@id/imageView_profile_photo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
-        android:id="@+id/textView_profile_birthday"
+        android:id="@+id/editText_profile_birthday"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:background="@drawable/round_corner_rect_white"
@@ -96,13 +110,13 @@
         android:textAlignment="center"
         android:textColor="@color/color_blue_grey_600"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_profile_bio"
+        app:layout_constraintBottom_toTopOf="@+id/editText_profile_bio"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_profile_full_name" />
+        app:layout_constraintTop_toBottomOf="@id/editText_profile_full_name" />
 
     <EditText
-        android:id="@+id/textView_profile_bio"
+        android:id="@+id/editText_profile_bio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
@@ -114,7 +128,7 @@
         android:textColor="@color/color_blue_grey_600"
         android:textSize="12sp"
         android:background="@drawable/round_corner_rect_white"
-        app:layout_constraintTop_toBottomOf="@id/textView_profile_birthday"
+        app:layout_constraintTop_toBottomOf="@id/editText_profile_birthday"
         app:layout_constraintLeft_toLeftOf="@id/imageView_user_profile_photo_bgr"
         app:layout_constraintRight_toRightOf="@id/imageView_user_profile_photo_bgr"
         app:layout_constraintBottom_toBottomOf="@id/imageView_user_profile_photo_bgr"
