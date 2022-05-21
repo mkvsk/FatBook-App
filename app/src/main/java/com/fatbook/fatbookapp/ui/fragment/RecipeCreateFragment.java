@@ -56,7 +56,7 @@ public class RecipeCreateFragment extends Fragment {
         binding.buttonRecipeAddSave.setOnClickListener(_view -> {
             recipe.setName(binding.editTextRecipeAddTitle.getText().toString());
             recipe.setDescription(binding.editTextRecipeAddDescription.getText().toString());
-            recipe.setAuthor(userViewModel.getUser().getValue());
+            recipe.setAuthor(userViewModel.getUser().getValue().getLogin());
             recipe.setIngredients(Collections.emptyList());
             recipe.setImage("");
             recipe.setForks(0);

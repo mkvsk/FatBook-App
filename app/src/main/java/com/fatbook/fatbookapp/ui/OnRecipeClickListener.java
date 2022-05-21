@@ -1,7 +1,9 @@
 package com.fatbook.fatbookapp.ui;
 
+import com.fatbook.fatbookapp.core.Recipe;
+
 public interface OnRecipeClickListener {
     void onRecipeClick(int position);
-    void onBookmarksClick(int position, boolean add);
-    void onForkClicked(int position, boolean fork);
+    void onBookmarksClick(Recipe recipe, boolean add);
+    void onForkClicked(Recipe recipe, boolean fork);
 }

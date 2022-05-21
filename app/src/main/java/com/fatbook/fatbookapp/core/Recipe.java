@@ -18,7 +18,7 @@ public class Recipe implements Serializable {
 
     private String description;
 
-    private User author;
+    private String author;
 
     private List<RecipeIngredient> ingredients;
 

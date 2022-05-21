@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.fatbook.fatbookapp.MainActivity;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivitySkipAdditionalInfoBinding;
 import com.fatbook.fatbookapp.util.UserUtils;

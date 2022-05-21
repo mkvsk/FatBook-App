@@ -1,4 +1,4 @@
-package com.fatbook.fatbookapp;
+package com.fatbook.fatbookapp.ui.activity;
 
 import android.os.Bundle;
 
@@ -8,6 +8,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivityMainBinding;
 import com.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel;

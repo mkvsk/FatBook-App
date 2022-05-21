@@ -4,6 +4,8 @@ import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import lombok.SneakyThrows;
 import okhttp3.MediaType;
@@ -21,6 +23,10 @@ public class UserUtils {
     public static final String TAG_USER = "user";
 
     private static String imageURL = "";
+
+    public static SimpleDateFormat regDateFormat = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss",Locale.US);
+
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd",Locale.US);
 
     @SneakyThrows
     public static boolean createNewUser(User user, File image) {

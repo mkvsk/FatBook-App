@@ -88,9 +88,7 @@ public class IngredientsFragment extends Fragment {
         binding.swipeRefreshBookmarks.setColorSchemeColors(
                 getResources().getColor(R.color.color_pink_a200));
 
-        binding.swipeRefreshBookmarks.setOnRefreshListener(() -> {
-            loadIngredients();
-        });
+        binding.swipeRefreshBookmarks.setOnRefreshListener(this::loadIngredients);
     }
 
     private void saveIngredient() {

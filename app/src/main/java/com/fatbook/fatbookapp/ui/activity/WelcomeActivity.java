@@ -6,7 +6,15 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fatbook.fatbookapp.databinding.ActivityWelcomeBinding;
+import com.fatbook.fatbookapp.util.UserUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import lombok.extern.java.Log;
+
+@Log
 public class WelcomeActivity extends AppCompatActivity {
 
     private ActivityWelcomeBinding binding;

@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
-import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.Recipe;
+import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.ui.OnRecipeClickListener;
 import com.fatbook.fatbookapp.util.RecipeUtils;
 
@@ -26,20 +26,23 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     private final LayoutInflater inflater;
     private List<Recipe> list;
+    private User user;
 
     private OnRecipeClickListener listener;
 
-    public RecipeAdapter(Context context, List<Recipe> list) {
+    public RecipeAdapter(Context context, List<Recipe> list, User user) {
         this.inflater = LayoutInflater.from(context);
         this.list = list;
+        this.user = user;
     }
 
     public void setClickListener(OnRecipeClickListener listener) {
         this.listener = listener;
     }
 
-    public void setData(List<Recipe> list) {
+    public void setData(List<Recipe> list, User user) {
         this.list = list;
+        this.user = user;
     }
 
     @NonNull
@@ -53,10 +56,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe recipe = list.get(position);
         holder.tvTitle.setText(recipe.getName());
-        holder.tvAuthor.setText(recipe.getAuthor().getLogin());
+        holder.tvAuthor.setText(recipe.getAuthor());
 
         String forksAmount = Integer.toString(recipe.getForks());
         holder.tvForks.setText(forksAmount);
+
+        List<Recipe> recipesForked = user.getRecipesForked();
+        List<Recipe> recipesBookmarked = user.getRecipesBookmarked();
+
+        toggleForks(holder.fork, user.getRecipesForked().contains(recipe));
+        toggleBookmarks(holder.bookmarks, user.getRecipesBookmarked().contains(recipe));
 
         Glide
                 .with(inflater.getContext())
@@ -69,7 +78,27 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    private void toggleForks(ImageView fork, boolean selected) {
+        if (selected) {
+            fork.setImageResource(R.drawable.icon_fork_checked);
+            fork.setTag(RecipeUtils.TAG_FORK_CHECKED);
+        } else {
+            fork.setImageResource(R.drawable.icon_fork_unchecked);
+            fork.setTag(RecipeUtils.TAG_FORK_UNCHECKED);
+        }
+    }
+
+    private void toggleBookmarks(ImageView bookmark, boolean selected) {
+        if (selected) {
+            bookmark.setImageResource(R.drawable.icon_bookmarks_checked);
+            bookmark.setTag(RecipeUtils.TAG_BOOKMARKS_CHECKED);
+        } else {
+            bookmark.setImageResource(R.drawable.icon_bookmarks_unchecked);
+            bookmark.setTag(RecipeUtils.TAG_BOOKMARKS_UNCHECKED);
+        }
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle;
         final TextView tvAuthor;
         final TextView tvForks;
@@ -93,19 +122,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             bookmarks.setOnClickListener(_view -> {
                 String tag = (String) bookmarks.getTag();
                 switch (tag) {
-                    case RecipeUtils.TAB_BOOKMARKS_UNCHECKED:
-                        bookmarks.setImageResource(R.drawable.icon_bookmarks_unchecked);
-                        bookmarks.setTag(RecipeUtils.TAG_BOOKMARKS_CHECKED);
-                        listener.onBookmarksClick(getAdapterPosition(), false);
-
-                        Toast.makeText(_view.getContext(), "removed from favourites", Toast.LENGTH_SHORT).show();
+                    case RecipeUtils.TAG_BOOKMARKS_UNCHECKED:
+                        toggleBookmarks(bookmarks, true);
+                        listener.onBookmarksClick(list.get(getAdapterPosition()), true);
                         break;
                     case RecipeUtils.TAG_BOOKMARKS_CHECKED:
-                        bookmarks.setImageResource(R.drawable.icon_bookmarks_checked);
-                        bookmarks.setTag(RecipeUtils.TAB_BOOKMARKS_UNCHECKED);
-                        listener.onBookmarksClick(getAdapterPosition(), true);
-
-                        Toast.makeText(_view.getContext(), "added to favourites", Toast.LENGTH_SHORT).show();
+                        toggleBookmarks(bookmarks, false);
+                        listener.onBookmarksClick(list.get(getAdapterPosition()), false);
                         break;
                 }
 
@@ -114,20 +137,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             fork.setOnClickListener(_view -> {
                 String tag = (String) fork.getTag();
                 switch (tag) {
-                    case RecipeUtils.TAG_FORK_CHECKED:
-                        fork.setImageResource(R.drawable.icon_fork_unchecked);
-                        fork.setTag(RecipeUtils.TAG_FORK_UNCHECKED);
-                        listener.onForkClicked(getAdapterPosition(), false);
-
-                        Toast.makeText(_view.getContext(), "no forked FAK U", Toast.LENGTH_SHORT).show();
-                        break;
                     case RecipeUtils.TAG_FORK_UNCHECKED:
-                        fork.setImageResource(R.drawable.icon_fork_checked);
-                        fork.setTag(RecipeUtils.TAG_FORK_CHECKED);
-                        listener.onForkClicked(getAdapterPosition(), true);
-
-                        Toast.makeText(_view.getContext(), "forked", Toast.LENGTH_SHORT).show();
+                        toggleForks(fork, true);
+                        listener.onForkClicked(list.get(getAdapterPosition()), true);
                         break;
+                    case RecipeUtils.TAG_FORK_CHECKED:
+                        toggleForks(fork, false);
+                        listener.onForkClicked(list.get(getAdapterPosition()), false);
+                        break;
+
                 }
             });
         }

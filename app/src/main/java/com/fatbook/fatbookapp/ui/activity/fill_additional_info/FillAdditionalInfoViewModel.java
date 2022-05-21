@@ -10,7 +10,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.fatbook.fatbookapp.MainActivity;
+import com.fatbook.fatbookapp.ui.activity.MainActivity;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.util.UserUtils;
 

@@ -68,7 +68,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         userViewModel.getFeedRecipeList().observe(getViewLifecycleOwner(), recipeList -> {
             //TODO add loader
             feedRecipeList = recipeList;
-            adapter.setData(feedRecipeList);
+            adapter.setData(feedRecipeList, user);
             adapter.notifyDataSetChanged();
         });
         setupAdapter();
@@ -76,7 +76,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
 
     private void setupAdapter() {
         RecyclerView recyclerView = binding.rvFeed;
-        adapter = new RecipeAdapter(binding.getRoot().getContext(), feedRecipeList);
+        adapter = new RecipeAdapter(binding.getRoot().getContext(), feedRecipeList, user);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
     }
@@ -115,12 +115,26 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
     }
 
     @Override
-    public void onBookmarksClick(int position, boolean add) {
+    public void onBookmarksClick(Recipe recipe, boolean add) {
+        if (add) {
+            user.getRecipesBookmarked().add(recipe);
+        } else {
+            user.getRecipesBookmarked().remove(recipe);
+        }
+        userViewModel.setUser(user);
+        System.out.println();
         //TODO api
     }
 
     @Override
-    public void onForkClicked(int position, boolean fork) {
+    public void onForkClicked(Recipe recipe, boolean fork) {
+        if (fork) {
+            user.getRecipesForked().add(recipe);
+        } else {
+            user.getRecipesForked().remove(recipe);
+        }
+        userViewModel.setUser(user);
+        System.out.println();
         //TODO api
     }
 
@@ -141,9 +155,9 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
     private void loadFakeData() {
         List<Recipe> list = new ArrayList<>();
         getFakeRecipeList(list);
-        getFakeRecipeList(list);
-        getFakeRecipeList(list);
-        getFakeRecipeList(list);
+//        getFakeRecipeList(list);
+//        getFakeRecipeList(list);
+//        getFakeRecipeList(list);
         userViewModel.setFeedRecipeList(list);
     }
 
@@ -164,17 +178,17 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         User u4 = new User();
         u4.setLogin("u4");
 
-        recipes.add(new Recipe(1L, "PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u1, ingredientList,
+        recipes.add(new Recipe(1L, "PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u1.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339));
-        recipes.add(new Recipe(2L, "Potato", getResources().getString(R.string.text_full_recipe_instruction), user, ingredientList,
+        recipes.add(new Recipe(2L, "Potato", getResources().getString(R.string.text_full_recipe_instruction), user.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345));
-        recipes.add(new Recipe(3L, "fried PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u2, ingredientList,
+        recipes.add(new Recipe(3L, "fried PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u2.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----1.jpg", 0));
-        recipes.add(new Recipe(4L, "creamy Potato", getResources().getString(R.string.text_full_recipe_instruction), user, ingredientList,
+        recipes.add(new Recipe(4L, "creamy Potato", getResources().getString(R.string.text_full_recipe_instruction), user.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8));
-        recipes.add(new Recipe(5L, "Potatoes with kotletki", getResources().getString(R.string.text_full_recipe_instruction), u3, ingredientList,
+        recipes.add(new Recipe(5L, "Potatoes with kotletki", getResources().getString(R.string.text_full_recipe_instruction), u3.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----6.jpg", 133349));
-        recipes.add(new Recipe(6L, "Potato so smetanka", getResources().getString(R.string.text_full_recipe_instruction), u4, ingredientList,
+        recipes.add(new Recipe(6L, "Potato so smetanka", getResources().getString(R.string.text_full_recipe_instruction), u4.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----4.jpg", 324));
     }
 }

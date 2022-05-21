@@ -86,7 +86,7 @@ public class RecipeViewFragment extends Fragment {
                             toggleBookmarks(false);
                             user.getRecipesBookmarked().remove(recipe);
                             break;
-                        case RecipeUtils.TAB_BOOKMARKS_UNCHECKED:
+                        case RecipeUtils.TAG_BOOKMARKS_UNCHECKED:
                             toggleBookmarks(true);
                             user.getRecipesBookmarked().add(recipe);
                             break;
@@ -131,7 +131,7 @@ public class RecipeViewFragment extends Fragment {
         binding.toolbarViewRecipe.setNavigationOnClickListener(view -> {
             NavHostFragment.findNavController(this).popBackStack();
         });
-        if (recipe.getAuthor().equals(userViewModel.getUser().getValue())) {
+        if (recipe.getAuthor().equals(userViewModel.getUser().getValue().getLogin())) {
             setHasOptionsMenu(true);
             binding.kuzyaRecipeView.setVisibility(View.GONE);
         } else {
@@ -225,7 +225,7 @@ public class RecipeViewFragment extends Fragment {
                 .with(requireContext())
                 .load(recipe.getImage())
                 .into(binding.imageViewFullRecipeImage);
-        binding.textViewFullRecipeUsername.setText(recipe.getAuthor().getLogin());
+        binding.textViewFullRecipeUsername.setText(recipe.getAuthor());
         String forks = Integer.toString(recipe.getForks());
         binding.textViewFullRecipeForksQuantity.setText(forks);
         binding.editTextFullRecipeDescription.setText(recipe.getDescription());
@@ -246,7 +246,7 @@ public class RecipeViewFragment extends Fragment {
             binding.imageViewFullRecipeIconBookmarks.setTag(RecipeUtils.TAG_BOOKMARKS_CHECKED);
         } else {
             binding.imageViewFullRecipeIconBookmarks.setImageResource(R.drawable.icon_bookmarks_unchecked);
-            binding.imageViewFullRecipeIconBookmarks.setTag(RecipeUtils.TAB_BOOKMARKS_UNCHECKED);
+            binding.imageViewFullRecipeIconBookmarks.setTag(RecipeUtils.TAG_BOOKMARKS_UNCHECKED);
         }
     }
 

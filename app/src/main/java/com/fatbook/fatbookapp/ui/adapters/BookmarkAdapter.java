@@ -38,7 +38,7 @@ public class BookmarkAdapter extends RecyclerView.Adapter<BookmarkAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe recipe = list.get(position);
         holder.tvTitle.setText(recipe.getName());
-        holder.tvAuthor.setText(recipe.getAuthor().getLogin());
+        holder.tvAuthor.setText(recipe.getAuthor());
         holder.tvForks.setText(recipe.getForks().toString());
 
         Glide

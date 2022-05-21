@@ -28,6 +28,9 @@ public interface NetworkInfoService {
     @POST("test/upload")
     Call<String> createNewUser(@Part MultipartBody.Part image);
 
+    @POST("user/create")
+    Call<String> createNewUser(@Body User user, @Query(value = "fat") String fat);
+
     @Multipart
     @POST("test/upload")
     Call<User> createNewUser(@Part RequestBody user, @Part MultipartBody.Part image);
@@ -56,6 +59,9 @@ public interface NetworkInfoService {
     Call<List<Ingredient>> getAllIngredients();
 
     @GET("feed")
-    Call<List<Recipe>> getFeedRecipeList();
+    Call<List<Recipe>> getFeed();
+
+    @GET("user/login")
+    Call<User> login(@Query(value = "login") String login, @Query(value = "fat") String fat);
 
 }

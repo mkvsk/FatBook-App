@@ -175,17 +175,17 @@ public class UserProfileFragment extends Fragment {
 
 
     private void getRecipeList(List<Recipe> recipes) {
-        recipes.add(new Recipe(1L, "PotatoChips", "qqqqq", user, Collections.emptyList(),
+        recipes.add(new Recipe(1L, "PotatoChips", "qqqqq", user.getLogin(), Collections.emptyList(),
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339));
-        recipes.add(new Recipe(2L, "Potato", "qqqqq", user, Collections.emptyList(),
+        recipes.add(new Recipe(2L, "Potato", "qqqqq", user.getLogin(), Collections.emptyList(),
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345));
-        recipes.add(new Recipe(13L, "fried PotatoChips", "qqqqq", user, Collections.emptyList(),
+        recipes.add(new Recipe(13L, "fried PotatoChips", "qqqqq", user.getLogin(), Collections.emptyList(),
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----1.jpg", 0));
-        recipes.add(new Recipe(11L, "creamy Potato", "sssss", user, Collections.emptyList(),
+        recipes.add(new Recipe(11L, "creamy Potato", "sssss", user.getLogin(), Collections.emptyList(),
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8));
-        recipes.add(new Recipe(1L, "Potatoes with kotletki", "asasasasasas", user, Collections.emptyList(),
+        recipes.add(new Recipe(1L, "Potatoes with kotletki", "asasasasasas", user.getLogin(), Collections.emptyList(),
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----6.jpg", 133349));
-        recipes.add(new Recipe(1L, "Potato so smetanka", "kkkkk", user, Collections.emptyList(),
+        recipes.add(new Recipe(1L, "Potato so smetanka", "kkkkk", user.getLogin(), Collections.emptyList(),
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----4.jpg", 324));
     }
 
