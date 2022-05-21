@@ -1,6 +1,6 @@
 <resources>
     ///login
-    <string name="app_name">FatBook</string>
+    <string name="app_name" translatable="false">FatBook</string>
     <string name="title_feed">Feed</string>
     <string name="title_add_recipe">Add recipe</string>
     <string name="title_user_profile">Profile</string>
