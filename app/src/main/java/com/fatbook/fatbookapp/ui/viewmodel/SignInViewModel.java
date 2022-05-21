@@ -9,11 +9,13 @@ import com.fatbook.fatbookapp.core.User;
 
 import java.util.List;
 
-public class LogInViewModel extends ViewModel {
+public class SignInViewModel extends ViewModel {
 
-    private final MutableLiveData<User> user = new MutableLiveData<User>();
+    private final MutableLiveData<User> user = new MutableLiveData<>();
 
-    private final MutableLiveData<Boolean> isFatValid = new MutableLiveData<Boolean>();
+    private final MutableLiveData<Boolean> isFatValid = new MutableLiveData<>();
+
+    private final MutableLiveData<Boolean> isLoginAvailable = new MutableLiveData<>();
 
     public void setUser(User user) {
         this.user.setValue(user);
@@ -29,6 +31,14 @@ public class LogInViewModel extends ViewModel {
 
     public LiveData<Boolean> getFatValid() {
         return isFatValid;
+    }
+
+    public void setLoginAvailable(Boolean available) {
+        this.isLoginAvailable.setValue(available);
+    }
+
+    public LiveData<Boolean> getLoginAvailable(){
+        return isLoginAvailable;
     }
 
 }

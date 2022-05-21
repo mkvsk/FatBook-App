@@ -20,10 +20,9 @@ import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.IngredientUnit;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.databinding.FragmentAddIngredientBinding;
-import com.fatbook.fatbookapp.ui.OnAddIngredientItemClickListener;
+import com.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAddIngredientAdapter;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
-import com.google.android.material.appbar.MaterialToolbar;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -65,8 +64,6 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
                 recipeIngredient.setIngredient(selectedIngredient);
                 recipeIngredient.setQuantity(Double.parseDouble(binding.editTextIngredientQuantity.getText().toString()));
                 recipeIngredient.setUnit(IngredientUnit.values()[binding.pickerIngredientUnit.getValue()]);
-
-
             } else {
                 //TODO OBRABOTAT' 0wibka
 

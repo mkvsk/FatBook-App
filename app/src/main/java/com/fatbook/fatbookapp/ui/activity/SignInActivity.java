@@ -16,8 +16,8 @@ import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
-import com.fatbook.fatbookapp.databinding.ActivityLogInBinding;
-import com.fatbook.fatbookapp.ui.viewmodel.LogInViewModel;
+import com.fatbook.fatbookapp.databinding.ActivitySignInBinding;
+import com.fatbook.fatbookapp.ui.viewmodel.SignInViewModel;
 import com.fatbook.fatbookapp.util.UserUtils;
 
 import java.util.ArrayList;
@@ -26,45 +26,45 @@ import java.util.List;
 import lombok.extern.java.Log;
 
 @Log
-public class LogInActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
-    private ActivityLogInBinding binding;
+    private ActivitySignInBinding binding;
 
-    private LogInViewModel logInViewModel;
+    private SignInViewModel signInViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityLogInBinding.inflate(getLayoutInflater());
+        binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        logInViewModel = new ViewModelProvider(this).get(LogInViewModel.class);
+        signInViewModel = new ViewModelProvider(this).get(SignInViewModel.class);
 
-        logInViewModel.getUser().observe(this, _user -> {
+        signInViewModel.getUser().observe(this, _user -> {
             if (_user != null) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra(UserUtils.TAG_USER, _user);
                 startActivity(intent);
                 finishAffinity();
             } else {
-                binding.editTextLogin.setBackground(AppCompatResources.getDrawable(this, R.drawable.round_corner_edittext_login_error));
-                binding.editTextPassword.setBackground(AppCompatResources.getDrawable(this, R.drawable.round_corner_edittext_login_error));
+                binding.editTextSignInLogin.setBackground(AppCompatResources.getDrawable(this, R.drawable.round_corner_edittext_login_error));
+                binding.editTextSignInPassword.setBackground(AppCompatResources.getDrawable(this, R.drawable.round_corner_edittext_login_error));
             }
         });
 
-        binding.buttonLogIn.setOnClickListener(view -> {
-            validateLogin(binding.editTextLogin.getText().toString(), binding.editTextPassword.getText().toString());
+        binding.buttonSignIn.setOnClickListener(view -> {
+            validateLogin(binding.editTextSignInLogin.getText().toString(), binding.editTextSignInPassword.getText().toString());
         });
 
-        binding.editTextLogin.addTextChangedListener(new TextWatcher() {
+        binding.editTextSignInLogin.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                binding.editTextLogin.setBackground(AppCompatResources.getDrawable(getBaseContext(), R.drawable.round_corner_edittext_login));
-                binding.editTextPassword.setBackground(AppCompatResources.getDrawable(getBaseContext(), R.drawable.round_corner_edittext_login));
+                binding.editTextSignInLogin.setBackground(AppCompatResources.getDrawable(getBaseContext(), R.drawable.round_corner_edittext_login));
+                binding.editTextSignInPassword.setBackground(AppCompatResources.getDrawable(getBaseContext(), R.drawable.round_corner_edittext_login));
             }
 
             @Override
@@ -119,6 +119,6 @@ public class LogInActivity extends AppCompatActivity {
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8));
 
         yourMom.setRecipesForked(recipes);
-        logInViewModel.setUser(yourMom);
+        signInViewModel.setUser(yourMom);
     }
 }

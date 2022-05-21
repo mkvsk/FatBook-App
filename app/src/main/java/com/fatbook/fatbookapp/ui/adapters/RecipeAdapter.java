@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.User;
-import com.fatbook.fatbookapp.ui.OnRecipeClickListener;
+import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
 import com.fatbook.fatbookapp.util.RecipeUtils;
 
 import java.util.List;

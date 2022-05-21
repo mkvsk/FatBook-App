@@ -1,7 +1,6 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,12 +22,11 @@ import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding;
-import com.fatbook.fatbookapp.ui.OnRecipeRevertDeleteListener;
+import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
 import com.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.RecipeUtils;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;

@@ -48,18 +48,18 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <EditText
-            android:id="@+id/editText_search_ingredient_to_recipe"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/round_feed_search"
-            android:fontFamily="@font/roboto_regular"
-            android:hint="@string/hint_search_recipe_feed"
-            android:lines="1"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:textColor="@color/color_blue_grey_600"
-            android:textSize="16sp" />
+<!--        <EditText-->
+<!--            android:id="@+id/editText_search_ingredient_to_recipe"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:background="@drawable/round_feed_search"-->
+<!--            android:fontFamily="@font/roboto_regular"-->
+<!--            android:hint="@string/hint_search_recipe_feed"-->
+<!--            android:lines="1"-->
+<!--            android:paddingStart="15dp"-->
+<!--            android:paddingEnd="15dp"-->
+<!--            android:textColor="@color/color_blue_grey_600"-->
+<!--            android:textSize="16sp" />-->
 
     </com.google.android.material.appbar.AppBarLayout>
 

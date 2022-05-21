@@ -24,6 +24,8 @@ public class SkipAdditionalInfoActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra(UserUtils.TAG_USER);
 
+        //TODO nice to meet you user.getLogin();
+
         binding.buttonSkip.setOnClickListener(view -> {
             navigateToMainActivity(false);
         });

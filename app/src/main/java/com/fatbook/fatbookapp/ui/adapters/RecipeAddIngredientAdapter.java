@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
-import com.fatbook.fatbookapp.ui.OnAddIngredientItemClickListener;
+import com.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener;
 
 import java.util.List;
 

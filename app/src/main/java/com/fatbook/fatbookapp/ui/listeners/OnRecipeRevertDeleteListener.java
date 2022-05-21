@@ -1,4 +1,4 @@
-package com.fatbook.fatbookapp.ui;
+package com.fatbook.fatbookapp.ui.listeners;
 
 import com.fatbook.fatbookapp.core.Recipe;
 

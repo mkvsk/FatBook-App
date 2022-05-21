@@ -19,6 +19,8 @@ import com.fatbook.fatbookapp.ui.adapters.AddRecipeAdapter;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,7 +60,7 @@ public class RecipeCreateFragment extends Fragment {
             recipe.setDescription(binding.editTextRecipeAddDescription.getText().toString());
             recipe.setAuthor(userViewModel.getUser().getValue().getLogin());
             recipe.setIngredients(Collections.emptyList());
-            recipe.setImage("");
+            recipe.setImage(StringUtils.EMPTY);
             recipe.setForks(0);
         });
 

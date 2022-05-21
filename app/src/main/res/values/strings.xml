@@ -7,7 +7,7 @@
     <string name="title_welcome_to">WELCOME TO</string>
     <string name="title_welcome_back_to">WELCOME BACK TO</string>
     <string name="title_fatbook_activity_login">FatBook</string>
-    <string name="title_button_login_googleplay">LOG IN</string>
+    <string name="title_button_sign_in">SIGN IN</string>
     <string name="tagline_fatbook">get your forks ready</string>
     <string name="tag_copyright">PotatoCorpⒸ2022</string>
     <string name="tag_version">v 1.0.0</string>
@@ -20,7 +20,8 @@
     <string name="title_fatbook_introduce">FatBook</string>
     <string name="text_dialog_introduce">Hello, Im Kuzya! \n How can I call you?</string>
     <string name="hint_username_introduce">Username</string>
-    <string name="text_requirements_introduce">*Allows only letters and numbers, max length 16 chars</string>
+    <string name="text_requirements_login">*Allows only letters and numbers, max length 16 chars</string>
+    <string name="text_requirements_password">*min length 8 chars</string>
     <string name="text_button_next_introduce">NEXT</string>
 
     ///skip additional info

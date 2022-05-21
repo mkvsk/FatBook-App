@@ -44,8 +44,8 @@ public interface NetworkInfoService {
     @GET("user/get-by-login")
     Call<User> getUser(@Query(value = "login") String login);
 
-    @GET("user/check-available-login")
-    Call<Void> checkAvailableLogin(@Query(value = "login") String login);
+    @GET("user/login/check")
+    Call<Boolean> loginCheck(@Query(value = "login") String login);
 
     /**
      *
