@@ -96,7 +96,12 @@ public class IngredientsFragment extends Fragment {
             RetrofitFactory.apiServiceClient().addIngredient(ingredientToAdd).enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                    log.log(Level.INFO, "ingredient save: SUCCESS");
+                    if (response.code() == 201) {
+                        Toast.makeText(requireContext(), "Ingredient added", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(requireContext(), "Ingredient with that name already exist", Toast.LENGTH_SHORT).show();
+                    }
+                    log.log(Level.INFO, "ingredient save: " + response.code());
                 }
 
                 @Override

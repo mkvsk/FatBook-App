@@ -22,14 +22,15 @@ import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding;
-import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
 import com.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter;
+import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.RecipeUtils;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIngredient {
@@ -50,6 +51,10 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
     private OnRecipeRevertDeleteListener onRecipeRevertDeleteListener;
 
+    private List<RecipeIngredient> ingredientListTemp;
+
+    private boolean addIngredient = false;
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -61,7 +66,9 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         });
 
         loadData();
+        setupAdapter();
         showData();
+        setupMenu();
 
         binding.imageViewFullRecipeFork.setOnClickListener(view1 -> {
                     String tag = (String) binding.imageViewFullRecipeFork.getTag();
@@ -92,7 +99,11 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                     }
                 }
         );
-        setupMenu();
+
+        binding.buttonFullRecipeIngredientAdd.setOnClickListener(view1 -> {
+            addIngredient = true;
+            NavHostFragment.findNavController(this).navigate(R.id.navigation_add_ingredient);
+        });
     }
 
     private void showDialog() {
@@ -101,7 +112,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                 .setMessage(getString(R.string.alert_dialog_delete_recipe_message))
                 .setPositiveButton(getResources().getString(R.string.alert_dialog_btn_ok), (dialogInterface, i) -> {
                     RecipeUtils.deleteRecipe(recipe);
-                    onConfirmDeleteRecipeClick();
+//                    onConfirmDeleteRecipeClick();
                 })
                 .setNegativeButton(getResources().getString(R.string.alert_dialog_btn_cancel), (dialogInterface, i) -> {
                     dialogInterface.dismiss();
@@ -145,12 +156,20 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.recipe_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        if (addIngredient) {
+            toggleEditMode(true);
+            addIngredient = false;
+            recipe.getIngredients().add(recipeViewModel.getSelectedRecipeIngredient().getValue());
+            adapter.setData(recipe.getIngredients());
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_recipe_edit:
+                ingredientListTemp = new ArrayList<>(recipe.getIngredients());
                 toggleEditMode(true);
                 return true;
             case R.id.menu_recipe_save:
@@ -200,7 +219,14 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
     private void cancelEdit() {
         toggleEditMode(false);
+        revertData();
+    }
+
+    private void revertData() {
+        recipe.setIngredients(ingredientListTemp);
         showData();
+        adapter.setData(recipe.getIngredients());
+        adapter.notifyDataSetChanged();
     }
 
     private void changeMenuItemsVisibility(boolean edit, boolean save, boolean cancel, boolean delete) {
@@ -230,17 +256,16 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                 .load(recipe.getImage())
                 .into(binding.imageViewFullRecipeImage);
         binding.textViewFullRecipeUsername.setText(recipe.getAuthor());
-        String forks = Integer.toString(recipe.getForks());
-        binding.textViewFullRecipeForksQuantity.setText(forks);
+        binding.textViewFullRecipeForksQuantity.setText(Integer.toString(recipe.getForks()));
         binding.editTextFullRecipeDescription.setText(recipe.getDescription());
+
         toggleBookmarks(user.getRecipesBookmarked().contains(recipe));
         toggleForks(user.getRecipesForked().contains(recipe));
-        setupAdapter(recipe.getIngredients());
     }
 
-    private void setupAdapter(List<RecipeIngredient> ingredients) {
+    private void setupAdapter() {
         RecyclerView recyclerView = binding.rvRecipeViewIngredients;
-        adapter = new ViewRecipeIngredientAdapter(binding.getRoot().getContext(), ingredients, this);
+        adapter = new ViewRecipeIngredientAdapter(binding.getRoot().getContext(), recipe.getIngredients(), this);
         recyclerView.setAdapter(adapter);
     }
 
