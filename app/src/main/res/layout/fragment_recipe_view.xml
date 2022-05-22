@@ -172,6 +172,7 @@
                 android:maxHeight="220dp"
                 android:clipToPadding="false"
                 android:overScrollMode="never"
+                android:paddingBottom="15dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

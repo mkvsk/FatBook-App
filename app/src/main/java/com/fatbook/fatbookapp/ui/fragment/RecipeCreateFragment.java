@@ -15,17 +15,16 @@ import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.databinding.FragmentRecipeCreateBinding;
-import com.fatbook.fatbookapp.ui.adapters.AddRecipeAdapter;
+import com.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter;
+import com.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-public class RecipeCreateFragment extends Fragment {
+public class RecipeCreateFragment extends Fragment implements OnRecipeViewDeleteIngredient {
 
     private FragmentRecipeCreateBinding binding;
 
@@ -35,9 +34,7 @@ public class RecipeCreateFragment extends Fragment {
 
     private Recipe recipe;
 
-    private List<RecipeIngredient> ingredients;
-
-    private AddRecipeAdapter adapter;
+    private ViewRecipeIngredientAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,9 +46,6 @@ public class RecipeCreateFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recipe = new Recipe();
-        ingredients = new ArrayList<>();
-
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
 
@@ -60,10 +54,8 @@ public class RecipeCreateFragment extends Fragment {
         binding.buttonRecipeAddSave.setOnClickListener(_view -> {
             recipe.setName(binding.editTextRecipeAddTitle.getText().toString());
             recipe.setDescription(binding.editTextRecipeAddDescription.getText().toString());
-            recipe.setAuthor(userViewModel.getUser().getValue().getLogin());
-            recipe.setIngredients(Collections.emptyList());
             recipe.setImage(StringUtils.EMPTY);
-            recipe.setForks(0);
+            recipe.setAuthor(userViewModel.getUser().getValue().getLogin());
         });
 
         binding.buttonRecipeAddIngredientAdd.setOnClickListener(_view -> {
@@ -73,19 +65,31 @@ public class RecipeCreateFragment extends Fragment {
         setupAdapter();
     }
 
+    private void initRecipe() {
+        recipe = new Recipe();
+        recipe.setIngredients(new ArrayList<>());
+        recipe.setForks(0);
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         if (recipeViewModel.getSelectedRecipeIngredient().getValue() != null) {
+            recipe.getIngredients().add(recipeViewModel.getSelectedRecipeIngredient().getValue());
+            adapter.setData(recipe.getIngredients());
+            adapter.notifyDataSetChanged();
             recipeViewModel.setSelectedRecipeIngredient(null);
         } else {
         }
     }
 
     private void setupAdapter() {
+        if (recipe == null) {
+            initRecipe();
+        }
         RecyclerView recyclerView = binding.rvRecipeAddIngredients;
-        adapter = new AddRecipeAdapter(binding.getRoot().getContext(), ingredients);
+        adapter = new ViewRecipeIngredientAdapter(binding.getRoot().getContext(), recipe.getIngredients(), this);
+        adapter.setEditMode(true);
         recyclerView.setAdapter(adapter);
     }
 
@@ -93,5 +97,12 @@ public class RecipeCreateFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onDeleteIngredientClick(RecipeIngredient recipeIngredient, int position) {
+        recipe.getIngredients().remove(recipeIngredient);
+        adapter.setData(recipe.getIngredients());
+        adapter.notifyItemRemoved(position);
     }
 }
