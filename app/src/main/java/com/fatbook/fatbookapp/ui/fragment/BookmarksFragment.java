@@ -40,7 +40,7 @@ public class BookmarksFragment extends Fragment {
         binding.swipeRefreshBookmarks.setColorSchemeColors(
                 getResources().getColor(R.color.color_pink_a200));
         binding.swipeRefreshBookmarks.setOnRefreshListener(() -> {
-            Toast.makeText(binding.getRoot().getContext(), "refreshed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(binding.getRoot().getContext(), R.string.toast_refreshed, Toast.LENGTH_SHORT).show();
             binding.swipeRefreshBookmarks.setRefreshing(false);
         });
 

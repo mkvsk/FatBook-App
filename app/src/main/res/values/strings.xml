@@ -1,35 +1,47 @@
 <resources>
-    ///login
+    ///app
     <string name="app_name" translatable="false">FatBook</string>
-    <string name="title_feed">Feed</string>
+    <string name="tagline_fatbook">get your forks ready</string>
+    <string name="tag_copyright" translatable="false">PotatoCorpⒸ2022</string>
+    <string name="tag_version" translatable="false">v 1.0.0</string>
+
+    ///login
     <string name="title_add_recipe">Add recipe</string>
     <string name="title_user_profile">Profile</string>
+
+    ///activity sign in
+    <string name="title_fatbook_a_sign_in" translatable="false">FatBook</string>
+    <string name="title_welcome_back_to_sign_in">WELCOME BACK TO</string>
+    <string name="title_fatbook_activity_login" translatable="false">FatBook</string>
+    <string name="btn_sign_in_a_sign_in">SIGN IN</string>
+
+    ///activity welcome
     <string name="title_welcome_to">WELCOME TO</string>
-    <string name="title_welcome_back_to">WELCOME BACK TO</string>
-    <string name="title_fatbook_activity_login">FatBook</string>
-    <string name="title_button_sign_in">SIGN IN</string>
-    <string name="tagline_fatbook">get your forks ready</string>
-    <string name="tag_copyright">PotatoCorpⒸ2022</string>
-    <string name="tag_version">v 1.0.0</string>
+    <string name="btn_sign_in_welcome_to">SIGN IN</string>
+    <string name="title_fatbook_a_welcome" translatable="false">FatBook</string>
+    <string name="btn_register_welcome_to">Register</string>
 
-    <string name="hint_password">Password</string>
-    <string name="text_dialog_password">Set the password for the account. \n Just do not forget it!</string>
-
-    ///introduce
-    <string name="title_login_introduce">LOGIN</string>
-    <string name="title_fatbook_introduce">FatBook</string>
-    <string name="text_dialog_introduce">Hello, Im Kuzya! \n How can I call you?</string>
-    <string name="hint_username_introduce">Username</string>
+    ///activity login
+    <string name="title_fatbook_a_login" translatable="false">FatBook</string>
+    <string name="cat_dialog_login">Hello, Im Kuzya! \n How can I call you?</string>
+    <string name="hint_username_login">Username</string>
     <string name="text_requirements_login">*Allows only letters and numbers, max length 16 chars</string>
-    <string name="text_requirements_password">*min length 8 chars</string>
-    <string name="text_button_next_introduce">NEXT</string>
+    <string name="btn_next_login">NEXT</string>
 
-    ///skip additional info
+    ///activity password
+    <string name="title_fatbook_a_password" translatable="false">FatBook</string>
+    <string name="cat_dialog_password">Set the password for the account. \n Just do not forget it!</string>
+    <string name="hint_password_password">Password</string>
+    <string name="text_requirements_password">*min length 8 chars, max length 16 chars</string>
+    <string name="btn_next_password">NEXT</string>
+
+
+    ///activity skip additional info
     <string name="title_new_cook_in_skip_add">NEW COOK IN</string>
-    <string name="title_fatbook_skip_add">FatBook</string>
-    <string name="text_dialog_skip_add">Nice to meet you, USERNAME!\n Do you want to tell about \n yourself?</string>
-    <string name="text_button_yeah_go_skip_add">YEAH, GO!</string>
-    <string name="text_button_no_later_skip_add">LATER</string>
+    <string name="title_fatbook_skip_add" translatable="false">FatBook</string>
+    <string name="cat_dialog_skip_add">Nice to meet you, %s!\n Do you want to tell about yourself?</string>
+    <string name="btn_yeah_go_skip_add">YEAH, GO!</string>
+    <string name="btn_no_later_skip_add">LATER</string>
 
     ///fill additional info
     <string name="title_username_fill_add_info">Username</string>
@@ -40,31 +52,31 @@
     <string name="text_button_save_fill_add_info">SAVE</string>
 
     ///fat user profile
-    <string name="title_username_profile">Username</string>
+    <string name="toolbar_username_profile">Username</string>
     <string name="text_fullname_profile">Firstname Secondname</string>
     <string name="text_birthday">Eating Birthday cake: </string>
     <string name="text_bio_profile">Write your bio</string>
     <string name="title_my_recipes_profile">My recipes:</string>
 
     ///feed
-    <string name="title_recipes_feed">Recipes</string>
+    <string name="toolbar_recipes_feed">Recipes</string>
     <string name="hint_search_recipe_feed">search...</string>
 
     ///rv feed recipe card preview
     <string name="title_recipe_preview_rv">Recipe title</string>
-    <string name="title_recipe_preview_author">by</string>
-    <string name="text_recipe_preview_tags">#pastries #desserts</string>
-    <string name="value_recipe_preview_forks_avg">1339</string>
+    <string name="title_recipe_preview_by_rv">by</string>
+    <string name="title_recipe_preview_author_rv">recipe author</string>
+    <string name="value_recipe_preview_forks_amount_rv" translatable="false">1339</string>
 
-    ///add recipe
+    ///fragment recipe create
+    <string name="toolbar_recipe_create">New recipe</string>
     <string name="hint_add_recipe_title">Recipe title</string>
     <string name="title_add_recipe_category">Recipe categories:</string>
-    <string name="hint_add_recipe_categories">#foodcategorytag</string>
     <string name="title_add_recipe_photo">Tasty photo:</string>
     <string name="title_add_recipe_ingredients">Ingredients:</string>
     <string name="title_add_recipe_description">Recipe:</string>
     <string name="hint_add_recipe_description">Сooking method</string>
-    <string name="text_add_recipe_button_save">SAVE</string>
+    <string name="btn_save_recipe_create">SAVE</string>
 
     ///rv add recipe ingredients
     <string name="hint_rv_add_new_recipe_ingredient">Milk</string>
@@ -72,31 +84,38 @@
     <string name="title_add_ingredients_and_qtt">Add ingredient</string>
     <string name="text_add">add</string>
     <string name="hint_quantity">quantity</string>
-    <string name="text_select_ingredient">Select ingredient</string>
+    <string name="text_select_ingredient">select ingredient</string>
 
     ///rv add new ingredient
     <string name="text_existing_ingredient">Existing Ingredient</string>
+    
+    ///fragment ingredients
+    <string name="toolbar_ingredients">Ingredients</string>
+
+    ///fragment bookmarks
+    <string name="toolbar_bookmarks">Bookmarks</string>
+
 
     ///fragment full recipe
-    <string name="title_full_recipe_header">Recipe title</string>
+    <string name="toolbar_full_recipe">Full description</string>
+    <string name="title_full_recipe_title">Recipe title</string>
     <string name="title_full_recipe_by">By:</string>
-    <string name="title_full_recipe_username">Username</string>
-    <string name="full_recipe_tags">#foodcategorytag #testtesttest #testtesttest #testtesttest #testtesttest #testtesttest #testtesttest #testtesttest</string>
-    <string name="full_recipe_forks_quantity">123456</string>
+    <string name="title_full_recipe_author">Username</string>
+    <string name="value_full_recipe_forks_quantity" translatable="false">123456</string>
     <string name="title_full_recipe_ingredients">Ingredients:</string>
     <string name="title_full_recipe_instruction">Recipe:</string>
     <string name="text_full_recipe_instruction">1)Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at neque et neque malesuada ultrices sit amet nec lectus. Proin scelerisque feugiat tincidunt. Suspendisse vel. 2)Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at neque et neque malesuada ultrices sit amet nec lectus. Proin scelerisque feugiat tincidunt. Suspendisse vel.</string>
-    <string name="text_potatocorp_suggestion">If you liked this recipe, don\'t forget to thank the author. Press on fork</string>
 
     ///rv recipe view ingredient
     <string name="title_recipe_view_ingredient">Ingredient</string>
 
     ///bottom nav menu
-    <string name="nav_feed">Feed</string>
-    <string name="nav_ingredients">Ingredients</string>
-    <string name="nav_recipe_create">Create recipe</string>
-    <string name="nav_bookmarks">Bookmarks</string>
-    <string name="nav_user_profile">Profile</string>
+    <string name="nav_feed" translatable="false">Feed</string>
+    <string name="nav_ingredients" translatable="false">Ingredients</string>
+    <string name="nav_recipe_create" translatable="false">Create recipe</string>
+    <string name="nav_bookmarks" translatable="false">Bookmarks</string>
+    <string name="nav_user_profile" translatable="false">Profile</string>
+    <string name="nav_new_recipe" translatable="false">New recipe</string>
 
     ///dialog_add_ingredient
     <string name="hint_dialog_add_ingredient">Suggest ingredient</string>
@@ -120,8 +139,53 @@
     <string name="menu_user_profile_cancel">Cancel</string>
     <string name="undo_string">Undo</string>
 
-    <string name="alert_dialog_delete_recipe_title">A</string>
-    <string name="alert_dialog_delete_recipe_message">B</string>
+    <string name="alert_dialog_delete_recipe_title">DELETE RECIPE</string>
+    <string name="alert_dialog_delete_recipe_message">Are you sure?</string>
 
+    //enum IngredientUnit
+    //GRAM
+    <string name="IngredientUnit_GRAM_SINGLE_NAMING">Gram</string>
+    <string name="IngredientUnit_GRAM_MULTIPLY_NAMING">Grams</string>
+    <string name="IngredientUnit_GRAM_DISPLAY_NAME">g</string>
+    //TABLE_SPOON
+    <string name="IngredientUnit_TABLE_SPOON_SINGLE_NAMING">Table spoon</string>
+    <string name="IngredientUnit_TABLE_SPOON_MULTIPLY_NAMING">Table spoons</string>
+    <string name="IngredientUnit_TABLE_SPOON_DISPLAY_NAME">tbs</string>
+    //TEA_SPOON
+    <string name="IngredientUnit_TEA_SPOON_SINGLE_NAMING">Tea spoon</string>
+    <string name="IngredientUnit_TEA_SPOON_MULTIPLY_NAMING">Tea spoons</string>
+    <string name="IngredientUnit_TEA_SPOON_DISPLAY_NAME">tsp</string>
+    //PCS
+    <string name="IngredientUnit_PCS_SINGLE_NAMING">Piece</string>
+    <string name="IngredientUnit_PCS_MULTIPLY_NAMING">Pieces</string>
+    <string name="IngredientUnit_PCS_DISPLAY_NAME">pcs</string>
+    //ML
+    <string name="IngredientUnit_ML_SINGLE_NAMING">Milliliter</string>
+    <string name="IngredientUnit_ML_MULTIPLY_NAMING">Milliliters</string>
+    <string name="IngredientUnit_ML_DISPLAY_NAME">ml</string>
+
+    //in code
+    <string name="ERROR_CREATING_USER" translatable="false">ERROR CREATING USER</string>
+    <string name="toast_refreshed">refreshed</string>
+    <string name="snackbar_recipe_deleted">Recipe deleted</string>
+    <string name="snackbar_edit">Edit</string>
+    <string name="snackbar_saved">Saved</string>
+    <string name="snackbar_end_edit">End edit</string>
+
+    //alert dialog
+    <string name="title_add_ingredient_alert_dialog">Add ingredient</string>
+
+    //
+    <string name="hint_recipe_by_rv_bookmarks">Author</string>
+    <string name="hint_recipe_by_rv_profile_my_recipes">Author</string>
+
+    //mobile navigation
+    <string name="mobile_nav_feed" translatable="false">Feed</string>
+    <string name="mobile_nav_ingredients" translatable="false">Ingredients</string>
+    <string name="mobile_nav_recipe_create" translatable="false">Add recipe</string>
+    <string name="mobile_nav_bookmarks" translatable="false">Bookmarks</string>
+    <string name="mobile_nav_user_profile" translatable="false">Profile</string>
+    <string name="mobile_nav_recipe_view" translatable="false">View Recipe</string>
+    <string name="mobile_nav_recipe_add_ingredient" translatable="false">Add ingredient</string>
 
 </resources>

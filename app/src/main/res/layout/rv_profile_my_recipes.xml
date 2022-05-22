@@ -32,7 +32,7 @@
 
     <TextView
         android:id="@+id/textView_rv_card_recipe_title"
-        android:layout_width="220dp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:lines="2"
         android:fontFamily="@font/roboto_bold"
@@ -50,7 +50,7 @@
         android:lines="1"
         app:layout_constraintTop_toBottomOf="@id/textView_rv_card_recipe_title"
         app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_title"
-        android:text="@string/title_recipe_preview_author"
+        android:text="@string/title_recipe_preview_by_rv"
         android:fontFamily="@font/roboto_regular"
         android:textSize="11sp"
         android:textColor="@color/color_blue_grey_600"/>
@@ -61,9 +61,9 @@
         android:layout_height="wrap_content"
         android:lines="1"
         android:layout_marginStart="3dp"
-        app:layout_constraintTop_toBottomOf="@id/textView_rv_card_recipe_title"
+        app:layout_constraintTop_toTopOf="@id/textView_rv_card_recipe_author_by"
         app:layout_constraintLeft_toRightOf="@id/textView_rv_card_recipe_author_by"
-        android:text="Neshik"
+        android:text="@string/hint_recipe_by_rv_profile_my_recipes"
         android:fontFamily="@font/roboto_regular"
         android:textSize="11sp"
         android:textColor="@color/color_blue_grey_600"/>
@@ -105,7 +105,7 @@
         app:layout_constraintRight_toLeftOf="@id/imageView_rv_card_recipe_fork"
         app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo"
         android:layout_marginRight="5dp"
-        android:text="@string/value_recipe_preview_forks_avg"
+        android:text="@string/value_recipe_preview_forks_amount_rv"
         android:fontFamily="@font/roboto_medium"
         android:textSize="9sp"
         android:textColor="@color/color_blue_grey_200"/>

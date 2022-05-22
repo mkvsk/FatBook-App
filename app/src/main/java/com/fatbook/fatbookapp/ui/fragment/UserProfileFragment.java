@@ -94,20 +94,20 @@ public class UserProfileFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_user_profile_edit:
-                Snackbar.make(binding.getRoot(), "Edit", Snackbar.LENGTH_SHORT)
+                Snackbar.make(binding.getRoot(), R.string.snackbar_edit, Snackbar.LENGTH_SHORT)
                         .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
                 changeMenuItemsVisibility(false, true, true);
                 editMode(true);
                 return true;
             case R.id.menu_user_profile_save:
-                Snackbar.make(binding.getRoot(), "Saved", Snackbar.LENGTH_SHORT)
+                Snackbar.make(binding.getRoot(), R.string.snackbar_saved, Snackbar.LENGTH_SHORT)
                         .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
                 confirmEdit();
                 editMode(false);
                 changeUserData();
                 return true;
             case R.id.menu_user_profile_cancel:
-                Snackbar.make(binding.getRoot(), "End edit", Snackbar.LENGTH_SHORT)
+                Snackbar.make(binding.getRoot(), R.string.snackbar_end_edit, Snackbar.LENGTH_SHORT)
                         .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
                 cancelEdit();
                 editMode(false);
