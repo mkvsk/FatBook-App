@@ -64,4 +64,7 @@ public interface NetworkInfoService {
     @GET("user/login")
     Call<User> login(@Query(value = "login") String login, @Query(value = "fat") String fat);
 
+    @POST("recipe/create")
+    Call<Void> recipeCreate(@Body Recipe recipe);
+
 }

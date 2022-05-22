@@ -55,7 +55,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
 
         userViewModel.getUser().observe(getViewLifecycleOwner(), userUpdated -> {
             user = userUpdated;
-            loadData();
+//            loadData();
         });
 
         binding.swipeRefreshBookmarks.setColorSchemeColors(getResources().getColor(R.color.color_pink_a200));
@@ -163,11 +163,11 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
 
     private void getFakeRecipeList(List<Recipe> recipes) {
         List<RecipeIngredient> ingredientList = new ArrayList<>();
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(1L, "potato"), IngredientUnit.PCS, 1.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(2L, "milk"), IngredientUnit.ML, 500.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(3L, "eggs"), IngredientUnit.PCS, 2.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(4L, "bread"), IngredientUnit.PCS, 3.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(5L, "cheese"), IngredientUnit.GRAM, 250.0));
+        ingredientList.add(new RecipeIngredient(null, new Ingredient(411L, "тестовый ингредиент"), IngredientUnit.PCS, 1.0));
+//        ingredientList.add(new RecipeIngredient(null, new Ingredient(361L, "Батат"), IngredientUnit.ML, 500.0));
+//        ingredientList.add(new RecipeIngredient(null, new Ingredient(326L, "Говядина"), IngredientUnit.PCS, 2.0));
+        ingredientList.add(new RecipeIngredient(null, new Ingredient(308L, "Масло"), IngredientUnit.PCS, 3.0));
+        ingredientList.add(new RecipeIngredient(null, new Ingredient(314L, "Молоко"), IngredientUnit.GRAM, 250.0));
 
         User u1 = new User();
         u1.setLogin("u1");
@@ -178,17 +178,17 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         User u4 = new User();
         u4.setLogin("u4");
 
-        recipes.add(new Recipe(1L, "PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u1.getLogin(), ingredientList,
+        recipes.add(new Recipe(null, "PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u1.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339));
-        recipes.add(new Recipe(2L, "Potato", getResources().getString(R.string.text_full_recipe_instruction), user.getLogin(), ingredientList,
+        recipes.add(new Recipe(414L, "Potato", getResources().getString(R.string.text_full_recipe_instruction), user.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345));
-        recipes.add(new Recipe(3L, "fried PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u2.getLogin(), ingredientList,
+        recipes.add(new Recipe(null, "fried PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u2.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----1.jpg", 0));
-        recipes.add(new Recipe(4L, "creamy Potato", getResources().getString(R.string.text_full_recipe_instruction), user.getLogin(), ingredientList,
+        recipes.add(new Recipe(437L, "creamy Potato", getResources().getString(R.string.text_full_recipe_instruction), user.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8));
-        recipes.add(new Recipe(5L, "Potatoes with kotletki", getResources().getString(R.string.text_full_recipe_instruction), u3.getLogin(), ingredientList,
+        recipes.add(new Recipe(null, "Potatoes with kotletki", getResources().getString(R.string.text_full_recipe_instruction), u3.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----6.jpg", 133349));
-        recipes.add(new Recipe(6L, "Potato so smetanka", getResources().getString(R.string.text_full_recipe_instruction), u4.getLogin(), ingredientList,
+        recipes.add(new Recipe(null, "Potato so smetanka", getResources().getString(R.string.text_full_recipe_instruction), u4.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----4.jpg", 324));
     }
 }

@@ -105,11 +105,12 @@ public class SignInActivity extends AppCompatActivity {
         yourMom.setRegDate("2022-05-20");
         yourMom.setBirthday("1975-03-09");
         List<RecipeIngredient> ingredientList = new ArrayList<>();
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(1L, "potato"), IngredientUnit.PCS, 1.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(2L, "milk"), IngredientUnit.ML, 500.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(3L, "eggs"), IngredientUnit.PCS, 2.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(4L, "bread"), IngredientUnit.PCS, 3.0));
-        ingredientList.add(new RecipeIngredient(1L, null, new Ingredient(5L, "cheese"), IngredientUnit.GRAM, 250.0));
+
+        ingredientList.add(new RecipeIngredient(null, new Ingredient(1L, "potato"), IngredientUnit.PCS, 1.0));
+        ingredientList.add(new RecipeIngredient(null, new Ingredient(2L, "milk"), IngredientUnit.ML, 500.0));
+        ingredientList.add(new RecipeIngredient(null, new Ingredient(3L, "eggs"), IngredientUnit.PCS, 2.0));
+        ingredientList.add(new RecipeIngredient(null, new Ingredient(4L, "bread"), IngredientUnit.PCS, 3.0));
+        ingredientList.add(new RecipeIngredient(null, new Ingredient(5L, "cheese"), IngredientUnit.GRAM, 250.0));
 
         List<Recipe> recipes = new ArrayList<>();
 
@@ -118,6 +119,7 @@ public class SignInActivity extends AppCompatActivity {
         recipes.add(new Recipe(4L, "creamy Potato", getResources().getString(R.string.text_full_recipe_instruction), yourMom.getLogin(), ingredientList,
                 "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8));
 
+        yourMom.setRecipes(recipes);
         yourMom.setRecipesForked(recipes);
         signInViewModel.setUser(yourMom);
     }

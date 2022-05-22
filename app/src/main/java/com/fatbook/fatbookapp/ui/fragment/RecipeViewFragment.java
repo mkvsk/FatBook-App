@@ -22,6 +22,7 @@ import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding;
+import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;
@@ -32,6 +33,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIngredient {
 
@@ -215,6 +221,17 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
     private void saveRecipe() {
         RecipeUtils.saveRecipe(recipe);
+        RetrofitFactory.apiServiceClient().recipeCreate(recipe).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                System.out.println();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println();
+            }
+        });
     }
 
     private void cancelEdit() {
