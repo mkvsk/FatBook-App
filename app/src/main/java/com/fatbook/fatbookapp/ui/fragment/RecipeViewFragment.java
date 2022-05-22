@@ -121,7 +121,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     }
 
     private void onConfirmDeleteRecipeClick() {
-        Snackbar.make(requireActivity().findViewById(R.id.container), "Recipe deleted", Snackbar.LENGTH_SHORT)
+        Snackbar.make(requireActivity().findViewById(R.id.container), R.string.snackbar_recipe_deleted, Snackbar.LENGTH_SHORT)
                 .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation))
                 .setAction(R.string.undo_string, view -> {
                     onRecipeRevertDeleteListener.onRecipeRevertDeleteClick(recipe);

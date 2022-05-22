@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.ui.activity.MainActivity;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.util.UserUtils;
@@ -41,7 +42,7 @@ public class FillAdditionalInfoViewModel extends AndroidViewModel {
             intent.putExtra(UserUtils.TAG_USER, user);
             view.getContext().startActivity(intent);
         } else {
-            Toast.makeText(getApplication(), "ERROR CREATING USER", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), R.string.ERROR_CREATING_USER, Toast.LENGTH_SHORT).show();
         }
     }
 }

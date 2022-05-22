@@ -23,7 +23,7 @@
             app:navigationIcon="@drawable/arrow_left"
             app:navigationIconTint="@color/color_blue_grey_600"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="Full recipe"
+            app:title="@string/toolbar_full_recipe"
             app:titleTextColor="@color/color_blue_grey_600">
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -83,7 +83,7 @@
                 android:gravity="start"
                 android:minLines="1"
                 android:maxLines="2"
-                android:text="@string/hint_add_recipe_title"
+                android:text="@string/title_full_recipe_title"
                 android:textAlignment="textStart"
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="18sp"
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="@string/title_full_recipe_username"
+                android:text="@string/title_full_recipe_author"
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/textView_full_recipe_by_label"
@@ -147,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
-                android:text="@string/full_recipe_forks_quantity"
+                android:text="@string/value_full_recipe_forks_quantity"
                 android:textColor="@color/color_blue_grey_200"
                 android:textSize="9sp"
                 app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_fork"

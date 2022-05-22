@@ -33,7 +33,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="Recipes"
+            app:title="@string/toolbar_recipes_feed"
             app:titleTextColor="@color/color_blue_grey_600">
 
             <com.google.android.material.imageview.ShapeableImageView

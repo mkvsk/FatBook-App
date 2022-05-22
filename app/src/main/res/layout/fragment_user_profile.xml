@@ -22,7 +22,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="Username"
+            app:title="@string/toolbar_username_profile"
             app:titleTextColor="@color/color_blue_grey_600" >
 
         </com.google.android.material.appbar.MaterialToolbar>
@@ -155,6 +155,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/textView_profile_recipes_title"
             android:paddingTop="15dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/rv_profile_my_recipes" />
 

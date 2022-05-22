@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivitySkipAdditionalInfoBinding;
 import com.fatbook.fatbookapp.util.UserUtils;
@@ -24,7 +25,8 @@ public class SkipAdditionalInfoActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra(UserUtils.TAG_USER);
 
-        //TODO nice to meet you user.getLogin();
+        String dialog = getResources().getString(R.string.cat_dialog_skip_add);
+        binding.textViewSkipAddCatDialog.setText(String.format(dialog, user.getLogin()));
 
         binding.buttonSkip.setOnClickListener(view -> {
             navigateToMainActivity(false);

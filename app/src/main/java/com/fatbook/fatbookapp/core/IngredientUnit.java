@@ -5,6 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 public enum IngredientUnit {
+    //TODO ingredient units string res
 
     GRAM("Gram", "Gram", "g"),
     TABLE_SPOON("Table spoon", "Table spoons", "tbs"),
