@@ -24,6 +24,7 @@ import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
 import com.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter;
+import com.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.RecipeUtils;
@@ -31,7 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
-public class RecipeViewFragment extends Fragment {
+public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIngredient {
 
     private FragmentRecipeViewBinding binding;
 
@@ -96,8 +97,8 @@ public class RecipeViewFragment extends Fragment {
 
     private void showDialog() {
         new AlertDialog.Builder(getContext())
-                .setTitle("A")
-                .setMessage("B")
+                .setTitle(getString(R.string.alert_dialog_delete_recipe_title))
+                .setMessage(getString(R.string.alert_dialog_delete_recipe_message))
                 .setPositiveButton(getResources().getString(R.string.alert_dialog_btn_ok), (dialogInterface, i) -> {
                     RecipeUtils.deleteRecipe(recipe);
                     onConfirmDeleteRecipeClick();
@@ -207,6 +208,11 @@ public class RecipeViewFragment extends Fragment {
         binding.toolbarViewRecipe.getMenu().findItem(R.id.menu_recipe_save).setVisible(save);
         binding.toolbarViewRecipe.getMenu().findItem(R.id.menu_recipe_cancel).setVisible(cancel);
         binding.toolbarViewRecipe.getMenu().findItem(R.id.menu_recipe_delete).setVisible(delete);
+        if (!edit) {
+            binding.buttonFullRecipeIngredientAdd.setVisibility(View.VISIBLE);
+        } else {
+            binding.buttonFullRecipeIngredientAdd.setVisibility(View.GONE);
+        }
     }
 
     private void loadData() {
@@ -234,7 +240,7 @@ public class RecipeViewFragment extends Fragment {
 
     private void setupAdapter(List<RecipeIngredient> ingredients) {
         RecyclerView recyclerView = binding.rvRecipeViewIngredients;
-        adapter = new ViewRecipeIngredientAdapter(binding.getRoot().getContext(), ingredients);
+        adapter = new ViewRecipeIngredientAdapter(binding.getRoot().getContext(), ingredients, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -268,5 +274,13 @@ public class RecipeViewFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onDeleteIngredientClick(RecipeIngredient recipeIngredient, int position) {
+        recipe.getIngredients().remove(recipeIngredient);
+        adapter.setData(recipe.getIngredients());
+        adapter.notifyItemRemoved(position);
+//        adapter.notifyDataSetChanged();
     }
 }

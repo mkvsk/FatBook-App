@@ -15,6 +15,8 @@ public class RecipeViewModel extends ViewModel {
 
     private final MutableLiveData<List<RecipeIngredient>> selectedRecipeIngredients = new MutableLiveData<>();
 
+    private final MutableLiveData<RecipeIngredient> selectedRecipeIngredient = new MutableLiveData<>();
+
     public void setRecipe(Recipe recipe) {
         this.recipe.setValue(recipe);
     }
@@ -33,5 +35,13 @@ public class RecipeViewModel extends ViewModel {
 
     public void addIngredient(RecipeIngredient ingredient) {
         selectedRecipeIngredients.getValue().add(ingredient);
+    }
+
+    public void setSelectedRecipeIngredient(RecipeIngredient ingredient) {
+        this.selectedRecipeIngredient.setValue(ingredient);
+    }
+
+    public LiveData<RecipeIngredient> getSelectedRecipeIngredient() {
+        return selectedRecipeIngredient;
     }
 }

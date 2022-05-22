@@ -37,6 +37,8 @@ public class RecipeCreateFragment extends Fragment {
 
     private List<RecipeIngredient> ingredients;
 
+    private AddRecipeAdapter adapter;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -71,9 +73,19 @@ public class RecipeCreateFragment extends Fragment {
         setupAdapter();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (recipeViewModel.getSelectedRecipeIngredient().getValue() != null) {
+            recipeViewModel.setSelectedRecipeIngredient(null);
+        } else {
+        }
+    }
+
     private void setupAdapter() {
         RecyclerView recyclerView = binding.rvRecipeAddIngredients;
-        AddRecipeAdapter adapter = new AddRecipeAdapter(binding.getRoot().getContext(), ingredients);
+        adapter = new AddRecipeAdapter(binding.getRoot().getContext(), ingredients);
         recyclerView.setAdapter(adapter);
     }
 

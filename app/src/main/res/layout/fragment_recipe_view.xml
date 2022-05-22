@@ -169,6 +169,7 @@
                 android:id="@+id/rv_recipe_view_ingredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxHeight="220dp"
                 android:clipToPadding="false"
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -176,6 +177,21 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textView_full_recipe_view_label"
                 tools:listitem="@layout/rv_add_new_recipe_ingredients" />
+
+            <ImageButton
+                android:visibility="gone"
+                android:id="@+id/button_full_recipe_ingredient_add"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/color_lime_500"
+                android:elevation="4dp"
+                android:src="@drawable/icon_plus"
+                android:translationZ="2dp"
+                android:stateListAnimator="@null"
+                android:layout_marginStart="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_recipe_view_ingredients" />
 
             <TextView
                 android:id="@+id/textView_full_recipe_instruction_label"
@@ -187,7 +203,7 @@
                 android:textColor="@color/color_blue_grey_200"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="@id/textView_full_recipe_view_label"
-                app:layout_constraintTop_toBottomOf="@id/rv_recipe_view_ingredients" />
+                app:layout_constraintTop_toBottomOf="@id/button_full_recipe_ingredient_add" />
 
             <EditText
                 android:id="@+id/editText_full_recipe_description"

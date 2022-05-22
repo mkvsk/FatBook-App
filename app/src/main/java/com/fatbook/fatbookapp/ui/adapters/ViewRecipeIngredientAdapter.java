@@ -13,19 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
+import com.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;
 
 import java.util.List;
 
 public class ViewRecipeIngredientAdapter extends RecyclerView.Adapter<ViewRecipeIngredientAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
-    private final List<RecipeIngredient> list;
+    private List<RecipeIngredient> list;
 
     private boolean isEditAvailable = false;
 
-    public ViewRecipeIngredientAdapter(Context context, List<RecipeIngredient> list) {
+    private OnRecipeViewDeleteIngredient listener;
+
+    public ViewRecipeIngredientAdapter(Context context, List<RecipeIngredient> list, OnRecipeViewDeleteIngredient listener) {
         this.inflater = LayoutInflater.from(context);
         this.list = list;
+        this.listener = listener;
     }
 
     @NonNull
@@ -57,6 +61,10 @@ public class ViewRecipeIngredientAdapter extends RecyclerView.Adapter<ViewRecipe
         isEditAvailable = allow;
     }
 
+    public void setData(List<RecipeIngredient> list) {
+        this.list = list;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         final TextView name;
         final TextView quantity;
@@ -67,9 +75,9 @@ public class ViewRecipeIngredientAdapter extends RecyclerView.Adapter<ViewRecipe
             name = itemView.findViewById(R.id.textView_ingredient_in_recipe);
             quantity = itemView.findViewById(R.id.textView_rv_add_recipe_ingredient_quantity);
             btnRemove = itemView.findViewById(R.id.btn_rv_add_recipe_ingredient_remove);
-//            btnRemove.setOnClickListener(view -> {
-//                System.out.println();
-//            });
+            btnRemove.setOnClickListener(view -> {
+                listener.onDeleteIngredientClick(list.get(getAdapterPosition()), getAdapterPosition());
+            });
         }
     }
 }

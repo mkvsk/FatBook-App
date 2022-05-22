@@ -120,5 +120,8 @@
     <string name="menu_user_profile_cancel">Cancel</string>
     <string name="undo_string">Undo</string>
 
+    <string name="alert_dialog_delete_recipe_title">A</string>
+    <string name="alert_dialog_delete_recipe_message">B</string>
+
 
 </resources>

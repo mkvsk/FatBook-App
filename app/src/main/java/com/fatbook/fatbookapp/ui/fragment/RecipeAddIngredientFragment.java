@@ -20,8 +20,8 @@ import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.IngredientUnit;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.databinding.FragmentAddIngredientBinding;
-import com.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAddIngredientAdapter;
+import com.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 
 import org.apache.commons.lang3.StringUtils;
@@ -51,6 +51,7 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
 
         binding.btnAddIngredientToRecipe.setEnabled(false);
+        binding.textViewSelectedIngredient.setTextColor(getResources().getColor(R.color.color_blue_grey_200));
 
         binding.toolbarAddIngredientToRecipe.setNavigationOnClickListener(view1 -> {
             NavHostFragment.findNavController(this).popBackStack();
@@ -59,15 +60,12 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         binding.btnAddIngredientToRecipe.setOnClickListener(view1 -> {
-            if (StringUtils.isNotEmpty(binding.editTextIngredientQuantity.getText().toString())) {
-                RecipeIngredient recipeIngredient = new RecipeIngredient();
-                recipeIngredient.setIngredient(selectedIngredient);
-                recipeIngredient.setQuantity(Double.parseDouble(binding.editTextIngredientQuantity.getText().toString()));
-                recipeIngredient.setUnit(IngredientUnit.values()[binding.pickerIngredientUnit.getValue()]);
-            } else {
-                //TODO OBRABOTAT' 0wibka
-
-            }
+            RecipeIngredient recipeIngredient = new RecipeIngredient();
+            recipeIngredient.setIngredient(selectedIngredient);
+            recipeIngredient.setQuantity(Double.parseDouble(binding.editTextIngredientQuantity.getText().toString()));
+            recipeIngredient.setUnit(IngredientUnit.values()[binding.pickerIngredientUnit.getValue()]);
+            recipeViewModel.setSelectedRecipeIngredient(recipeIngredient);
+            NavHostFragment.findNavController(this).popBackStack();
         });
 
         binding.editTextIngredientQuantity.addTextChangedListener(new TextWatcher() {
@@ -78,7 +76,7 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               activateButtonSave();
+                activateButtonSave();
             }
 
             @Override
@@ -93,11 +91,11 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
     private void setupUnitPicker() {
         String[] unitData = new String[]{
-                IngredientUnit.GRAM.getMultiplyNaming(),
                 IngredientUnit.TABLE_SPOON.getMultiplyNaming(),
-                IngredientUnit.TEA_SPOON.getMultiplyNaming(),
                 IngredientUnit.PCS.getMultiplyNaming(),
-                IngredientUnit.ML.getMultiplyNaming()
+                IngredientUnit.GRAM.getMultiplyNaming(),
+                IngredientUnit.ML.getMultiplyNaming(),
+                IngredientUnit.TEA_SPOON.getMultiplyNaming()
         };
         binding.pickerIngredientUnit.setMinValue(0);
         binding.pickerIngredientUnit.setMaxValue(unitData.length - 1);
@@ -159,18 +157,19 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
     @Override
     public void onIngredientClick(int previousItem, int selectedItem, Ingredient ingredient) {
         selectedIngredient = ingredient;
+        binding.textViewSelectedIngredient.setTextColor(getResources().getColor(R.color.color_pink_a200));
         binding.textViewSelectedIngredient.setText(ingredient.getName());
         adapter.notifyItemChanged(previousItem);
         adapter.notifyItemChanged(selectedItem);
         activateButtonSave();
     }
 
-    private void activateButtonSave( ) {
+    private void activateButtonSave() {
         if (StringUtils.isEmpty(binding.editTextIngredientQuantity.getText().toString()) || selectedIngredient == null) {
             binding.btnAddIngredientToRecipe.setEnabled(false);
-            binding.btnAddIngredientToRecipe.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(),R.color.color_blue_grey_200));
+            binding.btnAddIngredientToRecipe.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.color_blue_grey_200));
         } else {
-            binding.btnAddIngredientToRecipe.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(),R.color.color_pink_a200));
+            binding.btnAddIngredientToRecipe.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.color_pink_a200));
             binding.btnAddIngredientToRecipe.setEnabled(true);
         }
     }
