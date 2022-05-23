@@ -96,7 +96,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void validateLogin(String login, String fat) {
-       RetrofitFactory.apiServiceClient().login(login, fat).enqueue(new Callback<User>() {
+       RetrofitFactory.apiServiceClient().signIn(login, fat).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 log.log(Level.INFO, "fat: " + response.code());

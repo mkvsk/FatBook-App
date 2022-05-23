@@ -19,8 +19,43 @@ import retrofit2.http.Query;
 
 public interface NetworkInfoService {
 
+    /**
+     * User
+     */
     @GET("user/get/pid")
     Call<User> getUser(@Query(value = "pid") Long pid);
+
+    @POST("user/create")
+    Call<User> userCreate(@Body User user, @Query(value = "fat") String fat);
+
+    @GET("user/login/check")
+    Call<Boolean> loginCheck(@Query(value = "login") String login);
+
+    @GET("user/signin")
+    Call<User> signIn(@Query(value = "login") String login, @Query(value = "fat") String fat);
+
+    /**
+     * Ingredients
+     */
+    @POST("ingredient/add")
+    Call<Void> addIngredient(@Body Ingredient ingredient);
+
+    @GET("ingredient/get/all")
+    Call<List<Ingredient>> getAllIngredients();
+
+    /**
+     * Recipe
+     */
+    @POST("recipe/create")
+    Call<Void> recipeCreate(@Body Recipe recipe);
+
+    /**
+     * Feed
+     */
+    @GET("feed")
+    Call<List<Recipe>> getFeed();
+
+    //========================================================================================
 
 //    @Multipart
 //    @POST("upload")
@@ -31,35 +66,8 @@ public interface NetworkInfoService {
     @POST("test/upload")
     Call<String> createNewUser(@Part MultipartBody.Part image);
 
-    @POST("user/create")
-    Call<User> createNewUser(@Body User user, @Query(value = "fat") String fat);
-
     @Multipart
     @POST("test/upload")
     Call<User> createNewUser(@Part RequestBody user, @Part MultipartBody.Part image);
-
-//    @Part image: MultipartBody.Part,
-//    @Part("desc") desc: RequestBody
-
-    @GET("user/get-by-login")
-    Call<User> getUser(@Query(value = "login") String login);
-
-    @GET("user/login/check")
-    Call<Boolean> loginCheck(@Query(value = "login") String login);
-
-    @POST("ingredient/add")
-    Call<Void> addIngredient(@Body Ingredient ingredient);
-
-    @GET("ingredient/get-all")
-    Call<List<Ingredient>> getAllIngredients();
-
-    @GET("feed")
-    Call<List<Recipe>> getFeed();
-
-    @GET("user/login")
-    Call<User> login(@Query(value = "login") String login, @Query(value = "fat") String fat);
-
-    @POST("recipe/create")
-    Call<Void> recipeCreate(@Body Recipe recipe);
 
 }

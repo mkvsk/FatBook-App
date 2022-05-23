@@ -56,7 +56,7 @@ public class SkipAdditionalInfoActivity extends AppCompatActivity {
     }
 
     private void saveUser() {
-        RetrofitFactory.apiServiceClient().createNewUser(user, fat).enqueue(new Callback<User>() {
+        RetrofitFactory.apiServiceClient().userCreate(user, fat).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 log.log(Level.INFO, "save user code " + response.code());

@@ -15,6 +15,7 @@ import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentFeedBinding;
+import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
@@ -23,8 +24,12 @@ import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import lombok.extern.java.Log;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @Log
 public class FeedFragment extends Fragment implements OnRecipeClickListener, OnRecipeRevertDeleteListener {
@@ -78,19 +83,19 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
     }
 
     private void loadData() {
-//        RetrofitFactory.apiServiceClient().getFeedRecipeList().enqueue(new Callback<List<Recipe>>() {
-//            @Override
-//            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
-//                userViewModel.setFeedRecipeList(response.body());
-//                log.log(Level.INFO, "feed data load: SUCCESS");
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
-//                userViewModel.setFeedRecipeList(new ArrayList<>());
-//                log.log(Level.INFO, "feed data load: FAILED");
-//            }
-//        });
+        RetrofitFactory.apiServiceClient().getFeed().enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
+                userViewModel.setFeedRecipeList(response.body());
+                log.log(Level.INFO, "feed data load: SUCCESS");
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
+                userViewModel.setFeedRecipeList(new ArrayList<>());
+                log.log(Level.INFO, "feed data load: FAILED");
+            }
+        });
     }
 
     @Override
