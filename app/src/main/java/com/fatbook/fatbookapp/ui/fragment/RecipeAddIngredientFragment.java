@@ -103,24 +103,25 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
             adapter.notifyDataSetChanged();
         });
 
-        if (ingredientViewModel.getIngredientList().getValue() == null) {
-            RetrofitFactory.apiServiceClient().getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
-                @Override
-                public void onResponse(@NonNull Call<List<Ingredient>> call, @NonNull Response<List<Ingredient>> response) {
-                    ingredientViewModel.setIngredientList(response.body());
-                    log.log(Level.INFO, "ingredient list load: SUCCESS");
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<List<Ingredient>> call, @NonNull Throwable t) {
-                    log.log(Level.INFO, "ingredient list load: FAILED");
-                    showErrorMsg();
-                }
-            });
-        }
-
         setupAdapter();
+        loadIngredients();
         setupUnitPicker();
+    }
+
+    private void loadIngredients() {
+        RetrofitFactory.apiServiceClient().getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Ingredient>> call, @NonNull Response<List<Ingredient>> response) {
+                ingredientViewModel.setIngredientList(response.body());
+                log.log(Level.INFO, "ingredient list load: SUCCESS");
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Ingredient>> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "ingredient list load: FAILED");
+                showErrorMsg();
+            }
+        });
     }
 
     private void showErrorMsg() {
