@@ -52,7 +52,7 @@
     <string name="hint_dialog_add_ingredient">Предложить ингредиент</string>
     <string name="title_dialog_add_ingredient">Добавить ингредиент:</string>
     <string name="title_view_recipe">Просмотр рецепта</string>
-    <string name="alert_dialog_btn_cancel">Закрыть</string>
+    <string name="alert_dialog_btn_cancel">Отмена</string>
     <string name="alert_dialog_btn_ok">ОК</string>
     <string name="alert_dialog_suggest_ingredient">Название ингредиента</string>
     <string name="menu_recipe_delete">Удалить</string>

@@ -24,6 +24,7 @@ import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
+import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.ui.activity.SplashActivity;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
@@ -33,6 +34,14 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.logging.Level;
+
+import lombok.extern.java.Log;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+@Log
 public class UserProfileFragment extends Fragment implements OnRecipeClickListener {
 
     private FragmentUserProfileBinding binding;
@@ -51,13 +60,30 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         setupMenu();
 
         user = userViewModel.getUser().getValue();
-
-        fillUserProfile();
-        editMode(false);
-
+        loadUserData(user.getPid());
+        userViewModel.getUser().observe(getViewLifecycleOwner(), _user -> {
+            user = _user;
+            fillUserProfile();
+        });
         setupAdapter();
 
+        editMode(false);
         binding.toolbarUserProfile.getOverflowIcon().setColorFilter(getResources().getColor(R.color.color_blue_grey_600), PorterDuff.Mode.MULTIPLY);
+    }
+
+    private void loadUserData(long userPid) {
+        RetrofitFactory.apiServiceClient().getUser(userPid).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                log.log(Level.INFO, "" + response.code() + " found user: " + response.body());
+                userViewModel.setUser(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "load user ERROR");
+            }
+        });
     }
 
     private void setupAdapter() {
@@ -114,8 +140,6 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                 changeUserData();
                 return true;
             case R.id.menu_user_profile_cancel:
-                Snackbar.make(binding.getRoot(), R.string.snackbar_end_edit, Snackbar.LENGTH_SHORT)
-                        .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
                 cancelEdit();
                 editMode(false);
                 revertUserData();

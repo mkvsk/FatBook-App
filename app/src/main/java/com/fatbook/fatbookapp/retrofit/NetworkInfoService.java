@@ -52,7 +52,7 @@ public interface NetworkInfoService {
     /**
      * Feed
      */
-    @GET("feed")
+    @GET("recipe/feed")
     Call<List<Recipe>> getFeed();
 
     //========================================================================================

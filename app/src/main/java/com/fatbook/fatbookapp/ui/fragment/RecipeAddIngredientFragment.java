@@ -63,8 +63,6 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
             NavHostFragment.findNavController(this).popBackStack();
         });
 
-        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
         binding.btnAddIngredientToRecipe.setOnClickListener(view1 -> {
             RecipeIngredient recipeIngredient = new RecipeIngredient();
             recipeIngredient.setIngredient(selectedIngredient);

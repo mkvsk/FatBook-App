@@ -70,10 +70,14 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         userViewModel.getFeedRecipeList().observe(getViewLifecycleOwner(), recipeList -> {
             //TODO add loader
             feedRecipeList = recipeList;
-            adapter.setData(feedRecipeList, user);
+            if (feedRecipeList == null) {
+                feedRecipeList = new ArrayList<>();
+            }
+            adapter.setData(recipeList, user);
             adapter.notifyDataSetChanged();
         });
         setupAdapter();
+        feedRecipeList = userViewModel.getFeedRecipeList().getValue();
     }
 
     private void setupAdapter() {
