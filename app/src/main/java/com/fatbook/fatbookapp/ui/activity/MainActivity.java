@@ -1,5 +1,7 @@
 package com.fatbook.fatbookapp.ui.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,13 +53,17 @@ public class MainActivity extends AppCompatActivity {
         if (fillAdditional) {
             navController.navigate(R.id.action_go_to_profile);
         }
-//        loadSplash();
-
         loadData();
     }
 
     private void loadData() {
         User user = (User) getIntent().getSerializableExtra(UserUtils.TAG_USER);
+        SharedPreferences sharedPreferences = getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
+        if (sharedPreferences.getLong(UserUtils.USER_PID, 0L) == 0) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putLong(UserUtils.USER_PID, 194L);
+            editor.apply();
+        }
         userViewModel.setUser(user);
     }
 
@@ -86,10 +92,4 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
     }
-
-    //    private void loadSplash() {
-//        Intent intentSplash = new Intent(this, SplashActivity.class);
-//        startActivity(intentSplash);
-//    }
-
 }

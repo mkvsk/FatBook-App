@@ -29,10 +29,8 @@ public class PasswordActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra(UserUtils.TAG_USER);
 
-        //TODO remove stub
-        toggleViews(true);
-//        binding.buttonPasswordNext.setEnabled(false);
-//        binding.buttonPasswordNext.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_blue_grey_200));
+        binding.buttonPasswordNext.setEnabled(false);
+        binding.buttonPasswordNext.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_blue_grey_200));
 
         binding.editTextPassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -41,7 +39,7 @@ public class PasswordActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                toggleViews(isValid(charSequence.toString()));
+                toggleViews(validateFat(charSequence.toString()));
             }
 
             @Override
@@ -50,10 +48,10 @@ public class PasswordActivity extends AppCompatActivity {
         });
 
         binding.buttonPasswordNext.setOnClickListener(view -> {
-            if (isValid(binding.editTextPassword.getText().toString())) {
-                //TODO api call for save a user
+            if (validateFat(binding.editTextPassword.getText().toString())) {
                 Intent intent = new Intent(this, SkipAdditionalInfoActivity.class);
                 intent.putExtra(UserUtils.TAG_USER, user);
+                intent.putExtra(UserUtils.TAG_FAT, binding.editTextPassword.getText().toString());
                 startActivity(intent);
             } else {
                 toggleViews(false);
@@ -85,10 +83,8 @@ public class PasswordActivity extends AppCompatActivity {
      * Password must contain at least one special character like ! @ # & ( ).
      * Password must contain a length of at least 8 characters and a maximum of 20 characters.
      */
-    private boolean isValid(String fat) {
-        //TODO remove stub
-//        return fat.length() >= 6 && fat.length() <= 16;
-        return true;
+    private boolean validateFat(String fat) {
+        return fat.length() >= 6 && fat.length() <= 16;
 //        return fat.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$")
     }
 }

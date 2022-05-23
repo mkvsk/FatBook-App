@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,13 +18,18 @@ import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.core.Role;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivitySignInBinding;
+import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.ui.viewmodel.SignInViewModel;
 import com.fatbook.fatbookapp.util.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import lombok.extern.java.Log;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @Log
 public class SignInActivity extends AppCompatActivity {
@@ -71,26 +77,42 @@ public class SignInActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
             }
         });
+
+        binding.editTextSignInPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                binding.editTextSignInLogin.setBackground(AppCompatResources.getDrawable(getBaseContext(), R.drawable.round_corner_edittext_login));
+                binding.editTextSignInPassword.setBackground(AppCompatResources.getDrawable(getBaseContext(), R.drawable.round_corner_edittext_login));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
     }
 
     private void validateLogin(String login, String fat) {
-        fakeValidation();
-/*
        RetrofitFactory.apiServiceClient().login(login, fat).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 log.log(Level.INFO, "fat: " + response.code());
                 if (response.code() == 200) {
-                    logInViewModel.setUser(response.body());
+                    signInViewModel.setUser(response.body());
+                } else {
+                    signInViewModel.setUser(null);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 log.log(Level.INFO, "fat: FAILED " + t);
+                signInViewModel.setUser(null);
             }
         });
-*/
     }
 
     private void fakeValidation() {

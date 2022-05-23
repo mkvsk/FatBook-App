@@ -113,16 +113,11 @@ public class LoginActivity extends AppCompatActivity {
     private void validateLogin(String login) {
         if (login.matches("[a-zA-Z0-9]+") && login.length() >= 4) {
             log.log(Level.INFO, "login valid");
-//            loginCheckForCreation(login);
-            fakeLoginCheckForCreation(login);
+            loginCheckForCreation(login);
         } else {
             log.log(Level.INFO, "login invalid");
             toggleViews(false);
         }
-    }
-
-    private void fakeLoginCheckForCreation(String login) {
-        signInViewModel.setLoginAvailable(true);
     }
 
     private void loginCheckForCreation(String login) {
@@ -146,8 +141,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Boolean> call, @NonNull Throwable t) {
                 log.log(Level.INFO, "login check FAILED");
+                t.printStackTrace();
                 signInViewModel.setLoginAvailable(false);
             }
         });
+    }
+
+    private void fakeLoginCheckForCreation(String login) {
+        signInViewModel.setLoginAvailable(true);
     }
 }

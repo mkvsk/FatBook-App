@@ -43,6 +43,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="14sp"
+        android:layout_marginBottom="15dp"
         android:fontFamily="@font/roboto_light"
         app:layout_constraintBottom_toBottomOf="@id/imageView_skip_add_cat_dialog"
         app:layout_constraintLeft_toLeftOf="@id/imageView_skip_add_cat_dialog"

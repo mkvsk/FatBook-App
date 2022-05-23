@@ -2,19 +2,34 @@ package com.fatbook.fatbookapp.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivitySkipAdditionalInfoBinding;
+import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.util.UserUtils;
 
+import java.util.logging.Level;
+
+import lombok.extern.java.Log;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+@Log
 public class SkipAdditionalInfoActivity extends AppCompatActivity {
 
     private ActivitySkipAdditionalInfoBinding binding;
 
     private User user;
+
+    private String fat;
+
+    private boolean fill = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,18 +39,47 @@ public class SkipAdditionalInfoActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         user = (User) getIntent().getSerializableExtra(UserUtils.TAG_USER);
+        fat = getIntent().getStringExtra(UserUtils.TAG_FAT);
 
         String dialog = getResources().getString(R.string.cat_dialog_skip_add);
         binding.textViewSkipAddCatDialog.setText(String.format(dialog, user.getLogin()));
 
         binding.buttonSkip.setOnClickListener(view -> {
-            navigateToMainActivity(false);
+            fill = false;
+            saveUser();
         });
 
         binding.buttonFill.setOnClickListener(view -> {
-           navigateToMainActivity(true);
+            fill = true;
+            saveUser();
         });
     }
+
+    private void saveUser() {
+        RetrofitFactory.apiServiceClient().createNewUser(user, fat).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                log.log(Level.INFO, "save user code " + response.code());
+                if (response.code() == 200) {
+                    user = response.body();
+                    navigateToMainActivity(fill);
+                } else {
+                    showErrorMsg();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "save user code FAILED");
+                showErrorMsg();
+            }
+        });
+    }
+
+    private void showErrorMsg() {
+        Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+    }
+
 
     private void navigateToMainActivity(boolean navigate) {
         Intent intent = new Intent(this, MainActivity.class);

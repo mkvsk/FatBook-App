@@ -12,7 +12,7 @@
     <string name="text_requirements_password">*мин. длина 8 символов</string>
     <string name="btn_next_login">ДАЛЕЕ</string>
     <string name="title_new_cook_in_skip_add">НОВЫЙ ШЕФ</string>
-    <string name="cat_dialog_skip_add">Приятно познакомиться, %s!\n Хочешь рассказать о себе?</string>
+    <string name="cat_dialog_skip_add">Приятно познакомиться, %s!\nХочешь рассказать о себе?</string>
     <string name="btn_yeah_go_skip_add">ДА, КОНЕЧНО!</string>
     <string name="btn_no_later_skip_add">ПРОПУСТИТЬ</string>
     <string name="title_username_fill_add_info">Имя пользователя</string>
@@ -22,7 +22,7 @@
     <string name="hint_bio_fill_add_info">О себе</string>
     <string name="text_button_save_fill_add_info">СОХРАНИТЬ</string>
     <string name="toolbar_username_profile">Пользователь</string>
-    <string name="text_fullname_profile">Имя Фамилия</string>
+    <string name="text_fullname_profile">Представьтесь</string>
     <string name="text_birthday">Ем именинный тортик:</string>
     <string name="text_bio_profile">Обо мне:</string>
     <string name="title_my_recipes_profile">Мои рецепты:</string>

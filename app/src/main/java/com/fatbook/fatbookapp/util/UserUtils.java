@@ -22,11 +22,17 @@ public class UserUtils {
 
     public static final String TAG_USER = "user";
 
+    public static final String TAG_FAT = "fat";
+
     private static String imageURL = "";
 
     public static SimpleDateFormat regDateFormat = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss",Locale.US);
 
     public static SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd",Locale.US);
+
+    public static final String APP_PREFS = "app_prefs";
+
+    public static final String USER_PID = "user_pid";
 
     @SneakyThrows
     public static boolean createNewUser(User user, File image) {

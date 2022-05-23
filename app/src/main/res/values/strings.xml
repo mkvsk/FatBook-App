@@ -39,7 +39,7 @@
     ///activity skip additional info
     <string name="title_new_cook_in_skip_add">NEW COOK IN</string>
     <string name="title_fatbook_skip_add" translatable="false">FatBook</string>
-    <string name="cat_dialog_skip_add">Nice to meet you, %s!\n Do you want to tell about yourself?</string>
+    <string name="cat_dialog_skip_add">Nice to meet you, %s!\nDo you want to tell about yourself?</string>
     <string name="btn_yeah_go_skip_add">YEAH, GO!</string>
     <string name="btn_no_later_skip_add">LATER</string>
 
@@ -53,7 +53,7 @@
 
     ///fat user profile
     <string name="toolbar_username_profile">Username</string>
-    <string name="text_fullname_profile">Firstname Secondname</string>
+    <string name="text_fullname_profile">Introduce yourself</string>
     <string name="text_birthday">Eating Birthday cake: </string>
     <string name="text_bio_profile">Write your bio</string>
     <string name="title_my_recipes_profile">My recipes:</string>

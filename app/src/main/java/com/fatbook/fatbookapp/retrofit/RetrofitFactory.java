@@ -11,6 +11,7 @@ public abstract class RetrofitFactory {
 
     private static final String HTTP = "http://";
     private static final String ADDRESS = "10.0.2.2:8080";
+//    private static final String ADDRESS = "192.168.0.120:8080";
     private static final String ENDPOINT = "/api/";
     private static final String URL = HTTP + ADDRESS + ENDPOINT;
 

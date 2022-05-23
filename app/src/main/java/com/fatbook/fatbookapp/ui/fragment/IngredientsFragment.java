@@ -60,21 +60,11 @@ public class IngredientsFragment extends Fragment {
         setupAdapter();
         loadIngredients();
         setupSwipeRefresh();
-        setupObservers();
-    }
-
-    private void setupObservers() {
         ingredientViewModel.getIngredientList().observe(getViewLifecycleOwner(), ingredients -> {
             binding.swipeRefreshBookmarks.setRefreshing(false);
             ingredientList = ingredientViewModel.getIngredientList().getValue();
             adapter.setData(ingredientList);
             adapter.notifyDataSetChanged();
-        });
-
-        ingredientViewModel.getRefreshFailed().observe(getViewLifecycleOwner(), bool -> {
-            if (bool) {
-                Toast.makeText(binding.getRoot().getContext(), getResources().getString(R.string.ingredient_load_failed), Toast.LENGTH_SHORT).show();
-            }
         });
     }
 
@@ -115,28 +105,23 @@ public class IngredientsFragment extends Fragment {
     }
 
     private void loadIngredients() {
-        new Thread(() -> {
-            try {
-                RetrofitFactory.apiServiceClient().getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<Ingredient>> call, @NonNull Response<List<Ingredient>> response) {
-                        ingredientViewModel.setIngredientList(response.body());
-                        ingredientViewModel.setRefreshFailed(false);
-                        log.log(Level.INFO, "ingredient list load: SUCCESS");
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<List<Ingredient>> call, @NonNull Throwable t) {
-                        ingredientViewModel.setIngredientList(loadFakeData());
-                        ingredientViewModel.setRefreshFailed(true);
-                        log.log(Level.INFO, "ingredient list load: FAILED");
-                    }
-                });
-            } catch (Exception e) {
-                log.log(Level.INFO, "ingredient list load: FAILED " + e);
-                e.printStackTrace();
+        RetrofitFactory.apiServiceClient().getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Ingredient>> call, @NonNull Response<List<Ingredient>> response) {
+                ingredientViewModel.setIngredientList(response.body());
+                log.log(Level.INFO, "ingredient list load: SUCCESS");
             }
-        }).start();
+
+            @Override
+            public void onFailure(@NonNull Call<List<Ingredient>> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "ingredient list load: FAILED");
+                showErrorMsg();
+            }
+        });
+    }
+
+    private void showErrorMsg() {
+        Toast.makeText(binding.getRoot().getContext(), getResources().getString(R.string.ingredient_load_failed), Toast.LENGTH_SHORT).show();
     }
 
     private void configureAlertDialog() {

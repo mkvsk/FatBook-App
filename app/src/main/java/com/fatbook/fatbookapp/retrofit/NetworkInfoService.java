@@ -19,6 +19,9 @@ import retrofit2.http.Query;
 
 public interface NetworkInfoService {
 
+    @GET("user/get/pid")
+    Call<User> getUser(@Query(value = "pid") Long pid);
+
 //    @Multipart
 //    @POST("upload")
 //    Call<Void> createNewUser(
@@ -29,7 +32,7 @@ public interface NetworkInfoService {
     Call<String> createNewUser(@Part MultipartBody.Part image);
 
     @POST("user/create")
-    Call<String> createNewUser(@Body User user, @Query(value = "fat") String fat);
+    Call<User> createNewUser(@Body User user, @Query(value = "fat") String fat);
 
     @Multipart
     @POST("test/upload")
@@ -38,20 +41,12 @@ public interface NetworkInfoService {
 //    @Part image: MultipartBody.Part,
 //    @Part("desc") desc: RequestBody
 
-    @GET("user/get-by-pid")
-    Call<User> getUser(@Query(value = "pid") Long pid);
-
     @GET("user/get-by-login")
     Call<User> getUser(@Query(value = "login") String login);
 
     @GET("user/login/check")
     Call<Boolean> loginCheck(@Query(value = "login") String login);
 
-    /**
-     *
-     * @param ingredient
-     *
-     */
     @POST("ingredient/add")
     Call<Void> addIngredient(@Body Ingredient ingredient);
 

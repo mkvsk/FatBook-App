@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.User;
@@ -21,6 +22,8 @@ import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
 import com.fatbook.fatbookapp.ui.adapters.UserRecipeAdapter;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,20 +64,23 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void fillUserProfile() {
-//        binding.toolbarUserProfile.setTitle(user.getLogin());
-//        binding.editTextProfileFullName.setText(user.getName());
-//        binding.editTextProfileBio.setText(user.getBio());
-//        String birthday = getString(R.string.text_birthday) + user.getBirthday();
-//        binding.editTextProfileBirthday.setText(birthday);
-//        Glide
-//                .with(getLayoutInflater().getContext())
-//                .load(user.getImage())
-//                .into(binding.imageViewProfilePhoto);
-//
-//        Glide
-//                .with(getLayoutInflater().getContext())
-//                .load(user.getImage())
-//                .into(binding.imageViewUserProfilePhotoBgr);
+        binding.toolbarUserProfile.setTitle(user.getLogin());
+        if (StringUtils.isNotEmpty(user.getName())) {
+            binding.editTextProfileName.setText(user.getName());
+        }
+        if (StringUtils.isNotEmpty(user.getBio())) {
+            binding.editTextProfileBio.setText(user.getBio());
+        }
+        if (StringUtils.isNotEmpty(user.getImage())) {
+            Glide
+                    .with(getLayoutInflater().getContext())
+                    .load(user.getImage())
+                    .into(binding.imageViewProfilePhoto);
+            Glide
+                    .with(getLayoutInflater().getContext())
+                    .load(user.getImage())
+                    .into(binding.imageViewUserProfilePhotoBgr);
+        }
     }
 
     private void setupMenu() {
@@ -119,21 +125,15 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void editMode(boolean allow) {
-
-
-        binding.editTextProfileFullName.setEnabled(allow);
-        binding.editTextProfileBirthday.setEnabled(allow);
+        binding.editTextProfileName.setEnabled(allow);
         binding.editTextProfileBio.setEnabled(allow);
-        if(allow) {
+        if (allow) {
             binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
-            binding.editTextProfileFullName.setBackgroundResource(R.drawable.edit_mode_bgr);
-            binding.editTextProfileBirthday.setBackgroundResource(R.drawable.edit_mode_bgr);
+            binding.editTextProfileName.setBackgroundResource(R.drawable.edit_mode_bgr);
             binding.editTextProfileBio.setBackgroundResource(R.drawable.edit_mode_bgr);
-        }
-        else {
+        } else {
             binding.buttonUserProfileAddPhoto.setVisibility(View.GONE);
-            binding.editTextProfileFullName.setBackgroundResource(R.drawable.round_corner_rect_white);
-            binding.editTextProfileBirthday.setBackgroundResource(R.drawable.round_corner_rect_white);
+            binding.editTextProfileName.setBackgroundResource(R.drawable.round_corner_rect_white);
             binding.editTextProfileBio.setBackgroundResource(R.drawable.round_corner_rect_white);
         }
 
@@ -144,7 +144,7 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void changeUserData() {
-        user.setName(binding.editTextProfileFullName.getText().toString());
+        user.setName(binding.editTextProfileName.getText().toString());
 //        user.setBirthday(binding.textViewProfileBirthday.getText().toString());
         user.setBio(binding.editTextProfileBio.getText().toString());
     }
