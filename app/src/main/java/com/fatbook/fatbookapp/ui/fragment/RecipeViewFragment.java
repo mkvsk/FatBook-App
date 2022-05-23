@@ -29,11 +29,9 @@ import com.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.RecipeUtils;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -126,6 +124,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                 .show();
     }
 
+    /*
     private void onConfirmDeleteRecipeClick() {
         Snackbar.make(requireActivity().findViewById(R.id.container), R.string.snackbar_recipe_deleted, Snackbar.LENGTH_SHORT)
                 .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation))
@@ -139,6 +138,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     private void closeFragment() {
         NavHostFragment.findNavController(this).popBackStack();
     }
+     */
 
     private void setupMenu() {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -306,10 +306,11 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         }
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentRecipeViewBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+    @Override
+    public void onDeleteIngredientClick(RecipeIngredient recipeIngredient, int position) {
+        recipe.getIngredients().remove(recipeIngredient);
+        adapter.setData(recipe.getIngredients());
+        adapter.notifyItemRemoved(position);
     }
 
     @Override
@@ -319,10 +320,9 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     }
 
     @Override
-    public void onDeleteIngredientClick(RecipeIngredient recipeIngredient, int position) {
-        recipe.getIngredients().remove(recipeIngredient);
-        adapter.setData(recipe.getIngredients());
-        adapter.notifyItemRemoved(position);
-//        adapter.notifyDataSetChanged();
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentRecipeViewBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 }

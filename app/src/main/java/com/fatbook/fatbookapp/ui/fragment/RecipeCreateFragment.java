@@ -46,13 +46,6 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
 
     private ViewRecipeIngredientAdapter adapter;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-
-        binding = FragmentRecipeCreateBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -108,7 +101,6 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
             adapter.setData(recipe.getIngredients());
             adapter.notifyDataSetChanged();
             recipeViewModel.setSelectedRecipeIngredient(null);
-        } else {
         }
     }
 
@@ -122,6 +114,14 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
         recyclerView.setAdapter(adapter);
     }
 
+
+    @Override
+    public void onDeleteIngredientClick(RecipeIngredient recipeIngredient, int position) {
+        recipe.getIngredients().remove(recipeIngredient);
+        adapter.setData(recipe.getIngredients());
+        adapter.notifyItemRemoved(position);
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -129,9 +129,9 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
     }
 
     @Override
-    public void onDeleteIngredientClick(RecipeIngredient recipeIngredient, int position) {
-        recipe.getIngredients().remove(recipeIngredient);
-        adapter.setData(recipe.getIngredients());
-        adapter.notifyItemRemoved(position);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentRecipeCreateBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 }

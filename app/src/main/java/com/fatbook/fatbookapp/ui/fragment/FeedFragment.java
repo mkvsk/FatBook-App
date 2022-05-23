@@ -12,15 +12,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
-import com.fatbook.fatbookapp.core.Ingredient;
-import com.fatbook.fatbookapp.core.IngredientUnit;
 import com.fatbook.fatbookapp.core.Recipe;
-import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentFeedBinding;
+import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
-import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 
@@ -55,7 +52,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
 
         userViewModel.getUser().observe(getViewLifecycleOwner(), userUpdated -> {
             user = userUpdated;
-//            loadData();
+            loadData();
         });
 
         binding.swipeRefreshBookmarks.setColorSchemeColors(getResources().getColor(R.color.color_pink_a200));
@@ -82,7 +79,6 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
     }
 
     private void loadData() {
-        loadFakeData();
 //        RetrofitFactory.apiServiceClient().getFeedRecipeList().enqueue(new Callback<List<Recipe>>() {
 //            @Override
 //            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
@@ -97,15 +93,6 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
 //            }
 //        });
     }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-
-        binding = FragmentFeedBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
-
 
     @Override
     public void onRecipeClick(int position) {
@@ -152,43 +139,11 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         binding = null;
     }
 
-    private void loadFakeData() {
-        List<Recipe> list = new ArrayList<>();
-        getFakeRecipeList(list);
-//        getFakeRecipeList(list);
-//        getFakeRecipeList(list);
-//        getFakeRecipeList(list);
-        userViewModel.setFeedRecipeList(list);
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentFeedBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
-    private void getFakeRecipeList(List<Recipe> recipes) {
-        List<RecipeIngredient> ingredientList = new ArrayList<>();
-        ingredientList.add(new RecipeIngredient(null, new Ingredient(411L, "тестовый ингредиент"), IngredientUnit.PCS, 1.0));
-//        ingredientList.add(new RecipeIngredient(null, new Ingredient(361L, "Батат"), IngredientUnit.ML, 500.0));
-//        ingredientList.add(new RecipeIngredient(null, new Ingredient(326L, "Говядина"), IngredientUnit.PCS, 2.0));
-        ingredientList.add(new RecipeIngredient(null, new Ingredient(308L, "Масло"), IngredientUnit.PCS, 3.0));
-        ingredientList.add(new RecipeIngredient(null, new Ingredient(314L, "Молоко"), IngredientUnit.GRAM, 250.0));
-
-        User u1 = new User();
-        u1.setLogin("u1");
-        User u2 = new User();
-        u2.setLogin("u2");
-        User u3 = new User();
-        u3.setLogin("u3");
-        User u4 = new User();
-        u4.setLogin("u4");
-
-        recipes.add(new Recipe(null, "PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u1.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339, ""));
-        recipes.add(new Recipe(414L, "Potato", getResources().getString(R.string.text_full_recipe_instruction), user.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345, ""));
-        recipes.add(new Recipe(null, "fried PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u2.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----1.jpg", 0, ""));
-        recipes.add(new Recipe(437L, "creamy Potato", getResources().getString(R.string.text_full_recipe_instruction), user.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8, ""));
-        recipes.add(new Recipe(null, "Potatoes with kotletki", getResources().getString(R.string.text_full_recipe_instruction), u3.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----6.jpg", 133349, ""));
-        recipes.add(new Recipe(null, "Potato so smetanka", getResources().getString(R.string.text_full_recipe_instruction), u4.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----4.jpg", 324, ""));
-    }
 }

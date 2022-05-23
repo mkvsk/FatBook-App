@@ -166,45 +166,6 @@ public class IngredientsFragment extends Fragment {
         dialog.show();
     }
 
-    private List<Ingredient> loadFakeData() {
-        List<Ingredient> fakeList = new ArrayList<>();
-        fillFakeList(fakeList);
-        return fakeList;
-    }
-
-    private void fillFakeList(List<Ingredient> ingredients) {
-        ingredients.add(new Ingredient(1L, "potato"));
-        ingredients.add(new Ingredient(2L, "potato2"));
-        ingredients.add(new Ingredient(3L, "potato3"));
-        ingredients.add(new Ingredient(4L, "milk"));
-        ingredients.add(new Ingredient(5L, "juice"));
-        ingredients.add(new Ingredient(6L, "tea"));
-        ingredients.add(new Ingredient(7L, "coffee"));
-        ingredients.add(new Ingredient(8L, "banana"));
-        ingredients.add(new Ingredient(9L, "tomato"));
-        ingredients.add(new Ingredient(10L, "apple"));
-        ingredients.add(new Ingredient(1L, "potato"));
-        ingredients.add(new Ingredient(2L, "potato2"));
-        ingredients.add(new Ingredient(3L, "potato3"));
-        ingredients.add(new Ingredient(4L, "milk"));
-        ingredients.add(new Ingredient(5L, "juice"));
-        ingredients.add(new Ingredient(6L, "tea"));
-        ingredients.add(new Ingredient(7L, "coffee"));
-        ingredients.add(new Ingredient(8L, "banana"));
-        ingredients.add(new Ingredient(9L, "tomato"));
-        ingredients.add(new Ingredient(10L, "apple"));
-        ingredients.add(new Ingredient(1L, "potato"));
-        ingredients.add(new Ingredient(2L, "potato2"));
-        ingredients.add(new Ingredient(3L, "potato3"));
-        ingredients.add(new Ingredient(4L, "milk"));
-        ingredients.add(new Ingredient(5L, "juice"));
-        ingredients.add(new Ingredient(6L, "tea"));
-        ingredients.add(new Ingredient(7L, "coffee"));
-        ingredients.add(new Ingredient(8L, "banana"));
-        ingredients.add(new Ingredient(9L, "tomato"));
-        ingredients.add(new Ingredient(10L, "apple"));
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -214,7 +175,6 @@ public class IngredientsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         binding = FragmentIngredientsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }

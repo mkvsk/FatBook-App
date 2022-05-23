@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -51,12 +50,6 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
     private Ingredient selectedIngredient;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentAddIngredientBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -84,7 +77,6 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
         binding.editTextIngredientQuantity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -94,7 +86,6 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         });
 
@@ -119,13 +110,8 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
             @Override
             public void onFailure(@NonNull Call<List<Ingredient>> call, @NonNull Throwable t) {
                 log.log(Level.INFO, "ingredient list load: FAILED");
-                showErrorMsg();
             }
         });
-    }
-
-    private void showErrorMsg() {
-        Toast.makeText(binding.getRoot().getContext(), getResources().getString(R.string.ingredient_load_failed), Toast.LENGTH_SHORT).show();
     }
 
     private void setupUnitPicker() {
@@ -141,56 +127,11 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
         binding.pickerIngredientUnit.setDisplayedValues(unitData);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
     private void setupAdapter() {
         RecyclerView rv = binding.rvAddIngredientToRecipe;
         adapter = new RecipeAddIngredientAdapter(binding.getRoot().getContext(), new ArrayList<>());
         adapter.setClickListener(this);
         rv.setAdapter(adapter);
-    }
-
-    private List<Ingredient> loadFakeData() {
-        List<Ingredient> fakeList = new ArrayList<>();
-        fillFakeList(fakeList);
-        return fakeList;
-    }
-
-    private void fillFakeList(List<Ingredient> ingredients) {
-        ingredients.add(new Ingredient(1L, "potato"));
-        ingredients.add(new Ingredient(2L, "potato2"));
-        ingredients.add(new Ingredient(3L, "potato3"));
-        ingredients.add(new Ingredient(4L, "milk"));
-        ingredients.add(new Ingredient(5L, "juice"));
-        ingredients.add(new Ingredient(6L, "tea"));
-        ingredients.add(new Ingredient(7L, "coffee"));
-        ingredients.add(new Ingredient(8L, "banana"));
-        ingredients.add(new Ingredient(9L, "tomato"));
-        ingredients.add(new Ingredient(10L, "apple"));
-        ingredients.add(new Ingredient(1L, "potato"));
-        ingredients.add(new Ingredient(2L, "potato2"));
-        ingredients.add(new Ingredient(3L, "potato3"));
-        ingredients.add(new Ingredient(4L, "milk"));
-        ingredients.add(new Ingredient(5L, "juice"));
-        ingredients.add(new Ingredient(6L, "tea"));
-        ingredients.add(new Ingredient(7L, "coffee"));
-        ingredients.add(new Ingredient(8L, "banana"));
-        ingredients.add(new Ingredient(9L, "tomato"));
-        ingredients.add(new Ingredient(10L, "apple"));
-        ingredients.add(new Ingredient(1L, "potato"));
-        ingredients.add(new Ingredient(2L, "potato2"));
-        ingredients.add(new Ingredient(3L, "potato3"));
-        ingredients.add(new Ingredient(4L, "milk"));
-        ingredients.add(new Ingredient(5L, "juice"));
-        ingredients.add(new Ingredient(6L, "tea"));
-        ingredients.add(new Ingredient(7L, "coffee"));
-        ingredients.add(new Ingredient(8L, "banana"));
-        ingredients.add(new Ingredient(9L, "tomato"));
-        ingredients.add(new Ingredient(10L, "apple"));
     }
 
     @Override
@@ -211,5 +152,18 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
             binding.btnAddIngredientToRecipe.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.color_pink_a200));
             binding.btnAddIngredientToRecipe.setEnabled(true);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentAddIngredientBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 }
