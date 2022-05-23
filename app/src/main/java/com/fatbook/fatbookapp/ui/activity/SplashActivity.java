@@ -63,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
                 intent.putExtra(UserUtils.TAG_USER, user);
                 startActivity(intent);
                 finish();
-            }, 1);
+            }, 2000);
         });
 
         binding.buttonSplashRetry.setOnClickListener(view -> {
@@ -84,16 +84,14 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 log.log(Level.INFO, "load user ERROR");
-                if (t.toString().contains("Timeout")) {
-                    binding.textViewSplashError.setVisibility(View.VISIBLE);
-                    binding.textViewSplashError.setText(getString(R.string.splash_no_connection_error_api));
-                    binding.buttonSplashRetry.setVisibility(View.VISIBLE);
-                }
                 if (t.toString().contains("ConnectException")) {
-                    binding.textViewSplashError.setVisibility(View.VISIBLE);
                     binding.textViewSplashError.setText(getString(R.string.splash_no_connection_error_client));
-                    binding.buttonSplashRetry.setVisibility(View.VISIBLE);
+                } else {
+                    binding.textViewSplashError.setText(getString(R.string.splash_no_connection_error_api));
                 }
+                binding.textViewSplashError.setVisibility(View.VISIBLE);
+                binding.buttonSplashRetry.setVisibility(View.VISIBLE);
+
             }
         });
     }
