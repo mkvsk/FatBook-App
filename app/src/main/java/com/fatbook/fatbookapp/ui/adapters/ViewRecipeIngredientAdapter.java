@@ -32,11 +32,6 @@ public class ViewRecipeIngredientAdapter extends RecyclerView.Adapter<ViewRecipe
         this.listener = listener;
     }
 
-    public ViewRecipeIngredientAdapter(Context context, List<RecipeIngredient> list) {
-        this.inflater = LayoutInflater.from(context);
-        this.list = list;
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

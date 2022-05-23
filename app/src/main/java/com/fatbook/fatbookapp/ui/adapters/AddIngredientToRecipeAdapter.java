@@ -17,7 +17,7 @@ import com.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener;
 
 import java.util.List;
 
-public class RecipeAddIngredientAdapter  extends RecyclerView.Adapter<RecipeAddIngredientAdapter.ViewHolder> {
+public class AddIngredientToRecipeAdapter extends RecyclerView.Adapter<AddIngredientToRecipeAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
     private List<Ingredient> list;
@@ -26,7 +26,7 @@ public class RecipeAddIngredientAdapter  extends RecyclerView.Adapter<RecipeAddI
 
     private OnAddIngredientItemClickListener listener;
 
-    public RecipeAddIngredientAdapter(Context context, List<Ingredient> list) {
+    public AddIngredientToRecipeAdapter(Context context, List<Ingredient> list) {
         this.list = list;
         this.inflater = LayoutInflater.from(context);
     }

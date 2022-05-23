@@ -21,7 +21,7 @@ import com.fatbook.fatbookapp.core.IngredientUnit;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.databinding.FragmentAddIngredientBinding;
 import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
-import com.fatbook.fatbookapp.ui.adapters.RecipeAddIngredientAdapter;
+import com.fatbook.fatbookapp.ui.adapters.AddIngredientToRecipeAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener;
 import com.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
@@ -42,7 +42,7 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
     private FragmentAddIngredientBinding binding;
 
-    private RecipeAddIngredientAdapter adapter;
+    private AddIngredientToRecipeAdapter adapter;
 
     private RecipeViewModel recipeViewModel;
 
@@ -129,7 +129,7 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
     private void setupAdapter() {
         RecyclerView rv = binding.rvAddIngredientToRecipe;
-        adapter = new RecipeAddIngredientAdapter(binding.getRoot().getContext(), new ArrayList<>());
+        adapter = new AddIngredientToRecipeAdapter(binding.getRoot().getContext(), new ArrayList<>());
         adapter.setClickListener(this);
         rv.setAdapter(adapter);
     }

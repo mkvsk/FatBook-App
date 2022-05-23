@@ -19,7 +19,7 @@ import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.databinding.FragmentIngredientsBinding;
 import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
-import com.fatbook.fatbookapp.ui.adapters.IngredientAdapter;
+import com.fatbook.fatbookapp.ui.adapters.IngredientsAdapter;
 import com.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel;
 
 import org.apache.commons.lang3.StringUtils;
@@ -44,7 +44,7 @@ public class IngredientsFragment extends Fragment {
 
     private IngredientViewModel ingredientViewModel;
 
-    private IngredientAdapter adapter;
+    private IngredientsAdapter adapter;
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class IngredientsFragment extends Fragment {
 
     private void setupAdapter() {
         RecyclerView rv = binding.rvIngredients;
-        adapter = new IngredientAdapter(binding.getRoot().getContext(), ingredientList);
+        adapter = new IngredientsAdapter(binding.getRoot().getContext(), ingredientList);
         rv.setAdapter(adapter);
     }
 

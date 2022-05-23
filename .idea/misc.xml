@@ -16,6 +16,7 @@
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/kuzya_new_cook.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/kuzya_welcome.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/round_corner_edittext.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/round_corner_ingredient_bgr.xml" value="0.4395" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/round_corner_rect_blue_grey_50.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/round_corner_rect_lime.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/round_corner_rect_white.xml" value="0.2985" />
@@ -53,6 +54,8 @@
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_feed_categories.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_feed_item.xml" value="0.67" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_feed_recipe_card_preview.xml" value="0.5493519441674976" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_ingredient.xml" value="0.5541666666666667" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_ingredient_to_recipe.xml" value="0.5541666666666667" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_profile_my_recipes.xml" value="0.18802083333333333" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/bookmarks_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />

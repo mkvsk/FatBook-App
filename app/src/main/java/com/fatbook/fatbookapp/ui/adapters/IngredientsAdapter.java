@@ -14,12 +14,12 @@ import com.fatbook.fatbookapp.core.Ingredient;
 
 import java.util.List;
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
+public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
     private List<Ingredient> list;
 
-    public IngredientAdapter(Context context, List<Ingredient> list) {
+    public IngredientsAdapter(Context context, List<Ingredient> list) {
         this.list = list;
         this.inflater = LayoutInflater.from(context);
     }
