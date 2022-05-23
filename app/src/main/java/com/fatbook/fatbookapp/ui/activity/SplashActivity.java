@@ -9,7 +9,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.fatbook.fatbookapp.R;
@@ -91,7 +90,6 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 binding.textViewSplashError.setVisibility(View.VISIBLE);
                 binding.buttonSplashRetry.setVisibility(View.VISIBLE);
-
             }
         });
     }

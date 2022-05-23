@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/ic_feed_search.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/ic_more.xml" value="0.4395" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_add_fav_grey.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_add_fav_pink.xml" value="0.2985" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_edit_user_info.xml" value="0.4395" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_feed_search.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_plus.xml" value="0.2985" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/drawable/icon_search.xml" value="0.2985" />
@@ -60,7 +62,7 @@
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/bookmarks_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/feed_menu.xml" value="0.36666666666666664" />
-        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/user_profile_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/menu/user_profile_menu.xml" value="0.33" />
         <entry key="..\:/Projects/FatBook/app/src/main/res/layout/activity_introduce.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/app/src/main/res/layout/fragment_feed.xml" value="0.36666666666666664" />

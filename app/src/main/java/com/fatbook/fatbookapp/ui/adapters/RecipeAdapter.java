@@ -26,16 +26,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private final LayoutInflater inflater;
     private List<Recipe> list;
     private User user;
+    private boolean userProfileFragment;
 
     private OnRecipeClickListener listener;
 
-    public RecipeAdapter(Context context, List<Recipe> list, User user) {
+    public RecipeAdapter(Context context, List<Recipe> list, User user, boolean userProfileFragment, OnRecipeClickListener listener) {
         this.inflater = LayoutInflater.from(context);
         this.list = list;
         this.user = user;
-    }
-
-    public void setClickListener(OnRecipeClickListener listener) {
+        this.userProfileFragment = userProfileFragment;
         this.listener = listener;
     }
 
@@ -60,11 +59,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         String forksAmount = Integer.toString(recipe.getForks());
         holder.tvForks.setText(forksAmount);
 
-        List<Recipe> recipesForked = user.getRecipesForked();
-        List<Recipe> recipesBookmarked = user.getRecipesBookmarked();
-
         toggleForks(holder.fork, user.getRecipesForked().contains(recipe));
-        toggleBookmarks(holder.bookmarks, user.getRecipesBookmarked().contains(recipe));
+        if (userProfileFragment) {
+            holder.bookmarks.setVisibility(View.INVISIBLE);
+        } else {
+            toggleBookmarks(holder.bookmarks, user.getRecipesBookmarked().contains(recipe));
+        }
 
         Glide
                 .with(inflater.getContext())

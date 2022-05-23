@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/menu_user_profile_edit"
         android:icon="@drawable/icon_edit_user_info"
         android:title="@string/menu_user_profile_edit"
         app:showAsAction="ifRoom" />
+
+<!--    <item-->
+<!--        android:id="@+id/menu_user_profile_settings"-->
+<!--        android:title="@string/menu_user_profile_settings" />-->
+
+    <item
+        android:id="@+id/menu_user_profile_app_info"
+        android:title="@string/menu_user_profile_app_info" />
+
+    <item
+        android:id="@+id/menu_user_profile_logout"
+        android:title="@string/menu_user_profile_logout" />
 
     <item
         android:id="@+id/menu_user_profile_save"

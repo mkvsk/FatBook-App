@@ -1,5 +1,10 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,17 +24,16 @@ import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
-import com.fatbook.fatbookapp.ui.adapters.UserRecipeAdapter;
+import com.fatbook.fatbookapp.ui.activity.SplashActivity;
+import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
+import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
+import com.fatbook.fatbookapp.util.UserUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class UserProfileFragment extends Fragment {
+public class UserProfileFragment extends Fragment implements OnRecipeClickListener {
 
     private FragmentUserProfileBinding binding;
 
@@ -37,29 +41,28 @@ public class UserProfileFragment extends Fragment {
 
     private UserViewModel userViewModel;
 
+    private RecipeAdapter adapter;
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-
         setupMenu();
-
-//        user = new User(1339L, "Tatyana Mayakovskaya", "hewix", null,
-//                "Gradle – является отличным выбором в качестве систем сборки проектов. Подтверждением тому является то, что его используют разработчики таких известных проектов, как Spring и Hibernate. " +
-//                        "Выше были рассмотрены лишь самые базовые вещи. За ними скрыт миллион особенностей и возможностей, которые появляются 123456",
-//                Role.ADMIN, "https://sun9-12.userapi.com/s/v1/if2/WbpjaiKfC5Qw7qBjuIiXw0uNl93GiubjztSTN6HyyPyHqIjnhG-663S75ZyBMpCVgooC4-q-t5f5QZhpPLyZWBTh.jpg?size=1280x1280&quality=95&type=album",
-//                null, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
         user = userViewModel.getUser().getValue();
 
         fillUserProfile();
         editMode(false);
 
-        List<Recipe> recipes = new ArrayList<>();
-        getRecipeList(recipes);
+        setupAdapter();
+
+        binding.toolbarUserProfile.getOverflowIcon().setColorFilter(getResources().getColor(R.color.color_blue_grey_600), PorterDuff.Mode.MULTIPLY);
+    }
+
+    private void setupAdapter() {
         RecyclerView recyclerView = binding.rvUserRecipe;
-        UserRecipeAdapter adapter = new UserRecipeAdapter(binding.getRoot().getContext(), recipes);
+        adapter = new RecipeAdapter(binding.getRoot().getContext(), user.getRecipes(), user, true, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -100,8 +103,6 @@ public class UserProfileFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_user_profile_edit:
-                Snackbar.make(binding.getRoot(), R.string.snackbar_edit, Snackbar.LENGTH_SHORT)
-                        .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
                 changeMenuItemsVisibility(false, true, true);
                 editMode(true);
                 return true;
@@ -119,24 +120,47 @@ public class UserProfileFragment extends Fragment {
                 editMode(false);
                 revertUserData();
                 return true;
+            case R.id.menu_user_profile_app_info:
+                Snackbar.make(binding.getRoot(), "TODO app info", Snackbar.LENGTH_SHORT)
+                        .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
+                return true;
+            case R.id.menu_user_profile_logout:
+                logout();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void logout() {
+        new AlertDialog.Builder(requireContext())
+                .setMessage(R.string.alert_dialog_logout_message)
+                .setPositiveButton(getString(R.string.alert_dialog_btn_yes), (dialogInterface, i) -> {
+                    SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putLong(UserUtils.USER_PID, 0L);
+                    editor.apply();
+                    startActivity(new Intent(requireActivity(), SplashActivity.class));
+                    requireActivity().finish();
+                })
+                .setNegativeButton(getString(R.string.alert_dialog_btn_cancel), (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                })
+                .show();
     }
 
     private void editMode(boolean allow) {
         binding.editTextProfileName.setEnabled(allow);
         binding.editTextProfileBio.setEnabled(allow);
         if (allow) {
-            binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
+//            binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
             binding.editTextProfileName.setBackgroundResource(R.drawable.edit_mode_bgr);
             binding.editTextProfileBio.setBackgroundResource(R.drawable.edit_mode_bgr);
         } else {
-            binding.buttonUserProfileAddPhoto.setVisibility(View.GONE);
+//            binding.buttonUserProfileAddPhoto.setVisibility(View.GONE);
             binding.editTextProfileName.setBackgroundResource(R.drawable.round_corner_rect_white);
             binding.editTextProfileBio.setBackgroundResource(R.drawable.round_corner_rect_white);
         }
-
     }
 
     private void revertUserData() {
@@ -145,7 +169,6 @@ public class UserProfileFragment extends Fragment {
 
     private void changeUserData() {
         user.setName(binding.editTextProfileName.getText().toString());
-//        user.setBirthday(binding.textViewProfileBirthday.getText().toString());
         user.setBio(binding.editTextProfileBio.getText().toString());
     }
 
@@ -173,20 +196,19 @@ public class UserProfileFragment extends Fragment {
         binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_cancel).setVisible(cancel);
     }
 
+    @Override
+    public void onRecipeClick(int position) {
+        System.out.println("Stub!");
+    }
 
-    private void getRecipeList(List<Recipe> recipes) {
-        recipes.add(new Recipe(1L, "PotatoChips", "qqqqq", user.getLogin(), Collections.emptyList(),
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339, ""));
-        recipes.add(new Recipe(2L, "Potato", "qqqqq", user.getLogin(), Collections.emptyList(),
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345, ""));
-        recipes.add(new Recipe(13L, "fried PotatoChips", "qqqqq", user.getLogin(), Collections.emptyList(),
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----1.jpg", 0, ""));
-        recipes.add(new Recipe(11L, "creamy Potato", "sssss", user.getLogin(), Collections.emptyList(),
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8, ""));
-        recipes.add(new Recipe(1L, "Potatoes with kotletki", "asasasasasas", user.getLogin(), Collections.emptyList(),
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----6.jpg", 133349, ""));
-        recipes.add(new Recipe(1L, "Potato so smetanka", "kkkkk", user.getLogin(), Collections.emptyList(),
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----4.jpg", 324, ""));
+    @Override
+    public void onBookmarksClick(Recipe recipe, boolean add) {
+        System.out.println("Stub!");
+    }
+
+    @Override
+    public void onForkClicked(Recipe recipe, boolean fork) {
+        System.out.println("Stub!");
     }
 
     @Override
@@ -195,9 +217,9 @@ public class UserProfileFragment extends Fragment {
         binding = null;
     }
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         binding = FragmentUserProfileBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }

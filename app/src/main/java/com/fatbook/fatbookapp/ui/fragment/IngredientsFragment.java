@@ -125,21 +125,21 @@ public class IngredientsFragment extends Fragment {
     }
 
     private void configureAlertDialog() {
-        final EditText editTextName = new EditText(getContext());
+        final EditText editTextName = new EditText(requireContext());
         editTextName.setSingleLine();
         editTextName.setHintTextColor(getResources().getColor(R.color.color_blue_grey_200));
         editTextName.setTextColor(getResources().getColor(R.color.color_blue_grey_600));
 
-        FrameLayout container = new FrameLayout(getContext());
+        FrameLayout container = new FrameLayout(requireContext());
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         editTextName.setLayoutParams(params);
         container.addView(editTextName);
 
-        View title = LayoutInflater.from(getContext()).inflate(R.layout.alert_dialog_title, null);
+        View title = LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_title, null);
 
-        final AlertDialog dialog = new AlertDialog.Builder(getContext())
+        final AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setView(container)
                 .setCustomTitle(title)
                 .setPositiveButton(getResources().getString(R.string.alert_dialog_btn_ok), null)

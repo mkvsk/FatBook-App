@@ -124,9 +124,14 @@
     <string name="title_view_recipe">View recipe</string>
 
     //alert dialog
+    <string name="alert_dialog_btn_yes">Yes</string>
+    <string name="alert_dialog_btn_no">No</string>
     <string name="alert_dialog_btn_ok">OK</string>
     <string name="alert_dialog_btn_cancel">Cancel</string>
     <string name="alert_dialog_suggest_ingredient">Suggest another ingredient</string>
+    <string name="alert_dialog_delete_recipe_title">Delete recipe</string>
+    <string name="alert_dialog_logout_message">Are you sure you want to logout?</string>
+    <string name="alert_dialog_delete_recipe_message">Are you sure you want to delete recipe?</string>
 
     //ingredient
     <string name="ingredient_load_failed">Connection error</string>
@@ -138,9 +143,6 @@
     <string name="menu_user_profile_confirm">Confirm</string>
     <string name="menu_user_profile_cancel">Cancel</string>
     <string name="undo_string">Undo</string>
-
-    <string name="alert_dialog_delete_recipe_title">DELETE RECIPE</string>
-    <string name="alert_dialog_delete_recipe_message">Are you sure?</string>
 
     //enum IngredientUnit
     //GRAM
@@ -190,5 +192,8 @@
     <string name="splash_no_connection_error_api">Something went wrong,\ntry again later</string>
     <string name="splash_no_connection_error_client">Check internet connection\nand try again</string>
     <string name="button_splash_retry">retry</string>
+    <string name="menu_user_profile_settings">Settings</string>
+    <string name="menu_user_profile_app_info">App info</string>
+    <string name="menu_user_profile_logout">Logout</string>
 
 </resources>

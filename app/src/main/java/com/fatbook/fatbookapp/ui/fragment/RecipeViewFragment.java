@@ -111,14 +111,13 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     }
 
     private void showDialog() {
-        new AlertDialog.Builder(getContext())
-                .setTitle(getString(R.string.alert_dialog_delete_recipe_title))
+        new AlertDialog.Builder(requireContext())
                 .setMessage(getString(R.string.alert_dialog_delete_recipe_message))
-                .setPositiveButton(getResources().getString(R.string.alert_dialog_btn_ok), (dialogInterface, i) -> {
+                .setPositiveButton(getString(R.string.alert_dialog_btn_yes), (dialogInterface, i) -> {
                     RecipeUtils.deleteRecipe(recipe);
 //                    onConfirmDeleteRecipeClick();
                 })
-                .setNegativeButton(getResources().getString(R.string.alert_dialog_btn_cancel), (dialogInterface, i) -> {
+                .setNegativeButton(getString(R.string.alert_dialog_btn_cancel), (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                 })
                 .show();

@@ -73,8 +73,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
 
     private void setupAdapter() {
         RecyclerView recyclerView = binding.rvFeed;
-        adapter = new RecipeAdapter(binding.getRoot().getContext(), feedRecipeList, user);
-        adapter.setClickListener(this);
+        adapter = new RecipeAdapter(binding.getRoot().getContext(), feedRecipeList, user, false, this);
         recyclerView.setAdapter(adapter);
     }
 

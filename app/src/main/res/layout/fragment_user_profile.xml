@@ -118,14 +118,13 @@
 
     <EditText
         android:id="@+id/editText_profile_bio"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
         android:minLines="1"
         android:maxLines="6"
-        android:maxLength="303"
+        android:maxLength="300"
         android:hint="@string/text_bio_profile"
-        android:textAlignment="center"
         android:textColor="@color/color_blue_grey_600"
         android:textSize="12sp"
         android:background="@drawable/round_corner_rect_white"
@@ -159,6 +158,6 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/rv_profile_my_recipes" />
+            tools:listitem="@layout/rv_feed_recipe_card_preview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
