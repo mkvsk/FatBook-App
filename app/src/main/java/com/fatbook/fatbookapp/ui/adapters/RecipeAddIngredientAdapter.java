@@ -58,6 +58,10 @@ public class RecipeAddIngredientAdapter  extends RecyclerView.Adapter<RecipeAddI
         return list.size();
     }
 
+    public void setData(List<Ingredient> list) {
+        this.list = list;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         final TextView tvIngredient;
         final CardView cardView;

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -20,15 +21,24 @@ import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.IngredientUnit;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.databinding.FragmentAddIngredientBinding;
+import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAddIngredientAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener;
+import com.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
+import lombok.extern.java.Log;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+@Log
 public class RecipeAddIngredientFragment extends Fragment implements OnAddIngredientItemClickListener {
 
     private FragmentAddIngredientBinding binding;
@@ -36,6 +46,8 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
     private RecipeAddIngredientAdapter adapter;
 
     private RecipeViewModel recipeViewModel;
+
+    private IngredientViewModel ingredientViewModel;
 
     private Ingredient selectedIngredient;
 
@@ -49,6 +61,7 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
+        ingredientViewModel = new ViewModelProvider(requireActivity()).get(IngredientViewModel.class);
 
         binding.btnAddIngredientToRecipe.setEnabled(false);
         binding.textViewSelectedIngredient.setTextColor(getResources().getColor(R.color.color_blue_grey_200));
@@ -85,8 +98,33 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
             }
         });
 
+        ingredientViewModel.getIngredientList().observe(getViewLifecycleOwner(), ingredients -> {
+            adapter.setData(ingredients);
+            adapter.notifyDataSetChanged();
+        });
+
+        if (ingredientViewModel.getIngredientList().getValue() == null) {
+            RetrofitFactory.apiServiceClient().getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
+                @Override
+                public void onResponse(@NonNull Call<List<Ingredient>> call, @NonNull Response<List<Ingredient>> response) {
+                    ingredientViewModel.setIngredientList(response.body());
+                    log.log(Level.INFO, "ingredient list load: SUCCESS");
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<List<Ingredient>> call, @NonNull Throwable t) {
+                    log.log(Level.INFO, "ingredient list load: FAILED");
+                    showErrorMsg();
+                }
+            });
+        }
+
         setupAdapter();
         setupUnitPicker();
+    }
+
+    private void showErrorMsg() {
+        Toast.makeText(binding.getRoot().getContext(), getResources().getString(R.string.ingredient_load_failed), Toast.LENGTH_SHORT).show();
     }
 
     private void setupUnitPicker() {
@@ -110,7 +148,7 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
     private void setupAdapter() {
         RecyclerView rv = binding.rvAddIngredientToRecipe;
-        adapter = new RecipeAddIngredientAdapter(binding.getRoot().getContext(), loadFakeData());
+        adapter = new RecipeAddIngredientAdapter(binding.getRoot().getContext(), new ArrayList<>());
         adapter.setClickListener(this);
         rv.setAdapter(adapter);
     }
