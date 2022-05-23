@@ -179,16 +179,16 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         u4.setLogin("u4");
 
         recipes.add(new Recipe(null, "PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u1.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339));
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg", 1339, ""));
         recipes.add(new Recipe(414L, "Potato", getResources().getString(R.string.text_full_recipe_instruction), user.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345));
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345, ""));
         recipes.add(new Recipe(null, "fried PotatoChips", getResources().getString(R.string.text_full_recipe_instruction), u2.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----1.jpg", 0));
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----1.jpg", 0, ""));
         recipes.add(new Recipe(437L, "creamy Potato", getResources().getString(R.string.text_full_recipe_instruction), user.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8));
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8, ""));
         recipes.add(new Recipe(null, "Potatoes with kotletki", getResources().getString(R.string.text_full_recipe_instruction), u3.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----6.jpg", 133349));
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----6.jpg", 133349, ""));
         recipes.add(new Recipe(null, "Potato so smetanka", getResources().getString(R.string.text_full_recipe_instruction), u4.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----4.jpg", 324));
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----4.jpg", 324, ""));
     }
 }

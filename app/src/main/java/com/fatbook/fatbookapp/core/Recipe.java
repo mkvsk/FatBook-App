@@ -25,4 +25,6 @@ public class Recipe implements Serializable {
     private String image;
 
     private Integer forks;
+
+    private String createDate;
 }

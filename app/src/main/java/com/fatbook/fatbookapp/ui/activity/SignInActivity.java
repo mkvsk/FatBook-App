@@ -137,9 +137,9 @@ public class SignInActivity extends AppCompatActivity {
         List<Recipe> recipes = new ArrayList<>();
 
         recipes.add(new Recipe(2L, "Potato", getResources().getString(R.string.text_full_recipe_instruction), yourMom.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345));
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345, ""));
         recipes.add(new Recipe(4L, "creamy Potato", getResources().getString(R.string.text_full_recipe_instruction), yourMom.getLogin(), ingredientList,
-                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8));
+                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8, ""));
 
         yourMom.setRecipes(recipes);
         yourMom.setRecipesForked(recipes);
