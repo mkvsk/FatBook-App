@@ -101,4 +101,7 @@
     <string name="ingredient_load_failed">сбой подключения</string>
     <string name="toolbar_ingredients">Ингредиенты</string>
     <string name="toolbar_bookmarks">Закладки</string>
+    <string name="button_splash_retry">Повторить</string>
+    <string name="splash_no_connection_error_client">Проверьте интернет соединение и попробуйте снова</string>
+    <string name="splash_no_connection_error_api">Что-то пошло не так, попробуйте снова позже</string>
 </resources>

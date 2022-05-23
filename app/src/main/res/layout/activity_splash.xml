@@ -11,12 +11,13 @@
         android:layout_height="150dp"
         android:layout_margin="150dp"
         android:src="@drawable/kuzya_welcome"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView_fatbook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
@@ -28,5 +29,33 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_splash_image" />
 
+    <TextView
+        android:id="@+id/textView_splash_error"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/roboto_light"
+        android:text="@string/splash_no_connection_error_client"
+        android:textAlignment="center"
+        android:textColor="@color/color_blue_grey_600"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_fatbook" />
+
+    <Button
+        android:id="@+id/button_splash_retry"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:text="@string/button_splash_retry"
+        android:textColor="@color/color_blue_grey_600"
+        android:visibility="gone"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_splash_error" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.ActivitySplashBinding;
 import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
@@ -31,6 +33,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private UserViewModel userViewModel;
 
+    private long userPid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         SharedPreferences sharedPreferences = getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
-        long userPid = sharedPreferences.getLong(UserUtils.USER_PID, 0L);
+        userPid = sharedPreferences.getLong(UserUtils.USER_PID, 0L);
         if (userPid == 0) {
             userViewModel.setUser(new User());
         } else {
@@ -61,6 +65,12 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }, 1);
         });
+
+        binding.buttonSplashRetry.setOnClickListener(view -> {
+            binding.textViewSplashError.setVisibility(View.GONE);
+            binding.buttonSplashRetry.setVisibility(View.GONE);
+            loadUserData(userPid);
+        });
     }
 
     private void loadUserData(long userPid) {
@@ -74,6 +84,16 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 log.log(Level.INFO, "load user ERROR");
+                if (t.toString().contains("Timeout")) {
+                    binding.textViewSplashError.setVisibility(View.VISIBLE);
+                    binding.textViewSplashError.setText(getString(R.string.splash_no_connection_error_api));
+                    binding.buttonSplashRetry.setVisibility(View.VISIBLE);
+                }
+                if (t.toString().contains("ConnectException")) {
+                    binding.textViewSplashError.setVisibility(View.VISIBLE);
+                    binding.textViewSplashError.setText(getString(R.string.splash_no_connection_error_client));
+                    binding.buttonSplashRetry.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

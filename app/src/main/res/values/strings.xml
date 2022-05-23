@@ -187,5 +187,8 @@
     <string name="mobile_nav_user_profile" translatable="false">Profile</string>
     <string name="mobile_nav_recipe_view" translatable="false">View Recipe</string>
     <string name="mobile_nav_recipe_add_ingredient" translatable="false">Add ingredient</string>
+    <string name="splash_no_connection_error_api">Something went wrong,\ntry again later</string>
+    <string name="splash_no_connection_error_client">Check internet connection\nand try again</string>
+    <string name="button_splash_retry">retry</string>
 
 </resources>
