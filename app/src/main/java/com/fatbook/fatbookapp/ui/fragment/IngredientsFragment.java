@@ -58,7 +58,9 @@ public class IngredientsFragment extends Fragment {
 
         ingredientList = new ArrayList<>();
         setupAdapter();
-        loadIngredients();
+        if (ingredientViewModel.getIngredientList().getValue() == null) {
+            loadIngredients();
+        }
         setupSwipeRefresh();
         ingredientViewModel.getIngredientList().observe(getViewLifecycleOwner(), ingredients -> {
             binding.swipeRefreshBookmarks.setRefreshing(false);

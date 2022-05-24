@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_user_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
@@ -23,141 +24,159 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="@string/toolbar_username_profile"
-            app:titleTextColor="@color/color_blue_grey_600" >
+            app:titleTextColor="@color/color_blue_grey_600">
 
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ImageView
-        android:id="@+id/imageView_user_profile_photo_bgr"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_user_profile"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:alpha="0.7"
-        android:background="@color/color_blue_grey_50"
-        android:scaleType="centerCrop"
-        android:src="@drawable/user_profile_default_bgr"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout_add_ingredient_to_recipe" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout_add_ingredient_to_recipe">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        app:layout_constraintTop_toTopOf="@id/imageView_profile_photo"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_profile_photo"
-        app:layout_constraintRight_toRightOf="@id/imageView_profile_photo"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo"
-        android:background="@color/color_blue_grey_200"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView_profile_photo"
-        android:layout_width="115dp"
-        android:layout_height="115dp"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/image_recipe_default"
-        android:background="@color/color_blue_grey_200"
-        android:elevation="2dp"
-        android:translationZ="4dp"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_user_profile_photo_bgr"
-        app:layout_constraintRight_toRightOf="@id/imageView_user_profile_photo_bgr"
-        app:layout_constraintTop_toTopOf="@id/imageView_user_profile_photo_bgr"
-        app:layout_constraintBottom_toTopOf="@id/editText_profile_name"/>
-
-    <ImageButton
-        android:id="@+id/button_user_profile_add_photo"
-        android:layout_width="110dp"
-        android:layout_height="114dp"
-        android:backgroundTint="@color/color_blue_grey_50"
-        android:src="@drawable/icon_add_recipe_photo"
-        android:elevation="6dp"
-        android:scaleType="centerCrop"
-        android:translationZ="4dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/imageView_profile_photo"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_profile_photo"
-        app:layout_constraintRight_toRightOf="@id/imageView_profile_photo"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo" />
-
-    <EditText
-        android:id="@+id/editText_profile_name"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:fontFamily="@font/roboto_medium"
-        android:lines="1"
-        android:hint="@string/text_fullname_profile"
-        android:textAlignment="center"
-        android:textColor="@color/color_blue_grey_600"
-        android:textSize="12sp"
-        android:background="@drawable/round_corner_rect_white"
-        android:padding="5dp"
-        app:layout_constraintBottom_toTopOf="@id/editText_profile_bio"
-        app:layout_constraintTop_toBottomOf="@id/imageView_profile_photo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-<!--    <EditText-->
-<!--        android:id="@+id/editText_profile_birthday"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="25dp"-->
-<!--        android:background="@drawable/round_corner_rect_white"-->
-<!--        android:fontFamily="@font/roboto_medium"-->
-<!--        android:lines="1"-->
-<!--        android:padding="5dp"-->
-<!--        android:text="@string/text_birthday"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textColor="@color/color_blue_grey_600"-->
-<!--        android:textSize="12sp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/editText_profile_bio"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/editText_profile_full_name" />-->
-
-    <EditText
-        android:id="@+id/editText_profile_bio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_regular"
-        android:minLines="1"
-        android:maxLines="6"
-        android:maxLength="300"
-        android:hint="@string/text_bio_profile"
-        android:textColor="@color/color_blue_grey_600"
-        android:textSize="12sp"
-        android:background="@drawable/round_corner_rect_white"
-        app:layout_constraintTop_toBottomOf="@id/editText_profile_name"
-        app:layout_constraintLeft_toLeftOf="@id/imageView_user_profile_photo_bgr"
-        app:layout_constraintRight_toRightOf="@id/imageView_user_profile_photo_bgr"
-        app:layout_constraintBottom_toBottomOf="@id/imageView_user_profile_photo_bgr"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:padding="10dp"/>
-
-    <TextView
-        android:id="@+id/textView_profile_recipes_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
-        android:text="@string/title_my_recipes_profile"
-        android:textColor="@color/color_blue_grey_200"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/imageView_user_profile_photo_bgr"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_user_recipe"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textView_profile_recipes_title"
-            android:paddingTop="10dp"
-            android:clipToPadding="false"
             android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/rv_feed_recipe_card_preview" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView_user_profile_photo_bgr"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:alpha="0.7"
+                    android:background="@color/color_blue_grey_50"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user_profile_default_bgr"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:background="@color/color_blue_grey_200"
+                    app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo"
+                    app:layout_constraintLeft_toLeftOf="@id/imageView_profile_photo"
+                    app:layout_constraintRight_toRightOf="@id/imageView_profile_photo"
+                    app:layout_constraintTop_toTopOf="@id/imageView_profile_photo"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageView_profile_photo"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
+                    android:background="@color/color_blue_grey_200"
+                    android:elevation="2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/image_recipe_default"
+                    android:translationZ="4dp"
+                    app:layout_constraintBottom_toTopOf="@id/editText_profile_name"
+                    app:layout_constraintLeft_toLeftOf="@id/imageView_user_profile_photo_bgr"
+                    app:layout_constraintRight_toRightOf="@id/imageView_user_profile_photo_bgr"
+                    app:layout_constraintTop_toTopOf="@id/imageView_user_profile_photo_bgr"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent" />
+
+                <ImageButton
+                    android:id="@+id/button_user_profile_add_photo"
+                    android:layout_width="110dp"
+                    android:layout_height="114dp"
+                    android:backgroundTint="@color/color_blue_grey_50"
+                    android:elevation="6dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_add_recipe_photo"
+                    android:translationZ="4dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo"
+                    app:layout_constraintLeft_toLeftOf="@id/imageView_profile_photo"
+                    app:layout_constraintRight_toRightOf="@id/imageView_profile_photo"
+                    app:layout_constraintTop_toTopOf="@id/imageView_profile_photo" />
+
+                <EditText
+                    android:id="@+id/editText_profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:background="@drawable/round_corner_rect_white"
+                    android:fontFamily="@font/roboto_medium"
+                    android:hint="@string/text_fullname_profile"
+                    android:lines="1"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_blue_grey_600"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@id/editText_profile_bio"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView_profile_photo" />
+
+                <EditText
+                    android:id="@+id/editText_profile_bio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/round_corner_rect_white"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="@string/text_bio_profile"
+                    android:maxLength="300"
+                    android:maxLines="6"
+                    android:minLines="1"
+                    android:padding="10dp"
+                    android:textColor="@color/color_blue_grey_600"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/imageView_user_profile_photo_bgr"
+                    app:layout_constraintLeft_toLeftOf="@id/imageView_user_profile_photo_bgr"
+                    app:layout_constraintRight_toRightOf="@id/imageView_user_profile_photo_bgr"
+                    app:layout_constraintTop_toBottomOf="@id/editText_profile_name" />
+
+                <TextView
+                    android:id="@+id/textView_profile_recipes_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/title_my_recipes_profile"
+                    android:textColor="@color/color_blue_grey_200"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView_user_profile_photo_bgr" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_user_recipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:paddingTop="10dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/textView_profile_recipes_title"
+                    tools:listitem="@layout/rv_feed_recipe_card_preview" />
+
+                <View
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/rv_user_recipe"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/view_stub"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

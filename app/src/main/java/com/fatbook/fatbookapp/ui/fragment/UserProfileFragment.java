@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -31,6 +33,7 @@ import com.fatbook.fatbookapp.ui.activity.SplashActivity;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
+import com.fatbook.fatbookapp.util.KeyboardActionUtil;
 import com.fatbook.fatbookapp.util.UserUtils;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -62,19 +65,22 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         setupMenu();
 
         user = userViewModel.getUser().getValue();
-        loadUserData(user.getLogin());
+        if (userViewModel.getUser().getValue() == null) {
+            loadUserData();
+        }
         userViewModel.getUser().observe(getViewLifecycleOwner(), _user -> {
+            binding.swipeRefreshUserProfile.setRefreshing(false);
             user = _user;
             fillUserProfile();
         });
         setupAdapter();
-
+        setupSwipeRefresh();
         editMode(false);
         binding.toolbarUserProfile.getOverflowIcon().setColorFilter(getResources().getColor(R.color.color_blue_grey_600), PorterDuff.Mode.MULTIPLY);
     }
 
-    private void loadUserData(String login) {
-        RetrofitFactory.apiServiceClient().getUser(login).enqueue(new Callback<User>() {
+    private void loadUserData() {
+        RetrofitFactory.apiServiceClient().getUser(user.getLogin()).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 log.log(Level.INFO, "" + response.code() + " found user: " + response.body());
@@ -86,6 +92,13 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                 log.log(Level.INFO, "load user ERROR");
             }
         });
+    }
+
+    private void setupSwipeRefresh() {
+        // TODO disable edit
+        binding.swipeRefreshUserProfile.setColorSchemeColors(
+                getResources().getColor(R.color.color_pink_a200));
+        binding.swipeRefreshUserProfile.setOnRefreshListener(this::loadUserData);
     }
 
     private void setupAdapter() {
@@ -266,4 +279,37 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         binding = FragmentUserProfileBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listener);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        binding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listener);
+    }
+
+//    private void setupKeyboardOpenListener() {
+//        keyboardVisibilityListener = () -> {
+//            final Rect rectangle = new Rect();
+//            final View contentView = binding.getRoot();
+//            contentView.getWindowVisibleDisplayFrame(rectangle);
+//            int screenHeight = contentView.getRootView().getHeight();
+//            int keypadHeight = screenHeight - rectangle.bottom;
+//            boolean isKeyboardNowVisible = keypadHeight > screenHeight * 0.15;
+//
+//            if (isKeyboardVisible != isKeyboardNowVisible) {
+//                if (isKeyboardNowVisible) {
+//                    requireActivity().findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
+//                } else {
+//                    requireActivity().findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+//                }
+//            }
+//            isKeyboardVisible = isKeyboardNowVisible;
+//        };
+//    }
+
 }

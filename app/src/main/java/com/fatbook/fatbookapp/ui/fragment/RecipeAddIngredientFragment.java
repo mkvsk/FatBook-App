@@ -93,7 +93,9 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
         });
 
         setupAdapter();
-        loadIngredients();
+        if (ingredientViewModel.getIngredientList().getValue() == null) {
+            loadIngredients();
+        }
         setupUnitPicker();
     }
 

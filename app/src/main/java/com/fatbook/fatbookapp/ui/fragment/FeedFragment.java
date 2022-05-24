@@ -57,7 +57,9 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
 
         userViewModel.getUser().observe(getViewLifecycleOwner(), userUpdated -> {
             user = userUpdated;
-            loadData();
+            if (userViewModel.getFeedRecipeList().getValue() == null) {
+                loadData();
+            }
         });
 
         binding.swipeRefreshBookmarks.setColorSchemeColors(getResources().getColor(R.color.color_pink_a200));
@@ -68,7 +70,6 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         });
 
         userViewModel.getFeedRecipeList().observe(getViewLifecycleOwner(), recipeList -> {
-            //TODO add loader
             feedRecipeList = recipeList;
             if (feedRecipeList == null) {
                 feedRecipeList = new ArrayList<>();
@@ -92,6 +93,9 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
             public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                 userViewModel.setFeedRecipeList(response.body());
                 log.log(Level.INFO, "feed data load: SUCCESS");
+                if (response.body() != null) {
+                    log.log(Level.INFO, "loaded " + response.body().size() + " recipes");
+                }
             }
 
             @Override
