@@ -128,8 +128,8 @@
     <string name="alert_dialog_btn_no">No</string>
     <string name="alert_dialog_btn_ok">OK</string>
     <string name="alert_dialog_btn_cancel">Cancel</string>
+
     <string name="alert_dialog_suggest_ingredient">Suggest another ingredient</string>
-    <string name="alert_dialog_delete_recipe_title">Delete recipe</string>
     <string name="alert_dialog_logout_message">Are you sure you want to logout?</string>
     <string name="alert_dialog_delete_recipe_message">Are you sure you want to delete recipe?</string>
     //alert dialog titles
