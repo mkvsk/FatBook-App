@@ -49,6 +49,12 @@ public interface NetworkInfoService {
     @POST("recipe/create")
     Call<Void> recipeCreate(@Body Recipe recipe);
 
+    @POST("recipe/update")
+    Call<Void> recipeUpdate(@Body Recipe recipe);
+
+    @POST("recipe/delete")
+    Call<Void> recipeDelete(@Body Recipe recipe);
+
     /**
      * Feed
      */

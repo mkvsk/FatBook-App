@@ -36,11 +36,14 @@ import com.fatbook.fatbookapp.util.RecipeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
+import lombok.extern.java.Log;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@Log
 public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIngredient {
 
     private FragmentRecipeViewBinding binding;
@@ -139,7 +142,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                 .setView(container)
                 .setCustomTitle(title)
                 .setPositiveButton(getString(R.string.alert_dialog_btn_yes), (dialogInterface, i) -> {
-                    RecipeUtils.deleteRecipe(recipe);
+                    deleteRecipe();
 //                    onConfirmDeleteRecipeClick();
                 })
                 .setNegativeButton(getString(R.string.alert_dialog_btn_cancel), (dialogInterface, i) -> {
@@ -204,7 +207,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                 return true;
             case R.id.menu_recipe_save:
                 toggleEditMode(false);
-                confirmEdit();
+                saveEdit();
                 return true;
             case R.id.menu_recipe_cancel:
                 toggleEditMode(false);
@@ -235,25 +238,38 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         }
     }
 
-    private void confirmEdit() {
+    private void saveEdit() {
         recipe.setName(binding.editTextFullRecipeName.getText().toString());
         recipe.setDescription(binding.editTextFullRecipeDescription.getText().toString());
-        //TODO ingredient list save
-        recipeViewModel.setRecipe(recipe);
         saveRecipe();
     }
 
-    private void saveRecipe() {
-        RecipeUtils.saveRecipe(recipe);
-        RetrofitFactory.apiServiceClient().recipeCreate(recipe).enqueue(new Callback<Void>() {
+    private void deleteRecipe() {
+        RetrofitFactory.apiServiceClient().recipeDelete(recipe).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                System.out.println();
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                log.log(Level.INFO, "delete recipe SUCCESS");
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                System.out.println();
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "delete recipe FAILED");
+            }
+        });
+    }
+
+
+    private void saveRecipe() {
+        RetrofitFactory.apiServiceClient().recipeUpdate(recipe).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                log.log(Level.INFO, "edit recipe save SUCCESS");
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "edit recipe save FAILED");
+                t.printStackTrace();
             }
         });
     }

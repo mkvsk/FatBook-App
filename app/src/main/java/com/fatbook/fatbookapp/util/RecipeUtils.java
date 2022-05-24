@@ -25,13 +25,4 @@ public class RecipeUtils {
 //        }
 //    }
 
-    @SneakyThrows
-    public static void saveRecipe(Recipe recipe) {
-        //TODO save recipe
-    }
-
-    @SneakyThrows
-    public static void deleteRecipe(Recipe recipe) {
-        //TODO save recipe
-    }
 }
