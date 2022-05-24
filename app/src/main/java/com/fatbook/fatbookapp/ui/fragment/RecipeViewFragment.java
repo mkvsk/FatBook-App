@@ -131,7 +131,6 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
         View title = LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_title_recipe, null);
 
-
         new AlertDialog.Builder(requireContext())
                 .setView(container)
                 .setCustomTitle(title)

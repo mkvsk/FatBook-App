@@ -12,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -157,8 +159,25 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void logout() {
+        String msg = getResources().getString(R.string.alert_dialog_logout_message);
+
+        final TextView textViewMsg = new TextView(requireContext());
+        textViewMsg.setText(msg);
+        textViewMsg.setSingleLine();
+        textViewMsg.setTextColor(getResources().getColor(R.color.color_blue_grey_600));
+
+        FrameLayout container = new FrameLayout(requireContext());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.topMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        textViewMsg.setLayoutParams(params);
+        container.addView(textViewMsg);
+
+        View title = LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_title_logout, null);
         new AlertDialog.Builder(requireContext())
-                .setMessage(R.string.alert_dialog_logout_message)
+                .setView(container)
+                .setCustomTitle(title)
                 .setPositiveButton(getString(R.string.alert_dialog_btn_yes), (dialogInterface, i) -> {
                     SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
