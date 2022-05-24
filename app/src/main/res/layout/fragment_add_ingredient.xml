@@ -52,7 +52,7 @@
             android:clipToPadding="false"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_marginBottom="220dp"
+            android:layout_marginBottom="170dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -60,31 +60,20 @@
             android:overScrollMode="never"
             tools:listitem="@layout/rv_ingredient_to_recipe" />
 
-<!--        <View-->
-<!--            android:id="@+id/view_1"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:background="@drawable/rounded_corner"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            android:layout_height="220dp"-->
-<!--            android:elevation="2dp"-->
-<!--            android:translationZ="6dp"/>-->
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/view_1"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="180dp"
+            app:layout_constraintBottom_toTopOf="@id/view_add_ingredient"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            style="@style/addIngredientCardViewStyle"
             app:cardElevation="6dp"
-            app:cardCornerRadius="30dp"
             android:background="@color/white"/>
 
         <TextView
             android:id="@+id/textView_selected_ingredient"
-            app:layout_constraintTop_toTopOf="@id/view_1"
+            app:layout_constraintTop_toTopOf="@id/cardView"
             app:layout_constraintBottom_toTopOf="@id/editText_ingredient_quantity"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,18 +85,6 @@
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btn_add_ingredient_to_recipe"
-            style="@style/addRecipeButton"
-            android:text="@string/text_add"
-            android:layout_marginBottom="60dp"
-            android:elevation="2dp"
-            android:translationZ="6dp"
-            android:backgroundTint="@color/color_blue_grey_200"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
 
         <EditText
             android:layout_marginBottom="15dp"
@@ -145,6 +122,27 @@
             app:layout_constraintBottom_toBottomOf="@id/editText_ingredient_quantity"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/editText_ingredient_quantity"/>
+
+        <Button
+            android:id="@+id/btn_add_ingredient_to_recipe"
+            style="@style/addRecipeButton"
+            android:text="@string/text_add"
+            android:layout_marginBottom="10dp"
+            android:elevation="2dp"
+            android:translationZ="6dp"
+            android:backgroundTint="@color/color_blue_grey_200"
+            app:layout_constraintBottom_toTopOf="@+id/view_add_ingredient"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <View
+            android:visibility="gone"
+            android:id="@+id/view_add_ingredient"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

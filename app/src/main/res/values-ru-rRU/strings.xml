@@ -71,14 +71,15 @@
     <string name="btn_sign_in_a_sign_in">ВХОД</string>
     <string name="hint_recipe_by_rv_bookmarks">Автор</string>
     <string name="hint_recipe_by_rv_profile_my_recipes">Автор</string>
+
     <string name="IngredientUnit_GRAM_DISPLAY_NAME">гр</string>
-    <string name="IngredientUnit_GRAM_MULTIPLY_NAMING">Грамм</string>
+    <string name="IngredientUnit_GRAM_MULTIPLY_NAMING">Граммы</string>
     <string name="IngredientUnit_GRAM_SINGLE_NAMING">Грамм</string>
     <string name="IngredientUnit_ML_DISPLAY_NAME">мл</string>
-    <string name="IngredientUnit_ML_MULTIPLY_NAMING">Миллилитров</string>
+    <string name="IngredientUnit_ML_MULTIPLY_NAMING">Миллилитры</string>
     <string name="IngredientUnit_ML_SINGLE_NAMING">Миллилитр</string>
     <string name="IngredientUnit_PCS_DISPLAY_NAME">шт</string>
-    <string name="IngredientUnit_PCS_MULTIPLY_NAMING">штук</string>
+    <string name="IngredientUnit_PCS_MULTIPLY_NAMING">штуки</string>
     <string name="IngredientUnit_PCS_SINGLE_NAMING">штука</string>
     <string name="IngredientUnit_TABLE_SPOON_DISPLAY_NAME">ст. л.</string>
     <string name="IngredientUnit_TABLE_SPOON_MULTIPLY_NAMING">Столовые ложки</string>
@@ -86,6 +87,7 @@
     <string name="IngredientUnit_TEA_SPOON_DISPLAY_NAME">ч. л.</string>
     <string name="IngredientUnit_TEA_SPOON_MULTIPLY_NAMING">Чайные ложки</string>
     <string name="IngredientUnit_TEA_SPOON_SINGLE_NAMING">Чайная ложка</string>
+
     <string name="snackbar_edit">Редактировать</string>
     <string name="snackbar_end_edit">Завершить редактирование</string>
     <string name="snackbar_recipe_deleted">Рецепт удален</string>

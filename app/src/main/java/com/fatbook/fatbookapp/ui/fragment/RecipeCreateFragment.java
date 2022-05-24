@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import com.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
+import com.fatbook.fatbookapp.util.KeyboardActionUtil;
 import com.fatbook.fatbookapp.util.RecipeUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -49,6 +51,8 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
 
@@ -96,6 +100,7 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
     @Override
     public void onResume() {
         super.onResume();
+        binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity(), binding.viewRecipeCreate).listenerForAdjustPan);
         if (recipeViewModel.getSelectedRecipeIngredient().getValue() != null) {
             recipe.getIngredients().add(recipeViewModel.getSelectedRecipeIngredient().getValue());
             adapter.setData(recipe.getIngredients());
@@ -133,5 +138,11 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRecipeCreateBinding.inflate(inflater, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        binding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity(), binding.viewRecipeCreate).listenerForAdjustPan);
     }
 }

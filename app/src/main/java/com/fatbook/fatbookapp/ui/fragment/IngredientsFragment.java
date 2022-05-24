@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -21,6 +22,7 @@ import com.fatbook.fatbookapp.databinding.FragmentIngredientsBinding;
 import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.ui.adapters.IngredientsAdapter;
 import com.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel;
+import com.fatbook.fatbookapp.util.KeyboardActionUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -49,6 +51,7 @@ public class IngredientsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         binding.fabIngredientsAdd.setOnClickListener(view1 -> {
             configureAlertDialog();
@@ -179,5 +182,17 @@ public class IngredientsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentIngredientsBinding.inflate(inflater, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        binding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
     }
 }

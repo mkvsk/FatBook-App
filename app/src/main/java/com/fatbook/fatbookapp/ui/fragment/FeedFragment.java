@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
+import com.fatbook.fatbookapp.util.KeyboardActionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
@@ -156,6 +159,18 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFeedBinding.inflate(inflater, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        binding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
     }
 
 }

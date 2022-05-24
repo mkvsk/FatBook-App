@@ -213,7 +213,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
-                android:layout_marginBottom="100dp"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/round_corner_rect_white"
                 android:fontFamily="@font/roboto_light"
                 android:gravity="start"

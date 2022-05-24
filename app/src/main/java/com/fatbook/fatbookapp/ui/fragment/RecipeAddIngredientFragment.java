@@ -25,6 +25,7 @@ import com.fatbook.fatbookapp.ui.adapters.AddIngredientToRecipeAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener;
 import com.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
+import com.fatbook.fatbookapp.util.KeyboardActionUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -53,6 +54,8 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         ingredientViewModel = new ViewModelProvider(requireActivity()).get(IngredientViewModel.class);
 
@@ -165,5 +168,17 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAddIngredientBinding.inflate(inflater, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        binding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
     }
 }

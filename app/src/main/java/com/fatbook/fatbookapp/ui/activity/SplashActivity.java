@@ -64,7 +64,7 @@ public class SplashActivity extends AppCompatActivity {
                 intent.putExtra(UserUtils.TAG_USER, user);
                 startActivity(intent);
                 finish();
-            }, 2000);
+            }, 1);
         });
 
         binding.buttonSplashRetry.setOnClickListener(view -> {

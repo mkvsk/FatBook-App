@@ -3,7 +3,7 @@
     <string name="app_name" translatable="false">FatBook</string>
     <string name="tagline_fatbook">get your forks ready</string>
     <string name="tag_copyright" translatable="false">PotatoCorpⒸ2022</string>
-    <string name="tag_version" translatable="false">v 1.0.0</string>
+    <string name="tag_version" translatable="false">v 0.0.1</string>
 
     ///login
     <string name="title_add_recipe">Add recipe</string>

@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
+import com.fatbook.fatbookapp.util.KeyboardActionUtil;
 import com.fatbook.fatbookapp.util.RecipeUtils;
 
 import java.util.ArrayList;
@@ -65,6 +67,8 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
@@ -344,5 +348,17 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRecipeViewBinding.inflate(inflater, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        binding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
     }
 }
