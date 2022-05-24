@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
         if (sharedPreferences.getLong(UserUtils.USER_PID, 0L) == 0) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong(UserUtils.USER_PID, 194L);
+            editor.putLong(UserUtils.USER_PID, user.getPid());
             editor.apply();
         }
         userViewModel.setUser(user);
