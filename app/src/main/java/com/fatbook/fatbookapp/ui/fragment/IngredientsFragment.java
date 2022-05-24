@@ -137,7 +137,7 @@ public class IngredientsFragment extends Fragment {
         editTextName.setLayoutParams(params);
         container.addView(editTextName);
 
-        View title = LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_title, null);
+        View title = LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_title_ingredient, null);
 
         final AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setView(container)

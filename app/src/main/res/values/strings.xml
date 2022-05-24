@@ -176,7 +176,7 @@
 
     //alert dialog
     <string name="title_add_ingredient_alert_dialog">Add ingredient</string>
-
+    <string name="title_delete_recipe_alert_dialog">Delete recipe</string>
     //
     <string name="hint_recipe_by_rv_bookmarks">Author</string>
     <string name="hint_recipe_by_rv_profile_my_recipes">Author</string>
