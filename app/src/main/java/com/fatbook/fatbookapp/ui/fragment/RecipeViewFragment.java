@@ -61,6 +61,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
     private boolean addIngredient = false;
 
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
