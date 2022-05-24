@@ -86,7 +86,7 @@
 
     <Button
         android:id="@+id/button_sign_in"
-        style="@style/greyButton"
+        style="@style/pinkButton"
         android:text="@string/btn_sign_in_a_sign_in"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@+id/textView_sign_in_tagline"
