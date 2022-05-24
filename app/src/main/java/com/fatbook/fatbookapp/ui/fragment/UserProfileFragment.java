@@ -62,7 +62,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         setupMenu();
 
         user = userViewModel.getUser().getValue();
-        loadUserData(user.getPid());
+        loadUserData(user.getLogin());
         userViewModel.getUser().observe(getViewLifecycleOwner(), _user -> {
             user = _user;
             fillUserProfile();
@@ -73,8 +73,8 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         binding.toolbarUserProfile.getOverflowIcon().setColorFilter(getResources().getColor(R.color.color_blue_grey_600), PorterDuff.Mode.MULTIPLY);
     }
 
-    private void loadUserData(long userPid) {
-        RetrofitFactory.apiServiceClient().getUser(userPid).enqueue(new Callback<User>() {
+    private void loadUserData(String login) {
+        RetrofitFactory.apiServiceClient().getUser(login).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 log.log(Level.INFO, "" + response.code() + " found user: " + response.body());
@@ -181,7 +181,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                 .setPositiveButton(getString(R.string.alert_dialog_btn_yes), (dialogInterface, i) -> {
                     SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putLong(UserUtils.USER_PID, 0L);
+                    editor.putString(UserUtils.USER_LOGIN, StringUtils.EMPTY);
                     editor.apply();
                     startActivity(new Intent(requireActivity(), SplashActivity.class));
                     requireActivity().finish();

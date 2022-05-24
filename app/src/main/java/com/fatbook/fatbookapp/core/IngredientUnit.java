@@ -1,39 +1,33 @@
 package com.fatbook.fatbookapp.core;
 
+import android.content.Context;
+
+import com.fatbook.fatbookapp.R;
+
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
 @AllArgsConstructor
 public enum IngredientUnit {
-    //TODO ingredient units string res
+    ML(R.string.IngredientUnit_ML_SINGLE_NAMING, R.string.IngredientUnit_ML_MULTIPLY_NAMING, R.string.IngredientUnit_ML_DISPLAY_NAME),
+    PCS(R.string.IngredientUnit_PCS_SINGLE_NAMING, R.string.IngredientUnit_PCS_MULTIPLY_NAMING, R.string.IngredientUnit_PCS_DISPLAY_NAME),
+    GRAM(R.string.IngredientUnit_GRAM_SINGLE_NAMING, R.string.IngredientUnit_GRAM_MULTIPLY_NAMING, R.string.IngredientUnit_GRAM_DISPLAY_NAME),
+    TEA_SPOON(R.string.IngredientUnit_TEA_SPOON_SINGLE_NAMING, R.string.IngredientUnit_TEA_SPOON_MULTIPLY_NAMING, R.string.IngredientUnit_TEA_SPOON_DISPLAY_NAME),
+    TABLE_SPOON(R.string.IngredientUnit_TABLE_SPOON_SINGLE_NAMING, R.string.IngredientUnit_TABLE_SPOON_MULTIPLY_NAMING, R.string.IngredientUnit_TABLE_SPOON_DISPLAY_NAME);
 
-    GRAM("Gram", "Gram", "g"),
-    TABLE_SPOON("Table spoon", "Table spoons", "tbs"),
-    TEA_SPOON("Tea spoon", "Tea spoons", "tsp"),
-    PCS("Piece", "Pieces", "pcs"),
-    ML("Milliliter", "Milliliters", "ml");
+    private final int singleNaming;
+    private final int multiplyNaming;
+    private final int displayName;
 
-    private final String singleNaming;
-    private final String multiplyNaming;
-    private final String displayName;
-
-    public String getSingleNaming() {
-        return singleNaming;
+    public String getSingleNaming(Context context) {
+        return context.getString(singleNaming);
     }
 
-    public String getMultiplyNaming() {
-        return multiplyNaming;
+    public String getMultiplyNaming(Context context) {
+        return context.getString(multiplyNaming);
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getDisplayName(Context context) {
+        return context.getString(displayName);
     }
 
-    //    public String getNaming(double value) {
-//        if (value == 1.0) {
-//            return singleNaming;
-//        } else {
-//            return multiplyNaming;
-//        }
-//    }
 }

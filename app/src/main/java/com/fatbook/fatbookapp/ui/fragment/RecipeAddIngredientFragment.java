@@ -114,11 +114,11 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
     private void setupUnitPicker() {
         String[] unitData = new String[]{
-                IngredientUnit.TABLE_SPOON.getMultiplyNaming(),
-                IngredientUnit.PCS.getMultiplyNaming(),
-                IngredientUnit.GRAM.getMultiplyNaming(),
-                IngredientUnit.ML.getMultiplyNaming(),
-                IngredientUnit.TEA_SPOON.getMultiplyNaming()
+                IngredientUnit.ML.getMultiplyNaming(requireContext()),
+                IngredientUnit.PCS.getMultiplyNaming(requireContext()),
+                IngredientUnit.GRAM.getMultiplyNaming(requireContext()),
+                IngredientUnit.TEA_SPOON.getMultiplyNaming(requireContext()),
+                IngredientUnit.TABLE_SPOON.getMultiplyNaming(requireContext())
         };
         binding.pickerIngredientUnit.setMinValue(0);
         binding.pickerIngredientUnit.setMaxValue(unitData.length - 1);

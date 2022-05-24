@@ -18,6 +18,8 @@ import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.UserUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.logging.Level;
 
 import lombok.extern.java.Log;
@@ -32,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private UserViewModel userViewModel;
 
-    private long userPid;
+    private String userLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +45,18 @@ public class SplashActivity extends AppCompatActivity {
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         SharedPreferences sharedPreferences = getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
-        userPid = sharedPreferences.getLong(UserUtils.USER_PID, 0L);
-        if (userPid == 0) {
+        userLogin = sharedPreferences.getString(UserUtils.USER_LOGIN, StringUtils.EMPTY);
+        if (StringUtils.isEmpty(userLogin)) {
             userViewModel.setUser(new User());
         } else {
-            loadUserData(userPid);
+            loadUserData(userLogin);
         }
 
         userViewModel.getUser().observe(this, user -> {
             Handler handler = new Handler();
             handler.postDelayed(() -> {
                 Intent intent;
-                if (userPid == 0) {
+                if (StringUtils.isEmpty(userLogin)) {
                     intent = new Intent(this, WelcomeActivity.class);
                 } else {
                     intent = new Intent(this, MainActivity.class);
@@ -68,12 +70,12 @@ public class SplashActivity extends AppCompatActivity {
         binding.buttonSplashRetry.setOnClickListener(view -> {
             binding.textViewSplashError.setVisibility(View.GONE);
             binding.buttonSplashRetry.setVisibility(View.GONE);
-            loadUserData(userPid);
+            loadUserData(userLogin);
         });
     }
 
-    private void loadUserData(long userPid) {
-        RetrofitFactory.apiServiceClient().getUser(userPid).enqueue(new Callback<User>() {
+    private void loadUserData(String login) {
+        RetrofitFactory.apiServiceClient().getUser(login).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 log.log(Level.INFO, "" + response.code() + " found user: " + response.body());

@@ -18,6 +18,8 @@ import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.UserUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -59,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
     private void loadData() {
         User user = (User) getIntent().getSerializableExtra(UserUtils.TAG_USER);
         SharedPreferences sharedPreferences = getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
-        if (sharedPreferences.getLong(UserUtils.USER_PID, 0L) == 0) {
+        if (StringUtils.isEmpty(sharedPreferences.getString(UserUtils.USER_LOGIN, StringUtils.EMPTY))) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong(UserUtils.USER_PID, user.getPid());
+            editor.putString(UserUtils.USER_LOGIN, user.getLogin());
             editor.apply();
         }
         userViewModel.setUser(user);

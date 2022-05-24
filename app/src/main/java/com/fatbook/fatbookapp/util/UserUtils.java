@@ -32,7 +32,7 @@ public class UserUtils {
 
     public static final String APP_PREFS = "app_prefs";
 
-    public static final String USER_PID = "user_pid";
+    public static final String USER_LOGIN = "user_pid";
 
     @SneakyThrows
     public static boolean createNewUser(User user, File image) {

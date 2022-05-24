@@ -43,7 +43,7 @@ public class ViewRecipeIngredientAdapter extends RecyclerView.Adapter<ViewRecipe
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RecipeIngredient ingredient = list.get(position);
         holder.name.setText(ingredient.getIngredient().getName());
-        String quantityName = ingredient.getQuantity() + " " + ingredient.getUnit().getDisplayName();
+        String quantityName = ingredient.getQuantity() + " " + ingredient.getUnit().getDisplayName(inflater.getContext());
         holder.quantity.setText(quantityName);
         if (isEditAvailable) {
             holder.btnRemove.setVisibility(View.VISIBLE);

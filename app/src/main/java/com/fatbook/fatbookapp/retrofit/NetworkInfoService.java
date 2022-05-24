@@ -22,8 +22,8 @@ public interface NetworkInfoService {
     /**
      * User
      */
-    @GET("user/get/pid")
-    Call<User> getUser(@Query(value = "pid") Long pid);
+    @GET("user/get/login")
+    Call<User> getUser(@Query(value = "login") String login);
 
     @POST("user/create")
     Call<User> userCreate(@Body User user, @Query(value = "fat") String fat);
