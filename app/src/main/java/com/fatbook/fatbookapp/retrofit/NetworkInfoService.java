@@ -59,7 +59,7 @@ public interface NetworkInfoService {
      * Feed
      */
     @GET("recipe/feed")
-    Call<List<Recipe>> getFeed();
+    Call<List<Recipe>> getFeed(@Query(value = "pid") Long pid);
 
     //========================================================================================
 

@@ -90,8 +90,9 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         recyclerView.setAdapter(adapter);
     }
 
+    //TODO убрать костыль в api запросе
     private void loadData() {
-        RetrofitFactory.apiServiceClient().getFeed().enqueue(new Callback<List<Recipe>>() {
+        RetrofitFactory.apiServiceClient().getFeed(0L).enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                 userViewModel.setFeedRecipeList(response.body());
