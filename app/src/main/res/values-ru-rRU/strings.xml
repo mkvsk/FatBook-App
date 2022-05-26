@@ -66,7 +66,6 @@
     <string name="btn_register_welcome_to">РЕГИСТРАЦИЯ</string>
     <string name="btn_sign_in_welcome_to">ВХОД</string>
     <string name="alert_dialog_delete_recipe_message">Вы уверены что хотите удалить рецепт?</string>
-    <string name="alert_dialog_delete_recipe_title">УДАЛИТЬ РЕЦЕПТ</string>
     <string name="btn_next_password">ДАЛЕЕ</string>
     <string name="btn_sign_in_a_sign_in">ВХОД</string>
     <string name="hint_recipe_by_rv_bookmarks">Автор</string>
@@ -114,4 +113,6 @@
     <string name="alert_dialog_logout_message">Вы уверены что хотите выйти?</string>
     <string name="title_delete_recipe_alert_dialog">Удалить рецепт</string>
     <string name="title_logout_alert_dialog">Покинуть учетную запись</string>
+    <string name="alert_dialog_empty_recipe_message">Нельзя сохранить пустой рецепт</string>
+    <string name="title_empty_recipe_alert_dialog">Плохая идея :(</string>
 </resources>

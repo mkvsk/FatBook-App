@@ -132,10 +132,12 @@
     <string name="alert_dialog_suggest_ingredient">Suggest another ingredient</string>
     <string name="alert_dialog_logout_message">Are you sure you want to logout?</string>
     <string name="alert_dialog_delete_recipe_message">Are you sure you want to delete recipe?</string>
+    <string name="alert_dialog_empty_recipe_message">You cant save empty recipe.</string>
     //alert dialog titles
     <string name="title_add_ingredient_alert_dialog">Add ingredient</string>
     <string name="title_delete_recipe_alert_dialog">Delete recipe</string>
     <string name="title_logout_alert_dialog">Log out</string>
+    <string name="title_empty_recipe_alert_dialog">Bad idea :(</string>
 
     //ingredient
     <string name="ingredient_load_failed">Connection error</string>

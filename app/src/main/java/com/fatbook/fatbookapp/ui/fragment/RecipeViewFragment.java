@@ -2,8 +2,6 @@ package com.fatbook.fatbookapp.ui.fragment;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -125,7 +123,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
         }
 
-    private void showDialog() {
+    private void showDialogDelete() {
         String msg = getResources().getString(R.string.alert_dialog_delete_recipe_message);
 
         final TextView textViewMsg = new TextView(requireContext());
@@ -222,7 +220,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                 cancelEdit();
                 return true;
             case R.id.menu_recipe_delete:
-                showDialog();
+                showDialogDelete();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -230,9 +228,43 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     }
 
     private boolean niceCheck() {
-        return StringUtils.isNotEmpty(binding.editTextFullRecipeName.getText().toString())
+        if (StringUtils.isNotEmpty(binding.editTextFullRecipeName.getText().toString())
                 && StringUtils.isNotEmpty(binding.editTextFullRecipeDescription.getText().toString())
-        && !recipe.getIngredients().isEmpty();
+                && !recipe.getIngredients().isEmpty()) {
+            return true;
+        } else {
+            showDialogEmptyRecipe();
+            return false;
+        }
+    }
+
+    private void showDialogEmptyRecipe() {
+        String msg = getResources().getString(R.string.alert_dialog_empty_recipe_message);
+
+        final TextView textViewMsg = new TextView(requireContext());
+        textViewMsg.setText(msg);
+        textViewMsg.setSingleLine();
+        textViewMsg.setTextColor(getResources().getColor(R.color.color_blue_grey_600));
+
+        FrameLayout container = new FrameLayout(requireContext());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.topMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        textViewMsg.setLayoutParams(params);
+        container.addView(textViewMsg);
+
+        View title = LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_title_empty_recipe, null);
+
+        new AlertDialog.Builder(requireContext())
+                .setView(container)
+                .setCustomTitle(title)
+                .setPositiveButton(getString(R.string.alert_dialog_btn_ok), (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                })
+                .show();
+        binding.editTextFullRecipeName.setBackgroundResource(R.drawable.round_corner_edittext);
+        binding.editTextFullRecipeDescription.setBackgroundResource(R.drawable.round_corner_edittext);
     }
 
     private void toggleEditMode(boolean allow) {
