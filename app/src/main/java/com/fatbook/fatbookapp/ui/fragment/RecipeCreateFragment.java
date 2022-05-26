@@ -1,17 +1,21 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.engine.Resource;
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
@@ -67,6 +71,40 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
         });
 
         setupAdapter();
+
+        binding.editTextRecipeAddTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                niceCheck();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        binding.editTextRecipeAddDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                niceCheck();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void saveRecipe() {
@@ -97,6 +135,18 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
         recipe.setForks(0);
     }
 
+    private void niceCheck() {
+        if (StringUtils.isNotEmpty(binding.editTextRecipeAddTitle.toString())
+                && StringUtils.isNotEmpty(binding.editTextRecipeAddDescription.toString())
+                && !recipe.getIngredients().isEmpty()) {
+            binding.buttonRecipeAddSave.setEnabled(true);
+            binding.buttonRecipeAddSave.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.color_pink_a200));
+        } else {
+            binding.buttonRecipeAddSave.setEnabled(false);
+            binding.buttonRecipeAddSave.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.color_blue_grey_200));
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -107,6 +157,7 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
             adapter.notifyDataSetChanged();
             recipeViewModel.setSelectedRecipeIngredient(null);
         }
+        niceCheck();
     }
 
     private void setupAdapter() {
@@ -119,12 +170,12 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
         recyclerView.setAdapter(adapter);
     }
 
-
     @Override
     public void onDeleteIngredientClick(RecipeIngredient recipeIngredient, int position) {
         recipe.getIngredients().remove(recipeIngredient);
         adapter.setData(recipe.getIngredients());
         adapter.notifyItemRemoved(position);
+        niceCheck();
     }
 
     @Override

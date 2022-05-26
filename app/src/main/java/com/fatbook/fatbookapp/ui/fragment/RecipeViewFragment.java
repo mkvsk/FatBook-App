@@ -2,6 +2,8 @@ package com.fatbook.fatbookapp.ui.fragment;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +35,8 @@ import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.KeyboardActionUtil;
 import com.fatbook.fatbookapp.util.RecipeUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +122,8 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
             addIngredient = true;
             NavHostFragment.findNavController(this).navigate(R.id.navigation_add_ingredient);
         });
-    }
+
+        }
 
     private void showDialog() {
         String msg = getResources().getString(R.string.alert_dialog_delete_recipe_message);
@@ -204,10 +209,13 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
             case R.id.menu_recipe_edit:
                 ingredientListTemp = new ArrayList<>(recipe.getIngredients());
                 toggleEditMode(true);
+                niceCheck();
                 return true;
             case R.id.menu_recipe_save:
-                toggleEditMode(false);
-                saveEdit();
+                if(niceCheck()) {
+                    toggleEditMode(false);
+                    saveEdit();
+                }
                 return true;
             case R.id.menu_recipe_cancel:
                 toggleEditMode(false);
@@ -219,6 +227,12 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean niceCheck() {
+        return StringUtils.isNotEmpty(binding.editTextFullRecipeName.getText().toString())
+                && StringUtils.isNotEmpty(binding.editTextFullRecipeDescription.getText().toString())
+        && !recipe.getIngredients().isEmpty();
     }
 
     private void toggleEditMode(boolean allow) {
