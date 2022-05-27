@@ -30,7 +30,7 @@
 
     ///activity password
     <string name="title_fatbook_a_password" translatable="false">FatBook</string>
-    <string name="cat_dialog_password">Set the password for the account. \n Just do not forget it!</string>
+    <string name="cat_dialog_password">Set account password.</string>
     <string name="hint_password_password">Password</string>
     <string name="text_requirements_password">*min length 8 chars, max length 16 chars</string>
     <string name="btn_next_password">NEXT</string>
@@ -39,7 +39,7 @@
     ///activity skip additional info
     <string name="title_new_cook_in_skip_add">NEW COOK IN</string>
     <string name="title_fatbook_skip_add" translatable="false">FatBook</string>
-    <string name="cat_dialog_skip_add">Nice to meet you, %s!\nDo you want to tell about yourself?</string>
+    <string name="cat_dialog_skip_add_1">Nice to meet you, %s!\n Do you want to tell about yourself?</string>
     <string name="btn_yeah_go_skip_add">YEAH, GO!</string>
     <string name="btn_no_later_skip_add">LATER</string>
 

@@ -25,11 +25,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
-        android:layout_marginBottom="120dp"
+        android:layout_marginTop="45dp"
         android:text="@string/title_fatbook_a_sign_in"
         android:textColor="@color/color_pink_a200"
         android:textSize="45sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView_sign_in_catChef"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
@@ -37,7 +37,7 @@
     <ImageView
         android:id="@+id/imageView_sign_in_catChef"
         android:layout_width="180dp"
-        android:layout_height="220dp"
+        android:layout_height="180dp"
         android:layout_marginBottom="130dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toTopOf="@+id/button_sign_in"

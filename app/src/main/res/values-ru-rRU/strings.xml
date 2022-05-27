@@ -5,14 +5,14 @@
     <string name="title_welcome_to">ДОБРО ПОЖАЛОВАТЬ</string>
     <string name="title_welcome_back_to_sign_in">С ВОЗВРАЩЕНИЕМ</string>
     <string name="hint_password_password">Пароль</string>
-    <string name="cat_dialog_password">Придумай пароль для входа. \n Постарайся не забыть его!</string>
+    <string name="cat_dialog_password">Установим пароль аккаунта.</string>
     <string name="cat_dialog_login">Привет, я Кузя! \n Как мне тебя называть?</string>
     <string name="hint_username_login">Имя пользователя</string>
     <string name="text_requirements_login">*Разрешены только буквы и цифры, до 16 символов</string>
     <string name="text_requirements_password">*мин. длина 8 символов</string>
     <string name="btn_next_login">ДАЛЕЕ</string>
     <string name="title_new_cook_in_skip_add">НОВЫЙ ШЕФ</string>
-    <string name="cat_dialog_skip_add">Приятно познакомиться, %s!\nХочешь рассказать о себе?</string>
+    <string name="cat_dialog_skip_add_1">Приятно познакомиться, %s!\n Расскажешь о себе?</string>
     <string name="btn_yeah_go_skip_add">ДА, КОНЕЧНО!</string>
     <string name="btn_no_later_skip_add">ПРОПУСТИТЬ</string>
     <string name="title_username_fill_add_info">Имя пользователя</string>
