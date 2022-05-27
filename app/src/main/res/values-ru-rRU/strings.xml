@@ -12,7 +12,7 @@
     <string name="text_requirements_password">*мин. длина 8 символов</string>
     <string name="btn_next_login">ДАЛЕЕ</string>
     <string name="title_new_cook_in_skip_add">НОВЫЙ ШЕФ</string>
-    <string name="cat_dialog_skip_add_1">Приятно познакомиться, %s!\n Расскажешь о себе?</string>
+    <string name="cat_dialog_skip_add">Приятно познакомиться, %s!\n Расскажешь о себе?</string>
     <string name="btn_yeah_go_skip_add">ДА, КОНЕЧНО!</string>
     <string name="btn_no_later_skip_add">ПРОПУСТИТЬ</string>
     <string name="title_username_fill_add_info">Имя пользователя</string>

@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="10dp"
-        android:text="@string/cat_dialog_skip_add_1"
+        android:text="@string/cat_dialog_skip_add"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="12sp"

@@ -41,7 +41,7 @@ public class SkipAdditionalInfoActivity extends AppCompatActivity {
         user = (User) getIntent().getSerializableExtra(UserUtils.TAG_USER);
         fat = getIntent().getStringExtra(UserUtils.TAG_FAT);
 
-        String dialog = getResources().getString(R.string.cat_dialog_skip_add_1);
+        String dialog = getResources().getString(R.string.cat_dialog_skip_add);
         binding.textViewSkipAddCatDialog.setText(String.format(dialog, user.getLogin()));
 
         binding.buttonSkip.setOnClickListener(view -> {

@@ -39,7 +39,7 @@
     ///activity skip additional info
     <string name="title_new_cook_in_skip_add">NEW COOK IN</string>
     <string name="title_fatbook_skip_add" translatable="false">FatBook</string>
-    <string name="cat_dialog_skip_add_1">Nice to meet you, %s!\n Do you want to tell about yourself?</string>
+    <string name="cat_dialog_skip_add">Nice to meet you, %s!\n Do you want to tell about yourself?</string>
     <string name="btn_yeah_go_skip_add">YEAH, GO!</string>
     <string name="btn_no_later_skip_add">LATER</string>
 
