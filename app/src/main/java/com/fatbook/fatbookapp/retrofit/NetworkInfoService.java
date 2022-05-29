@@ -28,6 +28,9 @@ public interface NetworkInfoService {
     @POST("user/create")
     Call<User> userCreate(@Body User user, @Query(value = "fat") String fat);
 
+    @POST("user/update")
+    Call<User> userUpdate(@Body User user);
+
     @GET("user/login/check")
     Call<Boolean> loginCheck(@Query(value = "login") String login);
 
@@ -54,6 +57,9 @@ public interface NetworkInfoService {
 
     @POST("recipe/delete")
     Call<Void> recipeDelete(@Body Recipe recipe);
+
+    @POST("recipe/forked")
+    Call<Void> recipeForked(@Query(value = "pid") Long pid, @Query(value = "forked") Boolean forked);
 
     /**
      * Feed
