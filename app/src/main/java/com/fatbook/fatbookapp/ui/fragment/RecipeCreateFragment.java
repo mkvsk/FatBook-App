@@ -17,12 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.engine.Resource;
 import com.fatbook.fatbookapp.R;
+import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.RecipeIngredient;
 import com.fatbook.fatbookapp.databinding.FragmentRecipeCreateBinding;
 import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;
+import com.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.KeyboardActionUtil;
@@ -32,6 +34,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 
 import lombok.extern.java.Log;
@@ -48,6 +51,8 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
 
     private RecipeViewModel recipeViewModel;
 
+    private IngredientViewModel ingredientViewModel;
+
     private Recipe recipe;
 
     private ViewRecipeIngredientAdapter adapter;
@@ -59,6 +64,7 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
+        ingredientViewModel = new ViewModelProvider(requireActivity()).get(IngredientViewModel.class);
 
         recipeViewModel.setSelectedRecipeIngredients(new ArrayList<>());
 
@@ -71,6 +77,7 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
         });
 
         setupAdapter();
+        loadIngredients();
 
         binding.editTextRecipeAddTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -103,6 +110,21 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+    }
+
+    private void loadIngredients() {
+        RetrofitFactory.apiServiceClient().getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Ingredient>> call, @NonNull Response<List<Ingredient>> response) {
+                ingredientViewModel.setIngredientList(response.body());
+                log.log(Level.INFO, "ingredient list load: SUCCESS");
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Ingredient>> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "ingredient list load: FAILED");
             }
         });
     }
