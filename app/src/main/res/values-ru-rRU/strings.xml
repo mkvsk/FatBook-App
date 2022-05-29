@@ -78,8 +78,8 @@
     <string name="IngredientUnit_ML_MULTIPLY_NAMING">Миллилитры</string>
     <string name="IngredientUnit_ML_SINGLE_NAMING">Миллилитр</string>
     <string name="IngredientUnit_PCS_DISPLAY_NAME">шт</string>
-    <string name="IngredientUnit_PCS_MULTIPLY_NAMING">штуки</string>
-    <string name="IngredientUnit_PCS_SINGLE_NAMING">штука</string>
+    <string name="IngredientUnit_PCS_MULTIPLY_NAMING">Штуки</string>
+    <string name="IngredientUnit_PCS_SINGLE_NAMING">Штука</string>
     <string name="IngredientUnit_TABLE_SPOON_DISPLAY_NAME">ст. л.</string>
     <string name="IngredientUnit_TABLE_SPOON_MULTIPLY_NAMING">Столовые ложки</string>
     <string name="IngredientUnit_TABLE_SPOON_SINGLE_NAMING">Столовая ложка</string>
