@@ -138,11 +138,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 switch (tag) {
                     case RecipeUtils.TAG_FORK_UNCHECKED:
                         toggleForks(fork, true);
-                        listener.onForkClicked(list.get(getAdapterPosition()), true);
+                        listener.onForkClicked(list.get(getAdapterPosition()), true, getAdapterPosition());
                         break;
                     case RecipeUtils.TAG_FORK_CHECKED:
                         toggleForks(fork, false);
-                        listener.onForkClicked(list.get(getAdapterPosition()), false);
+                        listener.onForkClicked(list.get(getAdapterPosition()), false, getAdapterPosition());
                         break;
 
                 }

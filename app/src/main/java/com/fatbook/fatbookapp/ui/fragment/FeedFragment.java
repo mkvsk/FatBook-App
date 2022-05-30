@@ -124,21 +124,47 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         } else {
             user.getRecipesBookmarked().remove(recipe);
         }
-        userViewModel.setUser(user);
-        System.out.println();
         //TODO api
     }
 
     @Override
-    public void onForkClicked(Recipe recipe, boolean fork) {
+    public void onForkClicked(Recipe recipe, boolean fork, int position) {
         if (fork) {
             user.getRecipesForked().add(recipe);
         } else {
             user.getRecipesForked().remove(recipe);
         }
-        userViewModel.setUser(user);
-        System.out.println();
         //TODO api
+        saveUser();
+        onRecipeForked(recipe.getPid(), fork, position);
+    }
+
+    private void onRecipeForked(long pid, boolean fork, int position) {
+        RetrofitFactory.apiServiceClient().recipeForked(pid, fork).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                adapter.notifyItemChanged(position);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void saveUser() {
+        RetrofitFactory.apiServiceClient().userUpdate(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                System.out.println();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                System.out.println();
+            }
+        });
     }
 
     @Override

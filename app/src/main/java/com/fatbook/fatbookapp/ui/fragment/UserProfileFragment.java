@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.fatbook.fatbookapp.R;
@@ -275,7 +274,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     @Override
-    public void onForkClicked(Recipe recipe, boolean fork) {
+    public void onForkClicked(Recipe recipe, boolean fork, int position) {
         System.out.println("Stub!");
     }
 
