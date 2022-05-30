@@ -134,6 +134,7 @@
                     android:padding="10dp"
                     android:textColor="@color/color_blue_grey_600"
                     android:textSize="12sp"
+                    android:inputType="textMultiLine"
                     app:layout_constraintBottom_toBottomOf="@id/imageView_user_profile_photo_bgr"
                     app:layout_constraintLeft_toLeftOf="@id/imageView_user_profile_photo_bgr"
                     app:layout_constraintRight_toRightOf="@id/imageView_user_profile_photo_bgr"

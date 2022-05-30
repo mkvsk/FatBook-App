@@ -97,46 +97,46 @@
             android:inputType="numberDecimal"
             android:textAlignment="center"
             android:textColor="@color/color_blue_grey_600"
-            android:textSize="16sp"
+            android:textSize="17sp"
             android:elevation="2dp"
             android:translationZ="6dp"
             app:layout_constraintBottom_toTopOf="@id/btn_add_ingredient_to_recipe"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/picker_ingredient_unit"/>
 
-<!--        <com.shawnlin.numberpicker.NumberPicker-->
-<!--            android:id="@+id/picker_ingredient_unit"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:background="@drawable/round_corner_edittext"-->
-<!--            app:np_itemSpacing="2dp"-->
-<!--            app:np_width="65dp"-->
-<!--            app:np_height="175dp"-->
-<!--            app:np_orientation="vertical"-->
-<!--            app:np_selectedTextColor="@color/color_blue_grey_600"-->
-<!--            app:np_selectedTextSize="17sp"-->
-<!--            app:np_textColor="@color/color_blue_grey_200"-->
-<!--            app:np_textSize="15sp"-->
-<!--            android:elevation="2dp"-->
-<!--            android:translationZ="6dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/editText_ingredient_quantity"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            app:layout_constraintLeft_toRightOf="@id/editText_ingredient_quantity"/>-->
-
-        <NumberPicker
+        <com.shawnlin.numberpicker.NumberPicker
             android:id="@+id/picker_ingredient_unit"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:background="@drawable/round_corner_edittext"
-            android:descendantFocusability="blocksDescendants"
-            android:theme="@style/AppTheme.Picker"
-            android:fadingEdgeLength="30dp"
-            android:fadingEdge="horizontal"
+            app:np_itemSpacing="2dp"
+            app:np_width="65dp"
+            app:np_height="175dp"
+            app:np_orientation="vertical"
+            app:np_selectedTextColor="@color/color_blue_grey_600"
+            app:np_selectedTextSize="17sp"
+            app:np_textColor="@color/color_blue_grey_200"
+            app:np_textSize="15sp"
+            android:elevation="2dp"
+            android:translationZ="6dp"
             app:layout_constraintBottom_toBottomOf="@id/editText_ingredient_quantity"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/editText_ingredient_quantity"
-            android:elevation="2dp"
-            android:translationZ="6dp" />
+            app:layout_constraintLeft_toRightOf="@id/editText_ingredient_quantity"/>
+
+<!--        <NumberPicker-->
+<!--            android:id="@+id/picker_ingredient_unit"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="@drawable/round_corner_edittext"-->
+<!--            android:descendantFocusability="blocksDescendants"-->
+<!--            android:theme="@style/AppTheme.Picker"-->
+<!--            android:fadingEdgeLength="30dp"-->
+<!--            android:fadingEdge="horizontal"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/editText_ingredient_quantity"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintLeft_toRightOf="@id/editText_ingredient_quantity"-->
+<!--            android:elevation="2dp"-->
+<!--            android:translationZ="6dp" />-->
         
         <Button
             android:id="@+id/btn_add_ingredient_to_recipe"

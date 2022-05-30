@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -230,6 +232,10 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void changeUserData() {
+        String str = binding.editTextProfileBio.getText().toString();
+        str.replace("\n", " ").trim();
+        binding.editTextProfileBio.setText(str);
+
         user.setName(binding.editTextProfileName.getText().toString());
         user.setBio(binding.editTextProfileBio.getText().toString());
     }
