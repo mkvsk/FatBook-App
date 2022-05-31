@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -100,15 +98,14 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void setupSwipeRefresh() {
-        // TODO disable edit
-        binding.swipeRefreshUserProfile.setColorSchemeColors(
-                getResources().getColor(R.color.color_pink_a200));
+        cancelEdit();
+        binding.swipeRefreshUserProfile.setColorSchemeColors(getResources().getColor(R.color.color_pink_a200));
         binding.swipeRefreshUserProfile.setOnRefreshListener(this::loadUserData);
     }
 
     private void setupAdapter() {
         RecyclerView recyclerView = binding.rvUserRecipe;
-        adapter = new RecipeAdapter(binding.getRoot().getContext(), user.getRecipes(), user, true, this);
+        adapter = new RecipeAdapter(binding.getRoot().getContext(), user.getRecipes(), user, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -121,14 +118,8 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
             binding.editTextProfileBio.setText(user.getBio());
         }
         if (StringUtils.isNotEmpty(user.getImage())) {
-            Glide
-                    .with(getLayoutInflater().getContext())
-                    .load(user.getImage())
-                    .into(binding.imageViewProfilePhoto);
-            Glide
-                    .with(getLayoutInflater().getContext())
-                    .load(user.getImage())
-                    .into(binding.imageViewUserProfilePhotoBgr);
+            Glide.with(getLayoutInflater().getContext()).load(user.getImage()).into(binding.imageViewProfilePhoto);
+            Glide.with(getLayoutInflater().getContext()).load(user.getImage()).into(binding.imageViewUserProfilePhotoBgr);
         }
         adapter.setData(user.getRecipes(), user);
         adapter.notifyDataSetChanged();
@@ -155,8 +146,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                 editMode(true);
                 return true;
             case R.id.menu_user_profile_save:
-                Snackbar.make(binding.getRoot(), R.string.snackbar_saved, Snackbar.LENGTH_SHORT)
-                        .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
+                Snackbar.make(binding.getRoot(), R.string.snackbar_saved, Snackbar.LENGTH_SHORT).setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
                 confirmEdit();
                 editMode(false);
                 changeUserData();
@@ -167,8 +157,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                 revertUserData();
                 return true;
             case R.id.menu_user_profile_app_info:
-                Snackbar.make(binding.getRoot(), "TODO app info", Snackbar.LENGTH_SHORT)
-                        .setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
+                Snackbar.make(binding.getRoot(), "TODO app info", Snackbar.LENGTH_SHORT).setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
                 return true;
             case R.id.menu_user_profile_logout:
                 logout();
@@ -195,21 +184,16 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         container.addView(textViewMsg);
 
         View title = LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_title_logout, null);
-        new AlertDialog.Builder(requireContext())
-                .setView(container)
-                .setCustomTitle(title)
-                .setPositiveButton(getString(R.string.alert_dialog_btn_yes), (dialogInterface, i) -> {
-                    SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(UserUtils.USER_LOGIN, StringUtils.EMPTY);
-                    editor.apply();
-                    startActivity(new Intent(requireActivity(), SplashActivity.class));
-                    requireActivity().finish();
-                })
-                .setNegativeButton(getString(R.string.alert_dialog_btn_cancel), (dialogInterface, i) -> {
-                    dialogInterface.dismiss();
-                })
-                .show();
+        new AlertDialog.Builder(requireContext()).setView(container).setCustomTitle(title).setPositiveButton(getString(R.string.alert_dialog_btn_yes), (dialogInterface, i) -> {
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(UserUtils.USER_LOGIN, StringUtils.EMPTY);
+            editor.apply();
+            startActivity(new Intent(requireActivity(), SplashActivity.class));
+            requireActivity().finish();
+        }).setNegativeButton(getString(R.string.alert_dialog_btn_cancel), (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+        }).show();
     }
 
     private void editMode(boolean allow) {
@@ -269,7 +253,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     @Override
-    public void onBookmarksClick(Recipe recipe, boolean add) {
+    public void onBookmarksClick(Recipe recipe, boolean add, int adapterPosition) {
         System.out.println("Stub!");
     }
 
@@ -285,8 +269,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentUserProfileBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }

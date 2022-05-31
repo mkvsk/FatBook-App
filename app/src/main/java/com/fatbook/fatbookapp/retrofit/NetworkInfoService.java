@@ -59,8 +59,10 @@ public interface NetworkInfoService {
     Call<Void> recipeDelete(@Body Recipe recipe);
 
     @POST("recipe/forked")
-    Call<Void> recipeForked(@Query(value = "pid") Long pid, @Query(value = "forked") Boolean forked);
+    Call<Recipe> recipeForked(@Query(value = "pidUser") Long pidUser, @Query(value = "pidRecipe") Long pidRecipe, @Query(value = "forked") Boolean forked);
 
+    @POST("recipe/bookmarked")
+    Call<Recipe> recipeBookmarked(@Query(value = "pidUser") Long pidUser, @Query(value = "pidRecipe") Long pidRecipe, @Query(value = "bookmarked") Boolean bookmark);
     /**
      * Feed
      */
@@ -81,5 +83,4 @@ public interface NetworkInfoService {
     @Multipart
     @POST("test/upload")
     Call<User> createNewUser(@Part RequestBody user, @Part MultipartBody.Part image);
-
 }

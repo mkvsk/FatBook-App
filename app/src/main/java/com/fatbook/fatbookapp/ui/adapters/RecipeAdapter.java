@@ -26,20 +26,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private final LayoutInflater inflater;
     private List<Recipe> list;
     private User user;
-    private boolean userProfileFragment;
+    private final OnRecipeClickListener listener;
 
-    private OnRecipeClickListener listener;
-
-    public RecipeAdapter(Context context, List<Recipe> list, User user, boolean userProfileFragment, OnRecipeClickListener listener) {
+    public RecipeAdapter(Context context, List<Recipe> list, User user, OnRecipeClickListener listener) {
         this.inflater = LayoutInflater.from(context);
         this.list = list;
         this.user = user;
-        this.userProfileFragment = userProfileFragment;
         this.listener = listener;
     }
 
     public void setData(List<Recipe> list, User user) {
         this.list = list;
+        this.user = user;
+    }
+
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -60,7 +61,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         holder.tvForks.setText(forksAmount);
 
         toggleForks(holder.fork, user.getRecipesForked().contains(recipe));
-        if (userProfileFragment) {
+        if (recipe.getAuthor().equals(user.getLogin())) {
             holder.bookmarks.setVisibility(View.INVISIBLE);
         } else {
             toggleBookmarks(holder.bookmarks, user.getRecipesBookmarked().contains(recipe));
@@ -123,11 +124,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 switch (tag) {
                     case RecipeUtils.TAG_BOOKMARKS_UNCHECKED:
                         toggleBookmarks(bookmarks, true);
-                        listener.onBookmarksClick(list.get(getAdapterPosition()), true);
+                        listener.onBookmarksClick(list.get(getAdapterPosition()), true, getAdapterPosition());
                         break;
                     case RecipeUtils.TAG_BOOKMARKS_CHECKED:
                         toggleBookmarks(bookmarks, false);
-                        listener.onBookmarksClick(list.get(getAdapterPosition()), false);
+                        listener.onBookmarksClick(list.get(getAdapterPosition()), false, getAdapterPosition());
                         break;
                 }
 

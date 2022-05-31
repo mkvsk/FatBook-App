@@ -4,6 +4,6 @@ import com.fatbook.fatbookapp.core.Recipe;
 
 public interface OnRecipeClickListener {
     void onRecipeClick(int position);
-    void onBookmarksClick(Recipe recipe, boolean add);
+    void onBookmarksClick(Recipe recipe, boolean bookmark, int position);
     void onForkClicked(Recipe recipe, boolean fork, int position);
 }

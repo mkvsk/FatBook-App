@@ -86,7 +86,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
 
     private void setupAdapter() {
         RecyclerView recyclerView = binding.rvFeed;
-        adapter = new RecipeAdapter(binding.getRoot().getContext(), feedRecipeList, user, false, this);
+        adapter = new RecipeAdapter(binding.getRoot().getContext(), feedRecipeList, user, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -113,56 +113,63 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
     @Override
     public void onRecipeClick(int position) {
         Recipe recipe = feedRecipeList.get(position);
-        recipeViewModel.setRecipe(recipe);
+        recipeViewModel.setSelectedRecipe(recipe);
         NavHostFragment.findNavController(this).navigate(R.id.action_go_to_recipe_view);
     }
 
     @Override
-    public void onBookmarksClick(Recipe recipe, boolean add) {
-        if (add) {
-            user.getRecipesBookmarked().add(recipe);
-        } else {
-            user.getRecipesBookmarked().remove(recipe);
-        }
-        //TODO api
+    public void onBookmarksClick(Recipe recipe, boolean bookmark, int position) {
+        recipeBookmarked(recipe, bookmark, position);
     }
 
-    @Override
-    public void onForkClicked(Recipe recipe, boolean fork, int position) {
-        if (fork) {
-            user.getRecipesForked().add(recipe);
-        } else {
-            user.getRecipesForked().remove(recipe);
-        }
-        //TODO api
-        saveUser();
-        onRecipeForked(recipe.getPid(), fork, position);
-    }
-
-    private void onRecipeForked(long pid, boolean fork, int position) {
-        RetrofitFactory.apiServiceClient().recipeForked(pid, fork).enqueue(new Callback<Void>() {
+    private void recipeBookmarked(Recipe recipe, boolean bookmark, int position) {
+        RetrofitFactory.apiServiceClient().recipeBookmarked(user.getPid(), recipe.getPid(), bookmark).enqueue(new Callback<Recipe>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                adapter.notifyItemChanged(position);
+            public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
+                recipeViewModel.setTargetRecipe(response.body());
+                loadUser(position);
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
 
             }
         });
     }
 
-    private void saveUser() {
-        RetrofitFactory.apiServiceClient().userUpdate(user).enqueue(new Callback<User>() {
+    @Override
+    public void onForkClicked(Recipe recipe, boolean fork, int position) {
+        recipeForked(recipe, fork, position);
+    }
+
+    private void recipeForked(Recipe recipe, boolean fork, int position) {
+        RetrofitFactory.apiServiceClient().recipeForked(user.getPid(), recipe.getPid(), fork).enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
+                recipeViewModel.setTargetRecipe(response.body());
+                loadUser(position);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void loadUser(int position) {
+        RetrofitFactory.apiServiceClient().getUser(user.getLogin()).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                System.out.println();
+                user = response.body();
+                adapter.setUser(user);
+                feedRecipeList.get(position).setForks(recipeViewModel.getTargetRecipe().getValue().getForks());
+                adapter.notifyItemChanged(position);
             }
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                System.out.println();
+
             }
         });
     }

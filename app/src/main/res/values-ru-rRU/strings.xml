@@ -29,7 +29,7 @@
     <string name="toolbar_recipes_feed">Рецепты</string>
     <string name="hint_search_recipe_feed">поиск...</string>
     <string name="title_recipe_preview_rv">Название рецепта</string>
-    <string name="title_recipe_preview_by_rv">от:</string>
+    <string name="title_recipe_preview_by_rv">автор:</string>
     <string name="hint_add_recipe_title">Название рецепта</string>
     <string name="title_add_recipe_category">Категория рецепта:</string>
     <string name="title_add_recipe_photo">Аппетитное фото:</string>
@@ -44,7 +44,7 @@
     <string name="hint_quantity">количество</string>
     <string name="text_select_ingredient">Ингредиент/продукт</string>
     <string name="title_full_recipe_title">Название рецепта</string>
-    <string name="title_full_recipe_by">от:</string>
+    <string name="title_full_recipe_by">Автор:</string>
     <string name="title_full_recipe_author">Имя пользователя</string>
     <string name="title_full_recipe_ingredients">Ингредиенты:</string>
     <string name="title_full_recipe_instruction">Рецепт:</string>
