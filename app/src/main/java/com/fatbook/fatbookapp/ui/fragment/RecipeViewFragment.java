@@ -306,14 +306,14 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
 
     private void saveRecipe() {
-        RetrofitFactory.apiServiceClient().recipeUpdate(recipe).enqueue(new Callback<Void>() {
+        RetrofitFactory.apiServiceClient().recipeUpdate(recipe).enqueue(new Callback<Recipe>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+            public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
                 log.log(Level.INFO, "edit recipe save SUCCESS");
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
                 log.log(Level.INFO, "edit recipe save FAILED");
                 t.printStackTrace();
             }

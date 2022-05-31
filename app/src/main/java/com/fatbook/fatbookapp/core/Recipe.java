@@ -27,4 +27,6 @@ public class Recipe implements Serializable {
     private Integer forks;
 
     private String createDate;
+
+    private String id;
 }

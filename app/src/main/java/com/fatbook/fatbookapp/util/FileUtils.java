@@ -18,6 +18,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 public class FileUtils {
+    public static final String TAG_RECIPE = "r";
+    public static final String TAG_USER = "r";
     private static Uri contentUri = null;
 
     /**

@@ -161,6 +161,7 @@
         <entry key="..\:/dev/projects/FatBook/app/src/main/res/layout/fragment_notifications.xml" value="0.24547101449275363" />
         <entry key="..\:/dev/projects/FatBook/app/src/main/res/layout/fragment_user_profile.xml" value="0.24547101449275363" />
         <entry key="..\:/dev/projects/FatBook/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
+        <entry key="app/src/main/res/layout/fragment_recipe_create.xml" value="0.1" />
       </map>
     </option>
   </component>
