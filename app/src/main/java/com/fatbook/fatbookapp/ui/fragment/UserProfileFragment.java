@@ -78,7 +78,6 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         });
         setupAdapter();
         setupSwipeRefresh();
-        editMode(false);
         binding.toolbarUserProfile.getOverflowIcon().setColorFilter(getResources().getColor(R.color.color_blue_grey_600), PorterDuff.Mode.MULTIPLY);
     }
 
@@ -98,7 +97,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void setupSwipeRefresh() {
-        cancelEdit();
+        editMode(false);
         binding.swipeRefreshUserProfile.setColorSchemeColors(getResources().getColor(R.color.color_pink_a200));
         binding.swipeRefreshUserProfile.setOnRefreshListener(this::loadUserData);
     }
@@ -111,12 +110,8 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
 
     private void fillUserProfile() {
         binding.toolbarUserProfile.setTitle(user.getLogin());
-        if (StringUtils.isNotEmpty(user.getName())) {
-            binding.editTextProfileName.setText(user.getName());
-        }
-        if (StringUtils.isNotEmpty(user.getBio())) {
-            binding.editTextProfileBio.setText(user.getBio());
-        }
+        binding.editTextProfileName.setText(user.getName());
+        binding.editTextProfileBio.setText(user.getBio());
         if (StringUtils.isNotEmpty(user.getImage())) {
             Glide.with(getLayoutInflater().getContext()).load(user.getImage()).into(binding.imageViewProfilePhoto);
             Glide.with(getLayoutInflater().getContext()).load(user.getImage()).into(binding.imageViewUserProfilePhotoBgr);
@@ -142,19 +137,15 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_user_profile_edit:
-                changeMenuItemsVisibility(false, true, true);
                 editMode(true);
                 return true;
             case R.id.menu_user_profile_save:
-                Snackbar.make(binding.getRoot(), R.string.snackbar_saved, Snackbar.LENGTH_SHORT).setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
-                confirmEdit();
                 editMode(false);
-                changeUserData();
+                confirmEdit();
                 return true;
             case R.id.menu_user_profile_cancel:
-                cancelEdit();
                 editMode(false);
-                revertUserData();
+                revertEdit();
                 return true;
             case R.id.menu_user_profile_app_info:
                 Snackbar.make(binding.getRoot(), "TODO app info", Snackbar.LENGTH_SHORT).setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
@@ -197,6 +188,8 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void editMode(boolean allow) {
+        changeMenuItemsVisibility(!allow, allow, allow);
+
         binding.editTextProfileName.setEnabled(allow);
         binding.editTextProfileBio.setEnabled(allow);
         if (allow) {
@@ -210,41 +203,41 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         }
     }
 
-    private void revertUserData() {
+    private void revertEdit() {
         fillUserProfile();
     }
 
-    private void changeUserData() {
+    private void confirmEdit() {
         String str = binding.editTextProfileBio.getText().toString();
-        str.replace("\n", " ").trim();
-        binding.editTextProfileBio.setText(str);
+        binding.editTextProfileBio.setText(str.replace("\n", " ").trim());
 
         user.setName(binding.editTextProfileName.getText().toString());
         user.setBio(binding.editTextProfileBio.getText().toString());
-    }
 
-    private void confirmEdit() {
-        changeMenuItemsVisibility(true, false, false);
         saveUser();
     }
 
     private void saveUser() {
-        //TODO save user profile changes
-    }
+        RetrofitFactory.apiServiceClient().userUpdate(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                log.log(Level.INFO, "" + response.code() + " user update SUCCESS");
+                user = response.body();
+            }
 
-    private void cancelEdit() {
-        changeMenuItemsVisibility(true, false, false);
-        revertChanges();
-    }
-
-    private void revertChanges() {
-        //TODO revert user profile changes
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "user update FAILED");
+            }
+        });
     }
 
     private void changeMenuItemsVisibility(boolean edit, boolean save, boolean cancel) {
-        binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_edit).setVisible(edit);
-        binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_save).setVisible(save);
-        binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_cancel).setVisible(cancel);
+        if (binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_edit) != null) {
+            binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_edit).setVisible(edit);
+            binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_save).setVisible(save);
+            binding.toolbarUserProfile.getMenu().findItem(R.id.menu_user_profile_cancel).setVisible(cancel);
+        }
     }
 
     @Override

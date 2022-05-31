@@ -13,8 +13,6 @@ public class RecipeIngredient implements Serializable {
 
     private Long pid;
 
-//    private Recipe recipe;
-
     private Ingredient ingredient;
 
     private IngredientUnit unit;
