@@ -1,10 +1,12 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -39,6 +42,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.logging.Level;
 
 import lombok.extern.java.Log;
@@ -193,11 +197,11 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         binding.editTextProfileName.setEnabled(allow);
         binding.editTextProfileBio.setEnabled(allow);
         if (allow) {
-//            binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
+            binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
             binding.editTextProfileName.setBackgroundResource(R.drawable.edit_mode_bgr);
             binding.editTextProfileBio.setBackgroundResource(R.drawable.edit_mode_bgr);
         } else {
-//            binding.buttonUserProfileAddPhoto.setVisibility(View.GONE);
+            binding.buttonUserProfileAddPhoto.setVisibility(View.GONE);
             binding.editTextProfileName.setBackgroundResource(R.drawable.round_corner_rect_white);
             binding.editTextProfileBio.setBackgroundResource(R.drawable.round_corner_rect_white);
         }

@@ -325,9 +325,11 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         adapter.notifyDataSetChanged();
 
         if (allow) {
+            binding.buttonFullRecipeImageChange.setVisibility(View.VISIBLE);
             binding.editTextFullRecipeName.setBackgroundResource(R.drawable.edit_mode_bgr);
             binding.editTextFullRecipeDescription.setBackgroundResource(R.drawable.edit_mode_bgr);
         } else {
+            binding.buttonFullRecipeImageChange.setVisibility(View.GONE);
             binding.editTextFullRecipeName.setBackgroundResource(R.drawable.round_corner_rect_white);
             binding.editTextFullRecipeDescription.setBackgroundResource(R.drawable.round_corner_rect_white);
         }

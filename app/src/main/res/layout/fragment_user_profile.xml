@@ -41,8 +41,8 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:overScrollMode="never"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -88,18 +88,36 @@
 
                 <ImageButton
                     android:id="@+id/button_user_profile_add_photo"
-                    android:layout_width="110dp"
-                    android:layout_height="114dp"
-                    android:backgroundTint="@color/color_blue_grey_50"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="-10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="-10dp"
+                    android:background="@null"
                     android:elevation="6dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icon_add_recipe_photo"
-                    android:translationZ="4dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_add_photo_round"
+                    android:translationZ="2dp"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo"
-                    app:layout_constraintLeft_toLeftOf="@id/imageView_profile_photo"
-                    app:layout_constraintRight_toRightOf="@id/imageView_profile_photo"
-                    app:layout_constraintTop_toTopOf="@id/imageView_profile_photo" />
+                    app:layout_constraintLeft_toLeftOf="@id/imageView_profile_photo" />
+
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/button_user_profile_add_photo"-->
+<!--                    android:layout_width="110dp"-->
+<!--                    android:layout_height="114dp"-->
+<!--                    android:backgroundTint="@color/color_blue_grey_50"-->
+<!--                    android:elevation="6dp"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:src="@drawable/icon_add_recipe_photo"-->
+<!--                    android:translationZ="4dp"-->
+<!--                    android:visibility="visible"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/imageView_profile_photo"-->
+<!--                    app:layout_constraintLeft_toLeftOf="@id/imageView_profile_photo"-->
+<!--                    app:layout_constraintRight_toRightOf="@id/imageView_profile_photo"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/imageView_profile_photo" />-->
 
                 <EditText
                     android:id="@+id/editText_profile_name"
@@ -127,6 +145,7 @@
                     android:background="@drawable/round_corner_rect_white"
                     android:fontFamily="@font/roboto_regular"
                     android:hint="@string/text_bio_profile"
+                    android:inputType="textMultiLine"
                     android:lines="5"
                     android:maxLength="250"
                     android:maxLines="4"
@@ -134,7 +153,6 @@
                     android:padding="10dp"
                     android:textColor="@color/color_blue_grey_600"
                     android:textSize="12sp"
-                    android:inputType="textMultiLine"
                     app:layout_constraintBottom_toBottomOf="@id/imageView_user_profile_photo_bgr"
                     app:layout_constraintLeft_toLeftOf="@id/imageView_user_profile_photo_bgr"
                     app:layout_constraintRight_toRightOf="@id/imageView_user_profile_photo_bgr"
@@ -165,13 +183,13 @@
                     tools:listitem="@layout/rv_feed_recipe_card_preview" />
 
                 <View
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/rv_user_recipe"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:id="@+id/view_stub"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"/>
+                    android:layout_height="200dp"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_user_recipe" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

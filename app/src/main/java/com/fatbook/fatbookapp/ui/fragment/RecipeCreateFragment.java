@@ -90,7 +90,7 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
                     selectedImageUri = uri;
                     String path = FileUtils.getPath(requireContext(), selectedImageUri);
                     recipePhoto = new File(path);
-                    binding.buttonRecipeCreateImage.setImageURI(selectedImageUri);
+                    binding.imageViewRecipeCreateImage.setImageURI(selectedImageUri);
                 }
             });
         } catch (Exception e) {
@@ -224,7 +224,7 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
             recipeViewModel.setSelectedRecipeIngredient(null);
         }
         if (selectedImageUri != null) {
-            binding.buttonRecipeCreateImage.setImageURI(selectedImageUri);
+            binding.imageViewRecipeCreateImage.setImageURI(selectedImageUri);
         }
         niceCheck();
     }
