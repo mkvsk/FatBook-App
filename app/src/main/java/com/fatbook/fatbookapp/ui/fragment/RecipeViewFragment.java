@@ -91,11 +91,11 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                     switch (tag) {
                         case RecipeUtils.TAG_FORK_CHECKED:
                             toggleForks(false);
-                            user.getRecipesForked().remove(recipe);
+                            user.getRecipesForked().remove(recipe.getIdentifier());
                             break;
                         case RecipeUtils.TAG_FORK_UNCHECKED:
                             toggleForks(true);
-                            user.getRecipesForked().add(recipe);
+                            user.getRecipesForked().add(recipe.getIdentifier());
                             break;
                     }
                 }
@@ -106,11 +106,11 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                     switch (tag) {
                         case RecipeUtils.TAG_BOOKMARKS_CHECKED:
                             toggleBookmarks(false);
-                            user.getRecipesBookmarked().remove(recipe);
+                            user.getRecipesBookmarked().remove(recipe.getIdentifier());
                             break;
                         case RecipeUtils.TAG_BOOKMARKS_UNCHECKED:
                             toggleBookmarks(true);
-                            user.getRecipesBookmarked().add(recipe);
+                            user.getRecipesBookmarked().add(recipe.getIdentifier());
                             break;
                     }
                 }

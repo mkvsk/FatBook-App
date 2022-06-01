@@ -59,7 +59,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/icon_add_recipe_photo"
                 android:translationZ="4dp"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,7 +75,7 @@
                 android:translationZ="4dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/kartoshka"
-                android:visibility="visible"
+                android:visibility="invisible"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent"/>
 
             <EditText

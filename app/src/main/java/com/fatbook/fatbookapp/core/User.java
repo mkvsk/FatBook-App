@@ -31,7 +31,7 @@ public class User implements Serializable {
 
     private List<Recipe> recipes;
 
-    private List<Recipe> recipesForked;
+    private List<Long> recipesForked;
 
-    private List<Recipe> recipesBookmarked;
+    private List<Long> recipesBookmarked;
 }

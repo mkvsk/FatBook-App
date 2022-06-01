@@ -75,8 +75,8 @@ public interface NetworkInfoService {
      * File upload
      */
     @Multipart
-    @POST("upload")
-    Call<String> uploadImage(@Part MultipartBody.Part image, @Query(value = "dir") String dir, @Query(value = "id") String id);
+    @POST("recipe/upload")
+    Call<Recipe> uploadImage(@Part MultipartBody.Part image, @Query(value = "dir") String dir, @Query(value = "id") Long id);
     //========================================================================================
 
 //    @Multipart

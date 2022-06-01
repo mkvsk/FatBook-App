@@ -143,7 +143,7 @@ public class SignInActivity extends AppCompatActivity {
 //                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8, ""));
 
         yourMom.setRecipes(recipes);
-        yourMom.setRecipesForked(recipes);
+        yourMom.setRecipesForked(new ArrayList<>());
         signInViewModel.setUser(yourMom);
     }
 }

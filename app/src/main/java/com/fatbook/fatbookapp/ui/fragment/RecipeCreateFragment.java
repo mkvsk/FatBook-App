@@ -148,20 +148,17 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
         recipe.setImage(StringUtils.EMPTY);
         recipe.setAuthor(userViewModel.getUser().getValue().getLogin());
         recipe.setCreateDate(RecipeUtils.regDateFormat.format(new Date()));
-        save(false);
-//        uploadImage();
+        save();
         NavHostFragment.findNavController(this).popBackStack();
     }
 
-    private void save(boolean imageUploaded) {
+    private void save() {
         RetrofitFactory.apiServiceClient().recipeCreate(recipe).enqueue(new Callback<Recipe>() {
             @Override
             public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
                 log.log(Level.INFO, "recipe create SUCCESS");
                 recipe = response.body();
-                if (!imageUploaded) {
-                    uploadImage();
-                }
+                uploadImage();
             }
 
             @Override
@@ -171,42 +168,19 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
         });
     }
 
-    private void update() {
-        RetrofitFactory.apiServiceClient().recipeUpdate(recipe).enqueue(new Callback<Recipe>() {
-            @Override
-            public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
-                log.log(Level.INFO, "recipe update SUCCESS");
-                recipe = response.body();
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
-                log.log(Level.INFO, "recipe update FAILED");
-            }
-        });
-    }
-
     private void uploadImage() {
-
         if (recipePhoto != null) {
             RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), recipePhoto);
-
             MultipartBody.Part file = MultipartBody.Part.createFormData("file", recipePhoto.getName(), requestFile);
-
-
-            RetrofitFactory.apiServiceClient().uploadImage(file, FileUtils.TAG_RECIPE, recipe.getId()).enqueue(new Callback<String>() {
+            RetrofitFactory.apiServiceClient().uploadImage(file, FileUtils.TAG_RECIPE, recipe.getIdentifier()).enqueue(new Callback<Recipe>() {
                 @Override
-                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                    String replace = response.body().replace("-", "/");
-                    String url = RetrofitFactory.URL + replace;
-                    log.log(Level.INFO, "image upload SUCCESS " + url);
-                    recipe.setImage(url);
-                    update();
+                public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
+                    log.log(Level.INFO, "image add SUCCESS");
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                    log.log(Level.INFO, "image upload FAILED");
+                public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
+                    log.log(Level.INFO, "image add FAILED");
                 }
             });
         }

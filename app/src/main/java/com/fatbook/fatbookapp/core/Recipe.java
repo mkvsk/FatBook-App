@@ -28,5 +28,5 @@ public class Recipe implements Serializable {
 
     private String createDate;
 
-    private String id;
+    private Long identifier;
 }
