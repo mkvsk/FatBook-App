@@ -58,8 +58,6 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
     private UserViewModel userViewModel;
 
-    private boolean isEditModEnabled;
-
     private ViewRecipeIngredientAdapter adapter;
 
     private OnRecipeRevertDeleteListener onRecipeRevertDeleteListener;
@@ -67,7 +65,6 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     private List<RecipeIngredient> ingredientListTemp;
 
     private boolean addIngredient = false;
-
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -77,9 +74,8 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
-        recipeViewModel.getSelectedRecipe().observe(getViewLifecycleOwner(), recipe -> {
-            this.recipe = recipe;
-        });
+        recipeViewModel.getSelectedRecipe().observe(getViewLifecycleOwner(), recipe -> this.recipe = recipe);
+        userViewModel.getUser().observe(getViewLifecycleOwner(), user -> this.user = user);
 
         loadData();
         setupAdapter();
@@ -90,12 +86,10 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                     String tag = (String) binding.imageViewFullRecipeFork.getTag();
                     switch (tag) {
                         case RecipeUtils.TAG_FORK_CHECKED:
-                            toggleForks(false);
-                            user.getRecipesForked().remove(recipe.getIdentifier());
+                            forked(false);
                             break;
                         case RecipeUtils.TAG_FORK_UNCHECKED:
-                            toggleForks(true);
-                            user.getRecipesForked().add(recipe.getIdentifier());
+                            forked(true);
                             break;
                     }
                 }
@@ -105,12 +99,10 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                     String tag = (String) binding.imageViewFullRecipeIconBookmarks.getTag();
                     switch (tag) {
                         case RecipeUtils.TAG_BOOKMARKS_CHECKED:
-                            toggleBookmarks(false);
-                            user.getRecipesBookmarked().remove(recipe.getIdentifier());
+                            bookmarked(false);
                             break;
                         case RecipeUtils.TAG_BOOKMARKS_UNCHECKED:
-                            toggleBookmarks(true);
-                            user.getRecipesBookmarked().add(recipe.getIdentifier());
+                            bookmarked(true);
                             break;
                     }
                 }
@@ -121,7 +113,67 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
             NavHostFragment.findNavController(this).navigate(R.id.navigation_add_ingredient);
         });
 
-        }
+    }
+
+    private void forked(boolean value) {
+        toggleForks(value);
+        recipeForked(recipe, value);
+    }
+
+    private void recipeForked(Recipe _recipe, boolean fork) {
+        RetrofitFactory.apiServiceClient().recipeForked(user.getPid(), _recipe.getPid(), fork).enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
+                log.log(Level.INFO, "fork SUCCESS");
+                recipeViewModel.setSelectedRecipe(response.body());
+                loadUser();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "fork FAILED");
+            }
+        });
+    }
+
+    private void bookmarked(boolean value) {
+        toggleBookmarks(value);
+        recipeBookmarked(recipe, value);
+    }
+
+    private void recipeBookmarked(Recipe _recipe, boolean bookmark) {
+        RetrofitFactory.apiServiceClient().recipeBookmarked(user.getPid(), _recipe.getPid(), bookmark).enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
+                log.log(Level.INFO, "bookmark SUCCESS");
+                recipeViewModel.setSelectedRecipe(response.body());
+                loadUser();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "bookmark FAILED");
+            }
+        });
+    }
+
+    private void loadUser() {
+        RetrofitFactory.apiServiceClient().getUser(user.getLogin()).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                log.log(Level.INFO, "user load SUCCESS");
+                assert response.body() != null;
+                log.log(Level.INFO, response.body().toString());
+                userViewModel.setUser(response.body());
+                showData();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "user load FAILED");
+            }
+        });
+    }
 
     private void showDialogDelete() {
         String msg = getResources().getString(R.string.alert_dialog_delete_recipe_message);
@@ -210,7 +262,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                 niceCheck();
                 return true;
             case R.id.menu_recipe_save:
-                if(niceCheck()) {
+                if (niceCheck()) {
                     toggleEditMode(false);
                     saveEdit();
                 }
@@ -268,7 +320,6 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     }
 
     private void toggleEditMode(boolean allow) {
-        isEditModEnabled = allow;
         binding.editTextFullRecipeName.setEnabled(allow);
         binding.editTextFullRecipeDescription.setEnabled(allow);
         changeMenuItemsVisibility(!allow, allow, allow, allow);
@@ -362,8 +413,12 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         binding.textViewFullRecipeForksQuantity.setText(Integer.toString(recipe.getForks()));
         binding.editTextFullRecipeDescription.setText(recipe.getDescription());
 
-        toggleBookmarks(user.getRecipesBookmarked().contains(recipe));
-        toggleForks(user.getRecipesForked().contains(recipe));
+        if (recipe.getAuthor().equals(user.getLogin())) {
+            binding.imageViewFullRecipeIconBookmarks.setVisibility(View.INVISIBLE);
+        } else {
+            toggleBookmarks(user.getRecipesBookmarked().contains(recipe.getIdentifier()));
+        }
+        toggleForks(user.getRecipesForked().contains(recipe.getIdentifier()));
     }
 
     private void setupAdapter() {

@@ -38,6 +38,7 @@ import com.fatbook.fatbookapp.util.RecipeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -170,19 +171,27 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
 
     private void uploadImage() {
         if (recipePhoto != null) {
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), recipePhoto);
-            MultipartBody.Part file = MultipartBody.Part.createFormData("file", recipePhoto.getName(), requestFile);
-            RetrofitFactory.apiServiceClient().uploadImage(file, FileUtils.TAG_RECIPE, recipe.getIdentifier()).enqueue(new Callback<Recipe>() {
-                @Override
-                public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
-                    log.log(Level.INFO, "image add SUCCESS");
-                }
+            try {
+                URLEncoder.encode(recipePhoto.getName(), "utf-8");
+                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), recipePhoto);
+                String fileName = "image" + recipePhoto.getName().substring(recipePhoto.getName().indexOf('.'));
+                MultipartBody.Part file = MultipartBody.Part.createFormData("file", fileName, requestFile);
 
-                @Override
-                public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
-                    log.log(Level.INFO, "image add FAILED");
-                }
-            });
+                RetrofitFactory.apiServiceClient().uploadImage(file, FileUtils.TAG_RECIPE, recipe.getIdentifier()).enqueue(new Callback<Recipe>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
+                        log.log(Level.INFO, "image add SUCCESS");
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
+                        log.log(Level.INFO, "image add FAILED");
+                    }
+                });
+            } catch (Exception e) {
+                log.log(Level.INFO, e.toString());
+                e.printStackTrace();
+            }
         }
     }
 

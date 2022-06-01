@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Recipe;
@@ -56,6 +57,10 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
+        if (recipeViewModel.getSelectedRecipePosition().getValue() != null) {
+            loadUser(recipeViewModel.getSelectedRecipePosition().getValue());
+        }
+
         feedRecipeList = new ArrayList<>();
 
         userViewModel.getUser().observe(getViewLifecycleOwner(), userUpdated -> {
@@ -87,10 +92,11 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
     private void setupAdapter() {
         RecyclerView recyclerView = binding.rvFeed;
         adapter = new RecipeAdapter(binding.getRoot().getContext(), feedRecipeList, user, this);
+        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         recyclerView.setAdapter(adapter);
     }
 
-    //TODO убрать костыль в api запросе
+    //TODO убрать костыль в запросе
     private void loadData() {
         RetrofitFactory.apiServiceClient().getFeed(0L).enqueue(new Callback<List<Recipe>>() {
             @Override
@@ -100,6 +106,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
                 if (response.body() != null) {
                     log.log(Level.INFO, "loaded " + response.body().size() + " recipes");
                 }
+                loadUser(null);
             }
 
             @Override
@@ -114,6 +121,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
     public void onRecipeClick(int position) {
         Recipe recipe = feedRecipeList.get(position);
         recipeViewModel.setSelectedRecipe(recipe);
+        recipeViewModel.setSelectedRecipePosition(position);
         NavHostFragment.findNavController(this).navigate(R.id.action_go_to_recipe_view);
     }
 
@@ -127,7 +135,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
             @Override
             public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
                 log.log(Level.INFO, "bookmark SUCCESS");
-                recipeViewModel.setTargetRecipe(response.body());
+                recipeViewModel.setSelectedRecipe(response.body());
                 loadUser(position);
             }
 
@@ -148,7 +156,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
             @Override
             public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
                 log.log(Level.INFO, "fork SUCCESS");
-                recipeViewModel.setTargetRecipe(response.body());
+                recipeViewModel.setSelectedRecipe(response.body());
                 loadUser(position);
             }
 
@@ -159,19 +167,27 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         });
     }
 
-    private void loadUser(int position) {
+    private void loadUser(Integer position) {
         RetrofitFactory.apiServiceClient().getUser(user.getLogin()).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                user = response.body();
+                log.log(Level.INFO, "user load SUCCESS");
+                userViewModel.setUser(response.body());
+                System.out.println(user);
                 adapter.setUser(user);
-                feedRecipeList.get(position).setForks(recipeViewModel.getTargetRecipe().getValue().getForks());
-                adapter.notifyItemChanged(position);
+                if (position != null) {
+                    feedRecipeList.get(position).setForks(recipeViewModel.getSelectedRecipe().getValue().getForks());
+                    adapter.notifyItemChanged(position);
+                    recipeViewModel.setSelectedRecipe(null);
+                    recipeViewModel.setSelectedRecipePosition(null);
+                } else {
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-
+                log.log(Level.INFO, "user load FAILED");
             }
         });
     }
