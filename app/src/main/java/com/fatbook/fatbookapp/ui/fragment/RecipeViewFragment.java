@@ -263,6 +263,14 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                 if (niceCheck()) {
                     toggleEditMode(false);
                     saveEdit();
+                } else {
+                    if (StringUtils.isEmpty(binding.editTextFullRecipeName.getText())) {
+                        binding.editTextFullRecipeName.setBackgroundResource(R.drawable.round_corner_edittext);
+                    }
+                    if (StringUtils.isEmpty(binding.editTextFullRecipeDescription.getText())) {
+                        binding.editTextFullRecipeDescription.setBackgroundResource(R.drawable.round_corner_edittext);
+                    }
+                    showDialogEmptyRecipe();
                 }
                 return true;
             case R.id.menu_recipe_cancel:
@@ -278,14 +286,9 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     }
 
     private boolean niceCheck() {
-        if (StringUtils.isNotEmpty(binding.editTextFullRecipeName.getText().toString())
+        return StringUtils.isNotEmpty(binding.editTextFullRecipeName.getText().toString())
                 && StringUtils.isNotEmpty(binding.editTextFullRecipeDescription.getText().toString())
-                && !recipe.getIngredients().isEmpty()) {
-            return true;
-        } else {
-            showDialogEmptyRecipe();
-            return false;
-        }
+                && !recipe.getIngredients().isEmpty();
     }
 
     private void showDialogEmptyRecipe() {
@@ -313,8 +316,6 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                     dialogInterface.dismiss();
                 })
                 .show();
-        binding.editTextFullRecipeName.setBackgroundResource(R.drawable.round_corner_edittext);
-        binding.editTextFullRecipeDescription.setBackgroundResource(R.drawable.round_corner_edittext);
     }
 
     private void toggleEditMode(boolean allow) {

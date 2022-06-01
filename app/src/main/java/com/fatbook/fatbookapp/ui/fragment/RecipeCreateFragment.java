@@ -157,9 +157,13 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
         RetrofitFactory.apiServiceClient().recipeCreate(recipe).enqueue(new Callback<Recipe>() {
             @Override
             public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
-                log.log(Level.INFO, "recipe create SUCCESS");
-                recipe = response.body();
-                uploadImage();
+                if (response.code() == 200) {
+                    log.log(Level.INFO, "recipe create SUCCESS");
+                    recipe = response.body();
+                    uploadImage();
+                } else {
+                    log.log(Level.INFO, "recipe create FAILED " + response.code());
+                }
             }
 
             @Override
@@ -180,7 +184,11 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
                 RetrofitFactory.apiServiceClient().uploadImage(file, FileUtils.TAG_RECIPE, recipe.getIdentifier()).enqueue(new Callback<Recipe>() {
                     @Override
                     public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
-                        log.log(Level.INFO, "image add SUCCESS");
+                        if (response.code() == 200) {
+                            log.log(Level.INFO, "image add SUCCESS");
+                        } else {
+                            log.log(Level.INFO, "image add FAILED " + response.code());
+                        }
                     }
 
                     @Override
@@ -202,8 +210,8 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
     }
 
     private void niceCheck() {
-        if (StringUtils.isNotEmpty(binding.editTextRecipeAddTitle.toString())
-                && StringUtils.isNotEmpty(binding.editTextRecipeAddDescription.toString())
+        if (StringUtils.isNotEmpty(binding.editTextRecipeAddTitle.getText().toString())
+                && StringUtils.isNotEmpty(binding.editTextRecipeAddDescription.getText().toString())
                 && !recipe.getIngredients().isEmpty()) {
             binding.buttonRecipeAddSave.setEnabled(true);
             binding.buttonRecipeAddSave.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.color_pink_a200));

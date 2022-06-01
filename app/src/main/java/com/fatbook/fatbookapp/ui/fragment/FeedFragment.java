@@ -72,10 +72,7 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
 
         binding.swipeRefreshBookmarks.setColorSchemeColors(getResources().getColor(R.color.color_pink_a200));
 
-        binding.swipeRefreshBookmarks.setOnRefreshListener(() -> {
-            loadData();
-            binding.swipeRefreshBookmarks.setRefreshing(false);
-        });
+        binding.swipeRefreshBookmarks.setOnRefreshListener(this::loadData);
 
         userViewModel.getFeedRecipeList().observe(getViewLifecycleOwner(), recipeList -> {
             feedRecipeList = recipeList;
@@ -171,23 +168,28 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         RetrofitFactory.apiServiceClient().getUser(user.getLogin()).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                log.log(Level.INFO, "user load SUCCESS");
-                userViewModel.setUser(response.body());
-                System.out.println(user);
-                adapter.setUser(user);
-                if (position != null) {
-                    if (recipeViewModel.getSelectedRecipe().getValue() != null) {
-                        feedRecipeList.get(position).setForks(recipeViewModel.getSelectedRecipe().getValue().getForks());
-                        adapter.notifyItemChanged(position);
+                if (response.code() == 200) {
+                    log.log(Level.INFO, "user load SUCCESS");
+                    userViewModel.setUser(response.body());
+                    System.out.println(user);
+                    adapter.setUser(user);
+                    if (position != null) {
+                        if (recipeViewModel.getSelectedRecipe().getValue() != null) {
+                            feedRecipeList.get(position).setForks(recipeViewModel.getSelectedRecipe().getValue().getForks());
+                            adapter.notifyItemChanged(position);
+                        } else {
+                            feedRecipeList.remove((int) position);
+                            adapter.notifyItemRemoved(position);
+                        }
                         recipeViewModel.setSelectedRecipe(null);
                         recipeViewModel.setSelectedRecipePosition(null);
                     } else {
-                        feedRecipeList.remove((int) position);
-                        adapter.notifyItemRemoved(position);
+                        adapter.notifyDataSetChanged();
                     }
                 } else {
-                    adapter.notifyDataSetChanged();
+                    log.log(Level.INFO, "user load FAILED " + response.code());
                 }
+                binding.swipeRefreshBookmarks.setRefreshing(false);
             }
 
             @Override
