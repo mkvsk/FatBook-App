@@ -226,9 +226,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         assert activity != null;
         activity.setSupportActionBar(binding.toolbarViewRecipe);
-        binding.toolbarViewRecipe.setNavigationOnClickListener(view -> {
-            NavHostFragment.findNavController(this).popBackStack();
-        });
+        binding.toolbarViewRecipe.setNavigationOnClickListener(view -> navigateBack());
         if (recipe.getAuthor().equals(userViewModel.getUser().getValue().getLogin())) {
             setHasOptionsMenu(true);
             binding.kuzyaRecipeView.setVisibility(View.GONE);
@@ -345,7 +343,13 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         RetrofitFactory.apiServiceClient().recipeDelete(recipe).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                log.log(Level.INFO, "delete recipe SUCCESS");
+                if (response.code() == 200) {
+                    log.log(Level.INFO, "delete recipe SUCCESS");
+                    recipeViewModel.setSelectedRecipe(null);
+                    navigateBack();
+                } else {
+                    log.log(Level.INFO, "delete recipe FAILED" + response.code());
+                }
             }
 
             @Override
@@ -355,6 +359,9 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         });
     }
 
+    private void navigateBack() {
+        NavHostFragment.findNavController(this).popBackStack();
+    }
 
     private void saveRecipe() {
         RetrofitFactory.apiServiceClient().recipeUpdate(recipe).enqueue(new Callback<Recipe>() {

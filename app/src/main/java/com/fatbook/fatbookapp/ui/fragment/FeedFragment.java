@@ -176,10 +176,15 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
                 System.out.println(user);
                 adapter.setUser(user);
                 if (position != null) {
-                    feedRecipeList.get(position).setForks(recipeViewModel.getSelectedRecipe().getValue().getForks());
-                    adapter.notifyItemChanged(position);
-                    recipeViewModel.setSelectedRecipe(null);
-                    recipeViewModel.setSelectedRecipePosition(null);
+                    if (recipeViewModel.getSelectedRecipe().getValue() != null) {
+                        feedRecipeList.get(position).setForks(recipeViewModel.getSelectedRecipe().getValue().getForks());
+                        adapter.notifyItemChanged(position);
+                        recipeViewModel.setSelectedRecipe(null);
+                        recipeViewModel.setSelectedRecipePosition(null);
+                    } else {
+                        feedRecipeList.remove((int) position);
+                        adapter.notifyItemRemoved(position);
+                    }
                 } else {
                     adapter.notifyDataSetChanged();
                 }
