@@ -126,13 +126,14 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         RetrofitFactory.apiServiceClient().recipeBookmarked(user.getPid(), recipe.getPid(), bookmark).enqueue(new Callback<Recipe>() {
             @Override
             public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
+                log.log(Level.INFO, "bookmark SUCCESS");
                 recipeViewModel.setTargetRecipe(response.body());
                 loadUser(position);
             }
 
             @Override
             public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
-
+                log.log(Level.INFO, "bookmark FAILED");
             }
         });
     }
@@ -146,13 +147,14 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         RetrofitFactory.apiServiceClient().recipeForked(user.getPid(), recipe.getPid(), fork).enqueue(new Callback<Recipe>() {
             @Override
             public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
+                log.log(Level.INFO, "fork SUCCESS");
                 recipeViewModel.setTargetRecipe(response.body());
                 loadUser(position);
             }
 
             @Override
             public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
-
+                log.log(Level.INFO, "fork FAILED");
             }
         });
     }

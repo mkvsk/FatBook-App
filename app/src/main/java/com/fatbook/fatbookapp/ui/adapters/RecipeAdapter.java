@@ -60,11 +60,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         String forksAmount = Integer.toString(recipe.getForks());
         holder.tvForks.setText(forksAmount);
 
-        toggleForks(holder.fork, user.getRecipesForked().contains(recipe));
+        toggleForks(holder.fork, user.getRecipesForked().contains(recipe.getIdentifier()));
         if (recipe.getAuthor().equals(user.getLogin())) {
             holder.bookmarks.setVisibility(View.INVISIBLE);
         } else {
-            toggleBookmarks(holder.bookmarks, user.getRecipesBookmarked().contains(recipe));
+            toggleBookmarks(holder.bookmarks, user.getRecipesBookmarked().contains(recipe.getIdentifier()));
         }
 
         Glide
