@@ -59,8 +59,24 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/icon_add_recipe_photo"
                 android:translationZ="4dp"
+                android:visibility="invisible"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageView_recipe_create_image"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:layout_constraintLeft_toLeftOf="@id/button_recipe_create_image"
+                app:layout_constraintTop_toTopOf="@id/button_recipe_create_image"
+                app:layout_constraintRight_toRightOf="@id/button_recipe_create_image"
+                app:layout_constraintBottom_toBottomOf="@id/button_recipe_create_image"
+                android:elevation="6dp"
+                android:translationZ="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/kartoshka"
+                android:visibility="visible"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent"/>
 
             <EditText
                 android:id="@+id/editText_recipe_add_title"
