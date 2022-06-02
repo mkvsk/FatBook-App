@@ -8,14 +8,14 @@
     tools:context=".ui.fragment.RecipeViewFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout_full_recipe"
+        android:id="@+id/appBarLayout_recipe_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_blue_grey_50"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_view_recipe"
+            android:id="@+id/toolbar_recipe_view"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/color_blue_grey_200"
@@ -52,7 +52,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView_full_recipe_card_bgr"
+                android:id="@+id/imageView_recipe_view_card_bgr"
                 android:layout_width="match_parent"
                 android:layout_height="440dp"
                 android:layout_marginStart="25dp"
@@ -64,17 +64,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView_full_recipe_icon_bookmarks"
+                android:id="@+id/imageView_recipe_view_icon_bookmarks"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_margin="10dp"
                 android:src="@drawable/icon_bookmarks_unchecked"
                 android:tag="tag_bookmarks_unchecked"
-                app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_card_bgr"
-                app:layout_constraintTop_toTopOf="@id/imageView_full_recipe_card_bgr" />
+                app:layout_constraintRight_toRightOf="@id/imageView_recipe_view_card_bgr"
+                app:layout_constraintTop_toTopOf="@id/imageView_recipe_view_card_bgr" />
 
             <EditText
-                android:id="@+id/editText_full_recipe_name"
+                android:id="@+id/editText_recipe_view_name"
                 android:layout_width="290dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -88,12 +88,12 @@
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="18sp"
                 android:padding="5dp"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_card_bgr"
-                app:layout_constraintTop_toTopOf="@id/imageView_full_recipe_icon_bookmarks"
+                app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_view_card_bgr"
+                app:layout_constraintTop_toTopOf="@id/imageView_recipe_view_icon_bookmarks"
                 tools:ignore="RtlCompat" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageView_full_recipe_image"
+                android:id="@+id/imageView_recipe_view_image"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginStart="35dp"
@@ -102,28 +102,58 @@
                 android:background="@color/color_blue_grey_50"
                 android:scaleType="centerCrop"
                 android:src="@drawable/image_recipe_default"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_card_bgr"
-                app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_card_bgr"
-                app:layout_constraintTop_toBottomOf="@id/editText_full_recipe_name"
+                app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_view_card_bgr"
+                app:layout_constraintRight_toRightOf="@id/imageView_recipe_view_card_bgr"
+                app:layout_constraintTop_toBottomOf="@id/editText_recipe_view_name"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent" />
 
             <ImageButton
-                android:id="@+id/button_full_recipe_image_change"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:id="@+id/button_recipe_view_image_add"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@null"
                 android:elevation="6dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/icon_add_photo_round"
+                android:src="@drawable/ic_add"
                 android:translationZ="2dp"
                 android:layout_marginStart="-11dp"
                 android:layout_marginBottom="-12dp"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_image"
-                app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_image" />
+                android:visibility="visible"
+                app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_view_image"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_view_image" />
+
+            <ImageButton
+                android:id="@+id/button_recipe_view_image_change"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@null"
+                android:elevation="6dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_edit"
+                android:translationZ="2dp"
+                android:layout_marginStart="-11dp"
+                android:layout_marginBottom="-12dp"
+                android:visibility="visible"
+                app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_view_image"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_view_image" />
+
+            <ImageButton
+                android:id="@+id/button_recipe_view_image_delete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@null"
+                android:elevation="6dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_delete"
+                android:translationZ="2dp"
+                android:layout_marginEnd="-11dp"
+                android:layout_marginBottom="-12dp"
+                android:visibility="visible"
+                app:layout_constraintRight_toRightOf="@id/imageView_recipe_view_image"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_view_image" />
 
             <TextView
-                android:id="@+id/textView_full_recipe_by_label"
+                android:id="@+id/textView_recipe_view_by_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -131,11 +161,11 @@
                 android:text="@string/title_full_recipe_by"
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/textView_full_recipe_forks_quantity"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_image" />
+                app:layout_constraintBottom_toBottomOf="@id/textView_recipe_view_forks_quantity"
+                app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_view_image" />
 
             <TextView
-                android:id="@+id/textView_full_recipe_username"
+                android:id="@+id/textView_recipe_view_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -143,33 +173,33 @@
                 android:text="@string/title_full_recipe_author"
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/textView_full_recipe_by_label"
-                app:layout_constraintLeft_toRightOf="@id/textView_full_recipe_by_label" />
+                app:layout_constraintBottom_toBottomOf="@id/textView_recipe_view_by_label"
+                app:layout_constraintLeft_toRightOf="@id/textView_recipe_view_by_label" />
 
             <ImageView
-                android:id="@+id/imageView_full_recipe_fork"
+                android:id="@+id/imageView_recipe_view_fork"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginBottom="10dp"
                 android:src="@drawable/icon_fork_unchecked"
                 android:tag="tag_fork_unchecked"
-                app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_card_bgr"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_icon_bookmarks"
-                app:layout_constraintRight_toRightOf="@id/imageView_full_recipe_icon_bookmarks" />
+                app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_view_card_bgr"
+                app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_view_icon_bookmarks"
+                app:layout_constraintRight_toRightOf="@id/imageView_recipe_view_icon_bookmarks" />
 
             <TextView
-                android:id="@+id/textView_full_recipe_forks_quantity"
+                android:id="@+id/textView_recipe_view_forks_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/value_full_recipe_forks_quantity"
                 android:textColor="@color/color_blue_grey_200"
                 android:textSize="9sp"
-                app:layout_constraintBottom_toBottomOf="@id/imageView_full_recipe_fork"
-                app:layout_constraintRight_toLeftOf="@id/imageView_full_recipe_fork" />
+                app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_view_fork"
+                app:layout_constraintRight_toLeftOf="@id/imageView_recipe_view_fork" />
 
             <TextView
-                android:id="@+id/textView_full_recipe_view_label"
+                android:id="@+id/textView_recipe_view_view_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -177,8 +207,8 @@
                 android:text="@string/title_full_recipe_ingredients"
                 android:textColor="@color/color_blue_grey_200"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@id/imageView_full_recipe_card_bgr"
-                app:layout_constraintTop_toBottomOf="@id/imageView_full_recipe_card_bgr" />
+                app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_view_card_bgr"
+                app:layout_constraintTop_toBottomOf="@id/imageView_recipe_view_card_bgr" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recipe_view_ingredients"
@@ -191,12 +221,12 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView_full_recipe_view_label"
+                app:layout_constraintTop_toBottomOf="@id/textView_recipe_view_view_label"
                 tools:listitem="@layout/rv_add_new_recipe_ingredients" />
 
             <ImageButton
                 android:visibility="gone"
-                android:id="@+id/button_full_recipe_ingredient_add"
+                android:id="@+id/button_recipe_view_ingredient_add"
                 android:layout_width="220dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="5dp"
@@ -210,7 +240,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rv_recipe_view_ingredients" />
 
             <TextView
-                android:id="@+id/textView_full_recipe_instruction_label"
+                android:id="@+id/textView_recipe_view_instruction_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -218,11 +248,11 @@
                 android:text="@string/title_full_recipe_instruction"
                 android:textColor="@color/color_blue_grey_200"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="@id/textView_full_recipe_view_label"
-                app:layout_constraintTop_toBottomOf="@id/button_full_recipe_ingredient_add" />
+                app:layout_constraintLeft_toLeftOf="@id/textView_recipe_view_view_label"
+                app:layout_constraintTop_toBottomOf="@id/button_recipe_view_ingredient_add" />
 
             <EditText
-                android:id="@+id/editText_full_recipe_description"
+                android:id="@+id/editText_recipe_view_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
@@ -240,8 +270,8 @@
                 android:textColor="@color/color_blue_grey_600"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="@id/textView_full_recipe_instruction_label"
-                app:layout_constraintTop_toBottomOf="@id/textView_full_recipe_instruction_label" />
+                app:layout_constraintLeft_toLeftOf="@id/textView_recipe_view_instruction_label"
+                app:layout_constraintTop_toBottomOf="@id/textView_recipe_view_instruction_label" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

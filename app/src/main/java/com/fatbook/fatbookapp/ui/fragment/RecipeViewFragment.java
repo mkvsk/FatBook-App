@@ -82,8 +82,8 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         showData();
         setupMenu();
 
-        binding.imageViewFullRecipeFork.setOnClickListener(view1 -> {
-                    String tag = (String) binding.imageViewFullRecipeFork.getTag();
+        binding.imageViewRecipeViewFork.setOnClickListener(view1 -> {
+                    String tag = (String) binding.imageViewRecipeViewFork.getTag();
                     switch (tag) {
                         case RecipeUtils.TAG_FORK_CHECKED:
                             forked(false);
@@ -95,8 +95,8 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                 }
         );
 
-        binding.imageViewFullRecipeIconBookmarks.setOnClickListener(view1 -> {
-                    String tag = (String) binding.imageViewFullRecipeIconBookmarks.getTag();
+        binding.imageViewRecipeViewIconBookmarks.setOnClickListener(view1 -> {
+                    String tag = (String) binding.imageViewRecipeViewIconBookmarks.getTag();
                     switch (tag) {
                         case RecipeUtils.TAG_BOOKMARKS_CHECKED:
                             bookmarked(false);
@@ -108,7 +108,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                 }
         );
 
-        binding.buttonFullRecipeIngredientAdd.setOnClickListener(view1 -> {
+        binding.buttonRecipeViewIngredientAdd.setOnClickListener(view1 -> {
             addIngredient = true;
             NavHostFragment.findNavController(this).navigate(R.id.navigation_add_ingredient);
         });
@@ -225,8 +225,8 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     private void setupMenu() {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         assert activity != null;
-        activity.setSupportActionBar(binding.toolbarViewRecipe);
-        binding.toolbarViewRecipe.setNavigationOnClickListener(view -> navigateBack());
+        activity.setSupportActionBar(binding.toolbarRecipeView);
+        binding.toolbarRecipeView.setNavigationOnClickListener(view -> navigateBack());
         if (recipe.getAuthor().equals(userViewModel.getUser().getValue().getLogin())) {
             setHasOptionsMenu(true);
             binding.kuzyaRecipeView.setVisibility(View.GONE);
@@ -234,8 +234,8 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
             setHasOptionsMenu(false);
             binding.kuzyaRecipeView.setVisibility(View.VISIBLE);
         }
-        binding.editTextFullRecipeName.setEnabled(false);
-        binding.editTextFullRecipeDescription.setEnabled(false);
+        binding.editTextRecipeViewName.setEnabled(false);
+        binding.editTextRecipeViewDescription.setEnabled(false);
     }
 
     @Override
@@ -264,11 +264,11 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                     toggleEditMode(false);
                     saveEdit();
                 } else {
-                    if (StringUtils.isEmpty(binding.editTextFullRecipeName.getText())) {
-                        binding.editTextFullRecipeName.setBackgroundResource(R.drawable.round_corner_edittext);
+                    if (StringUtils.isEmpty(binding.editTextRecipeViewName.getText())) {
+                        binding.editTextRecipeViewName.setBackgroundResource(R.drawable.round_corner_edittext);
                     }
-                    if (StringUtils.isEmpty(binding.editTextFullRecipeDescription.getText())) {
-                        binding.editTextFullRecipeDescription.setBackgroundResource(R.drawable.round_corner_edittext);
+                    if (StringUtils.isEmpty(binding.editTextRecipeViewDescription.getText())) {
+                        binding.editTextRecipeViewDescription.setBackgroundResource(R.drawable.round_corner_edittext);
                     }
                     showDialogEmptyRecipe();
                 }
@@ -286,8 +286,8 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     }
 
     private boolean niceCheck() {
-        return StringUtils.isNotEmpty(binding.editTextFullRecipeName.getText().toString())
-                && StringUtils.isNotEmpty(binding.editTextFullRecipeDescription.getText().toString())
+        return StringUtils.isNotEmpty(binding.editTextRecipeViewName.getText().toString())
+                && StringUtils.isNotEmpty(binding.editTextRecipeViewDescription.getText().toString())
                 && !recipe.getIngredients().isEmpty();
     }
 
@@ -319,26 +319,26 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     }
 
     private void toggleEditMode(boolean allow) {
-        binding.editTextFullRecipeName.setEnabled(allow);
-        binding.editTextFullRecipeDescription.setEnabled(allow);
+        binding.editTextRecipeViewName.setEnabled(allow);
+        binding.editTextRecipeViewDescription.setEnabled(allow);
         changeMenuItemsVisibility(!allow, allow, allow, allow);
         adapter.setEditMode(allow);
         adapter.notifyDataSetChanged();
 
         if (allow) {
-            binding.buttonFullRecipeImageChange.setVisibility(View.VISIBLE);
-            binding.editTextFullRecipeName.setBackgroundResource(R.drawable.edit_mode_bgr);
-            binding.editTextFullRecipeDescription.setBackgroundResource(R.drawable.edit_mode_bgr);
+            binding.buttonRecipeViewImageChange.setVisibility(View.VISIBLE);
+            binding.editTextRecipeViewName.setBackgroundResource(R.drawable.edit_mode_bgr);
+            binding.editTextRecipeViewDescription.setBackgroundResource(R.drawable.edit_mode_bgr);
         } else {
-            binding.buttonFullRecipeImageChange.setVisibility(View.GONE);
-            binding.editTextFullRecipeName.setBackgroundResource(R.drawable.round_corner_rect_white);
-            binding.editTextFullRecipeDescription.setBackgroundResource(R.drawable.round_corner_rect_white);
+            binding.buttonRecipeViewImageChange.setVisibility(View.GONE);
+            binding.editTextRecipeViewName.setBackgroundResource(R.drawable.round_corner_rect_white);
+            binding.editTextRecipeViewDescription.setBackgroundResource(R.drawable.round_corner_rect_white);
         }
     }
 
     private void saveEdit() {
-        recipe.setName(binding.editTextFullRecipeName.getText().toString());
-        recipe.setDescription(binding.editTextFullRecipeDescription.getText().toString());
+        recipe.setName(binding.editTextRecipeViewName.getText().toString());
+        recipe.setDescription(binding.editTextRecipeViewDescription.getText().toString());
         saveRecipe();
     }
 
@@ -394,14 +394,14 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     }
 
     private void changeMenuItemsVisibility(boolean edit, boolean save, boolean cancel, boolean delete) {
-        binding.toolbarViewRecipe.getMenu().findItem(R.id.menu_recipe_edit).setVisible(edit);
-        binding.toolbarViewRecipe.getMenu().findItem(R.id.menu_recipe_save).setVisible(save);
-        binding.toolbarViewRecipe.getMenu().findItem(R.id.menu_recipe_cancel).setVisible(cancel);
-        binding.toolbarViewRecipe.getMenu().findItem(R.id.menu_recipe_delete).setVisible(delete);
+        binding.toolbarRecipeView.getMenu().findItem(R.id.menu_recipe_edit).setVisible(edit);
+        binding.toolbarRecipeView.getMenu().findItem(R.id.menu_recipe_save).setVisible(save);
+        binding.toolbarRecipeView.getMenu().findItem(R.id.menu_recipe_cancel).setVisible(cancel);
+        binding.toolbarRecipeView.getMenu().findItem(R.id.menu_recipe_delete).setVisible(delete);
         if (!edit) {
-            binding.buttonFullRecipeIngredientAdd.setVisibility(View.VISIBLE);
+            binding.buttonRecipeViewIngredientAdd.setVisibility(View.VISIBLE);
         } else {
-            binding.buttonFullRecipeIngredientAdd.setVisibility(View.GONE);
+            binding.buttonRecipeViewIngredientAdd.setVisibility(View.GONE);
         }
     }
 
@@ -414,17 +414,17 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     }
 
     private void showData() {
-        binding.editTextFullRecipeName.setText(recipe.getName());
+        binding.editTextRecipeViewName.setText(recipe.getName());
         Glide
                 .with(requireContext())
                 .load(recipe.getImage())
-                .into(binding.imageViewFullRecipeImage);
-        binding.textViewFullRecipeUsername.setText(recipe.getAuthor());
-        binding.textViewFullRecipeForksQuantity.setText(Integer.toString(recipe.getForks()));
-        binding.editTextFullRecipeDescription.setText(recipe.getDescription());
+                .into(binding.imageViewRecipeViewImage);
+        binding.textViewRecipeViewUsername.setText(recipe.getAuthor());
+        binding.textViewRecipeViewForksQuantity.setText(Integer.toString(recipe.getForks()));
+        binding.editTextRecipeViewDescription.setText(recipe.getDescription());
 
         if (recipe.getAuthor().equals(user.getLogin())) {
-            binding.imageViewFullRecipeIconBookmarks.setVisibility(View.INVISIBLE);
+            binding.imageViewRecipeViewIconBookmarks.setVisibility(View.INVISIBLE);
         } else {
             toggleBookmarks(user.getRecipesBookmarked().contains(recipe.getIdentifier()));
         }
@@ -439,21 +439,21 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
     private void toggleBookmarks(boolean check) {
         if (check) {
-            binding.imageViewFullRecipeIconBookmarks.setImageResource(R.drawable.icon_bookmarks_checked);
-            binding.imageViewFullRecipeIconBookmarks.setTag(RecipeUtils.TAG_BOOKMARKS_CHECKED);
+            binding.imageViewRecipeViewIconBookmarks.setImageResource(R.drawable.icon_bookmarks_checked);
+            binding.imageViewRecipeViewIconBookmarks.setTag(RecipeUtils.TAG_BOOKMARKS_CHECKED);
         } else {
-            binding.imageViewFullRecipeIconBookmarks.setImageResource(R.drawable.icon_bookmarks_unchecked);
-            binding.imageViewFullRecipeIconBookmarks.setTag(RecipeUtils.TAG_BOOKMARKS_UNCHECKED);
+            binding.imageViewRecipeViewIconBookmarks.setImageResource(R.drawable.icon_bookmarks_unchecked);
+            binding.imageViewRecipeViewIconBookmarks.setTag(RecipeUtils.TAG_BOOKMARKS_UNCHECKED);
         }
     }
 
     private void toggleForks(boolean selected) {
         if (selected) {
-            binding.imageViewFullRecipeFork.setImageResource(R.drawable.icon_fork_checked);
-            binding.imageViewFullRecipeFork.setTag(RecipeUtils.TAG_FORK_CHECKED);
+            binding.imageViewRecipeViewFork.setImageResource(R.drawable.icon_fork_checked);
+            binding.imageViewRecipeViewFork.setTag(RecipeUtils.TAG_FORK_CHECKED);
         } else {
-            binding.imageViewFullRecipeFork.setImageResource(R.drawable.icon_fork_unchecked);
-            binding.imageViewFullRecipeFork.setTag(RecipeUtils.TAG_FORK_UNCHECKED);
+            binding.imageViewRecipeViewFork.setImageResource(R.drawable.icon_fork_unchecked);
+            binding.imageViewRecipeViewFork.setTag(RecipeUtils.TAG_FORK_UNCHECKED);
         }
     }
 
