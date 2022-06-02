@@ -72,6 +72,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         } else {
             toggleBookmarks(holder.bookmarks, user.getRecipesBookmarked().contains(recipe.getIdentifier()));
         }
+
         if (StringUtils.isNotEmpty(recipe.getImage())) {
             Glide
                     .with(inflater.getContext())

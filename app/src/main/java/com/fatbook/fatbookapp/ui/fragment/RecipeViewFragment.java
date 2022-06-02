@@ -114,6 +114,15 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                     String path = FileUtils.getPath(requireContext(), selectedImageUri);
                     recipePhoto = new File(path);
                     binding.imageViewRecipeViewImage.setImageURI(selectedImageUri);
+
+                    binding.buttonRecipeViewImageAdd.setVisibility(View.GONE);
+                    binding.buttonRecipeViewImageChange.setVisibility(View.VISIBLE);
+                    binding.buttonRecipeViewImageDelete.setVisibility(View.VISIBLE);
+                } else {
+                    binding.buttonRecipeViewImageAdd.setVisibility(View.VISIBLE);
+                    binding.buttonRecipeViewImageChange.setVisibility(View.GONE);
+                    binding.buttonRecipeViewImageDelete.setVisibility(View.GONE);
+
                 }
             });
         } catch (Exception e) {
@@ -156,11 +165,20 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
             choosePhotoFromGallery.launch("image/*");
         });
 
+        binding.buttonRecipeViewImageChange.setOnClickListener(view1 -> {
+            verifyStoragePermissions(requireActivity());
+            choosePhotoFromGallery.launch("image/*");
+        });
+
         binding.buttonRecipeViewImageDelete.setOnClickListener(view1 -> {
             selectedImageUri = null;
             recipePhoto = null;
             recipe.setImage(StringUtils.EMPTY);
             showData();
+
+            binding.buttonRecipeViewImageAdd.setVisibility(View.VISIBLE);
+            binding.buttonRecipeViewImageChange.setVisibility(View.GONE);
+            binding.buttonRecipeViewImageDelete.setVisibility(View.GONE);
         });
     }
 
@@ -375,11 +393,20 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         adapter.notifyDataSetChanged();
 
         if (allow) {
-            binding.buttonRecipeViewImageChange.setVisibility(View.VISIBLE);
+            if (recipePhoto != null && StringUtils.isNotEmpty(recipe.getImage())) {
+                binding.buttonRecipeViewImageAdd.setVisibility(View.GONE);
+                binding.buttonRecipeViewImageChange.setVisibility(View.VISIBLE);
+                binding.buttonRecipeViewImageDelete.setVisibility(View.VISIBLE);
+            } else {
+                binding.buttonRecipeViewImageAdd.setVisibility(View.VISIBLE);
+                binding.buttonRecipeViewImageChange.setVisibility(View.GONE);
+                binding.buttonRecipeViewImageDelete.setVisibility(View.GONE);
+            }
+            binding.linearlayoutButtonsImage.setVisibility(View.VISIBLE);
             binding.editTextRecipeViewName.setBackgroundResource(R.drawable.edit_mode_bgr);
             binding.editTextRecipeViewDescription.setBackgroundResource(R.drawable.edit_mode_bgr);
         } else {
-            binding.buttonRecipeViewImageChange.setVisibility(View.GONE);
+            binding.linearlayoutButtonsImage.setVisibility(View.GONE);
             binding.editTextRecipeViewName.setBackgroundResource(R.drawable.round_corner_rect_white);
             binding.editTextRecipeViewDescription.setBackgroundResource(R.drawable.round_corner_rect_white);
         }
@@ -469,6 +496,8 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                     .with(requireContext())
                     .load(recipe.getImage())
                     .into(binding.imageViewRecipeViewImage);
+        } else {
+            binding.imageViewRecipeViewImage.setImageDrawable(getResources().getDrawable(R.drawable.image_recipe_default));
         }
         binding.textViewRecipeViewUsername.setText(recipe.getAuthor());
         binding.textViewRecipeViewForksQuantity.setText(Integer.toString(recipe.getForks()));
