@@ -191,7 +191,9 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
                 } else {
                     log.log(Level.INFO, "user load FAILED " + response.code());
                 }
-                binding.swipeRefreshBookmarks.setRefreshing(false);
+                if (binding != null) {
+                    binding.swipeRefreshBookmarks.setRefreshing(false);
+                }
             }
 
             @Override

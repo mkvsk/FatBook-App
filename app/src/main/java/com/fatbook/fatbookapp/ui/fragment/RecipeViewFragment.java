@@ -393,16 +393,16 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         adapter.notifyDataSetChanged();
 
         if (allow) {
-            if (recipePhoto != null && StringUtils.isNotEmpty(recipe.getImage())) {
-                binding.buttonRecipeViewImageAdd.setVisibility(View.GONE);
-                binding.buttonRecipeViewImageChange.setVisibility(View.VISIBLE);
-                binding.buttonRecipeViewImageDelete.setVisibility(View.VISIBLE);
-            } else {
+            binding.linearlayoutButtonsImage.setVisibility(View.VISIBLE);
+            if (recipePhoto == null && StringUtils.isEmpty(recipe.getImage())) {
                 binding.buttonRecipeViewImageAdd.setVisibility(View.VISIBLE);
                 binding.buttonRecipeViewImageChange.setVisibility(View.GONE);
                 binding.buttonRecipeViewImageDelete.setVisibility(View.GONE);
+            } else {
+                binding.buttonRecipeViewImageAdd.setVisibility(View.GONE);
+                binding.buttonRecipeViewImageChange.setVisibility(View.VISIBLE);
+                binding.buttonRecipeViewImageDelete.setVisibility(View.VISIBLE);
             }
-            binding.linearlayoutButtonsImage.setVisibility(View.VISIBLE);
             binding.editTextRecipeViewName.setBackgroundResource(R.drawable.edit_mode_bgr);
             binding.editTextRecipeViewDescription.setBackgroundResource(R.drawable.edit_mode_bgr);
         } else {
