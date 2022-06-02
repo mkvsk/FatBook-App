@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
@@ -78,6 +79,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                     .with(inflater.getContext())
                     .load(recipe.getImage())
                     .into(holder.image);
+        } else {
+            holder.image.setImageResource(R.drawable.image_recipe_default);
         }
     }
 

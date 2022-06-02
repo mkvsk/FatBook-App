@@ -58,7 +58,9 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         if (recipeViewModel.getSelectedRecipePosition().getValue() != null) {
-            loadUser(recipeViewModel.getSelectedRecipePosition().getValue());
+            if (user != null) {
+                loadUser(recipeViewModel.getSelectedRecipePosition().getValue());
+            }
         }
 
         feedRecipeList = new ArrayList<>();
