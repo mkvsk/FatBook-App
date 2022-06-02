@@ -176,7 +176,6 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
     private void uploadImage() {
         if (recipePhoto != null) {
             try {
-                URLEncoder.encode(recipePhoto.getName(), "utf-8");
                 RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), recipePhoto);
                 String fileName = "image" + recipePhoto.getName().substring(recipePhoto.getName().indexOf('.'));
                 MultipartBody.Part file = MultipartBody.Part.createFormData("file", fileName, requestFile);
@@ -207,6 +206,7 @@ public class RecipeCreateFragment extends Fragment implements OnRecipeViewDelete
         recipe = new Recipe();
         recipe.setIngredients(new ArrayList<>());
         recipe.setForks(0);
+        recipe.setIdentifier(0L);
     }
 
     private void niceCheck() {

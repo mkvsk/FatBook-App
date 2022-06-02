@@ -19,8 +19,14 @@ import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
 import com.fatbook.fatbookapp.util.RecipeUtils;
 
-import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+import java.util.logging.Level;
+
+import lombok.extern.java.Log;
+
+@Log
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
@@ -66,11 +72,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         } else {
             toggleBookmarks(holder.bookmarks, user.getRecipesBookmarked().contains(recipe.getIdentifier()));
         }
-
-        Glide
-                .with(inflater.getContext())
-                .load(recipe.getImage())
-                .into(holder.image);
+        if (StringUtils.isNotEmpty(recipe.getImage())) {
+            Glide
+                    .with(inflater.getContext())
+                    .load(recipe.getImage())
+                    .into(holder.image);
+        }
     }
 
     @Override

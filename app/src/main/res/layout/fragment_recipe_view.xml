@@ -131,7 +131,7 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_edit"
                 android:translationZ="2dp"
-                android:layout_marginStart="-11dp"
+                android:layout_marginStart="35dp"
                 android:layout_marginBottom="-12dp"
                 android:visibility="visible"
                 app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_view_image"

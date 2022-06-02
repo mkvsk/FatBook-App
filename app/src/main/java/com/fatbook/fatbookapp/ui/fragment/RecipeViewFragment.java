@@ -1,6 +1,10 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,8 +16,11 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -31,16 +38,21 @@ import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
+import com.fatbook.fatbookapp.util.FileUtils;
 import com.fatbook.fatbookapp.util.KeyboardActionUtil;
 import com.fatbook.fatbookapp.util.RecipeUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
 import lombok.extern.java.Log;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,6 +78,18 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
     private boolean addIngredient = false;
 
+    private ActivityResultLauncher<String> choosePhotoFromGallery;
+
+    private File recipePhoto;
+
+    private Uri selectedImageUri;
+
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static final String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -81,6 +105,20 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         setupAdapter();
         showData();
         setupMenu();
+
+        try {
+            choosePhotoFromGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+                verifyStoragePermissions(requireActivity());
+                if (uri != null) {
+                    selectedImageUri = uri;
+                    String path = FileUtils.getPath(requireContext(), selectedImageUri);
+                    recipePhoto = new File(path);
+                    binding.imageViewRecipeViewImage.setImageURI(selectedImageUri);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         binding.imageViewRecipeViewFork.setOnClickListener(view1 -> {
                     String tag = (String) binding.imageViewRecipeViewFork.getTag();
@@ -113,6 +151,17 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
             NavHostFragment.findNavController(this).navigate(R.id.navigation_add_ingredient);
         });
 
+        binding.buttonRecipeViewImageAdd.setOnClickListener(view1 -> {
+            verifyStoragePermissions(requireActivity());
+            choosePhotoFromGallery.launch("image/*");
+        });
+
+        binding.buttonRecipeViewImageDelete.setOnClickListener(view1 -> {
+            selectedImageUri = null;
+            recipePhoto = null;
+            recipe.setImage(StringUtils.EMPTY);
+            showData();
+        });
     }
 
     private void forked(boolean value) {
@@ -415,10 +464,12 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
 
     private void showData() {
         binding.editTextRecipeViewName.setText(recipe.getName());
-        Glide
-                .with(requireContext())
-                .load(recipe.getImage())
-                .into(binding.imageViewRecipeViewImage);
+        if (StringUtils.isNotEmpty(recipe.getImage())) {
+            Glide
+                    .with(requireContext())
+                    .load(recipe.getImage())
+                    .into(binding.imageViewRecipeViewImage);
+        }
         binding.textViewRecipeViewUsername.setText(recipe.getAuthor());
         binding.textViewRecipeViewForksQuantity.setText(Integer.toString(recipe.getForks()));
         binding.editTextRecipeViewDescription.setText(recipe.getDescription());
@@ -464,6 +515,18 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         adapter.notifyItemRemoved(position);
     }
 
+    public static void verifyStoragePermissions(Activity activity) {
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -481,6 +544,9 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
     public void onResume() {
         super.onResume();
         binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
+        if (selectedImageUri != null) {
+            binding.imageViewRecipeViewImage.setImageURI(selectedImageUri);
+        }
     }
 
     @Override
