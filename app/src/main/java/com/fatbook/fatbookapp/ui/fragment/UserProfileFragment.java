@@ -1,10 +1,12 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +19,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +38,7 @@ import com.fatbook.fatbookapp.ui.activity.SplashActivity;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
+import com.fatbook.fatbookapp.util.FileUtils;
 import com.fatbook.fatbookapp.util.KeyboardActionUtil;
 import com.fatbook.fatbookapp.util.UserUtils;
 import com.google.android.material.appbar.AppBarLayout;
@@ -41,6 +46,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;

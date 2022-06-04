@@ -122,7 +122,6 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
                     binding.buttonRecipeViewImageAdd.setVisibility(View.VISIBLE);
                     binding.buttonRecipeViewImageChange.setVisibility(View.GONE);
                     binding.buttonRecipeViewImageDelete.setVisibility(View.GONE);
-
                 }
             });
         } catch (Exception e) {
@@ -180,6 +179,35 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
             binding.buttonRecipeViewImageChange.setVisibility(View.GONE);
             binding.buttonRecipeViewImageDelete.setVisibility(View.GONE);
         });
+    }
+
+    private void uploadImage() {
+        if (recipePhoto != null) {
+            try {
+                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), recipePhoto);
+                String fileName = "image" + recipePhoto.getName().substring(recipePhoto.getName().indexOf('.'));
+                MultipartBody.Part file = MultipartBody.Part.createFormData("file", fileName, requestFile);
+
+                RetrofitFactory.apiServiceClient().uploadImage(file, FileUtils.TAG_RECIPE, recipe.getIdentifier()).enqueue(new Callback<Recipe>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
+                        if (response.code() == 200) {
+                            log.log(Level.INFO, "image add SUCCESS");
+                        } else {
+                            log.log(Level.INFO, "image add FAILED " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
+                        log.log(Level.INFO, "image add FAILED");
+                    }
+                });
+            } catch (Exception e) {
+                log.log(Level.INFO, e.toString());
+                e.printStackTrace();
+            }
+        }
     }
 
     private void forked(boolean value) {
@@ -416,6 +444,7 @@ public class RecipeViewFragment extends Fragment implements OnRecipeViewDeleteIn
         recipe.setName(binding.editTextRecipeViewName.getText().toString());
         recipe.setDescription(binding.editTextRecipeViewDescription.getText().toString());
         saveRecipe();
+        uploadImage();
     }
 
     private void deleteRecipe() {

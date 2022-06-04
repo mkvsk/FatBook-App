@@ -258,12 +258,11 @@
                 android:fontFamily="@font/roboto_light"
                 android:gravity="start"
                 android:minLines="1"
-                android:maxLines="30"
                 android:padding="15dp"
                 android:text="@string/text_full_recipe_instruction"
                 android:textAlignment="gravity"
                 android:textColor="@color/color_blue_grey_600"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="@id/textView_recipe_view_instruction_label"
                 app:layout_constraintTop_toBottomOf="@id/textView_recipe_view_instruction_label" />
