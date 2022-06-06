@@ -1,10 +1,12 @@
 package com.fatbook.fatbookapp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +41,33 @@ public class LoginActivity extends AppCompatActivity {
     private SignInViewModel signInViewModel;
 
     private boolean btnNextClicked = false;
+
+    private boolean isKeyboardVisible = false;
+
+    public final ViewTreeObserver.OnGlobalLayoutListener listener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+            final Rect rectangle = new Rect();
+            final View contentView = binding.getRoot();
+            contentView.getWindowVisibleDisplayFrame(rectangle);
+            int screenHeight = contentView.getRootView().getHeight();
+            int keypadHeight = screenHeight - rectangle.bottom;
+            boolean isKeyboardNowVisible = keypadHeight > screenHeight * 0.15;
+
+            if (isKeyboardVisible != isKeyboardNowVisible) {
+                if (isKeyboardNowVisible) {
+                    binding.textViewLoginVersion.setVisibility(View.GONE);
+                    binding.textViewLoginCopyright.setVisibility(View.GONE);
+                    binding.textViewLoginTagline.setVisibility(View.GONE);
+                } else {
+                    binding.textViewLoginVersion.setVisibility(View.VISIBLE);
+                    binding.textViewLoginCopyright.setVisibility(View.VISIBLE);
+                    binding.textViewLoginTagline.setVisibility(View.VISIBLE);
+                }
+            }
+            isKeyboardVisible = isKeyboardNowVisible;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +176,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void fakeLoginCheckForCreation(String login) {
-        signInViewModel.setLoginAvailable(true);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(listener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        binding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(listener);
     }
 }
