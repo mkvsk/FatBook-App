@@ -60,7 +60,7 @@ public class SignInActivity extends AppCompatActivity {
         });
 
         binding.buttonSignIn.setOnClickListener(view -> {
-            validateLogin(binding.editTextSignInLogin.getText().toString(), binding.editTextSignInPassword.getText().toString());
+            validateLogin(binding.editTextSignInLogin.getText().toString().trim(), binding.editTextSignInPassword.getText().toString());
         });
 
         binding.editTextSignInLogin.addTextChangedListener(new TextWatcher() {

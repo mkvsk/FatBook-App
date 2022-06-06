@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
@@ -24,7 +25,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,6 +55,9 @@ import java.util.List;
 import java.util.logging.Level;
 
 import lombok.extern.java.Log;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,6 +72,18 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     private UserViewModel userViewModel;
 
     private RecipeAdapter adapter;
+
+    private ActivityResultLauncher<String> choosePhotoFromGallery;
+
+    private File userPhoto;
+
+    private Uri selectedImageUri;
+
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static final String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -89,6 +107,61 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         setupAdapter();
         setupSwipeRefresh();
         binding.toolbarUserProfile.getOverflowIcon().setColorFilter(getResources().getColor(R.color.color_blue_grey_600), PorterDuff.Mode.MULTIPLY);
+
+        try {
+            choosePhotoFromGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+                verifyStoragePermissions(requireActivity());
+                if (uri != null) {
+                    selectedImageUri = uri;
+                    String path = FileUtils.getPath(requireContext(), selectedImageUri);
+                    userPhoto = new File(path);
+                    binding.imageViewProfilePhoto.setImageURI(selectedImageUri);
+
+                    binding.buttonUserProfileAddPhoto.setVisibility(View.GONE);
+                    binding.buttonUserProfileChangePhoto.setVisibility(View.VISIBLE);
+                    binding.buttonUserProfileDeletePhoto.setVisibility(View.VISIBLE);
+                } else {
+                    binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
+                    binding.buttonUserProfileChangePhoto.setVisibility(View.GONE);
+                    binding.buttonUserProfileDeletePhoto.setVisibility(View.GONE);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        binding.buttonUserProfileAddPhoto.setOnClickListener(view1 -> {
+            verifyStoragePermissions(requireActivity());
+            choosePhotoFromGallery.launch("image/*");
+        });
+
+        binding.buttonUserProfileChangePhoto.setOnClickListener(view1 -> {
+            verifyStoragePermissions(requireActivity());
+            choosePhotoFromGallery.launch("image/*");
+        });
+
+        binding.buttonUserProfileDeletePhoto.setOnClickListener(view1 -> {
+            selectedImageUri = null;
+            userPhoto = null;
+            user.setImage(StringUtils.EMPTY);
+            fillUserProfile();
+
+            binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
+            binding.buttonUserProfileChangePhoto.setVisibility(View.GONE);
+            binding.buttonUserProfileDeletePhoto.setVisibility(View.GONE);
+        });
+    }
+
+    private void verifyStoragePermissions(FragmentActivity requireActivity) {
+        int permission = ActivityCompat.checkSelfPermission(requireActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    requireActivity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
     }
 
     private void loadUserData() {
@@ -123,8 +196,13 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         binding.editTextProfileName.setText(user.getName());
         binding.editTextProfileBio.setText(user.getBio());
         if (StringUtils.isNotEmpty(user.getImage())) {
-            Glide.with(getLayoutInflater().getContext()).load(user.getImage()).into(binding.imageViewProfilePhoto);
-            Glide.with(getLayoutInflater().getContext()).load(user.getImage()).into(binding.imageViewUserProfilePhotoBgr);
+            Glide
+                    .with(getLayoutInflater()
+                    .getContext())
+                    .load(user.getImage())
+                    .into(binding.imageViewProfilePhoto);
+        } else {
+            binding.imageViewProfilePhoto.setImageDrawable(getResources().getDrawable(R.drawable.image_recipe_default));
         }
         adapter.setData(user.getRecipes(), user);
         adapter.notifyDataSetChanged();
@@ -203,21 +281,25 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         binding.editTextProfileName.setEnabled(allow);
         binding.editTextProfileBio.setEnabled(allow);
         if (allow) {
-            binding.imageViewUserProfilePhotoBgr.setVisibility(View.INVISIBLE);
             binding.linearlayoutButtonsUserImage.setVisibility(View.VISIBLE);
+            if (userPhoto == null && StringUtils.isEmpty(user.getImage())) {
+                binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
+                binding.buttonUserProfileChangePhoto.setVisibility(View.GONE);
+                binding.buttonUserProfileDeletePhoto.setVisibility(View.GONE);
+            } else {
+                binding.buttonUserProfileAddPhoto.setVisibility(View.GONE);
+                binding.buttonUserProfileChangePhoto.setVisibility(View.VISIBLE);
+                binding.buttonUserProfileDeletePhoto.setVisibility(View.VISIBLE);
+            }
+            binding.imageViewUserProfilePhotoBgr.setVisibility(View.INVISIBLE);
             binding.editTextProfileName.setBackgroundResource(R.drawable.edit_mode_bgr);
             binding.editTextProfileBio.setBackgroundResource(R.drawable.edit_mode_bgr);
 
-            binding.buttonUserProfileChangePhoto.setVisibility(View.VISIBLE);
-            binding.buttonUserProfileDeletePhoto.setVisibility(View.VISIBLE);
         } else {
-            binding.imageViewUserProfilePhotoBgr.setVisibility(View.VISIBLE);
             binding.linearlayoutButtonsUserImage.setVisibility(View.GONE);
+            binding.imageViewUserProfilePhotoBgr.setVisibility(View.VISIBLE);
             binding.editTextProfileName.setBackgroundResource(R.drawable.round_corner_rect_white);
             binding.editTextProfileBio.setBackgroundResource(R.drawable.round_corner_rect_white);
-
-            binding.buttonUserProfileChangePhoto.setVisibility(View.GONE);
-            binding.buttonUserProfileDeletePhoto.setVisibility(View.GONE);
         }
     }
 
@@ -226,8 +308,11 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void confirmEdit() {
-        String str = binding.editTextProfileBio.getText().toString();
-        binding.editTextProfileBio.setText(str.replace("\n", " ").trim());
+        String strName = binding.editTextProfileName.getText().toString();
+        binding.editTextProfileName.setText(strName.trim());
+
+        String strBio = binding.editTextProfileBio.getText().toString();
+        binding.editTextProfileBio.setText(strBio.replace("\n", " ").trim());
 
         user.setName(binding.editTextProfileName.getText().toString());
         user.setBio(binding.editTextProfileBio.getText().toString());
@@ -236,6 +321,33 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void saveUser() {
+        if (userPhoto != null) {
+            try {
+                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), userPhoto);
+                String fileName = "image" + userPhoto.getName().substring(userPhoto.getName().indexOf('.'));
+                MultipartBody.Part file = MultipartBody.Part.createFormData("file", fileName, requestFile);
+
+                RetrofitFactory.apiServiceClient().uploadUserImage(file, FileUtils.TAG_USER, user.getPid()).enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                        if (response.code() == 200) {
+                            log.log(Level.INFO, "image add SUCCESS");
+                        } else {
+                            log.log(Level.INFO, "image add FAILED " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                        log.log(Level.INFO, "image add FAILED");
+                    }
+                });
+            } catch (Exception e) {
+                log.log(Level.INFO, e.toString());
+                e.printStackTrace();
+            }
+        }
+
         RetrofitFactory.apiServiceClient().userUpdate(user).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
@@ -289,6 +401,9 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     public void onResume() {
         super.onResume();
         binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
+        if (selectedImageUri != null) {
+            binding.imageViewProfilePhoto.setImageURI(selectedImageUri);
+        }
     }
 
     @Override
