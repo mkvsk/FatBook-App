@@ -1,9 +1,12 @@
 package com.fatbook.fatbookapp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.ViewTreeObserver;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +41,35 @@ public class SignInActivity extends AppCompatActivity {
     private ActivitySignInBinding binding;
 
     private SignInViewModel signInViewModel;
+
+    public boolean isKeyboardVisible = false;
+
+    public final ViewTreeObserver.OnGlobalLayoutListener listener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+            final Rect rectangle = new Rect();
+            final View contentView = binding.getRoot();
+            contentView.getWindowVisibleDisplayFrame(rectangle);
+            int screenHeight = contentView.getRootView().getHeight();
+            int keypadHeight = screenHeight - rectangle.bottom;
+            boolean isKeyboardNowVisible = keypadHeight > screenHeight * 0.15;
+
+            if (isKeyboardVisible != isKeyboardNowVisible) {
+                if(isKeyboardNowVisible) {
+                    binding.textViewSignInVersion.setVisibility(View.GONE);
+                    binding.textViewSignInCopyright.setVisibility(View.GONE);
+                    binding.textViewSignInTagline.setVisibility(View.GONE);
+                    binding.textViewSignInAppLabel.setVisibility(View.GONE);
+                } else {
+                    binding.textViewSignInVersion.setVisibility(View.VISIBLE);
+                    binding.textViewSignInCopyright.setVisibility(View.VISIBLE);
+                    binding.textViewSignInTagline.setVisibility(View.VISIBLE);
+                    binding.textViewSignInAppLabel.setVisibility(View.VISIBLE);
+                }
+            }
+            isKeyboardVisible = isKeyboardNowVisible;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,34 +148,15 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
-    private void fakeValidation() {
-        User yourMom = new User();
-        yourMom.setName("Mom");
-        yourMom.setImage("https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----5.jpg");
-        yourMom.setBio("I'm am your momma, I gave birth to you and I'll obliterate you. \n cya at dinner mf");
-        yourMom.setLogin("your_mom1337");
-        yourMom.setRole(Role.USER);
-        yourMom.setRecipes(new ArrayList<>());
-        yourMom.setRecipesBookmarked(new ArrayList<>());
-        yourMom.setRegDate("2022-05-20");
-        yourMom.setBirthday("1975-03-09");
-        List<RecipeIngredient> ingredientList = new ArrayList<>();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(listener);
+    }
 
-        ingredientList.add(new RecipeIngredient(null, new Ingredient(1L, "potato"), IngredientUnit.PCS, 1.0));
-        ingredientList.add(new RecipeIngredient(null, new Ingredient(2L, "milk"), IngredientUnit.ML, 500.0));
-        ingredientList.add(new RecipeIngredient(null, new Ingredient(3L, "eggs"), IngredientUnit.PCS, 2.0));
-        ingredientList.add(new RecipeIngredient(null, new Ingredient(4L, "bread"), IngredientUnit.PCS, 3.0));
-        ingredientList.add(new RecipeIngredient(null, new Ingredient(5L, "cheese"), IngredientUnit.GRAM, 250.0));
-
-        List<Recipe> recipes = new ArrayList<>();
-
-//        recipes.add(new Recipe(2L, "Potato", getResources().getString(R.string.text_full_recipe_instruction), yourMom.getLogin(), ingredientList,
-//                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----2.jpg", 21345, ""));
-//        recipes.add(new Recipe(4L, "creamy Potato", getResources().getString(R.string.text_full_recipe_instruction), yourMom.getLogin(), ingredientList,
-//                "https://media.2x2tv.ru/content/images/size/h1080/2021/05/-----3.jpg", 8, ""));
-
-        yourMom.setRecipes(recipes);
-        yourMom.setRecipesForked(new ArrayList<>());
-        signInViewModel.setUser(yourMom);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        binding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(listener);
     }
 }

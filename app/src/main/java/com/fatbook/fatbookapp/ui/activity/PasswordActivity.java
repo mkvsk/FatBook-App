@@ -1,10 +1,12 @@
 package com.fatbook.fatbookapp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -20,6 +22,33 @@ public class PasswordActivity extends AppCompatActivity {
     private ActivityPasswordBinding binding;
 
     private User user;
+
+    public boolean isKeyboardVisible = false;
+
+    public final ViewTreeObserver.OnGlobalLayoutListener listener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+            final Rect rectangle = new Rect();
+            final View contentView = binding.getRoot();
+            contentView.getWindowVisibleDisplayFrame(rectangle);
+            int screenHeight = contentView.getRootView().getHeight();
+            int keypadHeight = screenHeight - rectangle.bottom;
+            boolean isKeyboardNowVisible = keypadHeight > screenHeight * 0.15;
+
+            if (isKeyboardVisible != isKeyboardNowVisible) {
+                if(isKeyboardNowVisible) {
+                    binding.textViewPasswordVersion.setVisibility(View.GONE);
+                    binding.textViewPasswordCopyright.setVisibility(View.GONE);
+                    binding.textViewPasswordTagline.setVisibility(View.GONE);
+                } else {
+                    binding.textViewPasswordVersion.setVisibility(View.VISIBLE);
+                    binding.textViewPasswordCopyright.setVisibility(View.VISIBLE);
+                    binding.textViewPasswordTagline.setVisibility(View.VISIBLE);
+                }
+            }
+            isKeyboardVisible = isKeyboardNowVisible;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +101,18 @@ public class PasswordActivity extends AppCompatActivity {
             binding.buttonPasswordNext.setEnabled(false);
             binding.buttonPasswordNext.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_blue_grey_200));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(listener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        binding.getRoot().getViewTreeObserver().removeOnGlobalLayoutListener(listener);
     }
 
     /**
