@@ -47,7 +47,13 @@
         android:id="@+id/navigation_user_profile"
         android:name="com.fatbook.fatbookapp.ui.fragment.UserProfileFragment"
         android:label="@string/mobile_nav_user_profile"
-        tools:layout="@layout/fragment_user_profile" />
+        tools:layout="@layout/fragment_user_profile" >
+
+        <action
+            android:id="@+id/action_go_to_recipe_view_from_user_profile"
+            app:destination="@id/navigation_recipe_view"
+            app:popUpTo="@id/navigation_user_profile" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_recipe_view"

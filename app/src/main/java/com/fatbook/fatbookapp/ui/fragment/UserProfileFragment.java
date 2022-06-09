@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,12 +22,12 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +39,7 @@ import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.ui.activity.SplashActivity;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
+import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.FileUtils;
 import com.fatbook.fatbookapp.util.KeyboardActionUtil;
@@ -50,8 +50,6 @@ import com.google.android.material.snackbar.Snackbar;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.util.Comparator;
-import java.util.List;
 import java.util.logging.Level;
 
 import lombok.extern.java.Log;
@@ -85,6 +83,8 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+    private RecipeViewModel recipeViewModel;
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -93,11 +93,12 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         ((AppBarLayout.LayoutParams) binding.toolbarUserProfile.getLayoutParams()).setScrollFlags(0);
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
         setupMenu();
 
         user = userViewModel.getUser().getValue();
         if (userViewModel.getUser().getValue() == null) {
-            loadUserData();
+            loadUser();
         }
         userViewModel.getUser().observe(getViewLifecycleOwner(), _user -> {
             binding.swipeRefreshUserProfile.setRefreshing(false);
@@ -116,6 +117,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                     String path = FileUtils.getPath(requireContext(), selectedImageUri);
                     userPhoto = new File(path);
                     binding.imageViewProfilePhoto.setImageURI(selectedImageUri);
+                    binding.imageViewUserProfilePhotoBgr.setImageURI(selectedImageUri);
 
                     binding.buttonUserProfileAddPhoto.setVisibility(View.GONE);
                     binding.buttonUserProfileChangePhoto.setVisibility(View.VISIBLE);
@@ -164,7 +166,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         }
     }
 
-    private void loadUserData() {
+    private void loadUser() {
         RetrofitFactory.apiServiceClient().getUser(user.getLogin()).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
@@ -182,7 +184,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     private void setupSwipeRefresh() {
         editMode(false);
         binding.swipeRefreshUserProfile.setColorSchemeColors(getResources().getColor(R.color.color_pink_a200));
-        binding.swipeRefreshUserProfile.setOnRefreshListener(this::loadUserData);
+        binding.swipeRefreshUserProfile.setOnRefreshListener(this::loadUser);
     }
 
     private void setupAdapter() {
@@ -198,11 +200,18 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         if (StringUtils.isNotEmpty(user.getImage())) {
             Glide
                     .with(getLayoutInflater()
-                    .getContext())
+                            .getContext())
                     .load(user.getImage())
                     .into(binding.imageViewProfilePhoto);
+
+            Glide
+                    .with(getLayoutInflater()
+                            .getContext())
+                    .load(user.getImage())
+                    .into(binding.imageViewUserProfilePhotoBgr);
         } else {
             binding.imageViewProfilePhoto.setImageDrawable(getResources().getDrawable(R.drawable.image_recipe_default));
+            binding.imageViewUserProfilePhotoBgr.setImageDrawable(getResources().getDrawable(R.drawable.user_profile_default_bgr));
         }
         adapter.setData(user.getRecipes(), user);
         adapter.notifyDataSetChanged();
@@ -332,6 +341,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                     public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                         if (response.code() == 200) {
                             log.log(Level.INFO, "image add SUCCESS");
+                            userViewModel.setUser(response.body());
                         } else {
                             log.log(Level.INFO, "image add FAILED " + response.code());
                         }
@@ -372,7 +382,10 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
 
     @Override
     public void onRecipeClick(int position) {
-        System.out.println("Stub!");
+        Recipe recipe = user.getRecipes().get(position);
+        recipeViewModel.setSelectedRecipe(recipe);
+        recipeViewModel.setSelectedRecipePosition(position);
+        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_recipe_view_from_user_profile);
     }
 
     @Override
@@ -382,7 +395,23 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
 
     @Override
     public void onForkClicked(Recipe recipe, boolean fork, int position) {
-        System.out.println("Stub!");
+        recipeForked(recipe, fork, position);
+    }
+
+    private void recipeForked(Recipe recipe, boolean fork, int position) {
+        RetrofitFactory.apiServiceClient().recipeForked(user.getPid(), recipe.getPid(), fork).enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
+                log.log(Level.INFO, "fork SUCCESS");
+                recipeViewModel.setSelectedRecipe(response.body());
+                loadUser();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "fork FAILED");
+            }
+        });
     }
 
     @Override
@@ -403,6 +432,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         binding.getRoot().getViewTreeObserver().addOnGlobalLayoutListener(new KeyboardActionUtil(binding.getRoot(), requireActivity()).listenerForAdjustResize);
         if (selectedImageUri != null) {
             binding.imageViewProfilePhoto.setImageURI(selectedImageUri);
+            binding.imageViewUserProfilePhotoBgr.setImageURI(selectedImageUri);
         }
     }
 
