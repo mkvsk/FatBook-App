@@ -10,7 +10,7 @@
 .externalNativeBuild
 /build_file_checksums.ser
 /gradle.xml
-/misc.xml
+/.idea/misc.xml
 /runConfigurations.xml
 /vcs.xml
 # Created by https://www.gitignore.io/api/java,sonar,gradle,android,androidstudio
