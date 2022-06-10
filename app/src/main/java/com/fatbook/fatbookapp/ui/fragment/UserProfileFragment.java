@@ -357,19 +357,6 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                 e.printStackTrace();
             }
         }
-
-        RetrofitFactory.apiServiceClient().userUpdate(user).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                log.log(Level.INFO, "" + response.code() + " user update SUCCESS");
-                user = response.body();
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                log.log(Level.INFO, "user update FAILED");
-            }
-        });
     }
 
     private void changeMenuItemsVisibility(boolean edit, boolean save, boolean cancel) {
