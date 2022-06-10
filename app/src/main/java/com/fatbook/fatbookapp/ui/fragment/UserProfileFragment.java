@@ -123,9 +123,15 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                     binding.buttonUserProfileChangePhoto.setVisibility(View.VISIBLE);
                     binding.buttonUserProfileDeletePhoto.setVisibility(View.VISIBLE);
                 } else {
-                    binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
-                    binding.buttonUserProfileChangePhoto.setVisibility(View.GONE);
-                    binding.buttonUserProfileDeletePhoto.setVisibility(View.GONE);
+                    if (StringUtils.isEmpty(user.getImage())) {
+                        binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
+                        binding.buttonUserProfileChangePhoto.setVisibility(View.GONE);
+                        binding.buttonUserProfileDeletePhoto.setVisibility(View.GONE);
+                    } else {
+                        binding.buttonUserProfileAddPhoto.setVisibility(View.GONE);
+                        binding.buttonUserProfileChangePhoto.setVisibility(View.VISIBLE);
+                        binding.buttonUserProfileDeletePhoto.setVisibility(View.VISIBLE);
+                    }
                 }
             });
         } catch (Exception e) {
@@ -198,6 +204,12 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
         binding.toolbarUserProfile.setTitle(user.getLogin());
         binding.editTextProfileName.setText(user.getName());
         binding.editTextProfileBio.setText(user.getBio());
+        adapter.setData(user.getRecipes(), user);
+        adapter.notifyDataSetChanged();
+        loadUserImage();
+    }
+
+    private void loadUserImage() {
         if (StringUtils.isNotEmpty(user.getImage())) {
             Glide
                     .with(getLayoutInflater()
@@ -214,8 +226,6 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
             binding.imageViewProfilePhoto.setImageDrawable(getResources().getDrawable(R.drawable.image_recipe_default));
             binding.imageViewUserProfilePhotoBgr.setImageDrawable(getResources().getDrawable(R.drawable.user_profile_default_bgr));
         }
-        adapter.setData(user.getRecipes(), user);
-        adapter.notifyDataSetChanged();
     }
 
     private void setupMenu() {
