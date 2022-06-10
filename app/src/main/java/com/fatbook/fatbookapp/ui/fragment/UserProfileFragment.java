@@ -194,6 +194,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void fillUserProfile() {
+        //TODO убрать блики при смене фото
         binding.toolbarUserProfile.setTitle(user.getLogin());
         binding.editTextProfileName.setText(user.getName());
         binding.editTextProfileBio.setText(user.getBio());
@@ -330,32 +331,55 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void saveUser() {
-        if (userPhoto != null) {
-            try {
-                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), userPhoto);
-                String fileName = "image" + userPhoto.getName().substring(userPhoto.getName().indexOf('.'));
-                MultipartBody.Part file = MultipartBody.Part.createFormData("file", fileName, requestFile);
-
-                RetrofitFactory.apiServiceClient().uploadUserImage(file, FileUtils.TAG_USER, user.getPid()).enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                        if (response.code() == 200) {
-                            log.log(Level.INFO, "image add SUCCESS");
-                            userViewModel.setUser(response.body());
-                        } else {
-                            log.log(Level.INFO, "image add FAILED " + response.code());
-                        }
+        RetrofitFactory.apiServiceClient().userUpdate(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                if (response.code() == 200) {
+                    log.log(Level.INFO, "user update SUCCESS");
+                    if (response.body() != null) {
+                        log.log(Level.INFO, response.body().toString());
                     }
-
-                    @Override
-                    public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                        log.log(Level.INFO, "image add FAILED");
+                    userViewModel.setUser(response.body());
+                    if (userPhoto != null) {
+                        uploadImage();
                     }
-                });
-            } catch (Exception e) {
-                log.log(Level.INFO, e.toString());
-                e.printStackTrace();
+                } else {
+                    log.log(Level.INFO, "user update FAILED");
+                }
             }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                log.log(Level.INFO, "user update FAILED");
+            }
+        });
+    }
+
+    private void uploadImage() {
+        try {
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), userPhoto);
+            String fileName = "image" + userPhoto.getName().substring(userPhoto.getName().indexOf('.'));
+            MultipartBody.Part file = MultipartBody.Part.createFormData("file", fileName, requestFile);
+
+            RetrofitFactory.apiServiceClient().uploadUserImage(file, FileUtils.TAG_USER, user.getLogin()).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                    if (response.code() == 200) {
+                        log.log(Level.INFO, "image add SUCCESS");
+                        userViewModel.setUser(response.body());
+                    } else {
+                        log.log(Level.INFO, "image add FAILED " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    log.log(Level.INFO, "image add FAILED");
+                }
+            });
+        } catch (Exception e) {
+            log.log(Level.INFO, "image add FAILED");
+            e.printStackTrace();
         }
     }
 

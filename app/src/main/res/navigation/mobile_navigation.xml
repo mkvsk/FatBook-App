@@ -41,7 +41,14 @@
         android:id="@+id/navigation_bookmarks"
         android:name="com.fatbook.fatbookapp.ui.fragment.BookmarksFragment"
         android:label="@string/mobile_nav_bookmarks"
-        tools:layout="@layout/fragment_bookmarks" />
+        tools:layout="@layout/fragment_bookmarks" >
+
+        <action
+            android:id="@+id/action_go_to_recipe_view_from_bookmarks"
+            app:destination="@id/navigation_recipe_view"
+            app:popUpTo="@id/navigation_bookmarks" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_user_profile"

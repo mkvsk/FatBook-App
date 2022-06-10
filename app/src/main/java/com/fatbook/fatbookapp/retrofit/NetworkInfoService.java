@@ -39,6 +39,13 @@ public interface NetworkInfoService {
     @GET("user/signin")
     Call<User> signIn(@Query(value = "login") String login, @Query(value = "fat") String fat);
 
+    @Multipart
+    @POST("user/upload")
+    Call<User> uploadUserImage(@Part MultipartBody.Part image, @Query(value = "dir") String dir, @Query(value = "login") String login);
+
+    @GET("user/bookmarks")
+    Call<List<Recipe>> getUserBookmarks(@Query(value = "login") String login);
+
     /**
      * Ingredients
      */
@@ -65,6 +72,10 @@ public interface NetworkInfoService {
 
     @POST("recipe/bookmarked")
     Call<Recipe> recipeBookmarked(@Query(value = "pidUser") Long pidUser, @Query(value = "pidRecipe") Long pidRecipe, @Query(value = "bookmarked") Boolean bookmark);
+
+    @Multipart
+    @POST("recipe/upload")
+    Call<Recipe> uploadImage(@Part MultipartBody.Part image, @Query(value = "dir") String dir, @Query(value = "id") Long id);
     /**
      * Feed
      */
@@ -74,13 +85,8 @@ public interface NetworkInfoService {
     /**
      * File upload
      */
-    @Multipart
-    @POST("recipe/upload")
-    Call<Recipe> uploadImage(@Part MultipartBody.Part image, @Query(value = "dir") String dir, @Query(value = "id") Long id);
+
     //========================================================================================
-    @Multipart
-    @POST("user/upload")
-    Call<User> uploadUserImage(@Part MultipartBody.Part image, @Query(value = "dir") String dir, @Query(value = "pid") Long pid);
 //    @Multipart
 //    @POST("upload")
 //    Call<Void> createNewUser(
