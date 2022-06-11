@@ -85,6 +85,8 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
 
     private RecipeViewModel recipeViewModel;
 
+    private boolean updateImage = true;
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -104,6 +106,9 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
             binding.swipeRefreshUserProfile.setRefreshing(false);
             user = _user;
             fillUserProfile();
+            if (updateImage) {
+                updateImage();
+            }
         });
         setupAdapter();
         setupSwipeRefresh();
@@ -153,6 +158,9 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
             userPhoto = null;
             user.setImage(StringUtils.EMPTY);
             fillUserProfile();
+            if (updateImage) {
+                updateImage();
+            }
 
             binding.buttonUserProfileAddPhoto.setVisibility(View.VISIBLE);
             binding.buttonUserProfileChangePhoto.setVisibility(View.GONE);
@@ -190,6 +198,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     private void setupSwipeRefresh() {
         editMode(false);
         binding.swipeRefreshUserProfile.setColorSchemeColors(getResources().getColor(R.color.color_pink_a200));
+        updateImage = true;
         binding.swipeRefreshUserProfile.setOnRefreshListener(this::loadUser);
     }
 
@@ -200,16 +209,14 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void fillUserProfile() {
-        //TODO убрать блики при смене фото
         binding.toolbarUserProfile.setTitle(user.getLogin());
         binding.editTextProfileName.setText(user.getName());
         binding.editTextProfileBio.setText(user.getBio());
         adapter.setData(user.getRecipes(), user);
         adapter.notifyDataSetChanged();
-        loadUserImage();
     }
 
-    private void loadUserImage() {
+    private void updateImage() {
         if (StringUtils.isNotEmpty(user.getImage())) {
             Glide
                     .with(getLayoutInflater()
@@ -324,7 +331,8 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     }
 
     private void revertEdit() {
-        fillUserProfile();
+        loadUser();
+        updateImage = true;
     }
 
     private void confirmEdit() {
@@ -349,6 +357,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                     if (response.body() != null) {
                         log.log(Level.INFO, response.body().toString());
                     }
+                    updateImage = false;
                     userViewModel.setUser(response.body());
                     if (userPhoto != null) {
                         uploadImage();
