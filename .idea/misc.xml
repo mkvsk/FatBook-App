@@ -164,7 +164,10 @@
         <entry key="..\:/dev/projects/FatBook/app/src/main/res/layout/fragment_user_profile.xml" value="0.24547101449275363" />
         <entry key="..\:/dev/projects/FatBook/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.24947916666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
+        <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.24947916666666667" />
         <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.24947916666666667" />
+        <entry key="app/src/main/res/layout/dialog_app_info.xml" value="0.24947916666666667" />
         <entry key="app/src/main/res/layout/fragment_recipe_create.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_recipe_view.xml" value="0.24947916666666667" />
       </map>
