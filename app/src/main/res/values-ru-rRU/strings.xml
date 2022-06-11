@@ -115,4 +115,5 @@
     <string name="title_logout_alert_dialog">Покинуть учетную запись</string>
     <string name="alert_dialog_empty_recipe_message">Нельзя сохранить пустой рецепт</string>
     <string name="title_empty_recipe_alert_dialog">Плохая идея :(</string>
+    <string name="alert_dialog_btn_close">Прекрасно</string>
 </resources>

@@ -277,7 +277,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
     private void showAppInfoDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setView(R.layout.dialog_app_info);
-        builder.setPositiveButton(getString(R.string.alert_dialog_btn_cancel), (dialogInterface, i) -> dialogInterface.dismiss());
+        builder.setPositiveButton(getString(R.string.alert_dialog_btn_close), (dialogInterface, i) -> dialogInterface.dismiss());
         builder.show();
     }
 
