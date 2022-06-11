@@ -40,7 +40,7 @@
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="40dp"-->
 <!--            android:background="@drawable/round_feed_search"-->
-<!--            android:focusable="false"-->
+<!--            android:focusable="true"-->
 <!--            android:fontFamily="@font/roboto_regular"-->
 <!--            android:hint="@string/hint_search_recipe_feed"-->
 <!--            android:lines="1"-->

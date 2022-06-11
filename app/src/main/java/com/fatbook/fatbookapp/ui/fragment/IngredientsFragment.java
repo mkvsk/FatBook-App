@@ -2,6 +2,8 @@ package com.fatbook.fatbookapp.ui.fragment;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
 import com.fatbook.fatbookapp.core.Ingredient;
+import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.databinding.FragmentIngredientsBinding;
 import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import com.fatbook.fatbookapp.ui.adapters.IngredientsAdapter;
@@ -71,6 +74,31 @@ public class IngredientsFragment extends Fragment {
             adapter.setData(ingredientList);
             adapter.notifyDataSetChanged();
         });
+//
+//        binding.editTextSearchIngredients.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                filter(editable.toString());
+//            }
+//        });
+//    }
+//
+//    private void filter(String text) {
+//        List<Ingredient> temp = new ArrayList<>();
+//        for (Ingredient i : ingredientList) {
+//            if (StringUtils.containsIgnoreCase(i.getName(), text)) {
+//                temp.add(i);
+//            }
+//        }
+//        adapter.updateList(temp);
     }
 
     private void setupAdapter() {

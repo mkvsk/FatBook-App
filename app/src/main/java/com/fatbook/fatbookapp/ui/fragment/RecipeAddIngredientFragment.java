@@ -53,6 +53,8 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
 
     private Ingredient selectedIngredient;
 
+    private List<Ingredient> ingredientList;
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -93,15 +95,45 @@ public class RecipeAddIngredientFragment extends Fragment implements OnAddIngred
         });
 
         ingredientViewModel.getIngredientList().observe(getViewLifecycleOwner(), ingredients -> {
+            ingredientList = ingredients;
             adapter.setData(ingredients);
             adapter.notifyDataSetChanged();
         });
 
         setupAdapter();
-        if (ingredientViewModel.getIngredientList().getValue() == null) {
+//        if (ingredientViewModel.getIngredientList().getValue() == null) {
             loadIngredients();
-        }
+//        }
         setupUnitPicker();
+
+        binding.editTextAddIngredientSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+    }
+
+    private void filter(String text) {
+        try {
+            List<Ingredient> temp = new ArrayList<>();
+            for (Ingredient i : ingredientList) {
+                if (StringUtils.containsIgnoreCase(i.getName(), text)) {
+                    temp.add(i);
+                }
+            }
+            adapter.updateList(temp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadIngredients() {

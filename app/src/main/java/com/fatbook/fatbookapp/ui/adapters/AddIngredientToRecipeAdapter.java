@@ -62,6 +62,11 @@ public class AddIngredientToRecipeAdapter extends RecyclerView.Adapter<AddIngred
         this.list = list;
     }
 
+    public void updateList(List<Ingredient> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         final TextView tvIngredient;
         final CardView cardView;

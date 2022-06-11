@@ -15,6 +15,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fatbook.fatbookapp.R;
+import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
@@ -49,6 +50,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void updateList(List<Recipe> list) {
+        this.list = list;
+        notifyDataSetChanged();
     }
 
     @NonNull

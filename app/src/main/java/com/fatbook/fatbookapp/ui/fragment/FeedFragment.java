@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.fatbook.fatbookapp.R;
+import com.fatbook.fatbookapp.core.Ingredient;
 import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentFeedBinding;
@@ -93,6 +96,40 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
         });
         setupAdapter();
         feedRecipeList = userViewModel.getFeedRecipeList().getValue();
+        setupSearch();
+    }
+
+    private void setupSearch() {
+        binding.editTextFeedSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+    }
+
+    private void filter(String text) {
+        try {
+            List<Recipe> temp = new ArrayList<>();
+            for (Recipe r : feedRecipeList) {
+                if (StringUtils.containsIgnoreCase(r.getName(), text) || StringUtils.containsIgnoreCase(r.getDescription(), text)) {
+                    temp.add(r);
+                }
+            }
+            adapter.updateList(temp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupAdapter() {
