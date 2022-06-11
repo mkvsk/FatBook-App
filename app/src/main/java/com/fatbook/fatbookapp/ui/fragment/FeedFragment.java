@@ -1,5 +1,8 @@
 package com.fatbook.fatbookapp.ui.fragment;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +21,16 @@ import com.fatbook.fatbookapp.core.Recipe;
 import com.fatbook.fatbookapp.core.User;
 import com.fatbook.fatbookapp.databinding.FragmentFeedBinding;
 import com.fatbook.fatbookapp.retrofit.RetrofitFactory;
+import com.fatbook.fatbookapp.ui.activity.SplashActivity;
 import com.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener;
 import com.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener;
 import com.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import com.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import com.fatbook.fatbookapp.util.KeyboardActionUtil;
+import com.fatbook.fatbookapp.util.UserUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,40 +174,49 @@ public class FeedFragment extends Fragment implements OnRecipeClickListener, OnR
     }
 
     private void loadUser(Integer position) {
-        RetrofitFactory.apiServiceClient().getUser(user.getLogin()).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                if (response.code() == 200) {
-                    log.log(Level.INFO, "user load SUCCESS");
-                    userViewModel.setUser(response.body());
-                    System.out.println(user);
-                    adapter.setUser(user);
-                    if (position != null) {
-                        if (recipeViewModel.getSelectedRecipe().getValue() != null) {
-                            feedRecipeList.get(position).setForks(recipeViewModel.getSelectedRecipe().getValue().getForks());
-                            adapter.notifyItemChanged(position);
+        if (user == null) {
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(UserUtils.USER_LOGIN, StringUtils.EMPTY);
+            editor.apply();
+            startActivity(new Intent(requireActivity(), SplashActivity.class));
+            requireActivity().finish();
+        } else {
+            RetrofitFactory.apiServiceClient().getUser(user.getLogin()).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                    if (response.code() == 200) {
+                        log.log(Level.INFO, "user load SUCCESS");
+                        userViewModel.setUser(response.body());
+                        System.out.println(user);
+                        adapter.setUser(user);
+                        if (position != null) {
+                            if (recipeViewModel.getSelectedRecipe().getValue() != null) {
+                                feedRecipeList.get(position).setForks(recipeViewModel.getSelectedRecipe().getValue().getForks());
+                                adapter.notifyItemChanged(position);
+                            } else {
+                                feedRecipeList.remove((int) position);
+                                adapter.notifyItemRemoved(position);
+                            }
+                            recipeViewModel.setSelectedRecipe(null);
+                            recipeViewModel.setSelectedRecipePosition(null);
                         } else {
-                            feedRecipeList.remove((int) position);
-                            adapter.notifyItemRemoved(position);
+                            adapter.notifyDataSetChanged();
                         }
-                        recipeViewModel.setSelectedRecipe(null);
-                        recipeViewModel.setSelectedRecipePosition(null);
                     } else {
-                        adapter.notifyDataSetChanged();
+                        log.log(Level.INFO, "user load FAILED " + response.code());
                     }
-                } else {
-                    log.log(Level.INFO, "user load FAILED " + response.code());
+                    if (binding != null) {
+                        binding.swipeRefreshBookmarks.setRefreshing(false);
+                    }
                 }
-                if (binding != null) {
-                    binding.swipeRefreshBookmarks.setRefreshing(false);
-                }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                log.log(Level.INFO, "user load FAILED");
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    log.log(Level.INFO, "user load FAILED");
+                }
+            });
+        }
     }
 
     @Override
