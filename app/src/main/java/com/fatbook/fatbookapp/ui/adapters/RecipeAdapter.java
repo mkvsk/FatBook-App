@@ -77,6 +77,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         if (recipe.getAuthor().equals(user.getLogin())) {
             holder.bookmarks.setVisibility(View.INVISIBLE);
         } else {
+            holder.bookmarks.setVisibility(View.VISIBLE);
             toggleBookmarks(holder.bookmarks, user.getRecipesBookmarked().contains(recipe.getIdentifier()));
         }
 

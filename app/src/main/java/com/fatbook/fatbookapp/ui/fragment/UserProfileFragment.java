@@ -3,6 +3,7 @@ package com.fatbook.fatbookapp.ui.fragment;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -263,7 +264,7 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
                 revertEdit();
                 return true;
             case R.id.menu_user_profile_app_info:
-                Snackbar.make(binding.getRoot(), "TODO app info", Snackbar.LENGTH_SHORT).setAnchorView(requireActivity().findViewById(R.id.bottom_navigation)).show();
+                showAppInfoDialog();
                 return true;
             case R.id.menu_user_profile_logout:
                 logout();
@@ -271,6 +272,13 @@ public class UserProfileFragment extends Fragment implements OnRecipeClickListen
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showAppInfoDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setView(R.layout.dialog_app_info);
+        builder.setPositiveButton(getString(R.string.alert_dialog_btn_close), (dialogInterface, i) -> dialogInterface.dismiss());
+        builder.show();
     }
 
     private void logout() {
