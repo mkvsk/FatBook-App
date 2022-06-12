@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
-    tools:context=".ui.fragment.RecipeViewFragment">
+    tools:context="online.fatbook.fatbookapp.ui.fragment.RecipeViewFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_recipe_view"

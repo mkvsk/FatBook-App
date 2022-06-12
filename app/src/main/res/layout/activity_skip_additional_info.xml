@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
-    tools:context=".ui.activity.SkipAdditionalInfoActivity">
+    tools:context="online.fatbook.fatbookapp.ui.activity.SkipAdditionalInfoActivity">
 
     <TextView
         android:id="@+id/textView_skip_add_info_new_cook"

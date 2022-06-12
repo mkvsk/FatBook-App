@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
-    tools:context=".ui.fragment.FeedFragment">
+    tools:context="online.fatbook.fatbookapp.ui.fragment.FeedFragment">
 
     <ImageView
         android:id="@+id/imageView_feed_kuzya_bgr"

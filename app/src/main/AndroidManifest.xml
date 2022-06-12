@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fatbook.fatbookapp">
+    package="online.fatbook.fatbookapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -16,7 +16,7 @@
         android:theme="@style/Theme.FatBook"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.activity.SplashActivity"
+            android:name="online.fatbook.fatbookapp.ui.activity.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name="online.fatbook.fatbookapp.ui.activity.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -43,21 +43,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.WelcomeActivity"
+        <activity android:name="online.fatbook.fatbookapp.ui.activity.WelcomeActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.activity.SignInActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ui.activity.LoginActivity"
+        <activity android:name="online.fatbook.fatbookapp.ui.activity.SignInActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.activity.PasswordActivity"
+            android:name="online.fatbook.fatbookapp.ui.activity.LoginActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.activity.SkipAdditionalInfoActivity"
+            android:name="online.fatbook.fatbookapp.ui.activity.PasswordActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.activity.fill_additional_info.FillAdditionalInfoActivity"
+            android:name="online.fatbook.fatbookapp.ui.activity.SkipAdditionalInfoActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="online.fatbook.fatbookapp.ui.activity.fill_additional_info.FillAdditionalInfoActivity"
             android:windowSoftInputMode="adjustResize" />
 
         <meta-data

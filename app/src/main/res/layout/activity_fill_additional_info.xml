@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
-    tools:context=".ui.activity.fill_additional_info.FillAdditionalInfoActivity">
+    tools:context="online.fatbook.fatbookapp.ui.activity.fill_additional_info.FillAdditionalInfoActivity">
 
     <TextView
         android:id="@+id/textView_fill_add_username"
