@@ -10,7 +10,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 
 import java.io.File;
 import java.util.Map;
@@ -39,11 +39,11 @@ public class FillAdditionalInfoViewModel extends AndroidViewModel {
 
     public void saveUser(View view, User user, File image) {
         Intent intent = new Intent(getApplication(), MainActivity.class);
-        if (UserUtils.createNewUser(user, image)) {
-            intent.putExtra(UserUtils.TAG_USER, user);
-            view.getContext().startActivity(intent);
-        } else {
-            Toast.makeText(getApplication(), R.string.ERROR_CREATING_USER, Toast.LENGTH_SHORT).show();
-        }
+//        if (UserUtils.createNewUser(user, image)) {
+//            intent.putExtra(UserUtils.TAG_USER, user);
+//            view.getContext().startActivity(intent);
+//        } else {
+//            Toast.makeText(getApplication(), R.string.ERROR_CREATING_USER, Toast.LENGTH_SHORT).show();
+//        }
     }
 }

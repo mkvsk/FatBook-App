@@ -7,8 +7,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 import online.fatbook.fatbookapp.core.User;
+import online.fatbook.fatbookapp.databinding.ActivitySkipAdditionalInfoBinding;
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import online.fatbook.fatbookapp.util.UserUtils;
 

@@ -15,10 +15,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 import online.fatbook.fatbookapp.core.Ingredient;
 import online.fatbook.fatbookapp.core.IngredientUnit;
 import online.fatbook.fatbookapp.core.RecipeIngredient;
+import online.fatbook.fatbookapp.databinding.FragmentAddIngredientBinding;
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import online.fatbook.fatbookapp.ui.adapters.AddIngredientToRecipeAdapter;
 import online.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener;

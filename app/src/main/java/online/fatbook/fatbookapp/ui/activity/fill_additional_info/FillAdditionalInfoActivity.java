@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import online.fatbook.fatbookapp.core.User;
+import online.fatbook.fatbookapp.databinding.ActivityFillAdditionalInfoBinding;
 import online.fatbook.fatbookapp.util.FileUtils;
 import online.fatbook.fatbookapp.util.UserUtils;
 

@@ -13,9 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 
 import online.fatbook.fatbookapp.core.User;
+import online.fatbook.fatbookapp.databinding.ActivitySignInBinding;
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import online.fatbook.fatbookapp.ui.viewmodel.SignInViewModel;
 import online.fatbook.fatbookapp.util.UserUtils;

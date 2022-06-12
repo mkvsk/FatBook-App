@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 import online.fatbook.fatbookapp.core.Ingredient;
 import online.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener;
 

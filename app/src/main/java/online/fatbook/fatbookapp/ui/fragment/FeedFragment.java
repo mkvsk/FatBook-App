@@ -18,7 +18,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.databinding.FragmentFeedBinding;
 
 import online.fatbook.fatbookapp.core.Recipe;
 import online.fatbook.fatbookapp.core.User;

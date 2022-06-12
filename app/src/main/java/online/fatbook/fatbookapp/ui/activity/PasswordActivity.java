@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
-import com.fatbook.fatbookapp.R;
-import com.fatbook.fatbookapp.databinding.ActivityPasswordBinding;
+import online.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.databinding.ActivityPasswordBinding;
 
 import online.fatbook.fatbookapp.core.User;
 import online.fatbook.fatbookapp.util.UserUtils;

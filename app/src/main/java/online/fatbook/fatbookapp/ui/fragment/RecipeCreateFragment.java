@@ -22,9 +22,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 import online.fatbook.fatbookapp.core.Recipe;
 import online.fatbook.fatbookapp.core.RecipeIngredient;
+import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateBinding;
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter;
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient;

@@ -11,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 import online.fatbook.fatbookapp.core.User;
+import online.fatbook.fatbookapp.databinding.ActivitySplashBinding;
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel;
 import online.fatbook.fatbookapp.util.UserUtils;

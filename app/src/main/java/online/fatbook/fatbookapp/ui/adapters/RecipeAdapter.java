@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 
 import online.fatbook.fatbookapp.core.Recipe;
 import online.fatbook.fatbookapp.core.User;

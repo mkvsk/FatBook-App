@@ -5,7 +5,7 @@ import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 
 public class KeyboardActionUtil {
 

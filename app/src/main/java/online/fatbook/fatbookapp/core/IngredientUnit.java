@@ -2,9 +2,8 @@ package online.fatbook.fatbookapp.core;
 
 import android.content.Context;
 
-import com.fatbook.fatbookapp.R;
-
 import lombok.AllArgsConstructor;
+import online.fatbook.fatbookapp.R;
 
 @AllArgsConstructor
 public enum IngredientUnit {

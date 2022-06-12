@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import lombok.extern.java.Log;
+import online.fatbook.fatbookapp.databinding.ActivityWelcomeBinding;
 
 @Log
 public class WelcomeActivity extends AppCompatActivity {

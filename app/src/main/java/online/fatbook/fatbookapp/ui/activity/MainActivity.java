@@ -10,8 +10,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 import online.fatbook.fatbookapp.core.User;
+import online.fatbook.fatbookapp.databinding.ActivityMainBinding;
 import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel;
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel;
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel;

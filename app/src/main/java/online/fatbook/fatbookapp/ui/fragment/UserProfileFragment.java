@@ -31,9 +31,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.fatbook.fatbookapp.R;
+import online.fatbook.fatbookapp.R;
 import online.fatbook.fatbookapp.core.Recipe;
 import online.fatbook.fatbookapp.core.User;
+import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding;
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory;
 import online.fatbook.fatbookapp.ui.activity.SplashActivity;
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter;
