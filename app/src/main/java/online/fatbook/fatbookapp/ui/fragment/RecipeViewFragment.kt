@@ -1,119 +1,46 @@
 package online.fatbook.fatbookapp.ui.fragment
 
 import android.Manifest
-import androidx.lifecycle.ViewModelProvider.get
-import androidx.navigation.NavController.navigate
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.ui.NavigationUI.setupWithNavController
-import androidx.navigation.NavController.popBackStack
-import androidx.appcompat.app.AppCompatActivity
-import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel
-import androidx.navigation.NavController
-import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
-import online.fatbook.fatbookapp.util.UserUtils
-import online.fatbook.fatbookapp.R
-import android.content.SharedPreferences
-import com.google.android.material.navigation.NavigationBarView
-import online.fatbook.fatbookapp.ui.viewmodel.SignInViewModel
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import androidx.core.content.ContextCompat
-import android.content.Intent
-import online.fatbook.fatbookapp.ui.activity.PasswordActivity
-import android.text.TextWatcher
-import android.text.Editable
-import androidx.appcompat.content.res.AppCompatResources
-import online.fatbook.fatbookapp.ui.activity.LoginActivity
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
-import online.fatbook.fatbookapp.ui.activity.MainActivity
-import online.fatbook.fatbookapp.ui.activity.SignInActivity
-import online.fatbook.fatbookapp.ui.activity.WelcomeActivity
-import online.fatbook.fatbookapp.ui.activity.SplashActivity
-import androidx.activity.result.ActivityResultLauncher
-import online.fatbook.fatbookapp.ui.activity.fill_additional_info.FillAdditionalInfoViewModel
-import androidx.activity.result.contract.ActivityResultContracts.GetContent
-import androidx.activity.result.ActivityResultCallback
-import online.fatbook.fatbookapp.ui.activity.fill_additional_info.FillAdditionalInfoActivity
 import android.app.Activity
-import androidx.core.app.ActivityCompat
-import android.content.pm.PackageManager
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.LiveData
-import online.fatbook.fatbookapp.ui.activity.SkipAdditionalInfoActivity
-import android.widget.Toast
-import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import online.fatbook.fatbookapp.util.RecipeUtils
-import android.widget.TextView
-import android.widget.ImageButton
-import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient
-import online.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener
-import android.annotation.SuppressLint
 import android.app.AlertDialog
-import androidx.cardview.widget.CardView
-import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
-import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import androidx.recyclerview.widget.SimpleItemAnimator
-import online.fatbook.fatbookapp.ui.fragment.FeedFragment
-import androidx.navigation.fragment.NavHostFragment
-import online.fatbook.fatbookapp.util.KeyboardActionUtil
-import online.fatbook.fatbookapp.ui.fragment.BookmarksFragment
-import online.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter
-import online.fatbook.fatbookapp.ui.fragment.RecipeViewFragment
-import okhttp3.RequestBody
-import okhttp3.MultipartBody
-import android.widget.FrameLayout
 import android.content.DialogInterface
-import online.fatbook.fatbookapp.ui.adapters.IngredientsAdapter
-import online.fatbook.fatbookapp.ui.fragment.IngredientsFragment
-import android.widget.EditText
-import android.content.DialogInterface.OnShowListener
-import com.google.android.material.appbar.AppBarLayout
-import android.graphics.PorterDuff
-import androidx.fragment.app.FragmentActivity
-import online.fatbook.fatbookapp.ui.fragment.UserProfileFragment
-import online.fatbook.fatbookapp.ui.fragment.RecipeCreateFragment
-import online.fatbook.fatbookapp.ui.adapters.AddIngredientToRecipeAdapter
-import online.fatbook.fatbookapp.ui.fragment.RecipeAddIngredientFragment
-import androidx.lifecycle.ViewModel
-import lombok.AllArgsConstructor
-import lombok.NoArgsConstructor
-import android.os.Build
-import android.provider.DocumentsContract
-import android.provider.MediaStore
-import android.os.Environment
-import android.text.TextUtils
-import android.content.ContentUris
+import android.content.pm.PackageManager
 import android.net.Uri
-import android.provider.OpenableColumns
+import android.os.Bundle
 import android.view.*
+import android.widget.FrameLayout
+import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts.GetContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
+import com.bumptech.glide.Glide
 import lombok.extern.java.Log
 import okhttp3.MediaType
-import online.fatbook.fatbookapp.core.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.core.Recipe
+import online.fatbook.fatbookapp.core.RecipeIngredient
+import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
-import online.fatbook.fatbookapp.retrofit.NetworkInfoService
+import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient
+import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.FileUtils
+import online.fatbook.fatbookapp.util.KeyboardActionUtil
+import online.fatbook.fatbookapp.util.RecipeUtils
 import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Multipart
 import java.io.File
-import java.lang.Exception
-import java.util.ArrayList
-import java.util.logging.Level
 
 @Log
 class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
@@ -124,17 +51,18 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     private var userViewModel: UserViewModel? = null
     private var adapter: ViewRecipeIngredientAdapter? = null
     private val onRecipeRevertDeleteListener: OnRecipeRevertDeleteListener? = null
-    private var ingredientListTemp: List<RecipeIngredient>? = null
+    private var ingredientListTemp: ArrayList<RecipeIngredient>? = null
     private var addIngredient = false
     private var choosePhotoFromGallery: ActivityResultLauncher<String>? = null
     private var recipePhoto: File? = null
     private var selectedImageUri: Uri? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         recipeViewModel = ViewModelProvider(requireActivity()).get(RecipeViewModel::class.java)
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
-        recipeViewModel.getSelectedRecipe()
+        recipeViewModel!!.selectedRecipe
             .observe(viewLifecycleOwner) { recipe: Recipe? -> this.recipe = recipe }
         userViewModel!!.user.observe(viewLifecycleOwner) { user: User? -> this.user = user }
         loadData()
@@ -190,7 +118,7 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
         binding!!.buttonRecipeViewImageDelete.setOnClickListener { view1: View? ->
             selectedImageUri = null
             recipePhoto = null
-            recipe.setImage(StringUtils.EMPTY)
+            recipe!!.image = StringUtils.EMPTY
             showData()
             binding!!.buttonRecipeViewImageAdd.visibility = View.VISIBLE
             binding!!.buttonRecipeViewImageChange.visibility = View.GONE
@@ -207,25 +135,25 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
                 )
                 val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
                 RetrofitFactory.apiServiceClient()
-                    .uploadImage(file, FileUtils.TAG_RECIPE, recipe.getIdentifier())
+                    .uploadImage(file, FileUtils.TAG_RECIPE, recipe!!.identifier)
                     .enqueue(object : Callback<Recipe?> {
                         override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
                             if (response.code() == 200) {
-                                RecipeViewFragment.log.log(Level.INFO, "image add SUCCESS")
+//                                RecipeViewFragment.log.log(Level.INFO, "image add SUCCESS")
                             } else {
-                                RecipeViewFragment.log.log(
-                                    Level.INFO,
-                                    "image add FAILED " + response.code()
-                                )
+//                                RecipeViewFragment.log.log(
+//                                    Level.INFO,
+//                                    "image add FAILED " + response.code()
+//                                )
                             }
                         }
 
                         override fun onFailure(call: Call<Recipe?>, t: Throwable) {
-                            RecipeViewFragment.log.log(Level.INFO, "image add FAILED")
+//                            RecipeViewFragment.log.log(Level.INFO, "image add FAILED")
                         }
                     })
             } catch (e: Exception) {
-                RecipeViewFragment.log.log(Level.INFO, e.toString())
+//                RecipeViewFragment.log.log(Level.INFO, e.toString())
                 e.printStackTrace()
             }
         }
@@ -237,16 +165,16 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun recipeForked(_recipe: Recipe?, fork: Boolean) {
-        RetrofitFactory.apiServiceClient().recipeForked(user.getPid(), _recipe.getPid(), fork)
+        RetrofitFactory.apiServiceClient().recipeForked(user!!.pid, _recipe!!.pid, fork)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
-                    RecipeViewFragment.log.log(Level.INFO, "fork SUCCESS")
-                    recipeViewModel!!.setSelectedRecipe(response.body())
+//                    RecipeViewFragment.log.log(Level.INFO, "fork SUCCESS")
+                    recipeViewModel!!.selectedRecipe.value = response.body()
                     loadUser()
                 }
 
                 override fun onFailure(call: Call<Recipe?>, t: Throwable) {
-                    RecipeViewFragment.log.log(Level.INFO, "fork FAILED")
+//                    RecipeViewFragment.log.log(Level.INFO, "fork FAILED")
                 }
             })
     }
@@ -258,33 +186,33 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
 
     private fun recipeBookmarked(_recipe: Recipe?, bookmark: Boolean) {
         RetrofitFactory.apiServiceClient()
-            .recipeBookmarked(user.getPid(), _recipe.getPid(), bookmark)
+            .recipeBookmarked(user!!.pid, _recipe!!.pid, bookmark)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
-                    RecipeViewFragment.log.log(Level.INFO, "bookmark SUCCESS")
-                    recipeViewModel!!.setSelectedRecipe(response.body())
+//                    RecipeViewFragment.log.log(Level.INFO, "bookmark SUCCESS")
+                    recipeViewModel!!.selectedRecipe.value = response.body()
                     loadUser()
                 }
 
                 override fun onFailure(call: Call<Recipe?>, t: Throwable) {
-                    RecipeViewFragment.log.log(Level.INFO, "bookmark FAILED")
+//                    RecipeViewFragment.log.log(Level.INFO, "bookmark FAILED")
                 }
             })
     }
 
     private fun loadUser() {
-        RetrofitFactory.apiServiceClient().getUser(user.getLogin())
+        RetrofitFactory.apiServiceClient().getUser(user!!.login)
             .enqueue(object : Callback<User?> {
                 override fun onResponse(call: Call<User?>, response: Response<User?>) {
-                    RecipeViewFragment.log.log(Level.INFO, "user load SUCCESS")
+//                    RecipeViewFragment.log.log(Level.INFO, "user load SUCCESS")
                     assert(response.body() != null)
-                    RecipeViewFragment.log.log(Level.INFO, response.body().toString())
-                    userViewModel!!.setUser(response.body())
+//                    RecipeViewFragment.log.log(Level.INFO, response.body().toString())
+                    userViewModel!!.user.value = response.body()
                     showData()
                 }
 
                 override fun onFailure(call: Call<User?>, t: Throwable) {
-                    RecipeViewFragment.log.log(Level.INFO, "user load FAILED")
+//                    RecipeViewFragment.log.log(Level.INFO, "user load FAILED")
                 }
             })
     }
@@ -334,7 +262,7 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
         val activity = (activity as AppCompatActivity?)!!
         activity.setSupportActionBar(binding!!.toolbarRecipeView)
         binding!!.toolbarRecipeView.setNavigationOnClickListener { view: View? -> navigateBack() }
-        if (recipe.getAuthor() == userViewModel!!.user.value.getLogin()) {
+        if (recipe!!.author == userViewModel!!.user.value!!.login) {
             setHasOptionsMenu(true)
             binding!!.kuzyaRecipeView.visibility = View.GONE
         } else {
@@ -351,8 +279,8 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
         if (addIngredient) {
             toggleEditMode(true)
             addIngredient = false
-            recipe.getIngredients().add(recipeViewModel!!.selectedRecipeIngredient.value)
-            adapter!!.setData(recipe.getIngredients())
+            recipe!!.ingredients!!.add(recipeViewModel!!.selectedRecipeIngredient.value!!)
+            adapter!!.setData(recipe!!.ingredients)
             adapter!!.notifyDataSetChanged()
         }
     }
@@ -360,7 +288,7 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_recipe_edit -> {
-                ingredientListTemp = ArrayList(recipe.getIngredients())
+                ingredientListTemp = ArrayList(recipe!!.ingredients!!)
                 toggleEditMode(true)
                 niceCheck()
                 true
@@ -396,7 +324,7 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     private fun niceCheck(): Boolean {
         return (StringUtils.isNotEmpty(binding!!.editTextRecipeViewName.text.toString())
                 && StringUtils.isNotEmpty(binding!!.editTextRecipeViewDescription.text.toString())
-                && !recipe.getIngredients().isEmpty())
+                && recipe!!.ingredients!!.isNotEmpty())
     }
 
     private fun showDialogEmptyRecipe() {
@@ -432,7 +360,7 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
         adapter!!.notifyDataSetChanged()
         if (allow) {
             binding!!.linearlayoutButtonsImage.visibility = View.VISIBLE
-            if (recipePhoto == null && StringUtils.isEmpty(recipe.getImage())) {
+            if (recipePhoto == null && StringUtils.isEmpty(recipe!!.image)) {
                 binding!!.buttonRecipeViewImageAdd.visibility = View.VISIBLE
                 binding!!.buttonRecipeViewImageChange.visibility = View.GONE
                 binding!!.buttonRecipeViewImageDelete.visibility = View.GONE
@@ -451,8 +379,8 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun saveEdit() {
-        recipe.setName(binding!!.editTextRecipeViewName.text.toString())
-        recipe.setDescription(binding!!.editTextRecipeViewDescription.text.toString())
+        recipe!!.name = binding!!.editTextRecipeViewName.text.toString()
+        recipe!!.description = binding!!.editTextRecipeViewDescription.text.toString()
         saveRecipe()
         uploadImage()
     }
@@ -461,16 +389,16 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
         RetrofitFactory.apiServiceClient().recipeDelete(recipe).enqueue(object : Callback<Void?> {
             override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
                 if (response.code() == 200) {
-                    RecipeViewFragment.log.log(Level.INFO, "delete recipe SUCCESS")
-                    recipeViewModel!!.setSelectedRecipe(null)
+//                    RecipeViewFragment.log.log(Level.INFO, "delete recipe SUCCESS")
+                    recipeViewModel!!.selectedRecipe.value = null
                     navigateBack()
                 } else {
-                    RecipeViewFragment.log.log(Level.INFO, "delete recipe FAILED" + response.code())
+//                    RecipeViewFragment.log.log(Level.INFO, "delete recipe FAILED" + response.code())
                 }
             }
 
             override fun onFailure(call: Call<Void?>, t: Throwable) {
-                RecipeViewFragment.log.log(Level.INFO, "delete recipe FAILED")
+//                RecipeViewFragment.log.log(Level.INFO, "delete recipe FAILED")
             }
         })
     }
@@ -482,11 +410,11 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     private fun saveRecipe() {
         RetrofitFactory.apiServiceClient().recipeUpdate(recipe).enqueue(object : Callback<Recipe?> {
             override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
-                RecipeViewFragment.log.log(Level.INFO, "edit recipe save SUCCESS")
+//                RecipeViewFragment.log.log(Level.INFO, "edit recipe save SUCCESS")
             }
 
             override fun onFailure(call: Call<Recipe?>, t: Throwable) {
-                RecipeViewFragment.log.log(Level.INFO, "edit recipe save FAILED")
+//                RecipeViewFragment.log.log(Level.INFO, "edit recipe save FAILED")
                 t.printStackTrace()
             }
         })
@@ -498,9 +426,9 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun revertData() {
-        recipe.setIngredients(ingredientListTemp)
+        recipe!!.ingredients = ingredientListTemp
         showData()
-        adapter!!.setData(recipe.getIngredients())
+        adapter!!.setData(recipe!!.ingredients)
         adapter!!.notifyDataSetChanged()
     }
 
@@ -522,7 +450,7 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun loadData() {
-        recipe = recipeViewModel.getSelectedRecipe().value
+        recipe = recipeViewModel!!.selectedRecipe.value
         user = userViewModel!!.user.value
         if (recipe == null) {
             recipe = Recipe()
@@ -530,29 +458,29 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun showData() {
-        binding!!.editTextRecipeViewName.setText(recipe.getName())
-        if (StringUtils.isNotEmpty(recipe.getImage())) {
+        binding!!.editTextRecipeViewName.setText(recipe!!.name)
+        if (StringUtils.isNotEmpty(recipe!!.image)) {
             Glide
                 .with(requireContext())
-                .load(recipe.getImage())
+                .load(recipe!!.image)
                 .into(binding!!.imageViewRecipeViewImage)
         } else {
             binding!!.imageViewRecipeViewImage.setImageDrawable(resources.getDrawable(R.drawable.image_recipe_default))
         }
-        binding!!.textViewRecipeViewUsername.text = recipe.getAuthor()
-        binding!!.textViewRecipeViewForksQuantity.text = Integer.toString(recipe.getForks())
-        binding!!.editTextRecipeViewDescription.setText(recipe.getDescription())
-        if (recipe.getAuthor() == user.getLogin()) {
+        binding!!.textViewRecipeViewUsername.text = recipe!!.author
+        binding!!.textViewRecipeViewForksQuantity.text = recipe!!.forks.toString()
+        binding!!.editTextRecipeViewDescription.setText(recipe!!.description)
+        if (recipe!!.author == user!!.login) {
             binding!!.imageViewRecipeViewIconBookmarks.visibility = View.INVISIBLE
         } else {
-            toggleBookmarks(user.getRecipesBookmarked().contains(recipe.getIdentifier()))
+            toggleBookmarks(user!!.recipesBookmarked!!.contains(recipe!!.identifier))
         }
-        toggleForks(user.getRecipesForked().contains(recipe.getIdentifier()))
+        toggleForks(user!!.recipesForked!!.contains(recipe!!.identifier))
     }
 
     private fun setupAdapter() {
         val recyclerView = binding!!.rvRecipeViewIngredients
-        adapter = ViewRecipeIngredientAdapter(binding!!.root.context, recipe.getIngredients(), this)
+        adapter = ViewRecipeIngredientAdapter(binding!!.root.context, recipe!!.ingredients!!, this)
         recyclerView.adapter = adapter
     }
 
@@ -577,8 +505,8 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     override fun onDeleteIngredientClick(recipeIngredient: RecipeIngredient?, position: Int) {
-        recipe.getIngredients().remove(recipeIngredient)
-        adapter!!.setData(recipe.getIngredients())
+        recipe!!.ingredients!!.remove(recipeIngredient)
+        adapter!!.setData(recipe!!.ingredients)
         adapter!!.notifyItemRemoved(position)
     }
 
@@ -590,7 +518,7 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRecipeViewBinding.inflate(inflater, container, false)
         return binding!!.root
     }

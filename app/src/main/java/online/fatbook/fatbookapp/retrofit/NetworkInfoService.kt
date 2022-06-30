@@ -13,16 +13,16 @@ interface NetworkInfoService {
      * User
      */
     @GET("user/get/login")
-    fun getUser(@Query(value = "login") login: String?): Call<User?>
+    fun getUser(@Query(value = "login") login: String?): Call<User>
 
     @POST("user/create")
-    fun userCreate(@Body user: User?, @Query(value = "fat") fat: String?): Call<User?>
+    fun userCreate(@Body user: User?, @Query(value = "fat") fat: String?): Call<User>
 
     @POST("user/update")
-    fun userUpdate(@Body user: User?): Call<User?>
+    fun userUpdate(@Body user: User?): Call<User>
 
     @GET("user/login/check")
-    fun loginCheck(@Query(value = "login") login: String?): Call<Boolean?>
+    fun loginCheck(@Query(value = "login") login: String?): Call<Boolean>
 
     @GET("user/signin")
     fun signIn(
@@ -45,36 +45,36 @@ interface NetworkInfoService {
      * Ingredients
      */
     @POST("ingredient/add")
-    fun addIngredient(@Body ingredient: Ingredient?): Call<Void?>
+    fun addIngredient(@Body ingredient: Ingredient?): Call<Void>
 
     @get:GET("ingredient/get/all")
-    val allIngredients: Call<List<Ingredient?>?>
+    val allIngredients: Call<List<Ingredient>>
 
     /**
      * Recipe
      */
     @POST("recipe/create")
-    fun recipeCreate(@Body recipe: Recipe?): Call<Recipe?>
+    fun recipeCreate(@Body recipe: Recipe?): Call<Recipe>
 
     @POST("recipe/update")
-    fun recipeUpdate(@Body recipe: Recipe?): Call<Recipe?>
+    fun recipeUpdate(@Body recipe: Recipe?): Call<Recipe>
 
     @POST("recipe/delete")
-    fun recipeDelete(@Body recipe: Recipe?): Call<Void?>
+    fun recipeDelete(@Body recipe: Recipe?): Call<Void>
 
     @POST("recipe/forked")
     fun recipeForked(
         @Query(value = "pidUser") pidUser: Long?,
         @Query(value = "pidRecipe") pidRecipe: Long?,
         @Query(value = "forked") forked: Boolean?
-    ): Call<Recipe?>
+    ): Call<Recipe>
 
     @POST("recipe/bookmarked")
     fun recipeBookmarked(
         @Query(value = "pidUser") pidUser: Long?,
         @Query(value = "pidRecipe") pidRecipe: Long?,
         @Query(value = "bookmarked") bookmark: Boolean?
-    ): Call<Recipe?>
+    ): Call<Recipe>
 
     @Multipart
     @POST("recipe/upload")
@@ -82,13 +82,13 @@ interface NetworkInfoService {
         @Part image: MultipartBody.Part?,
         @Query(value = "dir") dir: String?,
         @Query(value = "id") id: Long?
-    ): Call<Recipe?>
+    ): Call<Recipe>
 
     /**
      * Feed
      */
     @GET("recipe/feed")
-    fun getFeed(@Query(value = "pid") pid: Long?): Call<List<Recipe?>?>
+    fun getFeed(@Query(value = "pid") pid: Long?): Call<ArrayList<Recipe>?>
 
     /**
      * File upload
@@ -100,9 +100,9 @@ interface NetworkInfoService {
     //            @Part("image") MultipartBody.Part file, @Part User user);
     @Multipart
     @POST("test/upload")
-    fun createNewUser(@Part image: MultipartBody.Part?): Call<String?>?
+    fun createNewUser(@Part image: MultipartBody.Part?): Call<String>?
 
     @Multipart
     @POST("test/upload")
-    fun createNewUser(@Part user: RequestBody?, @Part image: MultipartBody.Part?): Call<User?>?
+    fun createNewUser(@Part user: RequestBody?, @Part image: MultipartBody.Part?): Call<User>?
 }

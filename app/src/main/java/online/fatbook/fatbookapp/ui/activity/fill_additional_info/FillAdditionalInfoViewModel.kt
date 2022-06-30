@@ -2,7 +2,7 @@ package online.fatbook.fatbookapp.ui.activity.fill_additional_info
 
 import android.app.Application
 import android.content.Intent
-import android.view.*
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +11,9 @@ import online.fatbook.fatbookapp.ui.activity.MainActivity
 import java.io.File
 
 class FillAdditionalInfoViewModel(application: Application) : AndroidViewModel(application) {
-    private val mMap: MutableLiveData<Map<String, Any>>
+
+    private val mMap: MutableLiveData<Map<String, Any>> = MutableLiveData()
+
     private fun fillData(mMap: MutableLiveData<Map<String, Any>>) {
         //TODO fill data for test
     }
@@ -30,7 +32,6 @@ class FillAdditionalInfoViewModel(application: Application) : AndroidViewModel(a
     }
 
     init {
-        mMap = MutableLiveData()
         fillData(mMap)
     }
 }

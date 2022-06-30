@@ -3,15 +3,15 @@ package online.fatbook.fatbookapp.core
 import java.io.Serializable
 
 class User : Serializable {
-    val pid: Long? = null
-    val name: String? = null
-    val login: String? = null
-    val birthday: String? = null
-    val bio: String? = null
-    val role: Role? = null
-    val image: String? = null
-    val regDate: String? = null
-    val recipes: List<Recipe>? = null
-    val recipesForked: List<Long>? = null
-    val recipesBookmarked: ArrayList<Long>? = null
+    var pid: Long? = null
+    var name: String? = null
+    var login: String? = null
+    var birthday: String? = null
+    var bio: String? = null
+    var role: Role? = null
+    var image: String? = null
+    var regDate: String? = null
+    var recipes: List<Recipe>? = null
+    var recipesForked: List<Long>? = null
+    var recipesBookmarked: ArrayList<Long>? = null
 }

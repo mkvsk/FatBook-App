@@ -1,6 +1,9 @@
-plugins {
-    id 'com.android.application'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+//apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdk 32
@@ -17,22 +20,19 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            debuggable = false
-            minifyEnabled false
-        }
-        beta{
-            resValue "string", "app_name", "@string/app_name_beta"
-            applicationIdSuffix ".beta"
-            signingConfig = signingConfigs.debug
-            debuggable = true
-            minifyEnabled false
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildFeatures {
         viewBinding true
     }
@@ -46,6 +46,8 @@ android {
 
 dependencies {
 //    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'io.github.ShawnLin013:number-picker:2.4.13'
 

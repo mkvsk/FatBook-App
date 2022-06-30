@@ -5,13 +5,12 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.get
 import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.databinding.ActivityFillAdditionalInfoBinding
 import online.fatbook.fatbookapp.util.FileUtils
@@ -36,9 +35,9 @@ class FillAdditionalInfoActivity : AppCompatActivity() {
         val introduceIntent = intent
         user = introduceIntent.getSerializableExtra(UserUtils.TAG_USER) as User?
         binding!!.buttonFillAddSave.setOnClickListener { view: View? ->
-            user.setName(binding!!.editTextFillAddName.text.toString())
+            user!!.name = binding!!.editTextFillAddName.text.toString()
             //            user.setBirthday();
-            user.setBio(binding!!.editTextFillAddBio.text.toString())
+            user!!.bio = binding!!.editTextFillAddBio.text.toString()
             viewModel.saveUser(binding!!.root, user, userProfilePhoto)
         }
         choosePhotoFromGallery = registerForActivityResult(

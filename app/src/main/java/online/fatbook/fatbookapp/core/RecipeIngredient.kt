@@ -3,8 +3,8 @@ package online.fatbook.fatbookapp.core
 import java.io.Serializable
 
 class RecipeIngredient : Serializable {
-    val pid: Long? = null
-    val ingredient: Ingredient? = null
-    val unit: IngredientUnit? = null
-    val quantity = 0.0
+    var pid: Long? = null
+    var ingredient: Ingredient? = null
+    var unit: IngredientUnit? = null
+    var quantity = 0.0
 }

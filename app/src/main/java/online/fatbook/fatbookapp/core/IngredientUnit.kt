@@ -4,9 +4,9 @@ import android.content.Context
 import online.fatbook.fatbookapp.R
 
 enum class IngredientUnit(
-    private val singleNaming: Int,
-    private val multiplyNaming: Int,
-    private val displayName: Int
+    private var singleNaming: Int,
+    private var multiplyNaming: Int,
+    private var displayName: Int
 ) {
     ML(
         R.string.IngredientUnit_ML_SINGLE_NAMING,

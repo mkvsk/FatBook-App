@@ -7,8 +7,8 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import online.fatbook.fatbookapp.R
 
 class KeyboardActionUtil {
-    private val view: View
-    private val activity: Activity
+    private lateinit var view: View
+    private lateinit var activity: Activity
     private var isKeyboardVisible = false
     private var viewToHide: View? = null
     val listenerForAdjustResize = OnGlobalLayoutListener {
