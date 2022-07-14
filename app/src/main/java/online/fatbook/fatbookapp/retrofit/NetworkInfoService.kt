@@ -39,7 +39,7 @@ interface NetworkInfoService {
     ): Call<User?>
 
     @GET("user/bookmarks")
-    fun getUserBookmarks(@Query(value = "login") login: String?): Call<List<Recipe?>?>
+    fun getUserBookmarks(@Query(value = "login") login: String?): Call<ArrayList<Recipe>?>
 
     /**
      * Ingredients

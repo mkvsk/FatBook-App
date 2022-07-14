@@ -170,7 +170,8 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
     private fun setupAdapter() {
         val recyclerView = binding!!.rvUserRecipe
-        adapter = RecipeAdapter(binding!!.root.context, user!!.recipes, user, this)
+        adapter = RecipeAdapter()
+        adapter!!.setData(user!!.recipes, user)
         recyclerView.adapter = adapter
     }
 

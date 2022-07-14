@@ -480,7 +480,8 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
 
     private fun setupAdapter() {
         val recyclerView = binding!!.rvRecipeViewIngredients
-        adapter = ViewRecipeIngredientAdapter(binding!!.root.context, recipe!!.ingredients!!, this)
+        adapter = ViewRecipeIngredientAdapter()
+        adapter!!.setData(recipe!!.ingredients)
         recyclerView.adapter = adapter
     }
 

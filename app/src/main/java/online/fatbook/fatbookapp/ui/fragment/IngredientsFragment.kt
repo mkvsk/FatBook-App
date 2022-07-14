@@ -3,7 +3,10 @@ package online.fatbook.fatbookapp.ui.fragment
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
@@ -21,7 +24,6 @@ import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.logging.Level
 
 @Log
 class IngredientsFragment : Fragment() {
@@ -79,7 +81,8 @@ class IngredientsFragment : Fragment() {
 
     private fun setupAdapter() {
         val rv = binding!!.rvIngredients
-        adapter = IngredientsAdapter(binding!!.root.context, ingredientList)
+        adapter = IngredientsAdapter()
+        adapter!!.setData(ingredientList)
         rv.adapter = adapter
     }
 

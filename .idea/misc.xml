@@ -28,6 +28,7 @@
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_password.xml" value="0.5541666666666667" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_skip_additional_info.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/activity_welcome.xml" value="0.5541666666666667" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/content_fragment_feed.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_add_ingredient.xml" value="0.5541666666666667" />
@@ -47,6 +48,7 @@
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_recipes_all.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_recipes_favourites.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_user_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/fragment_welcome.xml" value="0.5541666666666667" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_add_new_recipe_ingredients.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_existing_ingredients.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/FatBook/FatBook/app/src/main/res/layout/rv_feed_best_recipes.xml" value="1.1" />

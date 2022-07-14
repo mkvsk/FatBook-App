@@ -67,7 +67,6 @@ class RecipeAddIngredientFragment : Fragment(), OnAddIngredientItemClickListener
         ingredientViewModel!!.ingredientList.observe(viewLifecycleOwner) {
             ingredientList = it
             adapter!!.setData(it)
-            adapter!!.notifyDataSetChanged()
         }
         setupAdapter()
         //        if (ingredientViewModel.getIngredientList().getValue() == null) {
@@ -85,13 +84,13 @@ class RecipeAddIngredientFragment : Fragment(), OnAddIngredientItemClickListener
 
     private fun filter(text: String) {
         try {
-            val temp: MutableList<Ingredient?> = ArrayList()
+            val temp: ArrayList<Ingredient> = ArrayList()
             for (i in ingredientList!!) {
                 if (StringUtils.containsIgnoreCase(i!!.name, text)) {
                     temp.add(i)
                 }
             }
-            adapter!!.updateList(temp)
+            adapter!!.setData(temp)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -129,7 +128,8 @@ class RecipeAddIngredientFragment : Fragment(), OnAddIngredientItemClickListener
 
     private fun setupAdapter() {
         val rv = binding!!.rvAddIngredientToRecipe
-        adapter = AddIngredientToRecipeAdapter(binding!!.root.context, ArrayList())
+        adapter = AddIngredientToRecipeAdapter()
+        adapter!!.setData(ArrayList())
         adapter!!.setClickListener(this)
         rv.adapter = adapter
     }

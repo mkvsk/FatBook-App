@@ -1,48 +1,46 @@
 package online.fatbook.fatbookapp.ui.adapters
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.rv_ingredient.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Ingredient
+import online.fatbook.fatbookapp.core.User
 
-class IngredientsAdapter(context: Context?, private var list: List<Ingredient?>?) :
+class IngredientsAdapter :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>(), BindableAdapter<Ingredient> {
 
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
+    private var data: List<Ingredient> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = inflater.inflate(R.layout.rv_ingredient, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.rv_ingredient, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val ingredient = list!![position]
-        holder.tvName.text = ingredient!!.name
+        holder.bind(data[position])
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun setData(data: List<Ingredient>?) {
-        data.let {
-            list = it as ArrayList<Ingredient>
+        data?.let {
+            this.data = it as ArrayList<Ingredient>
             notifyDataSetChanged()
         }
     }
 
-    fun updateList(list: List<Ingredient?>?) {
-        this.list = list
-        notifyDataSetChanged()
-    }
-
     override fun getItemCount(): Int {
-        return list!!.size
+        return data.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvName: TextView = itemView.findViewById(R.id.textView_ingredients_name)
-
+        fun bind(ingredient: Ingredient?) {
+            itemView.textView_ingredients_name.text = ingredient!!.name
+        }
     }
 
 }

@@ -1,75 +1,131 @@
 package online.fatbook.fatbookapp.ui.adapters
 
-import android.content.*
-import android.view.*
-import android.widget.*
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.*
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.*
+import online.fatbook.fatbookapp.core.Recipe
+import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient
 import online.fatbook.fatbookapp.util.RecipeUtils
 import org.apache.commons.lang3.StringUtils
 
 @Log
-class RecipeAdapter(
-    context: Context?,
-    list: List<Recipe?>?,
-    user: User?,
-    listener: OnRecipeClickListener
-) : RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var list: List<Recipe?>?
-    private var user: User?
-    private val listener: OnRecipeClickListener
-    fun setData(list: List<Recipe?>?, user: User?) {
-        this.list = list
+class RecipeAdapter :
+    RecyclerView.Adapter<RecipeAdapter.ViewHolder>(), BindableAdapter<Recipe> {
+
+    private var data: List<Recipe> = ArrayList()
+    private var user: User = User()
+    private var listener: OnRecipeClickListener? = null
+
+
+    fun setUser(user: User) {
         this.user = user
     }
 
-    fun setUser(user: User?) {
-        this.user = user
-    }
-
-    fun updateList(list: List<Recipe?>?) {
-        this.list = list
-        notifyDataSetChanged()
+    fun setClickListener(listener: OnRecipeClickListener) {
+        this.listener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = inflater.inflate(R.layout.rv_feed_recipe_card_preview, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.rv_feed_recipe_card_preview, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val recipe = list!![position]
-        holder.tvTitle.text = recipe!!.name
-        holder.tvAuthor.text = recipe.author
-        val forksAmount = recipe.forks.toString()
-        holder.tvForks.text = forksAmount
-        toggleForks(holder.fork, user!!.recipesForked!!.contains(recipe.identifier))
-        if (recipe.author == user!!.login) {
-            holder.bookmarks.visibility = View.INVISIBLE
-        } else {
-            holder.bookmarks.visibility = View.VISIBLE
-            toggleBookmarks(
-                holder.bookmarks,
-                user!!.recipesBookmarked!!.contains(recipe.identifier)
-            )
-        }
-        if (StringUtils.isNotEmpty(recipe.image)) {
-            Glide
-                .with(inflater.context)
-                .load(recipe.image)
-                .into(holder.image)
-        } else {
-            holder.image.setImageResource(R.drawable.image_recipe_default)
-        }
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int {
-        return list!!.size
+        return data.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun setData(data: List<Recipe>?) {
+        data?.let {
+            this.data = it
+            notifyDataSetChanged()
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun setData(data: List<Recipe>?, user: User?) {
+        data?.let {
+            this.data = it
+        }
+        user?.let {
+            this.user = it
+        }
+        notifyDataSetChanged()
+    }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(recipe: Recipe) {
+
+            itemView.textView_rv_card_recipe_title.text = recipe.name
+            itemView.textView_rv_card_recipe_author.text = recipe.author
+            val forksAmount = recipe.forks.toString()
+            itemView.textView_rv_card_recipe_forks_avg.text = forksAmount
+            toggleForks(
+                itemView.imageView_rv_card_recipe_fork,
+                user.recipesForked!!.contains(recipe.identifier)
+            )
+            if (recipe.author == user.login) {
+                itemView.imageView_rv_card_recipe_bookmarks.visibility = View.INVISIBLE
+            } else {
+                itemView.imageView_rv_card_recipe_bookmarks.visibility = View.VISIBLE
+                toggleBookmarks(
+                    itemView.imageView_rv_card_recipe_bookmarks,
+                    user.recipesBookmarked!!.contains(recipe.identifier)
+                )
+            }
+            if (StringUtils.isNotEmpty(recipe.image)) {
+                Glide
+                    .with(itemView.context)
+                    .load(recipe.image)
+                    .into(itemView.imageView_rv_card_recipe_photo)
+            } else {
+                itemView.imageView_rv_card_recipe_photo.setImageResource(R.drawable.image_recipe_default)
+            }
+
+            itemView.rv_card_recipe_bgr.setOnClickListener {
+                listener!!.onRecipeClick(adapterPosition)
+            }
+            itemView.imageView_rv_card_recipe_bookmarks.setOnClickListener {
+                val tag = itemView.imageView_rv_card_recipe_bookmarks.tag as String
+                when (tag) {
+                    RecipeUtils.TAG_BOOKMARKS_UNCHECKED -> {
+                        toggleBookmarks(itemView.imageView_rv_card_recipe_bookmarks, true)
+                        listener!!.onBookmarksClick(data[adapterPosition], true, adapterPosition)
+                    }
+                    RecipeUtils.TAG_BOOKMARKS_CHECKED -> {
+                        toggleBookmarks(itemView.imageView_rv_card_recipe_bookmarks, false)
+                        listener!!.onBookmarksClick(data[adapterPosition], false, adapterPosition)
+                    }
+                }
+            }
+            itemView.imageView_rv_card_recipe_fork.setOnClickListener {
+                when (itemView.imageView_rv_card_recipe_fork.tag as String) {
+                    RecipeUtils.TAG_FORK_UNCHECKED -> {
+                        toggleForks(itemView.imageView_rv_card_recipe_fork, true)
+                        listener!!.onForkClicked(data[adapterPosition], true, adapterPosition)
+                    }
+                    RecipeUtils.TAG_FORK_CHECKED -> {
+                        toggleForks(itemView.imageView_rv_card_recipe_fork, false)
+                        listener!!.onForkClicked(data[adapterPosition], false, adapterPosition)
+                    }
+                }
+            }
+        }
     }
 
     private fun toggleForks(fork: ImageView, selected: Boolean) {
@@ -92,60 +148,4 @@ class RecipeAdapter(
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTitle: TextView
-        val tvAuthor: TextView
-        val tvForks: TextView
-        val image: ImageView
-        val bookmarks: ImageView
-        val fork: ImageView
-        val btnRecipe: ImageButton
-
-        init {
-            tvTitle = itemView.findViewById(R.id.textView_rv_card_recipe_title)
-            tvAuthor = itemView.findViewById(R.id.textView_rv_card_recipe_author)
-            tvForks = itemView.findViewById(R.id.textView_rv_card_recipe_forks_avg)
-            image = itemView.findViewById(R.id.imageView_rv_card_recipe_photo)
-            bookmarks = itemView.findViewById(R.id.imageView_rv_card_recipe_bookmarks)
-            fork = itemView.findViewById(R.id.imageView_rv_card_recipe_fork)
-            btnRecipe = itemView.findViewById(R.id.rv_card_recipe_bgr)
-            btnRecipe.setOnClickListener { view: View? ->
-                listener.onRecipeClick(
-                    adapterPosition
-                )
-            }
-            bookmarks.setOnClickListener { _view: View? ->
-                val tag = bookmarks.tag as String
-                when (tag) {
-                    RecipeUtils.TAG_BOOKMARKS_UNCHECKED -> {
-                        toggleBookmarks(bookmarks, true)
-                        listener.onBookmarksClick(list!![adapterPosition], true, adapterPosition)
-                    }
-                    RecipeUtils.TAG_BOOKMARKS_CHECKED -> {
-                        toggleBookmarks(bookmarks, false)
-                        listener.onBookmarksClick(list!![adapterPosition], false, adapterPosition)
-                    }
-                }
-            }
-            fork.setOnClickListener { _view: View? ->
-                val tag = fork.tag as String
-                when (tag) {
-                    RecipeUtils.TAG_FORK_UNCHECKED -> {
-                        toggleForks(fork, true)
-                        listener.onForkClicked(list!![adapterPosition], true, adapterPosition)
-                    }
-                    RecipeUtils.TAG_FORK_CHECKED -> {
-                        toggleForks(fork, false)
-                        listener.onForkClicked(list!![adapterPosition], false, adapterPosition)
-                    }
-                }
-            }
-        }
-    }
-
-    init {
-        this.list = list
-        this.user = user
-        this.listener = listener
-    }
 }

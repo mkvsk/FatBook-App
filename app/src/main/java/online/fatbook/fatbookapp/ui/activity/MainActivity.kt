@@ -22,11 +22,12 @@ class MainActivity : AppCompatActivity() {
     private var userViewModel: UserViewModel? = null
     private var ingredientViewModel: IngredientViewModel? = null
     private var navController: NavController? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        recipeViewModel = ViewModelProvider(this).get(RecipeViewModel::class.java)
-        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        ingredientViewModel = ViewModelProvider(this).get(IngredientViewModel::class.java)
+        recipeViewModel = ViewModelProvider(this)[RecipeViewModel::class.java]
+        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        ingredientViewModel = ViewModelProvider(this)[IngredientViewModel::class.java]
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
         setupNavigation()

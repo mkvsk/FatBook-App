@@ -39,7 +39,6 @@ import java.io.File
 import java.util.*
 import java.util.logging.Level
 
-@Log
 class RecipeCreateFragment : Fragment(), OnRecipeViewDeleteIngredient {
     private var binding: FragmentRecipeCreateBinding? = null
     private var userViewModel: UserViewModel? = null
@@ -208,7 +207,8 @@ class RecipeCreateFragment : Fragment(), OnRecipeViewDeleteIngredient {
             initRecipe()
         }
         val recyclerView = binding!!.rvRecipeAddIngredients
-        adapter = ViewRecipeIngredientAdapter(binding!!.root.context, recipe!!.ingredients!!, this)
+        adapter!!.setData(recipe!!.ingredients)
+        adapter!!.setClickListener(this)
         adapter!!.setEditMode(true)
         recyclerView.adapter = adapter
     }

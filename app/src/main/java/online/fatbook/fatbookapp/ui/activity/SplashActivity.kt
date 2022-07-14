@@ -23,6 +23,7 @@ class SplashActivity : AppCompatActivity() {
     private var binding: ActivitySplashBinding? = null
     private var userViewModel: UserViewModel? = null
     private var userLogin: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -48,7 +49,7 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             }, 1)
         }
-        binding!!.buttonSplashRetry.setOnClickListener { view: View? ->
+        binding!!.buttonSplashRetry.setOnClickListener {
             binding!!.textViewSplashError.visibility = View.GONE
             binding!!.buttonSplashRetry.visibility = View.GONE
             loadUserData(userLogin)

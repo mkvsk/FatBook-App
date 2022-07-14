@@ -26,7 +26,7 @@ class BookmarksFragment : Fragment(), OnRecipeClickListener {
     private var binding: FragmentBookmarksBinding? = null
     private var userViewModel: UserViewModel? = null
     private var recipeViewModel: RecipeViewModel? = null
-    private var recipeList: ArrayList<Recipe?>? = null
+    private var recipeList: ArrayList<Recipe>? = null
     private var adapter: RecipeAdapter? = null
     private var user: User? = null
     private var userUpdated = false
@@ -62,10 +62,10 @@ class BookmarksFragment : Fragment(), OnRecipeClickListener {
 
     private fun loadRecipes() {
         RetrofitFactory.apiServiceClient().getUserBookmarks(user!!.login)
-            .enqueue(object : Callback<List<Recipe?>?> {
+            .enqueue(object : Callback<ArrayList<Recipe>?> {
                 override fun onResponse(
-                    call: Call<List<Recipe?>?>,
-                    response: Response<List<Recipe?>?>
+                    call: Call<ArrayList<Recipe>?>,
+                    response: Response<ArrayList<Recipe>?>
                 ) {
                     binding!!.swipeRefreshBookmarks.isRefreshing = false
                     if (response.code() == 200) {
@@ -73,7 +73,7 @@ class BookmarksFragment : Fragment(), OnRecipeClickListener {
                         if (response.body() != null) {
 //                            BookmarksFragment.log.log(Level.INFO, response.body().toString())
                         }
-                        recipeList = response.body() as ArrayList<Recipe?>?
+                        recipeList = response.body()
                         adapter!!.setData(recipeList, user)
                         adapter!!.notifyDataSetChanged()
                     } else {
@@ -81,7 +81,7 @@ class BookmarksFragment : Fragment(), OnRecipeClickListener {
                     }
                 }
 
-                override fun onFailure(call: Call<List<Recipe?>?>, t: Throwable) {
+                override fun onFailure(call: Call<ArrayList<Recipe>?>, t: Throwable) {
                     binding!!.swipeRefreshBookmarks.isRefreshing = false
 //                    BookmarksFragment.log.log(Level.INFO, "bookmarks load FAILED")
                 }
@@ -90,7 +90,8 @@ class BookmarksFragment : Fragment(), OnRecipeClickListener {
 
     private fun setupAdapter() {
         val recyclerView = binding!!.rvBookmarks
-        adapter = RecipeAdapter(binding!!.root.context, recipeList, user, this)
+        adapter = RecipeAdapter()
+        adapter!!.setData(recipeList, user)
         recyclerView.adapter = adapter
     }
 
