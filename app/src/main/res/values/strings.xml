@@ -89,7 +89,7 @@
 
     ///rv add new ingredient
     <string name="text_existing_ingredient">Existing Ingredient</string>
-    
+
     ///fragment ingredients
     <string name="toolbar_ingredients">Ingredients</string>
 
