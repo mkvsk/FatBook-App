@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     ///Basic
-    <color name="black">#FF000000</color>
+    <color name="black">#263238</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_pink_a200">#FF4081</color>
     <color name="color_lime_500">#CDDC39</color>
+
     ///Light theme
     <color name="color_blue_grey_50">#ECEFF1</color>
     <color name="color_blue_grey_200">#B0BEC5</color>

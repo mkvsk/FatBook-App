@@ -81,7 +81,7 @@
 
     <Button
         android:id="@+id/button_fill"
-        style="@style/pinkButton"
+        style="@style/btnPink"
         android:layout_marginBottom="15dp"
         android:text="@string/btn_yeah_go_skip_add"
         app:layout_constraintBottom_toTopOf="@+id/button_skip"
@@ -91,7 +91,7 @@
 
     <Button
         android:id="@+id/button_skip"
-        style="@style/pinkButton"
+        style="@style/btnPink"
         android:text="@string/btn_no_later_skip_add"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@+id/textView_skip_add_tagline"

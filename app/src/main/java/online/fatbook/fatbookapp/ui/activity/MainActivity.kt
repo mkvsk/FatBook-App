@@ -53,9 +53,9 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         ) {
-            val editor = sharedPreferences.edit()
-            editor.putString(UserUtils.USER_LOGIN, user!!.login)
-            editor.apply()
+    //        val editor = sharedPreferences.edit()
+//            editor.putString(UserUtils.USER_LOGIN, user!!.login)
+  //          editor.apply()
         }
         userViewModel!!.user.value = user
     }

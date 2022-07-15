@@ -173,7 +173,7 @@
 
             <Button
                 android:id="@+id/button_recipe_add_save"
-                style="@style/pinkButton"
+                style="@style/btnPink"
                 android:layout_marginTop="20dp"
                 android:text="@string/btn_save_recipe_create"
                 app:layout_constraintTop_toBottomOf="@id/editText_recipe_add_description"
