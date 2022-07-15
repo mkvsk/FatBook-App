@@ -77,7 +77,7 @@
         android:src="@drawable/cat_dialog_signin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_signin_buttons"
+        android:layout_marginBottom="35dp"
         app:layout_constraintBottom_toTopOf="@id/fragment_signin_app_version"/>
 
     <TextView
@@ -96,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/txtVersion"
-        android:text="PotatoCorpⒸ V 2.0.0"
+        android:text="Ⓒ 2022 PotatoCorp V 2.0.0"
         android:layout_marginBottom="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
