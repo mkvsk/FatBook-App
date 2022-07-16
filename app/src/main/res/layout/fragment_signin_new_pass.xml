@@ -8,7 +8,7 @@
     tools:context=".ui.fragment.signin.FragmentSigninNewPass">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_signin_newpass_header"
+        android:id="@+id/fragment_signin_new_pass_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
@@ -19,23 +19,22 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/fragment_signin_newpass_title"
+            android:id="@+id/fragment_signin_new_pass_title"
             style="@style/txtWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@null"/>
+            android:text="@null" />
 
         <TextView
-            android:id="@+id/fragment_signin_newpass_appname"
+            android:id="@+id/fragment_signin_new_pass_appname"
             style="@style/txtAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FatBook" />
+            android:text="@string/title_app_name_signin_new_pass" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_signin_newpass_edittext_button"
+        android:id="@+id/fragment_signin_new_pass_edittext_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -47,54 +46,54 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/fragment_signin_newpass_edittext_new_password"
+            android:id="@+id/fragment_signin_new_pass_edittext_new_password"
             style="@style/editText"
             android:layout_marginBottom="10dp"
             android:background="@drawable/round_corner_edittext"
-            android:hint="New password"
+            android:hint="@string/hint_new_password_signin_new_pass"
             android:inputType="textPassword" />
 
         <EditText
-            android:id="@+id/fragment_signin_newpass_edittext_repeat_new_password"
+            android:id="@+id/fragment_signin_new_pass_edittext_repeat_new_password"
             style="@style/editText"
             android:layout_marginBottom="10dp"
             android:background="@drawable/round_corner_edittext"
-            android:hint="Repeat new password"
+            android:hint="@string/hint_repeat_new_password_signin_new_pass"
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/fragment_signin_newpass_button_next"
+            android:id="@+id/fragment_signin_new_pass_button_next"
             style="@style/btnPink"
-            android:text="next" />
+            android:text="@string/btn_next_signin_new_pass" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ImageView
-        android:id="@+id/fragment_signin_newpass_kuzya_dialog"
+        android:id="@+id/fragment_signin_new_pass_kuzya_dialog"
         android:layout_width="@dimen/kuzya_w"
         android:layout_height="@dimen/kuzya_h"
         android:layout_marginBottom="20dp"
         android:src="@drawable/cat_dialog_signin_newpass"
-        app:layout_constraintBottom_toTopOf="@id/fragment_signin_newpass_app_version"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signin_new_pass_app_version"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/fragment_signin_newpass_dialog_text"
+        android:id="@+id/fragment_signin_new_pass_dialog_text"
         style="@style/txtKuzyaDialog"
         android:layout_marginEnd="30dp"
         android:paddingTop="15dp"
-        android:text="Password must be 6-16 characters long and cointains only numbers and letters"
-        app:layout_constraintRight_toRightOf="@id/fragment_signin_newpass_kuzya_dialog"
-        app:layout_constraintTop_toTopOf="@id/fragment_signin_newpass_kuzya_dialog" />
+        android:text="@string/dialog_signin_new_pass"
+        app:layout_constraintRight_toRightOf="@id/fragment_signin_new_pass_kuzya_dialog"
+        app:layout_constraintTop_toTopOf="@id/fragment_signin_new_pass_kuzya_dialog" />
 
     <TextView
-        android:id="@+id/fragment_signin_newpass_app_version"
+        android:id="@+id/fragment_signin_new_pass_app_version"
         style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="Ⓒ 2022 PotatoCorp V 2.0.0"
+        android:text="@string/tag_copyright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

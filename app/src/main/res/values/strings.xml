@@ -2,10 +2,43 @@
     ///app
     <string name="app_name_release" translatable="false">FatBook</string>
     <string name="app_name_beta" translatable="false">FatBook BETA</string>
-    <string name="tagline_fatbook">get your forks ready</string>
-    <string name="tag_copyright" translatable="false">Ⓒ PotatoCorp, 2022</string>
-    <string name="tag_version" translatable="false">v 1.0.0</string>
+    <string name="tagline_fatbook">Get your forks ready</string>
+    <string name="tag_copyright" translatable="false">Ⓒ 2022 PotatoCorp V 2.0.0</string>
+    <string name="tag_version" translatable="false">Ⓒ 2022 PotatoCorp V 2.0.0</string>
 
+    ///fragment welcome
+    <string name="title_welcome">welcome to</string>
+    <string name="title_app_name_welcome" translatable="false">FatBook</string>
+    <string name="btn_signin_welcome">sign in</string>
+    <string name="btn_signup_welcome">sign up</string>
+
+    ///fragment signin
+    <string name="title_signin">welcome back</string>
+    <string name="title_app_name_signin" translatable="false">FatBook</string>
+    <string name="hint_username_signin">Username</string>
+    <string name="hint_password_signin">Password</string>
+    <string name="btn_signin_signin">sign in</string>
+    <string name="forgot_password"><u>forgot password</u></string>
+    <string name="dialog_signin">Nice to meet you again!</string>
+    <string name="dialog_wrong_data_signin">INVALID DATA! \n Try again or click \n “forgot password”</string>
+
+    ///fragment signin new pass
+    <string name="title_app_name_signin_new_pass" translatable="false">FatBook</string>
+    <string name="hint_new_password_signin_new_pass">New password</string>
+    <string name="hint_repeat_new_password_signin_new_pass">Repeat new password</string>
+    <string name="btn_next_signin_new_pass">next</string>
+    <string name="dialog_signin_new_pass">Password must be 6-16 \n characters long and \n contains only numbers \n and letters</string>
+
+    ///fragment signup e-mail:
+    <string name="title_app_name_signup_email" translatable="false">FatBook</string>
+    <string name="adds_signup_email">Enter actual e-mail:</string>
+    <string name="hint_email_signup_email">e-mail</string>
+    <string name="btn_next_signup_email">next</string>
+    <string name="dialog_signup_email">Only one user can be \n registered to an email</string>
+    <string name="dialog_wrong_data_signup_email">This email is already in \n use or is not entered \n correctly. Try another</string>
+
+
+    ///----------------------------V 1.0.0------------------------------------
     ///login
     <string name="title_add_recipe">Add recipe</string>
     <string name="title_user_profile">Profile</string>
@@ -15,12 +48,6 @@
     <string name="title_welcome_back_to_sign_in">WELCOME BACK TO</string>
     <string name="title_fatbook_activity_login" translatable="false">FatBook</string>
     <string name="btn_sign_in_a_sign_in">SIGN IN</string>
-
-    ///activity welcome
-    <string name="title_welcome_to">WELCOME TO</string>
-    <string name="btn_sign_in_welcome_to">SIGN IN</string>
-    <string name="title_fatbook_a_welcome" translatable="false">FatBook</string>
-    <string name="btn_register_welcome_to">Register</string>
 
     ///activity login
     <string name="title_fatbook_a_login" translatable="false">FatBook</string>
@@ -203,6 +230,5 @@
     <string name="menu_user_profile_logout">Logout</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="forgot_password"><u>forgot password</u></string>
 
 </resources>

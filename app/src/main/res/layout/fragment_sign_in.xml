@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/start_fragments_bgr"
     tools:context=".ui.fragment.signin.SignInFragment">
 
@@ -11,26 +11,26 @@
         android:id="@+id/fragment_signin_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="70dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/fragment_signin_title"
+            style="@style/txtWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="welcome back"
-            style="@style/txtWelcome" />
+            android:text="@string/title_signin" />
 
         <TextView
             android:id="@+id/fragment_signin_appname"
+            style="@style/txtAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FatBook"
-            style="@style/txtAppName" />
+            android:text="@string/title_app_name_signin" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -38,73 +38,73 @@
         android:id="@+id/fragment_signin_edittext_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingVertical="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingVertical="5dp"
-        android:gravity="center_horizontal">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/fragment_signin_edittext_username"
-            android:hint="username"
             style="@style/editText"
-            android:inputType="textPersonName"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/round_corner_edittext"
-            android:layout_marginBottom="10dp"/>
+            android:hint="@string/hint_username_signin"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/fragment_signin_edittext_password"
-            android:hint="password"
-            android:inputType="textPassword"
             style="@style/editText"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/round_corner_edittext"
-            android:layout_marginBottom="10dp"/>
+            android:hint="@string/hint_password_signin"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/fragment_signin_button_login"
             style="@style/btnPink"
-            android:text="log in" />
+            android:text="@string/btn_signin_signin" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
         android:id="@+id/fragment_signin_forgot_password_link"
         style="@style/signUpUnderlinedText"
+        android:layout_marginEnd="5dp"
         android:text="@string/forgot_password"
-        app:layout_constraintTop_toBottomOf="@id/fragment_signin_edittext_button"
         app:layout_constraintRight_toRightOf="@id/fragment_signin_dialog_text"
-        android:layout_marginRight="5dp" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_signin_edittext_button" />
 
     <ImageView
         android:id="@+id/fragment_signin_kuzya_dialog"
         android:layout_width="@dimen/kuzya_w"
         android:layout_height="@dimen/kuzya_h"
-        android:src="@drawable/cat_dialog_signin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@id/fragment_signin_app_version"/>
+        android:src="@drawable/cat_dialog_signin"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signin_app_version"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/fragment_signin_dialog_text"
         style="@style/txtKuzyaDialog"
         android:layout_marginEnd="30dp"
         android:paddingTop="15dp"
-        android:text="Nice to meet you again!"
+        android:text="@string/dialog_wrong_data_signin"
         app:layout_constraintRight_toRightOf="@id/fragment_signin_kuzya_dialog"
         app:layout_constraintTop_toTopOf="@id/fragment_signin_kuzya_dialog" />
 
     <TextView
         android:id="@+id/fragment_signin_app_version"
+        style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/txtVersion"
-        android:text="Ⓒ 2022 PotatoCorp V 2.0.0"
         android:layout_marginBottom="10dp"
+        android:text="@string/tag_copyright"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

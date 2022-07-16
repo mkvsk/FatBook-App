@@ -11,26 +11,26 @@
         android:id="@+id/fragment_welcome_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="70dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/fragment_welcome_title"
+            style="@style/txtWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="welcome to"
-            style="@style/txtWelcome" />
+            android:text="@string/title_welcome" />
 
         <TextView
             android:id="@+id/fragment_welcome_appname"
+            style="@style/txtAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FatBook"
-            style="@style/txtAppName" />
+            android:text="@string/title_app_name_welcome" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -38,23 +38,23 @@
         android:id="@+id/fragment_welcome_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingVertical="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingVertical="5dp"
-        android:gravity="center_horizontal">
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/fragment_welcome_button_signup"
             style="@style/btnPink"
-            android:text="register" />
+            android:text="@string/btn_signup_welcome" />
 
         <Button
             android:id="@+id/fragment_welcome_button_signin"
             style="@style/btnPink"
-            android:text="sign in" />
+            android:text="@string/btn_signin_welcome" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -63,30 +63,30 @@
         android:id="@+id/fragment_welcome_kuzya_dialog"
         android:layout_width="@dimen/kuzya_w"
         android:layout_height="@dimen/kuzya_h"
-        android:src="@drawable/cat_dialog_welcome"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@id/fragment_welcome_app_version"/>
+        android:src="@drawable/cat_dialog_welcome"
+        app:layout_constraintBottom_toTopOf="@id/fragment_welcome_app_version"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/fragment_welcome_dialog_text"
         style="@style/txtKuzyaDialog"
         android:layout_marginEnd="30dp"
         android:paddingTop="15dp"
-        android:text="Get your forks ready"
+        android:text="@string/tagline_fatbook"
         app:layout_constraintRight_toRightOf="@id/fragment_welcome_kuzya_dialog"
         app:layout_constraintTop_toTopOf="@id/fragment_welcome_kuzya_dialog" />
 
     <TextView
         android:id="@+id/fragment_welcome_app_version"
+        style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/txtVersion"
-        android:text="Ⓒ 2022 PotatoCorp V 2.0.0"
         android:layout_marginBottom="10dp"
+        android:text="@string/tag_copyright"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

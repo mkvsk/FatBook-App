@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/start_fragments_bgr"
     tools:context=".ui.fragment.signup.FragmentSignupEmail">
 
@@ -11,26 +11,26 @@
         android:id="@+id/fragment_signup_email_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="70dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/fragment_signup_email_title"
+            style="@style/txtWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@null"
-            style="@style/txtWelcome" />
+            android:text="@null" />
 
         <TextView
             android:id="@+id/fragment_signup_email_appname"
+            style="@style/txtAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FatBook"
-            style="@style/txtAppName" />
+            android:text="@string/title_app_name_signup_email" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -38,31 +38,32 @@
         android:id="@+id/fragment_signup_email_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingVertical="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingVertical="5dp"
-        android:gravity="center_horizontal">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/fragment_signup_email_additional_text"
             style="@style/signUpAdditionalText"
-            android:text="Enter actual e-mail:"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:text="@string/adds_signup_email" />
+
         <EditText
             android:id="@+id/fragment_signup_email_edittext_email"
-            android:hint="e-mail"
-            android:inputType="textPassword"
             style="@style/editText"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/round_corner_edittext"
-            android:layout_marginBottom="10dp"/>
+            android:hint="@string/hint_email_signup_email"
+            android:inputType="textEmailAddress" />
 
         <Button
             android:id="@+id/fragment_signup_email_button_next"
             style="@style/btnPink"
-            android:text="next" />
+            android:text="@string/btn_next_signup_email" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -71,30 +72,30 @@
         android:id="@+id/fragment_signup_email_kuzya_dialog"
         android:layout_width="@dimen/kuzya_w"
         android:layout_height="@dimen/kuzya_h"
-        android:src="@drawable/cat_dialog_signin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@id/fragment_signup_email_app_version"/>
+        android:src="@drawable/cat_dialog_signin"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signup_email_app_version"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/fragment_signup_email_dialog_text"
         style="@style/txtKuzyaDialog"
         android:layout_marginEnd="30dp"
         android:paddingTop="15dp"
-        android:text="Only one account can be registered to an email account"
+        android:text="@string/dialog_signup_email"
         app:layout_constraintRight_toRightOf="@id/fragment_signup_email_kuzya_dialog"
         app:layout_constraintTop_toTopOf="@id/fragment_signup_email_kuzya_dialog" />
 
     <TextView
         android:id="@+id/fragment_signup_email_app_version"
+        style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/txtVersion"
-        android:text="Ⓒ 2022 PotatoCorp V 2.0.0"
         android:layout_marginBottom="10dp"
+        android:text="@string/tag_copyright"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
