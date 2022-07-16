@@ -111,6 +111,15 @@
         <item name="android:textColor">@color/pink_a200</item>
     </style>
 
+    <style name="disconnectAdditionalText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/pink_a200</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
     ///v1.0.0
     <style name="greyButton">
         <item name="android:layout_width">234dp</item>

@@ -37,6 +37,13 @@
     <string name="dialog_signup_email">Only one user can be \n registered to an email</string>
     <string name="dialog_wrong_data_signup_email">This email is already in \n use or is not entered \n correctly. Try another</string>
 
+    ///fragment disconnect
+    <string name="title_app_name_disconnect" translatable="false">FatBook</string>
+    <string name="title_unavailable">unavailable</string>
+    <string name="adds_disconnect">Something went wrong. \n Check your Internet connection</string>
+    <string name="btn_reconnect_disconnect">reconnect</string>
+    <string name="dialog_disconnect">This is not me. Im just \n eating my soup.</string>
+
 
     ///----------------------------V 1.0.0------------------------------------
     ///login
