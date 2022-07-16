@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.FatBook" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/color_pink_a200</item>
+        <item name="colorPrimary">@color/pink_a200</item>
         <item name="colorPrimaryVariant">@color/color_blue_grey_600</item>
         <item name="colorOnPrimary">@color/color_blue_grey_900</item>
         <!-- Secondary brand color. -->
@@ -29,10 +29,17 @@
     <color name="ic_color">#FFFFFFFF</color>
     <color name="editText_catdialog_bgr">#37474F</color>
 
+    <color name="btnEnabledColor">#FF4081</color>
+    <color name="btnDisabledColor">#37474F</color>
+    <color name="btnEnabledColor_text">#FFFFFFFF</color>
+    <color name="btnDisabledColor_text">#546E7A</color>
+
+    ///ic colors
+    <color name="ic_visibility_color">#B0BEC5</color>
+
     <style name="btnPink">
-        <item name="android:layout_width">235dp</item>
-        <item name="android:layout_height">45dp</item>
-        <item name="backgroundTint">@color/pink_a200</item>
+        <item name="android:layout_width">@dimen/btn_pink_w</item>
+        <item name="android:layout_height">@dimen/btn_pink_h</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="cornerRadius">30dp</item>
@@ -60,7 +67,9 @@
     </style>
 
     <style name="txtKuzyaDialog">
-        <item name="android:textSize">12sp</item>
+        <item name="android:layout_width">@dimen/dialog_w</item>
+        <item name="android:layout_height">@dimen/dialog_h</item>
+        <item name="android:textSize">11sp</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="android:textColor">@color/main_text</item>
         <item name="android:textAlignment">center</item>
@@ -76,11 +85,30 @@
     </style>
 
     <style name="editText">
-        <item name="android:layout_width">235dp</item>
-        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_width">@dimen/edittext_start_fragments_w</item>
+        <item name="android:layout_height">@dimen/edittext_start_fragments_h</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/main_text</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="signUpAdditionalText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/main_text</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="signUpUnderlinedText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">11sp</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textColor">@color/pink_a200</item>
     </style>
 
 </resources>

@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/start_fragments_bgr"
-    tools:context=".ui.fragment.signin.SignInFragment">
+    tools:context=".ui.fragment.signup.FragmentSignupEmail">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_signin_header"
+        android:id="@+id/fragment_signup_email_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -19,14 +19,14 @@
         android:layout_marginTop="70dp">
 
         <TextView
-            android:id="@+id/fragment_signin_title"
+            android:id="@+id/fragment_signup_email_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="welcome back"
+            android:text="@null"
             style="@style/txtWelcome" />
 
         <TextView
-            android:id="@+id/fragment_signin_appname"
+            android:id="@+id/fragment_signup_email_appname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="FatBook"
@@ -35,7 +35,7 @@
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_signin_edittext_button"
+        android:id="@+id/fragment_signup_email_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -46,58 +46,48 @@
         android:paddingVertical="5dp"
         android:gravity="center_horizontal">
 
-        <EditText
-            android:id="@+id/fragment_signin_edittext_username"
-            android:hint="username"
-            style="@style/editText"
-            android:inputType="textPersonName"
-            android:background="@drawable/round_corner_edittext"
+        <TextView
+            android:id="@+id/fragment_signup_email_additional_text"
+            style="@style/signUpAdditionalText"
+            android:text="Enter actual e-mail:"
             android:layout_marginBottom="10dp"/>
-
         <EditText
-            android:id="@+id/fragment_signin_edittext_password"
-            android:hint="password"
+            android:id="@+id/fragment_signup_email_edittext_email"
+            android:hint="e-mail"
             android:inputType="textPassword"
             style="@style/editText"
             android:background="@drawable/round_corner_edittext"
             android:layout_marginBottom="10dp"/>
 
         <Button
-            android:id="@+id/fragment_signin_button_login"
+            android:id="@+id/fragment_signup_email_button_next"
             style="@style/btnPink"
-            android:text="log in" />
+            android:text="next" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <TextView
-        android:id="@+id/fragment_signin_forgot_password_link"
-        style="@style/signUpUnderlinedText"
-        android:text="@string/forgot_password"
-        app:layout_constraintTop_toBottomOf="@id/fragment_signin_edittext_button"
-        app:layout_constraintRight_toRightOf="@id/fragment_signin_dialog_text"
-        android:layout_marginRight="5dp" />
 
     <ImageView
-        android:id="@+id/fragment_signin_kuzya_dialog"
+        android:id="@+id/fragment_signup_email_kuzya_dialog"
         android:layout_width="@dimen/kuzya_w"
         android:layout_height="@dimen/kuzya_h"
         android:src="@drawable/cat_dialog_signin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@id/fragment_signin_app_version"/>
+        app:layout_constraintBottom_toTopOf="@id/fragment_signup_email_app_version"/>
 
     <TextView
-        android:id="@+id/fragment_signin_dialog_text"
+        android:id="@+id/fragment_signup_email_dialog_text"
         style="@style/txtKuzyaDialog"
         android:layout_marginEnd="30dp"
         android:paddingTop="15dp"
-        android:text="Nice to meet you again!"
-        app:layout_constraintRight_toRightOf="@id/fragment_signin_kuzya_dialog"
-        app:layout_constraintTop_toTopOf="@id/fragment_signin_kuzya_dialog" />
+        android:text="Only one account can be registered to an email account"
+        app:layout_constraintRight_toRightOf="@id/fragment_signup_email_kuzya_dialog"
+        app:layout_constraintTop_toTopOf="@id/fragment_signup_email_kuzya_dialog" />
 
     <TextView
-        android:id="@+id/fragment_signin_app_version"
+        android:id="@+id/fragment_signup_email_app_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/txtVersion"

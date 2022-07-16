@@ -86,7 +86,7 @@ class PasswordActivity : AppCompatActivity() {
             binding!!.editTextPassword.background =
                 AppCompatResources.getDrawable(
                     baseContext,
-                    R.drawable.round_corner_edittext_login_error
+                    R.drawable.round_corner_edittext_error
                 )
             binding!!.buttonPasswordNext.isEnabled = false
             binding!!.buttonPasswordNext.backgroundTintList =

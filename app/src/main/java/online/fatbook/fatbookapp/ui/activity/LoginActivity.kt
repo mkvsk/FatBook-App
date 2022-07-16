@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Role
 import online.fatbook.fatbookapp.core.User
@@ -108,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
             binding!!.editTextLogin.background =
                 AppCompatResources.getDrawable(
                     baseContext,
-                    R.drawable.round_corner_edittext_login_error
+                    R.drawable.round_corner_edittext_error
                 )
             binding!!.buttonLoginNext.isEnabled = false
             binding!!.buttonLoginNext.backgroundTintList =

@@ -10,7 +10,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
-import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.databinding.ActivitySignInBinding
@@ -20,7 +19,6 @@ import online.fatbook.fatbookapp.util.UserUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.logging.Level
 
 class SignInActivity : AppCompatActivity() {
     private var binding: ActivitySignInBinding? = null
@@ -63,11 +61,11 @@ class SignInActivity : AppCompatActivity() {
             } else {
                 binding!!.editTextSignInLogin.background = AppCompatResources.getDrawable(
                     this,
-                    R.drawable.round_corner_edittext_login_error
+                    R.drawable.round_corner_edittext_error
                 )
                 binding!!.editTextSignInPassword.background = AppCompatResources.getDrawable(
                     this,
-                    R.drawable.round_corner_edittext_login_error
+                    R.drawable.round_corner_edittext_error
                 )
             }
         }
