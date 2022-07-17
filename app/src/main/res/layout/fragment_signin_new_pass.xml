@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/start_fragments_bgr"
-    tools:context=".ui.fragment.signin.FragmentSigninNewPass">
+    tools:context=".ui.fragment.signin.SigninNewPassFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/fragment_signin_new_pass_header"
@@ -33,40 +33,36 @@
             android:text="@string/title_app_name_signin_new_pass" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_signin_new_pass_edittext_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingVertical="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
         <EditText
             android:id="@+id/fragment_signin_new_pass_edittext_new_password"
             style="@style/editText"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/start_fragments_edittext_spacing"
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_new_password_signin_new_pass"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragment_signin_new_pass_edittext_repeat_new_password"/>
 
         <EditText
             android:id="@+id/fragment_signin_new_pass_edittext_repeat_new_password"
             style="@style/editText"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/start_fragments_element_spacing"
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_repeat_new_password_signin_new_pass"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragment_signin_new_pass_button_next"/>
 
         <Button
             android:id="@+id/fragment_signin_new_pass_button_next"
             style="@style/btnPink"
-            android:text="@string/btn_next_signin_new_pass" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:text="@string/btn_next_signin_new_pass"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/fragment_signin_new_pass_kuzya_dialog"
@@ -92,7 +88,7 @@
         style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
         android:text="@string/tag_copyright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

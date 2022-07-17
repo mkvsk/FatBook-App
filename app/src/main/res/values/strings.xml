@@ -12,6 +12,13 @@
     <string name="btn_signin_welcome">sign in</string>
     <string name="btn_signup_welcome">sign up</string>
 
+    ///fragment disconnect
+    <string name="title_app_name_disconnect" translatable="false">FatBook</string>
+    <string name="title_unavailable">unavailable</string>
+    <string name="adds_disconnect">Something went wrong. \n Check your Internet connection</string>
+    <string name="btn_reconnect_disconnect">reconnect</string>
+    <string name="dialog_disconnect">This is not me. Im just \n eating my soup.</string>
+
     ///fragment signin
     <string name="title_signin">welcome back</string>
     <string name="title_app_name_signin" translatable="false">FatBook</string>
@@ -37,12 +44,14 @@
     <string name="dialog_signup_email">Only one user can be \n registered to an email</string>
     <string name="dialog_wrong_data_signup_email">This email is already in \n use or is not entered \n correctly. Try another</string>
 
-    ///fragment disconnect
-    <string name="title_app_name_disconnect" translatable="false">FatBook</string>
-    <string name="title_unavailable">unavailable</string>
-    <string name="adds_disconnect">Something went wrong. \n Check your Internet connection</string>
-    <string name="btn_reconnect_disconnect">reconnect</string>
-    <string name="dialog_disconnect">This is not me. Im just \n eating my soup.</string>
+    ///fragment verification code
+    <string name="title_app_name_verification_code" translatable="false">FatBook</string>
+    <string name="adds_verification_code">Enter verification code:</string>
+    <string name="hint_verification_code">0</string>
+    <string name="btn_next_verification_code">next</string>
+    <string name="dialog_verification_code">The verification code was \n sent to your e-mail</string>
+    <string name="dialog_wrong_verification_code">Wrong code</string>
+    <string name="resend_verification_code"><u>resend code</u></string>
 
 
     ///----------------------------V 1.0.0------------------------------------

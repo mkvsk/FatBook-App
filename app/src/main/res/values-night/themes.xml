@@ -67,8 +67,8 @@
     </style>
 
     <style name="txtKuzyaDialog">
-        <item name="android:layout_width">@dimen/dialog_w</item>
-        <item name="android:layout_height">@dimen/dialog_h</item>
+        <item name="android:layout_width">@dimen/kuzya_dialog_w</item>
+        <item name="android:layout_height">@dimen/kuzya_dialog_h</item>
         <item name="android:textSize">11sp</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="android:textColor">@color/main_text</item>
@@ -117,6 +117,15 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/pink_a200</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="editTextCode">
+        <item name="android:layout_width">@dimen/edittext_verification_code_w</item>
+        <item name="android:layout_height">@dimen/edittext_verification_code_h</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/main_text</item>
         <item name="fontFamily">@font/roboto_regular</item>
     </style>
 </resources>

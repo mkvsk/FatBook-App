@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/start_fragments_bgr"
-    tools:context=".ui.fragment.signup.FragmentSignupEmail">
+    tools:context=".ui.fragment.signup.SignupEmailFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/fragment_signup_email_header"
@@ -49,7 +49,7 @@
         <TextView
             android:id="@+id/fragment_signup_email_additional_text"
             style="@style/signUpAdditionalText"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
             android:text="@string/adds_signup_email" />
 
         <EditText
@@ -92,7 +92,7 @@
         style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
         android:text="@string/tag_copyright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

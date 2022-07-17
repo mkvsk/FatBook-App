@@ -33,31 +33,23 @@
             android:text="@string/title_app_name_welcome" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_welcome_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingVertical="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
         <Button
             android:id="@+id/fragment_welcome_button_signup"
             style="@style/btnPink"
-            android:text="@string/btn_signup_welcome" />
+            android:text="@string/btn_signup_welcome"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="@dimen/start_fragments_element_spacing"
+            app:layout_constraintBottom_toTopOf="@id/fragment_welcome_button_signin"/>
 
         <Button
             android:id="@+id/fragment_welcome_button_signin"
             style="@style/btnPink"
-            android:text="@string/btn_signin_welcome" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+            android:text="@string/btn_signin_welcome"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/fragment_welcome_kuzya_dialog"
@@ -83,7 +75,7 @@
         style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
         android:text="@string/tag_copyright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

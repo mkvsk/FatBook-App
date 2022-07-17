@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/start_fragments_bgr"
-    tools:context=".ui.fragment.FragmentDisconnect">
+    tools:context=".ui.fragment.DisconnectFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/fragment_disconnect_header"
@@ -33,34 +33,25 @@
             android:text="@string/title_app_name_disconnect" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_disconnect_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingVertical="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
         <TextView
             android:id="@+id/fragment_disconnect_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/adds_disconnect"
             style="@style/disconnectAdditionalText"
-            android:layout_marginBottom="50dp"/>
+            android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragment_disconnect_button_reconnect"/>
 
         <Button
             android:id="@+id/fragment_disconnect_button_reconnect"
             style="@style/btnPink"
-            android:text="@string/btn_reconnect_disconnect" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+            android:text="@string/btn_reconnect_disconnect"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/fragment_disconnect_kuzya_dialog"
@@ -86,7 +77,7 @@
         style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
         android:text="@string/tag_copyright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

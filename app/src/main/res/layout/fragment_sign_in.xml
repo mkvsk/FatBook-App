@@ -33,49 +33,44 @@
             android:text="@string/title_app_name_signin" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_signin_edittext_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingVertical="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
         <EditText
             android:id="@+id/fragment_signin_edittext_username"
             style="@style/editText"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/start_fragments_edittext_spacing"
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_username_signin"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragment_signin_edittext_password"/>
 
         <EditText
             android:id="@+id/fragment_signin_edittext_password"
             style="@style/editText"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/start_fragments_element_spacing"
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_password_signin"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragment_signin_button_signin"/>
 
         <Button
-            android:id="@+id/fragment_signin_button_login"
+            android:id="@+id/fragment_signin_button_signin"
             style="@style/btnPink"
-            android:text="@string/btn_signin_signin" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:text="@string/btn_signin_signin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/fragment_signin_forgot_password_link"
         style="@style/signUpUnderlinedText"
-        android:layout_marginEnd="5dp"
+        android:layout_marginTop="@dimen/start_fragments_link_spacing"
         android:text="@string/forgot_password"
         app:layout_constraintRight_toRightOf="@id/fragment_signin_dialog_text"
-        app:layout_constraintTop_toBottomOf="@id/fragment_signin_edittext_button" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_signin_button_signin" />
 
     <ImageView
         android:id="@+id/fragment_signin_kuzya_dialog"
@@ -101,7 +96,7 @@
         style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
         android:text="@string/tag_copyright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

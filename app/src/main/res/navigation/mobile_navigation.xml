@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_disconnect">
+    app:startDestination="@+id/navigation_verification_code">
 
     <fragment
         android:id="@+id/navigation_feed"
@@ -88,19 +88,25 @@
 
     <fragment
         android:id="@+id/navigation_signin_newpass"
-        android:name="online.fatbook.fatbookapp.ui.fragment.signin.FragmentSigninNewPass"
+        android:name="online.fatbook.fatbookapp.ui.fragment.signin.SigninNewPassFragment"
         android:label="@null"
         tools:layout="@layout/fragment_signin_new_pass" />
 
     <fragment
         android:id="@+id/navigation_signup_email"
-        android:name="online.fatbook.fatbookapp.ui.fragment.signup.FragmentSignupEmail"
+        android:name="online.fatbook.fatbookapp.ui.fragment.signup.SignupEmailFragment"
         android:label="@null"
         tools:layout="@layout/fragment_signup_email" />
 
     <fragment
+        android:id="@+id/navigation_verification_code"
+        android:name="online.fatbook.fatbookapp.ui.fragment.signup.VerificationCodeFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_verification_code" />
+
+    <fragment
         android:id="@+id/navigation_disconnect"
-        android:name="online.fatbook.fatbookapp.ui.fragment.FragmentDisconnect"
+        android:name="online.fatbook.fatbookapp.ui.fragment.DisconnectFragment"
         android:label="@null"
         tools:layout="@layout/fragment_disconnect" />
 

@@ -9,7 +9,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.ActivityFillAdditionalInfoBinding.inflate
 import online.fatbook.fatbookapp.databinding.FragmentSignupEmailBinding
 
-class FragmentSignupEmail : Fragment() {
+class SignupEmailFragment : Fragment() {
     private var binding: FragmentSignupEmailBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
