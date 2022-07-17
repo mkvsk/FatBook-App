@@ -71,52 +71,78 @@
         app:layout_constraintBottom_toTopOf="@id/fragment_verification_code_button_next">
 
         <EditText
-            android:id="@+id/fragment_verification_code_edittext_1"
+            android:id="@+id/fragment_verification_code_edittext_vc"
+            style="@style/editText"
+            android:background="@drawable/round_corner_edittext"
+            android:hint="@string/hint_verification_code"
+            android:inputType="number"
+            android:maxLength="6" />
+
+        <!--<EditText
+            android:id="@+id/vc_1"
             style="@style/editTextCode"
             android:background="@drawable/verification_code_bgr_default"
             android:hint="@string/hint_verification_code"
+            android:enabled="false"
+            android:maxLength="1"
             android:inputType="number" />
 
         <EditText
-            android:id="@+id/fragment_verification_code_edittext_2"
+            android:id="@+id/vc_2"
             style="@style/editTextCode"
             android:layout_marginStart="5dp"
             android:background="@drawable/verification_code_bgr_default"
             android:hint="@string/hint_verification_code"
-            android:inputType="number" />
+            android:maxLength="1"
+            android:inputType="number"
+            android:enabled="false"
+            />
 
         <EditText
-            android:id="@+id/fragment_verification_code_edittext_3"
+            android:id="@+id/vc_3"
             style="@style/editTextCode"
             android:layout_marginStart="5dp"
             android:background="@drawable/verification_code_bgr_default"
             android:hint="@string/hint_verification_code"
-            android:inputType="number" />
+            android:maxLength="1"
+            android:inputType="number"
+            android:enabled="false"
+            />
 
         <EditText
-            android:id="@+id/fragment_verification_code_edittext_4"
+            android:id="@+id/vc_4"
             style="@style/editTextCode"
             android:layout_marginStart="5dp"
             android:background="@drawable/verification_code_bgr_default"
             android:hint="@string/hint_verification_code"
-            android:inputType="number" />
+            android:maxLength="1"
+            android:inputType="number"
+            android:enabled="false"
+            />
 
         <EditText
-            android:id="@+id/fragment_verification_code_edittext_5"
+            android:id="@+id/vc_5"
             style="@style/editTextCode"
             android:layout_marginStart="5dp"
             android:background="@drawable/verification_code_bgr_default"
             android:hint="@string/hint_verification_code"
-            android:inputType="number" />
+            android:maxLength="1"
+            android:inputType="number"
+            android:enabled="false"
+            />
 
         <EditText
-            android:id="@+id/fragment_verification_code_edittext_6"
+            android:id="@+id/vc_6"
             style="@style/editTextCode"
             android:layout_marginStart="5dp"
             android:background="@drawable/verification_code_bgr_default"
             android:hint="@string/hint_verification_code"
-            android:inputType="number" />
+            android:maxLength="1"
+            android:inputType="number"
+            android:enabled="false"
+            />-->
     </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <ImageView
         android:id="@+id/fragment_verification_code_kuzya_dialog"

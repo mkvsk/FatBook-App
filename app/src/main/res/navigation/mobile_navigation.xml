@@ -105,10 +105,16 @@
         tools:layout="@layout/fragment_verification_code" />
 
     <fragment
-        android:id="@+id/navigation_disconnect"
-        android:name="online.fatbook.fatbookapp.ui.fragment.DisconnectFragment"
+        android:id="@+id/navigation_signup_password"
+        android:name="online.fatbook.fatbookapp.ui.fragment.signup.SignupPasswordFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_disconnect" />
+        tools:layout="@layout/fragment_signup_password" />
+
+    <fragment
+        android:id="@+id/navigation_signup_username"
+        android:name="online.fatbook.fatbookapp.ui.fragment.signup.SignupUsernameFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_signup_username" />
 
     <action
         android:id="@+id/action_go_to_feed"

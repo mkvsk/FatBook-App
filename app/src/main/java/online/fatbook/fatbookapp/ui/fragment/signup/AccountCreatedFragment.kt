@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment
+package online.fatbook.fatbookapp.ui.fragment.signup
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,16 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.databinding.FragmentDisconnectBinding
 
-class DisconnectFragment : Fragment() {
-    private var binding: FragmentDisconnectBinding? = null
+class AccountCreatedFragment : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDisconnectBinding.inflate(inflater, container, false)
-        return binding!!.root
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_account_created, container, false)
     }
 
 }

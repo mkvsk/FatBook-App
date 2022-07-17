@@ -12,12 +12,11 @@
     <string name="btn_signin_welcome">sign in</string>
     <string name="btn_signup_welcome">sign up</string>
 
-    ///fragment disconnect
+    ///splash screen
     <string name="title_app_name_disconnect" translatable="false">FatBook</string>
-    <string name="title_unavailable">unavailable</string>
-    <string name="adds_disconnect">Something went wrong. \n Check your Internet connection</string>
-    <string name="btn_reconnect_disconnect">reconnect</string>
-    <string name="dialog_disconnect">This is not me. Im just \n eating my soup.</string>
+    <string name="adds_splash">Something went wrong. \n Check your Internet connection</string>
+    <string name="btn_rectry_splash">retry</string>
+    <string name="dialog_splash">Im just \n eating my soup.</string>
 
     ///fragment signin
     <string name="title_signin">welcome back</string>
@@ -36,7 +35,7 @@
     <string name="btn_next_signin_new_pass">next</string>
     <string name="dialog_signin_new_pass">Password must be 6-16 \n characters long and \n contains only numbers \n and letters</string>
 
-    ///fragment signup e-mail:
+    ///fragment signup e-mail
     <string name="title_app_name_signup_email" translatable="false">FatBook</string>
     <string name="adds_signup_email">Enter actual e-mail:</string>
     <string name="hint_email_signup_email">e-mail</string>
@@ -44,15 +43,38 @@
     <string name="dialog_signup_email">Only one user can be \n registered to an email</string>
     <string name="dialog_wrong_data_signup_email">This email is already in \n use or is not entered \n correctly. Try another</string>
 
+    ///fragment signup password
+    <string name="title_app_name_signup_password" translatable="false">FatBook</string>
+    <string name="adds_signup_password">Set password:</string>
+    <string name="hint_password_signup_password">Password</string>
+    <string name="btn_next_signup_password">next</string>
+    <string name="dialog_signup_password">Password must be 6-16 \n characters long and \n contains only numbers \n and letters</string>
+
+    ///fragment signup username
+    <string name="title_app_name_signup_username" translatable="false">FatBook</string>
+    <string name="adds_signup_username">Set Username:</string>
+    <string name="hint_username_signup_username">Username</string>
+    <string name="btn_next_signup_username">next</string>
+    <string name="dialog_signup_username">Username is displayed \n in the profile and \n is used to sign in</string>
+    <string name="dialog_signup_username_unavailable">This Username \n is not available.</string>
+
+    ///fragment account created
+    <string name="title_account_created">welcome to</string>
+    <string name="title_app_name_signup_account_created" translatable="false">FatBook</string>
+    <string name="adds_account_created">Your account has been created</string>
+    <string name="btn_next_account_created">next</string>
+    <string name="dialog_account_created">Nice to meet you, \n Username! \n Let\'s make our book fatter!</string>
+
     ///fragment verification code
     <string name="title_app_name_verification_code" translatable="false">FatBook</string>
     <string name="adds_verification_code">Enter verification code:</string>
-    <string name="hint_verification_code">0</string>
+    <string name="hint_verification_code">0-0-0-0-0-0</string>
     <string name="btn_next_verification_code">next</string>
     <string name="dialog_verification_code">The verification code was \n sent to your e-mail</string>
     <string name="dialog_wrong_verification_code">Wrong code</string>
     <string name="resend_verification_code"><u>resend code</u></string>
 
+    <string name="resend_verification_code_timer"><u>(%s) resend code</u></string>
 
     ///----------------------------V 1.0.0------------------------------------
     ///login

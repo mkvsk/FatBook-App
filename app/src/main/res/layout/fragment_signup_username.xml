@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/start_fragments_bgr">
+    android:background="@color/start_fragments_bgr"
+    tools:context=".ui.fragment.signup.SignupUsernameFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_disconnect_header"
+        android:id="@+id/fragment_signup_username_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
@@ -17,66 +19,70 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/fragment_disconnect_title"
+            android:id="@+id/fragment_signup_username_title"
             style="@style/txtWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@null"
-            android:visibility="invisible"/>
+            android:text="@null" />
 
         <TextView
-            android:id="@+id/fragment_disconnect_appname"
+            android:id="@+id/fragment_signup_username_appname"
             style="@style/txtAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_app_name_disconnect" />
+            android:text="@string/title_app_name_signup_username" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
-        android:id="@+id/textView_splash_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/adds_splash"
-        style="@style/disconnectAdditionalText"
+        android:id="@+id/fragment_signup_username_additional_text"
+        style="@style/signUpAdditionalText"
         android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
-        android:visibility="visible"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/button_splash_retry"/>
-
-    <Button
-        android:id="@+id/button_splash_retry"
-        style="@style/btnPink"
-        android:text="@string/btn_rectry_splash"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <ImageView
-        android:id="@+id/fragment_disconnect_kuzya_dialog"
-        android:layout_width="@dimen/kuzya_w"
-        android:layout_height="@dimen/kuzya_h"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/cat_dialog_disconnection"
-        app:layout_constraintBottom_toTopOf="@id/fragment_disconnect_app_version"
+        android:text="@string/adds_signup_username"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signup_username_edittext_username"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <!--Добавить несколько фраз. Рандомные фразы + 3-5 об ошибках(негативные реакции)-->
-    <!--"Я просто залил сервак водой.Извините"-->
+    <EditText
+        android:id="@+id/fragment_signup_username_edittext_username"
+        style="@style/editText"
+        android:layout_marginBottom="@dimen/start_fragments_element_spacing"
+        android:background="@drawable/round_corner_edittext"
+        android:hint="@string/hint_username_signup_username"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signup_username_button_next"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/fragment_signup_username_button_next"
+        style="@style/btnPink"
+        android:text="@string/btn_next_signup_username"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fragment_signup_username_kuzya_dialog"
+        android:layout_width="@dimen/kuzya_w"
+        android:layout_height="@dimen/kuzya_h"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/cat_dialog_set_login"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signup_username_app_version"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <TextView
-        android:id="@+id/fragment_disconnect_dialog_text"
+        android:id="@+id/fragment_signup_username_dialog_text"
         style="@style/txtKuzyaDialog"
         android:layout_marginEnd="30dp"
         android:paddingTop="15dp"
-        android:text="@string/dialog_splash"
-        app:layout_constraintRight_toRightOf="@id/fragment_disconnect_kuzya_dialog"
-        app:layout_constraintTop_toTopOf="@id/fragment_disconnect_kuzya_dialog" />
+        android:text="@string/dialog_signup_username"
+        app:layout_constraintRight_toRightOf="@id/fragment_signup_username_kuzya_dialog"
+        app:layout_constraintTop_toTopOf="@id/fragment_signup_username_kuzya_dialog" />
 
     <TextView
-        android:id="@+id/fragment_disconnect_app_version"
+        android:id="@+id/fragment_signup_username_app_version"
         style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
