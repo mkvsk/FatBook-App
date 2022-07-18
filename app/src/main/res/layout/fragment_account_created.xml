@@ -1,14 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/start_fragments_bgr"
     tools:context=".ui.fragment.signup.AccountCreatedFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/fragment_signup_account_created_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/fragment_signup_account_created_title"
+            style="@style/txtWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_account_created" />
+
+        <TextView
+            android:id="@+id/fragment_signup_account_created_appname"
+            style="@style/txtAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_app_name_signup_account_created" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/fragment_signup_account_created_additional_text"
+        style="@style/signUpAdditionalText"
+        android:layout_marginBottom="@dimen/start_fragments_element_spacing"
+        android:text="@string/adds_account_created"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signup_account_created_button_next"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/fragment_signup_account_created_button_next"
+        style="@style/btnPink"
+        android:text="@string/btn_next_account_created"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fragment_signup_account_created_kuzya_dialog"
+        android:layout_width="@dimen/kuzya_w"
+        android:layout_height="@dimen/kuzya_h"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/cat_dialog_acc_created"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signup_account_created_app_version"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/fragment_signup_account_created_dialog_text"
+        style="@style/txtKuzyaDialog"
+        android:layout_marginEnd="30dp"
+        android:paddingTop="15dp"
+        android:text="@string/dialog_account_created"
+        app:layout_constraintRight_toRightOf="@id/fragment_signup_account_created_kuzya_dialog"
+        app:layout_constraintTop_toTopOf="@id/fragment_signup_account_created_kuzya_dialog" />
+
+    <TextView
+        android:id="@+id/fragment_signup_account_created_app_version"
+        style="@style/txtVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
+        android:text="@string/tag_copyright"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

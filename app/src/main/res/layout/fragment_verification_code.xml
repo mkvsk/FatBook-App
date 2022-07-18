@@ -76,6 +76,7 @@
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_verification_code"
             android:inputType="number"
+            android:maxLines="1"
             android:maxLength="6" />
 
         <!--<EditText

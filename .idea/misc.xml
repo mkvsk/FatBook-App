@@ -68,6 +68,7 @@
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/btn_disabled.xml" value="0.333" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/btn_enabled.xml" value="0.333" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/btn_selector.xml" value="0.413" />
+        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/cat_dialog_acc_created.xml" value="0.28" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/cat_dialog_disconnection.xml" value="0.2725" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/cat_dialog_invalid_data.xml" value="0.3655" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/drawable/cat_dialog_set_login.xml" value="0.3655" />
@@ -143,6 +144,7 @@
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/dialog_add_ingredient.xml" value="0.5744791666666667" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/dialog_app_info.xml" value="0.4390625" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/dropdown_item.xml" value="0.5679347826086957" />
+        <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/fragment_account_created.xml" value="0.5" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/fragment_add_ingredient.xml" value="0.5383986928104575" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/fragment_bookmarks.xml" value="0.43983402489626555" />
         <entry key="..\:/Users/Lunar Tear/AndroidStudioProjects/FatBook/app/src/main/res/layout/fragment_disconnect.xml" value="0.67" />

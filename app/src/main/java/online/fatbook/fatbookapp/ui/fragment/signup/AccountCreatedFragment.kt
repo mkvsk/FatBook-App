@@ -6,15 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.databinding.FragmentAccountCreatedBinding
 
 class AccountCreatedFragment : Fragment() {
-
+    private var binding: FragmentAccountCreatedBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account_created, container, false)
+        binding = FragmentAccountCreatedBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
 }
