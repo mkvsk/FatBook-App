@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import kotlinx.android.synthetic.main.activity_main.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.UserUtils
 import org.apache.commons.lang3.StringUtils
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var recipeViewModel: RecipeViewModel? = null
     private var userViewModel: UserViewModel? = null
     private var ingredientViewModel: IngredientViewModel? = null
+    private var signupViewModel: SignupViewModel? = null
     private var navController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +31,9 @@ class MainActivity : AppCompatActivity() {
         recipeViewModel = ViewModelProvider(this)[RecipeViewModel::class.java]
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         ingredientViewModel = ViewModelProvider(this)[IngredientViewModel::class.java]
+
+        signupViewModel = ViewModelProvider(this)[SignupViewModel::class.java]
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
         setupNavigation()
@@ -72,6 +78,14 @@ class MainActivity : AppCompatActivity() {
                 "Profile" -> navController!!.navigate(R.id.action_go_to_profile)
             }
             false
+        }
+
+        navController!!.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.navigation_welcome -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_signup_email -> bottom_navigation.visibility = View.GONE
+                else -> bottom_navigation.visibility = View.VISIBLE
+            }
         }
     }
 }

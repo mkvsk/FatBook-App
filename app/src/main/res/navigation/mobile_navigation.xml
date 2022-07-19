@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_signup_account_created">
+    app:startDestination="@+id/navigation_welcome">
 
     <fragment
         android:id="@+id/navigation_feed"
@@ -78,7 +78,13 @@
         android:id="@+id/navigation_welcome"
         android:name="online.fatbook.fatbookapp.ui.fragment.WelcomeFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_welcome" />
+        tools:layout="@layout/fragment_welcome" >
+
+        <action
+            android:id="@+id/action_go_to_signup_email"
+            app:destination="@id/navigation_signup_email"
+            app:popUpTo="@id/navigation_welcome" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_signin"
@@ -96,19 +102,19 @@
         android:id="@+id/navigation_signup_email"
         android:name="online.fatbook.fatbookapp.ui.fragment.signup.SignupEmailFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_signup_email" />
+        tools:layout="@layout/fragment_signup_email" >
+
+        <action
+            android:id="@+id/action_go_to_verification_code"
+            app:destination="@id/navigation_verification_code"
+            app:popUpTo="@id/navigation_signup_email" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_verification_code"
         android:name="online.fatbook.fatbookapp.ui.fragment.signup.VerificationCodeFragment"
         android:label="@null"
         tools:layout="@layout/fragment_verification_code" />
-
-    <fragment
-        android:id="@+id/navigation_signup_account_created"
-        android:name="online.fatbook.fatbookapp.ui.fragment.signup.AccountCreatedFragment"
-        android:label="@null"
-        tools:layout="@layout/fragment_account_created" />
 
     <fragment
         android:id="@+id/navigation_signup_password"
