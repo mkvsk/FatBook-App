@@ -2,25 +2,30 @@ package online.fatbook.fatbookapp.ui.fragment.signup
 
 import android.os.Bundle
 import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_verification_code.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentVerificationCodeBinding
+import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
+import online.fatbook.fatbookapp.util.obtainViewModel
 
 class VerificationCodeFragment : Fragment() {
+
     private var binding: FragmentVerificationCodeBinding? = null
+
+    private val signUpViewModel by lazy { obtainViewModel(SignupViewModel::class.java) }
+
     var timer = 10
+
     var handler = Handler()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentVerificationCodeBinding.inflate(inflater, container, false)
         return binding!!.root
     }
