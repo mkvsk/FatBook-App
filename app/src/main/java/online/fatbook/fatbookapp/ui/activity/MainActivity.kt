@@ -84,6 +84,13 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.navigation_welcome -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_signup_email -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_verification_code -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_signup_password -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_signup_username -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_signin -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_signin_newpass -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_account_created -> bottom_navigation.visibility = View.GONE
+
                 else -> bottom_navigation.visibility = View.VISIBLE
             }
         }

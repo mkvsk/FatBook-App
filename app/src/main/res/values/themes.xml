@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.FatBook" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/pink_a200</item> //основные элементы
+        <item name="colorPrimary">@color/pink_a200</item>
         <item name="colorPrimaryVariant">@color/color_blue_grey_200</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -30,9 +30,11 @@
     <color name="editText_catdialog_bgr">#ECEFF1</color>
 
     <color name="btnEnabledColor">#FF4081</color>
-    <color name="btnDisabledColor">#263238</color>
     <color name="btnEnabledColor_text">#FFFFFFFF</color>
-    <color name="btnDisabledColor_text">#263238</color>
+    <color name="btnDisabledColor">#ECEFF1</color>
+    <color name="btnDisabledColor_text">#B0BEC5</color>
+
+    <color name="btnDialogInvalid_text">#FF4081</color>
 
     ///ic colors
     <color name="ic_visibility_color">#B0BEC5</color>
@@ -41,7 +43,23 @@
         <item name="android:layout_width">@dimen/btn_pink_w</item>
         <item name="android:layout_height">@dimen/btn_pink_h</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/btnEnabledColor_text</item>
+        <item name="backgroundColor">@drawable/selector_start_buttons</item>
+        <item name="cornerRadius">30dp</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="textAllCaps">true</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="btnGrey">
+        <item name="android:layout_width">@dimen/btn_pink_w</item>
+        <item name="android:layout_height">@dimen/btn_pink_h</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/btnDisabledColor_text</item>
+        <item name="android:backgroundTint">@color/btnDisabledColor</item>
         <item name="cornerRadius">30dp</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="textAllCaps">true</item>
@@ -130,20 +148,7 @@
     </style>
 
     ///v1.0.0
-    <style name="greyButton">
-        <item name="android:layout_width">234dp</item>
-        <item name="android:layout_height">45dp</item>
-        <item name="backgroundTint">@color/color_blue_grey_200</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="cornerRadius">4dp</item>
-        <item name="fontFamily">@font/roboto_regular</item>
-        <item name="textAllCaps">true</item>
-        <item name="elevation">4dp</item>
-        <item name="android:translationZ">2dp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:stateListAnimator">@null</item>
-    </style>
+
 
     <style name="addRecipeButton">
         <item name="android:layout_width">234dp</item>
@@ -171,18 +176,18 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
-<!--    <style name="editTextPinkFrame">-->
-<!--        <item name="android:layout_width">234dp</item>-->
-<!--        <item name="android:layout_height">45dp</item>-->
-<!--        <item name="android:textSize">16sp</item>-->
-<!--        <item name="android:textColor">@color/color_blue_grey_900</item>-->
-<!--        <item name="elevation">6dp</item>-->
-<!--        <item name="android:translationZ">4dp</item>-->
-<!--        <item name="background">@drawable/round_corner_edittext</item>-->
-<!--        <item name="fontFamily">@font/roboto_regular</item>-->
-<!--        <item name="android:maxLength">16</item>-->
-<!--        <item name="android:textAlignment">center</item>-->
-<!--    </style>-->
+    <!--    <style name="editTextPinkFrame">-->
+    <!--        <item name="android:layout_width">234dp</item>-->
+    <!--        <item name="android:layout_height">45dp</item>-->
+    <!--        <item name="android:textSize">16sp</item>-->
+    <!--        <item name="android:textColor">@color/color_blue_grey_900</item>-->
+    <!--        <item name="elevation">6dp</item>-->
+    <!--        <item name="android:translationZ">4dp</item>-->
+    <!--        <item name="background">@drawable/round_corner_edittext</item>-->
+    <!--        <item name="fontFamily">@font/roboto_regular</item>-->
+    <!--        <item name="android:maxLength">16</item>-->
+    <!--        <item name="android:textAlignment">center</item>-->
+    <!--    </style>-->
 
 
 </resources>

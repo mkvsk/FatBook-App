@@ -115,7 +115,7 @@
 
     <Button
         android:id="@+id/button_login_next"
-        style="@style/greyButton"
+        style="@style/btnGrey"
         android:layout_marginBottom="30dp"
         android:text="@string/btn_next_login"
         app:layout_constraintBottom_toTopOf="@id/textView_login_tagline"

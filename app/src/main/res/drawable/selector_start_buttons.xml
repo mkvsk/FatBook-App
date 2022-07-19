@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:state_enabled="false"
-        android:drawable="@drawable/btn_disabled" />
-    <item
-        android:state_pressed="true"
-        android:state_enabled="true"
-        android:drawable="@drawable/btn_disabled" />
-    <item
-        android:state_focused="true"
-        android:state_enabled="true"
-        android:drawable="@drawable/btn_enabled" />
-    <item
-        android:state_enabled="true"
-        android:drawable="@drawable/btn_enabled" />
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+
+    <item android:state_enabled="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/btnEnabledColor" />
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/btnDisabledColor" />
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+
 </selector>

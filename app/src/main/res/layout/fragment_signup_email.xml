@@ -33,39 +33,36 @@
             android:text="@string/title_app_name_signup_email" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_signup_email_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingVertical="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
         <TextView
             android:id="@+id/fragment_signup_email_additional_text"
             style="@style/signUpAdditionalText"
             android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
-            android:text="@string/adds_signup_email" />
+            android:text="@string/adds_signup_email"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragment_signup_email_edittext_email"/>
 
         <EditText
             android:id="@+id/fragment_signup_email_edittext_email"
             style="@style/editText"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/start_fragments_element_spacing"
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_email_signup_email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragment_signup_email_button_next"/>
 
         <Button
             android:id="@+id/fragment_signup_email_button_next"
             style="@style/btnPink"
-            android:text="@string/btn_next_signup_email" />
+            android:text="@string/btn_next_signup_email"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
     <ImageView

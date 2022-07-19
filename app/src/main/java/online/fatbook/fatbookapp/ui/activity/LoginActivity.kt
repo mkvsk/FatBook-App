@@ -83,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
         binding!!.editTextLogin.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                charSequence.toString().lowercase()
                 validateLogin(charSequence.toString())
             }
 

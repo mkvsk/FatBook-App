@@ -41,7 +41,7 @@
         android:id="@+id/navigation_bookmarks"
         android:name="online.fatbook.fatbookapp.ui.fragment.BookmarksFragment"
         android:label="@string/mobile_nav_bookmarks"
-        tools:layout="@layout/fragment_bookmarks" >
+        tools:layout="@layout/fragment_bookmarks">
 
         <action
             android:id="@+id/action_go_to_recipe_view_from_bookmarks"
@@ -54,7 +54,7 @@
         android:id="@+id/navigation_user_profile"
         android:name="online.fatbook.fatbookapp.ui.fragment.UserProfileFragment"
         android:label="@string/mobile_nav_user_profile"
-        tools:layout="@layout/fragment_user_profile" >
+        tools:layout="@layout/fragment_user_profile">
 
         <action
             android:id="@+id/action_go_to_recipe_view_from_user_profile"
@@ -78,7 +78,7 @@
         android:id="@+id/navigation_welcome"
         android:name="online.fatbook.fatbookapp.ui.fragment.WelcomeFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_welcome">
 
         <action
             android:id="@+id/action_go_to_signup_email"
@@ -96,13 +96,15 @@
         android:id="@+id/navigation_signin_newpass"
         android:name="online.fatbook.fatbookapp.ui.fragment.signin.SigninNewPassFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_signin_new_pass" />
+        tools:layout="@layout/fragment_signin_new_pass">
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_signup_email"
         android:name="online.fatbook.fatbookapp.ui.fragment.signup.SignupEmailFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_signup_email" >
+        tools:layout="@layout/fragment_signup_email">
 
         <action
             android:id="@+id/action_go_to_verification_code"
@@ -114,19 +116,44 @@
         android:id="@+id/navigation_verification_code"
         android:name="online.fatbook.fatbookapp.ui.fragment.signup.VerificationCodeFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_verification_code" />
+        tools:layout="@layout/fragment_verification_code">
+
+        <action
+            android:id="@+id/action_go_to_signup_password"
+            app:destination="@id/navigation_signup_password"
+            app:popUpTo="@id/navigation_verification_code" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_signup_password"
         android:name="online.fatbook.fatbookapp.ui.fragment.signup.SignupPasswordFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_signup_password" />
+        tools:layout="@layout/fragment_signup_password">
+
+        <action
+            android:id="@+id/action_go_to_signup_username"
+            app:destination="@id/navigation_signup_username"
+            app:popUpTo="@id/navigation_signup_password" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_signup_username"
         android:name="online.fatbook.fatbookapp.ui.fragment.signup.SignupUsernameFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_signup_username" />
+        tools:layout="@layout/fragment_signup_username" >
+
+        <action
+            android:id="@+id/action_go_to_account_created"
+            app:destination="@id/navigation_account_created"
+            app:popUpTo="@id/navigation_signup_username" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_account_created"
+        android:name="online.fatbook.fatbookapp.ui.fragment.signup.AccountCreatedFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_account_created" />
 
     <action
         android:id="@+id/action_go_to_feed"
