@@ -41,6 +41,7 @@ class SignupEmailFragment : Fragment() {
         return binding!!.root
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,11 +57,14 @@ class SignupEmailFragment : Fragment() {
                     //TODO почта уже используется
                 }
             } else {
-//                val string: String = getString(R.string.dialog_wrong_data_signup_email)
-                fragment_signup_email_dialog_text.text = getString(R.string.dialog_wrong_data_signup_email)
+                fragment_signup_email_dialog_text.text =
+                    getString(R.string.dialog_wrong_data_signup_email)
                 fragment_signup_email_dialog_text.setTextColor(Color.parseColor("#FF4081"))
                 fragment_signup_email_edittext_email.text = null
                 fragment_signup_email_edittext_email.clearFocus()
+                fragment_signup_email_edittext_email.background = resources.getDrawable(R.drawable.round_corner_edittext_error)
+
+
                 //TODO почта инвалиндая
             }
         }
@@ -69,9 +73,8 @@ class SignupEmailFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
-            @SuppressLint("ResourceAsColor")
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s.toString().length > 3) {
+                if (s.toString().length > 3) {
                     fragment_signup_email_button_next.visibility = View.VISIBLE
                 } else {
                     fragment_signup_email_button_next.visibility = View.INVISIBLE
