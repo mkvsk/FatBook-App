@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_verification_code.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentVerificationCodeBinding
 import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
+import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 import java.lang.Exception
@@ -57,6 +58,8 @@ class VerificationCodeFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                fragment_verification_code_edittext_vc.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext)
                 fragment_verification_code_button_next.isEnabled = s.toString().length == 6
             }
 
@@ -75,11 +78,17 @@ class VerificationCodeFragment : Fragment() {
                 NavHostFragment.findNavController(this)
                     .navigate(R.id.action_go_to_signup_password)
             } else {
+                hideKeyboard(fragment_verification_code_edittext_vc)
                 fragment_verification_code_dialog_text.text =
                     getString(R.string.dialog_wrong_verification_code)
-                fragment_verification_code_dialog_text.setTextColor(ContextCompat.getColor(requireContext(), R.color.btnDialogInvalid_text))
-                fragment_verification_code_edittext_vc.clearFocus()
-                fragment_verification_code_edittext_vc.background = resources.getDrawable(R.drawable.round_corner_edittext_error)
+                fragment_verification_code_dialog_text.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.btnDialogInvalid_text
+                    )
+                )
+                fragment_verification_code_edittext_vc.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
             }
         }
     }

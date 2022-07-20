@@ -136,14 +136,14 @@
     <string name="dialog_signin_new_pass">Введите 6-16 символов, используя только буквы и цифры</string>
     <string name="adds_signup_email">Введите электронную почту:</string>
     <string name="dialog_signup_email">Только один аккаунт можно зарегистрировать на электронный адрес</string>
-    <string name="dialog_wrong_data_signup_email">Адрес почты\n уже используется либо\n введен не правильно</string>
+    <string name="dialog_wrong_data_signup_email">Адрес почты  указан некорректно</string>
     <string name="adds_signup_password">Задайте пароль:</string>
     <string name="hint_password_signup_password">Пароль</string>
-    <string name="dialog_signup_password">Введите 6-16 символов, используя только буквы и цифры</string>
+    <string name="dialog_signup_password">Введите 6-20 символов</string>
     <string name="adds_signup_username">Придумайте имя пользователя:</string>
     <string name="hint_username_signup_username">Имя пользователя</string>
-    <string name="dialog_signup_username">Имя пользователя отображается в профиле и используется для входа</string>
-    <string name="dialog_signup_username_unavailable">Это имя недоступно</string>
+    <string name="dialog_signup_username">Используйте строчные буквы и цифры,\n а также символы\n \".\" и \"_\"</string>
+    <string name="dialog_signup_username_unavailable">Это имя уже занято</string>
     <string name="title_account_created">добро пожаловать</string>
     <string name="adds_account_created">Ваш аккаунт создан</string>
     <string name="dialog_account_created">Рад встрече, %s! Сделаем нашу книгу рецептов еще толще!</string>
@@ -153,4 +153,6 @@
     <string name="resend_verification_code"><u>отправить код</u></string>
     <string name="resend_verification_code_timer"><u>(%s) отправить код</u></string>
     <string name="dialog_splash">Я просто ем тут свой суп.</string>
+    <string name="dialog_signup_username_invalid">Имя введено некорректно</string>
+    <string name="dialog_email_used_signup_email">Адрес почты уже используется другим аккаунтом</string>
 </resources>

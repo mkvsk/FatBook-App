@@ -49,15 +49,16 @@
     <string name="adds_signup_password">Set password:</string>
     <string name="hint_password_signup_password">Password</string>
     <string name="btn_next_signup_password">next</string>
-    <string name="dialog_signup_password">Password must be 6-16 \n characters long and \n contains only numbers \n and letters</string>
+    <string name="dialog_signup_password">Password must be 6-20 \n characters long</string>
 
     ///fragment signup username
     <string name="title_app_name_signup_username" translatable="false">FatBook</string>
     <string name="adds_signup_username">Set Username:</string>
     <string name="hint_username_signup_username">Username</string>
     <string name="btn_next_signup_username">next</string>
-    <string name="dialog_signup_username">Username is displayed \n in the profile and \n is used to sign in</string>
-    <string name="dialog_signup_username_unavailable">This Username \n is not available.</string>
+    <string name="dialog_signup_username">Use only lowercase\n letters and numbers,\n special characters\n \".\" and \"_\"</string>
+    <string name="dialog_signup_username_invalid">This Username\n is not entered correctly</string>
+    <string name="dialog_signup_username_unavailable">This Username \n is already in use</string>
 
     ///fragment account created
     <string name="title_account_created">welcome to</string>

@@ -71,7 +71,6 @@ class SignupEmailFragment : Fragment() {
 
     private fun showErrorMessage(message: String) {
         fragment_signup_email_dialog_text.text = message;
-
         fragment_signup_email_dialog_text.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
