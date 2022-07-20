@@ -3,7 +3,7 @@
     <style name="Theme.FatBook" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/pink_a200</item>
-        <item name="colorPrimaryVariant">@color/color_blue_grey_200</item>
+        <item name="colorPrimaryVariant">@color/blue_grey_50</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/color_lime_500</item>
@@ -44,7 +44,7 @@
         <item name="android:layout_height">@dimen/btn_pink_h</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/btnEnabledColor_text</item>
-        <item name="backgroundColor">@drawable/selector_start_buttons</item>
+        <item name="background">@color/btnEnabledColor</item>
         <item name="cornerRadius">30dp</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="textAllCaps">true</item>

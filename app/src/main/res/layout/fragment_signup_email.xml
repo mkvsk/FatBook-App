@@ -57,7 +57,7 @@
             android:id="@+id/fragment_signup_email_button_next"
             style="@style/btnPink"
             android:text="@string/btn_next_signup_email"
-            android:visibility="invisible"
+            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

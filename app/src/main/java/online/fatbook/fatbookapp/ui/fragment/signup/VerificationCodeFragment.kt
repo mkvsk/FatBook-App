@@ -1,12 +1,18 @@
 package online.fatbook.fatbookapp.ui.fragment.signup
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import kotlinx.android.synthetic.main.fragment_signup_email.*
 import kotlinx.android.synthetic.main.fragment_verification_code.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentVerificationCodeBinding
@@ -33,6 +39,7 @@ class VerificationCodeFragment : Fragment() {
         return binding!!.root
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -45,6 +52,19 @@ class VerificationCodeFragment : Fragment() {
             startTimer()
         }
 
+        fragment_verification_code_edittext_vc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                fragment_verification_code_button_next.isEnabled = s.toString().length == 6
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
+
         fragment_verification_code_button_next.setOnClickListener {
             val value = signUpViewModel.VCCode.value
             if (StringUtils.equals(
@@ -55,7 +75,11 @@ class VerificationCodeFragment : Fragment() {
                 NavHostFragment.findNavController(this)
                     .navigate(R.id.action_go_to_signup_password)
             } else {
-                //TODO invalid code
+                fragment_verification_code_dialog_text.text =
+                    getString(R.string.dialog_wrong_verification_code)
+                fragment_verification_code_dialog_text.setTextColor(ContextCompat.getColor(requireContext(), R.color.btnDialogInvalid_text))
+                fragment_verification_code_edittext_vc.clearFocus()
+                fragment_verification_code_edittext_vc.background = resources.getDrawable(R.drawable.round_corner_edittext_error)
             }
         }
     }

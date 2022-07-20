@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/color_blue_grey_600</item>
         <item name="colorOnPrimary">@color/color_blue_grey_900</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/color_lime_500</item>
+        <item name="colorSecondary">@color/blue_grey_800</item>
         <item name="colorSecondaryVariant">@color/color_blue_grey_600</item>
         <item name="colorOnSecondary">@color/color_blue_grey_900</item>
         <!-- Status bar color. -->
@@ -44,7 +44,7 @@
         <item name="android:layout_height">@dimen/btn_pink_h</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/btnEnabledColor_text</item>
-        <item name="backgroundColor">@drawable/selector_start_buttons</item>
+        <item name="background">@color/btnEnabledColor</item>
         <item name="cornerRadius">30dp</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="textAllCaps">true</item>

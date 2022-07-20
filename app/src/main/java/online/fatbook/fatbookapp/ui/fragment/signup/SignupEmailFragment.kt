@@ -1,30 +1,21 @@
 package online.fatbook.fatbookapp.ui.fragment.signup
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import androidx.core.view.isGone
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_signup_email.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentSignupEmailBinding
 import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
+import online.fatbook.fatbookapp.util.Constants.SYMBOL_AT
+import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
-import java.lang.Exception
-import java.util.regex.Pattern
 
 class SignupEmailFragment : Fragment() {
 
@@ -32,7 +23,6 @@ class SignupEmailFragment : Fragment() {
 
     private val signupViewModel by lazy { obtainViewModel(SignupViewModel::class.java) }
 
-    @SuppressLint("ResourceAsColor")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +31,6 @@ class SignupEmailFragment : Fragment() {
         return binding!!.root
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,18 +43,12 @@ class SignupEmailFragment : Fragment() {
                     NavHostFragment.findNavController(this)
                         .navigate(R.id.action_go_to_verification_code)
                 } else {
-                    //TODO почта уже используется
+                    hideKeyboard(fragment_signup_email_edittext_email)
+                    showErrorMessage(getString(R.string.dialog_email_used_signup_email))
                 }
             } else {
-                fragment_signup_email_dialog_text.text =
-                    getString(R.string.dialog_wrong_data_signup_email)
-                fragment_signup_email_dialog_text.setTextColor(Color.parseColor("#FF4081"))
-                fragment_signup_email_edittext_email.text = null
-                fragment_signup_email_edittext_email.clearFocus()
-                fragment_signup_email_edittext_email.background = resources.getDrawable(R.drawable.round_corner_edittext_error)
-
-
-                //TODO почта инвалиндая
+                hideKeyboard(fragment_signup_email_edittext_email)
+                showErrorMessage(getString(R.string.dialog_wrong_data_signup_email))
             }
         }
 
@@ -74,17 +57,29 @@ class SignupEmailFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString().length > 3) {
-                    fragment_signup_email_button_next.visibility = View.VISIBLE
-                } else {
-                    fragment_signup_email_button_next.visibility = View.INVISIBLE
+                fragment_signup_email_edittext_email.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext)
+                if (s != null) {
+                    fragment_signup_email_button_next.isEnabled = s.contains(SYMBOL_AT)
                 }
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
-
         })
+    }
+
+    private fun showErrorMessage(message: String) {
+        fragment_signup_email_dialog_text.text = message;
+
+        fragment_signup_email_dialog_text.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.btnDialogInvalid_text
+            )
+        )
+        fragment_signup_email_edittext_email.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
     }
 
     //TODO api call
@@ -101,7 +96,7 @@ class SignupEmailFragment : Fragment() {
     }
 
     private fun emailValidate(): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(fragment_signup_email_edittext_email.text).matches()
-//        return true
+//        return Patterns.EMAIL_ADDRESS.matcher(fragment_signup_email_edittext_email.text).matches()
+        return true
     }
 }
