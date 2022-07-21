@@ -30,6 +30,9 @@ class WelcomeFragment : Fragment() {
         fragment_welcome_button_signup.setOnClickListener {
             NavHostFragment.findNavController(this).navigate(R.id.action_go_to_signup_email)
         }
+        fragment_welcome_button_signin.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_signin)
+        }
     }
 
 }

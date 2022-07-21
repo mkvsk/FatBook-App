@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.time.LocalDateTime
 
 class SignupViewModel : ViewModel() {
     var email = MutableLiveData<String?>()
@@ -10,5 +11,6 @@ class SignupViewModel : ViewModel() {
 
     var isVCSend = MutableLiveData(false)
     var VCCode = MutableLiveData<String?>()
+    var VCResendTimestamp = MutableLiveData<LocalDateTime?>()
 
 }

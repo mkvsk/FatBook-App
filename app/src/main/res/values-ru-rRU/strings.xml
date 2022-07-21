@@ -124,7 +124,7 @@
     <string name="btn_signin_signin">Войти</string>
     <string name="forgot_password"><u>не помню  пароль</u></string>
     <string name="dialog_signin">Рад снова встретиться с вами!</string>
-    <string name="dialog_wrong_data_signin">Неверно! Попробуйте еще или нажмите \"не помню пароль\"</string>
+    <string name="dialog_wrong_password_signin">Пользователь с таким\n именем не существует</string>
     <string name="hint_new_password_signin_new_pass">Новый пароль</string>
     <string name="hint_repeat_new_password_signin_new_pass">Повторить новый пароль</string>
     <string name="btn_next_signin_new_pass">далее</string>
@@ -155,4 +155,5 @@
     <string name="dialog_splash">Я просто ем тут свой суп.</string>
     <string name="dialog_signup_username_invalid">Имя введено некорректно</string>
     <string name="dialog_email_used_signup_email">Адрес почты уже используется другим аккаунтом</string>
+    <string name="dialog_wrong_username_signin">Пользователь с таким\\n именем не существует</string>
 </resources>

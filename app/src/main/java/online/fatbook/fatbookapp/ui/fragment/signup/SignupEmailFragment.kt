@@ -16,6 +16,7 @@ import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
 import online.fatbook.fatbookapp.util.Constants.SYMBOL_AT
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
+import java.time.LocalDateTime
 
 class SignupEmailFragment : Fragment() {
 
@@ -39,6 +40,11 @@ class SignupEmailFragment : Fragment() {
                 if (emailCheck()) {
                     signupViewModel.email.value =
                         fragment_signup_email_edittext_email.text.toString()
+
+                    signupViewModel.VCResendTimestamp.value = LocalDateTime.now().plusMinutes(1)
+
+//                    signupViewModel.VCResendTimestamp.value!!.isBefore(LocalDateTime.now()) count down android textview
+
                     sendVerificationCode(signupViewModel.email.value!!)
                     NavHostFragment.findNavController(this)
                         .navigate(R.id.action_go_to_verification_code)
@@ -74,7 +80,7 @@ class SignupEmailFragment : Fragment() {
         fragment_signup_email_dialog_text.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.btnDialogInvalid_text
+                R.color.dialogErrorMess_text
             )
         )
         fragment_signup_email_edittext_email.background =

@@ -1,7 +1,6 @@
 package online.fatbook.fatbookapp.ui.fragment.signup
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -12,7 +11,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_signup_email.*
 import kotlinx.android.synthetic.main.fragment_verification_code.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentVerificationCodeBinding
@@ -20,7 +18,6 @@ import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
-import java.lang.Exception
 
 class VerificationCodeFragment : Fragment() {
 
@@ -84,7 +81,7 @@ class VerificationCodeFragment : Fragment() {
                 fragment_verification_code_dialog_text.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
-                        R.color.btnDialogInvalid_text
+                        R.color.dialogErrorMess_text
                     )
                 )
                 fragment_verification_code_edittext_vc.background =

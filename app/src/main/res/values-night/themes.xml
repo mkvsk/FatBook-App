@@ -34,7 +34,7 @@
     <color name="btnDisabledColor">#37474F</color>
     <color name="btnDisabledColor_text">#546E7A</color>
 
-    <color name="btnDialogInvalid_text">#FF4081</color>
+    <color name="dialogErrorMess_text">#FF4081</color>
 
     ///ic colors
     <color name="ic_visibility_color">#B0BEC5</color>

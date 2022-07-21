@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_signup_email.*
 import kotlinx.android.synthetic.main.fragment_signup_password.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentSignupPasswordBinding
@@ -67,7 +66,7 @@ class SignupPasswordFragment : Fragment() {
         fragment_signup_password_dialog_text.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.btnDialogInvalid_text
+                R.color.dialogErrorMess_text
             )
         )
         fragment_signup_password_edittext_password.text = null

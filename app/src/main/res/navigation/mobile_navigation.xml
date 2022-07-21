@@ -84,13 +84,26 @@
             android:id="@+id/action_go_to_signup_email"
             app:destination="@id/navigation_signup_email"
             app:popUpTo="@id/navigation_welcome" />
+
+        <action
+            android:id="@+id/action_go_to_signin"
+            app:destination="@id/navigation_signin"
+            app:popUpTo="@id/navigation_welcome" />
+
     </fragment>
 
     <fragment
         android:id="@+id/navigation_signin"
         android:name="online.fatbook.fatbookapp.ui.fragment.signin.SignInFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in">
+
+<!--        <action-->
+<!--            android:id="@+id/action_go_to_verification_code"-->
+<!--            app:destination="@id/navigation_verification_code"-->
+<!--            app:popUpTo="@id/navigation_signup_email"-->
+<!--            />-->
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_signin_newpass"
