@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitFactory {
     private const val HTTP = "http://"
-    private const val ADDRESS = "10.0.2.2:8080/"
+    private const val ADDRESS = "10.0.2.2:1339/"
 
     //    private static final String ADDRESS = "192.168.0.120:8080";
     private const val ENDPOINT = "api/"

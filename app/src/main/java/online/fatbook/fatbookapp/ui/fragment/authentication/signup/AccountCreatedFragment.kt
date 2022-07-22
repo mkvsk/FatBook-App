@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.signup
+package online.fatbook.fatbookapp.ui.fragment.authentication.signup
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

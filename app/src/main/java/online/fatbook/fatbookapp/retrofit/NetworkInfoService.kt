@@ -9,6 +9,10 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface NetworkInfoService {
+
+    @GET("registration/username/check")
+    fun usernameCheck(@Query(value = "username") username: String?): Call<Boolean>
+
     /**
      * User
      */
@@ -47,8 +51,8 @@ interface NetworkInfoService {
     @POST("ingredient/add")
     fun addIngredient(@Body ingredient: Ingredient?): Call<Void>
 
-    @get:GET("ingredient/get/all")
-    val allIngredients: Call<List<Ingredient>>
+    @GET("ingredient/get/all")
+    fun allIngredients(): Call<List<Ingredient>>
 
     /**
      * Recipe

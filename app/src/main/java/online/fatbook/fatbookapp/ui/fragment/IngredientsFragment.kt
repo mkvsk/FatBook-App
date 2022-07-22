@@ -124,7 +124,7 @@ class IngredientsFragment : Fragment() {
     }
 
     private fun loadIngredients() {
-        RetrofitFactory.apiServiceClient().allIngredients.enqueue(object :
+        RetrofitFactory.apiServiceClient().allIngredients().enqueue(object :
             Callback<List<Ingredient>?> {
             override fun onResponse(
                 call: Call<List<Ingredient>?>,

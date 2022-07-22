@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/start_fragments_bgr"
-    tools:context=".ui.fragment.signup.SignupUsernameFragment">
+    tools:context=".ui.fragment.authentication.signup.SignupUsernameFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/fragment_signup_username_header"

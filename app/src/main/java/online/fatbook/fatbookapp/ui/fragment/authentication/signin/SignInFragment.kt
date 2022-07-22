@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.signin
+package online.fatbook.fatbookapp.ui.fragment.authentication.signin
 
 import android.os.Bundle
 import android.text.Editable

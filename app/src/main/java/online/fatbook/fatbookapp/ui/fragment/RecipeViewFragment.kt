@@ -20,6 +20,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import lombok.extern.java.Log
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
@@ -129,7 +130,7 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
     private fun uploadImage() {
         if (recipePhoto != null) {
             try {
-                val requestFile = RequestBody.create(MediaType.parse("image/*"), recipePhoto)
+                val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), recipePhoto!!)
                 val fileName = "image" + recipePhoto!!.name.substring(
                     recipePhoto!!.name.indexOf('.')
                 )

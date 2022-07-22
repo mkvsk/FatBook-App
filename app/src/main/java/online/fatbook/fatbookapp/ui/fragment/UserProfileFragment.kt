@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import lombok.extern.java.Log
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
@@ -352,7 +353,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
     private fun uploadImage() {
         try {
-            val requestFile = RequestBody.create(MediaType.parse("image/*"), userPhoto)
+            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), userPhoto!!)
             val fileName = "image" + userPhoto!!.name.substring(userPhoto!!.name.indexOf('.'))
             val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
             RetrofitFactory.apiServiceClient()

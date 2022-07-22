@@ -1,8 +1,9 @@
-package online.fatbook.fatbookapp.ui.fragment.signup
+package online.fatbook.fatbookapp.ui.fragment.authentication.signup
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,6 @@ import java.time.LocalDateTime
 class SignupEmailFragment : Fragment() {
 
     private var binding: FragmentSignupEmailBinding? = null
-
     private val signupViewModel by lazy { obtainViewModel(SignupViewModel::class.java) }
 
     override fun onCreateView(
@@ -34,20 +34,17 @@ class SignupEmailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         fragment_signup_email_button_next.setOnClickListener {
             if (emailValidate()) {
                 if (emailCheck()) {
+                    if (signupViewModel.email.value!! != fragment_signup_email_edittext_email.text.toString()) {
+                        signupViewModel.timestampSet.value = false
+                        signupViewModel.currentCountdown.value = 0
+                        signupViewModel.cancelTimer()
+                    }
                     signupViewModel.email.value =
                         fragment_signup_email_edittext_email.text.toString()
-
-                    if(!signupViewModel.timestampSet.value!!) {
-                        signupViewModel.VCResendTimestamp.value = LocalDateTime.now().plusMinutes(1)
-                        signupViewModel.timestampSet.value = true
-                    }
-
-//                    signupViewModel.VCResendTimestamp.value!!.isBefore(LocalDateTime.now()) count down android textview
-
+                    startTimer()
                     sendVerificationCode(signupViewModel.email.value!!)
                     NavHostFragment.findNavController(this)
                         .navigate(R.id.action_go_to_verification_code)
@@ -90,12 +87,16 @@ class SignupEmailFragment : Fragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
     }
 
+    private fun startTimer() {
+        if (!signupViewModel.timestampSet.value!!) {
+            signupViewModel.timestampSet.value = true
+            signupViewModel.startTimer(signupViewModel.resendVCTimer.value!!)
+        }
+    }
+
     //TODO api call
     private fun sendVerificationCode(value: String) {
-        signupViewModel.VCCode.value = "111111"
-        /* if (!signupViewModel.isVCSend.value!!) {
-
-         }*/
+        signupViewModel.vCode.value = "123123"
     }
 
     //TODO api call

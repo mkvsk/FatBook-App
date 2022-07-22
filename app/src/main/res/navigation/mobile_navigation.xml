@@ -94,7 +94,7 @@
 
     <fragment
         android:id="@+id/navigation_signin"
-        android:name="online.fatbook.fatbookapp.ui.fragment.signin.SignInFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signin.SignInFragment"
         android:label="@null"
         tools:layout="@layout/fragment_sign_in">
 
@@ -107,7 +107,7 @@
 
     <fragment
         android:id="@+id/navigation_signin_newpass"
-        android:name="online.fatbook.fatbookapp.ui.fragment.signin.SigninNewPassFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signin.SigninNewPassFragment"
         android:label="@null"
         tools:layout="@layout/fragment_signin_new_pass">
 
@@ -115,7 +115,7 @@
 
     <fragment
         android:id="@+id/navigation_signup_email"
-        android:name="online.fatbook.fatbookapp.ui.fragment.signup.SignupEmailFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.SignupEmailFragment"
         android:label="@null"
         tools:layout="@layout/fragment_signup_email">
 
@@ -127,7 +127,7 @@
 
     <fragment
         android:id="@+id/navigation_verification_code"
-        android:name="online.fatbook.fatbookapp.ui.fragment.signup.VerificationCodeFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.VerificationCodeFragment"
         android:label="@null"
         tools:layout="@layout/fragment_verification_code">
 
@@ -140,7 +140,7 @@
 
     <fragment
         android:id="@+id/navigation_signup_password"
-        android:name="online.fatbook.fatbookapp.ui.fragment.signup.SignupPasswordFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.SignupPasswordFragment"
         android:label="@null"
         tools:layout="@layout/fragment_signup_password">
 
@@ -152,7 +152,7 @@
 
     <fragment
         android:id="@+id/navigation_signup_username"
-        android:name="online.fatbook.fatbookapp.ui.fragment.signup.SignupUsernameFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.SignupUsernameFragment"
         android:label="@null"
         tools:layout="@layout/fragment_signup_username" >
 
@@ -164,7 +164,7 @@
 
     <fragment
         android:id="@+id/navigation_account_created"
-        android:name="online.fatbook.fatbookapp.ui.fragment.signup.AccountCreatedFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.AccountCreatedFragment"
         android:label="@null"
         tools:layout="@layout/fragment_account_created" />
 

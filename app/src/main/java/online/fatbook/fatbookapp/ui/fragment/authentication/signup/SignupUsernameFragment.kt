@@ -1,13 +1,13 @@
-package online.fatbook.fatbookapp.ui.fragment.signup
+package online.fatbook.fatbookapp.ui.fragment.authentication.signup
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_signup_username.*
 import online.fatbook.fatbookapp.R
@@ -26,7 +26,7 @@ class SignupUsernameFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSignupUsernameBinding.inflate(inflater, container, false)
         return binding!!.root
     }
@@ -34,16 +34,11 @@ class SignupUsernameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        addObservers()
+
         fragment_signup_username_button_next.setOnClickListener {
             if (usernameValidate()) {
-                if (usernameCheck(fragment_signup_username_edittext_username.text.toString())) {
-                    signupViewModel.username.value =
-                        fragment_signup_username_edittext_username.text.toString()
-                    createNewUser()
-                } else {
-                    hideKeyboard(fragment_signup_username_edittext_username)
-                    showErrorMessage(getString(R.string.dialog_signup_username_unavailable))
-                }
+                signupViewModel.usernameCheck(fragment_signup_username_edittext_username.text.toString())
             } else {
                 hideKeyboard(fragment_signup_username_edittext_username)
                 showErrorMessage(getString(R.string.dialog_signup_username_invalid))
@@ -61,14 +56,33 @@ class SignupUsernameFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if(s.toString().isEmpty()) {
-                    fragment_signup_username_dialog_text.text = getString(R.string.dialog_signup_username)
-                    fragment_signup_username_dialog_text.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_text))
+                if (s.toString().isEmpty()) {
+                    fragment_signup_username_dialog_text.text =
+                        getString(R.string.dialog_signup_username)
+                    fragment_signup_username_dialog_text.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.main_text
+                        )
+                    )
                 }
 //                fragment_signup_username_edittext_username.setText(s.toString().lowercase())
             }
 
         })
+    }
+
+    private fun addObservers() {
+        signupViewModel.usernameAvailable.observe(viewLifecycleOwner) {
+            if (it!!) {
+                signupViewModel.username.value =
+                    fragment_signup_username_edittext_username.text.toString()
+                createNewUser()
+            } else {
+                hideKeyboard(fragment_signup_username_edittext_username)
+                showErrorMessage(getString(R.string.dialog_signup_username_unavailable))
+            }
+        }
     }
 
     private fun showErrorMessage(message: String) {
@@ -94,13 +108,9 @@ class SignupUsernameFragment : Fragment() {
             .navigate(R.id.action_go_to_account_created)
     }
 
-    //TODO api call
-    private fun usernameCheck(username: String): Boolean {
-        return true
-    }
-
     private fun usernameValidate(): Boolean {
-        return Pattern.compile(USERNAME_REGEX).matcher(fragment_signup_username_edittext_username.text).matches()
+        return Pattern.compile(USERNAME_REGEX)
+            .matcher(fragment_signup_username_edittext_username.text).matches()
 //        return true
 
     }
