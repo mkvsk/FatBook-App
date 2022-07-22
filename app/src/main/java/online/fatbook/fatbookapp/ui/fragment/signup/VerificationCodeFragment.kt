@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.ui.fragment.signup
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_verification_code.*
@@ -18,6 +20,7 @@ import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
+import java.time.LocalDateTime
 
 class VerificationCodeFragment : Fragment() {
 
@@ -28,6 +31,8 @@ class VerificationCodeFragment : Fragment() {
     var timer = 10
 
     var handler = Handler()
+
+    val seconds = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +46,9 @@ class VerificationCodeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fragment_verification_code_resend_link.isVisible = LocalDateTime.now().isAfter(signUpViewModel.VCResendTimestamp.value)
+
+        seconds = signUpViewModel
         startTimer()
         fragment_verification_code_resend_link.isEnabled = false
 
@@ -91,22 +99,34 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun startTimer() {
+        object : CountDownTimer(seconds, 1000) {
 
-        context?.let {
-            handler.postDelayed({
-                if (timer > -1) {
-                    fragment_verification_code_resend_link.text = String.format(
-                        resources.getString(R.string.resend_verification_code_timer), timer
-                    )
-                    timer -= 1
-                    startTimer();
-                } else {
-                    fragment_verification_code_resend_link.text =
-                        resources.getString(R.string.resend_verification_code)
-                    fragment_verification_code_resend_link.isEnabled = true
-                }
-            }, 1000L)
-        }
+            override fun onTick(millisUntilFinished: Long) {
+
+            }
+
+            override fun onFinish() {
+                signUpViewModel.timestampSet.value = false
+                signUpViewModel.VCResendTimestamp.value = null
+            }
+        }.start()
+
+//
+//        context?.let {
+//            handler.postDelayed({
+//                if (timer > -1) {
+//                    fragment_verification_code_resend_link.text = String.format(
+//                        resources.getString(R.string.resend_verification_code_timer), timer
+//                    )
+//                    timer -= 1
+//                    startTimer();
+//                } else {
+//                    fragment_verification_code_resend_link.text =
+//                        resources.getString(R.string.resend_verification_code)
+//                    fragment_verification_code_resend_link.isEnabled = true
+//                }
+//            }, 1000L)
+//        }
 
     }
 

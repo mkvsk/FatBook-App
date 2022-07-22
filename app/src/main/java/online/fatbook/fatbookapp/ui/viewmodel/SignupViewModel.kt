@@ -12,5 +12,6 @@ class SignupViewModel : ViewModel() {
     var isVCSend = MutableLiveData(false)
     var VCCode = MutableLiveData<String?>()
     var VCResendTimestamp = MutableLiveData<LocalDateTime?>()
+    var timestampSet = MutableLiveData(false)
 
 }

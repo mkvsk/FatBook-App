@@ -41,7 +41,10 @@ class SignupEmailFragment : Fragment() {
                     signupViewModel.email.value =
                         fragment_signup_email_edittext_email.text.toString()
 
-                    signupViewModel.VCResendTimestamp.value = LocalDateTime.now().plusMinutes(1)
+                    if(!signupViewModel.timestampSet.value!!) {
+                        signupViewModel.VCResendTimestamp.value = LocalDateTime.now().plusMinutes(1)
+                        signupViewModel.timestampSet.value = true
+                    }
 
 //                    signupViewModel.VCResendTimestamp.value!!.isBefore(LocalDateTime.now()) count down android textview
 

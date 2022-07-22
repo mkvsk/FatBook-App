@@ -26,8 +26,7 @@
     <string name="btn_signin_signin">sign in</string>
     <string name="forgot_password"><u>forgot password</u></string>
     <string name="dialog_signin">Nice to meet you again!</string>
-    <string name="dialog_wrong_username_signin">Account with this\n Username does not exist</string>
-    <string name="dialog_wrong_password_signin">Wrong password!\n Try again or click \n “forgot password”</string>
+    <string name="dialog_wrong_data_signin">Wrong data\n Try again or click\n \"<u>forgot password</u>\"</string>
 
     ///fragment signin new pass
     <string name="title_app_name_signin_new_pass" translatable="false">FatBook</string>

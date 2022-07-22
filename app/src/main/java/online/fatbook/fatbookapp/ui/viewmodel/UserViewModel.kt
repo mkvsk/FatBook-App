@@ -11,5 +11,4 @@ class UserViewModel : ViewModel() {
     val bookmarkedRecipeList = MutableLiveData<ArrayList<Recipe>>()
     val forkedRecipeList = MutableLiveData<ArrayList<Recipe>>()
     val feedRecipeList = MutableLiveData<ArrayList<Recipe>?>()
-
 }

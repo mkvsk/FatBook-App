@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentSignInBinding
+import online.fatbook.fatbookapp.util.hideKeyboard
 
 class SignInFragment : Fragment() {
     private var binding: FragmentSignInBinding? = null
@@ -25,6 +26,10 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fragment_signin_button_signin.setOnClickListener {
+            hideKeyboard(fragment_signin_edittext_password)
+            signIn()
+        }
         fragment_signin_edittext_username.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -96,7 +101,7 @@ class SignInFragment : Fragment() {
 
     //TODO API call
     private fun signIn() {
-
+        showErrorMessage(getString(R.string.dialog_wrong_data_signin))
     }
 
 }
