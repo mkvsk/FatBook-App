@@ -36,6 +36,9 @@
 
     <color name="dialogErrorMess_text">#FF4081</color>
 
+    <color name="vcEnabledColor_text">#FF4081</color>
+    <color name="vcDisabledColor_text">#B0BEC5</color>
+
     ///ic colors
     <color name="ic_visibility_color">#B0BEC5</color>
 
@@ -126,7 +129,7 @@
         <item name="android:gravity">left</item>
         <item name="android:textSize">11sp</item>
         <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:textColor">@color/pink_a200</item>
+        <item name="android:textColor">@color/vcEnabledColor_text</item>
     </style>
 
     <style name="disconnectAdditionalText">

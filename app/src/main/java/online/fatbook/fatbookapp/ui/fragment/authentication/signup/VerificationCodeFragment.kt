@@ -93,13 +93,22 @@ class VerificationCodeFragment : Fragment() {
                 fragment_verification_code_resend_link.isEnabled = true
                 fragment_verification_code_resend_link.text =
                     resources.getString(R.string.resend_verification_code)
+                fragment_verification_code_resend_link.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.vcEnabledColor_text,
+                            ))
             } else {
                 //disable button
                 fragment_verification_code_resend_link.isEnabled = false
                 fragment_verification_code_resend_link.text = String.format(
                     resources.getString(R.string.resend_verification_code_timer), it
                 )
-
+                fragment_verification_code_resend_link.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.vcDisabledColor_text,
+                    ))
             }
         }
     }
