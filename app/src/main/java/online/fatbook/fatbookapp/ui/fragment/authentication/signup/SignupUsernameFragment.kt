@@ -12,7 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_signup_username.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentSignupUsernameBinding
-import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.USERNAME_REGEX
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
@@ -21,7 +21,7 @@ import java.util.regex.Pattern
 class SignupUsernameFragment : Fragment() {
     private var binding: FragmentSignupUsernameBinding? = null
 
-    private val signupViewModel by lazy { obtainViewModel(SignupViewModel::class.java) }
+    private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +38,7 @@ class SignupUsernameFragment : Fragment() {
 
         fragment_signup_username_button_next.setOnClickListener {
             if (usernameValidate()) {
-                signupViewModel.usernameCheck(fragment_signup_username_edittext_username.text.toString())
+                authViewModel.usernameCheck(fragment_signup_username_edittext_username.text.toString())
             } else {
                 hideKeyboard(fragment_signup_username_edittext_username)
                 showErrorMessage(getString(R.string.dialog_signup_username_invalid))
@@ -73,9 +73,9 @@ class SignupUsernameFragment : Fragment() {
     }
 
     private fun addObservers() {
-        signupViewModel.usernameAvailable.observe(viewLifecycleOwner) {
+        authViewModel.usernameAvailable.observe(viewLifecycleOwner) {
             if (it!!) {
-                signupViewModel.username.value =
+                authViewModel.username.value =
                     fragment_signup_username_edittext_username.text.toString()
                 createNewUser()
             } else {
@@ -100,9 +100,9 @@ class SignupUsernameFragment : Fragment() {
 
     //TODO api call create new user
     private fun createNewUser() {
-        println(signupViewModel.email.value)
-        println(signupViewModel.password.value)
-        println(signupViewModel.username.value)
+        println(authViewModel.userEmail.value)
+        println(authViewModel.password.value)
+        println(authViewModel.username.value)
 
         NavHostFragment.findNavController(this)
             .navigate(R.id.action_go_to_account_created)

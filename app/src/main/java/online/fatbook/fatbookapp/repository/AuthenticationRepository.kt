@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.AuthenticationResponse
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,6 +35,28 @@ class AuthenticationRepository(private val context: Context) {
                     Log.d("USERNAME CHECK", "error")
                     t.printStackTrace()
                 }
+            })
+        }
+    }
+
+    fun emailCheck(email: String, callback: ResultCallback<AuthenticationResponse>) {
+        scope.launch {
+            val call = RetrofitFactory.apiServiceClient().emailCheck(email)
+
+            call.enqueue(object : Callback<AuthenticationResponse> {
+                override fun onResponse(
+                    call: Call<AuthenticationResponse>,
+                    response: Response<AuthenticationResponse>
+                ) {
+                    Log.d("EMAIL CHECK", response.body().toString())
+                    callback.onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+                    Log.d("EMAIL CHECK", "error")
+                    t.printStackTrace()
+                }
+
             })
         }
     }

@@ -12,7 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_verification_code.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentVerificationCodeBinding
-import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
@@ -21,7 +21,7 @@ class VerificationCodeFragment : Fragment() {
 
     private var binding: FragmentVerificationCodeBinding? = null
 
-    private val signupViewModel by lazy { obtainViewModel(SignupViewModel::class.java) }
+    private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
 
     override fun onCreateView(
@@ -38,9 +38,9 @@ class VerificationCodeFragment : Fragment() {
         addObservers()
 
         fragment_verification_code_resend_link.setOnClickListener {
-            if (!signupViewModel.timestampSet.value!!) {
-                signupViewModel.timestampSet.value = true
-                signupViewModel.startTimer(signupViewModel.resendVCTimer.value!!)
+            if (!authViewModel.isTimerRunning.value!!) {
+                authViewModel.isTimerRunning.value = true
+                authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
             }
         }
 
@@ -62,7 +62,7 @@ class VerificationCodeFragment : Fragment() {
         fragment_verification_code_button_next.setOnClickListener {
             if (StringUtils.equals(
                     fragment_verification_code_edittext_vc.text.toString(),
-                    signupViewModel.vCode.value
+                    authViewModel.vCode.value
                 )
             ) {
                 NavHostFragment.findNavController(this)
@@ -87,7 +87,7 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun addObservers() {
-        signupViewModel.currentCountdown.observe(viewLifecycleOwner) {
+        authViewModel.currentCountdown.observe(viewLifecycleOwner) {
             if (it == 0L) {
                 //enable button
                 fragment_verification_code_resend_link.isEnabled = true

@@ -3,7 +3,6 @@ package online.fatbook.fatbookapp.ui.fragment.authentication.signup
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,17 +11,18 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_signup_email.*
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentSignupEmailBinding
-import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.SYMBOL_AT
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
-import java.time.LocalDateTime
 
 class SignupEmailFragment : Fragment() {
 
     private var binding: FragmentSignupEmailBinding? = null
-    private val signupViewModel by lazy { obtainViewModel(SignupViewModel::class.java) }
+    private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,22 +35,15 @@ class SignupEmailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragment_signup_email_button_next.setOnClickListener {
-            if (emailValidate()) {
-                if (emailCheck()) {
-                    if (signupViewModel.email.value!! != fragment_signup_email_edittext_email.text.toString()) {
-                        signupViewModel.timestampSet.value = false
-                        signupViewModel.currentCountdown.value = 0
-                        signupViewModel.cancelTimer()
-                    }
-                    signupViewModel.email.value =
-                        fragment_signup_email_edittext_email.text.toString()
-                    startTimer()
-                    sendVerificationCode(signupViewModel.email.value!!)
-                    NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_verification_code)
+            if (emailValidate(fragment_signup_email_edittext_email.text.toString())) {
+
+                if (authViewModel.userEmail.value!! != fragment_signup_email_edittext_email.text.toString()) {
+                    authViewModel.isTimerRunning.value = false
+                    authViewModel.currentCountdown.value = 0
+                    authViewModel.cancelTimer()
+                    emailCheck(fragment_signup_email_edittext_email.text.toString())
                 } else {
-                    hideKeyboard(fragment_signup_email_edittext_email)
-                    showErrorMessage(getString(R.string.dialog_email_used_signup_email))
+                    navigateToVerificationCode()
                 }
             } else {
                 hideKeyboard(fragment_signup_email_edittext_email)
@@ -87,25 +80,38 @@ class SignupEmailFragment : Fragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
     }
 
-    private fun startTimer() {
-        if (!signupViewModel.timestampSet.value!!) {
-            signupViewModel.timestampSet.value = true
-            signupViewModel.startTimer(signupViewModel.resendVCTimer.value!!)
-        }
-    }
-
-    //TODO api call
-    private fun sendVerificationCode(value: String) {
-        signupViewModel.vCode.value = "123123"
-    }
-
-    //TODO api call
-    private fun emailCheck(): Boolean {
+    private fun emailValidate(email: String): Boolean {
+//        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
         return true
     }
 
-    private fun emailValidate(): Boolean {
-//        return Patterns.EMAIL_ADDRESS.matcher(fragment_signup_email_edittext_email.text).matches()
-        return true
+
+    private fun emailCheck(email: String) {
+        authViewModel.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
+            override fun onResult(value: AuthenticationResponse?) {
+                when (value?.code) {
+                    0 -> {
+                        authViewModel.userEmail.value = value.email
+                        if (!authViewModel.isTimerRunning.value!!) {
+                            authViewModel.isTimerRunning.value = true
+                            authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
+                        }
+                        navigateToVerificationCode()
+                    }
+                    4 -> {
+                        hideKeyboard(fragment_signup_email_edittext_email)
+                        showErrorMessage(getString(R.string.dialog_email_used_signup_email))
+                    }
+                    else -> {
+                        hideKeyboard(fragment_signup_email_edittext_email)
+                        showErrorMessage(getString(R.string.dialog_signup_email_error))
+                    }
+                }
+            }
+        })
+    }
+
+    private fun navigateToVerificationCode() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_verification_code)
     }
 }

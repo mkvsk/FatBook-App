@@ -43,6 +43,7 @@
     <string name="dialog_signup_email">Only one user can be \n registered to an email</string>
     <string name="dialog_wrong_data_signup_email">This email is not entered \n correctly</string>
     <string name="dialog_email_used_signup_email">This email is already in \n use</string>
+    <string name="dialog_signup_email_error">Something went wrong. \n Try again</string>
 
     ///fragment signup password
     <string name="title_app_name_signup_password" translatable="false">FatBook</string>
