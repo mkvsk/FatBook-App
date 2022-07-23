@@ -3,6 +3,7 @@ package online.fatbook.fatbookapp.ui.activity
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
@@ -13,10 +14,9 @@ import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.SignupViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.UserUtils
-import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private var recipeViewModel: RecipeViewModel? = null
     private var userViewModel: UserViewModel? = null
     private var ingredientViewModel: IngredientViewModel? = null
-    private var signupViewModel: SignupViewModel? = null
+    private var authViewModel: AuthenticationViewModel? = null
     private var navController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         ingredientViewModel = ViewModelProvider(this)[IngredientViewModel::class.java]
 
-        signupViewModel = ViewModelProvider(this)[SignupViewModel::class.java]
+        authViewModel = ViewModelProvider(this)[AuthenticationViewModel::class.java]
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
@@ -72,11 +72,11 @@ class MainActivity : AppCompatActivity() {
         setupWithNavController(binding!!.bottomNavigation, navController!!)
         binding!!.bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
             when (item.title.toString()) {
-                "Feed" -> navController!!.navigate(R.id.action_go_to_feed)
-                "Ingredients" -> navController!!.navigate(R.id.action_go_to_ingredients)
-                "Create recipe" -> navController!!.navigate(R.id.action_go_to_recipe_create)
-                "Bookmarks" -> navController!!.navigate(R.id.action_go_to_bookmarks)
-                "Profile" -> navController!!.navigate(R.id.action_go_to_profile)
+                getString(R.string.nav_feed) -> navController!!.navigate(R.id.action_go_to_feed)
+                getString(R.string.nav_ingredients) -> navController!!.navigate(R.id.action_go_to_ingredients)
+                getString(R.string.nav_recipe_create) -> navController!!.navigate(R.id.action_go_to_recipe_create)
+                getString(R.string.nav_bookmarks) -> navController!!.navigate(R.id.action_go_to_bookmarks)
+                getString(R.string.nav_user_profile) -> navController!!.navigate(R.id.action_go_to_profile)
             }
             false
         }
