@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_primary_bgr"
-    tools:context=".ui.fragment.testFragment">
+    tools:context=".ui.fragment.TestFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_userprofile"
