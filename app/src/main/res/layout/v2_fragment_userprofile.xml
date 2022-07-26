@@ -133,7 +133,6 @@
                 android:id="@+id/textview_readmore_userprofile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/read_more"
                 android:textColor="@color/blue_grey_200"
                 android:fontFamily="@font/roboto_medium"
                 android:textSize="14sp"

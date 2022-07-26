@@ -22,6 +22,8 @@ class testFragment : Fragment() {
     ): View? {
         binding = FragmentTestBinding.inflate(inflater, container, false)
         return binding!!.root
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,17 +40,8 @@ class testFragment : Fragment() {
                 imageview_ic_expand.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_expand_more))
             }
         }
+
     }
-    /*textview_readmore_userprofile.setOnClickListener {
-        if (expandableLayout.visibility == View.GONE) {
-            TransitionManager.beginDelayedTransition(cardview_userprofile, AutoTransition())
-            expandableLayout.visibility = View.VISIBLE
-            textview_readmore_userprofile.visibility = View.INVISIBLE
-        } else {
-            TransitionManager.beginDelayedTransition(cardview_userprofile, AutoTransition())
-            expandableLayout.visibility = View.GONE
-            textview_readmore_userprofile.visibility = View.VISIBLE
-        }
-    }*/
+
 }
 
