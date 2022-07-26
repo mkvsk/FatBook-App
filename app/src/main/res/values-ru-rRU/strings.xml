@@ -156,4 +156,5 @@
     <string name="dialog_email_used_signup_email">Адрес почты уже используется другим аккаунтом</string>
     <string name="dialog_signup_email_error">Что-то пошло не так. \n Попробуйте снова</string>
     <string name="dialog_wrong_data_signin">Неверные данные\n Повторите попытку или\n нажмите \"не помню пароль\"</string>
+    <string name="read_more"><u>Подробнее</u></string>
 </resources>

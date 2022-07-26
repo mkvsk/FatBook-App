@@ -1,12 +1,15 @@
 package online.fatbook.fatbookapp.ui.fragment
 
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_welcome.*
 import online.fatbook.fatbookapp.R
@@ -33,6 +36,7 @@ class WelcomeFragment : Fragment() {
         fragment_welcome_button_signin.setOnClickListener {
             NavHostFragment.findNavController(this).navigate(R.id.action_go_to_signin)
         }
+
     }
 
 }

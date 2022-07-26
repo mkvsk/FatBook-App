@@ -1,0 +1,15 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+  <path
+      android:pathData="M13.5,9C14.3284,9 15,8.3284 15,7.5C15,6.6716 14.3284,6 13.5,6C12.6716,6 12,6.6716 12,7.5C12,8.3284 12.6716,9 13.5,9Z"
+      android:fillColor="@color/ic_userprofile_color"/>
+  <path
+      android:pathData="M6.5,9C7.3284,9 8,8.3284 8,7.5C8,6.6716 7.3284,6 6.5,6C5.6716,6 5,6.6716 5,7.5C5,8.3284 5.6716,9 6.5,9Z"
+      android:fillColor="@color/ic_userprofile_color"/>
+  <path
+      android:pathData="M9.99,0C4.47,0 0,4.48 0,10C0,15.52 4.47,20 9.99,20C15.52,20 20,15.52 20,10C20,4.48 15.52,0 9.99,0ZM10,18C5.58,18 2,14.42 2,10C2,5.58 5.58,2 10,2C14.42,2 18,5.58 18,10C18,14.42 14.42,18 10,18ZM14.41,11.89C14.06,11.67 13.59,11.78 13.38,12.13C12.64,13.3 11.38,14 10,14C8.62,14 7.36,13.3 6.62,12.12C6.4,11.77 5.94,11.66 5.59,11.88C5.24,12.1 5.13,12.56 5.35,12.91C6.37,14.54 8.1,15.5 10,15.5C11.9,15.5 13.63,14.53 14.65,12.92C14.87,12.57 14.76,12.11 14.41,11.89Z"
+      android:fillColor="@color/ic_userprofile_color"/>
+</vector>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_welcome">
+    app:startDestination="@+id/navigation_test">
 
     <fragment
         android:id="@+id/navigation_feed"
@@ -167,6 +167,12 @@
         android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.AccountCreatedFragment"
         android:label="@null"
         tools:layout="@layout/fragment_account_created" />
+
+    <fragment
+        android:id="@+id/navigation_test"
+        android:label="@null"
+        android:name="online.fatbook.fatbookapp.ui.fragment.testFragment"
+        tools:layout="@layout/fragment_test" />
 
     <action
         android:id="@+id/action_go_to_feed"

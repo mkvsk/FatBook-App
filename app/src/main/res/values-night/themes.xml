@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue_grey_900</item>
         <!-- Customize your theme here. -->
+        <item name="toolbarStyle">@style/ToolbarTheme</item>
     </style>
 
     ///v2.0.0
@@ -25,7 +26,6 @@
 
     <color name="main_text">#FFFFFFFF</color>
     <color name="start_fragments_bgr">#263238</color>
-    <color name="toolbar_bgr">#263238</color>
     <color name="ic_color">#FFFFFFFF</color>
     <color name="editText_catdialog_bgr">#37474F</color>
 
@@ -40,7 +40,37 @@
     <color name="vcDisabledColor_text">#37474F</color>
 
     ///ic colors
-    <color name="ic_visibility_color">#B0BEC5</color>
+    <color name="ic_bottomnav_color">#B0BEC5</color>
+    <color name="ic_userprofile_color">#FFFFFFFF</color>
+    <color name="ic_expand_color">#263238</color>
+
+    ///main
+    <color name="theme_primary_bgr">#263238</color>
+    <color name="theme_toolbar_color">#263238</color>
+    <color name="theme_toolbar_text_color">#FFFFFFFF</color>
+    <color name="theme_toolbar_ic_color">#FFFFFFFF</color>
+    <color name="theme_cardview_bgr">#37474F</color>
+
+    <style name="ToolbarTheme" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextColor">@color/theme_toolbar_text_color</item>
+        <item name="backgroundColor">@color/theme_toolbar_color</item>
+    </style>
+
+    <style name="myMaterialCard" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">6dp</item>
+        <item name="android:shadowRadius">10</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners_userprofile</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners_userprofile" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">30dp</item>
+    </style>
 
     <style name="btnPink">
         <item name="android:layout_width">@dimen/btn_pink_w</item>
@@ -52,6 +82,20 @@
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="textAllCaps">true</item>
         <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="btnsUserProfile">
+
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/btnEnabledColor_text</item>
+        <item name="background">@color/btnEnabledColor</item>
+        <item name="cornerRadius">30dp</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="elevation">4dp</item>
+        <item name="textAllCaps">false</item>
         <item name="android:translationZ">2dp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:stateListAnimator">@null</item>
