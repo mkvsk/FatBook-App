@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme_primary_bgr"
-    tools:context=".ui.fragment.testFragment">
+    tools:context=".ui.fragment.TestFragment"
+    android:background="@color/theme_primary_bgr">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_userprofile"
@@ -37,9 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         app:cardElevation="6dp"
-        app:contentPaddingBottom="10dp"
         app:contentPaddingLeft="10dp"
         app:contentPaddingRight="20dp"
+        app:contentPaddingBottom="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout_userprofile">
@@ -57,18 +57,6 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/imageview_userphoto_userprofile"
                 app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile" />
-
-            <TextView
-                android:id="@+id/textview_recipes_qqt_userprofile"
-                style="@style/txtUserProfileStats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="12345"
-                app:layout_constraintBottom_toBottomOf="@id/imageview_recipes_qqt_userprofile"
-                app:layout_constraintLeft_toLeftOf="@id/imageview_recipes_qqt_userprofile"
-                app:layout_constraintRight_toRightOf="@id/imageview_recipes_qqt_userprofile"
-                app:layout_constraintTop_toTopOf="@id/imageview_recipes_qqt_userprofile" />
 
             <ImageView
                 android:id="@+id/imageview_userphoto_userprofile"
@@ -89,60 +77,70 @@
                 app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile" />
 
             <TextView
-                android:id="@+id/textview_friends_qqt_userprofile"
-                style="@style/txtUserProfileStats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="45"
-                app:layout_constraintBottom_toBottomOf="@id/imageview_friends_qqt_userprofile"
-                app:layout_constraintLeft_toLeftOf="@id/imageview_friends_qqt_userprofile"
-                app:layout_constraintRight_toRightOf="@id/imageview_friends_qqt_userprofile"
-                app:layout_constraintTop_toTopOf="@id/imageview_friends_qqt_userprofile" />
-
-            <TextView
                 android:id="@+id/textview_title_userprofile"
-                style="@style/txtUserProfileTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/roboto_medium"
+                android:inputType="textPersonName"
                 android:maxLines="1"
                 android:text="Title"
                 android:textAlignment="center"
+                android:textColor="@color/main_text"
+                android:textSize="16sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageview_userphoto_userprofile" />
 
+            <!--            <Button-->
+            <!--                android:id="@+id/expand_button"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:text="expand"-->
+            <!--                android:textSize="10sp"-->
+            <!--                style="@style/btnPink"-->
+            <!--                android:backgroundTint="@color/blue_grey_50"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/textview_title_userprofile"-->
+            <!--                app:layout_constraintRight_toRightOf="parent"-->
+            <!--                app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--                android:layout_marginTop="10dp"/>-->
+
             <ImageView
                 android:id="@+id/imageview_ic_website"
-                android:layout_width="@dimen/ic_userprofile_w_h"
-                android:layout_height="@dimen/ic_userprofile_w_h"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:src="@drawable/ic_user_website"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@id/textview_website_userprofile" />
 
             <TextView
                 android:id="@+id/textview_website_userprofile"
-                style="@style/txtUserProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
+                android:fontFamily="@font/roboto_regular"
+                android:inputType="textUri"
                 android:text="www.potatocorp.online"
+                android:textColor="@color/main_text"
+                android:textSize="11sp"
+                android:visibility="visible"
                 app:layout_constraintLeft_toRightOf="@id/imageview_ic_website"
                 app:layout_constraintTop_toBottomOf="@id/textview_title_userprofile" />
 
 
+
             <ImageView
                 android:id="@+id/imageview_ic_expand"
-                android:layout_width="@dimen/ic_userprofile_w_h"
-                android:layout_height="@dimen/ic_userprofile_w_h"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:src="@drawable/ic_expand_more"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/expandableLayout"
-                app:layout_constraintRight_toRightOf="parent" />
+                />
 
             <LinearLayout
                 android:id="@+id/expandableLayout"
@@ -152,24 +150,28 @@
                 android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_website_userprofile">
+                app:layout_constraintTop_toBottomOf="@id/textview_website_userprofile"
+                >
 
                 <ImageView
                     android:id="@+id/imageview_ic_bio"
-                    android:layout_width="@dimen/ic_userprofile_w_h"
-                    android:layout_height="@dimen/ic_userprofile_w_h"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:src="@drawable/ic_user_bio"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="@id/expandableLayout" />
 
                 <TextView
                     android:id="@+id/textview_bio_userprofile"
-                    style="@style/txtUserProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="30dp"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    android:textColor="@color/main_text"
+                    android:textSize="11sp"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -183,40 +185,19 @@
                 <Button
                     android:id="@+id/button_friends"
                     style="@style/btnsUserProfile"
-                    android:layout_marginEnd="35dp"
-                    android:elevation="4dp"
-                    android:translationZ="1dp"
-                    android:text="@string/btn_friends" />
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="35dp"
+                    android:text="friends" />
 
                 <Button
                     android:id="@+id/button_messages"
                     style="@style/btnsUserProfile"
-                    android:elevation="4dp"
-                    android:translationZ="1dp"
-                    android:text="@string/btn_messages" />
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:text="messages" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/swipe_refresh_categories_userprofile"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/cardview_userprofile"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_categories_userprofile"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:orientation="horizontal"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/rv_recipe_categories" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_test.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentTestBinding
 
-class testFragment : Fragment() {
+class TestFragment : Fragment() {
 
     private var binding: FragmentTestBinding? = null
 
