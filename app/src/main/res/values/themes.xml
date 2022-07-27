@@ -39,6 +39,8 @@
     <color name="vcEnabledColor_text">#FF4081</color>
     <color name="vcDisabledColor_text">#B0BEC5</color>
 
+    <color name="ic_password_visibility">#B0BEC5</color>
+
     ///ic colors
     <color name="ic_bottomnav_color">#B0BEC5</color>
     <color name="ic_userprofile_color">#263238</color>
@@ -187,6 +189,15 @@
     </style>
 
     <style name="editText">
+        <item name="android:layout_width">@dimen/edittext_start_fragments_w</item>
+        <item name="android:layout_height">@dimen/edittext_start_fragments_h</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/main_text</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="etPassword" parent="ThemeOverlay.Material3.TextInputEditText">
         <item name="android:layout_width">@dimen/edittext_start_fragments_w</item>
         <item name="android:layout_height">@dimen/edittext_start_fragments_h</item>
         <item name="android:textAlignment">center</item>
