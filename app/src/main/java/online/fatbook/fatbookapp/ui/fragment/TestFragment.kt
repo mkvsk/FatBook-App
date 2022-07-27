@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.transition.AutoTransition
+import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_test.*
 import online.fatbook.fatbookapp.R
@@ -16,32 +17,40 @@ class TestFragment : Fragment() {
 
     private var binding: FragmentTestBinding? = null
 
+    private var expanded: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTestBinding.inflate(inflater, container, false)
         return binding!!.root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         imageview_ic_expand.setOnClickListener {
-            if(expandableLayout.visibility == View.GONE) {
-                TransitionManager.beginDelayedTransition(cardview_userprofile, AutoTransition())
-                expandableLayout.visibility = View.VISIBLE
-                imageview_ic_expand.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_expand_less))
+            TransitionManager.go(Scene(cardview_userprofile), AutoTransition())
+            if (!expanded) {
+                textview_bio_userprofile.maxLines = Integer.MAX_VALUE
+                imageview_ic_expand.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_expand_less
+                    )
+                )
+                expanded = true
             } else {
-                TransitionManager.beginDelayedTransition(cardview_userprofile, AutoTransition())
-                expandableLayout.visibility = View.GONE
-                imageview_ic_expand.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_expand_more))
+                textview_bio_userprofile.maxLines = 2
+                imageview_ic_expand.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_expand_more
+                    )
+                )
+                expanded = false
             }
         }
-
     }
-
 }
-
