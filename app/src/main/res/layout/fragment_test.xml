@@ -32,10 +32,10 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardview_userprofile"
-        style="@style/myMaterialCard"
+        style="@style/myMaterialCardUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/cards_margin_start"
         app:cardElevation="6dp"
         app:contentPaddingBottom="10dp"
         app:contentPaddingLeft="10dp"
@@ -166,7 +166,7 @@
                     android:id="@+id/textview_bio_userprofile"
                     style="@style/txtUserProfile"
                     android:ellipsize="end"
-                    android:maxLines="2"
+                    android:maxLines="3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
@@ -177,7 +177,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/expandableLayout">
@@ -200,36 +200,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/tabitem_card_h"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/userprofile_categories_spacing"
-        app:layout_constraintTop_toBottomOf="@id/cardview_userprofile"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="240dp"
-            android:layout_height="@dimen/tabitem_h"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="6dp">
-
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout_userprofile"
                 android:layout_width="match_parent"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginTop="@dimen/userprofile_categories_spacing"
                 android:layout_height="@dimen/tabitem_h"
-                app:tabBackground="@drawable/capsule_shape"
-                android:background="@android:color/transparent"
-                app:tabIndicatorGravity="stretch"
-                app:tabGravity="fill"
-                app:tabMode="fixed"
-                app:tabTextColor="@color/main_text"
-                app:tabSelectedTextColor="@color/white"
-                app:tabRippleColor="@null"
-                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-                app:tabIndicatorHeight="0dp">
+                style="@style/myTabLayout"
+                android:background="@drawable/tabview_bgr"
+                app:layout_constraintTop_toBottomOf="@id/cardview_userprofile"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -242,9 +224,7 @@
                     android:text="Favourites" />
 
             </com.google.android.material.tabs.TabLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
 
 
     <androidx.core.widget.NestedScrollView

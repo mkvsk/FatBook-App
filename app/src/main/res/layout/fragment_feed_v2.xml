@@ -48,7 +48,6 @@
             android:id="@+id/tabLayout_feed"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            app:tabBackground="@drawable/capsule_shape"
             android:background="@android:color/transparent"
             android:elevation="0dp"
             android:translationZ="0dp"

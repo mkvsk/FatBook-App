@@ -25,12 +25,16 @@
     <dimen name="edittext_verification_code_w">35dp</dimen>
     <dimen name="edittext_verification_code_h">35dp</dimen>
 
+    ///userprofile
+    <dimen name="cards_margin_start">10dp</dimen>
+    <dimen name="cards_margin_end">10dp</dimen>
+
     <dimen name="btn_user_profile_w">130dp</dimen>
     <dimen name="btn_user_profile_h">40dp</dimen>
 
     <dimen name="ic_userprofile_w_h">15dp</dimen>
 
-    <dimen name="userprofile_categories_spacing">5dp</dimen>
+    <dimen name="userprofile_categories_spacing">15dp</dimen>
     <dimen name="tabitem_h">30dp</dimen>
     <dimen name="tabitem_card_h">50dp</dimen>
 </resources>

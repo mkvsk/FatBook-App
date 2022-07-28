@@ -2,5 +2,5 @@
 <shape android:shape="rectangle"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="30dp"/>
-    <solid android:color="@color/tabview_categories_userprofile_bgr"/>
+    <solid android:color="@color/tabitem_not_selected_color"/>
 </shape>

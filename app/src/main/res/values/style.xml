@@ -3,6 +3,9 @@
     <style name="ShapeAppearanceOverlay.App.CornerSize4Percent" parent=""><item name="cornerSize">4%</item></style>
     <style name="ShapeAppearanceOverlay.App.CornerSize20Percent" parent=""><item name="cornerSizeTopLeft">20%</item> <item name="cornerSizeTopRight">20%</item></style>
 
+    <style name="ShapeAppearanceOverlay.App.CornerSize15Percent" parent=""><item name="cornerSize">15%</item></style>
+
+
     <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="android:textColorPrimary">@color/color_blue_grey_600</item>
         <item name="android:fontFamily">@font/roboto_regular</item>

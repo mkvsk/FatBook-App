@@ -41,9 +41,6 @@
 
     <color name="ic_password_visibility">#B0BEC5</color>
 
-    <color name="tabview_categories_userprofile_bgr">#FFFFFFFF</color>
-    <color name="tabitem_selected_color">#FF4081</color>
-
     ///ic colors
     <color name="ic_bottomnav_color">#B0BEC5</color>
     <color name="ic_userprofile_color">#263238</color>
@@ -56,20 +53,20 @@
     <color name="theme_toolbar_ic_color">#263238</color>
     <color name="theme_cardview_bgr">#FFFFFFFF</color>
 
-    <color name="tl_categories_not_selected_btn_bgr">#FFFFFFFF</color>
-    <color name="tl_categories_not_selected_btn_text">#263238</color>
-
-    <color name="tl_categories_selected_btn_bgr">#FF4081</color>
-    <color name="tl_categories_selected_btn_text">#FFFFFFFF</color>
+    ///fragment user profile
+    <color name="tabview_categories_userprofile_bgr">#FFFFFFFF</color>
+    <color name="tabitem_selected_color">#FF4081</color>
+    <color name="tabitem_selected_color_text">#FFFFFFFF</color>
+    <color name="tabitem_not_selected_color">#FFFFFFFF</color>
+    <color name="tabitem_not_selected_color_text">#263238</color>
 
     <style name="ToolbarTheme" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextColor">@color/theme_toolbar_text_color</item>
         <item name="backgroundColor">@color/theme_toolbar_color</item>
     </style>
 
-    <style name="myMaterialCard" parent="@style/Widget.MaterialComponents.CardView">
+    <style name="myMaterialCardUser" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="elevation">4dp</item>
         <item name="android:translationZ">6dp</item>
         <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners_userprofile</item>
@@ -81,6 +78,21 @@
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">30dp</item>
+    </style>
+
+    <style name="myMaterialCardRecipePreview" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
+        <item name="android:translationZ">6dp</item>
+        <item name="android:shadowRadius">10</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners_recipe_preview</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners_recipe_preview" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">30dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
     <style name="btnPink">
@@ -111,6 +123,13 @@
         <item name="android:translationZ">2dp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:stateListAnimator">@null</item>
+        <item name="android:textAppearance">@style/myBtnsTextAppearance</item>
+    </style>
+
+    <style name="myBtnsTextAppearance" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:textSize">13sp</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     <style name="txtUserProfile">
@@ -129,18 +148,6 @@
         <item name="fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">9sp</item>
         <item name="android:textColor">@color/main_text</item>
-    </style>
-
-    <style name="rvCategories">
-        <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/tl_categories_not_selected_btn_text</item>
-        <item name="backgroundTint">@color/tl_categories_not_selected_btn_bgr</item>
-        <item name="cornerRadius">30dp</item>
-        <item name="fontFamily">@font/roboto_regular</item>
-        <item name="elevation">4dp</item>
-        <item name="textAllCaps">false</item>
-        <item name="android:translationZ">2dp</item>
-        <item name="android:textAlignment">center</item>
     </style>
 
     <style name="btnGrey">
@@ -243,6 +250,21 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/main_text</item>
         <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="myTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabIndicator">@null</item>
+        <item name="tabBackground">@drawable/tabs_selector</item>
+        <item name="tabSelectedTextColor">@color/tabitem_selected_color_text</item>
+        <item name="tabTextColor">@color/tabitem_not_selected_color_text</item>
+        <item name="tabTextAppearance">@style/myTabTextAppearance</item>
+    </style>
+
+    <style name="myTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">13sp</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     ///v1.0.0

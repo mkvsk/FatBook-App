@@ -47,7 +47,7 @@ class TestFragment : Fragment() {
                 )
                 expanded = true
             } else {
-                textview_bio_userprofile.maxLines = 2
+                textview_bio_userprofile.maxLines = 3
                 imageview_ic_expand.setImageDrawable(
                     ContextCompat.getDrawable(
                         requireContext(),

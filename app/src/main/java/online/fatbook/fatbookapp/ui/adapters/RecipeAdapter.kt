@@ -13,7 +13,6 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Recipe
 import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
-import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient
 import online.fatbook.fatbookapp.util.RecipeUtils
 import org.apache.commons.lang3.StringUtils
 
@@ -97,7 +96,7 @@ class RecipeAdapter :
                 itemView.imageView_rv_card_recipe_photo.setImageResource(R.drawable.image_recipe_default)
             }
 
-            itemView.rv_card_recipe_bgr.setOnClickListener {
+            itemView.rv_card_recipe_preview.setOnClickListener {
                 listener!!.onRecipeClick(adapterPosition)
             }
             itemView.imageView_rv_card_recipe_bookmarks.setOnClickListener {
