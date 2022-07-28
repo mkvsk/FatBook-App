@@ -43,9 +43,38 @@
             android:inputType="text"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragment_signin_edittext_password"/>
+            app:layout_constraintBottom_toTopOf="@id/et_signin_password_layout"/>
 
-        <EditText
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_signin_password_layout"
+        android:layout_width="@dimen/edittext_start_fragments_w"
+        android:layout_height="@dimen/edittext_start_fragments_h"
+        android:layout_marginBottom="@dimen/start_fragments_element_spacing"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signin_button_signin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/ic_password_visibility">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fragment_signin_edittext_password"
+            style="@style/etPassword"
+            android:layout_width="@dimen/edittext_start_fragments_w"
+            android:layout_height="@dimen/edittext_start_fragments_h"
+            android:background="@drawable/round_corner_edittext"
+            android:drawablePadding="-30dp"
+            android:gravity="bottom"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:paddingTop="0dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <!--<EditText
             android:id="@+id/fragment_signin_edittext_password"
             style="@style/editText"
             android:layout_marginBottom="@dimen/start_fragments_element_spacing"
@@ -56,7 +85,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/fragment_signin_button_signin"/>
-
+-->
         <Button
             android:id="@+id/fragment_signin_button_signin"
             style="@style/btnPink"

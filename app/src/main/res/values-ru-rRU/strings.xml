@@ -124,8 +124,7 @@
     <string name="btn_signin_signin">Войти</string>
     <string name="forgot_password"><u>не помню  пароль</u></string>
     <string name="dialog_signin">Рад снова встретиться с вами!</string>
-    <string name="hint_new_password_signin_new_pass">Новый пароль</string>
-    <string name="hint_repeat_new_password_signin_new_pass">Повторить новый пароль</string>
+    <string name="adds_new_password_signin_new_pass">Введите новый пароль и повторите:</string>
     <string name="btn_next_signin_new_pass">далее</string>
     <string name="btn_next_signup_email">далее</string>
     <string name="btn_next_signup_password">далее</string>
@@ -158,4 +157,7 @@
     <string name="dialog_wrong_data_signin">Неверные данные\n Повторите попытку или\n нажмите \"не помню пароль\"</string>
     <string name="btn_friends">друзья</string>
     <string name="btn_messages">сообщения</string>
+    <string name="hint_new_password_signin_new_pass">Новый пароль</string>
+    <string name="hint_repeat_new_password_signin_new_pass">Повторите пароль</string>
+    <string name="dialog_sigbib_new_pass_passwords_not_match">Пароли не совпадают</string>
 </resources>

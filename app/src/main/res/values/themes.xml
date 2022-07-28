@@ -53,11 +53,11 @@
     <color name="theme_toolbar_ic_color">#263238</color>
     <color name="theme_cardview_bgr">#FFFFFFFF</color>
 
-    <color name="rv_categories_not_selected_btn_bgr">#FFFFFFFF</color>
-    <color name="rv_categories_not_selected_btn_text">#263238</color>
+    <color name="tl_categories_not_selected_btn_bgr">#FFFFFFFF</color>
+    <color name="tl_categories_not_selected_btn_text">#263238</color>
 
-    <color name="rv_categories_selected_btn_bgr">#FF4081</color>
-    <color name="rv_categories_selected_btn_text">#FFFFFFFF</color>
+    <color name="tl_categories_selected_btn_bgr">#FF4081</color>
+    <color name="tl_categories_selected_btn_text">#FFFFFFFF</color>
 
     <style name="ToolbarTheme" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextColor">@color/theme_toolbar_text_color</item>
@@ -130,8 +130,8 @@
 
     <style name="rvCategories">
         <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/rv_categories_not_selected_btn_text</item>
-        <item name="backgroundTint">@color/rv_categories_not_selected_btn_bgr</item>
+        <item name="android:textColor">@color/tl_categories_not_selected_btn_text</item>
+        <item name="backgroundTint">@color/tl_categories_not_selected_btn_bgr</item>
         <item name="cornerRadius">30dp</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="elevation">4dp</item>

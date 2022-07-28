@@ -8,7 +8,7 @@
     android:background="@color/color_blue_grey_50"
     tools:context="online.fatbook.fatbookapp.ui.fragment.FeedFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <!--<com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_blue_grey_50"
@@ -42,31 +42,41 @@
                 android:textSize="13sp" />
 
         </com.google.android.material.appbar.MaterialToolbar>
-
+-->
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout_feed"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/color_blue_grey_50"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            app:tabBackground="@drawable/capsule_shape"
+            android:background="@android:color/transparent"
+            android:elevation="0dp"
+            android:translationZ="0dp"
+            app:tabMode="scrollable"
+            app:tabIndicatorHeight="0dp"
             app:layout_constraintEnd_toEndOf="@id/parent_layout"
-            app:layout_constraintStart_toStartOf="@id/parent_layout"
-            app:tabIndicatorColor="@color/color_blue_grey_600"
-            app:tabTextColor="@color/color_blue_grey_600">
+            app:layout_constraintStart_toStartOf="@id/parent_layout">
 
             <com.google.android.material.tabs.TabItem
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="All recipes" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="My recipes" />
 
             <com.google.android.material.tabs.TabItem
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="Favourites" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Bookmarks" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Russian cuisine" />
 
         </com.google.android.material.tabs.TabLayout>
 
+<!--
     </com.google.android.material.appbar.AppBarLayout>
+-->
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView_feed"

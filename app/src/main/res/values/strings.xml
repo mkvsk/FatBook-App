@@ -30,10 +30,12 @@
 
     ///fragment signin new pass
     <string name="title_app_name_signin_new_pass" translatable="false">FatBook</string>
+    <string name="adds_new_password_signin_new_pass">Set new password and repeat:</string>
     <string name="hint_new_password_signin_new_pass">New password</string>
-    <string name="hint_repeat_new_password_signin_new_pass">Repeat new password</string>
+    <string name="hint_repeat_new_password_signin_new_pass">Repeat password</string>
     <string name="btn_next_signin_new_pass">next</string>
     <string name="dialog_signin_new_pass">Password must be 6-16 \n characters long and \n contains only numbers \n and letters</string>
+    <string name="dialog_sigbib_new_pass_passwords_not_match">Passwords do not match</string>
 
     ///fragment signup e-mail
     <string name="title_app_name_signup_email" translatable="false">FatBook</string>
