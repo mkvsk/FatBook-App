@@ -200,25 +200,76 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/swipe_refresh_categories_userprofile"
-        android:layout_marginTop="10dp"
+        android:layout_height="@dimen/tabitem_card_h"
         android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/userprofile_categories_spacing"
         app:layout_constraintTop_toBottomOf="@id/cardview_userprofile"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_categories_userprofile"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="240dp"
+            android:layout_height="@dimen/tabitem_h"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="6dp">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout_userprofile"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tabitem_h"
+                app:tabBackground="@drawable/capsule_shape"
+                android:background="@android:color/transparent"
+                app:tabIndicatorGravity="stretch"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabTextColor="@color/main_text"
+                app:tabSelectedTextColor="@color/white"
+                app:tabRippleColor="@null"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:tabIndicatorHeight="0dp">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="My recipes" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Favourites" />
+
+            </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_userprofile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:orientation="horizontal"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/rv_recipe_categories" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tabLayout_feed" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,6 +41,9 @@
 
     <color name="ic_password_visibility">#B0BEC5</color>
 
+    <color name="tabview_categories_userprofile_bgr">#FFFFFFFF</color>
+    <color name="tabitem_selected_color">#FF4081</color>
+
     ///ic colors
     <color name="ic_bottomnav_color">#B0BEC5</color>
     <color name="ic_userprofile_color">#263238</color>

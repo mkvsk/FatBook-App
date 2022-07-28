@@ -29,4 +29,8 @@
     <dimen name="btn_user_profile_h">40dp</dimen>
 
     <dimen name="ic_userprofile_w_h">15dp</dimen>
+
+    <dimen name="userprofile_categories_spacing">5dp</dimen>
+    <dimen name="tabitem_h">30dp</dimen>
+    <dimen name="tabitem_card_h">50dp</dimen>
 </resources>
