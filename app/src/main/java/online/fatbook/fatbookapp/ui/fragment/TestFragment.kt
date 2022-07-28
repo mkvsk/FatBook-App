@@ -24,8 +24,6 @@ class TestFragment : Fragment() {
 
     private var expanded: Boolean = false
 
-    val tabCount: Int = tabLayout_userprofile.tabCount
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
