@@ -15,8 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import lombok.extern.java.Log
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -38,7 +36,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.util.*
-import java.util.logging.Level
 
 class RecipeCreateFragment : Fragment(), OnRecipeViewDeleteIngredient {
     private var binding: FragmentRecipeCreateBinding? = null

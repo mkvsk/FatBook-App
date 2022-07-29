@@ -4,14 +4,14 @@ import java.io.Serializable
 
 class User : Serializable {
     var pid: Long? = null
-    var name: String? = null
-    var login: String? = null
-    var birthday: String? = null
-    var bio: String? = null
+    var name: String? = ""
+    var login: String? = ""
+    var birthday: String? = ""
+    var bio: String? = ""
     var role: Role? = null
-    var image: String? = null
-    var regDate: String? = null
-    var recipes: List<Recipe>? = null
-    var recipesForked: List<Long>? = null
-    var recipesBookmarked: ArrayList<Long>? = null
+    var image: String? = ""
+    var regDate: String? = ""
+    var recipes: List<Recipe>? = ArrayList()
+    var recipesForked: List<Long>? = ArrayList()
+    var recipesBookmarked: ArrayList<Long>? = ArrayList()
 }

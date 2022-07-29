@@ -7,7 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.*
+import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.imageView_rv_card_recipe_bookmarks
+import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.imageView_rv_card_recipe_fork
+import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.imageView_rv_card_recipe_photo
+import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.textView_rv_card_recipe_author
+import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.textView_rv_card_recipe_forks_avg
+import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.textView_rv_card_recipe_title
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Recipe
