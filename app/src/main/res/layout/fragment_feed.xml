@@ -18,7 +18,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_feed"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="60dp"
             android:background="@color/theme_toolbar_color"
             android:theme="@style/ToolbarTheme"
             app:layout_scrollFlags="scroll|enterAlways"

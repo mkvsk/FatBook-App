@@ -72,13 +72,13 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun setupSearch() {
-        binding!!.editTextFeedSearch.addTextChangedListener(object : TextWatcher {
+       /* binding!!.editTextFeedSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun afterTextChanged(editable: Editable) {
                 filter(editable.toString())
             }
-        })
+        })*/
     }
 
     private fun filter(text: String) {

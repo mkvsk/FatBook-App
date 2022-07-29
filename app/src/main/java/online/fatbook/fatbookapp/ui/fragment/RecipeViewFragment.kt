@@ -466,7 +466,7 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
                 .load(recipe!!.image)
                 .into(binding!!.imageViewRecipeViewImage)
         } else {
-            binding!!.imageViewRecipeViewImage.setImageDrawable(resources.getDrawable(R.drawable.image_recipe_default))
+            binding!!.imageViewRecipeViewImage.setImageDrawable(resources.getDrawable(R.drawable.ic_default_recipe_image))
         }
         binding!!.textViewRecipeViewUsername.text = recipe!!.author
         binding!!.textViewRecipeViewForksQuantity.text = recipe!!.forks.toString()

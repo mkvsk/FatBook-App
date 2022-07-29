@@ -201,7 +201,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                 .load(user!!.image)
                 .into(binding!!.imageViewUserProfilePhotoBgr)
         } else {
-            binding!!.imageViewProfilePhoto.setImageDrawable(resources.getDrawable(R.drawable.image_recipe_default))
+            binding!!.imageViewProfilePhoto.setImageDrawable(resources.getDrawable(R.drawable.ic_default_recipe_image))
             binding!!.imageViewUserProfilePhotoBgr.setImageDrawable(resources.getDrawable(R.drawable.user_profile_default_bgr))
         }
     }

@@ -30,226 +30,232 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardview_userprofile"
-        style="@style/myMaterialCardUser"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_user_profile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/cards_margin_start"
-        app:cardElevation="6dp"
-        app:contentPaddingBottom="10dp"
-        app:contentPaddingLeft="10dp"
-        app:contentPaddingRight="20dp"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout_userprofile">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsv_userprofile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:overScrollMode="never"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <ImageView
-                android:id="@+id/imageview_recipes_qqt_userprofile"
-                android:layout_width="50dp"
-                android:layout_height="120dp"
-                android:src="@drawable/ic_user_recipes_qqt"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/imageview_userphoto_userprofile"
-                app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile" />
-
-            <TextView
-                android:id="@+id/textview_recipes_qqt_userprofile"
-                style="@style/txtUserProfileStats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="12345"
-                app:layout_constraintBottom_toBottomOf="@id/imageview_recipes_qqt_userprofile"
-                app:layout_constraintLeft_toLeftOf="@id/imageview_recipes_qqt_userprofile"
-                app:layout_constraintRight_toRightOf="@id/imageview_recipes_qqt_userprofile"
-                app:layout_constraintTop_toTopOf="@id/imageview_recipes_qqt_userprofile" />
-
-            <ImageView
-                android:id="@+id/imageview_userphoto_userprofile"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@drawable/ic_default_userphoto"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageview_friends_qqt_userprofile"
-                android:layout_width="50dp"
-                android:layout_height="120dp"
-                android:src="@drawable/ic_user_friends_qqt"
-                app:layout_constraintLeft_toRightOf="@id/imageview_userphoto_userprofile"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile" />
-
-            <TextView
-                android:id="@+id/textview_friends_qqt_userprofile"
-                style="@style/txtUserProfileStats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="45"
-                app:layout_constraintBottom_toBottomOf="@id/imageview_friends_qqt_userprofile"
-                app:layout_constraintLeft_toLeftOf="@id/imageview_friends_qqt_userprofile"
-                app:layout_constraintRight_toRightOf="@id/imageview_friends_qqt_userprofile"
-                app:layout_constraintTop_toTopOf="@id/imageview_friends_qqt_userprofile" />
-
-            <TextView
-                android:id="@+id/textview_title_userprofile"
-                style="@style/txtUserProfileTitle"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="30dp"
-                android:maxLines="1"
-                android:text="Title"
-                android:textAlignment="center"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageview_userphoto_userprofile" />
+                android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageview_ic_website"
-                android:layout_width="@dimen/ic_userprofile_w_h"
-                android:layout_height="@dimen/ic_userprofile_w_h"
-                android:src="@drawable/ic_user_website"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@id/textview_website_userprofile" />
-
-            <TextView
-                android:id="@+id/textview_website_userprofile"
-                style="@style/txtUserProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
-                android:text="www.potatocorp.online"
-                app:layout_constraintLeft_toRightOf="@id/imageview_ic_website"
-                app:layout_constraintTop_toBottomOf="@id/textview_title_userprofile" />
-
-
-            <ImageView
-                android:id="@+id/imageview_ic_expand"
-                android:layout_width="@dimen/ic_userprofile_w_h"
-                android:layout_height="@dimen/ic_userprofile_w_h"
-                android:src="@drawable/ic_expand_more"
-                app:layout_constraintBottom_toBottomOf="@id/expandableLayout"
-                app:layout_constraintRight_toRightOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/expandableLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:visibility="visible"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_website_userprofile">
-
-                <ImageView
-                    android:id="@+id/imageview_ic_bio"
-                    android:layout_width="@dimen/ic_userprofile_w_h"
-                    android:layout_height="@dimen/ic_userprofile_w_h"
-                    android:src="@drawable/ic_user_bio"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/expandableLayout" />
-
-                <TextView
-                    android:id="@+id/textview_bio_userprofile"
-                    style="@style/txtUserProfile"
-                    android:ellipsize="end"
-                    android:maxLines="3"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardview_userprofile"
+                    style="@style/myMaterialCardUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="30dp"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-            </LinearLayout>
+                    android:layout_marginStart="@dimen/cards_margin_start"
+                    app:cardElevation="6dp"
+                    app:contentPaddingBottom="10dp"
+                    app:contentPaddingLeft="10dp"
+                    app:contentPaddingRight="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/expandableLayout">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/button_friends"
-                    style="@style/btnsUserProfile"
-                    android:layout_marginEnd="35dp"
-                    android:elevation="4dp"
-                    android:translationZ="1dp"
-                    android:text="@string/btn_friends" />
+                        <ImageView
+                            android:id="@+id/imageview_recipes_qqt_userprofile"
+                            android:layout_width="50dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/ic_user_recipes_qqt"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toLeftOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile" />
 
-                <Button
-                    android:id="@+id/button_messages"
-                    style="@style/btnsUserProfile"
-                    android:elevation="4dp"
-                    android:translationZ="1dp"
-                    android:text="@string/btn_messages" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/textview_recipes_qqt_userprofile"
+                            style="@style/txtUserProfileStats"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="12345"
+                            app:layout_constraintBottom_toBottomOf="@id/imageview_recipes_qqt_userprofile"
+                            app:layout_constraintLeft_toLeftOf="@id/imageview_recipes_qqt_userprofile"
+                            app:layout_constraintRight_toRightOf="@id/imageview_recipes_qqt_userprofile"
+                            app:layout_constraintTop_toTopOf="@id/imageview_recipes_qqt_userprofile" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout_userprofile"
-                android:layout_width="match_parent"
-                android:layout_marginStart="60dp"
-                android:layout_marginEnd="60dp"
-                android:layout_marginTop="@dimen/userprofile_categories_spacing"
-                android:layout_height="@dimen/tabitem_h"
-                style="@style/myTabLayout"
-                android:background="@drawable/tabview_bgr"
-                app:layout_constraintTop_toBottomOf="@id/cardview_userprofile"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+                        <ImageView
+                            android:id="@+id/imageview_userphoto_userprofile"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/ic_default_userphoto"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="My recipes" />
+                        <ImageView
+                            android:id="@+id/imageview_friends_qqt_userprofile"
+                            android:layout_width="50dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/ic_user_friends_qqt"
+                            app:layout_constraintLeft_toRightOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Favourites" />
+                        <TextView
+                            android:id="@+id/textview_friends_qqt_userprofile"
+                            style="@style/txtUserProfileStats"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="45"
+                            app:layout_constraintBottom_toBottomOf="@id/imageview_friends_qqt_userprofile"
+                            app:layout_constraintLeft_toLeftOf="@id/imageview_friends_qqt_userprofile"
+                            app:layout_constraintRight_toRightOf="@id/imageview_friends_qqt_userprofile"
+                            app:layout_constraintTop_toTopOf="@id/imageview_friends_qqt_userprofile" />
 
-            </com.google.android.material.tabs.TabLayout>
+                        <TextView
+                            android:id="@+id/textview_title_userprofile"
+                            style="@style/txtUserProfileTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="30dp"
+                            android:maxLines="1"
+                            android:text="Title"
+                            android:textAlignment="center"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/imageview_userphoto_userprofile" />
+
+                        <ImageView
+                            android:id="@+id/imageview_ic_website"
+                            android:layout_width="@dimen/ic_userprofile_w_h"
+                            android:layout_height="@dimen/ic_userprofile_w_h"
+                            android:src="@drawable/ic_user_website"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/textview_website_userprofile" />
+
+                        <TextView
+                            android:id="@+id/textview_website_userprofile"
+                            style="@style/txtUserProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="30dp"
+                            android:text="www.potatocorp.online"
+                            app:layout_constraintLeft_toRightOf="@id/imageview_ic_website"
+                            app:layout_constraintTop_toBottomOf="@id/textview_title_userprofile" />
 
 
+                        <ImageView
+                            android:id="@+id/imageview_ic_expand"
+                            android:layout_width="@dimen/ic_userprofile_w_h"
+                            android:layout_height="@dimen/ic_userprofile_w_h"
+                            android:src="@drawable/ic_expand_more"
+                            app:layout_constraintBottom_toBottomOf="@id/expandableLayout"
+                            app:layout_constraintRight_toRightOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nsv_userprofile"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+                        <LinearLayout
+                            android:id="@+id/expandableLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="visible"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textview_website_userprofile">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+                            <ImageView
+                                android:id="@+id/imageview_ic_bio"
+                                android:layout_width="@dimen/ic_userprofile_w_h"
+                                android:layout_height="@dimen/ic_userprofile_w_h"
+                                android:src="@drawable/ic_user_bio"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/expandableLayout" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vp_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tabLayout_feed" />
+                            <TextView
+                                android:id="@+id/textview_bio_userprofile"
+                                style="@style/txtUserProfile"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="30dp"
+                                android:ellipsize="end"
+                                android:maxLines="3"
+                                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+                        </LinearLayout>
 
-        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toBottomOf="@id/expandableLayout">
 
-    </androidx.core.widget.NestedScrollView>
+                            <Button
+                                android:id="@+id/button_friends"
+                                style="@style/btnsUserProfile"
+                                android:layout_marginEnd="35dp"
+                                android:elevation="4dp"
+                                android:text="@string/btn_friends"
+                                android:translationZ="1dp" />
 
+                            <Button
+                                android:id="@+id/button_messages"
+                                style="@style/btnsUserProfile"
+                                android:elevation="4dp"
+                                android:text="@string/btn_messages"
+                                android:translationZ="1dp" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout_userprofile"
+                    style="@style/myTabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/tabitem_h"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="@dimen/userprofile_categories_spacing"
+                    android:layout_marginEnd="60dp"
+                    android:background="@drawable/tabview_bgr"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardview_userprofile">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="My recipes" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Favourites" />
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="@dimen/userprofile_categories_spacing"
+                    android:background="@color/color_lime_500"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tabLayout_userprofile" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

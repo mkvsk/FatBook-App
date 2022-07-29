@@ -63,14 +63,17 @@
     ///recipe rv
     <color name="rv_recipe_preview_adds_bgr">#ECEFF1</color>
     <color name="rv_recipe_preview_ic_color">#B0BEC5</color>
+    <color name="rv_forks_qqt">#B0BEC5</color>
 
     <style name="ToolbarTheme" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextColor">@color/theme_toolbar_text_color</item>
         <item name="backgroundColor">@color/theme_toolbar_color</item>
+        <item name="titleTextAppearance">@style/txtToolbar</item>
     </style>
 
     <style name="myMaterialCardUser" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
+        <item name="elevation">4dp</item>
         <item name="android:translationZ">6dp</item>
         <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
@@ -156,6 +159,18 @@
         <item name="fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">9sp</item>
         <item name="android:textColor">@color/main_text</item>
+    </style>
+
+    <style name="txtToolbar">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">22sp</item>
+        <item name="titleTextColor">@color/theme_toolbar_text_color</item>
+    </style>
+
+    <style name="txtRecipePreviewAdds">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:textColor">@color/rv_recipe_preview_ic_color</item>
     </style>
 
     <style name="btnGrey">

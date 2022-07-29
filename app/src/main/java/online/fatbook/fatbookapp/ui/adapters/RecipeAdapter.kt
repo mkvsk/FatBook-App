@@ -93,7 +93,7 @@ class RecipeAdapter :
                     .load(recipe.image)
                     .into(itemView.imageView_rv_card_recipe_photo)
             } else {
-                itemView.imageView_rv_card_recipe_photo.setImageResource(R.drawable.image_recipe_default)
+                itemView.imageView_rv_card_recipe_photo.setImageResource(R.drawable.ic_default_recipe_image)
             }
 
             itemView.rv_card_recipe_preview.setOnClickListener {
