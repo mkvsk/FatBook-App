@@ -60,6 +60,10 @@
     <color name="tabitem_not_selected_color">#FFFFFFFF</color>
     <color name="tabitem_not_selected_color_text">#263238</color>
 
+    ///recipe rv
+    <color name="rv_recipe_preview_adds_bgr">#ECEFF1</color>
+    <color name="rv_recipe_preview_ic_color">#B0BEC5</color>
+
     <style name="ToolbarTheme" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextColor">@color/theme_toolbar_text_color</item>
         <item name="backgroundColor">@color/theme_toolbar_color</item>
@@ -69,7 +73,9 @@
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
         <item name="android:translationZ">6dp</item>
         <item name="android:shadowRadius">10</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners_userprofile</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_card_custom_corners_userprofile
+        </item>
     </style>
 
     <style name="ShapeAppearanceOverlay_card_custom_corners_userprofile" parent="">
@@ -84,7 +90,9 @@
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
         <item name="android:translationZ">6dp</item>
         <item name="android:shadowRadius">10</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners_recipe_preview</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_card_custom_corners_recipe_preview
+        </item>
     </style>
 
     <style name="ShapeAppearanceOverlay_card_custom_corners_recipe_preview" parent="">

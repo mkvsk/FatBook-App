@@ -44,7 +44,7 @@
                 android:elevation="6dp"
                 android:fontFamily="@font/roboto_medium"
                 android:maxLines="2"
-                android:lines="2"
+                android:ellipsize="end"
                 android:text="@string/title_recipe_preview_rv"
                 android:textColor="@color/main_text"
                 android:textSize="13sp"
@@ -57,9 +57,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@id/textView_rv_card_recipe_title"
                 app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_title"
+                app:layout_constraintBottom_toTopOf="@id/rv_ingredients_preview"
                 android:text="@string/title_recipe_preview_by_rv"
                 android:fontFamily="@font/roboto_light"
                 android:textSize="11sp"
@@ -81,14 +81,79 @@
                 android:textSize="11sp"
                 android:textColor="@color/pink_a200"
                 android:elevation="6dp"
-                android:translationZ="4dp"/>
+                android:translationZ="4dp" />
 
+            <TextView
+                android:id="@+id/rv_ingredients_preview"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:text="Ingredients(12): milk, egg, salt, tomatoes, avocado, lemon, cottage cheese, bread, green, butter, parsley, spinach"
+                android:textSize="10sp"
+                android:textColor="@color/main_text"
+                android:fontFamily="@font/roboto_light"
+                android:ellipsize="end"
+                android:maxLines="2"
+                app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_author_by"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@id/rv_recipe_adds"/>
+
+            <LinearLayout
+                android:id="@+id/rv_recipe_adds"
+                android:layout_width="180dp"
+                android:layout_height="20dp"
+                android:background="@drawable/adds_recipe_preview_bgr"
+                android:gravity="center"
+                app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_author_by"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_time_preview"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="345kcal"
+                    android:textSize="9sp"
+                    android:layout_marginLeft="2dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/rv_recipe_preview_ic_color"/>
+
+                <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_kcals_preview"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="35 min"
+                    android:textSize="9sp"
+                    android:layout_marginLeft="2dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/rv_recipe_preview_ic_color"/>
+
+                <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_difficulty_preview"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="medium"
+                    android:textSize="9sp"
+                    android:layout_marginLeft="2dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/rv_recipe_preview_ic_color"/>
+
+            </LinearLayout>
 
             <ImageView
                 android:tag="tag_fork_unchecked"
                 android:id="@+id/imageView_rv_card_recipe_fork"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:src="@drawable/icon_fork_unchecked"
@@ -103,6 +168,7 @@
                 app:layout_constraintRight_toLeftOf="@id/imageView_rv_card_recipe_fork"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/value_recipe_preview_forks_amount_rv"
+                android:layout_marginRight="5dp"
                 android:fontFamily="@font/roboto_medium"
                 android:textSize="9sp"
                 android:textColor="@color/color_blue_grey_200"
@@ -119,7 +185,7 @@
         android:layout_height="35dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="@id/rv_card_recipe_preview"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="10dp"
         android:src="@drawable/ic_add_to_fav"
         android:elevation="6dp"
         android:translationZ="4dp"/>

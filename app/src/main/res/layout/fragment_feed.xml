@@ -4,39 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/start_fragments_bgr"
+    android:background="@color/theme_primary_bgr"
     tools:context="online.fatbook.fatbookapp.ui.fragment.FeedFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_feed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_blue_grey_50"
+        android:elevation="8dp"
+        android:translationZ="6dp"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_feed"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/color_blue_grey_200"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@color/theme_toolbar_color"
+            android:theme="@style/ToolbarTheme"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="@string/toolbar_recipes_feed"
-            app:titleTextColor="@color/color_blue_grey_600">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="70dp"
-                android:layout_gravity="end"
-                android:rotationY="180"
-                android:layout_height="70dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:src="@drawable/kuzya_welcome"/>
-
+            app:titleTextColor="@color/theme_toolbar_text_color">
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <EditText
+        <!--<EditText
             android:id="@+id/editText_feed_search"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -46,7 +37,7 @@
             android:lines="1"
             android:paddingStart="15dp"
             android:textColor="@color/color_blue_grey_600"
-            android:textSize="16sp" />
+            android:textSize="16sp" />-->
 
     </com.google.android.material.appbar.AppBarLayout>
 
