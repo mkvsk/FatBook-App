@@ -7,7 +7,7 @@
     android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.EditProfileFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <!--<com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_add_ingredient_to_recipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>-->
 
    <!-- <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_userprofile"

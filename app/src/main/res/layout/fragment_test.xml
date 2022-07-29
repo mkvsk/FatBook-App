@@ -22,15 +22,17 @@
             android:background="@color/theme_toolbar_color"
             android:theme="@style/ToolbarTheme"
             app:layout_scrollFlags="scroll|enterAlways"
+            app:buttonGravity="center_vertical"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="my_profile"
-            app:titleTextColor="@color/theme_toolbar_text_color">
+            app:title="my_profile">
 
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/swipe_refresh_user_profile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
