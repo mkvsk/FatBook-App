@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.alert_dialog_title_logout.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import kotlinx.android.synthetic.main.fragment_signin_new_pass.*
 import kotlinx.android.synthetic.main.fragment_signup_password.*
@@ -18,7 +19,7 @@ import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.hideKeyboard
 import java.util.regex.Pattern
 
-class SigninNewPassFragment : Fragment() {
+class SignInNewPassFragment : Fragment() {
     private var binding: FragmentSigninNewPassBinding? = null
 
     override fun onCreateView(
@@ -36,9 +37,12 @@ class SigninNewPassFragment : Fragment() {
             hideKeyboard(fragment_signin_new_pass_edittext_repeat_new_password)
 
             //TODO fix validate
-            if(fragment_signin_new_pass_edittext_new_password.text.contentEquals(fragment_signin_new_pass_edittext_repeat_new_password.text)) {
+            if (fragment_signin_new_pass_edittext_new_password.text.toString().contentEquals(
+                    fragment_signin_new_pass_edittext_repeat_new_password.text.toString()
+                )
+            ) {
                 showErrorMessage("equals")
-                if(passwordValidate()) {
+                if (passwordValidate()) {
                     showErrorMessage("valid")
                 } else if (!passwordValidate()) {
                     showErrorMessage("INVALID")
@@ -109,7 +113,12 @@ class SigninNewPassFragment : Fragment() {
     }
 
     private fun showErrorMessage(message: String) {
-        fragment_signin_new_pass_kuzya_dialog.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.cat_dialog_invalid_data))
+        fragment_signin_new_pass_kuzya_dialog.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.cat_dialog_invalid_data
+            )
+        )
         fragment_signin_new_pass_dialog_text.text = message
         fragment_signin_new_pass_dialog_text.setTextColor(
             ContextCompat.getColor(
@@ -135,6 +144,7 @@ class SigninNewPassFragment : Fragment() {
     }
 
     private fun passwordValidate(): Boolean {
-        return Pattern.compile(Constants.PASSWORD_REGEX).matcher(fragment_signin_new_pass_edittext_new_password.text).matches()
+        return Pattern.compile(Constants.PASSWORD_REGEX)
+            .matcher(fragment_signin_new_pass_edittext_new_password.text.toString()).matches()
     }
 }

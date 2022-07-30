@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.AuthenticationRequest
 import online.fatbook.fatbookapp.core.AuthenticationResponse
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
 import online.fatbook.fatbookapp.util.ContextHolder
@@ -58,6 +59,16 @@ class AuthenticationViewModel : ViewModel() {
 
     fun emailCheck(email: String, callback: ResultCallback<AuthenticationResponse>) {
         repository.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
+            override fun onResult(value: AuthenticationResponse?) {
+                value?.let {
+                    callback.onResult(it)
+                }
+            }
+        })
+    }
+
+    fun signup(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
+        repository.signup(request, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
                 value?.let {
                     callback.onResult(it)

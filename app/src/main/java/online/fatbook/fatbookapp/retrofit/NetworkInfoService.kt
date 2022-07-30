@@ -2,10 +2,7 @@ package online.fatbook.fatbookapp.retrofit
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import online.fatbook.fatbookapp.core.AuthenticationResponse
-import online.fatbook.fatbookapp.core.Ingredient
-import online.fatbook.fatbookapp.core.Recipe
-import online.fatbook.fatbookapp.core.User
+import online.fatbook.fatbookapp.core.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -16,6 +13,9 @@ interface NetworkInfoService {
 
     @GET("auth/vc/send")
     fun emailCheck(@Query(value = "email") email: String?): Call<AuthenticationResponse>
+
+    @POST("auth/signup")
+    fun signup(@Body request: AuthenticationRequest?): Call<AuthenticationResponse>
 
     /**
      * User

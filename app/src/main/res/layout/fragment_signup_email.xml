@@ -80,7 +80,7 @@
         style="@style/txtKuzyaDialog"
         android:layout_marginEnd="30dp"
         android:paddingTop="15dp"
-        android:text="@string/dialog_signup_email"
+        android:text="@string/dialog_signup_email_error"
         app:layout_constraintRight_toRightOf="@id/fragment_signup_email_kuzya_dialog"
         app:layout_constraintTop_toTopOf="@id/fragment_signup_email_kuzya_dialog" />
 

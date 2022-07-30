@@ -65,8 +65,7 @@ class VerificationCodeFragment : Fragment() {
                     authViewModel.vCode.value
                 )
             ) {
-                NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_signup_password)
+                confirmVCode()
             } else {
                 hideKeyboard(fragment_verification_code_edittext_vc)
                 fragment_verification_code_dialog_text.text =
@@ -84,6 +83,11 @@ class VerificationCodeFragment : Fragment() {
                     )
             }
         }
+    }
+
+    private fun confirmVCode() {
+        NavHostFragment.findNavController(this)
+            .navigate(R.id.action_go_to_signup_password)
     }
 
     private fun addObservers() {

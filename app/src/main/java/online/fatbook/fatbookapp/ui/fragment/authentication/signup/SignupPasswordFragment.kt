@@ -75,8 +75,8 @@ class SignupPasswordFragment : Fragment() {
     }
 
     private fun passwordValidate(): Boolean {
-        //return true
-        return Pattern.compile(PASSWORD_REGEX).matcher(fragment_signup_password_edittext_password.text).matches()
+        return true
+//        return Pattern.compile(PASSWORD_REGEX).matcher(fragment_signup_password_edittext_password.text.toString()).matches()
     }
 
 }

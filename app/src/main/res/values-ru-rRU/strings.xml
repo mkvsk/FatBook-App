@@ -133,7 +133,7 @@
     <string name="btn_next_verification_code">далее</string>
     <string name="dialog_signin_new_pass">Введите 6-16 символов, используя только буквы и цифры</string>
     <string name="adds_signup_email">Введите электронную почту:</string>
-    <string name="dialog_signup_email">Только один аккаунт можно зарегистрировать на электронный адрес</string>
+    <string name="dialog_signup_email_error">Только один аккаунт можно зарегистрировать на электронный адрес</string>
     <string name="dialog_wrong_data_signup_email">Адрес почты  указан некорректно</string>
     <string name="adds_signup_password">Задайте пароль:</string>
     <string name="hint_password_signup_password">Пароль</string>
@@ -153,7 +153,7 @@
     <string name="dialog_splash">Я просто ем тут свой суп.</string>
     <string name="dialog_signup_username_invalid">Имя введено некорректно</string>
     <string name="dialog_email_used_signup_email">Адрес почты уже используется другим аккаунтом</string>
-    <string name="dialog_signup_email_error">Что-то пошло не так. \n Попробуйте снова</string>
+    <string name="dialog_signup_error">Что-то пошло не так. \n Попробуйте снова</string>
     <string name="dialog_wrong_data_signin">Неверные данные\n Повторите попытку или\n нажмите \"не помню пароль\"</string>
     <string name="btn_friends">Мои друзья</string>
     <string name="btn_messages">Сообщения</string>

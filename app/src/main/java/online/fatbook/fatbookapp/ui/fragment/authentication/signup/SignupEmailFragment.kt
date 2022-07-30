@@ -96,6 +96,7 @@ class SignupEmailFragment : Fragment() {
                             authViewModel.isTimerRunning.value = true
                             authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
                         }
+                        authViewModel.vCode.value = value.vcode
                         navigateToVerificationCode()
                     }
                     4 -> {
@@ -104,7 +105,7 @@ class SignupEmailFragment : Fragment() {
                     }
                     else -> {
                         hideKeyboard(fragment_signup_email_edittext_email)
-                        showErrorMessage(getString(R.string.dialog_signup_email_error))
+                        showErrorMessage(getString(R.string.dialog_signup_error))
                     }
                 }
             }

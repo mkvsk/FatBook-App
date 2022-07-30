@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_signup_username.*
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.AuthenticationRequest
+import online.fatbook.fatbookapp.core.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentSignupUsernameBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.USERNAME_REGEX
@@ -98,12 +101,37 @@ class SignupUsernameFragment : Fragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
     }
 
-    //TODO api call create new user
     private fun createNewUser() {
-        println(authViewModel.userEmail.value)
-        println(authViewModel.password.value)
-        println(authViewModel.username.value)
+        authViewModel.signup(
+            AuthenticationRequest(
+                authViewModel.username.value,
+                authViewModel.password.value,
+                authViewModel.userEmail.value
+            ), object : ResultCallback<AuthenticationResponse> {
+                override fun onResult(value: AuthenticationResponse?) {
+                    value?.let {
+                        when (it.code) {
+                            0 -> {
+                                navigateToAccountCreated()
+                            }
+                            4 -> {
+                                showErrorMessage(getString(R.string.dialog_signup_email_error))
+                            }
+                            5 -> {
+                                showErrorMessage(getString(R.string.dialog_signup_username_unavailable))
+                            }
+                            else -> {
+                                showErrorMessage(getString(R.string.dialog_signup_error))
+                            }
+                        }
+                    }
 
+                }
+            }
+        )
+    }
+
+    private fun navigateToAccountCreated() {
         NavHostFragment.findNavController(this)
             .navigate(R.id.action_go_to_account_created)
     }
