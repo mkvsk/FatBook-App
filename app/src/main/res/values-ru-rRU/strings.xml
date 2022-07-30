@@ -147,7 +147,7 @@
     <string name="dialog_account_created">Рад встрече, %s! Сделаем нашу книгу рецептов еще толще!</string>
     <string name="adds_verification_code">Проверочный код:</string>
     <string name="dialog_verification_code">Проверочный код отправлен на вашу почту</string>
-    <string name="dialog_wrong_verification_code">Неверный код</string>
+    <string name="dialog_wrong_verification_code_2_500">Неверный код</string>
     <string name="resend_verification_code"><u>отправить код</u></string>
     <string name="resend_verification_code_timer"><u>(%s) отправить код</u></string>
     <string name="dialog_splash">Я просто ем тут свой суп.</string>
@@ -160,4 +160,6 @@
     <string name="hint_new_password_signin_new_pass">Новый пароль</string>
     <string name="hint_repeat_new_password_signin_new_pass">Повторите пароль</string>
     <string name="dialog_sigbib_new_pass_passwords_not_match">Пароли не совпадают</string>
+    <string name="dialog_wrong_verification_code_1">Этот код уже подтвержден</string>
+    <string name="dialog_wrong_verification_code_3">Код уже недействителен</string>
 </resources>

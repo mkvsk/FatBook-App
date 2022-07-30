@@ -82,4 +82,28 @@ class AuthenticationRepository(private val context: Context) {
             })
         }
     }
+
+    fun confirmVCode(
+        vCode: String,
+        email: String,
+        resultCallback: ResultCallback<AuthenticationResponse>
+    ) {
+        scope.launch {
+            val call = RetrofitFactory.apiServiceClient().confirmVCode(vCode, email)
+
+            call.enqueue(object : Callback<AuthenticationResponse> {
+                override fun onResponse(
+                    call: Call<AuthenticationResponse>,
+                    response: Response<AuthenticationResponse>
+                ) {
+                    resultCallback.onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+                    t.printStackTrace()
+                }
+
+            })
+        }
+    }
 }

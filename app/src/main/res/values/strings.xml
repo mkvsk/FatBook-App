@@ -76,7 +76,10 @@
     <string name="hint_verification_code" translatable="false">0-0-0-0-0-0</string>
     <string name="btn_next_verification_code">next</string>
     <string name="dialog_verification_code">The verification code was \n sent to your e-mail</string>
-    <string name="dialog_wrong_verification_code">Wrong code</string>
+    <string name="dialog_wrong_verification_code_2_500">Wrong code</string>
+    <string name="dialog_wrong_verification_code_1">This code is already confirmed</string>
+    <string name="dialog_wrong_verification_code_3">This code was expired</string>
+
     <string name="resend_verification_code"><u>resend code</u></string>
     <string name="resend_verification_code_timer"><u>(%s) resend code</u></string>
 

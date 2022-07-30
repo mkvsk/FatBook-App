@@ -8,6 +8,12 @@ import retrofit2.http.*
 
 interface NetworkInfoService {
 
+    @POST("auth/vc/confirm")
+    fun confirmVCode(
+        @Query(value = "email") email: String?,
+        @Query(value = "code") code: String?
+    ): Call<AuthenticationResponse>
+
     @GET("auth/username/check")
     fun usernameCheck(@Query(value = "username") username: String?): Call<Boolean>
 
@@ -113,4 +119,5 @@ interface NetworkInfoService {
     @Multipart
     @POST("test/upload")
     fun createNewUser(@Part user: RequestBody?, @Part image: MultipartBody.Part?): Call<User>?
+
 }

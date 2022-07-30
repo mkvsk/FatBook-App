@@ -76,4 +76,14 @@ class AuthenticationViewModel : ViewModel() {
             }
         })
     }
+
+    fun confirmVCode(vCode: String, email: String, resultCallback: ResultCallback<AuthenticationResponse>) {
+        repository.confirmVCode(vCode, email, object : ResultCallback<AuthenticationResponse> {
+            override fun onResult(value: AuthenticationResponse?) {
+                value?.let {
+                    resultCallback.onResult(it)
+                }
+            }
+        })
+    }
 }
