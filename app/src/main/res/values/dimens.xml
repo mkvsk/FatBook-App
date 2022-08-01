@@ -37,4 +37,8 @@
     <dimen name="userprofile_categories_spacing">15dp</dimen>
     <dimen name="tabitem_h">30dp</dimen>
     <dimen name="tabitem_card_h">50dp</dimen>
+
+    ///edit userprofile
+    <dimen name="round_btn_w_h">30dp</dimen>
+
 </resources>

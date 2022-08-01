@@ -75,7 +75,7 @@
         android:layout_width="234dp"
         android:layout_height="40dp"
         android:autofillHints="@null"
-        android:background="@drawable/round_corner_edittext_login"
+        android:background="@drawable/round_corner_edittext_bio"
         android:fontFamily="@font/roboto_regular"
         android:hint="@string/hint_username_login"
         android:inputType="text"
@@ -115,7 +115,7 @@
 
     <Button
         android:id="@+id/button_login_next"
-        style="@style/btnGrey"
+        style="@style/btnPink"
         android:layout_marginBottom="30dp"
         android:text="@string/btn_next_login"
         app:layout_constraintBottom_toTopOf="@id/textView_login_tagline"

@@ -79,10 +79,10 @@ class SignInActivity : AppCompatActivity() {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                 binding!!.editTextSignInLogin.background = AppCompatResources.getDrawable(
-                    baseContext, R.drawable.round_corner_edittext_login
+                    baseContext, R.drawable.round_corner_edittext_bio
                 )
                 binding!!.editTextSignInPassword.background = AppCompatResources.getDrawable(
-                    baseContext, R.drawable.round_corner_edittext_login
+                    baseContext, R.drawable.round_corner_edittext_bio
                 )
             }
 
@@ -92,10 +92,10 @@ class SignInActivity : AppCompatActivity() {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                 binding!!.editTextSignInLogin.background = AppCompatResources.getDrawable(
-                    baseContext, R.drawable.round_corner_edittext_login
+                    baseContext, R.drawable.round_corner_edittext_bio
                 )
                 binding!!.editTextSignInPassword.background = AppCompatResources.getDrawable(
-                    baseContext, R.drawable.round_corner_edittext_login
+                    baseContext, R.drawable.round_corner_edittext_bio
                 )
             }
 

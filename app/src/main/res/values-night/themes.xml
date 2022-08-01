@@ -60,6 +60,11 @@
     <color name="tabitem_not_selected_color">#37474F</color>
     <color name="tabitem_not_selected_color_text">#B0BEC5</color>
 
+    ///edit userprofile
+    <color name="round_btn_edit">#263238</color>
+    <color name="ic_delete_color">#FF4081</color>
+    <color name="et_edit_userinfo_color">#263238</color>
+
     ///recipe rv
     <color name="rv_recipe_preview_adds_bgr">#263238</color>
     <color name="rv_recipe_preview_ic_color">#B0BEC5</color>
@@ -71,22 +76,40 @@
         <item name="titleTextAppearance">@style/txtToolbar</item>
     </style>
 
-    <style name="myMaterialCardUser" parent="@style/Widget.MaterialComponents.CardView">
+    <style name="myMaterialCardRight" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
         <item name="elevation">4dp</item>
         <item name="android:translationZ">6dp</item>
         <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
-            @style/ShapeAppearanceOverlay_card_custom_corners_userprofile
+            @style/ShapeAppearanceOverlay_card_custom_corners_right
         </item>
     </style>
 
-    <style name="ShapeAppearanceOverlay_card_custom_corners_userprofile" parent="">
+    <style name="ShapeAppearanceOverlay_card_custom_corners_right" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">0dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">30dp</item>
+    </style>
+
+    <style name="myMaterialCardLeft" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">6dp</item>
+        <item name="android:shadowRadius">10</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_card_custom_corners_left
+        </item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners_left" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
     <style name="myMaterialCardRecipePreview" parent="@style/Widget.MaterialComponents.CardView">
@@ -173,19 +196,31 @@
         <item name="android:textColor">@color/rv_recipe_preview_ic_color</item>
     </style>
 
-    <style name="btnGrey">
-        <item name="android:layout_width">@dimen/btn_pink_w</item>
-        <item name="android:layout_height">@dimen/btn_pink_h</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/btnDisabledColor_text</item>
-        <item name="android:backgroundTint">@color/btnDisabledColor</item>
-        <item name="cornerRadius">30dp</item>
-        <item name="fontFamily">@font/roboto_regular</item>
-        <item name="textAllCaps">true</item>
+    <style name="roundBtnEditPhoto" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/round_btn_edit</item>
         <item name="elevation">4dp</item>
         <item name="android:translationZ">2dp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:stateListAnimator">@null</item>
+        <item name="android:src">@drawable/ic_btn_edit</item>
+        <item name="fabCustomSize">@dimen/round_btn_w_h</item>
+        <item name="tint">@color/ic_userprofile_color</item>
+    </style>
+
+    <style name="roundBtnDeletePhoto" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/round_btn_edit</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_btn_delete</item>
+        <item name="fabCustomSize">@dimen/round_btn_w_h</item>
+        <item name="tint">@color/ic_delete_color</item>
+    </style>
+
+    <style name="roundBtnAddPhoto" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/round_btn_edit</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_btn_add</item>
+        <item name="fabCustomSize">@dimen/round_btn_w_h</item>
+        <item name="tint">@color/ic_userprofile_color</item>
     </style>
 
     <style name="txtWelcome">
@@ -288,5 +323,14 @@
         <item name="android:textSize">13sp</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="textAllCaps">false</item>
+    </style>
+
+    <color name="switch_track_color">#ECEFF1</color>
+    <color name="switch_thumb_normal_color">#263238</color>
+
+    <style name="MySwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/pink_a200</item>
+        <item name="trackTint">#ECEFF1</item>
+        <item name="colorSwitchThumbNormal">#263238</item>
     </style>
 </resources>

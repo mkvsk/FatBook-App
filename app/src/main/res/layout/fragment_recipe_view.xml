@@ -132,7 +132,7 @@
                 android:layout_height="25dp"
                 android:background="@null"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_edit"
+                android:src="@drawable/ic_btn_edit"
                 android:visibility="gone" />
 
             <ImageButton

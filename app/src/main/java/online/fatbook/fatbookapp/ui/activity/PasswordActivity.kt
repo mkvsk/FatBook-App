@@ -77,7 +77,7 @@ class PasswordActivity : AppCompatActivity() {
         if (enable) {
             binding!!.imageViewPasswordIconAccepted.visibility = View.VISIBLE
             binding!!.editTextPassword.background =
-                AppCompatResources.getDrawable(baseContext, R.drawable.round_corner_edittext_login)
+                AppCompatResources.getDrawable(baseContext, R.drawable.round_corner_edittext_bio)
             binding!!.buttonPasswordNext.isEnabled = true
             binding!!.buttonPasswordNext.backgroundTintList =
                 ContextCompat.getColorStateList(this, R.color.color_pink_a200)

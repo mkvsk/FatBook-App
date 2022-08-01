@@ -99,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
         if (enable) {
             binding!!.imageViewLoginIconAccepted.visibility = View.VISIBLE
             binding!!.editTextLogin.background =
-                AppCompatResources.getDrawable(baseContext, R.drawable.round_corner_edittext_login)
+                AppCompatResources.getDrawable(baseContext, R.drawable.round_corner_edittext_bio)
             binding!!.buttonLoginNext.isEnabled = true
             binding!!.buttonLoginNext.backgroundTintList =
                 ContextCompat.getColorStateList(this, R.color.color_pink_a200)
