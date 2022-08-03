@@ -66,6 +66,7 @@
         app:layout_constraintBottom_toTopOf="@id/et_repeat_password_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:passwordToggleDrawable="@drawable/show_password_selector"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/ic_password_visibility">
 
