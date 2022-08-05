@@ -7,6 +7,35 @@
     android:background="@color/start_fragments_bgr"
     tools:context=".ui.fragment.authentication.signin.SignInNewPassFragment">
 
+    <!--<androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/blur_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/blur_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/blue_grey_200"
+            android:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/fragment_signin_new_pass_header"
         android:layout_width="wrap_content"
@@ -43,16 +72,16 @@
         app:layout_constraintRight_toRightOf="parent" />
 
 
-   <!-- <EditText
-        android:id="@+id/fragment_signin_new_pass_edittext_new_password"
-        style="@style/editText"
-        android:layout_marginBottom="@dimen/start_fragments_edittext_spacing"
-        android:background="@drawable/round_corner_edittext"
-        android:hint="@string/hint_new_password_signin_new_pass"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@id/fragment_signin_new_pass_edittext_repeat_new_password"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />-->
+    <!-- <EditText
+         android:id="@+id/fragment_signin_new_pass_edittext_new_password"
+         style="@style/editText"
+         android:layout_marginBottom="@dimen/start_fragments_edittext_spacing"
+         android:background="@drawable/round_corner_edittext"
+         android:hint="@string/hint_new_password_signin_new_pass"
+         android:inputType="textPassword"
+         app:layout_constraintBottom_toTopOf="@id/fragment_signin_new_pass_edittext_repeat_new_password"
+         app:layout_constraintLeft_toLeftOf="parent"
+         app:layout_constraintRight_toRightOf="parent" />-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_new_password_layout"
@@ -128,8 +157,8 @@
     <Button
         android:id="@+id/fragment_signin_new_pass_button_next"
         style="@style/btnPink"
-        android:text="@string/btn_next_signin_new_pass"
         android:enabled="false"
+        android:text="@string/btn_next_signin_new_pass"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

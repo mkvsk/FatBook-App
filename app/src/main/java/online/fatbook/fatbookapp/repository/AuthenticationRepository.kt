@@ -89,7 +89,7 @@ class AuthenticationRepository(private val context: Context) {
         resultCallback: ResultCallback<AuthenticationResponse>
     ) {
         scope.launch {
-            val call = RetrofitFactory.apiServiceClient().confirmVCode(vCode, email)
+            val call = RetrofitFactory.apiServiceClient().confirmVCode(email, vCode)
 
             call.enqueue(object : Callback<AuthenticationResponse> {
                 override fun onResponse(

@@ -1,14 +1,20 @@
 package online.fatbook.fatbookapp.ui.fragment.authentication.signin
 
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions.bitmapTransform
+import com.bumptech.glide.request.target.Target
+import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.alert_dialog_title_logout.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import kotlinx.android.synthetic.main.fragment_signin_new_pass.*
@@ -18,6 +24,7 @@ import online.fatbook.fatbookapp.databinding.FragmentSigninNewPassBinding
 import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.hideKeyboard
 import java.util.regex.Pattern
+
 
 class SignInNewPassFragment : Fragment() {
     private var binding: FragmentSigninNewPassBinding? = null
@@ -32,6 +39,12 @@ class SignInNewPassFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+       /* Blurry.with(requireContext()).radius(10)
+            .sampling(8)
+            .color(Color.argb(66, 255, 255, 0))
+            .async()
+            .onto(blur_group);*/
 
         fragment_signin_new_pass_button_next.setOnClickListener {
             hideKeyboard(fragment_signin_new_pass_edittext_repeat_new_password)

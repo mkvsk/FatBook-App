@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitFactory {
-    private const val ADDRESS = "http://10.0.2.2:1339/"
+    private const val ADDRESS = "https://api.fatbook.online/"
     private val gson = GsonBuilder()
         .setLenient()
         .create()
