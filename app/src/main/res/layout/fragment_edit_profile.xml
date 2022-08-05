@@ -7,8 +7,6 @@
     android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.EditProfileFragment">
 
-
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_edit_userprofile"
         android:layout_width="match_parent"

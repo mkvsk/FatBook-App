@@ -7,7 +7,7 @@
     /// v2.0.0
     <dimen name="start_fragments_element_spacing">15dp</dimen>
     <dimen name="start_fragments_add_text_spacing">10dp</dimen>
-    <dimen name="start_fragments_edittext_spacing">10dp</dimen>
+    <dimen name="start_fragments_edittext_spacing">15dp</dimen>
     <dimen name="start_fragments_link_spacing">5dp</dimen>
 
     <dimen name="kuzya_w">300dp</dimen>
@@ -16,11 +16,11 @@
     <dimen name="kuzya_dialog_w">140dp</dimen>
     <dimen name="kuzya_dialog_h">90dp</dimen>
 
-    <dimen name="btn_pink_w">235dp</dimen>
-    <dimen name="btn_pink_h">45dp</dimen>
+    <dimen name="btn_pink_w">240dp</dimen>
+    <dimen name="btn_pink_h">50dp</dimen>
 
-    <dimen name="edittext_start_fragments_w">235dp</dimen>
-    <dimen name="edittext_start_fragments_h">35dp</dimen>
+    <dimen name="edittext_start_fragments_w">245dp</dimen>
+    <dimen name="edittext_start_fragments_h">40dp</dimen>
 
     <dimen name="edittext_verification_code_w">35dp</dimen>
     <dimen name="edittext_verification_code_h">35dp</dimen>
