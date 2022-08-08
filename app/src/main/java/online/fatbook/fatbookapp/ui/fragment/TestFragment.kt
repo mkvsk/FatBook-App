@@ -1,10 +1,12 @@
 package online.fatbook.fatbookapp.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
@@ -34,7 +36,23 @@ class TestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        tabLayout_userprofile.tabRippleColor = null
+        nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY >= 1044) {
+                floating_button_up.visibility = View.VISIBLE
+            }
+            if (scrollY < 1044) {
+                floating_button_up.visibility = View.GONE
+            }
+        })
+
+        floating_button_up.setOnClickListener {
+            nsv_userprofile.post(Runnable {
+                nsv_userprofile.scrollTo(
+                    0,
+                    cardview_userprofile.bottom
+                )
+            })
+        }
 
         imageview_ic_expand.setOnClickListener {
             TransitionManager.go(Scene(cardview_userprofile), AutoTransition())

@@ -61,6 +61,8 @@
     <color name="tabitem_selected_color_text">#FFFFFFFF</color>
     <color name="tabitem_not_selected_color">#37474F</color>
     <color name="tabitem_not_selected_color_text">#B0BEC5</color>
+    <color name="floating_btn">#37474F</color>
+    <color name="ic_up_color">#263238</color>
 
     ///edit userprofile
     <color name="round_btn_edit">#263238</color>
@@ -223,6 +225,15 @@
         <item name="android:src">@drawable/ic_btn_add</item>
         <item name="fabCustomSize">@dimen/round_btn_w_h</item>
         <item name="tint">@color/ic_userprofile_color</item>
+    </style>
+
+    <style name="floatingBtnFocusOnTab" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/floating_btn</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_up</item>
+        <item name="fabCustomSize">@dimen/round_btn_w_h</item>
+        <item name="tint">@color/ic_up_color</item>
     </style>
 
     <style name="txtWelcome">
