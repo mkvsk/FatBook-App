@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
-import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.*
 import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.imageView_rv_card_recipe_bookmarks
 import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.imageView_rv_card_recipe_fork
 import kotlinx.android.synthetic.main.rv_profile_my_recipes.view.imageView_rv_card_recipe_photo
@@ -89,7 +88,7 @@ class RecipeAdapter :
                 itemView.imageView_rv_card_recipe_bookmarks.visibility = View.INVISIBLE
             } else {
                 itemView.imageView_rv_card_recipe_bookmarks.visibility = View.VISIBLE
-                toggleBookmarks(
+                toggleFavourites(
                     itemView.imageView_rv_card_recipe_bookmarks,
                     user.recipesBookmarked!!.contains(recipe.identifier)
                 )
@@ -110,11 +109,11 @@ class RecipeAdapter :
                 val tag = itemView.imageView_rv_card_recipe_bookmarks.tag as String
                 when (tag) {
                     RecipeUtils.TAG_BOOKMARKS_UNCHECKED -> {
-                        toggleBookmarks(itemView.imageView_rv_card_recipe_bookmarks, true)
+                        toggleFavourites(itemView.imageView_rv_card_recipe_bookmarks, true)
                         listener!!.onBookmarksClick(data[adapterPosition], true, adapterPosition)
                     }
                     RecipeUtils.TAG_BOOKMARKS_CHECKED -> {
-                        toggleBookmarks(itemView.imageView_rv_card_recipe_bookmarks, false)
+                        toggleFavourites(itemView.imageView_rv_card_recipe_bookmarks, false)
                         listener!!.onBookmarksClick(data[adapterPosition], false, adapterPosition)
                     }
                 }
@@ -136,21 +135,21 @@ class RecipeAdapter :
 
     private fun toggleForks(fork: ImageView, selected: Boolean) {
         if (selected) {
-            fork.setImageResource(R.drawable.icon_fork_checked)
+            fork.setImageResource(R.drawable.ic_fork_checked)
             fork.tag = RecipeUtils.TAG_FORK_CHECKED
         } else {
-            fork.setImageResource(R.drawable.icon_fork_unchecked)
+            fork.setImageResource(R.drawable.ic_fork_unchecked)
             fork.tag = RecipeUtils.TAG_FORK_UNCHECKED
         }
     }
 
-    private fun toggleBookmarks(bookmark: ImageView, selected: Boolean) {
+    private fun toggleFavourites(favourite: ImageView, selected: Boolean) {
         if (selected) {
-            bookmark.setImageResource(R.drawable.icon_bookmarks_checked)
-            bookmark.tag = RecipeUtils.TAG_BOOKMARKS_CHECKED
+            favourite.setImageResource(R.drawable.ic_add_to_fav)
+            favourite.tag = RecipeUtils.TAG_BOOKMARKS_CHECKED
         } else {
-            bookmark.setImageResource(R.drawable.icon_bookmarks_unchecked)
-            bookmark.tag = RecipeUtils.TAG_BOOKMARKS_UNCHECKED
+            favourite.setImageResource(R.drawable.ic_not_fav)
+            favourite.tag = RecipeUtils.TAG_BOOKMARKS_UNCHECKED
         }
     }
 

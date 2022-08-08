@@ -3,13 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/theme_primary_bgr"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Switch
-        android:layout_width="45dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout_userprofile"
+        style="@style/myTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tabitem_h"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="@dimen/userprofile_categories_spacing"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/tabview_bgr"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <online.fatbook.fatbookapp.design.ViewTabButton
+            android:id="@+id/tab_la"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="62dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/pink_a200"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <online.fatbook.fatbookapp.design.ViewTabButton
+            android:id="@+id/tab_la1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="62dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/pink_a200"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.google.android.material.tabs.TabLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

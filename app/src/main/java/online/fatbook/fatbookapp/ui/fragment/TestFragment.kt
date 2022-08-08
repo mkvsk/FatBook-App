@@ -34,6 +34,8 @@ class TestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        tabLayout_userprofile.tabRippleColor = null
+
         imageview_ic_expand.setOnClickListener {
             TransitionManager.go(Scene(cardview_userprofile), AutoTransition())
             if (!expanded) {

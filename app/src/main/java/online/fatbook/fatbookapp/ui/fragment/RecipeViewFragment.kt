@@ -497,10 +497,10 @@ class RecipeViewFragment : Fragment(), OnRecipeViewDeleteIngredient {
 
     private fun toggleForks(selected: Boolean) {
         if (selected) {
-            binding!!.imageViewRecipeViewFork.setImageResource(R.drawable.icon_fork_checked)
+            binding!!.imageViewRecipeViewFork.setImageResource(R.drawable.ic_fork_checked)
             binding!!.imageViewRecipeViewFork.tag = RecipeUtils.TAG_FORK_CHECKED
         } else {
-            binding!!.imageViewRecipeViewFork.setImageResource(R.drawable.icon_fork_unchecked)
+            binding!!.imageViewRecipeViewFork.setImageResource(R.drawable.ic_fork_unchecked)
             binding!!.imageViewRecipeViewFork.tag = RecipeUtils.TAG_FORK_UNCHECKED
         }
     }

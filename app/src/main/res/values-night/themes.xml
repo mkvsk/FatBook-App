@@ -42,6 +42,8 @@
     <color name="ic_password_visibility">#263238</color>
 
     ///ic colors
+    <color name="ic_forked_favourite">#FF4081</color>
+    <color name="ic_not_forked_favourite">#B0BEC5</color>
     <color name="ic_bottomnav_color">#B0BEC5</color>
     <color name="ic_userprofile_color">#FFFFFFFF</color>
     <color name="ic_expand_color">#263238</color>
@@ -260,7 +262,7 @@
         <item name="android:layout_width">@dimen/edittext_start_fragments_w</item>
         <item name="android:layout_height">@dimen/edittext_start_fragments_h</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/main_text</item>
         <item name="fontFamily">@font/roboto_regular</item>
     </style>
@@ -269,7 +271,7 @@
         <item name="android:layout_width">@dimen/edittext_start_fragments_w</item>
         <item name="android:layout_height">@dimen/edittext_start_fragments_h</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/main_text</item>
         <item name="fontFamily">@font/roboto_regular</item>
     </style>
@@ -278,7 +280,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/main_text</item>
         <item name="fontFamily">@font/roboto_regular</item>
     </style>

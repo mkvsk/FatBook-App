@@ -5,5 +5,5 @@
     android:viewportHeight="49">
   <path
       android:pathData="M0,4V47.7669C0,48.8589 1.6508,49.4098 2.626,48.6432L12.4169,40.9461C13.0176,40.4739 13.9824,40.4739 14.5831,40.9461L24.3741,48.6432C25.3492,49.4098 27,48.8589 27,47.7669V4.0004C27,1.7913 25.2092,0.0004 23,0.0004L4.0002,0C1.7909,-0.0001 0,1.7908 0,4Z"
-      android:fillColor="@color/ic_forked_favourite"/>
+      android:fillColor="@color/ic_not_forked_favourite"/>
 </vector>

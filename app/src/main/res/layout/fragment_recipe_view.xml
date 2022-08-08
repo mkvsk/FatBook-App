@@ -176,7 +176,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/icon_fork_unchecked"
+                android:src="@drawable/ic_fork_unchecked"
                 android:tag="tag_fork_unchecked"
                 app:layout_constraintBottom_toBottomOf="@id/imageView_recipe_view_card_bgr"
                 app:layout_constraintLeft_toLeftOf="@id/imageView_recipe_view_icon_bookmarks"

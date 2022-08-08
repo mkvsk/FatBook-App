@@ -95,7 +95,7 @@
         app:layout_constraintRight_toRightOf="@id/imageView_rv_card_recipe_bookmarks"
         app:layout_constraintLeft_toLeftOf="@id/imageView_rv_card_recipe_bookmarks"
         app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo"
-        android:src="@drawable/icon_fork_checked"/>
+        android:src="@drawable/ic_fork_checked"/>
 
     <TextView
         android:id="@+id/textView_rv_card_recipe_forks_avg"
