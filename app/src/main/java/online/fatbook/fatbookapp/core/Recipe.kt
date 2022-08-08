@@ -8,6 +8,17 @@ class Recipe() : Serializable {
         this.name = name
     }
 
+    constructor(name: String?, forks: Int?) : this() {
+        this.name = name
+        this.forks = forks
+    }
+
+    constructor(name: String?, forks: Int?, author: String?) : this() {
+        this.name = name
+        this.forks = forks
+        this.author = author
+    }
+
     var pid: Long? = null
     var name: String? = ""
     var description: String? = ""

@@ -26,8 +26,8 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView_rv_card_recipe_photo"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
+                android:layout_width="115dp"
+                android:layout_height="115dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_default_recipe_image"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +37,7 @@
 
             <TextView
                 android:id="@+id/textView_rv_card_recipe_title"
-                android:layout_width="215dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:elevation="6dp"
@@ -62,9 +62,9 @@
                 android:textColor="@color/main_text"
                 android:textSize="11sp"
                 android:translationZ="4dp"
-                app:layout_constraintBottom_toTopOf="@id/rv_ingredients_preview"
-                app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_title"
-                app:layout_constraintTop_toBottomOf="@id/textView_rv_card_recipe_title" />
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo"
+                app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_title"/>
 
             <TextView
                 android:id="@+id/textView_rv_card_recipe_author"
@@ -84,46 +84,48 @@
 
             <TextView
                 android:id="@+id/rv_ingredients_preview"
-                android:layout_width="220dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/roboto_light"
-                android:maxLines="2"
+                android:maxLines="3"
                 android:paddingEnd="10dp"
                 android:text="Ingredients(12): milk, egg, salt, tomatoes, avocado, lemon, cottage cheese, bread, green, butter, parsley, spinach"
                 android:textColor="@color/main_text"
                 android:textSize="10sp"
-                app:layout_constraintBottom_toTopOf="@id/rv_recipe_adds"
-                app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_author_by" />
+                app:layout_constraintTop_toBottomOf="@id/textView_rv_card_recipe_title"
+                app:layout_constraintBottom_toTopOf="@id/textView_rv_card_recipe_author_by"
+                app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_title" />
+
 
             <LinearLayout
                 android:id="@+id/rv_recipe_adds"
-                android:layout_width="180dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:background="@drawable/adds_recipe_preview_bgr"
                 android:gravity="center"
+                app:layout_constraintLeft_toLeftOf="@id/imageView_rv_card_recipe_photo"
+                app:layout_constraintRight_toRightOf="@id/imageView_rv_card_recipe_photo"
                 app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo"
-                app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_author_by">
+                android:layout_marginLeft="5dp"
+                >
 
                 <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:src="@drawable/ic_time_preview" />
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/ic_kcals_preview" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
-                    android:text="345kcal"
+                    android:text="345"
                     android:textAppearance="@style/txtRecipePreviewAdds"
                     android:textColor="@color/rv_recipe_preview_ic_color" />
 
-                <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_kcals_preview" />
+                <!--<ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/ic_time_preview" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -131,12 +133,12 @@
                     android:layout_marginLeft="2dp"
                     android:text="35 min"
                     android:textAppearance="@style/txtRecipePreviewAdds"
-                    android:textColor="@color/rv_recipe_preview_ic_color" />
+                    android:textColor="@color/rv_recipe_preview_ic_color" />-->
 
-                <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_marginLeft="10dp"
+                <!--<ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="7dp"
                     android:src="@drawable/ic_difficulty_preview" />
 
                 <TextView
@@ -145,7 +147,7 @@
                     android:layout_marginLeft="2dp"
                     android:text="medium"
                     android:textAppearance="@style/txtRecipePreviewAdds"
-                    android:textColor="@color/rv_recipe_preview_ic_color" />
+                    android:textColor="@color/rv_recipe_preview_ic_color" />-->
 
             </LinearLayout>
 
@@ -157,7 +159,7 @@
                 android:src="@drawable/ic_fork_unchecked"
                 android:tag="tag_fork_unchecked"
                 android:translationZ="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo"
                 app:layout_constraintRight_toRightOf="parent" />
 
             <TextView
@@ -172,7 +174,7 @@
                 android:textColor="@color/color_blue_grey_200"
                 android:textSize="9sp"
                 android:translationZ="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_photo"
                 app:layout_constraintRight_toLeftOf="@id/imageView_rv_card_recipe_fork" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

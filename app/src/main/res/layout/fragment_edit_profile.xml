@@ -63,11 +63,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imageview_userphoto_edit_userprofile"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:src="@drawable/ic_default_userphoto"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

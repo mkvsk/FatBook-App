@@ -37,11 +37,20 @@ class TestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if (scrollY >= 1044) {
-                floating_button_up.visibility = View.VISIBLE
-            }
-            if (scrollY < 1044) {
-                floating_button_up.visibility = View.GONE
+            if (!expanded) {
+                if (scrollY >= 1044) {
+                    floating_button_up.visibility = View.VISIBLE
+                }
+                if (scrollY < 1044) {
+                    floating_button_up.visibility = View.GONE
+                }
+            } else {
+                if (scrollY >= 1200) {
+                    floating_button_up.visibility = View.VISIBLE
+                }
+                if (scrollY < 1200) {
+                    floating_button_up.visibility = View.GONE
+                }
             }
         })
 
@@ -82,14 +91,18 @@ class TestFragment : Fragment() {
         }
 
         val list1 = listOf(
-            Recipe(name = "sobaka1"),
-            Recipe(name = "sobaka2"),
-            Recipe(name = "sobaka3"),
+            Recipe(name = "sobaka1", forks = 255),
+            Recipe(name = "sobaka2", forks = 1477, author = "Neshik"),
+            Recipe(
+                name = "Text text text text text text text text",
+                forks = 1234567,
+                author = "Timofey"
+            ),
             Recipe(name = "sobaka4"),
             Recipe(name = "sobaka5"),
             Recipe(name = "sobaka6"),
             Recipe(name = "sobaka7"),
-            Recipe(name = "sobaka8"),
+            Recipe(name = "sobaka8", forks = 1339),
             Recipe(name = "sobaka9"),
             Recipe(name = "sobaka10")
         )
