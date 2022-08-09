@@ -4,6 +4,9 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +20,7 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import kotlinx.android.synthetic.main.fragment_test.*
 import online.fatbook.fatbookapp.databinding.FragmentEditProfileBinding
+import online.fatbook.fatbookapp.util.hideKeyboard
 import java.lang.Math.hypot
 import kotlin.math.hypot
 import kotlin.properties.Delegates
@@ -25,6 +29,8 @@ class EditProfileFragment : Fragment() {
     private var binding: FragmentEditProfileBinding? = null
     private var savedScrollX: Int = 0
     private var savedScrollY: Int = 0
+
+    private var bioTextLength: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +56,38 @@ class EditProfileFragment : Fragment() {
 
         Log.i("view:", "onViewCreated")
 
+        edittext_profile_bio.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                bioTextLength =
+                    edittext_profile_bio.filters.filterIsInstance<InputFilter.LengthFilter>()
+                        .firstOrNull()?.max!!
+                bioTextLength -= s.toString().length
+                textview_bio_length.text = bioTextLength.toString()
+                if (bioTextLength == 0) {
+                    hideKeyboard(edittext_profile_bio)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+//                s.toString().replace("\\s+".toRegex(), " ")
+            }
+
+        })
+
+       /* button_save_edit_userprofile.setOnClickListener {
+            var str = edittext_profile_bio.text
+            print(str.toString())
+
+            str.toString().toString().replace("\\s+", "_")
+//            str.replace("^(?:[\t ]*(?:\r?\n|\r))+".toRegex(), "_")
+            print(str.toString())
+
+        }*/
         /*if (savedScrollY != 0) {
             nsv_edit_userprofile.post(Runnable { nsv_edit_userprofile.scrollTo(0, savedScrollY) })
             Log.d("position:", "$savedScrollY")
@@ -85,37 +123,32 @@ class EditProfileFragment : Fragment() {
 
         }, 5000)
 */
+        /* nsv_edit_userprofile.setOnScrollChangeListener(object :
+             NestedScrollView.OnScrollChangeListener {
+             override fun onScrollChange(
+                 v: NestedScrollView?,
+                 scrollX: Int,
+                 scrollY: Int,
+                 oldScrollX: Int,
+                 oldScrollY: Int
+             ) {
+                 savedScrollY = scrollY
 
+                  if (scrollY > oldScrollY) {
+                      Log.i("position:", "SCROLL DOWN")
+                  }
+                  if (scrollY < oldScrollY) {
+                      Log.i("position:", "SCROLL UP")
+                  }
+                  if (scrollY == 0) {
+                      Log.i("position:", "TOP SCROLL")
+                  }
+                  if (scrollY == v!!.measuredHeight - v.getChildAt(0).measuredHeight) {
+                      Log.i("position:", "BOTTOM SCROLL")
+                  }
+             }
 
-
-
-
-        nsv_edit_userprofile.setOnScrollChangeListener(object :
-            NestedScrollView.OnScrollChangeListener {
-            override fun onScrollChange(
-                v: NestedScrollView?,
-                scrollX: Int,
-                scrollY: Int,
-                oldScrollX: Int,
-                oldScrollY: Int
-            ) {
-//                savedScrollY = scrollY
-
-                /* if (scrollY > oldScrollY) {
-                     Log.i("position:", "SCROLL DOWN")
-                 }
-                 if (scrollY < oldScrollY) {
-                     Log.i("position:", "SCROLL UP")
-                 }
-                 if (scrollY == 0) {
-                     Log.i("position:", "TOP SCROLL")
-                 }
-                 if (scrollY == v!!.measuredHeight - v.getChildAt(0).measuredHeight) {
-                     Log.i("position:", "BOTTOM SCROLL")
-                 }*/
-            }
-
-        })
+         })*/
 
     }
 

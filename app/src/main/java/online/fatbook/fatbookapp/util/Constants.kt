@@ -7,5 +7,5 @@ object Constants {
     const val ACCESS_TOKEN = "access_token"
     const val REFRESH_TOKEN = "refresh_token"
     const val USERNAME = "username"
-
+//    const val ET_BIO_REGEX = "^(?=\\S+\$)$"
 }

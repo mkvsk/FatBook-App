@@ -44,7 +44,7 @@
 
         <EditText
             android:id="@+id/fragment_signup_email_edittext_email"
-            style="@style/editText"
+            style="@style/signUpInEditText"
             android:layout_marginBottom="@dimen/start_fragments_element_spacing"
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_email_signup_email"

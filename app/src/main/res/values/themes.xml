@@ -269,7 +269,7 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="editText">
+    <style name="signUpInEditText">
         <item name="android:layout_width">@dimen/edittext_start_fragments_w</item>
         <item name="android:layout_height">@dimen/edittext_start_fragments_h</item>
         <item name="android:textAlignment">center</item>
@@ -345,6 +345,13 @@
         <item name="colorControlActivated">@color/pink_a200</item>
         <item name="trackTint">#ECEFF1</item>
         <item name="colorSwitchThumbNormal">#263238</item>
+    </style>
+
+    <style name="editProfileText">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/main_text</item>
+        <item name="fontFamily">@font/roboto_regular</item>
     </style>
     ///v1.0.0
 

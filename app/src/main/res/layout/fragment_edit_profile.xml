@@ -67,7 +67,7 @@
                         android:id="@+id/imageview_userphoto_edit_userprofile"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:src="@drawable/ic_default_userphoto"
+                        android:background="@drawable/ic_default_userphoto"
                         android:scaleType="centerCrop"
                         app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -132,7 +132,7 @@
                         android:lines="1"
                         android:maxLength="40"
                         android:paddingHorizontal="10dp"
-                        android:textSize="13sp"
+                        android:textAppearance="@style/editProfileText"
                         app:layout_constraintLeft_toRightOf="@id/imageview_ic_title_edit_userprofile"
                         app:layout_constraintTop_toBottomOf="@id/imageview_userphoto_edit_userprofile" />
 
@@ -157,7 +157,7 @@
                         android:inputType="textUri"
                         android:lines="1"
                         android:paddingHorizontal="10dp"
-                        android:textSize="13sp"
+                        android:textAppearance="@style/editProfileText"
                         app:layout_constraintLeft_toRightOf="@id/imageview_ic_website_edit_userprofile"
                         app:layout_constraintTop_toBottomOf="@id/edittext_profile_title" />
 
@@ -180,11 +180,12 @@
                         android:background="@drawable/round_corner_edittext_bio"
                         android:gravity="start"
                         android:hint="Bio"
-                        android:lines="20"
+                        android:minLines="10"
+                        android:maxLines="20"
                         android:maxLength="635"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="5dp"
-                        android:textSize="13sp"
+                        android:textAppearance="@style/editProfileText"
                         app:layout_constraintLeft_toRightOf="@id/imageview_ic_website_edit_userprofile"
                         app:layout_constraintTop_toBottomOf="@id/edittext_profile_website" />
 

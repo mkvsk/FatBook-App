@@ -35,7 +35,7 @@
 
         <EditText
             android:id="@+id/fragment_signin_edittext_username"
-            style="@style/editText"
+            style="@style/signUpInEditText"
             android:layout_marginBottom="@dimen/start_fragments_edittext_spacing"
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_username_signin"

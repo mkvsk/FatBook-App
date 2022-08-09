@@ -63,7 +63,7 @@
 
         <EditText
             android:id="@+id/fragment_verification_code_edittext_vc"
-            style="@style/editText"
+            style="@style/signUpInEditText"
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_verification_code"
             android:inputType="number"
