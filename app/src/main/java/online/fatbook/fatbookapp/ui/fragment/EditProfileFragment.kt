@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import kotlinx.android.synthetic.main.fragment_test.*
 import online.fatbook.fatbookapp.databinding.FragmentEditProfileBinding
+import online.fatbook.fatbookapp.util.MyTextFilter
 import online.fatbook.fatbookapp.util.hideKeyboard
 import java.lang.Math.hypot
 import kotlin.math.hypot
@@ -31,6 +32,8 @@ class EditProfileFragment : Fragment() {
     private var savedScrollY: Int = 0
 
     private var bioTextLength: Int = 0
+    private var strBio: String? = null
+    private var strTmp: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +63,7 @@ class EditProfileFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                 bioTextLength =
                     edittext_profile_bio.filters.filterIsInstance<InputFilter.LengthFilter>()
                         .firstOrNull()?.max!!
@@ -74,24 +75,19 @@ class EditProfileFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                s.toString().replace("\\s+".toRegex(), " ")
             }
 
         })
 
-       /* button_save_edit_userprofile.setOnClickListener {
-            var str = edittext_profile_bio.text
-            print(str.toString())
-
-            str.toString().toString().replace("\\s+", "_")
-//            str.replace("^(?:[\t ]*(?:\r?\n|\r))+".toRegex(), "_")
-            print(str.toString())
-
-        }*/
-        /*if (savedScrollY != 0) {
-            nsv_edit_userprofile.post(Runnable { nsv_edit_userprofile.scrollTo(0, savedScrollY) })
-            Log.d("position:", "$savedScrollY")
+        button_save_edit_userprofile.setOnClickListener {
+            edittext_profile_bio.filters
         }
+
+    }
+    /*if (savedScrollY != 0) {
+        nsv_edit_userprofile.post(Runnable { nsv_edit_userprofile.scrollTo(0, savedScrollY) })
+        Log.d("position:", "$savedScrollY")
+    }
 */
 
 /*
@@ -102,98 +98,96 @@ class EditProfileFragment : Fragment() {
         nsv_edit_userprofile.scrollTo(3, 30)
 */
 
-        /* val value = if (savedInstanceState?.getInt("scroll", 0) != null) {
-             savedInstanceState.getInt("scroll", 0)
-         } else {
-             0
-         }
+    /* val value = if (savedInstanceState?.getInt("scroll", 0) != null) {
+         savedInstanceState.getInt("scroll", 0)
+     } else {
+         0
+     }
 
-         Log.d("scroll", "$value LOADED")
-         nsv_edit_userprofile.smoothScrollTo(value, value)*/
+     Log.d("scroll", "$value LOADED")
+     nsv_edit_userprofile.smoothScrollTo(value, value)*/
 
 
-        /*val loadingDialog = LoadingDialog(requireContext())
+    /*val loadingDialog = LoadingDialog(requireContext())
 
-        loadingDialog.startLoading()
-        val handler = Handler()
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                loadingDialog.isDismiss()
-            }
+    loadingDialog.startLoading()
+    val handler = Handler()
+    handler.postDelayed(object : Runnable {
+        override fun run() {
+            loadingDialog.isDismiss()
+        }
 
-        }, 5000)
+    }, 5000)
 */
-        /* nsv_edit_userprofile.setOnScrollChangeListener(object :
-             NestedScrollView.OnScrollChangeListener {
-             override fun onScrollChange(
-                 v: NestedScrollView?,
-                 scrollX: Int,
-                 scrollY: Int,
-                 oldScrollX: Int,
-                 oldScrollY: Int
-             ) {
-                 savedScrollY = scrollY
+    /* nsv_edit_userprofile.setOnScrollChangeListener(object :
+         NestedScrollView.OnScrollChangeListener {
+         override fun onScrollChange(
+             v: NestedScrollView?,
+             scrollX: Int,
+             scrollY: Int,
+             oldScrollX: Int,
+             oldScrollY: Int
+         ) {
+             savedScrollY = scrollY
 
-                  if (scrollY > oldScrollY) {
-                      Log.i("position:", "SCROLL DOWN")
-                  }
-                  if (scrollY < oldScrollY) {
-                      Log.i("position:", "SCROLL UP")
-                  }
-                  if (scrollY == 0) {
-                      Log.i("position:", "TOP SCROLL")
-                  }
-                  if (scrollY == v!!.measuredHeight - v.getChildAt(0).measuredHeight) {
-                      Log.i("position:", "BOTTOM SCROLL")
-                  }
-             }
-
-         })*/
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.i("view:", "onDestroyView")
-
-        savedScrollY = nsv_edit_userprofile.scrollY
-    }
-    /* private fun setTheme(night: Boolean) {
-         if (imageview_anim.isVisible) {
-             return
+              if (scrollY > oldScrollY) {
+                  Log.i("position:", "SCROLL DOWN")
+              }
+              if (scrollY < oldScrollY) {
+                  Log.i("position:", "SCROLL UP")
+              }
+              if (scrollY == 0) {
+                  Log.i("position:", "TOP SCROLL")
+              }
+              if (scrollY == v!!.measuredHeight - v.getChildAt(0).measuredHeight) {
+                  Log.i("position:", "BOTTOM SCROLL")
+              }
          }
 
-         val w = container.width
-         println("$w")
-         val h = container.height
-         println("$h")
-
-
-         val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-         val canvas = Canvas(bitmap)
-         container.draw(canvas)
-
-         imageview_anim.setImageBitmap(bitmap)
-         imageview_anim.isVisible = true
-
-         val finalRadius = hypot(w.toFloat(), h.toFloat())
-
-         if(night) {
-             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-         } else {
-             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-         }
-
-         val anim = ViewAnimationUtils.createCircularReveal(container, w / 2, h / 2, 0f, finalRadius)
-         anim.duration = 400L
-         anim.doOnEnd {
-             imageview_anim.setImageDrawable(null)
-             imageview_anim.isVisible = false
-         }
-         anim.start()
-     }*/
+     })*/
 
 }
+/*
+override fun onDestroyView() {
+    super.onDestroyView()
+    Log.i("view:", "onDestroyView")
+
+    savedScrollY = nsv_edit_userprofile.scrollY
+}*/
+/* private fun setTheme(night: Boolean) {
+     if (imageview_anim.isVisible) {
+         return
+     }
+
+     val w = container.width
+     println("$w")
+     val h = container.height
+     println("$h")
+
+
+     val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+     val canvas = Canvas(bitmap)
+     container.draw(canvas)
+
+     imageview_anim.setImageBitmap(bitmap)
+     imageview_anim.isVisible = true
+
+     val finalRadius = hypot(w.toFloat(), h.toFloat())
+
+     if(night) {
+         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+     } else {
+         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+     }
+
+     val anim = ViewAnimationUtils.createCircularReveal(container, w / 2, h / 2, 0f, finalRadius)
+     anim.duration = 400L
+     anim.doOnEnd {
+         imageview_anim.setImageDrawable(null)
+         imageview_anim.isVisible = false
+     }
+     anim.start()
+ }*/
 
 
 /*private fun focusOnView() {
