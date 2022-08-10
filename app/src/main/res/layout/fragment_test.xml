@@ -257,7 +257,7 @@
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:overScrollMode="never"
-                    android:paddingTop="10dp"
+                    android:paddingTop="15dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/tabLayout_userprofile"
                     tools:listitem="@layout/rv_feed_recipe_card_preview" />

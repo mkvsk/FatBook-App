@@ -59,6 +59,8 @@ class EditProfileFragment : Fragment() {
 
         Log.i("view:", "onViewCreated")
 
+//        edittext_profile_bio.filters = arrayOf<InputFilter>(MyTextFilter())
+
         edittext_profile_bio.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -80,7 +82,7 @@ class EditProfileFragment : Fragment() {
         })
 
         button_save_edit_userprofile.setOnClickListener {
-            edittext_profile_bio.filters
+            edittext_profile_bio.setText(edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " "))
         }
 
     }

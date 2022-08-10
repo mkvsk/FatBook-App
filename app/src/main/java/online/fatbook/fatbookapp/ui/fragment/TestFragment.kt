@@ -18,8 +18,9 @@ import online.fatbook.fatbookapp.core.Recipe
 import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.databinding.FragmentTestBinding
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 
-class TestFragment : Fragment() {
+class TestFragment : Fragment(), OnRecipeClickListener {
 
     private var binding: FragmentTestBinding? = null
 
@@ -28,7 +29,7 @@ class TestFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentTestBinding.inflate(inflater, container, false)
         return binding!!.root
     }
@@ -36,7 +37,7 @@ class TestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+        nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
             if (!expanded) {
                 if (scrollY >= 1044) {
                     floating_button_up.visibility = View.VISIBLE
@@ -55,12 +56,12 @@ class TestFragment : Fragment() {
         })
 
         floating_button_up.setOnClickListener {
-            nsv_userprofile.post(Runnable {
+            nsv_userprofile.post {
                 nsv_userprofile.scrollTo(
                     0,
                     cardview_userprofile.bottom
                 )
-            })
+            }
         }
 
         imageview_ic_expand.setOnClickListener {
@@ -120,6 +121,7 @@ class TestFragment : Fragment() {
 
         val adapter = RecipeAdapter()
         adapter.setData(list1, User())
+        adapter.setClickListener(this)
         rv_user_recipe.adapter = adapter
 
         tabLayout_userprofile.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -140,6 +142,18 @@ class TestFragment : Fragment() {
             }
 
         })
+    }
+
+    override fun onRecipeClick(position: Int) {
+        Log.d("recipe click", position.toString())
+    }
+
+    override fun onBookmarksClick(recipe: Recipe?, bookmark: Boolean, position: Int) {
+        Log.d("bookmark click", position.toString())
+    }
+
+    override fun onForkClicked(recipe: Recipe?, fork: Boolean, position: Int) {
+        Log.d("fork click", position.toString())
     }
 
 }
