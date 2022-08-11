@@ -30,193 +30,184 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nsv_edit_userprofile"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_edit_userprofile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:overScrollMode="never"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_marginTop="?attr/actionBarSize">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_edit_userprofile"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardview_edit_userprofile"
+            style="@style/myMaterialCardRight"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/cards_margin_start"
+            app:cardElevation="6dp"
+            app:contentPaddingBottom="10dp"
+            app:contentPaddingLeft="10dp"
+            app:contentPaddingRight="20dp"
+            app:contentPaddingTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardview_edit_userprofile"
-                style="@style/myMaterialCardRight"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/cards_margin_start"
-                app:cardElevation="6dp"
-                app:contentPaddingBottom="10dp"
-                app:contentPaddingLeft="10dp"
-                app:contentPaddingRight="20dp"
-                app:contentPaddingTop="10dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="horizontal">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageview_userphoto_edit_userprofile"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:background="@drawable/ic_default_userphoto"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-15dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_edit_userprofile"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/button_edit_photo"
+                        style="@style/roundBtnEditPhoto"
+                        android:layout_width="@dimen/round_btn_w_h"
+                        android:layout_height="@dimen/round_btn_w_h"
+                        android:visibility="visible"
+                        app:maxImageSize="16dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/button_add_photo"
+                        style="@style/roundBtnAddPhoto"
+                        android:layout_width="@dimen/round_btn_w_h"
+                        android:layout_height="@dimen/round_btn_w_h"
+                        android:visibility="gone"
+                        app:maxImageSize="16dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/button_delete_photo"
+                        style="@style/roundBtnDeletePhoto"
+                        android:layout_width="@dimen/round_btn_w_h"
+                        android:layout_height="@dimen/round_btn_w_h"
+                        android:layout_marginLeft="90dp"
+                        android:visibility="visible"
+                        app:maxImageSize="16dp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <ImageView
+                    android:id="@+id/imageview_ic_title_edit_userprofile"
+                    android:layout_width="@dimen/ic_userprofile_w_h"
+                    android:layout_height="@dimen/ic_userprofile_w_h"
+                    android:src="@drawable/ic_edit_profile"
+                    app:layout_constraintBottom_toBottomOf="@id/edittext_profile_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edittext_profile_title" />
+
+                <EditText
+                    android:id="@+id/edittext_profile_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/round_corner_edittext_title_website"
+                    android:hint="Profile title"
+                    android:inputType="textPersonName"
+                    android:lines="1"
+                    android:maxLength="40"
+                    android:paddingHorizontal="10dp"
+                    android:textAppearance="@style/editProfileText"
+                    app:layout_constraintLeft_toRightOf="@id/imageview_ic_title_edit_userprofile"
+                    app:layout_constraintTop_toBottomOf="@id/imageview_userphoto_edit_userprofile" />
+
+                <ImageView
+                    android:id="@+id/imageview_ic_website_edit_userprofile"
+                    android:layout_width="@dimen/ic_userprofile_w_h"
+                    android:layout_height="@dimen/ic_userprofile_w_h"
+                    android:src="@drawable/ic_user_website"
+                    app:layout_constraintBottom_toBottomOf="@id/edittext_profile_website"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edittext_profile_website" />
+
+                <EditText
+                    android:id="@+id/edittext_profile_website"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/round_corner_edittext_title_website"
+                    android:hint="Website"
+                    android:inputType="textUri"
+                    android:lines="1"
+                    android:paddingHorizontal="10dp"
+                    android:textAppearance="@style/editProfileText"
+                    app:layout_constraintLeft_toRightOf="@id/imageview_ic_website_edit_userprofile"
+                    app:layout_constraintTop_toBottomOf="@id/edittext_profile_title" />
+
+                <ImageView
+                    android:id="@+id/imageview_ic_bio_edit_userprofile"
+                    android:layout_width="@dimen/ic_userprofile_w_h"
+                    android:layout_height="@dimen/ic_userprofile_w_h"
+                    android:layout_marginTop="6dp"
+                    android:src="@drawable/ic_user_bio"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edittext_profile_bio" />
+
+                <EditText
+                    android:id="@+id/edittext_profile_bio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/round_corner_edittext_bio"
+                    android:gravity="start"
+                    android:hint="Bio"
+                    android:maxLength="635"
+                    android:maxLines="20"
+                    android:minLines="10"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp"
+                    android:textAppearance="@style/editProfileText"
+                    app:layout_constraintLeft_toRightOf="@id/imageview_ic_website_edit_userprofile"
+                    app:layout_constraintTop_toBottomOf="@id/edittext_profile_website" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/imageview_userphoto_edit_userprofile"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:background="@drawable/ic_default_userphoto"
-                        android:scaleType="centerCrop"
-                        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/textview_bio_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:text="635"
+                    android:textColor="@color/blue_grey_200"
+                    android:textSize="11sp"
+                    app:layout_constraintRight_toRightOf="@id/edittext_profile_bio"
+                    app:layout_constraintTop_toBottomOf="@id/edittext_profile_bio" />
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="-15dp"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_edit_userprofile"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent">
+                <Button
+                    android:id="@+id/button_save_edit_userprofile"
+                    style="@style/btnsUserProfile"
+                    android:layout_marginTop="20dp"
+                    android:elevation="4dp"
+                    android:text="Save"
+                    android:translationZ="1dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edittext_profile_bio" />
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/button_edit_photo"
-                            style="@style/roundBtnEditPhoto"
-                            android:layout_width="@dimen/round_btn_w_h"
-                            android:layout_height="@dimen/round_btn_w_h"
-                            android:visibility="visible"
-                            app:maxImageSize="16dp" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/button_add_photo"
-                            style="@style/roundBtnAddPhoto"
-                            android:layout_width="@dimen/round_btn_w_h"
-                            android:layout_height="@dimen/round_btn_w_h"
-                            android:visibility="gone"
-                            app:maxImageSize="16dp" />
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/button_delete_photo"
-                            style="@style/roundBtnDeletePhoto"
-                            android:layout_width="@dimen/round_btn_w_h"
-                            android:layout_height="@dimen/round_btn_w_h"
-                            android:layout_marginLeft="90dp"
-                            android:visibility="visible"
-                            app:maxImageSize="16dp" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
-                    <ImageView
-                        android:id="@+id/imageview_ic_title_edit_userprofile"
-                        android:layout_width="@dimen/ic_userprofile_w_h"
-                        android:layout_height="@dimen/ic_userprofile_w_h"
-                        android:src="@drawable/ic_edit_profile"
-                        app:layout_constraintBottom_toBottomOf="@id/edittext_profile_title"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/edittext_profile_title" />
-
-                    <EditText
-                        android:id="@+id/edittext_profile_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/round_corner_edittext_title_website"
-                        android:hint="Profile title"
-                        android:inputType="textPersonName"
-                        android:lines="1"
-                        android:maxLength="40"
-                        android:paddingHorizontal="10dp"
-                        android:textAppearance="@style/editProfileText"
-                        app:layout_constraintLeft_toRightOf="@id/imageview_ic_title_edit_userprofile"
-                        app:layout_constraintTop_toBottomOf="@id/imageview_userphoto_edit_userprofile" />
-
-                    <ImageView
-                        android:id="@+id/imageview_ic_website_edit_userprofile"
-                        android:layout_width="@dimen/ic_userprofile_w_h"
-                        android:layout_height="@dimen/ic_userprofile_w_h"
-                        android:src="@drawable/ic_user_website"
-                        app:layout_constraintBottom_toBottomOf="@id/edittext_profile_website"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/edittext_profile_website" />
-
-                    <EditText
-                        android:id="@+id/edittext_profile_website"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/round_corner_edittext_title_website"
-                        android:hint="Website"
-                        android:inputType="textUri"
-                        android:lines="1"
-                        android:paddingHorizontal="10dp"
-                        android:textAppearance="@style/editProfileText"
-                        app:layout_constraintLeft_toRightOf="@id/imageview_ic_website_edit_userprofile"
-                        app:layout_constraintTop_toBottomOf="@id/edittext_profile_title" />
-
-                    <ImageView
-                        android:id="@+id/imageview_ic_bio_edit_userprofile"
-                        android:layout_width="@dimen/ic_userprofile_w_h"
-                        android:layout_height="@dimen/ic_userprofile_w_h"
-                        android:layout_marginTop="6dp"
-                        android:src="@drawable/ic_user_bio"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/edittext_profile_bio" />
-
-                    <EditText
-                        android:id="@+id/edittext_profile_bio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/round_corner_edittext_bio"
-                        android:gravity="start"
-                        android:hint="Bio"
-                        android:minLines="10"
-                        android:maxLines="20"
-                        android:maxLength="635"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="5dp"
-                        android:textAppearance="@style/editProfileText"
-                        app:layout_constraintLeft_toRightOf="@id/imageview_ic_website_edit_userprofile"
-                        app:layout_constraintTop_toBottomOf="@id/edittext_profile_website" />
-
-                    <TextView
-                        android:id="@+id/textview_bio_length"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:text="635"
-                        android:textColor="@color/blue_grey_200"
-                        android:textSize="11sp"
-                        app:layout_constraintRight_toRightOf="@id/edittext_profile_bio"
-                        app:layout_constraintTop_toBottomOf="@id/edittext_profile_bio" />
-
-                    <Button
-                        android:id="@+id/button_save_edit_userprofile"
-                        style="@style/btnsUserProfile"
-                        android:layout_marginTop="20dp"
-                        android:elevation="4dp"
-                        android:text="Save"
-                        android:translationZ="1dp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/edittext_profile_bio" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

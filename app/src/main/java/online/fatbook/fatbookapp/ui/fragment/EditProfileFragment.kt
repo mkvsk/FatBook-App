@@ -61,6 +61,23 @@ class EditProfileFragment : Fragment() {
 
 //        edittext_profile_bio.filters = arrayOf<InputFilter>(MyTextFilter())
 
+        edittext_profile_title.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.toString().length == edittext_profile_title.filters.filterIsInstance<InputFilter.LengthFilter>()
+                        .firstOrNull()?.max!!
+                ) {
+                    hideKeyboard(edittext_profile_title)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
+
         edittext_profile_bio.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -82,7 +99,13 @@ class EditProfileFragment : Fragment() {
         })
 
         button_save_edit_userprofile.setOnClickListener {
-            edittext_profile_bio.setText(edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " "))
+            edittext_profile_title.setText(
+                edittext_profile_title.text.toString().replace("\\s+".toRegex(), " ")
+            )
+            edittext_profile_bio.setText(
+                edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " ")
+            )
+            hideKeyboard(edittext_profile_bio)
         }
 
     }
