@@ -24,7 +24,7 @@
     <string name="hint_username_signin">Username</string>
     <string name="hint_password_signin">Password</string>
     <string name="btn_signin_signin">sign in</string>
-    <string name="forgot_password"><u>forgot password</u></string>
+    <string name="forgot_password">forgot password</string>
     <string name="dialog_signin">Nice to meet you again!</string>
     <string name="dialog_wrong_data_signin">Wrong data\n Try again or click\n \"<u>forgot password</u>\"</string>
 
@@ -80,8 +80,8 @@
     <string name="dialog_wrong_verification_code_1">This code is already confirmed</string>
     <string name="dialog_wrong_verification_code_3">This code was expired</string>
 
-    <string name="resend_verification_code"><u>resend code</u></string>
-    <string name="resend_verification_code_timer"><u>(%s) resend code</u></string>
+    <string name="resend_verification_code">resend code</string>
+    <string name="resend_verification_code_timer">(%s) resend code</string>
 
     ///fragment user profile
     <string name="btn_friends">Friends</string>

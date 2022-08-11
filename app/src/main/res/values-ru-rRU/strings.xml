@@ -122,7 +122,7 @@
     <string name="hint_username_signin">Имя пользователя</string>
     <string name="hint_password_signin">Пароль</string>
     <string name="btn_signin_signin">Войти</string>
-    <string name="forgot_password"><u>не помню  пароль</u></string>
+    <string name="forgot_password">не помню  пароль</string>
     <string name="dialog_signin">Рад снова встретиться с вами!</string>
     <string name="adds_new_password_signin_new_pass">Введите новый пароль и повторите:</string>
     <string name="btn_next_signin_new_pass">далее</string>
@@ -148,8 +148,8 @@
     <string name="adds_verification_code">Проверочный код:</string>
     <string name="dialog_verification_code">Проверочный код отправлен на вашу почту</string>
     <string name="dialog_wrong_verification_code_2_500">Неверный код</string>
-    <string name="resend_verification_code"><u>отправить код</u></string>
-    <string name="resend_verification_code_timer"><u>(%s) отправить код</u></string>
+    <string name="resend_verification_code">отправить код</string>
+    <string name="resend_verification_code_timer">(%s) отправить код</string>
     <string name="dialog_splash">Я просто ем тут свой суп.</string>
     <string name="dialog_signup_username_invalid">Имя введено некорректно</string>
     <string name="dialog_email_used_signup_email">Адрес почты уже используется другим аккаунтом</string>
