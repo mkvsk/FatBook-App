@@ -37,6 +37,10 @@ class TestFragment : Fragment(), OnRecipeClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        imageview_recipes_qqt_userprofile.setOnClickListener {
+            focusOnRecipes()
+        }
+
         nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
             if (!expanded) {
                 if (scrollY >= 1044) {
@@ -56,12 +60,7 @@ class TestFragment : Fragment(), OnRecipeClickListener {
         })
 
         floating_button_up.setOnClickListener {
-            nsv_userprofile.post {
-                nsv_userprofile.scrollTo(
-                    0,
-                    cardview_userprofile.bottom
-                )
-            }
+            focusOnRecipes()
         }
 
         imageview_ic_expand.setOnClickListener {
@@ -142,6 +141,15 @@ class TestFragment : Fragment(), OnRecipeClickListener {
             }
 
         })
+    }
+
+    private fun focusOnRecipes() {
+        nsv_userprofile.post {
+            nsv_userprofile.scrollTo(
+                0,
+                cardview_userprofile.bottom
+            )
+        }
     }
 
     override fun onRecipeClick(position: Int) {

@@ -84,8 +84,8 @@
     <string name="resend_verification_code_timer">(%s) resend code</string>
 
     ///fragment user profile
-    <string name="btn_friends">Friends</string>
-    <string name="btn_messages">Messages</string>
+    <string name="btn_follow">Follow</string>
+    <string name="btn_messages">New message</string>
 
     ///----------------------------V 1.0.0------------------------------------
     ///login
