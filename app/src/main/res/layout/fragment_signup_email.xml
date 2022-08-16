@@ -7,6 +7,36 @@
     android:background="@color/start_fragments_bgr"
     tools:context=".ui.fragment.authentication.signup.SignupEmailFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progressbarLayout_signup_email"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/start_fragments_bgr"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/fragment_signup_email_header"
         android:layout_width="wrap_content"
@@ -33,38 +63,36 @@
             android:text="@string/title_app_name_signup_email" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <TextView
-            android:id="@+id/fragment_signup_email_additional_text"
-            style="@style/signUpAdditionalText"
-            android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
-            android:text="@string/adds_signup_email"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragment_signup_email_edittext_email"/>
+    <TextView
+        android:id="@+id/fragment_signup_email_additional_text"
+        style="@style/signUpAdditionalText"
+        android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
+        android:text="@string/adds_signup_email"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signup_email_edittext_email"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <EditText
-            android:id="@+id/fragment_signup_email_edittext_email"
-            style="@style/signUpInEditText"
-            android:layout_marginBottom="@dimen/start_fragments_element_spacing"
-            android:background="@drawable/round_corner_edittext"
-            android:hint="@string/hint_email_signup_email"
-            android:paddingHorizontal="10dp"
-            android:inputType="textEmailAddress"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragment_signup_email_button_next"/>
+    <EditText
+        android:id="@+id/fragment_signup_email_edittext_email"
+        style="@style/signUpInEditText"
+        android:layout_marginBottom="@dimen/start_fragments_element_spacing"
+        android:background="@drawable/round_corner_edittext"
+        android:hint="@string/hint_email_signup_email"
+        android:inputType="textEmailAddress"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintBottom_toTopOf="@id/fragment_signup_email_button_next"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <Button
-            android:id="@+id/fragment_signup_email_button_next"
-            style="@style/btnPink"
-            android:text="@string/btn_next_signup_email"
-            android:enabled="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-
+    <Button
+        android:id="@+id/fragment_signup_email_button_next"
+        style="@style/btnPink"
+        android:enabled="false"
+        android:text="@string/btn_next_signup_email"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/fragment_signup_email_kuzya_dialog"

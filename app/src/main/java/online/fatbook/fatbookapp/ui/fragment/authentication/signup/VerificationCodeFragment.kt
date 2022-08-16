@@ -96,11 +96,13 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun confirmVCode(vCode: String) {
+        progressbarLayout_vc.visibility = View.VISIBLE
         authViewModel.confirmVCode(
             vCode,
             authViewModel.userEmail.value!!,
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
+                    progressbarLayout_vc.visibility = View.GONE
                     when (value?.code) {
                         0 -> {
                             hideKeyboard(fragment_verification_code_edittext_vc)

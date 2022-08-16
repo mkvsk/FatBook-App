@@ -25,6 +25,8 @@
     <dimen name="edittext_verification_code_w">35dp</dimen>
     <dimen name="edittext_verification_code_h">35dp</dimen>
 
+    <dimen name="toolbar_title_paddingStart">30dp</dimen>
+
     ///userprofile
     <dimen name="cards_margin_start">10dp</dimen>
     <dimen name="cards_margin_end">10dp</dimen>

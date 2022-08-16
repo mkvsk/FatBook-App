@@ -89,8 +89,10 @@ class SignupEmailFragment : Fragment() {
 
 
     private fun emailCheck(email: String) {
+        progressbarLayout_signup_email.visibility = View.VISIBLE
         authViewModel.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
+                progressbarLayout_signup_email.visibility = View.GONE
                 when (value?.code) {
                     0 -> {
                         authViewModel.userEmail.value = value.email

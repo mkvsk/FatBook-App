@@ -7,6 +7,36 @@
     android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.TestFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progressbarLayout_userprofile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/start_fragments_bgr"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_userprofile"
         android:layout_width="match_parent"
@@ -21,7 +51,7 @@
             android:theme="@style/ToolbarTheme"
             app:buttonGravity="center_vertical"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:navigationIcon="@drawable/ic_arrow_back"
+            android:paddingStart="@dimen/toolbar_title_paddingStart"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="my_profile"
             app:titleTextColor="@color/theme_toolbar_text_color">
@@ -92,7 +122,7 @@
                             app:layout_constraintRight_toRightOf="@id/imageview_recipes_qqt_userprofile"
                             app:layout_constraintTop_toTopOf="@id/imageview_recipes_qqt_userprofile" />
 
-                        <com.google.android.material.imageview.ShapeableImageView
+                        <!--<com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageview_is_online"
                             android:layout_width="123dp"
                             android:layout_height="123dp"
@@ -101,19 +131,22 @@
                             app:layout_constraintRight_toRightOf="@id/imageview_userphoto_userprofile"
                             app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_userprofile"
                             android:background="@color/color_lime_500"
-                            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"/>
+                            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"/>-->
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageview_userphoto_userprofile"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:padding="1dp"
                             android:src="@drawable/ic_default_userphoto"
                             android:scaleType="centerCrop"
                             android:layout_marginTop="5dp"
                             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeColor="@color/user_is_online_color"
+                            app:strokeWidth="1dp"/>
 
                         <ImageView
                             android:id="@+id/imageview_friends_qqt_userprofile"

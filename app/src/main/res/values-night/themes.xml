@@ -42,6 +42,7 @@
     <color name="ic_password_visibility">#263238</color>
 
     ///ic colors
+    <color name="user_is_online_color">#CDDC39</color>
     <color name="ic_forked_favourite">#FF4081</color>
     <color name="ic_not_forked_favourite">#B0BEC5</color>
     <color name="ic_bottomnav_color">#B0BEC5</color>

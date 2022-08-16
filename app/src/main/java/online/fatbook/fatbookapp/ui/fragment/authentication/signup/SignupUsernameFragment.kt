@@ -103,6 +103,7 @@ class SignupUsernameFragment : Fragment() {
     }
 
     private fun createNewUser() {
+        progressbarLayout_signup_username.visibility = View.VISIBLE
         authViewModel.signUp(
             AuthenticationRequest(
                 authViewModel.username.value,
@@ -110,6 +111,7 @@ class SignupUsernameFragment : Fragment() {
                 authViewModel.userEmail.value
             ), object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
+                    progressbarLayout_signup_username.visibility = View.GONE
                     value?.let {
                         when (it.code) {
                             0 -> {
