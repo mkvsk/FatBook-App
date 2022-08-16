@@ -37,7 +37,7 @@ import retrofit2.Response
 import java.io.File
 import java.util.*
 
-class RecipeCreateFragment : Fragment(), OnRecipeViewDeleteIngredient {
+class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
     private var binding: FragmentRecipeCreateBinding? = null
     private var userViewModel: UserViewModel? = null
     private var recipeViewModel: RecipeViewModel? = null

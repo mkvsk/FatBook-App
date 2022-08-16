@@ -93,11 +93,23 @@
                             app:layout_constraintTop_toTopOf="@id/imageview_recipes_qqt_userprofile" />
 
                         <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imageview_is_online"
+                            android:layout_width="123dp"
+                            android:layout_height="123dp"
+                            app:layout_constraintLeft_toLeftOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintRight_toRightOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_userprofile"
+                            android:background="@color/color_lime_500"
+                            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"/>
+
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageview_userphoto_userprofile"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:src="@drawable/ic_default_userphoto"
                             android:scaleType="centerCrop"
+                            android:layout_marginTop="5dp"
                             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"

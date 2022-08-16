@@ -26,9 +26,9 @@
 
     <fragment
         android:id="@+id/navigation_recipe_create"
-        android:name="online.fatbook.fatbookapp.ui.fragment.RecipeCreateFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.RecipeCreateFragmentV1"
         android:label="@string/mobile_nav_recipe_create"
-        tools:layout="@layout/fragment_recipe_create">
+        tools:layout="@layout/fragment_recipe_create_v1">
 
         <action
             android:id="@+id/action_go_to_add_ingredient"
