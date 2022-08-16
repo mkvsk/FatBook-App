@@ -354,6 +354,14 @@
         <item name="android:textColor">@color/main_text</item>
         <item name="fontFamily">@font/roboto_regular</item>
     </style>
+
+    ///follow
+    <color name="follow_rv_bgr">#FFFFFFFF</color>
+
+
+
+
+
     ///v1.0.0
 
 
