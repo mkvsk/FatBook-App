@@ -3,6 +3,8 @@ package online.fatbook.fatbookapp.ui.fragment.authentication.signup
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,8 +83,8 @@ class SignupEmailFragment : Fragment() {
     }
 
     private fun emailValidate(email: String): Boolean {
-//        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        return true
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+//        return true
     }
 
 
@@ -97,6 +99,7 @@ class SignupEmailFragment : Fragment() {
                             authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
                         }
                         authViewModel.vCode.value = value.vcode
+                        Log.d("code", value.vcode!!)
                         navigateToVerificationCode()
                     }
                     4 -> {

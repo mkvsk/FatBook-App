@@ -61,7 +61,7 @@ class AuthenticationRepository(private val context: Context) {
         }
     }
 
-    fun signup(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
+    fun signUp(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
         scope.launch {
             val call = RetrofitFactory.apiServiceClient().signup(request)
 

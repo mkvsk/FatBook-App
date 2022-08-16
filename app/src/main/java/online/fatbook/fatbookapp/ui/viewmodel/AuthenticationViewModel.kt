@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.AuthenticationRequest
 import online.fatbook.fatbookapp.core.AuthenticationResponse
+import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
 import online.fatbook.fatbookapp.util.ContextHolder
 
@@ -67,8 +68,8 @@ class AuthenticationViewModel : ViewModel() {
         })
     }
 
-    fun signup(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
-        repository.signup(request, object : ResultCallback<AuthenticationResponse> {
+    fun signUp(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
+        repository.signUp(request, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
                 value?.let {
                     callback.onResult(it)
@@ -77,13 +78,17 @@ class AuthenticationViewModel : ViewModel() {
         })
     }
 
-    fun confirmVCode(vCode: String, email: String, resultCallback: ResultCallback<AuthenticationResponse>) {
+    fun confirmVCode(vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>) {
         repository.confirmVCode(vCode, email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
                 value?.let {
-                    resultCallback.onResult(it)
+                    callback.onResult(it)
                 }
             }
         })
+    }
+
+    fun signIn(username: String, password: String, callback: ResultCallback<User>) {
+//        repository.signIn()
     }
 }

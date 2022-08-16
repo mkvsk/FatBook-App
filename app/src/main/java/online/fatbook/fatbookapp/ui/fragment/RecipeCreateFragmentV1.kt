@@ -7,7 +7,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.core.app.ActivityCompat
@@ -21,7 +24,7 @@ import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Recipe
 import online.fatbook.fatbookapp.core.RecipeIngredient
-import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateBinding
+import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateV1Binding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient
@@ -38,7 +41,7 @@ import java.io.File
 import java.util.*
 
 class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
-    private var binding: FragmentRecipeCreateBinding? = null
+    private var binding: FragmentRecipeCreateV1Binding? = null
     private var userViewModel: UserViewModel? = null
     private var recipeViewModel: RecipeViewModel? = null
     private var recipe: Recipe? = null
@@ -60,24 +63,24 @@ class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
                     selectedImageUri = uri
                     val path = FileUtils.getPath(requireContext(), selectedImageUri!!)
                     recipePhoto = File(path)
-                    binding!!.imageViewRecipeCreateImage.setImageURI(selectedImageUri)
+                    binding!!.imageViewRecipeCreateImageV1.setImageURI(selectedImageUri)
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        binding!!.buttonRecipeCreateImage.setOnClickListener { _view: View? ->
+        binding!!.buttonRecipeCreateImageV1.setOnClickListener { _view: View? ->
             verifyStoragePermissions(requireActivity())
             choosePhotoFromGallery!!.launch("image/*")
         }
-        binding!!.buttonRecipeAddSave.setOnClickListener { _view: View? -> saveRecipe() }
-        binding!!.buttonRecipeAddIngredientAdd.setOnClickListener { _view: View? ->
+        binding!!.buttonRecipeAddSaveV1.setOnClickListener { _view: View? -> saveRecipe() }
+        binding!!.buttonRecipeAddIngredientAddV1.setOnClickListener { _view: View? ->
             NavHostFragment.findNavController(
                 this
             ).navigate(R.id.navigation_add_ingredient)
         }
         setupAdapter()
-        binding!!.editTextRecipeAddTitle.addTextChangedListener(object : TextWatcher {
+        binding!!.editTextRecipeAddTitleV1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                 niceCheck()
@@ -85,7 +88,7 @@ class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
 
             override fun afterTextChanged(editable: Editable) {}
         })
-        binding!!.editTextRecipeAddDescription.addTextChangedListener(object : TextWatcher {
+        binding!!.editTextRecipeAddDescriptionV1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                 niceCheck()
@@ -96,8 +99,8 @@ class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun saveRecipe() {
-        recipe!!.name = binding!!.editTextRecipeAddTitle.text.toString()
-        recipe!!.description = binding!!.editTextRecipeAddDescription.text.toString()
+        recipe!!.name = binding!!.editTextRecipeAddTitleV1.text.toString()
+        recipe!!.description = binding!!.editTextRecipeAddDescriptionV1.text.toString()
         recipe!!.image = StringUtils.EMPTY
         recipe!!.author = userViewModel!!.user.value!!.login
         recipe!!.createDate = RecipeUtils.regDateFormat.format(Date())
@@ -167,16 +170,16 @@ class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun niceCheck() {
-        if (StringUtils.isNotEmpty(binding!!.editTextRecipeAddTitle.text.toString())
-            && StringUtils.isNotEmpty(binding!!.editTextRecipeAddDescription.text.toString())
+        if (StringUtils.isNotEmpty(binding!!.editTextRecipeAddTitleV1.text.toString())
+            && StringUtils.isNotEmpty(binding!!.editTextRecipeAddDescriptionV1.text.toString())
             && recipe!!.ingredients!!.isNotEmpty()
         ) {
-            binding!!.buttonRecipeAddSave.isEnabled = true
-            binding!!.buttonRecipeAddSave.backgroundTintList =
+            binding!!.buttonRecipeAddSaveV1.isEnabled = true
+            binding!!.buttonRecipeAddSaveV1.backgroundTintList =
                 ContextCompat.getColorStateList(requireContext(), R.color.color_pink_a200)
         } else {
-            binding!!.buttonRecipeAddSave.isEnabled = false
-            binding!!.buttonRecipeAddSave.backgroundTintList =
+            binding!!.buttonRecipeAddSaveV1.isEnabled = false
+            binding!!.buttonRecipeAddSaveV1.backgroundTintList =
                 ContextCompat.getColorStateList(requireContext(), R.color.color_blue_grey_200)
         }
     }
@@ -185,7 +188,7 @@ class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
         super.onResume()
         binding!!.root.viewTreeObserver.addOnGlobalLayoutListener(
             KeyboardActionUtil(
-                binding!!.root, requireActivity(), binding!!.viewRecipeCreate
+                binding!!.root, requireActivity(), binding!!.viewRecipeCreateV1
             ).listenerForAdjustPan
         )
         if (recipeViewModel!!.selectedRecipeIngredient.value != null) {
@@ -195,7 +198,7 @@ class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
             recipeViewModel!!.selectedRecipeIngredient.value = null
         }
         if (selectedImageUri != null) {
-            binding!!.imageViewRecipeCreateImage.setImageURI(selectedImageUri)
+            binding!!.imageViewRecipeCreateImageV1.setImageURI(selectedImageUri)
         }
         niceCheck()
     }
@@ -204,7 +207,7 @@ class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
         if (recipe == null) {
             initRecipe()
         }
-        val recyclerView = binding!!.rvRecipeAddIngredients
+        val recyclerView = binding!!.rvRecipeAddIngredientsV1
         adapter!!.setData(recipe!!.ingredients)
         adapter!!.setClickListener(this)
         adapter!!.setEditMode(true)
@@ -228,7 +231,7 @@ class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRecipeCreateBinding.inflate(inflater, container, false)
+        binding = FragmentRecipeCreateV1Binding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -236,7 +239,7 @@ class RecipeCreateFragmentV1 : Fragment(), OnRecipeViewDeleteIngredient {
         super.onPause()
         binding!!.root.viewTreeObserver.removeOnGlobalLayoutListener(
             KeyboardActionUtil(
-                binding!!.root, requireActivity(), binding!!.viewRecipeCreate
+                binding!!.root, requireActivity(), binding!!.viewRecipeCreateV1
             ).listenerForAdjustPan
         )
     }

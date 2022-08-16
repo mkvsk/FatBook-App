@@ -75,6 +75,7 @@ fun Fragment.hideKeyboard() {
         imm.hideSoftInputFromWindow(activity?.window?.decorView?.windowToken, 0)
     }
 }
+
 fun Fragment.hideKeyboard(editText: EditText) {
     context?.let {
         editText.clearFocus()
@@ -82,6 +83,7 @@ fun Fragment.hideKeyboard(editText: EditText) {
         imm.hideSoftInputFromWindow(activity?.window?.decorView?.windowToken, 0)
     }
 }
+
 fun Fragment.showKeyboard(editText: EditText) {
     context?.let {
         editText.requestFocus()

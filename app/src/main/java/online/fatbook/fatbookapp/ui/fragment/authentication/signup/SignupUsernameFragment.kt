@@ -19,6 +19,7 @@ import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.USERNAME_REGEX
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
+import org.apache.commons.lang3.StringUtils
 import java.util.regex.Pattern
 
 class SignupUsernameFragment : Fragment() {
@@ -102,7 +103,7 @@ class SignupUsernameFragment : Fragment() {
     }
 
     private fun createNewUser() {
-        authViewModel.signup(
+        authViewModel.signUp(
             AuthenticationRequest(
                 authViewModel.username.value,
                 authViewModel.password.value,
@@ -132,6 +133,7 @@ class SignupUsernameFragment : Fragment() {
     }
 
     private fun navigateToAccountCreated() {
+        authViewModel.userEmail.value = StringUtils.EMPTY
         NavHostFragment.findNavController(this)
             .navigate(R.id.action_go_to_account_created)
     }

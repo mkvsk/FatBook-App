@@ -3,22 +3,30 @@ package online.fatbook.fatbookapp.ui.fragment.authentication.signin
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.databinding.FragmentSignInBinding
+import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
+import online.fatbook.fatbookapp.util.obtainViewModel
 
 class SignInFragment : Fragment() {
+
     private var binding: FragmentSignInBinding? = null
+
+    private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSignInBinding.inflate(inflater, container, false)
         return binding!!.root
     }
@@ -99,9 +107,16 @@ class SignInFragment : Fragment() {
         )
     }
 
-    //TODO API call
     private fun signIn() {
-        showErrorMessage(getString(R.string.dialog_wrong_data_signin))
+//        showErrorMessage(getString(R.string.dialog_wrong_data_signin))
+        authViewModel.signIn(
+            fragment_signin_edittext_username.text.toString(),
+            fragment_signin_edittext_password.text.toString(), object : ResultCallback<User> {
+                override fun onResult(value: User?) {
+                    //TODO save user data to room
+                }
+            }
+        )
     }
 
 }

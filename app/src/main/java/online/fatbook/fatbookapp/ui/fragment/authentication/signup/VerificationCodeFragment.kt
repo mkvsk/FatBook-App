@@ -43,6 +43,11 @@ class VerificationCodeFragment : Fragment() {
             if (!authViewModel.isTimerRunning.value!!) {
                 authViewModel.isTimerRunning.value = true
                 authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
+                authViewModel.emailCheck(authViewModel.userEmail.value!!, object : ResultCallback<AuthenticationResponse>{
+                    override fun onResult(value: AuthenticationResponse?) {
+                        println(value!!.vcode)
+                    }
+                })
             }
         }
 
