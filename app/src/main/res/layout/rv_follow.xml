@@ -2,16 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:paddingHorizontal="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        style="@style/ShapeAppearanceOverlay_card_custom_round_corners"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
 
-        />
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

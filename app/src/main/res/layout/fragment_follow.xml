@@ -45,7 +45,6 @@
             android:layout_height="match_parent"
             android:overScrollMode="never">
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container_follow"
                 android:layout_width="match_parent"
@@ -57,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/tabitem_h"
                     android:layout_marginStart="60dp"
-                    android:layout_marginTop="@dimen/userprofile_categories_spacing"
+                    android:layout_marginTop="15dp"
                     android:layout_marginEnd="60dp"
                     app:tabRippleColor="@null"
                     android:stateListAnimator="@null"
@@ -82,12 +81,14 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_follow"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:overScrollMode="never"
                     android:paddingTop="15dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/tabLayout_follow"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     tools:listitem="@layout/rv_follow" />
 
 
