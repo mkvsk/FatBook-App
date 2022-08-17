@@ -41,6 +41,8 @@
     <dimen name="tabitem_card_h">50dp</dimen>
 
     ///edit userprofile
-    <dimen name="round_btn_w_h">30dp</dimen>
+    <dimen name="round_btn_edit_userprofile_w_h">35dp</dimen>
 
+    ///follow
+    <dimen name="round_btn_follow_message_w_h">40dp</dimen>
 </resources>

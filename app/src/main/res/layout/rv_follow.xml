@@ -1,20 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:paddingHorizontal="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="60dp"
+    android:orientation="horizontal">
 
-    <com.google.android.material.card.MaterialCardView
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        style="@style/ShapeAppearanceOverlay_card_custom_round_corners"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardview_rv_follow"
+            style="@style/myMaterialCardRound"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/cards_margin_start"
+            android:layout_marginEnd="@dimen/cards_margin_end"
+            app:cardElevation="6dp"
+            app:contentPaddingBottom="2dp"
+            app:contentPaddingLeft="2dp"
+            app:contentPaddingTop="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/container_btns_rv_follow"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageview_userphoto_rv_follow"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_default_userphoto"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+                <TextView
+                    android:id="@+id/textview_username_rv_follow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:ellipsize="end"
+                    android:maxLength="20"
+                    android:text="Username"
+                    android:textAppearance="@style/followUsernameTextStyle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/imageview_userphoto_rv_follow"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:id="@+id/container_btns_rv_follow"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toRightOf="@id/cardview_rv_follow"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="@dimen/cards_margin_end"
+        >
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_follow_rv_follow"
+            style="@style/roundBtnFollow"
+            android:layout_width="@dimen/round_btn_follow_message_w_h"
+            android:layout_height="@dimen/round_btn_follow_message_w_h"
+            android:visibility="gone"
+            app:maxImageSize="25dp"
+            android:layout_marginEnd="5dp"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_unfollow_rv_follow"
+            style="@style/roundBtnUnFollow"
+            android:layout_width="@dimen/round_btn_follow_message_w_h"
+            android:layout_height="@dimen/round_btn_follow_message_w_h"
+            android:visibility="visible"
+            app:maxImageSize="25dp"
+            android:layout_marginEnd="5dp"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_message_available_rv_follow"
+            style="@style/roundBtnMessageAvailable"
+            android:layout_width="@dimen/round_btn_follow_message_w_h"
+            android:layout_height="@dimen/round_btn_follow_message_w_h"
+            android:visibility="visible"
+            app:maxImageSize="25dp"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_message_unavailable_rv_follow"
+            style="@style/roundBtnMessageUnAvailable"
+            android:layout_width="@dimen/round_btn_follow_message_w_h"
+            android:layout_height="@dimen/round_btn_follow_message_w_h"
+            android:visibility="gone"
+            app:maxImageSize="25dp"
+            />
+    </LinearLayout>
 
 
-    </com.google.android.material.card.MaterialCardView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

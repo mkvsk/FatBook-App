@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="10dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -108,24 +109,24 @@
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/button_edit_photo"
                         style="@style/roundBtnEditPhoto"
-                        android:layout_width="@dimen/round_btn_w_h"
-                        android:layout_height="@dimen/round_btn_w_h"
+                        android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
+                        android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
                         android:visibility="visible"
                         app:maxImageSize="16dp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/button_add_photo"
                         style="@style/roundBtnAddPhoto"
-                        android:layout_width="@dimen/round_btn_w_h"
-                        android:layout_height="@dimen/round_btn_w_h"
+                        android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
+                        android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
                         android:visibility="gone"
                         app:maxImageSize="16dp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/button_delete_photo"
                         style="@style/roundBtnDeletePhoto"
-                        android:layout_width="@dimen/round_btn_w_h"
-                        android:layout_height="@dimen/round_btn_w_h"
+                        android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
+                        android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
                         android:layout_marginLeft="90dp"
                         android:visibility="visible"
                         app:maxImageSize="16dp" />

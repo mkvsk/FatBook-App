@@ -206,7 +206,7 @@
         <item name="elevation">4dp</item>
         <item name="android:translationZ">2dp</item>
         <item name="android:src">@drawable/ic_btn_edit</item>
-        <item name="fabCustomSize">@dimen/round_btn_w_h</item>
+        <item name="fabCustomSize">@dimen/round_btn_edit_userprofile_w_h</item>
         <item name="tint">@color/ic_userprofile_color</item>
     </style>
 
@@ -215,7 +215,7 @@
         <item name="elevation">4dp</item>
         <item name="android:translationZ">2dp</item>
         <item name="android:src">@drawable/ic_btn_delete</item>
-        <item name="fabCustomSize">@dimen/round_btn_w_h</item>
+        <item name="fabCustomSize">@dimen/round_btn_edit_userprofile_w_h</item>
         <item name="tint">@color/ic_delete_color</item>
     </style>
 
@@ -224,7 +224,7 @@
         <item name="elevation">4dp</item>
         <item name="android:translationZ">2dp</item>
         <item name="android:src">@drawable/ic_btn_add</item>
-        <item name="fabCustomSize">@dimen/round_btn_w_h</item>
+        <item name="fabCustomSize">@dimen/round_btn_edit_userprofile_w_h</item>
         <item name="tint">@color/ic_userprofile_color</item>
     </style>
 
@@ -233,7 +233,7 @@
         <item name="elevation">4dp</item>
         <item name="android:translationZ">2dp</item>
         <item name="android:src">@drawable/ic_up</item>
-        <item name="fabCustomSize">@dimen/round_btn_w_h</item>
+        <item name="fabCustomSize">@dimen/round_btn_edit_userprofile_w_h</item>
         <item name="tint">@color/ic_up_color</item>
     </style>
 
@@ -357,6 +357,10 @@
 
     ///follow
     <color name="follow_rv_bgr">#FFFFFFFF</color>
+    <color name="ic_positive_color">#263238</color>
+    <color name="ic_positive_bgr_color">#FFFFFFFF</color>
+    <color name="ic_negative_color">#ECEFF1</color>
+    <color name="ic_negative_bgr_color">#B0BEC5</color>
 
     <style name="myMaterialCardRound" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/follow_rv_bgr</item>
@@ -369,15 +373,54 @@
 
     <style name="ShapeAppearanceOverlay_card_custom_round_corners" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerRadius">30dp</item>
-        <item name="cardCornerRadius">30dp</item>
-        <!--<item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeTopRight">30dp</item>
         <item name="cornerSizeTopLeft">30dp</item>
         <item name="cornerSizeBottomRight">30dp</item>
-        <item name="cornerSizeBottomLeft">30dp</item>-->
+        <item name="cornerSizeBottomLeft">30dp</item>
     </style>
 
+    <style name="followUsernameTextStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/pink_a200</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
 
+    <style name="roundBtnFollow" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/ic_positive_bgr_color</item>
+        <item name="tint">@color/ic_positive_color</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/follow</item>
+        <item name="fabCustomSize">@dimen/round_btn_follow_message_w_h</item>
+    </style>
+
+    <style name="roundBtnUnFollow" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/ic_negative_bgr_color</item>
+        <item name="tint">@color/ic_negative_color</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/unfollow</item>
+        <item name="fabCustomSize">@dimen/round_btn_follow_message_w_h</item>
+    </style>
+
+    <style name="roundBtnMessageAvailable" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/ic_positive_bgr_color</item>
+        <item name="tint">@color/ic_positive_color</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_msg</item>
+        <item name="fabCustomSize">@dimen/round_btn_follow_message_w_h</item>
+    </style>
+
+    <style name="roundBtnMessageUnAvailable" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/ic_negative_bgr_color</item>
+        <item name="tint">@color/ic_negative_color</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_msg</item>
+        <item name="fabCustomSize">@dimen/round_btn_follow_message_w_h</item>
+    </style>
     ///v1.0.0
 
 

@@ -326,8 +326,8 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_button_up"
             style="@style/floatingBtnFocusOnTab"
-            android:layout_width="@dimen/round_btn_w_h"
-            android:layout_height="@dimen/round_btn_w_h"
+            android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
+            android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
             android:visibility="gone"
             app:maxImageSize="16dp"
             android:elevation="10dp"

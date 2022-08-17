@@ -186,6 +186,12 @@
         android:name="online.fatbook.fatbookapp.ui.fragment.EditProfileFragment"
         tools:layout="@layout/fragment_edit_profile" />
 
+    <fragment
+        android:id="@+id/navigation_follow_fragment"
+        android:label="@null"
+        android:name="online.fatbook.fatbookapp.ui.fragment.FollowFragment"
+        tools:layout="@layout/fragment_follow" />
+
     <action
         android:id="@+id/action_go_to_feed"
         app:destination="@id/navigation_feed"
