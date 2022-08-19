@@ -100,11 +100,11 @@ class EditProfileFragment : Fragment() {
 //        val loadingDialog = LoadingDialog(requireContext())
 
 //        loadingDialog.startLoading()
-        progressbarLayout.visibility = View.VISIBLE
+        progressbarLayout_edit_userprofile.visibility = View.VISIBLE
         val handler = Handler()
         handler.postDelayed(object : Runnable {
             override fun run() {
-                progressbarLayout.visibility = View.GONE
+                progressbarLayout_edit_userprofile.visibility = View.GONE
 //                loadingDialog.isDismiss()
             }
 
