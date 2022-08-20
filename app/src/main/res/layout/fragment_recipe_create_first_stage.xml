@@ -125,11 +125,158 @@
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <TextView
+                            android:id="@+id/textview_title_recipe_create_1_stage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/container_ll"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            android:text="Title:"/>
+                            android:text="Title:"
+                            style="@style/recipeCreateTitlesTextStyle"/>
+
+                        <EditText
+                            android:id="@+id/edittext_title_recipe_create_1_stage"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textview_title_recipe_create_1_stage"
+                            android:background="@drawable/round_corner_edittext_recipe_create"
+                            android:textAppearance="@style/recipeCreateEditTextStyle"
+                            android:hint="Recipe title"
+                            android:inputType="textCapSentences"
+                            android:lines="1"
+                            android:maxLength="50"
+                            android:ellipsize="end"
+                            android:paddingHorizontal="10dp"
+                            android:layout_marginTop="@dimen/titles_spacing_recipe_create"/>
+
+                        <TextView
+                            android:id="@+id/textview_title_cooking_lvl_recipe_create_1_stage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/edittext_title_recipe_create_1_stage"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:text="Difficulty:"
+                            style="@style/recipeCreateTitlesTextStyle"
+                            android:layout_marginTop="@dimen/elements_spacing_recipe_create"/>
+
+                        <RadioGroup
+                            android:id="@+id/togglegroup_recipe_create_1_stage"
+                            android:layout_width="match_parent"
+                            android:layout_height="33dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_horizontal"
+                            android:checkedButton="@id/rb_lvl_easy"
+                            android:layout_marginTop="@dimen/titles_spacing_recipe_create"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textview_title_cooking_lvl_recipe_create_1_stage"
+                            >
+                            <RadioButton
+                                android:id="@+id/rb_lvl_easy"
+                                android:layout_width="0dp"
+                                android:layout_height="28dp"
+                                android:layout_weight="1"
+                                android:text="Easy"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:background="@drawable/radio_selector"
+                                android:button="@drawable/null_radio_button"
+                                android:elevation="1dp"
+                                android:translationZ="1dp"
+                                android:gravity="center"
+                                android:textColor="@drawable/radio_text_selector"
+                                />
+
+                            <RadioButton
+                                android:id="@+id/rb_lvl_normal"
+                                android:layout_width="0dp"
+                                android:layout_height="28dp"
+                                android:layout_weight="1"
+                                android:text="Normal"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@drawable/radio_selector"
+                                android:button="@drawable/null_radio_button"
+                                android:elevation="1dp"
+                                android:translationZ="1dp"
+                                android:gravity="center"
+                                android:textColor="@drawable/radio_text_selector"/>
+
+                            <RadioButton
+                                android:id="@+id/rb_lvl_hard"
+                                android:layout_width="0dp"
+                                android:layout_height="28dp"
+                                android:layout_weight="1"
+                                android:text="Hard"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:background="@drawable/radio_selector"
+                                android:button="@drawable/null_radio_button"
+                                android:elevation="1dp"
+                                android:translationZ="1dp"
+                                android:gravity="center"
+                                android:textColor="@drawable/radio_text_selector"
+                                />
+
+                        </RadioGroup>
+
+                        <TextView
+                            android:id="@+id/textview_servings_qqt_cooking_lvl_recipe_create_1_stage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/togglegroup_recipe_create_1_stage"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:text="Servings:"
+                            style="@style/recipeCreateTitlesTextStyle"
+                            android:layout_marginTop="@dimen/elements_spacing_recipe_create"/>
+
+                        <LinearLayout
+                            android:id="@+id/ll_servings_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textview_servings_qqt_cooking_lvl_recipe_create_1_stage">
+
+                            <EditText
+                                android:id="@+id/edittext_qqt_recipe_create_1_stage"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/round_corner_edittext_recipe_create"
+                                android:textAppearance="@style/recipeCreateEditTextStyle"
+                                android:hint="2"
+                                android:drawableStart="@drawable/ic_servings_qqt"
+                                android:drawableTint="@color/main_text"
+                                android:inputType="number"
+                                android:lines="1"
+                                android:maxLength="6"
+                                android:paddingHorizontal="10dp"
+                                android:drawablePadding="10dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="@dimen/titles_spacing_recipe_create"/>
+
+                            <EditText
+                                android:id="@+id/edittext_time_recipe_create_1_stage"
+                                android:layout_width="0dp"
+                                android:layout_height="30dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/round_corner_edittext_recipe_create"
+                                android:textAppearance="@style/recipeCreateEditTextStyle"
+                                android:hint="15 min"
+                                android:drawableStart="@drawable/ic_time_small"
+                                android:drawableTint="@color/main_text"
+                                android:inputType="number"
+                                android:lines="1"
+                                android:maxLength="6"
+                                android:paddingHorizontal="10dp"
+                                android:drawablePadding="10dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="@dimen/titles_spacing_recipe_create"/>
+                        </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>

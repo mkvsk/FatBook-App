@@ -421,6 +421,36 @@
         <item name="android:src">@drawable/ic_msg</item>
         <item name="fabCustomSize">@dimen/round_btn_follow_message_w_h</item>
     </style>
+
+    ///recipe create
+    <color name="et_recipe_create_bgr">#ECEFF1</color>
+
+    <style name="recipeCreateTitlesTextStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/main_text</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="recipeCreateEditTextStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/main_text</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="myToggleBtn" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="shapeAppearanceOverlay">@style/MyShapeAppearanceToggleBtn</item>
+    </style>
+    <style name="MyShapeAppearanceToggleBtn">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">30dp</item>
+    </style>
+
+    <color name="toggle_selected_color">#FF4081</color>
+    <color name="toggle_selected_color_text">#FFFFFFFF</color>
+    <color name="toggle_not_selected_color">#ECEFF1</color>
+    <color name="toggle_not_selected_color_text">#263238</color>
     ///v1.0.0
 
 

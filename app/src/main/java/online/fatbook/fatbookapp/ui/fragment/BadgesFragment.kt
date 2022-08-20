@@ -6,17 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.databinding.FragmentBagesBinding
+import online.fatbook.fatbookapp.databinding.FragmentBadgesBinding
 
 class BadgesFragment : Fragment() {
 
-    private var binding: FragmentBagesBinding? = null
+    private var binding: FragmentBadgesBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBagesBinding.inflate(inflater, container, false)
+        binding = FragmentBadgesBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 

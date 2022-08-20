@@ -45,4 +45,9 @@
 
     ///follow
     <dimen name="round_btn_follow_message_w_h">40dp</dimen>
+
+    ///recipe create
+    <dimen name="titles_spacing_recipe_create">5dp</dimen>
+    <dimen name="elements_spacing_recipe_create">10dp</dimen>
+
 </resources>
