@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "255373540076",
+    "project_id": "fatbook-app",
+    "storage_bucket": "fatbook-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255373540076:android:b1bc58d1043d909a43c3c9",
+        "android_client_info": {
+          "package_name": "online.fatbook.fatbookapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "255373540076-9apmsr3ejkmupqquo0fith4tcsn5opjf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChsyBprfQRUCXJMiaLfj06MrqNSJ3JRr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "255373540076-9apmsr3ejkmupqquo0fith4tcsn5opjf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
