@@ -427,14 +427,14 @@
 
     <style name="recipeCreateTitlesTextStyle">
         <item name="android:textAlignment">viewStart</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/main_text</item>
         <item name="fontFamily">@font/roboto_regular</item>
     </style>
 
     <style name="recipeCreateEditTextStyle">
         <item name="android:textAlignment">viewStart</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/main_text</item>
         <item name="fontFamily">@font/roboto_medium</item>
     </style>
