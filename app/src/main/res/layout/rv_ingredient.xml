@@ -22,6 +22,6 @@
         android:lines="1"
         android:gravity="left"
         android:textColor="@color/color_blue_grey_600"
-        android:background="@drawable/round_corner_ingredient_bgr"/>
+        android:background="@drawable/round_corner_categories_methods_bgr"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

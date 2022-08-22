@@ -452,4 +452,6 @@
     <color name="toggle_not_selected_color">#263238</color>
     <color name="toggle_not_selected_color_text">#B0BEC5</color>
 
+    <color name="recipe_rv_categories_methods_bgr">#37474F</color>
+
 </resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <TextView
+        android:id="@+id/textview_rv_recipe_methods_categories_items"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/round_corner_categories_methods_bgr"
+        android:text="Recipe category or method"
+        android:lines="1"
+        android:elevation="4dp"
+        android:translationZ="1dp"
+        android:paddingHorizontal="10dp"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/recipeCreateTitlesTextStyle"
+        android:layout_marginStart="@dimen/cards_margin_start"
+        android:layout_marginEnd="@dimen/cards_margin_end"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="2dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
