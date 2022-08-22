@@ -406,6 +406,7 @@
                             android:layout_marginTop="20dp"
                             android:elevation="4dp"
                             android:text="Next"
+                            android:enabled="false"
                             android:translationZ="1dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
