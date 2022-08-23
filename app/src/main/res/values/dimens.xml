@@ -49,5 +49,7 @@
     ///recipe create
     <dimen name="titles_spacing_recipe_create">5dp</dimen>
     <dimen name="elements_spacing_recipe_create">10dp</dimen>
+    <dimen name="round_btn_remove_ingredient_w_h">25dp</dimen>
+
 
 </resources>

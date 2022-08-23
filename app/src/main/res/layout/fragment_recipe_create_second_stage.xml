@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme_primary_bgr"
+    tools:context=".ui.fragment.recipe.RecipeCreateSecondStageFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progressbarLayout_recipe_create_2_stage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/start_fragments_bgr"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout_recipe_create_2_stage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_recipe_create_2_stage"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/theme_toolbar_color"
+            android:theme="@style/ToolbarTheme"
+            app:buttonGravity="center_vertical"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="New recipe"
+            app:titleTextColor="@color/theme_toolbar_text_color">
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_recipe_create_2_stage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsv_recipe_create_2_stage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:overScrollMode="never">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_recipe_create_2_stage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardview_recipe_create_2_stage"
+                    style="@style/myMaterialCardRight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/cards_margin_start"
+                    app:cardElevation="6dp"
+                    app:contentPaddingBottom="10dp"
+                    app:contentPaddingRight="10dp"
+                    app:contentPaddingTop="10dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/textview_ingredients_recipe_create_2_stage"
+                            style="@style/recipeCreateTitlesTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/cards_margin_start"
+                            android:text="Ingredients:"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_ingredients_recipe_create_2_stage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/titles_spacing_recipe_create"
+                            android:clipToPadding="false"
+                            android:overScrollMode="never"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@id/textview_ingredients_recipe_create_2_stage"
+                            tools:listitem="@layout/rv_ingredients" />
+
+                        <Button
+                            android:id="@+id/button_add_ingredient_recipe_create_2_stage"
+                            style="@style/btnsUserProfile"
+                            android:layout_marginTop="@dimen/titles_spacing_recipe_create"
+                            android:elevation="4dp"
+                            android:enabled="true"
+                            android:text="Add ingredient"
+                            android:translationZ="1dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/rv_ingredients_recipe_create_2_stage" />
+
+                        <TextView
+                            android:id="@+id/textview_nutrition_facts_recipe_create_2_stage"
+                            style="@style/recipeCreateTitlesTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/cards_margin_start"
+                            android:text="Nutrition facts:"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/button_add_ingredient_recipe_create_2_stage"
+                            android:layout_marginTop="20dp"/>
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@color/theme_primary_bgr"
+                            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.AllCornerSize20Percent"
+                            android:layout_marginTop="@dimen/titles_spacing_recipe_create"
+                            android:layout_marginStart="@dimen/cards_margin_start"
+                            app:layout_constraintTop_toBottomOf="@id/textview_nutrition_facts_recipe_create_2_stage"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

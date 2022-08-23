@@ -454,4 +454,21 @@
 
     <color name="recipe_rv_items_bgr">#37474F</color>
 
+    <style name="roundBtnRemoveIngredient" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">#FF4081</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_remove_ingredient</item>
+        <item name="fabCustomSize">@dimen/round_btn_remove_ingredient_w_h</item>
+        <item name="tint">@color/theme_cardview_bgr</item>
+    </style>
+
+    <style name="recipeCreateIngredientsTextStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <color name="rv_ingredients_kcals">#546E7A</color>
+
 </resources>
