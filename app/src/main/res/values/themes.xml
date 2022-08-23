@@ -470,6 +470,7 @@
     </style>
 
     <color name="rv_ingredients_kcals">#B0BEC5</color>
+    <color name="ic_nutrition_kcals_color">#263238</color>
 
     ///v1.0.0
 
