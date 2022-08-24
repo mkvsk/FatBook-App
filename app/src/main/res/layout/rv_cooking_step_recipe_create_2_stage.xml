@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_remove_rv_cooking_step"
+        style="@style/roundBtnRemoveIngredient"
+        android:layout_width="@dimen/round_btn_remove_ingredient_w_h"
+        android:layout_height="@dimen/round_btn_remove_ingredient_w_h"
+        android:visibility="visible"
+        app:maxImageSize="15dp" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview_rv_cooking_step"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="3dp"
+        android:layout_marginVertical="5dp"
+        android:elevation="6dp"
+        app:contentPadding="5dp"
+        android:backgroundTint="@color/theme_primary_bgr"
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize15Percent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="7dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageview_photo_rv_cooking_step"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@drawable/ic_default_recipe_image"
+                android:backgroundTint="@color/theme_cardview_bgr"
+                app:layout_constraintDimensionRatio="H,1:1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize15Percent" />
+
+            <TextView
+                android:id="@+id/textview_description_rv_cooking_step"
+                style="@style/recipeCreateIngredientsTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="5"
+                android:paddingRight="5dp"
+                android:text="Приготовить тесто: предварительно охлажденное сливочное масло нарезать кусочками, поместить в чашу блендера, всыпать муку, соль и взбить все в мелкую крошку, добавить сахарную пудру, фундук, ванильный экстракт, желток и все..."
+                app:layout_constraintRight_toLeftOf="@id/imageview_photo_rv_cooking_step"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</LinearLayout>
