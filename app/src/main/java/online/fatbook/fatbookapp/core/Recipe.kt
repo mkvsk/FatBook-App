@@ -28,4 +28,7 @@ class Recipe() : Serializable {
     var forks: Int? = 0
     var createDate: String? = ""
     var identifier: Long? = 0L
+
+    //новые поля
+    //recipe step
 }

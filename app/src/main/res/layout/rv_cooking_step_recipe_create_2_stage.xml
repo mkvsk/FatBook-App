@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="106dp"
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="3dp"
-        android:layout_marginVertical="5dp"
+        android:layout_marginVertical="8dp"
         android:elevation="6dp"
         app:contentPadding="5dp"
         android:backgroundTint="@color/theme_primary_bgr"
@@ -44,13 +44,14 @@
 
             <TextView
                 android:id="@+id/textview_description_rv_cooking_step"
-                style="@style/recipeCreateIngredientsTextStyle"
+                style="@style/recipeCreateStepDescriptionPreview"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:ellipsize="end"
-                android:maxLines="5"
-                android:paddingRight="5dp"
+                android:maxLines="6"
+                android:paddingHorizontal="5dp"
+                android:textColor="@color/main_text"
                 android:text="Приготовить тесто: предварительно охлажденное сливочное масло нарезать кусочками, поместить в чашу блендера, всыпать муку, соль и взбить все в мелкую крошку, добавить сахарную пудру, фундук, ванильный экстракт, желток и все..."
                 app:layout_constraintRight_toLeftOf="@id/imageview_photo_rv_cooking_step"
                 app:layout_constraintLeft_toLeftOf="parent"
