@@ -493,6 +493,9 @@
     </style>
 
     <color name="rv_gradient_color">#FFFFFF</color>
+    <color name="rv_thumb_color">#FFFFFF</color>
+    <color name="rv_thumb_line_color">#37474F</color>
+    <color name="ingredient_qtt_units_bgr">#ECEFF1</color>
     ///v1.0.0
 
 
