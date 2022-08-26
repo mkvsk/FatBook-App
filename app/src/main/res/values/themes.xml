@@ -483,7 +483,16 @@
 
     <color name="rv_ingredients_kcals">#B0BEC5</color>
     <color name="ic_nutrition_kcals_color">#263238</color>
+    <color name="et_search_bgr">#FFFFFF</color>
+    <color name="ic_search_tint">#B0BEC5</color>
 
+    <style name="searchEditText">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/main_text</item>
+    </style>
+
+    <color name="rv_gradient_color">#FFFFFF</color>
     ///v1.0.0
 
 

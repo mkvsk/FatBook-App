@@ -157,7 +157,7 @@
                             android:inputType="textMultiLine"
                             android:maxLength="500"
                             android:maxLines="17"
-                            android:minLines="10"
+                            android:minLines="7"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="5dp"
                             android:textAppearance="@style/recipeCreateStepDescription"
