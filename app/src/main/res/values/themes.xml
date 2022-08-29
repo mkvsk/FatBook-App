@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/color_lime_500</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/pink_a200</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_grey_200</item>
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/ToolbarTheme</item>
     </style>
@@ -493,8 +493,8 @@
     </style>
 
     <color name="rv_gradient_color">#FFFFFF</color>
-    <color name="rv_thumb_color">#FFFFFF</color>
-    <color name="rv_thumb_line_color">#37474F</color>
+    <color name="rv_thumb_color">#B0BEC5</color>
+    <color name="rv_thumb_line_color">#ECEFF1</color>
     <color name="ingredient_qtt_units_bgr">#ECEFF1</color>
     ///v1.0.0
 

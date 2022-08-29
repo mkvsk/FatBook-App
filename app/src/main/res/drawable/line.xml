@@ -3,8 +3,5 @@
     android:shape="rectangle">
     <corners android:radius="50dp"/>
     <solid android:color="@color/rv_thumb_line_color"/>
-    <size android:width="4dp"/>
-    <padding
-        android:left="0.5dp"
-        android:right="0.5dp" />
+    <size android:width="1dp"/>
 </shape>
