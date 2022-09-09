@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_primary_bgr"
-    tools:context=".ui.fragment.recipe.RecipeCreateSecondStageFragment">
+    tools:context=".ui.fragment.recipe.create.RecipeCreateSecondStageFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progressbarLayout_recipe_create_2_stage"
@@ -309,7 +309,7 @@
                             tools:itemCount="10"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintTop_toBottomOf="@id/textview_steps_title_recipe_create_2_stage"
-                            tools:listitem="@layout/rv_cooking_step_recipe_create_2_stage" />
+                            tools:listitem="@layout/rv_cooking_step_recipe_create_stage_2_template" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

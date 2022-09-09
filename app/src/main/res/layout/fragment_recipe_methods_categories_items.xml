@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/recipe_rv_items_bgr"
-    tools:context=".ui.fragment.recipe.RecipeMethodsCategoriesItemsFragment">
+    tools:context=".ui.fragment.recipe.create.RecipeMethodsCategoriesItemsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progressbarLayout_recipe_methods_categories_items"

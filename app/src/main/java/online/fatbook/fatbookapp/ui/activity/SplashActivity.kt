@@ -54,7 +54,7 @@ class SplashActivity : AppCompatActivity() {
 
         val handler = Handler()
         handler.postDelayed({
-            startMainScreen(StringUtils.isEmpty(username) || StringUtils.isEmpty(password))
+            startMainScreen(!StringUtils.isEmpty(username) || !StringUtils.isEmpty(password))
         }, 1500)
     }
 

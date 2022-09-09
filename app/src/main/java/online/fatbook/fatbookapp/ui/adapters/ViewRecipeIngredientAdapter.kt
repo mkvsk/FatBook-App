@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.rv_add_new_recipe_ingredients.view.*
+import kotlinx.android.synthetic.main.rv_add_new_recipe_ingredients_old.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.RecipeIngredient
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient
@@ -20,7 +20,7 @@ class ViewRecipeIngredientAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.rv_add_new_recipe_ingredients, parent, false))
+            .inflate(R.layout.rv_add_new_recipe_ingredients_old, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

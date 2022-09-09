@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/theme_primary_bgr"
-    tools:context=".ui.fragment.recipe.RecipeCreateCookingStepFragment">
+    tools:context=".ui.fragment.recipe.create.RecipeCreateCookingStepFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progressbarLayout_recipe_create_cooking_step"

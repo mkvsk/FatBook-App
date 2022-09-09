@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/theme_primary_bgr"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.AppSettingsFragment">
+    tools:context=".ui.fragment.util.AppSettingsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progressbarLayout_app_settings"

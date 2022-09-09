@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_primary_bgr"
-    tools:context=".ui.fragment.recipe.RecipeCreateFirstStageFragment">
+    tools:context=".ui.fragment.recipe.create.RecipeCreateFirstStageFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progressbarLayout_recipe_create_1_stage"

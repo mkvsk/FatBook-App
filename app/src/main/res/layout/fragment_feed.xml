@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_primary_bgr"
-    tools:context="online.fatbook.fatbookapp.ui.fragment.FeedFragment">
+    tools:context="online.fatbook.fatbookapp.ui.fragment.feed.FeedFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progressbarLayout_feed"

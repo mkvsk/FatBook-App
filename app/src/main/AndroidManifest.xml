@@ -43,24 +43,6 @@
                     android:scheme="auth" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activity.WelcomeActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ui.activity.SignInActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ui.activity.LoginActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ui.activity.PasswordActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ui.activity.SkipAdditionalInfoActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ui.activity.fill_additional_info.FillAdditionalInfoActivity"
-            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="preloaded_fonts"
