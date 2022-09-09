@@ -1,5 +1,7 @@
 package online.fatbook.fatbookapp.ui.fragment
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -12,8 +14,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import online.fatbook.fatbookapp.databinding.FragmentEditProfileBinding
-import online.fatbook.fatbookapp.util.LoadingDialog
+import online.fatbook.fatbookapp.ui.activity.SplashActivity
+import online.fatbook.fatbookapp.util.Constants
+import online.fatbook.fatbookapp.util.Constants.SP_TAG
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
 import online.fatbook.fatbookapp.util.hideKeyboard
+import org.apache.commons.lang3.StringUtils
 
 class EditProfileFragment : Fragment() {
     private var binding: FragmentEditProfileBinding? = null
@@ -95,6 +102,18 @@ class EditProfileFragment : Fragment() {
                 edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " ")
             )
             hideKeyboard(edittext_profile_bio)
+
+            //TODO remove logout
+            val sharedPreferences = requireActivity().getSharedPreferences(
+                SP_TAG,
+                Context.MODE_PRIVATE
+            )
+            val editor = sharedPreferences.edit()
+            editor.putString(SP_TAG_USERNAME, StringUtils.EMPTY)
+            editor.putString(SP_TAG_PASSWORD, StringUtils.EMPTY)
+            editor.apply()
+            startActivity(Intent(requireActivity(), SplashActivity::class.java))
+            requireActivity().finish()
         }
 
 //        val loadingDialog = LoadingDialog(requireContext())
@@ -102,12 +121,9 @@ class EditProfileFragment : Fragment() {
 //        loadingDialog.startLoading()
         progressbarLayout_edit_userprofile.visibility = View.VISIBLE
         val handler = Handler()
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                progressbarLayout_edit_userprofile.visibility = View.GONE
-//                loadingDialog.isDismiss()
-            }
-
+        handler.postDelayed({
+            progressbarLayout_edit_userprofile.visibility = View.GONE
+            //                loadingDialog.isDismiss()
         }, 1500)
 
     }

@@ -19,6 +19,7 @@ class UserViewModel : ViewModel() {
     val bookmarkedRecipeList = MutableLiveData<ArrayList<Recipe>>()
     val forkedRecipeList = MutableLiveData<ArrayList<Recipe>>()
     val feedRecipeList = MutableLiveData<ArrayList<Recipe>?>()
+    val test = MutableLiveData<String>()
 
     fun getUserByUsername(username: String) {
         repository.getUserByUsername(username, object : ResultCallback<User> {

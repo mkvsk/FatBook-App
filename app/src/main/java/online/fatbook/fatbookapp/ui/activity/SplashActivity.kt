@@ -1,32 +1,24 @@
 package online.fatbook.fatbookapp.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.User
+import androidx.lifecycle.ViewModelProvider
 import online.fatbook.fatbookapp.databinding.ActivitySplashBinding
-import online.fatbook.fatbookapp.repository.UserRepository
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
-import online.fatbook.fatbookapp.util.Constants.ACCESS_TOKEN
-import online.fatbook.fatbookapp.util.ContextHolder
-import online.fatbook.fatbookapp.util.UserUtils
-import online.fatbook.fatbookapp.util.obtainViewModel
+import online.fatbook.fatbookapp.util.Constants.FEED_TAG
+import online.fatbook.fatbookapp.util.Constants.SP_TAG
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
 import org.apache.commons.lang3.StringUtils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SplashActivity : AppCompatActivity() {
     private var binding: ActivitySplashBinding? = null
     private var username: String? = null
-    private var accessToken: String? = null
-
-    private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
-
+    private var password: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -34,37 +26,36 @@ class SplashActivity : AppCompatActivity() {
 
         loadSharedPreferences()
 
-//        userViewModel.user.observe(this) { user: User? ->
-//            val handler = Handler()
-//            handler.postDelayed({
-//                val intent: Intent = if (StringUtils.isEmpty(username)) {
-//                    Intent(this, WelcomeActivity::class.java)
-//                } else {
-//                    Intent(this, MainActivity::class.java)
-//                }
-//                intent.putExtra(UserUtils.TAG_USER, user)
-//                startActivity(intent)
-//                finish()
-//            }, 1)
+//        binding!!.buttonSplashRetry.setOnClickListener {
+//            binding!!.textViewSplashError.visibility = View.GONE
+//            binding!!.buttonSplashRetry.visibility = View.GONE
+//            loadUserData(username!!)
 //        }
-        binding!!.buttonSplashRetry.setOnClickListener {
-            binding!!.textViewSplashError.visibility = View.GONE
-            binding!!.buttonSplashRetry.visibility = View.GONE
-            loadUserData(username!!)
+    }
+
+    private fun startMainScreen(launchFeed: Boolean) {
+        val mainScreenIntent = Intent(this@SplashActivity, MainActivity::class.java)
+        if (intent.action != null && intent.action != "android.intent.action.MAIN") {
+            mainScreenIntent.action = intent.action
         }
+        mainScreenIntent.putExtra(FEED_TAG, launchFeed)
+        startActivity(mainScreenIntent)
+        finish()
     }
 
     private fun loadSharedPreferences() {
-        val sharedPreferences = getSharedPreferences(UserUtils.APP_PREFS, MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
 
-        username = sharedPreferences.getString(UserUtils.USER_LOGIN, StringUtils.EMPTY)
-        accessToken = sharedPreferences.getString(ACCESS_TOKEN, StringUtils.EMPTY)
+        username = sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
+        password = sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
 
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(accessToken)) {
-            //showWelcomeFragment
-        } else {
-            userViewModel.getUserByUsername(username!!)
-        }
+        Log.d("username", username!!)
+        Log.d("password", password!!)
+
+        val handler = Handler()
+        handler.postDelayed({
+            startMainScreen(StringUtils.isEmpty(username) || StringUtils.isEmpty(password))
+        }, 1500)
     }
 
     private fun loadUserData(username: String) {

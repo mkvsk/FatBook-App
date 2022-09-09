@@ -16,8 +16,8 @@ class AuthenticationViewModel : ViewModel() {
     private val repository by lazy { AuthenticationRepository(ContextHolder.get()) }
 
     var userEmail = MutableLiveData("")
-    var password = MutableLiveData<String?>()
-    var username = MutableLiveData<String?>()
+    var password = MutableLiveData("")
+    var username = MutableLiveData("")
 
     var vCode = MutableLiveData<String?>()
 
@@ -25,7 +25,7 @@ class AuthenticationViewModel : ViewModel() {
 
     var currentCountdown = MutableLiveData<Long?>()
     var isTimerRunning = MutableLiveData(false)
-    val resendVCTimer = MutableLiveData(20L)
+    val resendVCTimer = MutableLiveData(10L)
 
     private var timer: CountDownTimer? = null
 

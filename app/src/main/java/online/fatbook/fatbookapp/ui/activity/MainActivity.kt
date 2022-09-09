@@ -3,7 +3,6 @@ package online.fatbook.fatbookapp.ui.activity
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
@@ -16,6 +15,8 @@ import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.Constants.FEED_TAG
+import online.fatbook.fatbookapp.util.ProgressBarUtil
 import online.fatbook.fatbookapp.util.UserUtils
 import org.apache.commons.lang3.StringUtils
 
@@ -37,17 +38,18 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
+        ProgressBarUtil.set(this)
         setupNavigation()
 
 //        BottomNavigationView navView = findViewById(R.id.nav_view);
 //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 //                R.id.navigation_feed, R.id.navigation_ingredients, R.id.navigation_recipe_create, R.id.navigation_bookmarks, R.id.navigation_user_profile)
 //                .build();
-        val fillAdditional = intent.getBooleanExtra(UserUtils.FILL_ADDITIONAL_INFO, false)
-        if (fillAdditional) {
-            navController!!.navigate(R.id.action_go_to_profile)
+        val launchFeed = intent.getBooleanExtra(FEED_TAG, false)
+        if (launchFeed) {
+            navController!!.navigate(R.id.action_go_to_edit_profile_from_welcome)
         }
-        loadData()
+//        loadData()
     }
 
     private fun loadData() {

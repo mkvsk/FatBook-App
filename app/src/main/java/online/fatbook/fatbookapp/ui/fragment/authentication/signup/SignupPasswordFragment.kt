@@ -14,6 +14,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentSignupPasswordBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.PASSWORD_REGEX
+import online.fatbook.fatbookapp.util.ProgressBarUtil.hideProgressBar
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import java.util.regex.Pattern
@@ -33,6 +34,7 @@ class SignupPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideProgressBar()
         fragment_signup_password_button_next.setOnClickListener {
             if (passwordValidate()) {
                 authViewModel.password.value =

@@ -39,7 +39,6 @@ class SignupUsernameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         addObservers()
-
         fragment_signup_username_button_next.setOnClickListener {
             if (usernameValidate()) {
                 authViewModel.usernameCheck(fragment_signup_username_edittext_username.text.toString())
@@ -135,7 +134,7 @@ class SignupUsernameFragment : Fragment() {
     }
 
     private fun navigateToAccountCreated() {
-        authViewModel.userEmail.value = StringUtils.EMPTY
+//        authViewModel.userEmail.value = StringUtils.EMPTY
         NavHostFragment.findNavController(this)
             .navigate(R.id.action_go_to_account_created)
     }

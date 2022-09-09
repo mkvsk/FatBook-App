@@ -159,7 +159,7 @@
     <string name="btn_messages">Написать сообщение</string>
     <string name="hint_new_password_signin_new_pass">Новый пароль</string>
     <string name="hint_repeat_new_password_signin_new_pass">Повторите пароль</string>
-    <string name="dialog_sigbib_new_pass_passwords_not_match">Пароли не совпадают</string>
+    <string name="dialog_sigbin_new_pass_passwords_not_match">Пароли не совпадают</string>
     <string name="dialog_wrong_verification_code_1">Этот код уже подтвержден</string>
     <string name="dialog_wrong_verification_code_3">Код уже недействителен</string>
 </resources>

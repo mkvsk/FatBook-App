@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_view_image">
+    app:startDestination="@+id/navigation_welcome">
 
     <fragment
         android:id="@+id/navigation_feed"
@@ -90,6 +90,11 @@
             app:destination="@id/navigation_signin"
             app:popUpTo="@id/navigation_welcome" />
 
+        <action
+            android:id="@+id/action_go_to_edit_profile_from_welcome"
+            app:destination="@id/navigation_edit_profile_fragment"
+            app:popUpTo="@id/mobile_navigation" />
+
     </fragment>
 
     <fragment
@@ -98,11 +103,11 @@
         android:label="@null"
         tools:layout="@layout/fragment_sign_in">
 
-<!--        <action-->
-<!--            android:id="@+id/action_go_to_verification_code"-->
-<!--            app:destination="@id/navigation_verification_code"-->
-<!--            app:popUpTo="@id/navigation_signup_email"-->
-<!--            />-->
+        <!--        <action-->
+        <!--            android:id="@+id/action_go_to_verification_code"-->
+        <!--            app:destination="@id/navigation_verification_code"-->
+        <!--            app:popUpTo="@id/navigation_signup_email"-->
+        <!--            />-->
     </fragment>
 
     <fragment
@@ -154,7 +159,7 @@
         android:id="@+id/navigation_signup_username"
         android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.SignupUsernameFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_signup_username" >
+        tools:layout="@layout/fragment_signup_username">
 
         <action
             android:id="@+id/action_go_to_account_created"
@@ -166,48 +171,54 @@
         android:id="@+id/navigation_account_created"
         android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.AccountCreatedFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_account_created" />
+        tools:layout="@layout/fragment_account_created">
+
+        <action
+            android:id="@+id/action_go_to_edit_profile_from_account_created"
+            app:destination="@id/navigation_edit_profile_fragment"
+            app:popUpTo="@id/mobile_navigation" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_test"
-        android:label="@null"
         android:name="online.fatbook.fatbookapp.ui.fragment.TestFragment"
+        android:label="@null"
         tools:layout="@layout/fragment_test">
 
-    <action
-        android:id="@+id/action_go_to_edit_profile"
-        app:destination="@id/navigation_edit_profile_fragment"
-        app:popUpTo="@id/navigation_test" />
+        <action
+            android:id="@+id/action_go_to_edit_profile"
+            app:destination="@id/navigation_edit_profile_fragment"
+            app:popUpTo="@id/navigation_test" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_edit_profile_fragment"
-        android:label="@null"
         android:name="online.fatbook.fatbookapp.ui.fragment.EditProfileFragment"
+        android:label="@null"
         tools:layout="@layout/fragment_edit_profile" />
 
     <fragment
         android:id="@+id/navigation_follow_fragment"
-        android:label="@null"
         android:name="online.fatbook.fatbookapp.ui.fragment.FollowFragment"
+        android:label="@null"
         tools:layout="@layout/fragment_follow" />
 
     <fragment
         android:id="@+id/navigation_recipe_create_first_stage"
-        android:label="@null"
         android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeCreateFirstStageFragment"
+        android:label="@null"
         tools:layout="@layout/fragment_recipe_create_first_stage" />
 
     <fragment
         android:id="@+id/navigation_recipe_create_add_ingredients"
-        android:label="@null"
         android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeCreateAddIngredientsFragment"
+        android:label="@null"
         tools:layout="@layout/fragment_recipe_create_add_ingredients" />
 
     <fragment
         android:id="@+id/navigation_view_image"
-        android:label="@null"
         android:name="online.fatbook.fatbookapp.ui.fragment.ViewImageFragment"
+        android:label="@null"
         tools:layout="@layout/fragment_view_image" />
 
     <action

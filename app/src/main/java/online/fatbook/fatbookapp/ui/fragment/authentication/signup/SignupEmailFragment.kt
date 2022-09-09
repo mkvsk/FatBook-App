@@ -8,6 +8,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -18,6 +19,8 @@ import online.fatbook.fatbookapp.core.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentSignupEmailBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.SYMBOL_AT
+import online.fatbook.fatbookapp.util.ProgressBarUtil.hideProgressBar
+import online.fatbook.fatbookapp.util.ProgressBarUtil.showProgressBar
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
@@ -38,7 +41,6 @@ class SignupEmailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fragment_signup_email_button_next.setOnClickListener {
             if (emailValidate(fragment_signup_email_edittext_email.text.toString())) {
-
                 if (authViewModel.userEmail.value!! != fragment_signup_email_edittext_email.text.toString()) {
                     authViewModel.isTimerRunning.value = false
                     authViewModel.currentCountdown.value = 0
@@ -84,15 +86,14 @@ class SignupEmailFragment : Fragment() {
 
     private fun emailValidate(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-//        return true
     }
 
 
     private fun emailCheck(email: String) {
-        progressbarLayout_signup_email.visibility = View.VISIBLE
+        showProgressBar()
+        Log.d("PROGRESS BAR", "VISIBLE")
         authViewModel.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                progressbarLayout_signup_email.visibility = View.GONE
                 when (value?.code) {
                     0 -> {
                         authViewModel.userEmail.value = value.email
@@ -101,16 +102,19 @@ class SignupEmailFragment : Fragment() {
                             authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
                         }
                         authViewModel.vCode.value = value.vcode
-                        Log.d("code", value.vcode!!)
+                        Log.d("CODE ======================= ", value.vcode!!)
+                        Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG).show()
                         navigateToVerificationCode()
                     }
                     4 -> {
                         hideKeyboard(fragment_signup_email_edittext_email)
                         showErrorMessage(getString(R.string.dialog_email_used_signup_email))
+                        hideProgressBar()
                     }
                     else -> {
                         hideKeyboard(fragment_signup_email_edittext_email)
                         showErrorMessage(getString(R.string.dialog_signup_error))
+                        hideProgressBar()
                     }
                 }
             }

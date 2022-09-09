@@ -1,6 +1,6 @@
 <resources>
     ///app
-    <string name="app_name_release" translatable="false">FatBook</string>
+    <string name="app_name" translatable="false">FatBook</string>
     <string name="app_name_beta" translatable="false">FatBook BETA</string>
     <string name="tagline_fatbook">Get your forks ready</string>
     <string name="tag_copyright" translatable="false">Ⓒ 2022 PotatoCorp V 2.0.0</string>
@@ -34,8 +34,8 @@
     <string name="hint_new_password_signin_new_pass">New password</string>
     <string name="hint_repeat_new_password_signin_new_pass">Repeat password</string>
     <string name="btn_next_signin_new_pass">next</string>
-    <string name="dialog_signin_new_pass">Password must be 6-16 \n characters long and \n contains only numbers \n and letters</string>
-    <string name="dialog_sigbib_new_pass_passwords_not_match">Passwords do not match</string>
+    <string name="dialog_signin_new_pass">Password must be 6–16 \n characters long and \n contains only numbers \n and letters</string>
+    <string name="dialog_sigbin_new_pass_passwords_not_match">Passwords do not match</string>
 
     ///fragment signup e-mail
     <string name="title_app_name_signup_email" translatable="false">FatBook</string>
@@ -52,7 +52,7 @@
     <string name="adds_signup_password">Set password:</string>
     <string name="hint_password_signup_password">Password</string>
     <string name="btn_next_signup_password">next</string>
-    <string name="dialog_signup_password">Password must be 6-20 \n characters long</string>
+    <string name="dialog_signup_password">Password must be 6–20 \n characters long</string>
 
     ///fragment signup username
     <string name="title_app_name_signup_username" translatable="false">FatBook</string>
@@ -68,17 +68,17 @@
     <string name="title_app_name_signup_account_created" translatable="false">FatBook</string>
     <string name="adds_account_created">Your account has been created</string>
     <string name="btn_next_account_created">next</string>
-    <string name="dialog_account_created">Nice to meet you,\n %s!\n Let\'s make our book\n fatter!</string>
+    <string name="dialog_account_created">Nice to meet you,\n %s!\n Let\'s make our book\n more fat!</string>
 
     ///fragment verification code
     <string name="title_app_name_verification_code" translatable="false">FatBook</string>
     <string name="adds_verification_code">Verification code:</string>
     <string name="hint_verification_code" translatable="false">0-0-0-0-0-0</string>
     <string name="btn_next_verification_code">next</string>
-    <string name="dialog_verification_code">The verification code was \n sent to your e-mail</string>
+    <string name="dialog_verification_code">Verification code was \n sent to your e-mail</string>
     <string name="dialog_wrong_verification_code_2_500">Wrong code</string>
     <string name="dialog_wrong_verification_code_1">This code is already confirmed</string>
-    <string name="dialog_wrong_verification_code_3">This code was expired</string>
+    <string name="dialog_wrong_verification_code_3">This code has expired</string>
 
     <string name="resend_verification_code">resend code</string>
     <string name="resend_verification_code_timer">(%s) resend code</string>
@@ -137,7 +137,7 @@
 
     ///feed
     <string name="toolbar_recipes_feed">Recipes</string>
-    <string name="hint_search_recipe_feed">search...</string>
+    <string name="hint_search_recipe_feed">search…</string>
 
     ///rv feed recipe card preview
     <string name="title_recipe_preview_rv">Recipe title</string>
@@ -152,7 +152,7 @@
     <string name="title_add_recipe_photo">Tasty photo:</string>
     <string name="title_add_recipe_ingredients">Ingredients:</string>
     <string name="title_add_recipe_description">Recipe:</string>
-    <string name="hint_add_recipe_description">Сooking method</string>
+    <string name="hint_add_recipe_description">Cooking method</string>
     <string name="btn_save_recipe_create">SAVE</string>
 
     ///rv add recipe ingredients
@@ -214,7 +214,7 @@
     <string name="alert_dialog_suggest_ingredient">Suggest another ingredient</string>
     <string name="alert_dialog_logout_message">Are you sure you want to logout?</string>
     <string name="alert_dialog_delete_recipe_message">Are you sure you want to delete recipe?</string>
-    <string name="alert_dialog_empty_recipe_message">You cant save empty recipe.</string>
+    <string name="alert_dialog_empty_recipe_message">You can\'t save empty recipe.</string>
     //alert dialog titles
     <string name="title_add_ingredient_alert_dialog">Add ingredient</string>
     <string name="title_delete_recipe_alert_dialog">Delete recipe</string>
