@@ -181,7 +181,7 @@
                                     android:id="@+id/textview_portion_kcals_qtt_recipe_create_2_stage"
                                     android:layout_width="80dp"
                                     android:layout_height="wrap_content"
-                                    android:text="1220 kcal"
+                                    android:text="1220 kcal/\n1 serving"
                                     android:textAlignment="center"
                                     android:textAppearance="@style/recipeCreateEditTextStyle"
                                     android:textColor="@color/main_text"

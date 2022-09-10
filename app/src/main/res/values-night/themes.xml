@@ -45,6 +45,7 @@
     <color name="user_is_online_color">#CDDC39</color>
     <color name="ic_forked_favourite">#FF4081</color>
     <color name="ic_not_forked_favourite">#B0BEC5</color>
+    <color name="ic_comments_color">#B0BEC5</color>
     <color name="ic_bottomnav_color">#B0BEC5</color>
     <color name="ic_userprofile_color">#FFFFFFFF</color>
     <color name="ic_expand_color">#263238</color>
@@ -134,6 +135,40 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
+    <style name="myMaterialCardRecipeViewImage" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
+        <item name="android:translationZ">6dp</item>
+        <item name="android:shadowRadius">10</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_card_custom_corners_recipe_view_image
+        </item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners_recipe_view_image" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">30dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">30dp</item>
+    </style>
+
+    <style name="myMaterialCardRecipeView" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
+        <item name="android:translationZ">6dp</item>
+        <item name="android:shadowRadius">10</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_card_custom_corners_recipe_view
+        </item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners_recipe_view" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">30dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
     <style name="btnPink">
         <item name="android:layout_width">@dimen/btn_pink_w</item>
         <item name="android:layout_height">@dimen/btn_pink_h</item>
@@ -199,6 +234,12 @@
         <item name="fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">9sp</item>
         <item name="android:textColor">@color/rv_recipe_preview_ic_color</item>
+    </style>
+
+    <style name="txtRecipeViewAdds">
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/main_text</item>
     </style>
 
     <style name="roundBtnEditPhoto" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
@@ -442,6 +483,7 @@
     <style name="myToggleBtn" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="shapeAppearanceOverlay">@style/MyShapeAppearanceToggleBtn</item>
     </style>
+
     <style name="MyShapeAppearanceToggleBtn">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">30dp</item>
@@ -461,6 +503,22 @@
         <item name="android:src">@drawable/ic_remove_ingredient</item>
         <item name="fabCustomSize">@dimen/round_btn_remove_ingredient_w_h</item>
         <item name="tint">@color/theme_cardview_bgr</item>
+    </style>
+
+    <style name="roundBtnRemovePortion" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/main_text</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_remove_ingredient</item>
+        <item name="fabCustomSize">@dimen/round_btn_add_remove_portion_w_h</item>
+    </style>
+
+    <style name="roundBtnAddPortion" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/main_text</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_plus</item>
+        <item name="fabCustomSize">@dimen/round_btn_add_remove_portion_w_h</item>
     </style>
 
     <style name="recipeCreateIngredientsTextStyle">

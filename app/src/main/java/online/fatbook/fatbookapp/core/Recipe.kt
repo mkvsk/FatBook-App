@@ -19,6 +19,28 @@ class Recipe() : Serializable {
         this.author = author
     }
 
+    constructor(
+        pid: Long?,
+        name: String?,
+        description: String?,
+        author: String?,
+        ingredients: ArrayList<RecipeIngredient>?,
+        image: String?,
+        forks: Int?,
+        createDate: String?,
+        identifier: Long?
+    ) : this() {
+        this.pid = pid
+        this.name = name
+        this.description = description
+        this.author = author
+        this.ingredients = ingredients
+        this.image = image
+        this.forks = forks
+        this.createDate = createDate
+        this.identifier = identifier
+    }
+
     var pid: Long? = null
     var name: String? = ""
     var description: String? = ""
@@ -28,6 +50,7 @@ class Recipe() : Serializable {
     var forks: Int? = 0
     var createDate: String? = ""
     var identifier: Long? = 0L
+    var recipePortionFats: Double? = 0.0
 
     //новые поля
     //recipe step

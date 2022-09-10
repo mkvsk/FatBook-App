@@ -31,6 +31,9 @@
     <dimen name="cards_margin_start">10dp</dimen>
     <dimen name="cards_margin_end">10dp</dimen>
 
+    <dimen name="content_padding_20">20dp</dimen>
+    <dimen name="content_padding_10">10dp</dimen>
+
     <dimen name="btn_user_profile_w">130dp</dimen>
     <dimen name="btn_user_profile_h">40dp</dimen>
 
@@ -50,6 +53,7 @@
     <dimen name="titles_spacing_recipe_create">5dp</dimen>
     <dimen name="elements_spacing_recipe_create">10dp</dimen>
     <dimen name="round_btn_remove_ingredient_w_h">25dp</dimen>
+    <dimen name="round_btn_add_remove_portion_w_h">20dp</dimen>
 
 
 </resources>

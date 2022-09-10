@@ -258,7 +258,7 @@
                             app:layout_constraintTop_toBottomOf="@id/togglegroup_recipe_create_1_stage">
 
                             <TextView
-                                android:id="@+id/textview_servings_qqt_cooking_lvl_recipe_create_1_stage"
+                                android:id="@+id/textview_servings_qtt_cooking_lvl_recipe_create_1_stage"
                                 style="@style/recipeCreateTitlesTextStyle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -286,7 +286,7 @@
                             app:layout_constraintTop_toBottomOf="@id/ll_titles_servings_time">
 
                             <EditText
-                                android:id="@+id/edittext_servings_recipe_create_1_stage"
+                                android:id="@+id/edittext_servings_qtt_recipe_create_1_stage"
                                 android:layout_width="0dp"
                                 android:layout_height="30dp"
                                 android:layout_marginTop="@dimen/titles_spacing_recipe_create"

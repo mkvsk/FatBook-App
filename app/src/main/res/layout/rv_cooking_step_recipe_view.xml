@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/content_padding_10"
+    android:orientation="horizontal">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/rv_cooking_step_number_recipe_view"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/digit_1"
+        android:backgroundTint="@color/theme_primary_bgr"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/content_padding_10"
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview_rv_cooking_step_recipe_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="3dp"
+        android:layout_marginTop="5dp"
+        android:elevation="6dp"
+        app:layout_constraintTop_toBottomOf="@id/rv_cooking_step_number_recipe_view"
+        app:contentPadding="@dimen/content_padding_10"
+        android:backgroundTint="@color/theme_primary_bgr"
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize4Percent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="7dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageview_photo_rv_cooking_step_recipe_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/kartoshka"
+                android:background="@drawable/ic_default_recipe_image"
+                android:backgroundTint="@color/theme_cardview_bgr"
+                app:layout_constraintDimensionRatio="H,3:1.5"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize4Percent" />
+
+            <TextView
+                android:id="@+id/textview_description_rv_cooking_step_recipe_view"
+                style="@style/recipeCreateStepDescriptionPreview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:textColor="@color/main_text"
+                android:layout_marginTop="5dp"
+                android:text="Приготовить тесто: предварительно охлажденное сливочное масло нарезать кусочками, поместить в чашу блендера, всыпать муку, соль и взбить все в мелкую крошку, добавить сахарную пудру, фундук, ванильный экстракт, желток и все"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageview_photo_rv_cooking_step_recipe_view"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardview_rv_cooking_step_recipe_view"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
