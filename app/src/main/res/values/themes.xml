@@ -554,9 +554,20 @@
     <color name="rv_thumb_color">#B0BEC5</color>
     <color name="rv_thumb_line_color">#ECEFF1</color>
     <color name="ingredient_qtt_units_bgr">#ECEFF1</color>
+
+    <color name="ic_send_color">#FFFFFF</color>
+    <color name="btn_send_color">#B0BEC5</color>
+
+    <style name="roundBtnSend" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/btn_send_color</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_send1</item>
+        <item name="fabCustomSize">@dimen/round_btn_send_w_h</item>
+    </style>
+
+
     ///v1.0.0
-
-
     <style name="addRecipeButton">
         <item name="android:layout_width">234dp</item>
         <item name="android:layout_height">45dp</item>

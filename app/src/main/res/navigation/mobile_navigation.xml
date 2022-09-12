@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_welcome">
+    app:startDestination="@+id/navigation_recipe_view">
 
     <fragment
         android:id="@+id/navigation_feed"
@@ -64,9 +64,9 @@
 
     <fragment
         android:id="@+id/navigation_recipe_view"
-        android:name="online.fatbook.fatbookapp.ui.fragment.RecipeViewFragmentOLD"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.view.edit.RecipeViewFragment"
         android:label="@string/mobile_nav_recipe_view"
-        tools:layout="@layout/fragment_recipe_view_old" />
+        tools:layout="@layout/fragment_recipe_view" />
 
     <fragment
         android:id="@+id/navigation_add_ingredient"
@@ -220,6 +220,12 @@
         android:name="online.fatbook.fatbookapp.ui.fragment.util.ViewImageFragment"
         android:label="@null"
         tools:layout="@layout/fragment_view_image" />
+
+    <!--<fragment
+        android:id="@+id/navigation_recipe_view"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.EditUserProfileFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_edit_profile" />-->
 
     <action
         android:id="@+id/action_go_to_feed"

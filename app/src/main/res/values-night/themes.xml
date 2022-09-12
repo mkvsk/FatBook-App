@@ -555,5 +555,15 @@
     <color name="rv_thumb_line_color">#263238</color>
     <color name="ingredient_qtt_units_bgr">#263238</color>
 
+    <color name="ic_send_color">#37474F</color>
+    <color name="btn_send_color">#B0BEC5</color>
+
+    <style name="roundBtnSend" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/btn_send_color</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_send1</item>
+        <item name="fabCustomSize">@dimen/round_btn_send_w_h</item>
+    </style>
 
 </resources>
