@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/content_padding_20"
+    android:layout_marginBottom="15dp"
+    android:background="@drawable/round_corner_comment_bgr">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageview_userphoto_rv_comment"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_default_userphoto"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+    <TextView
+        android:id="@+id/textview_username_rv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:maxLength="20"
+        android:text="Username"
+        android:textAppearance="@style/followUsernameTextStyle"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_rv_comment"
+        app:layout_constraintLeft_toRightOf="@id/imageview_userphoto_rv_comment"
+        app:layout_constraintTop_toTopOf="@id/imageview_userphoto_rv_comment" />
+
+    <LinearLayout
+        android:id="@+id/ll_btns_rv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/content_padding_10"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_rv_comment"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imageview_userphoto_rv_comment">
+
+        <ImageButton
+            android:id="@+id/button_edit_rv_comment"
+            android:layout_width="@dimen/round_btn_edit_delete_comment_w_h"
+            android:layout_height="@dimen/round_btn_edit_delete_comment_w_h"
+            android:layout_marginEnd="@dimen/content_padding_20"
+            android:background="@drawable/ic_btn_edit"
+            android:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/button_delete_rv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/round_btn_edit_delete_comment_w_h"
+            android:background="@drawable/ic_btn_delete"
+            android:visibility="visible" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/textview_date_rv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/content_padding_10"
+        android:text="dd/mm/yyyy"
+        android:textColor="@color/tv_date_color"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@id/textview_username_rv_comment"
+        app:layout_constraintRight_toLeftOf="@id/ll_btns_rv_comment"
+        app:layout_constraintTop_toTopOf="@id/textview_username_rv_comment" />
+
+    <TextView
+        android:id="@+id/textview_user_comment_rv_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLength="200"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:text="Comment Comm e n t   C omm ent Com ment Com ment Comm ent Comm ent C omm ent Comm ent Com ent"
+        android:textColor="@color/main_text"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageview_userphoto_rv_comment" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

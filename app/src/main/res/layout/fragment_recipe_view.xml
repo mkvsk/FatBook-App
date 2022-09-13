@@ -335,11 +335,11 @@
                             android:layout_height="70dp"
                             android:layout_marginTop="@dimen/content_padding_20"
                             android:backgroundTint="@color/theme_primary_bgr"
+                            app:cardPreventCornerOverlap="false"
                             app:contentPaddingBottom="5dp"
                             app:contentPaddingLeft="10dp"
                             app:contentPaddingRight="10dp"
                             app:contentPaddingTop="5dp"
-                            app:cardPreventCornerOverlap="false"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/ll_info"
@@ -438,29 +438,29 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:id="@+id/textview_portion_recipe_view_full_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/main_text"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="Portion quantity:"
-                        app:layout_constraintTop_toBottomOf="@id/cardview_nutrition_facts_recipe_view"
-                        android:layout_marginTop="@dimen/content_padding_20"
-                        app:layout_constraintLeft_toLeftOf="parent"/>
+                        <TextView
+                            android:id="@+id/textview_portion_recipe_view_full_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/content_padding_20"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="Portion quantity:"
+                            android:textColor="@color/main_text"
+                            android:textSize="16sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cardview_nutrition_facts_recipe_view" />
 
                         <TextView
                             android:id="@+id/textview_servings_qtt_recipe_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/pink_a200"
-                            android:textSize="16sp"
+                            android:layout_marginLeft="@dimen/content_padding_10"
                             android:fontFamily="@font/roboto_medium"
                             android:text="5"
-                            android:layout_marginLeft="@dimen/content_padding_10"
-                            app:layout_constraintLeft_toRightOf="@id/textview_portion_recipe_view_full_info"
-                            app:layout_constraintBottom_toBottomOf="@id/textview_portion_recipe_view_full_info"/>
+                            android:textColor="@color/pink_a200"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@id/textview_portion_recipe_view_full_info"
+                            app:layout_constraintLeft_toRightOf="@id/textview_portion_recipe_view_full_info" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/button_remove_portion_recipe_view"
@@ -468,10 +468,10 @@
                             android:layout_width="@dimen/round_btn_add_remove_portion_w_h"
                             android:layout_height="@dimen/round_btn_add_remove_portion_w_h"
                             android:visibility="visible"
-                            app:maxImageSize="13dp"
+                            app:layout_constraintBottom_toBottomOf="@id/textview_portion_recipe_view_full_info"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="@id/textview_portion_recipe_view_full_info"
-                            app:layout_constraintBottom_toBottomOf="@id/textview_portion_recipe_view_full_info"/>
+                            app:maxImageSize="13dp" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/button_add_portion_recipe_view"
@@ -479,22 +479,22 @@
                             android:layout_width="@dimen/round_btn_add_remove_portion_w_h"
                             android:layout_height="@dimen/round_btn_add_remove_portion_w_h"
                             android:visibility="visible"
-                            app:maxImageSize="13dp"
+                            app:layout_constraintBottom_toBottomOf="@id/textview_portion_recipe_view_full_info"
                             app:layout_constraintRight_toLeftOf="@id/button_remove_portion_recipe_view"
                             app:layout_constraintTop_toTopOf="@id/textview_portion_recipe_view_full_info"
-                            app:layout_constraintBottom_toBottomOf="@id/textview_portion_recipe_view_full_info"/>
+                            app:maxImageSize="13dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_medium"
                             android:text="/"
                             android:textColor="@color/main_text"
                             android:textSize="20sp"
-                            android:fontFamily="@font/roboto_medium"
-                            app:layout_constraintRight_toLeftOf="@id/button_remove_portion_recipe_view"
                             app:layout_constraintBottom_toBottomOf="@id/button_remove_portion_recipe_view"
-                            app:layout_constraintTop_toTopOf="@id/button_remove_portion_recipe_view"
-                            app:layout_constraintLeft_toRightOf="@id/button_add_portion_recipe_view"/>
+                            app:layout_constraintLeft_toRightOf="@id/button_add_portion_recipe_view"
+                            app:layout_constraintRight_toLeftOf="@id/button_remove_portion_recipe_view"
+                            app:layout_constraintTop_toTopOf="@id/button_remove_portion_recipe_view" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_ingredients_recipe_view"
@@ -524,45 +524,56 @@
 
                 <LinearLayout
                     android:id="@+id/ll_input_comment"
-                    android:layout_marginTop="@dimen/content_padding_20"
-                    app:layout_constraintTop_toBottomOf="@id/cardview_recipe_view_full_info"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp">
+                    android:layout_marginTop="@dimen/content_padding_20"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardview_recipe_view_full_info">
 
                     <EditText
                         android:id="@+id/edittext_input_comment"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@drawable/round_corner_comment_bgr"
                         android:hint="Comment..."
                         android:inputType="textMultiLine"
                         android:maxLength="200"
+                        android:maxLines="5"
+                        android:paddingVertical="6dp"
                         android:paddingStart="10dp"
                         android:paddingEnd="30dp"
-                        android:paddingVertical="5dp"
-                        android:textSize="15sp"
-                        android:layout_gravity="center_vertical"
-                        />
+                        android:textSize="13sp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/button_send_comment"
+                        style="@style/roundBtnSend"
                         android:layout_width="@dimen/round_btn_send_w_h"
                         android:layout_height="@dimen/round_btn_send_w_h"
-                        style="@style/roundBtnSend"
-                        app:maxImageSize="20dp"
-                        android:layout_gravity="bottom"/>
-
+                        android:layout_gravity="bottom"
+                        android:visibility="gone"
+                        app:maxImageSize="20dp" />
                 </LinearLayout>
 
-
-
-
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_comments_recipe_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/content_padding_20"
+                    android:layout_marginBottom="150dp"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ll_input_comment"
+                    tools:listitem="@layout/rv_comment_recipe_view" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

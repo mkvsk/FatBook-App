@@ -56,5 +56,6 @@
     <dimen name="round_btn_add_remove_portion_w_h">20dp</dimen>
 
     <dimen name="round_btn_send_w_h">30dp</dimen>
+    <dimen name="round_btn_edit_delete_comment_w_h">20dp</dimen>
 
 </resources>
