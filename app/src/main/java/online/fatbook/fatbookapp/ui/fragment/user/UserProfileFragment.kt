@@ -14,17 +14,22 @@ import androidx.transition.TransitionManager
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.Recipe
 import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
+import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.obtainViewModel
 
 class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
     private var binding: FragmentUserProfileBinding? = null
 
     private var expanded: Boolean = false
+
+    private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +41,12 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        progressbarLayout_userprofile.visibility = View.VISIBLE
+        if (!userViewModel.selectedUsername.value.isNullOrEmpty()) {
+            loadData()
+        }
+
 
         imageview_recipes_qqt_userprofile.setOnClickListener {
             focusOnRecipes()
@@ -140,6 +151,19 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
             }
 
+        })
+    }
+
+    private fun drawData() {
+        val user = userViewModel.selectedUser.value
+    }
+
+    private fun loadData() {
+        userViewModel.getUserByUsername(userViewModel.selectedUsername.value.toString(), object : ResultCallback<User> {
+            override fun onResult(value: User?) {
+                drawData()
+                progressbarLayout_userprofile.visibility = View.GONE
+            }
         })
     }
 

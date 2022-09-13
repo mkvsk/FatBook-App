@@ -26,8 +26,8 @@ interface NetworkInfoService {
     /**
      * User
      */
-    @GET("user/get/login")
-    fun getUser(@Query(value = "login") login: String?): Call<User>
+    @GET("user/get/username")
+    fun getUser(@Query(value = "username") username: String?): Call<User>
 
     @POST("user/create")
     fun userCreate(@Body user: User?, @Query(value = "fat") fat: String?): Call<User>

@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 //                .build();
         val launchFeed = intent.getBooleanExtra(FEED_TAG, false)
         if (launchFeed) {
-            navController!!.navigate(R.id.action_go_to_edit_profile_from_welcome)
+//            navController!!.navigate(R.id.action_go_to_edit_profile_from_welcome)
         }
 //        loadData()
     }

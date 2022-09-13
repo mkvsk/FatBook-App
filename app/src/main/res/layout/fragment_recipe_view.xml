@@ -144,7 +144,7 @@
                             android:fontFamily="@font/roboto_medium"
                             android:lines="1"
                             android:maxLength="21"
-                            android:text="@string/title_recipe_preview_author_rv"
+                            android:text="hewix"
                             android:textColor="@color/pink_a200"
                             android:textSize="13sp"
                             app:layout_constraintBottom_toBottomOf="@id/imageview_author_photo_recipe_view"
