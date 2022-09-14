@@ -1,5 +1,7 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import online.fatbook.fatbookapp.R
@@ -22,6 +25,7 @@ import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
+
 
 class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
@@ -156,15 +160,65 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
     private fun drawData() {
         val user = userViewModel.selectedUser.value
+
+        user!!.login = "kit"
+        toolbar_userprofile.title = user!!.login
+
+        if (user.recipes == null) {
+            textview_recipes_qqt_userprofile.text = "0"
+        } else {
+            textview_recipes_qqt_userprofile.text = user.recipes?.size.toString()
+        }
+
+        if (user.followers == null || user.followers == 0) {
+            textview_friends_qqt_userprofile.text = "0"
+        } else {
+            textview_friends_qqt_userprofile.text = user.followers.toString()
+        }
+
+        if (user.name.isNullOrEmpty()) {
+            textview_title_userprofile.visibility = View.GONE
+        } else {
+            textview_title_userprofile.text = user.name
+        }
+
+        if (user.website.isNullOrEmpty()) {
+            textview_website_userprofile.visibility = View.GONE
+            imageview_ic_website.visibility = View.GONE
+        } else {
+            textview_website_userprofile.text = user.website
+        }
+
+        if (user.bio.isNullOrEmpty()) {
+            expandableLayout.visibility = View.GONE
+            imageview_ic_expand.visibility = View.GONE
+        } else {
+            textview_bio_userprofile.text = user.bio
+        }
+
+        user.image = "https://fatbook.b-cdn.net/root/upal.jpg"
+        Glide
+            .with(requireContext())
+            .load(user.image!!)
+            .into(imageview_userphoto_userprofile)
+
+        user.online = true
+        if (user.online!!) {
+            imageview_is_online.visibility = View.VISIBLE
+        } else {
+            imageview_is_online.visibility = View.INVISIBLE
+        }
     }
 
     private fun loadData() {
-        userViewModel.getUserByUsername(userViewModel.selectedUsername.value.toString(), object : ResultCallback<User> {
-            override fun onResult(value: User?) {
-                drawData()
-                progressbarLayout_userprofile.visibility = View.GONE
-            }
-        })
+        userViewModel.getUserByUsername(
+            userViewModel.selectedUsername.value.toString(),
+            object : ResultCallback<User> {
+                override fun onResult(value: User?) {
+                    drawData()
+                    progressbarLayout_userprofile.visibility = View.GONE
+                }
+            })
     }
 
     private fun focusOnRecipes() {

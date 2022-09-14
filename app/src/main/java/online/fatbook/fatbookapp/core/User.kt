@@ -14,4 +14,9 @@ class User : Serializable {
     var recipes: List<Recipe>? = ArrayList()
     var recipesForked: List<Long>? = ArrayList()
     var recipesBookmarked: ArrayList<Long>? = ArrayList()
+
+    var website: String = ""
+    var followers: Int? = null
+    var online: Boolean? = false
+
 }

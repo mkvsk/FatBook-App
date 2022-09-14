@@ -122,22 +122,24 @@
                             app:layout_constraintRight_toRightOf="@id/imageview_recipes_qqt_userprofile"
                             app:layout_constraintTop_toTopOf="@id/imageview_recipes_qqt_userprofile" />
 
-                        <!--<com.google.android.material.imageview.ShapeableImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageview_is_online"
-                            android:layout_width="123dp"
-                            android:layout_height="123dp"
+                            android:layout_width="124dp"
+                            android:layout_height="124dp"
                             app:layout_constraintLeft_toLeftOf="@id/imageview_userphoto_userprofile"
                             app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile"
                             app:layout_constraintRight_toRightOf="@id/imageview_userphoto_userprofile"
                             app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_userprofile"
-                            android:background="@color/color_lime_500"
-                            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"/>-->
+                            android:background="@color/user_is_online_color"
+                            android:visibility="visible"
+                            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"/>
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageview_userphoto_userprofile"
                             android:layout_width="125dp"
                             android:layout_height="125dp"
-                            android:padding="1dp"
+                            android:padding="2dp"
+                            android:background="@color/theme_cardview_bgr"
                             android:src="@drawable/ic_default_userphoto"
                             android:scaleType="centerCrop"
                             android:layout_marginTop="5dp"
@@ -145,8 +147,7 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:strokeColor="@color/user_is_online_color"
-                            app:strokeWidth="1dp"/>
+                            />
 
                         <ImageView
                             android:id="@+id/imageview_friends_qqt_userprofile"
