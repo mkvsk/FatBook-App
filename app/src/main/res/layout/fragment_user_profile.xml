@@ -51,7 +51,7 @@
             android:theme="@style/ToolbarTheme"
             app:buttonGravity="center_vertical"
             app:layout_scrollFlags="scroll|enterAlways"
-            android:paddingStart="@dimen/toolbar_title_paddingStart"
+            app:navigationIcon="@drawable/ic_back"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="my_profile"
             app:titleTextColor="@color/theme_toolbar_text_color">

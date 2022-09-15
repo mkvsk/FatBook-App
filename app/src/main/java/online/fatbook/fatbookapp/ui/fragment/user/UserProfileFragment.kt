@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
@@ -51,6 +52,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             loadData()
         }
 
+        this.toolbar_userprofile.navigationIcon = null
 
         imageview_recipes_qqt_userprofile.setOnClickListener {
             focusOnRecipes()
@@ -159,6 +161,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     }
 
     private fun drawData() {
+
         val user = userViewModel.selectedUser.value
 
         user!!.login = "kit"
