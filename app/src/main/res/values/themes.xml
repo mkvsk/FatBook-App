@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue_grey_200</item>
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/ToolbarTheme</item>
+        <item name="materialTimePickerTheme">@style/TimePicker</item>
     </style>
 
     ///v2.0.0
@@ -567,6 +568,9 @@
     </style>
 
     <color name="tv_date_color">#B0BEC5</color>
+
+
+
     ///v1.0.0
     <style name="addRecipeButton">
         <item name="android:layout_width">234dp</item>

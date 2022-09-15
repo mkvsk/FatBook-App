@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize4Percent" parent="">
+        <item name="cornerSize">4%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize20Percent" parent="">
+        <item name="cornerSizeTopLeft">20%</item>
+        <item name="cornerSizeTopRight">20%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.AllCornerSize20Percent" parent="">
+        <item name="cornerSize">20%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize15Percent" parent="">
+        <item name="cornerSize">15%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/color_blue_grey_600</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSizeRecipeViewImage" parent="">
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+    </style>
+
+    <style name="TimePicker" parent="ThemeOverlay.MaterialComponents.TimePicker">
+        <item name="colorPrimary">@color/main_text</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="materialTimePickerTitleStyle">@style/recipeCreateEditTextStyle</item>
+        <item name="materialClockStyle">@style/TimePicker.Clock</item>
+        <item name="materialButtonOutlinedStyle">@style/TimePicker.Button</item>
+        <item name="chipStyle">@style/TimePicker.Chip</item>
+        <item name="imageButtonStyle">@style/TimePicker.ImageButton</item>
+        <item name="borderlessButtonStyle">@style/TimePicker.Button</item>
+    </style>
+
+    <style name="TimePicker.Clock" parent="Widget.MaterialComponents.TimePicker.Clock">
+        <item name="clockFaceBackgroundColor">@color/theme_primary_bgr</item>
+        <item name="clockHandColor">@color/pink_a200</item>
+        <item name="clockNumberTextColor">@color/main_text</item>
+    </style>
+
+    <style name="TimePicker.Button" parent="Widget.MaterialComponents.TimePicker.Button">
+        <item name="backgroundTint">@color/theme_primary_bgr</item>
+        <item name="android:textColor">@color/main_text</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <style name="TimePicker.Chip" parent="Widget.MaterialComponents.TimePicker.Display">
+        <item name="chipBackgroundColor">@color/theme_primary_bgr</item>
+        <item name="android:textColor">@color/main_text</item>
+        <item name="android:textAppearance">@style/recipeCreateEditTextStyle</item>
+    </style>
+
+    <style name="TimePicker.ImageButton" parent="Widget.MaterialComponents.TimePicker.ImageButton">
+        <item name="iconTint">@color/pink_a200</item>
+    </style>
+
+
+</resources>
