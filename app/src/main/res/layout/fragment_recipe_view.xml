@@ -179,7 +179,7 @@
 
                         <ImageView
                             android:id="@+id/imageView_fork_view_recipe"
-                            android:layout_width="wrap_content"
+                            android:layout_width="14dp"
                             android:layout_height="30dp"
                             android:layout_marginEnd="20dp"
                             android:elevation="6dp"
@@ -236,11 +236,11 @@
 
                 <ImageView
                     android:id="@+id/imageView_recipe_view_favourites"
-                    android:layout_width="wrap_content"
+                    android:layout_width="25dp"
                     android:layout_height="55dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="8dp"
-                    android:src="@drawable/ic_add_to_fav"
+                    android:src="@drawable/ic_not_fav"
                     android:tag="tag_favourites_unchecked"
                     app:layout_constraintRight_toRightOf="@id/cardview_main_photo_recipe_view"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -510,7 +510,7 @@
                             android:layout_marginTop="@dimen/titles_spacing_recipe_create"
                             android:clipToPadding="false"
                             android:overScrollMode="never"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintTop_toBottomOf="@id/textview_servings_qtt_recipe_view"
                             tools:listitem="@layout/rv_ingredients_to_recipe_view" />
@@ -522,7 +522,7 @@
                             android:layout_marginTop="@dimen/content_padding_10"
                             android:clipToPadding="false"
                             android:overScrollMode="never"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintTop_toBottomOf="@id/rv_ingredients_recipe_view"
                             tools:listitem="@layout/rv_cooking_step_recipe_view" />
@@ -535,9 +535,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
-                    android:minHeight="50dp"
+                    android:minHeight="48dp"
                     android:orientation="horizontal"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -555,8 +555,7 @@
                         android:maxLength="200"
                         android:maxLines="5"
                         android:paddingVertical="6dp"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="30dp"
+                        android:paddingHorizontal="@dimen/content_padding_10"
                         android:textSize="13sp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -564,7 +563,7 @@
                         style="@style/roundBtnSend"
                         android:layout_width="@dimen/round_btn_send_w_h"
                         android:layout_height="@dimen/round_btn_send_w_h"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="center_vertical"
                         android:visibility="gone"
                         app:maxImageSize="20dp" />
                 </LinearLayout>

@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.ui.fragment.recipe.view.edit
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_recipe_view.*
@@ -19,6 +21,7 @@ import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.RecipeUtils
+import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
 class RecipeViewFragment : Fragment() {
@@ -76,6 +79,11 @@ class RecipeViewFragment : Fragment() {
 
         })
 
+        button_send_comment.setOnClickListener {
+            button_send_comment.visibility = View.GONE
+            hideKeyboard(edittext_input_comment)
+        }
+
         imageView_ic_comments_view_recipe.setOnClickListener {
             nsv_recipe_view.post {
                 nsv_recipe_view.scrollTo(
@@ -86,23 +94,40 @@ class RecipeViewFragment : Fragment() {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun toggleFavourites(inFavourite: Boolean) {
-        if (inFavourite) {
-            Toast.makeText(context,"Removed from favourites",Toast.LENGTH_SHORT).show()
-            recipeInFav = false
+        recipeInFav = if (inFavourite) {
+            Glide
+                .with(requireContext())
+                .load(requireContext().getDrawable(R.drawable.ic_not_fav))
+                .into(imageView_recipe_view_favourites)
+            Toast.makeText(context, "Removed from favourites", Toast.LENGTH_SHORT).show()
+            false
         } else {
-            Toast.makeText(context,"Added to favourites",Toast.LENGTH_SHORT).show()
-            recipeInFav = true
+            Glide
+                .with(requireContext())
+                .load(requireContext().getDrawable(R.drawable.ic_add_to_fav))
+                .into(imageView_recipe_view_favourites)
+            Toast.makeText(context, "Added to favourites", Toast.LENGTH_SHORT).show()
+            true
         }
     }
 
     private fun toggleForks(forked: Boolean) {
-        if (forked) {
-            Toast.makeText(context,"Recipe not forked :(",Toast.LENGTH_SHORT).show()
-            recipeForked = false
+        recipeForked = if (forked) {
+            Glide
+                .with(requireContext())
+                .load(requireContext().getDrawable(R.drawable.ic_fork_unchecked))
+                .into(imageView_fork_view_recipe)
+            Toast.makeText(context, "Recipe not forked :(", Toast.LENGTH_SHORT).show()
+            false
         } else {
-            Toast.makeText(context,"Recipe forked!",Toast.LENGTH_SHORT).show()
-            recipeForked = true
+            Glide
+                .with(requireContext())
+                .load(requireContext().getDrawable(R.drawable.ic_fork_checked))
+                .into(imageView_fork_view_recipe)
+            Toast.makeText(context, "Recipe forked!", Toast.LENGTH_SHORT).show()
+            true
         }
     }
 
