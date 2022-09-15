@@ -11,6 +11,7 @@ import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateFirstStageBinding
+import online.fatbook.fatbookapp.util.TimePickerFragment
 
 class RecipeCreateFirstStageFragment : Fragment() {
     private var binding: FragmentRecipeCreateFirstStageBinding? = null
@@ -24,19 +25,10 @@ class RecipeCreateFirstStageFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        button_delete_photo_recipe_create_1_stage.setOnClickListener {
+            TimePickerFragment().show(parentFragmentManager, "time picker")
+        }
 
-//        val materialTimePicker = MaterialTimePicker.Builder()
-//            .setTimeFormat(TimeFormat.CLOCK_24H)
-//            .build()
-//
-//        materialTimePicker.addOnPositiveButtonClickListener {
-//            val newHour: Int = materialTimePicker.hour
-//            val newMinute: Int = materialTimePicker.minute
-//        }
-//
-//        edittext_time_recipe_create_1_stage.setOnClickListener {
-//            materialTimePicker.showsDialog
-//        }
     }
 
     private fun setTime() {
