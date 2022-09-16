@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue_grey_900</item>
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/ToolbarTheme</item>
-        <item name="materialTimePickerTheme">@style/TimePicker</item>
+<!--        <item name="materialTimePickerTheme">@style/TimePicker</item>-->
     </style>
 
     ///v2.0.0
