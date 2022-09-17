@@ -83,6 +83,10 @@
     <string name="resend_verification_code">resend code</string>
     <string name="resend_verification_code_timer">(%s) resend code</string>
 
+    <string name="set_cooking_time_tmpl_hours">%d h</string>
+    <string name="set_cooking_time_tmpl_min">%d min</string>
+    <string name="default_cooking_time">15 min</string>
+
     ///fragment user profile
     <string name="btn_follow">Follow</string>
     <string name="btn_messages">New message</string>

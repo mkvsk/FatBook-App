@@ -162,4 +162,7 @@
     <string name="dialog_sigbin_new_pass_passwords_not_match">Пароли не совпадают</string>
     <string name="dialog_wrong_verification_code_1">Этот код уже подтвержден</string>
     <string name="dialog_wrong_verification_code_3">Код уже недействителен</string>
+    <string name="set_cooking_time_tmpl_hours">%d ч</string>
+    <string name="set_cooking_time_tmpl_min">%d мин</string>
+    <string name="default_cooking_time">15 мин</string>
 </resources>
