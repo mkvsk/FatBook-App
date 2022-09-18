@@ -87,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/cards_margin_start"
                     app:cardElevation="6dp"
+                    app:cardPreventCornerOverlap="false"
                     app:contentPaddingBottom="10dp"
                     app:contentPaddingRight="10dp"
                     app:contentPaddingTop="10dp"
@@ -158,6 +159,7 @@
                             app:contentPaddingLeft="10dp"
                             app:contentPaddingRight="10dp"
                             app:contentPaddingTop="5dp"
+                            app:cardPreventCornerOverlap="false"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/textview_nutrition_facts_title_recipe_create_2_stage"
@@ -267,23 +269,26 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardview_left_recipe_create_2_stage"
+                    style="@style/myMaterialCardLeft"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/myMaterialCardLeft"
+                    android:layout_marginTop="@dimen/elements_spacing_recipe_create"
                     android:layout_marginEnd="@dimen/cards_margin_end"
                     app:cardElevation="6dp"
+                    app:cardPreventCornerOverlap="false"
                     app:contentPaddingBottom="10dp"
-                    app:contentPaddingTop="10dp"
                     app:contentPaddingLeft="@dimen/cards_margin_start"
+                    app:contentPaddingRight="@dimen/content_padding_10"
+                    app:contentPaddingTop="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginTop="@dimen/elements_spacing_recipe_create"
-                    app:layout_constraintTop_toBottomOf="@id/cardview_right_recipe_create_2_stage"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/cardview_right_recipe_create_2_stage">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="100dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -306,11 +311,29 @@
                             android:layout_marginTop="@dimen/titles_spacing_recipe_create"
                             android:clipToPadding="false"
                             android:overScrollMode="never"
-                            tools:itemCount="10"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintTop_toBottomOf="@id/textview_steps_title_recipe_create_2_stage"
+                            tools:itemCount="10"
                             tools:listitem="@layout/rv_cooking_step_recipe_create_stage_2_template" />
 
+                        <Button
+                            android:id="@+id/button_save_recipe_create_2_stage"
+                            style="@style/btnsUserProfile"
+                            android:layout_marginTop="@dimen/titles_spacing_recipe_create"
+                            android:elevation="4dp"
+                            android:enabled="true"
+                            android:text="Save"
+                            android:translationZ="1dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/rv_steps_recipe_create_2_stage" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/button_save_recipe_create_2_stage" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>

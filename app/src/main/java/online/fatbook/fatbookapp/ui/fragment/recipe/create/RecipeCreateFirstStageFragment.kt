@@ -1,21 +1,22 @@
 package online.fatbook.fatbookapp.ui.fragment.recipe.create
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TimePicker
+import android.widget.TimePicker.OnTimeChangedListener
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateFirstStageBinding
-import kotlin.math.min
+import online.fatbook.fatbookapp.util.hideKeyboard
 
 
 class RecipeCreateFirstStageFragment : Fragment() {
@@ -35,7 +36,7 @@ class RecipeCreateFirstStageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.WRAP_CONTENT)
-        button_delete_photo_recipe_create_1_stage.setOnClickListener {
+        textview_set_time_recipe_create_1_stage.setOnClickListener {
             configureAlertDialog()
         }
 
@@ -55,29 +56,68 @@ class RecipeCreateFirstStageFragment : Fragment() {
             //.setNegativeButton(resources.getString(R.string.alert_dialog_btn_cancel)) { dialogInterface: DialogInterface, i: Int -> dialogInterface.dismiss() }
             .create()
 
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.show()
-            val picker = dialog.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
-            picker.setIs24HourView(true)
-            picker.setOnTimeChangedListener { _, hourOfDay, minute ->
-                cooking_time_hours = hourOfDay
-                cooking_time_min = minute
-            }
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        dialog.setOnShowListener {
+//            val button = (dialog as AlertDialog).getButton(
+//                AlertDialog.BUTTON_POSITIVE
+//            )
+//            button.setOnClickListener {
+//                Log.i("time:", "HIDE KB")
+//
+//                hideKeyboard()
+//            }
+//        }
+        dialog.show()
+        val picker = dialog.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
+        picker.setIs24HourView(true)
 
-        setTime(cooking_time_hours, cooking_time_min)
+        picker.setOnTimeChangedListener(OnTimeChangedListener { view, hourOfDay, minute ->
+            cooking_time_hours = hourOfDay
+            cooking_time_min = minute
+
+            Log.i("time:", "$cooking_time_hours : $cooking_time_min")
+
+            if (hourOfDay == 0 && minute == 0) {
+                textview_set_time_recipe_create_1_stage.text =
+                    getString(R.string.default_cooking_time)
+            }
+            if (hourOfDay != 0 && minute != 0) {
+                textview_set_time_recipe_create_1_stage.text =
+                    String.format("%d h %d min", hourOfDay, minute)
+            }
+            if (hourOfDay != 0 && minute == 0) {
+                textview_set_time_recipe_create_1_stage.text =
+                    String.format("%d h", hourOfDay, minute)
+            }
+            if (hourOfDay == 0 && minute != 0) {
+                textview_set_time_recipe_create_1_stage.text =
+                    String.format("%d min", minute)
+            }
+        })
+
+
+
+//        picker.setOnTimeChangedListener { _, hourOfDay, minute ->
+//            cooking_time_hours = hourOfDay
+//            cooking_time_min = minute
+//        }
+
+    }
+
+    private fun setTime(hours: Int, minute: Int) {
+        if (hours == 0 && minute == 0) {
+            textview_set_time_recipe_create_1_stage.text = getString(R.string.default_cooking_time)
         }
+        if (hours != 0 || minute != 0) {
+            textview_set_time_recipe_create_1_stage.text =
+                String.format("%d h %d min", hours, minute)
 
-        private fun setTime(hours: Int, minute: Int) {
-            if (hours == 0 && minute == 0) {
-                edittext_time_recipe_create_1_stage.setText(getString(R.string.default_cooking_time))
-            }
-            if (hours != 0 || minute != 0) {
-                val _hours = String.format(getString(R.string.set_cooking_time_tmpl_hours), hours)
-                val _minute = String.format(getString(R.string.set_cooking_time_tmpl_min), minute)
-                val str = String.format("%d h, %d min", _hours, _minute)
-                edittext_time_recipe_create_1_stage.setText(str)
-            }
-
+//            val set_hours = String.format(getString(R.string.set_cooking_time_tmpl_hours), hours)
+//            val set_minute = String.format(getString(R.string.set_cooking_time_tmpl_min), minute)
+//            val str = String.format("%d h, %d min", set_hours, set_minute)
+//            textview_set_time_recipe_create_1_stage.text = str
         }
 
     }
+
+}
