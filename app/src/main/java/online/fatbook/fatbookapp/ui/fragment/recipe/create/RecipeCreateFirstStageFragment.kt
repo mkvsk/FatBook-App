@@ -95,29 +95,8 @@ class RecipeCreateFirstStageFragment : Fragment() {
             }
         })
 
-
-
-//        picker.setOnTimeChangedListener { _, hourOfDay, minute ->
-//            cooking_time_hours = hourOfDay
-//            cooking_time_min = minute
-//        }
-
     }
 
-    private fun setTime(hours: Int, minute: Int) {
-        if (hours == 0 && minute == 0) {
-            textview_set_time_recipe_create_1_stage.text = getString(R.string.default_cooking_time)
-        }
-        if (hours != 0 || minute != 0) {
-            textview_set_time_recipe_create_1_stage.text =
-                String.format("%d h %d min", hours, minute)
 
-//            val set_hours = String.format(getString(R.string.set_cooking_time_tmpl_hours), hours)
-//            val set_minute = String.format(getString(R.string.set_cooking_time_tmpl_min), minute)
-//            val str = String.format("%d h, %d min", set_hours, set_minute)
-//            textview_set_time_recipe_create_1_stage.text = str
-        }
-
-    }
 
 }
