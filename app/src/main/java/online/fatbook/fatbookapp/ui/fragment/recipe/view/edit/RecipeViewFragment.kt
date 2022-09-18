@@ -1,6 +1,5 @@
 package online.fatbook.fatbookapp.ui.fragment.recipe.view.edit
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,18 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.core.view.size
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_recipe_view.*
-import kotlinx.android.synthetic.main.fragment_recipe_view_old.*
-import kotlinx.android.synthetic.main.fragment_user_profile.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
-import online.fatbook.fatbookapp.util.RecipeUtils
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
@@ -92,9 +88,30 @@ class RecipeViewFragment : Fragment() {
                 )
             }
         }
+
+
+        var qtt = 5
+        button_remove_portion_recipe_view.setOnClickListener {
+            if (qtt > 1) {
+                button_remove_portion_recipe_view.isEnabled = true
+                qtt--
+                textview_portions_qtt_recipe_view.text = qtt.toString()
+            }
+            if (qtt == 1) {
+                button_remove_portion_recipe_view.isEnabled = false
+            }
+        }
+
+        button_add_portion_recipe_view.setOnClickListener {
+            qtt++
+            button_remove_portion_recipe_view.isEnabled = true
+            textview_portions_qtt_recipe_view.text = qtt.toString()
+        }
+
+        textView_comments_avg_view_recipe.text = rv_comments_recipe_view.size.toString()
+
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     private fun toggleFavourites(inFavourite: Boolean) {
         recipeInFav = if (inFavourite) {
             Glide
@@ -158,3 +175,4 @@ class RecipeViewFragment : Fragment() {
 
     }
 }
+

@@ -458,7 +458,7 @@
                             app:layout_constraintTop_toBottomOf="@id/cardview_nutrition_facts_recipe_view" />
 
                         <TextView
-                            android:id="@+id/textview_servings_qtt_recipe_view"
+                            android:id="@+id/textview_portions_qtt_recipe_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/content_padding_10"
@@ -512,7 +512,7 @@
                             android:overScrollMode="never"
                             android:visibility="visible"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            app:layout_constraintTop_toBottomOf="@id/textview_servings_qtt_recipe_view"
+                            app:layout_constraintTop_toBottomOf="@id/textview_portions_qtt_recipe_view"
                             tools:listitem="@layout/rv_ingredients_to_recipe_view" />
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -554,6 +554,7 @@
                         android:inputType="textMultiLine"
                         android:maxLength="200"
                         android:maxLines="5"
+                        android:scrollbars="vertical"
                         android:paddingVertical="6dp"
                         android:paddingHorizontal="@dimen/content_padding_10"
                         android:textSize="13sp" />
@@ -573,7 +574,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/content_padding_20"
-                    android:layout_marginBottom="150dp"
+                    android:layout_marginBottom="450dp"
                     android:clipToPadding="false"
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -57,26 +57,12 @@ class RecipeCreateFirstStageFragment : Fragment() {
             .create()
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        dialog.setOnShowListener {
-//            val button = (dialog as AlertDialog).getButton(
-//                AlertDialog.BUTTON_POSITIVE
-//            )
-//            button.setOnClickListener {
-//                Log.i("time:", "HIDE KB")
-//
-//                hideKeyboard()
-//            }
-//        }
+
         dialog.show()
         val picker = dialog.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
         picker.setIs24HourView(true)
 
         picker.setOnTimeChangedListener(OnTimeChangedListener { view, hourOfDay, minute ->
-            cooking_time_hours = hourOfDay
-            cooking_time_min = minute
-
-            Log.i("time:", "$cooking_time_hours : $cooking_time_min")
-
             if (hourOfDay == 0 && minute == 0) {
                 textview_set_time_recipe_create_1_stage.text =
                     getString(R.string.default_cooking_time)
