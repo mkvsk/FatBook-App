@@ -15,6 +15,10 @@ import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.util.RecipeUtils
 import org.apache.commons.lang3.StringUtils
+import java.text.DecimalFormat
+import kotlin.math.floor
+import kotlin.math.log10
+import kotlin.math.pow
 
 @Log
 class RecipeAdapter :
@@ -72,7 +76,7 @@ class RecipeAdapter :
 
             itemView.textView_rv_card_recipe_title.text = recipe.name
             itemView.textView_rv_card_recipe_author.text = recipe.author
-            val forksAmount = recipe.forks.toString()
+            val forksAmount = prettyCount(recipe.forks!!)
             itemView.textView_rv_card_recipe_forks_avg.text = forksAmount
             toggleForks(
                 itemView.imageView_rv_card_recipe_fork,
@@ -144,6 +148,20 @@ class RecipeAdapter :
         } else {
             favourite.setImageResource(R.drawable.ic_not_fav)
             favourite.tag = RecipeUtils.TAG_BOOKMARKS_UNCHECKED
+        }
+    }
+
+    private fun prettyCount(number: Int): String? {
+        val suffix = charArrayOf(' ', 'k', 'M', 'B', 'T', 'P', 'E')
+        val numValue = number.toLong()
+        val value = floor(log10(numValue.toDouble())).toInt()
+        val base = value / 3
+        return if (value >= 3 && base < suffix.size) {
+            DecimalFormat("#0.00").format(
+                numValue / 10.0.pow((base * 3).toDouble())
+            ) + suffix[base]
+        } else {
+            DecimalFormat().format(numValue)
         }
     }
 

@@ -10,7 +10,8 @@
         <item name="colorSecondaryVariant">@color/color_lime_500</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_grey_200</item>
+        <item name="android:statusBarColor" >@color/blue_grey_200</item>
+        <item name="android:navigationBarColor">@color/white</item>
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/ToolbarTheme</item>
 <!--        <item name="materialTimePickerTheme">@style/TimePicker</item>-->
@@ -41,6 +42,9 @@
     <color name="vcDisabledColor_text">#B0BEC5</color>
 
     <color name="ic_password_visibility">#B0BEC5</color>
+
+    <color name="bottomNav_bgr">#ECEFF1</color>
+    <color name="bottomNav_ic_tint">#B0BEC5</color>
 
     ///ic colors
     <color name="user_is_online_color">#CDDC39</color>

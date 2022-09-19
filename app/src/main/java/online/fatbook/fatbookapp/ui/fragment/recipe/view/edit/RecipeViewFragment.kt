@@ -156,7 +156,7 @@ class RecipeViewFragment : Fragment() {
             author = "Neshik",
             ingredients = ArrayList(),
             image = "https://fatbook.b-cdn.net/root/upal.jpg",
-            forks = 123,
+            forks = 123456789,
             createDate = "10.09.2022", identifier = id
         )
         recipe.recipePortionFats = 1.9
@@ -173,6 +173,11 @@ class RecipeViewFragment : Fragment() {
             .into(imageview_main_photo_recipe_view)
 
 
+        textView_forks_avg_view_recipe.text = convertNumeric(recipe.forks!!)
+    }
+
+    private fun convertNumeric(value: Int): String {
+        return "%,d".format(value)
     }
 }
 

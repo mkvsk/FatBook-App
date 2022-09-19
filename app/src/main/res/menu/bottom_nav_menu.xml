@@ -4,26 +4,31 @@
     <item
         android:id="@+id/navigation_feed"
         android:icon="@drawable/ic_bottomnav_feed"
+        android:iconTint="@color/bottomNav_ic_tint"
         android:title="@string/nav_feed" />
 
     <item
         android:id="@+id/navigation_ingredients"
         android:icon="@drawable/ic_bottomnav_search"
+        android:iconTint="@color/bottomNav_ic_tint"
         android:title="@string/nav_ingredients" />
 
     <item
         android:id="@+id/navigation_recipe_create"
         android:icon="@drawable/ic_bottomnav_add_recipe"
+        android:iconTint="@color/bottomNav_ic_tint"
         android:title="@string/nav_recipe_create" />
 
     <item
         android:id="@+id/navigation_bookmarks"
         android:icon="@drawable/ic_bottomnav_notification"
+        android:iconTint="@color/bottomNav_ic_tint"
         android:title="@string/nav_bookmarks" />
 
     <item
         android:id="@+id/navigation_user_profile"
         android:icon="@drawable/ic_bottomnav_profile"
+        android:iconTint="@color/bottomNav_ic_tint"
         android:title="@string/nav_user_profile" />
 
 </menu>
