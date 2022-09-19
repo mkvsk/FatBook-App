@@ -16,7 +16,7 @@ class User : Serializable {
     var recipesBookmarked: ArrayList<Long>? = ArrayList()
 
     var website: String = ""
-    var followers: Int? = null
+    var followers: Int = 1666666
     var online: Boolean? = false
 
 }

@@ -26,7 +26,7 @@
         android:title="@string/nav_bookmarks" />
 
     <item
-        android:id="@+id/navigation_user_profile"
+        android:id="@+id/navigation_user_profile_old"
         android:icon="@drawable/ic_bottomnav_profile"
         android:iconTint="@color/bottomNav_ic_tint"
         android:title="@string/nav_user_profile" />

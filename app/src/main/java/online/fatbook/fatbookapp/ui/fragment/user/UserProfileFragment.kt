@@ -1,5 +1,9 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
+import android.animation.ValueAnimator
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,7 +27,12 @@ import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
+import java.text.DecimalFormat
+import kotlin.math.floor
+import kotlin.math.log10
+import kotlin.math.pow
 
 
 class UserProfileFragment : Fragment(), OnRecipeClickListener {
@@ -45,7 +54,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        progressbarLayout_userprofile.visibility = View.VISIBLE
+        progressbarLayout_userprofile.visibility = View.GONE
         if (!userViewModel.selectedUsername.value.isNullOrEmpty()) {
             loadData()
         }
@@ -57,9 +66,26 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         }
 
         imageview_friends_qtt_userprofile.setOnClickListener {
-            //TODO fix
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_user_followers_from_user_profile)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_followers_from_user_profile)
         }
+
+
+//        val imgContainerView = imageviewuser
+//
+//
+//        imageview_userphoto_userprofile.setOnClickListener {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//
+//            } else {
+//                //TODO action go to full
+//            }
+//
+//
+////            val set = AnimatorInflater.loadAnimator(context, R.animator.open_animator) as AnimatorSet
+////            set.setTarget(imageview_userphoto_userprofile)
+////            set.start()
+//        }
 
         nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
             if (!expanded) {
@@ -173,13 +199,13 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         if (user.recipes == null) {
             textview_recipes_qtt_userprofile.text = "0"
         } else {
-            textview_recipes_qtt_userprofile.text = user.recipes?.size.toString()
+            textview_recipes_qtt_userprofile.text = FormatUtils.prettyCount(user.recipes?.size!!)
         }
 
         if (user.followers == null || user.followers == 0) {
             textview_friends_qtt_userprofile.text = "0"
         } else {
-            textview_friends_qtt_userprofile.text = user.followers.toString()
+            textview_friends_qtt_userprofile.text = FormatUtils.prettyCount(user.followers)
         }
 
         if (user.name.isNullOrEmpty()) {
@@ -247,5 +273,6 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     override fun onForkClicked(recipe: Recipe?, fork: Boolean, position: Int) {
         Log.d("fork click", position.toString())
     }
+
 
 }
