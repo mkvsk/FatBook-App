@@ -57,6 +57,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         }
 
         imageview_friends_qtt_userprofile.setOnClickListener {
+            //TODO fix
             NavHostFragment.findNavController(this).navigate(R.id.action_go_to_user_followers_from_user_profile)
         }
 
