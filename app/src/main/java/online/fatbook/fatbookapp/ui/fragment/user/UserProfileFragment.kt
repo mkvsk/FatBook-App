@@ -1,8 +1,6 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
-import android.animation.AnimatorInflater
-import android.animation.AnimatorSet
-import android.animation.ValueAnimator
+
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.LayoutInflaterCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -70,22 +69,18 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                 .navigate(R.id.action_go_to_followers_from_user_profile)
         }
 
-
-//        val imgContainerView = imageviewuser
-//
-//
-//        imageview_userphoto_userprofile.setOnClickListener {
+//        imageview_userphoto_userprofile.setOnClickListener ({
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //
 //            } else {
 //                //TODO action go to full
 //            }
-//
+//        }
+
 //
 ////            val set = AnimatorInflater.loadAnimator(context, R.animator.open_animator) as AnimatorSet
 ////            set.setTarget(imageview_userphoto_userprofile)
 ////            set.start()
-//        }
 
         nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
             if (!expanded) {
