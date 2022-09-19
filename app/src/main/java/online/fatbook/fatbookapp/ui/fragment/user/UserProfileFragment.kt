@@ -1,8 +1,5 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
@@ -54,8 +52,12 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
         this.toolbar_userprofile.navigationIcon = null
 
-        imageview_recipes_qqt_userprofile.setOnClickListener {
+        imageview_recipes_qtt_userprofile.setOnClickListener {
             focusOnRecipes()
+        }
+
+        imageview_friends_qtt_userprofile.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_user_followers_from_user_profile)
         }
 
         nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
@@ -168,15 +170,15 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         toolbar_userprofile.title = user!!.login
 
         if (user.recipes == null) {
-            textview_recipes_qqt_userprofile.text = "0"
+            textview_recipes_qtt_userprofile.text = "0"
         } else {
-            textview_recipes_qqt_userprofile.text = user.recipes?.size.toString()
+            textview_recipes_qtt_userprofile.text = user.recipes?.size.toString()
         }
 
         if (user.followers == null || user.followers == 0) {
-            textview_friends_qqt_userprofile.text = "0"
+            textview_friends_qtt_userprofile.text = "0"
         } else {
-            textview_friends_qqt_userprofile.text = user.followers.toString()
+            textview_friends_qtt_userprofile.text = user.followers.toString()
         }
 
         if (user.name.isNullOrEmpty()) {

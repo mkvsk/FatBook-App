@@ -54,6 +54,7 @@
     <color name="ic_bottomnav_color">#B0BEC5</color>
     <color name="ic_userprofile_color">#FFFFFFFF</color>
     <color name="ic_expand_color">#263238</color>
+    <color name="ic_pressed_color">#546E7A</color>
 
     ///main
     <color name="theme_primary_bgr">#263238</color>

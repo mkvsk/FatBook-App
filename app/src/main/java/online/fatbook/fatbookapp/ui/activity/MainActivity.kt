@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding!!.root)
         ProgressBarUtil.set(this)
         setupNavigation()
-
 //        BottomNavigationView navView = findViewById(R.id.nav_view);
 //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 //                R.id.navigation_feed, R.id.navigation_ingredients, R.id.navigation_recipe_create, R.id.navigation_bookmarks, R.id.navigation_user_profile)

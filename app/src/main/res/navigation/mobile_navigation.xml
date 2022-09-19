@@ -50,7 +50,7 @@
 
     </fragment>
 
-<!--    Old fragment-->
+    <!--    Old fragment-->
     <fragment
         android:id="@+id/navigation_user_profile"
         android:name="online.fatbook.fatbookapp.ui.fragment.UserProfileFragmentOLD"
@@ -61,6 +61,7 @@
             android:id="@+id/action_go_to_recipe_view_from_user_profile"
             app:destination="@id/navigation_recipe_view"
             app:popUpTo="@id/navigation_user_profile" />
+
     </fragment>
 
     <fragment
@@ -73,6 +74,11 @@
             android:id="@+id/action_go_to_userprofile_from_recipe_view"
             app:destination="@id/navigation_user"
             app:popUpTo="@id/navigation_recipe_view" />
+
+        <action
+            android:id="@+id/action_go_to_user_followers_from_user_profile"
+            app:destination="@+id/navigation_follow_fragment"
+            app:popUpTo="@id/navigation_user" />
     </fragment>
 
     <fragment
@@ -196,6 +202,12 @@
             android:id="@+id/action_go_to_edit_profile"
             app:destination="@id/navigation_edit_profile_fragment"
             app:popUpTo="@id/navigation_user" />
+
+        <action
+            android:id="@+id/action_go_to_followers_from_user_profile"
+            app:destination="@+id/navigation_follow_fragment"
+            app:popUpTo="@id/navigation_user"/>
+
     </fragment>
 
     <fragment

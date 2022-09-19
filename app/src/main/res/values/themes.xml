@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >@color/blue_grey_200</item>
-        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/blue_grey_50</item>
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/ToolbarTheme</item>
 <!--        <item name="materialTimePickerTheme">@style/TimePicker</item>-->
@@ -54,6 +54,7 @@
     <color name="ic_bottomnav_color">#B0BEC5</color>
     <color name="ic_userprofile_color">#263238</color>
     <color name="ic_expand_color">#B0BEC5</color>
+    <color name="ic_pressed_color">#B0BEC5</color>
 
     ///main
     <color name="theme_primary_bgr">#ECEFF1</color>
