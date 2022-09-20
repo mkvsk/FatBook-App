@@ -10,11 +10,11 @@
         <item name="colorSecondaryVariant">@color/color_blue_grey_600</item>
         <item name="colorOnSecondary">@color/color_blue_grey_900</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@color/blue_grey_900</item>
+        <item name="android:statusBarColor">@color/blue_grey_900</item>
         <item name="android:navigationBarColor">@color/color_blue_grey_900</item>
         <!-- Customize your theme here. -->
-        <item name="toolbarStyle">@style/ToolbarTheme</item>
-<!--        <item name="materialTimePickerTheme">@style/TimePicker</item>-->
+<!--        <item name="toolbarStyle">@style/ToolbarTheme</item>-->
+        <!--        <item name="materialTimePickerTheme">@style/TimePicker</item>-->
     </style>
 
     ///v2.0.0

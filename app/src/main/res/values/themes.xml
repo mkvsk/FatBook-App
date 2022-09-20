@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" >@color/blue_grey_200</item>
         <item name="android:navigationBarColor">@color/blue_grey_50</item>
         <!-- Customize your theme here. -->
-        <item name="toolbarStyle">@style/ToolbarTheme</item>
+<!--        <item name="toolbarStyle">@style/ToolbarTheme</item>-->
 <!--        <item name="materialTimePickerTheme">@style/TimePicker</item>-->
     </style>
 
