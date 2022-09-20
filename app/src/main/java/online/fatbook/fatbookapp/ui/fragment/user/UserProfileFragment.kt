@@ -18,6 +18,7 @@ import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_user_profile.*
+import kotlinx.android.synthetic.main.fragment_view_image.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.Recipe
@@ -68,6 +69,11 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_followers_from_user_profile)
         }
+//
+//        imageview_userphoto_userprofile.setOnClickListener {
+//            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_view_image_from_user_profile)
+//        }
+
 
 //        imageview_userphoto_userprofile.setOnClickListener ({
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

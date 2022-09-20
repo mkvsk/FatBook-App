@@ -22,9 +22,6 @@ import online.fatbook.fatbookapp.util.hideKeyboard
 class RecipeCreateFirstStageFragment : Fragment() {
     private var binding: FragmentRecipeCreateFirstStageBinding? = null
 
-    private var cooking_time_hours = 0
-    private var cooking_time_min = 0
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

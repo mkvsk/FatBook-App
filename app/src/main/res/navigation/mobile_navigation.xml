@@ -208,6 +208,12 @@
             app:destination="@id/navigation_follow_fragment"
             app:popUpTo="@id/navigation_user_profile"/>
 
+        <action
+            android:id="@+id/action_go_to_view_image_from_user_profile"
+            app:destination="@id/navigation_view_image"
+            app:popUpTo="@id/navigation_user_profile"
+            />
+
     </fragment>
 
     <fragment

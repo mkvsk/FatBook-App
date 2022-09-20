@@ -59,7 +59,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
-        android:id="@+id/imageview_recipe_create_cooking_step"
+        android:id="@+id/imageview_full_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/kit_waiting_eat"

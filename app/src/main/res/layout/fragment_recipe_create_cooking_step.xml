@@ -102,7 +102,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/imageview_recipe_create_cooking_step"
+                            android:id="@+id/imageview_full_image"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:scaleType="centerCrop"
@@ -121,7 +121,7 @@
                             android:orientation="horizontal"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/imageview_recipe_create_cooking_step">
+                            app:layout_constraintTop_toBottomOf="@id/imageview_full_image">
 
                             <com.google.android.material.floatingactionbutton.FloatingActionButton
                                 android:id="@+id/button_edit_photo_recipe_create_cooking_step"
