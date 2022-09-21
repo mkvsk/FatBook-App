@@ -15,7 +15,7 @@
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_recipe_view"
+            android:id="@+id/toolbar_recipe_view_old"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/color_blue_grey_200"

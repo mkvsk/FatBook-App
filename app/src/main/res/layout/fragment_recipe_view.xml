@@ -44,7 +44,7 @@
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_recipe_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/theme_toolbar_color"
