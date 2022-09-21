@@ -43,20 +43,34 @@
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar_recipe_methods_categories_items"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="@color/theme_toolbar_color"
-            android:theme="@style/ToolbarTheme"
-            app:buttonGravity="center_vertical"
+            android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="methods_categories"
-            app:titleTextColor="@color/theme_toolbar_text_color">
+            local:navigationIcon="@drawable/ic_arrow_back"
+            local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            local:theme="@style/ThemeOverlay.AppCompat.Dark"
+            local:title="methods_categories"
+            local:titleTextAppearance="@style/txtToolbar" />
 
-        </com.google.android.material.appbar.MaterialToolbar>
+
+        <!--        <com.google.android.material.appbar.MaterialToolbar-->
+<!--            android:id="@+id/toolbar_recipe_methods_categories_items"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:background="@color/theme_toolbar_color"-->
+<!--            android:theme="@style/ToolbarTheme"-->
+<!--            app:buttonGravity="center_vertical"-->
+<!--            app:layout_scrollFlags="scroll|enterAlways"-->
+<!--            app:navigationIcon="@drawable/ic_arrow_back"-->
+<!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+<!--            app:title="methods_categories"-->
+<!--            app:titleTextColor="@color/theme_toolbar_text_color">-->
+
+<!--        </com.google.android.material.appbar.MaterialToolbar>-->
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

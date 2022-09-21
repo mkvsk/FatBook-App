@@ -69,10 +69,10 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_followers_from_user_profile)
         }
-//
-//        imageview_userphoto_userprofile.setOnClickListener {
-//            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_view_image_from_user_profile)
-//        }
+
+        imageview_userphoto_userprofile.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_view_image_from_user_profile)
+        }
 
 
 //        imageview_userphoto_userprofile.setOnClickListener ({

@@ -45,18 +45,32 @@
         android:translationZ="6dp"
         tools:ignore="MissingConstraints">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_feed"
+        <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar_edit_userprofile"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@color/theme_toolbar_color"
-            android:theme="@style/ToolbarTheme"
+            android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/toolbar_recipes_feed"
-            android:paddingStart="@dimen/toolbar_title_paddingStart"
-            app:titleTextColor="@color/theme_toolbar_text_color">
-        </com.google.android.material.appbar.MaterialToolbar>
+            local:navigationIcon="@null"
+            local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            local:theme="@style/ThemeOverlay.AppCompat.Dark"
+            local:title="@string/app_name_beta"
+            local:titleTextAppearance="@style/txtToolbar" />
+
+
+        <!--        <com.google.android.material.appbar.MaterialToolbar-->
+<!--            android:id="@+id/toolbar_feed"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:background="@color/theme_toolbar_color"-->
+<!--            android:theme="@style/ToolbarTheme"-->
+<!--            app:layout_scrollFlags="scroll|enterAlways"-->
+<!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+<!--            app:title="@string/toolbar_recipes_feed"-->
+<!--            android:paddingStart="@dimen/toolbar_title_paddingStart"-->
+<!--            app:titleTextColor="@color/theme_toolbar_text_color">-->
+<!--        </com.google.android.material.appbar.MaterialToolbar>-->
 
         <!--<EditText
             android:id="@+id/editText_feed_search"
