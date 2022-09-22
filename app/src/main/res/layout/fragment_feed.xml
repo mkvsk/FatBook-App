@@ -41,23 +41,20 @@
         android:id="@+id/appBarLayout_feed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:translationZ="6dp"
         tools:ignore="MissingConstraints">
 
-        <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar_edit_userprofile"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_feed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/theme_toolbar_color"
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            local:navigationIcon="@null"
-            local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-            local:theme="@style/ThemeOverlay.AppCompat.Dark"
-            local:title="@string/app_name_beta"
-            local:titleTextColor="@color/main_text"
-            local:titleTextAppearance="@style/txtToolbar" />
+            app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:title="@string/app_name_beta"
+            app:titleTextColor="@color/main_text"
+            app:titleTextAppearance="@style/txtToolbar" />
 
 
         <!--        <com.google.android.material.appbar.MaterialToolbar-->

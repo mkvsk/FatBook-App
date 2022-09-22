@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_feed.*
@@ -37,6 +37,17 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentFeedBinding.inflate(inflater, container, false)
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+        return binding!!.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -62,8 +73,11 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_overflow_feed, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return super.onOptionsItemSelected(item)
+//    }
 
 //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 //        return NavHostFragment.findNavController(this).navigate(R.id.action_go_to_direct_messages)
@@ -243,14 +257,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentFeedBinding.inflate(inflater, container, false)
-        return binding!!.root
     }
 
     override fun onResume() {

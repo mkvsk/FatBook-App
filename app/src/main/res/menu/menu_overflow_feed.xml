@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/direct_messages"
+        android:id="@+id/item_direct_messages"
         android:title="direct_messages"
-        android:icon="@drawable/ic_mess_toolbar_0" />
+        android:icon="@drawable/ic_mess_toolbar_0"
+        app:showAsAction="always"/>
 
 </menu>
