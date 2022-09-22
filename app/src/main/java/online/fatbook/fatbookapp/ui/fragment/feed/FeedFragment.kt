@@ -3,11 +3,9 @@ package online.fatbook.fatbookapp.ui.fragment.feed
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_feed.*
@@ -56,8 +54,21 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         setupSearch()
         addObservers()
 
-        loadUser(requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE).getString(UserUtils.USER_LOGIN, StringUtils.EMPTY)!!, null)
+        loadUser(
+            requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE)
+                .getString(UserUtils.USER_LOGIN, StringUtils.EMPTY)!!, null
+        )
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_overflow_feed, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return NavHostFragment.findNavController(this).navigate(R.id.action_go_to_direct_messages)
+//        super.onOptionsItemSelected(item)
+//    }
 
     private fun addObservers() {
         userViewModel.user.observe(viewLifecycleOwner) {
@@ -70,13 +81,13 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun setupSearch() {
-       /* binding!!.editTextFeedSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun afterTextChanged(editable: Editable) {
-                filter(editable.toString())
-            }
-        })*/
+        /* binding!!.editTextFeedSearch.addTextChangedListener(object : TextWatcher {
+             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+             override fun afterTextChanged(editable: Editable) {
+                 filter(editable.toString())
+             }
+         })*/
     }
 
     private fun filter(text: String) {
@@ -159,7 +170,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun recipeForked(recipe: Recipe?, fork: Boolean, position: Int) {
-        RetrofitFactory.apiServiceClient().recipeForked(userViewModel.user.value!!.pid, recipe!!.pid, fork)
+        RetrofitFactory.apiServiceClient()
+            .recipeForked(userViewModel.user.value!!.pid, recipe!!.pid, fork)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
 //                    FeedFragment.log.log(Level.INFO, "fork SUCCESS")

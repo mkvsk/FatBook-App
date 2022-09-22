@@ -54,6 +54,7 @@
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="my_profile"
+            local:titleTextColor="@color/main_text"
             local:titleTextAppearance="@style/txtToolbar" />
 
 <!--        <com.google.android.material.appbar.MaterialToolbar-->

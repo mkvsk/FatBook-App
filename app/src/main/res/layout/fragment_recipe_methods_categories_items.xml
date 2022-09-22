@@ -54,6 +54,7 @@
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="methods_categories"
+            local:titleTextColor="@color/main_text"
             local:titleTextAppearance="@style/txtToolbar" />
 
 

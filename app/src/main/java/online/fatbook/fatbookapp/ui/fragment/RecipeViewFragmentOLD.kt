@@ -260,8 +260,8 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
      */
     private fun setupMenu() {
         val activity = (activity as AppCompatActivity?)!!
-        activity.setSupportActionBar(binding!!.toolbarRecipeView)
-        binding!!.toolbarRecipeView.setNavigationOnClickListener { view: View? -> navigateBack() }
+        activity.setSupportActionBar(binding!!.toolbarRecipeViewOld)
+        binding!!.toolbarRecipeViewOld.setNavigationOnClickListener { view: View? -> navigateBack() }
         if (recipe!!.author == userViewModel!!.user.value!!.login) {
             setHasOptionsMenu(true)
             binding!!.kuzyaRecipeView.visibility = View.GONE
@@ -438,10 +438,10 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
         cancel: Boolean,
         delete: Boolean
     ) {
-        binding!!.toolbarRecipeView.menu.findItem(R.id.menu_recipe_edit).isVisible = edit
-        binding!!.toolbarRecipeView.menu.findItem(R.id.menu_recipe_save).isVisible = save
-        binding!!.toolbarRecipeView.menu.findItem(R.id.menu_recipe_cancel).isVisible = cancel
-        binding!!.toolbarRecipeView.menu.findItem(R.id.menu_recipe_delete).isVisible = delete
+        binding!!.toolbarRecipeViewOld.menu.findItem(R.id.menu_recipe_edit).isVisible = edit
+        binding!!.toolbarRecipeViewOld.menu.findItem(R.id.menu_recipe_save).isVisible = save
+        binding!!.toolbarRecipeViewOld.menu.findItem(R.id.menu_recipe_cancel).isVisible = cancel
+        binding!!.toolbarRecipeViewOld.menu.findItem(R.id.menu_recipe_delete).isVisible = delete
         if (!edit) {
             binding!!.buttonRecipeViewIngredientAdd.visibility = View.VISIBLE
         } else {

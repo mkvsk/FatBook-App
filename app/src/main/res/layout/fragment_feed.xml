@@ -56,6 +56,7 @@
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="@string/app_name_beta"
+            local:titleTextColor="@color/main_text"
             local:titleTextAppearance="@style/txtToolbar" />
 
 
