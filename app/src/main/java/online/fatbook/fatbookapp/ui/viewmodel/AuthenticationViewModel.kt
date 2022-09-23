@@ -4,9 +4,11 @@ import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.AuthenticationRequest
 import online.fatbook.fatbookapp.core.AuthenticationResponse
+import online.fatbook.fatbookapp.core.SignInResponse
 import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
 import online.fatbook.fatbookapp.util.ContextHolder
@@ -18,6 +20,9 @@ class AuthenticationViewModel : ViewModel() {
     var userEmail = MutableLiveData("")
     var password = MutableLiveData("")
     var username = MutableLiveData("")
+
+    var jwtAccess = MutableLiveData("")
+    var jwtRefresh = MutableLiveData("")
 
     var vCode = MutableLiveData<String?>()
 
@@ -68,6 +73,16 @@ class AuthenticationViewModel : ViewModel() {
         })
     }
 
+    fun signIn(request: RequestBody, callback: ResultCallback<SignInResponse>) {
+        repository.signIn(request, object : ResultCallback<SignInResponse> {
+            override fun onResult(value: SignInResponse?) {
+                value?.let {
+                    callback.onResult(it)
+                }
+            }
+        })
+    }
+
     fun signUp(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
         repository.signUp(request, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
@@ -86,9 +101,5 @@ class AuthenticationViewModel : ViewModel() {
                 }
             }
         })
-    }
-
-    fun signIn(username: String, password: String, callback: ResultCallback<User>) {
-//        repository.signIn()
     }
 }

@@ -36,7 +36,6 @@ class SignInFragment : Fragment() {
 
         fragment_signin_button_signin.setOnClickListener {
             hideKeyboard(fragment_signin_edittext_password)
-            signIn()
         }
         fragment_signin_edittext_username.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -107,16 +106,16 @@ class SignInFragment : Fragment() {
         )
     }
 
-    private fun signIn() {
-//        showErrorMessage(getString(R.string.dialog_wrong_data_signin))
-        authViewModel.signIn(
-            fragment_signin_edittext_username.text.toString(),
-            fragment_signin_edittext_password.text.toString(), object : ResultCallback<User> {
-                override fun onResult(value: User?) {
-                    //TODO save user data to room
-                }
-            }
-        )
-    }
+//    private fun signIn() {
+////        showErrorMessage(getString(R.string.dialog_wrong_data_signin))
+//        authViewModel.signIn(
+//            fragment_signin_edittext_username.text.toString(),
+//            fragment_signin_edittext_password.text.toString(), object : ResultCallback<User> {
+//                override fun onResult(value: User?) {
+//                    //TODO save user data to room
+//                }
+//            }
+//        )
+//    }
 
 }

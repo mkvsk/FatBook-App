@@ -6,9 +6,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.AuthenticationRequest
 import online.fatbook.fatbookapp.core.AuthenticationResponse
+import online.fatbook.fatbookapp.core.SignInResponse
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
@@ -61,9 +63,34 @@ class AuthenticationRepository(private val context: Context) {
         }
     }
 
+    fun signIn(request: RequestBody, callback: ResultCallback<SignInResponse>) {
+        scope.launch {
+            val call = RetrofitFactory.apiServiceClient().signIn(request)
+
+            call.enqueue(object : Callback<SignInResponse> {
+                override fun onResponse(
+                    call: Call<SignInResponse>,
+                    response: Response<SignInResponse>
+                ) {
+                    if (response.code() == 403) {
+                        Log.d("SIGNIN", "403 - Authentication error")
+                    } else {
+                        Log.d("SIGNIN", response.body().toString())
+                    }
+                    callback.onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<SignInResponse>, t: Throwable) {
+                    Log.d("SIGNIN", "error")
+                    t.printStackTrace()
+                }
+            })
+        }
+    }
+
     fun signUp(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
         scope.launch {
-            val call = RetrofitFactory.apiServiceClient().signup(request)
+            val call = RetrofitFactory.apiServiceClient().signUp(request)
 
             call.enqueue(object : Callback<AuthenticationResponse> {
                 override fun onResponse(
@@ -78,7 +105,6 @@ class AuthenticationRepository(private val context: Context) {
                     Log.d("SIGNUP", "error")
                     t.printStackTrace()
                 }
-
             })
         }
     }
@@ -102,7 +128,6 @@ class AuthenticationRepository(private val context: Context) {
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                     t.printStackTrace()
                 }
-
             })
         }
     }
