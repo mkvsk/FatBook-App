@@ -14,7 +14,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.SignInResponse
+import online.fatbook.fatbookapp.core.LoginResponse
 import online.fatbook.fatbookapp.databinding.FragmentAccountCreatedBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
@@ -52,8 +52,8 @@ class AccountCreatedFragment : Fragment() {
                 .addFormDataPart("username", authViewModel.username.value.toString())
                 .addFormDataPart("password", authViewModel.password.value.toString())
                 .build()
-            authViewModel.signIn(request, object : ResultCallback<SignInResponse> {
-                override fun onResult(value: SignInResponse?) {
+            authViewModel.login(request, object : ResultCallback<LoginResponse> {
+                override fun onResult(value: LoginResponse?) {
                     if (value != null) {
                         saveData(value)
                         navigateToFeed()
@@ -85,7 +85,7 @@ class AccountCreatedFragment : Fragment() {
         requireActivity().finish()
     }
 
-    private fun saveData(value: SignInResponse) {
+    private fun saveData(value: LoginResponse) {
         authViewModel.jwtAccess.value = value.access_token
         authViewModel.jwtRefresh.value = value.refresh_token
         RetrofitFactory.updateJWT(value.access_token!!)

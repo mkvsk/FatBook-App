@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_feed">
+    app:startDestination="@+id/navigation_welcome">
 
     <fragment
         android:id="@+id/navigation_feed"
@@ -99,8 +99,8 @@
             app:popUpTo="@id/navigation_welcome" />
 
         <action
-            android:id="@+id/action_go_to_signin"
-            app:destination="@id/navigation_signin"
+            android:id="@+id/action_go_to_login"
+            app:destination="@id/navigation_login"
             app:popUpTo="@id/navigation_welcome" />
 
         <action
@@ -111,10 +111,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_signin"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signin.SignInFragment"
+        android:id="@+id/navigation_login"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_sign_in">
+        tools:layout="@layout/fragment_login">
 
         <!--        <action-->
         <!--            android:id="@+id/action_go_to_verification_code"-->
@@ -124,10 +124,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_signin_newpass"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signin.SignInNewPassFragment"
+        android:id="@+id/navigation_login_new_pass"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginNewPassFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_signin_new_pass">
+        tools:layout="@layout/fragment_login_new_pass">
     </fragment>
 
     <fragment

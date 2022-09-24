@@ -40,12 +40,12 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginBottom="@dimen/start_fragments_element_spacing"
-            app:layout_constraintBottom_toTopOf="@id/fragment_welcome_button_signin"/>
+            app:layout_constraintBottom_toTopOf="@id/fragment_welcome_button_login"/>
 
         <Button
-            android:id="@+id/fragment_welcome_button_signin"
+            android:id="@+id/fragment_welcome_button_login"
             style="@style/btnPink"
-            android:text="@string/btn_signin_welcome"
+            android:text="@string/btn_login_welcome"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

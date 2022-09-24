@@ -2,7 +2,7 @@ package online.fatbook.fatbookapp.core
 
 import java.io.Serializable
 
-class SignInResponse(
+class LoginResponse(
     val access_token: String? = "",
     val refresh_token: String? = "",
 ) : Serializable {

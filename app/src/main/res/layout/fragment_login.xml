@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/start_fragments_bgr"
-    tools:context=".ui.fragment.authentication.signin.SignInFragment">
+    tools:context=".ui.fragment.authentication.login.LoginFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_signin_header"
+        android:id="@+id/fragment_login_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
@@ -19,35 +19,35 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/fragment_signin_title"
+            android:id="@+id/fragment_login_title"
             style="@style/txtWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_signin" />
+            android:text="@string/title_login" />
 
         <TextView
-            android:id="@+id/fragment_signin_appname"
+            android:id="@+id/fragment_login_appname"
             style="@style/txtAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_app_name_signin" />
+            android:text="@string/app_name" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
         <EditText
-            android:id="@+id/fragment_signin_edittext_username"
+            android:id="@+id/fragment_login_edittext_username"
             style="@style/signUpInEditText"
             android:layout_marginBottom="@dimen/start_fragments_edittext_spacing"
             android:background="@drawable/round_corner_edittext"
-            android:hint="@string/hint_username_signin"
+            android:hint="@string/hint_login_username"
             android:maxLength="20"
             android:inputType="text"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/et_signin_password_layout"/>
+            app:layout_constraintBottom_toTopOf="@id/et_login_password_layout"/>
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_signin_password_layout"
+        android:id="@+id/et_login_password_layout"
         android:layout_width="@dimen/edittext_start_fragments_w"
         android:layout_height="@dimen/edittext_start_fragments_h"
         android:layout_marginBottom="@dimen/start_fragments_element_spacing"
@@ -55,7 +55,7 @@
         app:boxStrokeWidthFocused="0dp"
         app:hintAnimationEnabled="false"
         app:hintEnabled="false"
-        app:layout_constraintBottom_toTopOf="@id/fragment_signin_button_signin"
+        app:layout_constraintBottom_toTopOf="@id/fragment_login_button_login"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:passwordToggleDrawable="@drawable/show_password_selector"
@@ -63,10 +63,11 @@
         app:passwordToggleTint="@color/ic_password_visibility">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fragment_signin_edittext_password"
+            android:id="@+id/fragment_login_edittext_password"
             style="@style/etPassword"
             android:layout_width="@dimen/edittext_start_fragments_w"
             android:layout_height="@dimen/edittext_start_fragments_h"
+            android:hint="@string/hint_login_password"
             android:background="@drawable/round_corner_edittext"
             android:drawablePadding="-30dp"
             android:gravity="bottom"
@@ -76,21 +77,21 @@
     </com.google.android.material.textfield.TextInputLayout>
 
         <!--<EditText
-            android:id="@+id/fragment_signin_edittext_password"
+            android:id="@+id/fragment_login_edittext_password"
             style="@style/editText"
             android:layout_marginBottom="@dimen/start_fragments_element_spacing"
             android:background="@drawable/round_corner_edittext"
-            android:hint="@string/hint_password_signin"
+            android:hint="@string/hint_password_login"
             android:maxLength="20"
             android:inputType="textPassword"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragment_signin_button_signin"/>
+            app:layout_constraintBottom_toTopOf="@id/fragment_login_button_login"/>
 -->
         <Button
-            android:id="@+id/fragment_signin_button_signin"
+            android:id="@+id/fragment_login_button_login"
             style="@style/btnPink"
-            android:text="@string/btn_signin_signin"
+            android:text="@string/btn_login_login"
             android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -98,34 +99,34 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/fragment_signin_forgot_password_link"
+        android:id="@+id/fragment_login_forgot_password_link"
         style="@style/signUpUnderlinedText"
         android:layout_marginTop="@dimen/start_fragments_link_spacing"
         android:text="@string/forgot_password"
-        app:layout_constraintRight_toRightOf="@id/fragment_signin_dialog_text"
-        app:layout_constraintTop_toBottomOf="@id/fragment_signin_button_signin" />
+        app:layout_constraintRight_toRightOf="@id/fragment_login_dialog_text"
+        app:layout_constraintTop_toBottomOf="@id/fragment_login_button_login" />
 
     <ImageView
-        android:id="@+id/fragment_signin_kuzya_dialog"
+        android:id="@+id/fragment_login_kuzya_dialog"
         android:layout_width="@dimen/kuzya_w"
         android:layout_height="@dimen/kuzya_h"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/cat_dialog_signin"
-        app:layout_constraintBottom_toTopOf="@id/fragment_signin_app_version"
+        android:src="@drawable/cat_dialog_login"
+        app:layout_constraintBottom_toTopOf="@id/fragment_login_app_version"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/fragment_signin_dialog_text"
+        android:id="@+id/fragment_login_dialog_text"
         style="@style/txtKuzyaDialog"
         android:layout_marginEnd="30dp"
         android:paddingTop="15dp"
-        android:text="@string/dialog_signin"
-        app:layout_constraintRight_toRightOf="@id/fragment_signin_kuzya_dialog"
-        app:layout_constraintTop_toTopOf="@id/fragment_signin_kuzya_dialog" />
+        android:text="@string/dialog_login"
+        app:layout_constraintRight_toRightOf="@id/fragment_login_kuzya_dialog"
+        app:layout_constraintTop_toTopOf="@id/fragment_login_kuzya_dialog" />
 
     <TextView
-        android:id="@+id/fragment_signin_app_version"
+        android:id="@+id/fragment_login_app_version"
         style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

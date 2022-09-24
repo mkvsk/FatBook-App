@@ -8,8 +8,7 @@ import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.AuthenticationRequest
 import online.fatbook.fatbookapp.core.AuthenticationResponse
-import online.fatbook.fatbookapp.core.SignInResponse
-import online.fatbook.fatbookapp.core.User
+import online.fatbook.fatbookapp.core.LoginResponse
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
 import online.fatbook.fatbookapp.util.ContextHolder
 
@@ -73,9 +72,9 @@ class AuthenticationViewModel : ViewModel() {
         })
     }
 
-    fun signIn(request: RequestBody, callback: ResultCallback<SignInResponse>) {
-        repository.signIn(request, object : ResultCallback<SignInResponse> {
-            override fun onResult(value: SignInResponse?) {
+    fun login(request: RequestBody, callback: ResultCallback<LoginResponse>) {
+        repository.login(request, object : ResultCallback<LoginResponse> {
+            override fun onResult(value: LoginResponse?) {
                 value?.let {
                     callback.onResult(it)
                 }

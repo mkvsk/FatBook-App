@@ -24,10 +24,10 @@ interface NetworkInfoService {
     fun emailCheck(@Query(value = "email") email: String?): Call<AuthenticationResponse>
 
     @POST("auth/signup")
-    fun signUp(@Body request: AuthenticationRequest?): Call<AuthenticationResponse>
+    fun register(@Body request: AuthenticationRequest?): Call<AuthenticationResponse>
 
-    @POST("signin")
-    fun signIn(@Body request: RequestBody?): Call<SignInResponse>
+    @POST("login")
+    fun login(@Body request: RequestBody?): Call<LoginResponse>
 
     /**
      * User

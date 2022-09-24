@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.authentication.signin
+package online.fatbook.fatbookapp.ui.fragment.authentication.login
 
 import android.os.Bundle
 import android.text.Editable
@@ -8,18 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_sign_in.*
+import kotlinx.android.synthetic.main.fragment_login.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.User
-import online.fatbook.fatbookapp.databinding.FragmentSignInBinding
+import online.fatbook.fatbookapp.databinding.FragmentLoginBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
-class SignInFragment : Fragment() {
+class LoginFragment : Fragment() {
 
-    private var binding: FragmentSignInBinding? = null
+    private var binding: FragmentLoginBinding? = null
 
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
@@ -27,29 +25,29 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSignInBinding.inflate(inflater, container, false)
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragment_signin_button_signin.setOnClickListener {
-            hideKeyboard(fragment_signin_edittext_password)
+        fragment_login_button_login.setOnClickListener {
+            hideKeyboard(fragment_login_edittext_password)
         }
-        fragment_signin_edittext_username.addTextChangedListener(object : TextWatcher {
+        fragment_login_edittext_username.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString().length in 3..20) {
-                    checkEditTextIsFilled(fragment_signin_edittext_username, true)
+                    checkEditTextIsFilled(fragment_login_edittext_username, true)
                 } else {
-                    checkEditTextIsFilled(fragment_signin_edittext_username, false)
+                    checkEditTextIsFilled(fragment_login_edittext_username, false)
                 }
                 enableButtonNext(
-                    username = fragment_signin_edittext_username.text.toString(),
-                    password = fragment_signin_edittext_password.text.toString()
+                    username = fragment_login_edittext_username.text.toString(),
+                    password = fragment_login_edittext_password.text.toString()
                 )
             }
 
@@ -58,19 +56,19 @@ class SignInFragment : Fragment() {
 
         })
 
-        fragment_signin_edittext_password.addTextChangedListener(object : TextWatcher {
+        fragment_login_edittext_password.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString().length in 6..20) {
-                    checkEditTextIsFilled(fragment_signin_edittext_password, true)
+                    checkEditTextIsFilled(fragment_login_edittext_password, true)
                 } else {
-                    checkEditTextIsFilled(fragment_signin_edittext_password, false)
+                    checkEditTextIsFilled(fragment_login_edittext_password, false)
                 }
                 enableButtonNext(
-                    username = fragment_signin_edittext_username.text.toString(),
-                    password = fragment_signin_edittext_password.text.toString()
+                    username = fragment_login_edittext_username.text.toString(),
+                    password = fragment_login_edittext_password.text.toString()
                 )
             }
 
@@ -92,13 +90,13 @@ class SignInFragment : Fragment() {
     }
 
     private fun enableButtonNext(username: String, password: String) {
-        fragment_signin_button_signin.isEnabled =
+        fragment_login_button_login.isEnabled =
             username.length in 3..20 && password.length in 6..20
     }
 
     private fun showErrorMessage(message: String) {
-        fragment_signin_dialog_text.text = message
-        fragment_signin_dialog_text.setTextColor(
+        fragment_login_dialog_text.text = message
+        fragment_login_dialog_text.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.dialogErrorMess_text
@@ -106,11 +104,11 @@ class SignInFragment : Fragment() {
         )
     }
 
-//    private fun signIn() {
-////        showErrorMessage(getString(R.string.dialog_wrong_data_signin))
-//        authViewModel.signIn(
-//            fragment_signin_edittext_username.text.toString(),
-//            fragment_signin_edittext_password.text.toString(), object : ResultCallback<User> {
+//    private fun login() {
+////        showErrorMessage(getString(R.string.dialog_wrong_data_login))
+//        authViewModel.login(
+//            fragment_login_edittext_username.text.toString(),
+//            fragment_login_edittext_password.text.toString(), object : ResultCallback<User> {
 //                override fun onResult(value: User?) {
 //                    //TODO save user data to room
 //                }

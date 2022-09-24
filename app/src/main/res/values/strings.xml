@@ -9,7 +9,7 @@
     ///fragment welcome
     <string name="title_welcome">welcome to</string>
     <string name="title_app_name_welcome" translatable="false">FatBook</string>
-    <string name="btn_signin_welcome">sign in</string>
+    <string name="btn_login_welcome">Login</string>
     <string name="btn_signup_welcome">sign up</string>
 
     ///splash screen
@@ -19,22 +19,22 @@
     <string name="dialog_splash">Im just \n eating my soup.</string>
 
     ///fragment signin
-    <string name="title_signin">welcome back</string>
-    <string name="title_app_name_signin" translatable="false">FatBook</string>
+    <string name="title_login">welcome back</string>
+    <string name="title_app_name_login" translatable="false">FatBook</string>
     <string name="hint_username_signin">Username</string>
     <string name="hint_password_signin">Password</string>
-    <string name="btn_signin_signin">sign in</string>
+    <string name="btn_login_login">login</string>
     <string name="forgot_password">forgot password</string>
-    <string name="dialog_signin">Nice to meet you again!</string>
+    <string name="dialog_login">Nice to meet you again!</string>
     <string name="dialog_wrong_data_signin">Wrong data\n Try again or click\n \"<u>forgot password</u>\"</string>
 
     ///fragment signin new pass
-    <string name="title_app_name_signin_new_pass" translatable="false">FatBook</string>
-    <string name="adds_new_password_signin_new_pass">Set new password and repeat:</string>
+    <string name="title_app_name_login_new_pass" translatable="false">FatBook</string>
+    <string name="adds_new_password_login_new_pass">Set new password and repeat:</string>
     <string name="hint_new_password_signin_new_pass">New password</string>
     <string name="hint_repeat_new_password_signin_new_pass">Repeat password</string>
-    <string name="btn_next_signin_new_pass">next</string>
-    <string name="dialog_signin_new_pass">Password must be 6–16 \n characters long and \n contains only numbers \n and letters</string>
+    <string name="btn_next_login_new_pass">next</string>
+    <string name="dialog_login_new_pass">Password must be 6–16 \n characters long and \n contains only numbers \n and letters</string>
     <string name="dialog_sigbin_new_pass_passwords_not_match">Passwords do not match</string>
 
     ///fragment signup e-mail
@@ -105,7 +105,8 @@
     ///activity login
     <string name="title_fatbook_a_login" translatable="false">FatBook</string>
     <string name="cat_dialog_login">Hello, Im Kuzya! \n How can I call you?</string>
-    <string name="hint_username_login">Username</string>
+    <string name="hint_login_username">Username</string>
+    <string name="hint_login_password">Password</string>
     <string name="text_requirements_login">*Allows only letters and numbers, max length 16 chars</string>
     <string name="btn_next_login">NEXT</string>
 

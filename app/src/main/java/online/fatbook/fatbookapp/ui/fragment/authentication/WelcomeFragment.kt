@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_welcome.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentWelcomeBinding
@@ -33,8 +32,8 @@ class WelcomeFragment : Fragment() {
         fragment_welcome_button_signup.setOnClickListener {
             NavHostFragment.findNavController(this).navigate(R.id.action_go_to_signup_email)
         }
-        fragment_welcome_button_signin.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_signin)
+        fragment_welcome_button_login.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_login)
         }
 
     }
