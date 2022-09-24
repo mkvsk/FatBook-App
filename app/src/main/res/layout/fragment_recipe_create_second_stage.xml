@@ -139,14 +139,16 @@
                             app:layout_constraintTop_toBottomOf="@id/textview_ingredients_recipe_create_2_stage"
                             tools:listitem="@layout/rv_ingredients_added_to_recipe" />
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button_add_ingredient_recipe_create_2_stage"
-                            style="@style/btnsUserProfile"
-                            android:layout_marginTop="@dimen/titles_spacing_recipe_create"
+                            style="@style/btnsMain"
+                            android:layout_width="@dimen/btn_main_w"
+                            android:layout_height="@dimen/btn_main_h"
+                            android:layout_marginVertical="@dimen/btn_spacing"
+                            android:background="@drawable/selector_btn_main"
                             android:elevation="4dp"
-                            android:enabled="true"
+                            android:translationZ="2dp"
                             android:text="Add ingredient"
-                            android:translationZ="1dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/rv_ingredients_recipe_create_2_stage" />
@@ -178,6 +180,7 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/textview_nutrition_facts_title_recipe_create_2_stage"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.AllCornerSize20Percent">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
@@ -273,12 +276,6 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </com.google.android.material.card.MaterialCardView>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/cardview_nutrition_facts_recipe_create_2_stage" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -331,24 +328,22 @@
                             tools:itemCount="10"
                             tools:listitem="@layout/rv_cooking_step_recipe_create_stage_2_template" />
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button_save_recipe_create_2_stage"
-                            style="@style/btnsUserProfile"
-                            android:layout_marginTop="@dimen/titles_spacing_recipe_create"
+                            style="@style/btnsMain"
+                            android:layout_width="@dimen/btn_main_w"
+                            android:layout_height="@dimen/btn_main_h"
+                            android:layout_marginVertical="@dimen/btn_spacing"
+                            android:background="@drawable/selector_btn_main"
                             android:elevation="4dp"
-                            android:enabled="true"
+                            android:translationZ="2dp"
+                            android:enabled="false"
                             android:text="Save"
-                            android:translationZ="1dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/rv_steps_recipe_create_2_stage" />
+                            app:layout_constraintTop_toBottomOf="@id/rv_steps_recipe_create_2_stage"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/button_save_recipe_create_2_stage" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>

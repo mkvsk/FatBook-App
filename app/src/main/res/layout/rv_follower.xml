@@ -9,6 +9,7 @@
             android:id="@+id/cardview_rv_follow"
             style="@style/myMaterialCardRound"
             android:layout_height="40dp"
+            android:layout_width="0dp"
             android:layout_marginStart="@dimen/cards_margin_start"
             android:layout_marginEnd="@dimen/cards_margin_end"
             app:cardElevation="6dp"

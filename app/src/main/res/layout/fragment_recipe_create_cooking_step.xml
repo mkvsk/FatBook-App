@@ -183,14 +183,17 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"/>
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button_add_recipe_create_cooking_step"
-                            style="@style/btnsUserProfile"
-                            android:layout_marginTop="20dp"
+                            style="@style/btnsMain"
+                            android:layout_width="@dimen/btn_main_w"
+                            android:layout_height="@dimen/btn_main_h"
+                            android:layout_marginVertical="@dimen/btn_spacing"
+                            android:background="@drawable/selector_btn_main"
                             android:elevation="4dp"
-                            android:enabled="true"
+                            android:translationZ="2dp"
+                            android:enabled="false"
                             android:text="Add"
-                            android:translationZ="1dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/edittext_recipe_create_cooking_step"

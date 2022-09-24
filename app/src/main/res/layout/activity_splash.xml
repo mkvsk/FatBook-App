@@ -48,7 +48,7 @@
         android:id="@+id/button_splash_retry"
         android:layout_height="@dimen/btn_pink_h"
         android:layout_width="@dimen/btn_pink_w"
-        android:background="@drawable/selector_btn_pink"
+        android:background="@drawable/selector_btn_main"
         style="@style/btnPink"
         android:elevation="4dp"
         android:translationZ="2dp"

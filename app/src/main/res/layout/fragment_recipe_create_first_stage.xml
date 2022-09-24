@@ -106,9 +106,11 @@
                     app:contentPaddingLeft="10dp"
                     app:contentPaddingRight="20dp"
                     app:contentPaddingTop="10dp"
+                    android:layout_marginBottom="100dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -459,27 +461,24 @@
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/textview_title_private_recipe_create_1_stage" />
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button_next_recipe_create_1_stage"
-                            style="@style/btnsUserProfile"
-                            android:layout_marginTop="20dp"
+                            style="@style/btnsMain"
+                            android:layout_width="@dimen/btn_main_w"
+                            android:layout_height="@dimen/btn_main_h"
+                            android:layout_marginVertical="@dimen/btn_spacing"
+                            android:background="@drawable/selector_btn_main"
                             android:elevation="4dp"
-                            android:text="Next"
+                            android:translationZ="2dp"
                             android:enabled="false"
-                            android:translationZ="1dp"
+                            android:text="Next"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/textview_description_private_recipe_create_1_stage" />
+                            app:layout_constraintTop_toBottomOf="@id/textview_description_private_recipe_create_1_stage"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardview_recipe_create_1_stage" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -55,23 +55,23 @@
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="New recipe"
-            local:titleTextColor="@color/main_text"
-            local:titleTextAppearance="@style/txtToolbar" />
+            local:titleTextAppearance="@style/txtToolbar"
+            local:titleTextColor="@color/main_text" />
 
-<!--        <com.google.android.material.appbar.MaterialToolbar-->
-<!--            android:id="@+id/toolbar_recipe_add_ingredients"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?attr/actionBarSize"-->
-<!--            android:background="@color/theme_toolbar_color"-->
-<!--            android:theme="@style/ToolbarTheme"-->
-<!--            app:buttonGravity="center_vertical"-->
-<!--            app:layout_scrollFlags="scroll|enterAlways"-->
-<!--            app:navigationIcon="@drawable/ic_arrow_back"-->
-<!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-<!--            app:title="New recipe"-->
-<!--            app:titleTextColor="@color/theme_toolbar_text_color">-->
+        <!--        <com.google.android.material.appbar.MaterialToolbar-->
+        <!--            android:id="@+id/toolbar_recipe_add_ingredients"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="?attr/actionBarSize"-->
+        <!--            android:background="@color/theme_toolbar_color"-->
+        <!--            android:theme="@style/ToolbarTheme"-->
+        <!--            app:buttonGravity="center_vertical"-->
+        <!--            app:layout_scrollFlags="scroll|enterAlways"-->
+        <!--            app:navigationIcon="@drawable/ic_arrow_back"-->
+        <!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+        <!--            app:title="New recipe"-->
+        <!--            app:titleTextColor="@color/theme_toolbar_text_color">-->
 
-<!--        </com.google.android.material.appbar.MaterialToolbar>-->
+        <!--        </com.google.android.material.appbar.MaterialToolbar>-->
 
         <EditText
             android:id="@+id/edittext_search_recipe_add_ingredients"
@@ -91,7 +91,7 @@
         android:id="@+id/cardview_right_recipe_add_ingredients"
         style="@style/myMaterialCardRight"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/cards_margin_start"
         app:cardElevation="6dp"
         app:cardPreventCornerOverlap="false"
@@ -100,7 +100,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout_recipe_add_ingredients"
-        app:layout_constraintVertical_weight="1">
+        app:layout_constraintBottom_toTopOf="@id/cardview_left_recipe_add_ingredients">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -148,15 +148,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/elements_spacing_recipe_create"
         android:layout_marginEnd="@dimen/cards_margin_end"
-        app:cardPreventCornerOverlap="false"
+        android:layout_marginBottom="48dp"
         app:cardElevation="6dp"
+        app:cardPreventCornerOverlap="false"
         app:contentPaddingBottom="10dp"
         app:contentPaddingLeft="10dp"
         app:contentPaddingRight="10dp"
-        app:contentPaddingTop="10dp"
+        app:contentPaddingTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardview_right_recipe_add_ingredients">
+        app:layout_constraintTop_toBottomOf="@id/cardview_right_recipe_add_ingredients"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -173,10 +175,10 @@
                 android:layout_marginStart="@dimen/cards_margin_start"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
+                android:maxLines="3"
                 android:text="@string/text_select_ingredient"
                 android:textColor="@color/color_pink_a200"
                 android:textSize="15sp"
-                android:maxLines="3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -362,22 +364,22 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_add_recipe_add_ingredients"
-                style="@style/btnsUserProfile"
-                android:layout_marginTop="@dimen/elements_spacing_recipe_create"
+                style="@style/btnsMain"
+                android:layout_width="@dimen/btn_main_w"
+                android:layout_height="@dimen/btn_main_h"
+                android:layout_marginVertical="@dimen/btn_spacing"
+                android:background="@drawable/selector_btn_main"
                 android:elevation="4dp"
-                android:enabled="true"
+                android:translationZ="2dp"
+                android:enabled="false"
                 android:text="Add"
-                android:translationZ="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardview_nutrition_facts_recipe_add_ingredients" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                app:layout_constraintTop_toBottomOf="@id/button_add_recipe_add_ingredients"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
