@@ -63,9 +63,14 @@
             android:text="@string/title_app_name_verification_code" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/fragment_verification_code_button_next"
+        android:layout_height="@dimen/btn_pink_h"
+        android:layout_width="@dimen/btn_pink_w"
+        android:background="@drawable/selector_btn_pink"
         style="@style/btnPink"
+        android:elevation="4dp"
+        android:translationZ="2dp"
         android:text="@string/btn_next_verification_code"
         android:enabled="false"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -13,7 +13,7 @@
         <item name="android:statusBarColor">@color/blue_grey_900</item>
         <item name="android:navigationBarColor">@color/color_blue_grey_900</item>
         <!-- Customize your theme here. -->
-<!--        <item name="toolbarStyle">@style/ToolbarTheme</item>-->
+        <!--        <item name="toolbarStyle">@style/ToolbarTheme</item>-->
         <!--        <item name="materialTimePickerTheme">@style/TimePicker</item>-->
     </style>
 
@@ -176,37 +176,22 @@
     </style>
 
     <style name="btnPink">
-        <item name="android:layout_width">@dimen/btn_pink_w</item>
-        <item name="android:layout_height">@dimen/btn_pink_h</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/btnEnabledColor_text</item>
-        <item name="background">@color/btnEnabledColor</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="cornerRadius">30dp</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="textAllCaps">true</item>
-        <item name="elevation">4dp</item>
-        <item name="android:translationZ">2dp</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:stateListAnimator">@null</item>
     </style>
 
     <style name="btnsUserProfile">
-        <item name="android:layout_width">@dimen/btn_user_profile_w</item>
-        <item name="android:layout_height">@dimen/btn_user_profile_h</item>
-        <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/btnEnabledColor_text</item>
-        <item name="background">@color/btnEnabledColor</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="cornerRadius">30dp</item>
-        <item name="fontFamily">@font/roboto_regular</item>
-        <item name="elevation">4dp</item>
-        <item name="textAllCaps">false</item>
-        <item name="android:translationZ">2dp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:stateListAnimator">@null</item>
         <item name="android:textAppearance">@style/myBtnsTextAppearance</item>
     </style>
 
     <style name="myBtnsTextAppearance" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:textAlignment">center</item>
         <item name="android:textSize">13sp</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="textAllCaps">false</item>

@@ -154,9 +154,14 @@
         app:layout_constraintRight_toRightOf="parent" />-->
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/fragment_login_new_pass_button_next"
+        android:layout_height="@dimen/btn_pink_h"
+        android:layout_width="@dimen/btn_pink_w"
+        android:background="@drawable/selector_btn_pink"
         style="@style/btnPink"
+        android:elevation="4dp"
+        android:translationZ="2dp"
         android:enabled="false"
         android:text="@string/btn_next_login_new_pass"
         app:layout_constraintBottom_toBottomOf="parent"

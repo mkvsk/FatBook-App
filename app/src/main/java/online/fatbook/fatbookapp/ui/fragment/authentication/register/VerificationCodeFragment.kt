@@ -66,6 +66,18 @@ class VerificationCodeFragment : Fragment() {
                         }
 
                         override fun onFailure(value: AuthenticationResponse?) {
+                            when (value?.code) {
+                                401 -> {
+                                    if (reconnectCount != 0) {
+                                        confirmVCode(fragment_verification_code_edittext_vc.text.toString())
+                                        reconnectCount--
+                                    } else {
+                                        showErrorMessage("api error", false)
+                                        hideKeyboard(fragment_register_email_edittext_email)
+                                        progressbar_register_email.visibility = View.GONE
+                                    }
+                                }
+                            }
                         }
                     })
             }
