@@ -43,6 +43,7 @@ android {
             mavenCentral()
         }
     }
+    namespace 'online.fatbook.fatbookapp'
 }
 
 dependencies {
