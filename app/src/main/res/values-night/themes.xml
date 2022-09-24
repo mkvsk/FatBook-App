@@ -317,7 +317,7 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="signUpInEditText">
+    <style name="authenticationEditText">
         <item name="android:layout_width">@dimen/edittext_start_fragments_w</item>
         <item name="android:layout_height">@dimen/edittext_start_fragments_h</item>
         <item name="android:textAlignment">center</item>
@@ -335,7 +335,7 @@
         <item name="fontFamily">@font/roboto_regular</item>
     </style>
 
-    <style name="signUpAdditionalText">
+    <style name="registerAdditionalText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAlignment">center</item>
@@ -344,7 +344,7 @@
         <item name="fontFamily">@font/roboto_regular</item>
     </style>
 
-    <style name="signUpUnderlinedText">
+    <style name="registerUnderlinedText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">left</item>

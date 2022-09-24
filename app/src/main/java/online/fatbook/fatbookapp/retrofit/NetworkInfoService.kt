@@ -23,7 +23,7 @@ interface NetworkInfoService {
     @GET("auth/vc/send")
     fun emailCheck(@Query(value = "email") email: String?): Call<AuthenticationResponse>
 
-    @POST("auth/signup")
+    @POST("auth/register")
     fun register(@Body request: AuthenticationRequest?): Call<AuthenticationResponse>
 
     @POST("login")

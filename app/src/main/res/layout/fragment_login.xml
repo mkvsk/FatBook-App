@@ -35,7 +35,7 @@
 
         <EditText
             android:id="@+id/fragment_login_edittext_username"
-            style="@style/signUpInEditText"
+            style="@style/authenticationEditText"
             android:layout_marginBottom="@dimen/start_fragments_edittext_spacing"
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_login_username"
@@ -100,7 +100,7 @@
 
     <TextView
         android:id="@+id/fragment_login_forgot_password_link"
-        style="@style/signUpUnderlinedText"
+        style="@style/registerUnderlinedText"
         android:layout_marginTop="@dimen/start_fragments_link_spacing"
         android:text="@string/forgot_password"
         app:layout_constraintRight_toRightOf="@id/fragment_login_dialog_text"

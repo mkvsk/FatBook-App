@@ -5,19 +5,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:id="@+id/imageView_sign_in_catChef"
+        android:id="@+id/imageView_dialog_app_info_catChef"
         android:layout_width="180dp"
         android:layout_height="100dp"
         android:contentDescription="@null"
         android:paddingTop="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_sign_in_tagline"
+        app:layout_constraintBottom_toTopOf="@+id/textView_dialog_app_info_tagline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/kuzya_welcome" />
 
     <TextView
         android:paddingTop="20dp"
-        android:id="@+id/textView_sign_in_tagline"
+        android:id="@+id/textView_dialog_app_info_tagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
@@ -25,24 +25,24 @@
         android:text="@string/tagline_fatbook"
         android:textColor="@color/color_blue_grey_200"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_sign_in_copyright"
+        app:layout_constraintBottom_toTopOf="@+id/textView_dialog_app_info_copyright"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/textView_sign_in_copyright"
+        android:id="@+id/textView_dialog_app_info_copyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tag_copyright"
         android:textColor="@color/color_blue_grey_200"
         android:textSize="11sp"
         android:fontFamily="@font/roboto_regular"
-        app:layout_constraintBottom_toTopOf="@+id/textView_sign_in_version"
+        app:layout_constraintBottom_toTopOf="@+id/textView_dialog_app_info_version"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/textView_sign_in_version"
+        android:id="@+id/textView_dialog_app_info_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"

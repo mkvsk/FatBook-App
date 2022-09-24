@@ -88,7 +88,7 @@ class AuthenticationRepository(private val context: Context) {
         }
     }
 
-    fun signUp(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
+    fun register(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
         scope.launch {
             val call = RetrofitFactory.apiServiceClient().register(request)
 
@@ -97,12 +97,12 @@ class AuthenticationRepository(private val context: Context) {
                     call: Call<AuthenticationResponse>,
                     response: Response<AuthenticationResponse>
                 ) {
-                    Log.d("SIGNUP", response.body().toString())
+                    Log.d("REGISTER", response.body().toString())
                     callback.onResult(response.body())
                 }
 
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
-                    Log.d("SIGNUP", "error")
+                    Log.d("REGISTER", "error")
                     t.printStackTrace()
                 }
             })

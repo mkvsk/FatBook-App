@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/start_fragments_bgr"
-    tools:context=".ui.fragment.authentication.signup.VerificationCodeFragment">
+    tools:context=".ui.fragment.authentication.register.VerificationCodeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progressbarLayout_vc"
@@ -75,7 +75,7 @@
 
     <TextView
         android:id="@+id/fragment_verification_code_resend_link"
-        style="@style/signUpUnderlinedText"
+        style="@style/registerUnderlinedText"
         android:layout_marginTop="@dimen/start_fragments_link_spacing"
         android:text="@string/resend_verification_code"
         android:visibility="visible"
@@ -84,7 +84,7 @@
 
     <TextView
         android:id="@+id/fragment_verification_code_additional_text"
-        style="@style/signUpAdditionalText"
+        style="@style/registerAdditionalText"
         android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
         android:text="@string/adds_verification_code"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -93,7 +93,7 @@
 
         <EditText
             android:id="@+id/fragment_verification_code_edittext_vc"
-            style="@style/signUpInEditText"
+            style="@style/authenticationEditText"
             android:background="@drawable/round_corner_edittext"
             android:hint="@string/hint_verification_code"
             android:inputType="number"

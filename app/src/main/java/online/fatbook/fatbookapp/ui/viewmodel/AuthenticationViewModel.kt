@@ -82,8 +82,8 @@ class AuthenticationViewModel : ViewModel() {
         })
     }
 
-    fun signUp(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
-        repository.signUp(request, object : ResultCallback<AuthenticationResponse> {
+    fun register(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
+        repository.register(request, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
                 value?.let {
                     callback.onResult(it)

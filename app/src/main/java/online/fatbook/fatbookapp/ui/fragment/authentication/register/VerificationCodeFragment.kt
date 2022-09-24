@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.authentication.signup
+package online.fatbook.fatbookapp.ui.fragment.authentication.register
 
 import android.os.Bundle
 import android.text.Editable
@@ -121,7 +121,7 @@ class VerificationCodeFragment : Fragment() {
                     when (value?.code) {
                         0 -> {
                             hideKeyboard(fragment_verification_code_edittext_vc)
-                            navigateToSignUpPassword()
+                            navigateToRegisterPassword()
                         }
                         1 -> {
                             hideProgressBar()
@@ -148,9 +148,9 @@ class VerificationCodeFragment : Fragment() {
             })
     }
 
-    private fun navigateToSignUpPassword() {
+    private fun navigateToRegisterPassword() {
         NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_signup_password)
+            .navigate(R.id.action_go_to_register_password)
     }
 
     private fun addObservers() {

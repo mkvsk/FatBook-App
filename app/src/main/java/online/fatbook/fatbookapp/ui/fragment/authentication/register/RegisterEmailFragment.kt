@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.authentication.signup
+package online.fatbook.fatbookapp.ui.fragment.authentication.register
 
 import android.os.Bundle
 import android.text.Editable
@@ -12,11 +12,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_signup_email.*
+import kotlinx.android.synthetic.main.fragment_register_email.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.AuthenticationResponse
-import online.fatbook.fatbookapp.databinding.FragmentSignupEmailBinding
+import online.fatbook.fatbookapp.databinding.FragmentRegisterEmailBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.SYMBOL_AT
 import online.fatbook.fatbookapp.util.ProgressBarUtil.hideProgressBar
@@ -24,46 +24,46 @@ import online.fatbook.fatbookapp.util.ProgressBarUtil.showProgressBar
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
-class SignupEmailFragment : Fragment() {
+class RegisterEmailFragment : Fragment() {
 
-    private var binding: FragmentSignupEmailBinding? = null
+    private var binding: FragmentRegisterEmailBinding? = null
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSignupEmailBinding.inflate(inflater, container, false)
+        binding = FragmentRegisterEmailBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragment_signup_email_button_next.setOnClickListener {
-            if (emailValidate(fragment_signup_email_edittext_email.text.toString())) {
-                if (authViewModel.userEmail.value!! != fragment_signup_email_edittext_email.text.toString()) {
+        fragment_register_email_button_next.setOnClickListener {
+            if (emailValidate(fragment_register_email_edittext_email.text.toString())) {
+                if (authViewModel.userEmail.value!! != fragment_register_email_edittext_email.text.toString()) {
                     authViewModel.isTimerRunning.value = false
                     authViewModel.currentCountdown.value = 0
                     authViewModel.cancelTimer()
-                    emailCheck(fragment_signup_email_edittext_email.text.toString())
+                    emailCheck(fragment_register_email_edittext_email.text.toString())
                 } else {
                     navigateToVerificationCode()
                 }
             } else {
-                hideKeyboard(fragment_signup_email_edittext_email)
-                showErrorMessage(getString(R.string.dialog_wrong_data_signup_email))
+                hideKeyboard(fragment_register_email_edittext_email)
+                showErrorMessage(getString(R.string.dialog_wrong_data_register_email))
             }
         }
 
-        fragment_signup_email_edittext_email.addTextChangedListener(object : TextWatcher {
+        fragment_register_email_edittext_email.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                fragment_signup_email_edittext_email.background =
+                fragment_register_email_edittext_email.background =
                     ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext)
                 if (s != null) {
-                    fragment_signup_email_button_next.isEnabled = s.contains(SYMBOL_AT)
+                    fragment_register_email_button_next.isEnabled = s.contains(SYMBOL_AT)
                 }
             }
 
@@ -73,14 +73,14 @@ class SignupEmailFragment : Fragment() {
     }
 
     private fun showErrorMessage(message: String) {
-        fragment_signup_email_dialog_text.text = message;
-        fragment_signup_email_dialog_text.setTextColor(
+        fragment_register_email_dialog_text.text = message;
+        fragment_register_email_dialog_text.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.dialogErrorMess_text
             )
         )
-        fragment_signup_email_edittext_email.background =
+        fragment_register_email_edittext_email.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
     }
 
@@ -107,13 +107,13 @@ class SignupEmailFragment : Fragment() {
                         navigateToVerificationCode()
                     }
                     4 -> {
-                        hideKeyboard(fragment_signup_email_edittext_email)
-                        showErrorMessage(getString(R.string.dialog_email_used_signup_email))
+                        hideKeyboard(fragment_register_email_edittext_email)
+                        showErrorMessage(getString(R.string.dialog_email_used_register_email))
                         hideProgressBar()
                     }
                     else -> {
-                        hideKeyboard(fragment_signup_email_edittext_email)
-                        showErrorMessage(getString(R.string.dialog_signup_error))
+                        hideKeyboard(fragment_register_email_edittext_email)
+                        showErrorMessage(getString(R.string.dialog_register_error))
                         hideProgressBar()
                     }
                 }

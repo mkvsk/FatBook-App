@@ -63,8 +63,8 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
-        android:id="@+id/fragment_signup_password_additional_text"
-        style="@style/signUpAdditionalText"
+        android:id="@+id/fragment_login_password_additional_text"
+        style="@style/registerAdditionalText"
         android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
         android:text="@string/adds_new_password_login_new_pass"
         app:layout_constraintBottom_toTopOf="@id/et_new_password_layout"

@@ -85,10 +85,10 @@ class MainActivity : AppCompatActivity() {
         navController!!.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_welcome -> bottom_navigation.visibility = View.GONE
-                R.id.navigation_signup_email -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_register_email -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_verification_code -> bottom_navigation.visibility = View.GONE
-                R.id.navigation_signup_password -> bottom_navigation.visibility = View.GONE
-                R.id.navigation_signup_username -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_register_password -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_sregister_username -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_login -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_login_new_pass -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_account_created -> bottom_navigation.visibility = View.GONE

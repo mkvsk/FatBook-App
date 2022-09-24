@@ -94,8 +94,8 @@
         tools:layout="@layout/fragment_welcome">
 
         <action
-            android:id="@+id/action_go_to_signup_email"
-            app:destination="@id/navigation_signup_email"
+            android:id="@+id/action_go_to_register_email"
+            app:destination="@id/navigation_register_email"
             app:popUpTo="@id/navigation_welcome" />
 
         <action
@@ -119,7 +119,7 @@
         <!--        <action-->
         <!--            android:id="@+id/action_go_to_verification_code"-->
         <!--            app:destination="@id/navigation_verification_code"-->
-        <!--            app:popUpTo="@id/navigation_signup_email"-->
+        <!--            app:popUpTo="@id/navigation_register_email"-->
         <!--            />-->
     </fragment>
 
@@ -131,57 +131,57 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_signup_email"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.SignupEmailFragment"
+        android:id="@+id/navigation_register_email"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.RegisterEmailFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_signup_email">
+        tools:layout="@layout/fragment_register_email">
 
         <action
             android:id="@+id/action_go_to_verification_code"
             app:destination="@id/navigation_verification_code"
-            app:popUpTo="@id/navigation_signup_email" />
+            app:popUpTo="@id/navigation_register_email" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_verification_code"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.VerificationCodeFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.VerificationCodeFragment"
         android:label="@null"
         tools:layout="@layout/fragment_verification_code">
 
         <action
-            android:id="@+id/action_go_to_signup_password"
-            app:destination="@id/navigation_signup_password"
+            android:id="@+id/action_go_to_register_password"
+            app:destination="@id/navigation_register_password"
             app:popUpTo="@id/navigation_verification_code" />
     </fragment>
 
 
     <fragment
-        android:id="@+id/navigation_signup_password"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.SignupPasswordFragment"
+        android:id="@+id/navigation_register_password"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.RegisterPasswordFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_signup_password">
+        tools:layout="@layout/fragment_register_password">
 
         <action
-            android:id="@+id/action_go_to_signup_username"
-            app:destination="@id/navigation_signup_username"
-            app:popUpTo="@id/navigation_signup_password" />
+            android:id="@+id/action_go_to_register_username"
+            app:destination="@id/navigation_sregister_username"
+            app:popUpTo="@id/navigation_register_password" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_signup_username"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.SignupUsernameFragment"
+        android:id="@+id/navigation_sregister_username"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.RegisterUsernameFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_signup_username">
+        tools:layout="@layout/fragment_register_username">
 
         <action
             android:id="@+id/action_go_to_account_created"
             app:destination="@id/navigation_account_created"
-            app:popUpTo="@id/navigation_signup_username" />
+            app:popUpTo="@id/navigation_sregister_username" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_account_created"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.signup.AccountCreatedFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.AccountCreatedFragment"
         android:label="@null"
         tools:layout="@layout/fragment_account_created">
 

@@ -10,7 +10,7 @@
     <string name="title_welcome">welcome to</string>
     <string name="title_app_name_welcome" translatable="false">FatBook</string>
     <string name="btn_login_welcome">Login</string>
-    <string name="btn_signup_welcome">sign up</string>
+    <string name="btn_register_welcome">Register</string>
 
     ///splash screen
     <string name="title_app_name_disconnect" translatable="false">FatBook</string>
@@ -18,54 +18,54 @@
     <string name="btn_rectry_splash">retry</string>
     <string name="dialog_splash">Im just \n eating my soup.</string>
 
-    ///fragment signin
+    ///fragment login
     <string name="title_login">welcome back</string>
     <string name="title_app_name_login" translatable="false">FatBook</string>
-    <string name="hint_username_signin">Username</string>
-    <string name="hint_password_signin">Password</string>
+    <string name="hint_username_login">Username</string>
+    <string name="hint_password_login">Password</string>
     <string name="btn_login_login">login</string>
     <string name="forgot_password">forgot password</string>
     <string name="dialog_login">Nice to meet you again!</string>
-    <string name="dialog_wrong_data_signin">Wrong data\n Try again or click\n \"<u>forgot password</u>\"</string>
+    <string name="dialog_wrong_data_login">Wrong data\n Try again or click\n \"<u>forgot password</u>\"</string>
 
-    ///fragment signin new pass
+    ///fragment login new pass
     <string name="title_app_name_login_new_pass" translatable="false">FatBook</string>
     <string name="adds_new_password_login_new_pass">Set new password and repeat:</string>
-    <string name="hint_new_password_signin_new_pass">New password</string>
-    <string name="hint_repeat_new_password_signin_new_pass">Repeat password</string>
+    <string name="hint_new_password_login_new_pass">New password</string>
+    <string name="hint_repeat_new_password_login_new_pass">Repeat password</string>
     <string name="btn_next_login_new_pass">next</string>
     <string name="dialog_login_new_pass">Password must be 6–16 \n characters long and \n contains only numbers \n and letters</string>
-    <string name="dialog_sigbin_new_pass_passwords_not_match">Passwords do not match</string>
+    <string name="dialog_register_new_pass_passwords_not_match">Passwords do not match</string>
 
-    ///fragment signup e-mail
-    <string name="title_app_name_signup_email" translatable="false">FatBook</string>
-    <string name="adds_signup_email">Enter actual e-mail:</string>
-    <string name="hint_email_signup_email" translatable="false">e-mail</string>
-    <string name="btn_next_signup_email">next</string>
-    <string name="dialog_signup_email_error">Only one user can be \n registered to an email</string>
-    <string name="dialog_wrong_data_signup_email">This email is not entered \n correctly</string>
-    <string name="dialog_email_used_signup_email">This email is already in \n use</string>
-    <string name="dialog_signup_error">Something went wrong. \n Try again</string>
+    ///fragment register e-mail
+    <string name="title_app_name_register_email" translatable="false">FatBook</string>
+    <string name="adds_register_email">Enter actual e-mail:</string>
+    <string name="hint_email_register_email" translatable="false">e-mail</string>
+    <string name="btn_next_register_email">next</string>
+    <string name="dialog_register_email_error">Only one user can be \n registered to an email</string>
+    <string name="dialog_wrong_data_register_email">This email is not entered \n correctly</string>
+    <string name="dialog_email_used_register_email">This email is already in \n use</string>
+    <string name="dialog_register_error">Something went wrong. \n Try again</string>
 
-    ///fragment signup password
-    <string name="title_app_name_signup_password" translatable="false">FatBook</string>
-    <string name="adds_signup_password">Set password:</string>
-    <string name="hint_password_signup_password">Password</string>
-    <string name="btn_next_signup_password">next</string>
-    <string name="dialog_signup_password">Password must be 6–20 \n characters long</string>
+    ///fragment register password
+    <string name="title_app_name_register_password" translatable="false">FatBook</string>
+    <string name="adds_register_password">Set password:</string>
+    <string name="hint_password_register_password">Password</string>
+    <string name="btn_next_register_password">next</string>
+    <string name="dialog_register_password">Password must be 6–20 \n characters long</string>
 
-    ///fragment signup username
-    <string name="title_app_name_signup_username" translatable="false">FatBook</string>
-    <string name="adds_signup_username">Set Username:</string>
-    <string name="hint_username_signup_username">Username</string>
-    <string name="btn_next_signup_username">next</string>
-    <string name="dialog_signup_username">Use only lowercase\n letters and numbers,\n special characters\n \".\" and \"_\"</string>
-    <string name="dialog_signup_username_invalid">This Username\n is not entered correctly</string>
-    <string name="dialog_signup_username_unavailable">This Username \n is already in use</string>
+    ///fragment register username
+    <string name="title_app_name_register_username" translatable="false">FatBook</string>
+    <string name="adds_register_username">Set Username:</string>
+    <string name="hint_username_register_username">Username</string>
+    <string name="btn_next_register_username">next</string>
+    <string name="dialog_register_username">Use only lowercase\n letters and numbers,\n special characters\n \".\" and \"_\"</string>
+    <string name="dialog_register_username_invalid">This Username\n is not entered correctly</string>
+    <string name="dialog_register_username_unavailable">This Username \n is already in use</string>
 
     ///fragment account created
     <string name="title_account_created">welcome to</string>
-    <string name="title_app_name_signup_account_created" translatable="false">FatBook</string>
+    <string name="title_app_name_register_account_created" translatable="false">FatBook</string>
     <string name="adds_account_created">Your account has been created</string>
     <string name="btn_next_account_created">next</string>
     <string name="dialog_account_created">Nice to meet you,\n %s!\n Let\'s make our book\n more fat!</string>

@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.authentication.signup
+package online.fatbook.fatbookapp.ui.fragment.authentication.register
 
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
@@ -41,12 +41,12 @@ class AccountCreatedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragment_signup_account_created_dialog_text.text =
+        fragment_register_account_created_dialog_text.text =
             String.format(getString(R.string.dialog_account_created), authViewModel.username.value)
 
         saveUserData()
 
-        fragment_signup_account_created_button_next.setOnClickListener {
+        fragment_register_account_created_button_next.setOnClickListener {
             val request: RequestBody = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("username", authViewModel.username.value.toString())
