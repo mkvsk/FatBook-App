@@ -5,7 +5,7 @@
     <item
         android:id="@+id/item_direct_messages"
         android:title="direct_messages"
-        android:icon="@drawable/ic_mess_toolbar_9_plus"
+        android:icon="@drawable/ic_mess_toolbar_11"
         app:showAsAction="always"/>
 
 </menu>
