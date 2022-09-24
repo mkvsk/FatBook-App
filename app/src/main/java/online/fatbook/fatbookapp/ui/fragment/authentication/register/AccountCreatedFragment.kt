@@ -62,6 +62,10 @@ class AccountCreatedFragment : Fragment() {
                         //TODO sign in try again
                     }
                 }
+
+                override fun onFailure(value: LoginResponse?) {
+
+                }
             })
         }
 

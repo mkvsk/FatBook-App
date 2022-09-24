@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import kotlinx.android.synthetic.main.fragment_register_email.*
 import kotlinx.android.synthetic.main.fragment_verification_code.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -23,6 +24,8 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 
 class VerificationCodeFragment : Fragment() {
+
+    private var reconnectCount = 5
 
     private var binding: FragmentVerificationCodeBinding? = null
 
@@ -63,7 +66,6 @@ class VerificationCodeFragment : Fragment() {
                         }
 
                         override fun onFailure(value: AuthenticationResponse?) {
-
                         }
                     })
             }
@@ -94,12 +96,12 @@ class VerificationCodeFragment : Fragment() {
             } else {
                 hideProgressBar()
                 hideKeyboard(fragment_verification_code_edittext_vc)
-                showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500))
+                showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500), true)
             }
         }
     }
 
-    private fun showErrorMessage(message: String) {
+    private fun showErrorMessage(message: String, dyeEditText: Boolean) {
         fragment_verification_code_dialog_text.text = message
         fragment_verification_code_dialog_text.setTextColor(
             ContextCompat.getColor(
@@ -107,15 +109,18 @@ class VerificationCodeFragment : Fragment() {
                 R.color.dialogErrorMess_text
             )
         )
-        fragment_verification_code_edittext_vc.background =
-            ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.round_corner_edittext_error
-            )
+
+        if (dyeEditText) {
+            fragment_verification_code_edittext_vc.background =
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.round_corner_edittext_error
+                )
+        }
     }
 
     private fun confirmVCode(vCode: String) {
-        showProgressBar()
+        //показать прогресс бар
         authViewModel.confirmVCode(
             vCode,
             authViewModel.userEmail.value!!,
@@ -130,28 +135,44 @@ class VerificationCodeFragment : Fragment() {
                         1 -> {
                             hideProgressBar()
                             hideKeyboard(fragment_verification_code_edittext_vc)
-                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_1))
+                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_1), true)
                         }
                         2 -> {
                             hideProgressBar()
                             hideKeyboard(fragment_verification_code_edittext_vc)
-                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500))
+                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500), true)
                         }
                         3 -> {
                             hideProgressBar()
                             hideKeyboard(fragment_verification_code_edittext_vc)
-                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_3))
+                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_3), true)
                         }
                         else -> {
                             hideProgressBar()
                             hideKeyboard(fragment_verification_code_edittext_vc)
-                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500))
+                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500), true)
                         }
                     }
                 }
 
                 override fun onFailure(value: AuthenticationResponse?) {
-
+                    when (value?.code) {
+                        401 -> {
+                            if (reconnectCount != 0) {
+                                confirmVCode(vCode)
+                                reconnectCount--
+                            } else {
+                                showErrorMessage("api error", false)
+                                hideKeyboard(fragment_register_email_edittext_email)
+                                progressbar_register_email.visibility = View.GONE
+                            }
+                        }
+                        402 -> {
+                            showErrorMessage("check internet connection", false)
+                            hideKeyboard(fragment_register_email_edittext_email)
+                            progressbar_register_email.visibility = View.GONE
+                        }
+                    }
                 }
             })
     }

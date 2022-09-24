@@ -25,6 +25,8 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 
 class RegisterEmailFragment : Fragment() {
 
+    private var reconnectCount = 5
+
     private var binding: FragmentRegisterEmailBinding? = null
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
@@ -50,7 +52,7 @@ class RegisterEmailFragment : Fragment() {
                 }
             } else {
                 hideKeyboard(fragment_register_email_edittext_email)
-                showErrorMessage(getString(R.string.dialog_wrong_data_register_email))
+                showErrorMessage(getString(R.string.dialog_wrong_data_register_email), true)
             }
         }
 
@@ -92,7 +94,7 @@ class RegisterEmailFragment : Fragment() {
         NavHostFragment.findNavController(this).popBackStack()
     }
 
-    private fun showErrorMessage(message: String) {
+    private fun showErrorMessage(message: String, dyeEditText: Boolean) {
         fragment_register_email_dialog_text.text = message;
         fragment_register_email_dialog_text.setTextColor(
             ContextCompat.getColor(
@@ -100,8 +102,11 @@ class RegisterEmailFragment : Fragment() {
                 R.color.dialogErrorMess_text
             )
         )
-        fragment_register_email_edittext_email.background =
-            ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
+
+        if (dyeEditText) {
+            fragment_register_email_edittext_email.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
+        }
     }
 
     private fun showDefaultMessage(message: String) {
@@ -140,23 +145,38 @@ class RegisterEmailFragment : Fragment() {
                     }
                     4 -> {
                         hideKeyboard(fragment_register_email_edittext_email)
-                        showErrorMessage(getString(R.string.dialog_email_used_register_email))
+                        showErrorMessage(
+                            getString(R.string.dialog_email_used_register_email),
+                            true
+                        )
                         progressbar_register_email.visibility = View.GONE
                     }
                     else -> {
                         hideKeyboard(fragment_register_email_edittext_email)
-                        showErrorMessage(getString(R.string.dialog_register_error))
+                        showErrorMessage(getString(R.string.dialog_register_error), true)
                         progressbar_register_email.visibility = View.GONE
                     }
                 }
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                hideKeyboard(fragment_register_email_edittext_email)
-                showErrorMessage(getString(R.string.dialog_register_error))
-                progressbar_register_email.visibility = View.GONE
-
-//                emailCheck(email)
+                when (value?.code) {
+                    401 -> {
+                        if (reconnectCount != 0) {
+                            emailCheck(email)
+                            reconnectCount--
+                        } else {
+                            showErrorMessage("api error", false)
+                            hideKeyboard(fragment_register_email_edittext_email)
+                            progressbar_register_email.visibility = View.GONE
+                        }
+                    }
+                    402 -> {
+                        showErrorMessage("check internet connection", false)
+                        hideKeyboard(fragment_register_email_edittext_email)
+                        progressbar_register_email.visibility = View.GONE
+                    }
+                }
             }
         })
     }

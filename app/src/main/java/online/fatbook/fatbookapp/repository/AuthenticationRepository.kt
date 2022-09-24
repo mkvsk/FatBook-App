@@ -15,9 +15,7 @@ import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.net.ConnectException
 import kotlin.coroutines.CoroutineContext
-import kotlin.math.log
 
 class AuthenticationRepository(private val context: Context) {
 
@@ -39,7 +37,6 @@ class AuthenticationRepository(private val context: Context) {
                 override fun onFailure(call: Call<Boolean>, t: Throwable) {
                     Log.d("USERNAME CHECK", "error")
                     t.printStackTrace()
-                    callback.onFailure(call.isCanceled)
                 }
             })
         }
@@ -55,18 +52,21 @@ class AuthenticationRepository(private val context: Context) {
                     response: Response<AuthenticationResponse>
                 ) {
                     Log.d("EMAIL CHECK", response.body().toString())
-                    callback.onResult(response.body())
+                    if (response.body() == null) {
+                        callback.onFailure(AuthenticationResponse(401))
+                    } else {
+                        callback.onResult(response.body())
+                    }
                 }
 
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                     Log.d("EMAIL CHECK", "error")
                     t.printStackTrace()
-                    if (t.cause!!.message!!.contains("Connection refused")) {
-                        println("api error")
+                    if (t.cause == null) {
+                        callback.onFailure(AuthenticationResponse(401))
                     } else {
-                        println("check internet")
+                        callback.onFailure(AuthenticationResponse(402))
                     }
-                    callback.onFailure(null)
                 }
             })
         }
@@ -92,7 +92,6 @@ class AuthenticationRepository(private val context: Context) {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     Log.d("LOGIN", "error")
                     t.printStackTrace()
-                    callback.onFailure(null)
                 }
             })
         }
@@ -114,7 +113,11 @@ class AuthenticationRepository(private val context: Context) {
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                     Log.d("REGISTER", "error")
                     t.printStackTrace()
-                    callback.onFailure(null)
+                    if (t.cause == null) {
+                        callback.onFailure(AuthenticationResponse(401))
+                    } else {
+                        callback.onFailure(AuthenticationResponse(402))
+                    }
                 }
             })
         }
@@ -123,7 +126,7 @@ class AuthenticationRepository(private val context: Context) {
     fun confirmVCode(
         vCode: String,
         email: String,
-        resultCallback: ResultCallback<AuthenticationResponse>
+        callback: ResultCallback<AuthenticationResponse>
     ) {
         scope.launch {
             val call = RetrofitFactory.apiServiceClient().confirmVCode(email, vCode)
@@ -133,11 +136,18 @@ class AuthenticationRepository(private val context: Context) {
                     call: Call<AuthenticationResponse>,
                     response: Response<AuthenticationResponse>
                 ) {
-                    resultCallback.onResult(response.body())
+                    Log.d("VCODE CONFIRM", response.body().toString())
+                    callback.onResult(response.body())
                 }
 
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+                    Log.d("VCODE CONFIRM", "error")
                     t.printStackTrace()
+                    if (t.cause == null) {
+                        callback.onFailure(AuthenticationResponse(401))
+                    } else {
+                        callback.onFailure(AuthenticationResponse(402))
+                    }
                 }
             })
         }

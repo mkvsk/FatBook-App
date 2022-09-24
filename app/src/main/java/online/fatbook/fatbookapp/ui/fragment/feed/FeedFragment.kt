@@ -4,12 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_feed.*
-import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Recipe
 import online.fatbook.fatbookapp.core.User
@@ -29,7 +28,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-@Log
 class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteListener {
     private var binding: FragmentFeedBinding? = null
     private var adapter: RecipeAdapter? = null
@@ -61,8 +59,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         binding!!.swipeRefreshBookmarks.setColorSchemeColors(resources.getColor(R.color.color_pink_a200))
         binding!!.swipeRefreshBookmarks.setOnRefreshListener { loadData() }
         setupAdapter()
+        setupMenu()
         userViewModel.feedRecipeList.value = userViewModel.feedRecipeList.value
-        setupSearch()
         addObservers()
 
         loadUser(
@@ -71,18 +69,20 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_overflow_feed, menu)
+    private fun setupMenu() {
+        val activity = (activity as AppCompatActivity?)!!
+        activity.setSupportActionBar(toolbar_feed)
+        setHasOptionsMenu(true)
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return super.onOptionsItemSelected(item)
-//    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.feed_overflow_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return NavHostFragment.findNavController(this).navigate(R.id.action_go_to_direct_messages)
-//        super.onOptionsItemSelected(item)
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun addObservers() {
         userViewModel.user.observe(viewLifecycleOwner) {
@@ -92,16 +92,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             android.util.Log.d("TAG", " FEED ")
             adapter!!.setData(it ?: ArrayList(), userViewModel.user.value)
         }
-    }
-
-    private fun setupSearch() {
-        /* binding!!.editTextFeedSearch.addTextChangedListener(object : TextWatcher {
-             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-             override fun afterTextChanged(editable: Editable) {
-                 filter(editable.toString())
-             }
-         })*/
     }
 
     private fun filter(text: String) {

@@ -116,6 +116,9 @@ class AuthenticationViewModel : ViewModel() {
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
+                value?.let {
+                    callback.onFailure(it)
+                }
             }
         })
     }

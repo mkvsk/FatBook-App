@@ -10,6 +10,14 @@ data class AuthenticationResponse(
     var username: String? = ""
 ) : Serializable {
 
+    /**
+     * 401 - api error
+     */
+
+    /**
+     * 402 - internet connection error
+     */
+
     override fun toString(): String {
         return "{code = $code, message = $message, vCode = $vcode, email = $email, username = $username}"
     }

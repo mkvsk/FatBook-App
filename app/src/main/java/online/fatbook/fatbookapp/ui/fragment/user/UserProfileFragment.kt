@@ -251,6 +251,10 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                     drawData()
                     progressbarLayout_userprofile.visibility = View.GONE
                 }
+
+                override fun onFailure(value: User?) {
+
+                }
             })
     }
 
