@@ -61,6 +61,10 @@ class VerificationCodeFragment : Fragment() {
                             )
                             Log.d("CODE ================= ", value.vcode.toString())
                         }
+
+                        override fun onFailure(value: AuthenticationResponse?) {
+
+                        }
                     })
             }
         }
@@ -144,6 +148,10 @@ class VerificationCodeFragment : Fragment() {
                             showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500))
                         }
                     }
+                }
+
+                override fun onFailure(value: AuthenticationResponse?) {
+
                 }
             })
     }

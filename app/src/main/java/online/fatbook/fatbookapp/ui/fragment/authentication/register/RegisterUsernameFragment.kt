@@ -128,6 +128,10 @@ class RegisterUsernameFragment : Fragment() {
                     }
 
                 }
+
+                override fun onFailure(value: AuthenticationResponse?) {
+
+                }
             }
         )
     }

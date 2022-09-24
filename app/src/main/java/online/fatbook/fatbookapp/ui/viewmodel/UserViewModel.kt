@@ -32,6 +32,10 @@ class UserViewModel : ViewModel() {
                     callback.onResult(it)
                 }
             }
+
+            override fun onFailure(value: User?) {
+
+            }
         })
     }
 

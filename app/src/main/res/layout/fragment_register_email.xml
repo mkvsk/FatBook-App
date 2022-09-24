@@ -8,7 +8,7 @@
     tools:context=".ui.fragment.authentication.register.RegisterEmailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progressbarLayout_register_email"
+        android:id="@+id/progressbar_register_email"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="10dp"

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -19,8 +20,6 @@ import online.fatbook.fatbookapp.core.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentRegisterEmailBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.SYMBOL_AT
-import online.fatbook.fatbookapp.util.ProgressBarUtil.hideProgressBar
-import online.fatbook.fatbookapp.util.ProgressBarUtil.showProgressBar
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
@@ -70,6 +69,27 @@ class RegisterEmailFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
             }
         })
+
+        handleBackPressed()
+    }
+
+    private fun handleBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (progressbar_register_email.visibility == View.VISIBLE) {
+                        progressbar_register_email.visibility = View.GONE
+                    } else {
+                        showDefaultMessage(getString(R.string.dialog_register_email_error))
+                        popBackStack()
+                    }
+                }
+            })
+    }
+
+    private fun popBackStack() {
+        NavHostFragment.findNavController(this).popBackStack()
     }
 
     private fun showErrorMessage(message: String) {
@@ -84,14 +104,26 @@ class RegisterEmailFragment : Fragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
     }
 
+    private fun showDefaultMessage(message: String) {
+        fragment_register_email_dialog_text.text = message;
+        fragment_register_email_dialog_text.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.main_text
+            )
+        )
+        fragment_register_email_edittext_email.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext)
+    }
+
     private fun emailValidate(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
 
     private fun emailCheck(email: String) {
-        showProgressBar()
-        Log.d("PROGRESS BAR", "VISIBLE")
+        progressbar_register_email.visibility = View.VISIBLE
+        hideKeyboard(fragment_register_email_edittext_email)
         authViewModel.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
                 when (value?.code) {
@@ -109,14 +141,22 @@ class RegisterEmailFragment : Fragment() {
                     4 -> {
                         hideKeyboard(fragment_register_email_edittext_email)
                         showErrorMessage(getString(R.string.dialog_email_used_register_email))
-                        hideProgressBar()
+                        progressbar_register_email.visibility = View.GONE
                     }
                     else -> {
                         hideKeyboard(fragment_register_email_edittext_email)
                         showErrorMessage(getString(R.string.dialog_register_error))
-                        hideProgressBar()
+                        progressbar_register_email.visibility = View.GONE
                     }
                 }
+            }
+
+            override fun onFailure(value: AuthenticationResponse?) {
+                hideKeyboard(fragment_register_email_edittext_email)
+                showErrorMessage(getString(R.string.dialog_register_error))
+                progressbar_register_email.visibility = View.GONE
+
+//                emailCheck(email)
             }
         })
     }

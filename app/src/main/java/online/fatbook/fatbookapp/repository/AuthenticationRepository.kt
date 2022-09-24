@@ -15,7 +15,9 @@ import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.ConnectException
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.log
 
 class AuthenticationRepository(private val context: Context) {
 
@@ -37,6 +39,7 @@ class AuthenticationRepository(private val context: Context) {
                 override fun onFailure(call: Call<Boolean>, t: Throwable) {
                     Log.d("USERNAME CHECK", "error")
                     t.printStackTrace()
+                    callback.onFailure(call.isCanceled)
                 }
             })
         }
@@ -58,6 +61,12 @@ class AuthenticationRepository(private val context: Context) {
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                     Log.d("EMAIL CHECK", "error")
                     t.printStackTrace()
+                    if (t.cause!!.message!!.contains("Connection refused")) {
+                        println("api error")
+                    } else {
+                        println("check internet")
+                    }
+                    callback.onFailure(null)
                 }
             })
         }
@@ -83,6 +92,7 @@ class AuthenticationRepository(private val context: Context) {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     Log.d("LOGIN", "error")
                     t.printStackTrace()
+                    callback.onFailure(null)
                 }
             })
         }
@@ -104,6 +114,7 @@ class AuthenticationRepository(private val context: Context) {
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                     Log.d("REGISTER", "error")
                     t.printStackTrace()
+                    callback.onFailure(null)
                 }
             })
         }

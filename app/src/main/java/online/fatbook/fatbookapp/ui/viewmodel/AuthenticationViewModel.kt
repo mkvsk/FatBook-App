@@ -40,6 +40,9 @@ class AuthenticationViewModel : ViewModel() {
                     usernameAvailable.value = it
                 }
             }
+
+            override fun onFailure(value: Boolean?) {
+            }
         })
     }
 
@@ -69,6 +72,12 @@ class AuthenticationViewModel : ViewModel() {
                     callback.onResult(it)
                 }
             }
+
+            override fun onFailure(value: AuthenticationResponse?) {
+                value?.let {
+                    callback.onFailure(it)
+                }
+            }
         })
     }
 
@@ -78,6 +87,9 @@ class AuthenticationViewModel : ViewModel() {
                 value?.let {
                     callback.onResult(it)
                 }
+            }
+
+            override fun onFailure(value: LoginResponse?) {
             }
         })
     }
@@ -89,6 +101,9 @@ class AuthenticationViewModel : ViewModel() {
                     callback.onResult(it)
                 }
             }
+
+            override fun onFailure(value: AuthenticationResponse?) {
+            }
         })
     }
 
@@ -98,6 +113,9 @@ class AuthenticationViewModel : ViewModel() {
                 value?.let {
                     callback.onResult(it)
                 }
+            }
+
+            override fun onFailure(value: AuthenticationResponse?) {
             }
         })
     }
