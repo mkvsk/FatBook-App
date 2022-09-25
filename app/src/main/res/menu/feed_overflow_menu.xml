@@ -3,9 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/item_direct_messages3"
+        android:title="direct_messages"
+        android:icon="@drawable/tb2"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/item_direct_messages2"
+        android:title="direct_messages"
+        android:icon="@drawable/ic_mess_toolbar_9_plus"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/item_direct_messages"
         android:title="direct_messages"
-        android:icon="@drawable/ic_mess_toolbar_11"
+        android:icon="@drawable/tbtest"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/item_direct_messages1"
+        android:title="direct_messages"
+        android:icon="@drawable/tbempty"
         app:showAsAction="always"/>
 
 </menu>
