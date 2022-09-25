@@ -1,6 +1,8 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
 
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -24,11 +26,14 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.Recipe
 import online.fatbook.fatbookapp.core.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
+import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
+import org.apache.commons.lang3.StringUtils
 import java.text.DecimalFormat
 import kotlin.math.floor
 import kotlin.math.log10
@@ -53,6 +58,20 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        button_friends.setOnClickListener {
+            //TODO remove logout
+            val sharedPreferences = requireActivity().getSharedPreferences(
+                Constants.SP_TAG,
+                Context.MODE_PRIVATE
+            )
+            val editor = sharedPreferences.edit()
+            editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
+            editor.putString(Constants.SP_TAG_PASSWORD, StringUtils.EMPTY)
+            editor.apply()
+            startActivity(Intent(requireActivity(), SplashActivity::class.java))
+            requireActivity().finish()
+        }
 
         progressbarLayout_userprofile.visibility = View.GONE
         if (!userViewModel.selectedUsername.value.isNullOrEmpty()) {
@@ -243,6 +262,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         }
     }
 
+    //TODO ШЕФ СЮДА ПАСМАТРИ АЛООООООООООООООООООООООООООООООООООООООООООООООО
     private fun loadData() {
         userViewModel.getUserByUsername(
             userViewModel.selectedUsername.value.toString(),

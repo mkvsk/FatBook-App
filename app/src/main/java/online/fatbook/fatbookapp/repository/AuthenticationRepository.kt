@@ -48,12 +48,11 @@ class AuthenticationRepository(private val context: Context) {
 
             call.enqueue(object : Callback<AuthenticationResponse> {
                 override fun onResponse(
-                    call: Call<AuthenticationResponse>,
-                    response: Response<AuthenticationResponse>
+                    call: Call<AuthenticationResponse>, response: Response<AuthenticationResponse>
                 ) {
                     Log.d("EMAIL CHECK", response.body().toString())
                     if (response.body() == null) {
-                        callback.onFailure(AuthenticationResponse(401))
+                        callback.onFailure(null)
                     } else {
                         callback.onResult(response.body())
                     }
@@ -62,11 +61,7 @@ class AuthenticationRepository(private val context: Context) {
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                     Log.d("EMAIL CHECK", "error")
                     t.printStackTrace()
-                    if (t.cause == null) {
-                        callback.onFailure(AuthenticationResponse(401))
-                    } else {
-                        callback.onFailure(AuthenticationResponse(402))
-                    }
+                    callback.onFailure(null)
                 }
             })
         }
@@ -78,20 +73,20 @@ class AuthenticationRepository(private val context: Context) {
 
             call.enqueue(object : Callback<LoginResponse> {
                 override fun onResponse(
-                    call: Call<LoginResponse>,
-                    response: Response<LoginResponse>
+                    call: Call<LoginResponse>, response: Response<LoginResponse>
                 ) {
-                    if (response.code() == 403) {
-                        Log.d("LOGIN", "403 - Authentication error")
+                    Log.d("LOGIN", response.body().toString())
+                    if (response.body() == null) {
+                        callback.onFailure(null)
                     } else {
-                        Log.d("LOGIN", response.body().toString())
+                        callback.onResult(response.body())
                     }
-                    callback.onResult(response.body())
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     Log.d("LOGIN", "error")
                     t.printStackTrace()
+                    callback.onFailure(null)
                 }
             })
         }
@@ -103,51 +98,47 @@ class AuthenticationRepository(private val context: Context) {
 
             call.enqueue(object : Callback<AuthenticationResponse> {
                 override fun onResponse(
-                    call: Call<AuthenticationResponse>,
-                    response: Response<AuthenticationResponse>
+                    call: Call<AuthenticationResponse>, response: Response<AuthenticationResponse>
                 ) {
                     Log.d("REGISTER", response.body().toString())
-                    callback.onResult(response.body())
+                    if (response.body() == null) {
+                        callback.onFailure(null)
+                    } else {
+                        callback.onResult(response.body())
+                    }
                 }
 
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                     Log.d("REGISTER", "error")
                     t.printStackTrace()
-                    if (t.cause == null) {
-                        callback.onFailure(AuthenticationResponse(401))
-                    } else {
-                        callback.onFailure(AuthenticationResponse(402))
-                    }
+                    callback.onFailure(null)
                 }
             })
         }
     }
 
     fun confirmVCode(
-        vCode: String,
-        email: String,
-        callback: ResultCallback<AuthenticationResponse>
+        vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>
     ) {
         scope.launch {
             val call = RetrofitFactory.apiServiceClient().confirmVCode(email, vCode)
 
             call.enqueue(object : Callback<AuthenticationResponse> {
                 override fun onResponse(
-                    call: Call<AuthenticationResponse>,
-                    response: Response<AuthenticationResponse>
+                    call: Call<AuthenticationResponse>, response: Response<AuthenticationResponse>
                 ) {
                     Log.d("VCODE CONFIRM", response.body().toString())
-                    callback.onResult(response.body())
+                    if (response.body() == null) {
+                        callback.onFailure(null)
+                    } else {
+                        callback.onResult(response.body())
+                    }
                 }
 
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                     Log.d("VCODE CONFIRM", "error")
                     t.printStackTrace()
-                    if (t.cause == null) {
-                        callback.onFailure(AuthenticationResponse(401))
-                    } else {
-                        callback.onFailure(AuthenticationResponse(402))
-                    }
+                    callback.onFailure(null)
                 }
             })
         }

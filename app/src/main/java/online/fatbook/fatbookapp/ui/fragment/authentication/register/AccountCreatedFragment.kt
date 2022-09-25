@@ -97,7 +97,7 @@ class AccountCreatedFragment : Fragment() {
 
     private fun navigateToFeed() {
         NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_edit_profile_from_account_created)
+            .navigate(R.id.action_go_to_feed_from_account_created)
     }
 
     /**

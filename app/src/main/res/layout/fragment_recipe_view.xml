@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_primary_bgr"
-    tools:context=".ui.fragment.recipe.view.edit.RecipeViewFragment">
+    tools:context=".ui.fragment.recipe.view.RecipeViewFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/progressbarLayout_recipe_view"

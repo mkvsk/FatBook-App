@@ -34,6 +34,7 @@ class UserRepository(private val context: Context) {
                 override fun onFailure(call: Call<User>, t: Throwable) {
                     Log.d("LOAD USER", "error")
                     t.printStackTrace()
+                    callback.onFailure(null)
                 }
             })
         }

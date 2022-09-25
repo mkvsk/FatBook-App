@@ -101,18 +101,6 @@ class EditUserProfileFragment : Fragment() {
                 edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " ")
             )
             hideKeyboard(edittext_profile_bio)
-
-            //TODO remove logout
-            val sharedPreferences = requireActivity().getSharedPreferences(
-                SP_TAG,
-                Context.MODE_PRIVATE
-            )
-            val editor = sharedPreferences.edit()
-            editor.putString(SP_TAG_USERNAME, StringUtils.EMPTY)
-            editor.putString(SP_TAG_PASSWORD, StringUtils.EMPTY)
-            editor.apply()
-            startActivity(Intent(requireActivity(), SplashActivity::class.java))
-            requireActivity().finish()
         }
 
 //        val loadingDialog = LoadingDialog(requireContext())

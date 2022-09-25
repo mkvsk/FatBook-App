@@ -160,22 +160,13 @@ class RegisterEmailFragment : Fragment() {
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                when (value?.code) {
-                    401 -> {
-                        if (reconnectCount != 0) {
-                            emailCheck(email)
-                            reconnectCount--
-                        } else {
-                            showErrorMessage("api error", false)
-                            hideKeyboard(fragment_register_email_edittext_email)
-                            progressbar_register_email.visibility = View.GONE
-                        }
-                    }
-                    402 -> {
-                        showErrorMessage("check internet connection", false)
-                        hideKeyboard(fragment_register_email_edittext_email)
-                        progressbar_register_email.visibility = View.GONE
-                    }
+                if (reconnectCount != 0) {
+                    emailCheck(email)
+                    reconnectCount--
+                } else {
+                    showErrorMessage(getString(R.string.dialog_register_error), false)
+                    hideKeyboard(fragment_register_email_edittext_email)
+                    progressbar_register_email.visibility = View.GONE
                 }
             }
         })
