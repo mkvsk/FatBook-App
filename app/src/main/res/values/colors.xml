@@ -21,7 +21,7 @@
     <color name="colorPrimary">#ECEFF1</color>
     <color name="colorPrimaryDark">#546e7a</color>
     <color name="colorAccent">#FF4081</color>
-
+    <color name="colorPrimaryRipple">#33FF4081</color>
 
 
 </resources>

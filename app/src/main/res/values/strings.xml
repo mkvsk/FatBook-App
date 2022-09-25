@@ -194,15 +194,11 @@
     ///bottom nav menu
     <string name="nav_feed" translatable="false">Feed</string>
     <string name="nav_search" translatable="false">Search</string>
+    <string name="nav_recipe_create" translatable="false">Create recipe</string>
     <string name="nav_notifications" translatable="false">Notifications</string>
+    <string name="nav_user_profile" translatable="false">Profile</string>
 
     <!--    v.1.0.0-->
-    <string name="nav_ingredients" translatable="false">Ingredients</string>
-    <string name="nav_recipe_create" translatable="false">Create recipe</string>
-    <string name="nav_bookmarks" translatable="false">Bookmarks</string>
-    <string name="nav_user_profile" translatable="false">Profile</string>
-    <string name="nav_new_recipe" translatable="false">New recipe</string>
-
     ///dialog_add_ingredient
     <string name="hint_dialog_add_ingredient">Suggest ingredient</string>
     <string name="title_dialog_add_ingredient">Add ingredient:</string>
@@ -298,7 +294,6 @@
     <string name="menu_user_profile_settings">Settings</string>
     <string name="menu_user_profile_app_info">App info</string>
     <string name="menu_user_profile_logout">Logout</string>
-
 
 
 </resources>

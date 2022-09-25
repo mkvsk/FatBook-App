@@ -127,8 +127,7 @@
         android:id="@+id/navigation_login_new_pass"
         android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginNewPassFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_login_new_pass">
-    </fragment>
+        tools:layout="@layout/fragment_login_new_pass"></fragment>
 
     <fragment
         android:id="@+id/navigation_register_email"
@@ -205,13 +204,12 @@
         <action
             android:id="@+id/action_go_to_followers_from_user_profile"
             app:destination="@id/navigation_follow_fragment"
-            app:popUpTo="@id/navigation_user_profile"/>
+            app:popUpTo="@id/navigation_user_profile" />
 
         <action
             android:id="@+id/action_go_to_view_image_from_user_profile"
             app:destination="@id/navigation_view_image"
-            app:popUpTo="@id/navigation_user_profile"
-            />
+            app:popUpTo="@id/navigation_user_profile" />
 
     </fragment>
 
@@ -245,6 +243,18 @@
         android:label="@null"
         tools:layout="@layout/fragment_view_image" />
 
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.SearchFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.NotificationsFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_notifications" />
+
     <!--<fragment
         android:id="@+id/navigation_recipe_view"
         android:name="online.fatbook.fatbookapp.ui.fragment.user.EditUserProfileFragment"
@@ -256,21 +266,21 @@
         app:destination="@id/navigation_feed"
         app:popUpTo="@id/mobile_navigation" />
     <action
-        android:id="@+id/action_go_to_ingredients"
-        app:destination="@id/navigation_ingredients"
+        android:id="@+id/action_go_to_search"
+        app:destination="@id/navigation_search"
         app:popUpTo="@id/navigation_feed" />
     <action
         android:id="@+id/action_go_to_recipe_create"
-        app:destination="@id/navigation_recipe_create"
+        app:destination="@id/navigation_recipe_create_first_stage"
         app:popUpTo="@id/navigation_feed" />
     <action
-        android:id="@+id/action_go_to_bookmarks"
-        app:destination="@id/navigation_bookmarks"
+        android:id="@+id/action_go_to_notifications"
+        app:destination="@id/navigation_notifications"
         app:popUpTo="@id/navigation_feed" />
 
     <action
         android:id="@+id/action_go_to_profile"
-        app:destination="@id/navigation_user_profile_old"
+        app:destination="@id/navigation_user_profile"
         app:popUpTo="@id/navigation_feed" />
 
 </navigation>

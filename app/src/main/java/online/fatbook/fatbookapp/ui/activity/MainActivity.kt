@@ -61,9 +61,9 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         ) {
-    //        val editor = sharedPreferences.edit()
+            //        val editor = sharedPreferences.edit()
 //            editor.putString(UserUtils.USER_LOGIN, user!!.login)
-  //          editor.apply()
+            //          editor.apply()
         }
         userViewModel!!.user.value = user
     }
@@ -74,12 +74,12 @@ class MainActivity : AppCompatActivity() {
         binding!!.bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
             when (item.title.toString()) {
                 getString(R.string.nav_feed) -> navController!!.navigate(R.id.action_go_to_feed)
-                getString(R.string.nav_ingredients) -> navController!!.navigate(R.id.action_go_to_ingredients)
+                getString(R.string.nav_search) -> navController!!.navigate(R.id.action_go_to_search)
                 getString(R.string.nav_recipe_create) -> navController!!.navigate(R.id.action_go_to_recipe_create)
-                getString(R.string.nav_bookmarks) -> navController!!.navigate(R.id.action_go_to_bookmarks)
+                getString(R.string.nav_notifications) -> navController!!.navigate(R.id.action_go_to_notifications)
                 getString(R.string.nav_user_profile) -> navController!!.navigate(R.id.action_go_to_profile)
             }
-            false
+            true
         }
 
         navController!!.addOnDestinationChangedListener { _, destination, _ ->
@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_login -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_login_new_pass -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_account_created -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_view_image -> bottom_navigation.visibility = View.GONE
 
                 else -> bottom_navigation.visibility = View.VISIBLE
             }
