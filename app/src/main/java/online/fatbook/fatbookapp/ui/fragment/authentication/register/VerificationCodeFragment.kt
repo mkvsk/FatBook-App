@@ -14,11 +14,10 @@ import kotlinx.android.synthetic.main.fragment_register_email.*
 import kotlinx.android.synthetic.main.fragment_verification_code.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.AuthenticationResponse
+import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentVerificationCodeBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.ProgressBarUtil.hideProgressBar
-import online.fatbook.fatbookapp.util.ProgressBarUtil.showProgressBar
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils

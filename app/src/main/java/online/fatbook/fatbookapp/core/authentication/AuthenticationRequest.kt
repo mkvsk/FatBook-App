@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.core
+package online.fatbook.fatbookapp.core.authentication
 
 import java.io.Serializable
 

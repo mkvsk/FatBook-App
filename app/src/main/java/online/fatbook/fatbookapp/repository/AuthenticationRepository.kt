@@ -8,8 +8,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.AuthenticationRequest
-import online.fatbook.fatbookapp.core.AuthenticationResponse
+import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
+import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
 import online.fatbook.fatbookapp.core.LoginResponse
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import retrofit2.Call
