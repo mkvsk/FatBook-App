@@ -70,14 +70,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigation() {
         navController = findNavController(this, R.id.nav_host_fragment_activity_main)
-        setupWithNavController(binding!!.bottomNavigation, navController!!)
-        binding!!.bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
-            when (item.title.toString()) {
-                getString(R.string.nav_feed) -> navController!!.navigate(R.id.action_go_to_feed)
-                getString(R.string.nav_search) -> navController!!.navigate(R.id.action_go_to_search)
-                getString(R.string.nav_recipe_create) -> navController!!.navigate(R.id.action_go_to_recipe_create)
-                getString(R.string.nav_notifications) -> navController!!.navigate(R.id.action_go_to_notifications)
-                getString(R.string.nav_user_profile) -> navController!!.navigate(R.id.action_go_to_profile)
+        setupWithNavController(bottom_navigation, navController!!)
+        bottom_navigation.setOnItemSelectedListener { item: MenuItem ->
+            when (item.itemId) {
+                R.id.navigation_feed -> navController!!.navigate(R.id.action_go_to_feed)
+                R.id.navigation_search -> navController!!.navigate(R.id.action_go_to_search)
+                R.id.navigation_recipe_create -> navController!!.navigate(R.id.action_go_to_recipe_create)
+                R.id.navigation_notifications -> navController!!.navigate(R.id.action_go_to_notifications)
+                R.id.navigation_user_profile-> navController!!.navigate(R.id.action_go_to_profile)
             }
             true
         }

@@ -5,5 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.util.DirectMessagesFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="DIRECT MESSAGES"
+        android:textColor="@color/main_text"
+        android:textSize="50sp"
+        android:gravity="center"/>
+
 
 </FrameLayout>

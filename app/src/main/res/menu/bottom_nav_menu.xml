@@ -7,22 +7,22 @@
         android:title="@string/nav_feed" />
 
     <item
-        android:id="@+id/navigation_ingredients"
+        android:id="@+id/navigation_search"
         android:icon="@drawable/ic_bottomnav_search"
         android:title="@string/nav_search" />
 
     <item
-        android:id="@+id/navigation_recipe_create_old"
+        android:id="@+id/navigation_recipe_create"
         android:icon="@drawable/ic_bottomnav_add_recipe"
         android:title="@string/nav_recipe_create" />
 
     <item
-        android:id="@+id/navigation_bookmarks"
+        android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_bottomnav_notification"
         android:title="@string/nav_notifications" />
 
     <item
-        android:id="@+id/navigation_user_profile_old"
+        android:id="@+id/navigation_user_profile"
         android:icon="@drawable/ic_bottomnav_profile"
         android:title="@string/nav_user_profile" />
 

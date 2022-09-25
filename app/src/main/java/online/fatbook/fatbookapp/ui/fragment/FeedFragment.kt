@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.feed
+package online.fatbook.fatbookapp.ui.fragment
 
 import android.content.Context
 import android.content.Intent
@@ -81,7 +81,13 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.item_direct_messages -> {
+                NavHostFragment.findNavController(this).navigate(R.id.action_go_to_direct_messages_from_feed)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun addObservers() {
