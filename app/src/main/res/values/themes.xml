@@ -441,7 +441,7 @@
         <item name="tint">@color/ic_positive_color</item>
         <item name="elevation">4dp</item>
         <item name="android:translationZ">2dp</item>
-        <item name="android:src">@drawable/ic_msg</item>
+        <item name="android:src">@drawable/ic_btn_msg</item>
         <item name="fabCustomSize">@dimen/round_btn_follow_message_w_h</item>
     </style>
 
@@ -450,7 +450,7 @@
         <item name="tint">@color/ic_negative_color</item>
         <item name="elevation">4dp</item>
         <item name="android:translationZ">2dp</item>
-        <item name="android:src">@drawable/ic_msg</item>
+        <item name="android:src">@drawable/ic_btn_msg</item>
         <item name="fabCustomSize">@dimen/round_btn_follow_message_w_h</item>
     </style>
 
