@@ -19,7 +19,7 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.Recipe
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
@@ -148,31 +148,31 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         }
 
         val list1 = listOf(
-            Recipe(name = "sobaka1", forks = 255),
-            Recipe(name = "sobaka2", forks = 1477, author = "Neshik"),
+            Recipe(title = "sobaka1", forks = 255),
+            Recipe(title = "sobaka2", forks = 1477, author = "Neshik"),
             Recipe(
-                name = "Text text text text text text text text",
+                title = "Text text text text text text text text",
                 forks = 1234567,
                 author = "Timofey"
             ),
-            Recipe(name = "sobaka4"),
-            Recipe(name = "sobaka5"),
-            Recipe(name = "sobaka6"),
-            Recipe(name = "sobaka7"),
-            Recipe(name = "sobaka8", forks = 1339),
-            Recipe(name = "sobaka9"),
-            Recipe(name = "sobaka10")
+            Recipe(title = "sobaka4"),
+            Recipe(title = "sobaka5"),
+            Recipe(title = "sobaka6"),
+            Recipe(title = "sobaka7"),
+            Recipe(title = "sobaka8", forks = 1339),
+            Recipe(title = "sobaka9"),
+            Recipe(title = "sobaka10")
         )
         val list2 = listOf(
-            Recipe(name = "kot1"),
-            Recipe(name = "kot2"),
-            Recipe(name = "kot3"),
-            Recipe(name = "kot4"),
-            Recipe(name = "kot5"),
-            Recipe(name = "kot6"),
-            Recipe(name = "kot7"),
-            Recipe(name = "kot8"),
-            Recipe(name = "kot9")
+            Recipe(title = "kot1"),
+            Recipe(title = "kot2"),
+            Recipe(title = "kot3"),
+            Recipe(title = "kot4"),
+            Recipe(title = "kot5"),
+            Recipe(title = "kot6"),
+            Recipe(title = "kot7"),
+            Recipe(title = "kot8"),
+            Recipe(title = "kot9")
         )
 
         val adapter = RecipeAdapter()

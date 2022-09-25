@@ -8,7 +8,7 @@ import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
-import online.fatbook.fatbookapp.core.LoginResponse
+import online.fatbook.fatbookapp.core.authentication.LoginResponse
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
 import online.fatbook.fatbookapp.util.ContextHolder
 

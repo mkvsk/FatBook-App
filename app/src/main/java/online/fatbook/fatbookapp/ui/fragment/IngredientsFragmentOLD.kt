@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.databinding.FragmentIngredientsOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.IngredientsAdapter

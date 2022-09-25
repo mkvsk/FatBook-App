@@ -166,4 +166,13 @@
     <string name="set_cooking_time_tmpl_min">%d мин</string>
     <string name="default_cooking_time">15 мин</string>
     <string name="hint_login_password">Пароль</string>
+    <string name="IngredientUnit_KG_SINGLE_NAMING">Килограмм</string>
+    <string name="IngredientUnit_KG_MULTIPLY_NAMING">Килограммы</string>
+    <string name="IngredientUnit_KG_DISPLAY_NAME">кг</string>
+    <string name="IngredientUnit_L_SINGLE_NAMING">Литр</string>
+    <string name="IngredientUnit_L_MULTIPLY_NAMING">Литры</string>
+    <string name="IngredientUnit_L_DISPLAY_NAME">л</string>
+    <string name="IngredientUnit_CUP_SINGLE_NAMING">Стакан</string>
+    <string name="IngredientUnit_CUP_MULTIPLY_NAMING">Стаканы</string>
+    <string name="IngredientUnit_CUPL_DISPLAY_NAME">ст</string>
 </resources>

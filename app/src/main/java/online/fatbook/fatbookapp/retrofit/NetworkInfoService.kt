@@ -2,9 +2,11 @@ package online.fatbook.fatbookapp.retrofit
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import online.fatbook.fatbookapp.core.*
 import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
+import online.fatbook.fatbookapp.core.authentication.LoginResponse
+import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.user.User
 import retrofit2.Call
 import retrofit2.http.*

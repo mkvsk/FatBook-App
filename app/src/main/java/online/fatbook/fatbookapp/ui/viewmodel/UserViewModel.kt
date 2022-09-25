@@ -4,7 +4,7 @@ import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.Recipe
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.repository.UserRepository
 import online.fatbook.fatbookapp.util.ContextHolder

@@ -2,8 +2,8 @@ package online.fatbook.fatbookapp.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import online.fatbook.fatbookapp.core.Recipe
-import online.fatbook.fatbookapp.core.RecipeIngredient
+import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 
 class RecipeViewModel : ViewModel() {
     var recipe = MutableLiveData<Recipe?>()

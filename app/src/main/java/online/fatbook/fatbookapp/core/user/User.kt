@@ -1,6 +1,6 @@
 package online.fatbook.fatbookapp.core.user
 
-import online.fatbook.fatbookapp.core.Recipe
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import java.io.Serializable
 
 data class User(
@@ -30,4 +30,10 @@ data class User(
     fun convertToSimpleObject(): UserSimpleObject {
         return UserSimpleObject(pid, username, title, profileImage)
     }
+}
+
+enum class UserRole {
+    ADMIN,
+    MOD,
+    USER
 }

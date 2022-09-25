@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.rv_ingredient.view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 
 class IngredientsAdapter :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>(), BindableAdapter<Ingredient> {

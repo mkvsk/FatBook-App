@@ -1,6 +1,6 @@
 package online.fatbook.fatbookapp.ui.listeners
 
-import online.fatbook.fatbookapp.core.Recipe
+import online.fatbook.fatbookapp.core.recipe.Recipe
 
 interface OnRecipeClickListener {
     fun onRecipeClick(position: Int)

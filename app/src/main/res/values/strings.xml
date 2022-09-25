@@ -238,10 +238,6 @@
     <string name="undo_string">Undo</string>
 
     //enum IngredientUnit
-    //GRAM
-    <string name="IngredientUnit_GRAM_SINGLE_NAMING">Gram</string>
-    <string name="IngredientUnit_GRAM_MULTIPLY_NAMING">Grams</string>
-    <string name="IngredientUnit_GRAM_DISPLAY_NAME">g</string>
     //TABLE_SPOON
     <string name="IngredientUnit_TABLE_SPOON_SINGLE_NAMING">Table spoon</string>
     <string name="IngredientUnit_TABLE_SPOON_MULTIPLY_NAMING">Table spoons</string>
@@ -250,14 +246,30 @@
     <string name="IngredientUnit_TEA_SPOON_SINGLE_NAMING">Tea spoon</string>
     <string name="IngredientUnit_TEA_SPOON_MULTIPLY_NAMING">Tea spoons</string>
     <string name="IngredientUnit_TEA_SPOON_DISPLAY_NAME">tsp</string>
+    //GRAM
+    <string name="IngredientUnit_GRAM_SINGLE_NAMING">Gram</string>
+    <string name="IngredientUnit_GRAM_MULTIPLY_NAMING">Grams</string>
+    <string name="IngredientUnit_GRAM_DISPLAY_NAME">g</string>
+    //KG
+    <string name="IngredientUnit_KG_SINGLE_NAMING">Kilogram</string>
+    <string name="IngredientUnit_KG_MULTIPLY_NAMING">Kilos</string>
+    <string name="IngredientUnit_KG_DISPLAY_NAME">kg</string>
     //PCS
     <string name="IngredientUnit_PCS_SINGLE_NAMING">Piece</string>
     <string name="IngredientUnit_PCS_MULTIPLY_NAMING">Pieces</string>
     <string name="IngredientUnit_PCS_DISPLAY_NAME">pcs</string>
+    //L
+    <string name="IngredientUnit_L_SINGLE_NAMING">Liter</string>
+    <string name="IngredientUnit_L_MULTIPLY_NAMING">Liters</string>
+    <string name="IngredientUnit_L_DISPLAY_NAME">l</string>
     //ML
     <string name="IngredientUnit_ML_SINGLE_NAMING">Milliliter</string>
     <string name="IngredientUnit_ML_MULTIPLY_NAMING">Milliliters</string>
     <string name="IngredientUnit_ML_DISPLAY_NAME">ml</string>
+    //CUP
+    <string name="IngredientUnit_CUP_SINGLE_NAMING">Cup</string>
+    <string name="IngredientUnit_CUP_MULTIPLY_NAMING">Cups</string>
+    <string name="IngredientUnit_CUPL_DISPLAY_NAME">cup</string>
 
     //in code
     <string name="ERROR_CREATING_USER" translatable="false">ERROR CREATING USER</string>

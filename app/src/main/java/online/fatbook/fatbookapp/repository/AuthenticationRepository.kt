@@ -10,7 +10,7 @@ import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
-import online.fatbook.fatbookapp.core.LoginResponse
+import online.fatbook.fatbookapp.core.authentication.LoginResponse
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback

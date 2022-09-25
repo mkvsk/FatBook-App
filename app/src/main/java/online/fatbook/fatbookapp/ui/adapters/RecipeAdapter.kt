@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.Recipe
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.util.FormatUtils
@@ -71,7 +71,7 @@ class RecipeAdapter :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(recipe: Recipe) {
 
-            itemView.textView_rv_card_recipe_title.text = recipe.name
+            itemView.textView_rv_card_recipe_title.text = recipe.title
             itemView.textView_rv_card_recipe_author.text = recipe.author
             val forksAmount = FormatUtils.prettyCount(recipe.forks!!)
             itemView.textView_rv_card_recipe_forks_avg.text = forksAmount

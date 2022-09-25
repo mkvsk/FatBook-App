@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.Ingredient
-import online.fatbook.fatbookapp.core.IngredientUnit
-import online.fatbook.fatbookapp.core.RecipeIngredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
+import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentAddIngredientOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.AddIngredientToRecipeAdapter
@@ -24,7 +24,6 @@ import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.logging.Level
 
 @Log
 class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListener {

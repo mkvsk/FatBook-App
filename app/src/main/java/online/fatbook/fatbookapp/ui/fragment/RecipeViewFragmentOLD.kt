@@ -23,8 +23,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.Recipe
-import online.fatbook.fatbookapp.core.RecipeIngredient
+import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
@@ -379,8 +379,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun saveEdit() {
-        recipe!!.name = binding!!.editTextRecipeViewName.text.toString()
-        recipe!!.description = binding!!.editTextRecipeViewDescription.text.toString()
+        recipe!!.title = binding!!.editTextRecipeViewName.text.toString()
         saveRecipe()
         uploadImage()
     }
@@ -458,7 +457,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun showData() {
-        binding!!.editTextRecipeViewName.setText(recipe!!.name)
+        binding!!.editTextRecipeViewName.setText(recipe!!.title)
         if (StringUtils.isNotEmpty(recipe!!.image)) {
             Glide
                 .with(requireContext())
@@ -469,7 +468,6 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
         }
         binding!!.textViewRecipeViewUsername.text = recipe!!.author
         binding!!.textViewRecipeViewForksQuantity.text = recipe!!.forks.toString()
-        binding!!.editTextRecipeViewDescription.setText(recipe!!.description)
         if (recipe!!.author == user!!.username) {
             binding!!.imageViewRecipeViewIconBookmarks.visibility = View.INVISIBLE
         } else {

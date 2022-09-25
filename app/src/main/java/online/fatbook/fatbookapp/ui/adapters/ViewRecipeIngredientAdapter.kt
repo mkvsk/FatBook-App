@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.rv_add_new_recipe_ingredients_old.view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.RecipeIngredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient
 
 class ViewRecipeIngredientAdapter :

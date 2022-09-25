@@ -25,7 +25,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.*
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory

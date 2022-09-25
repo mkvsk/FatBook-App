@@ -11,7 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_recipe_view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.Recipe
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
@@ -149,15 +149,13 @@ class RecipeViewFragment : Fragment() {
     private fun loadData(id: Long) {
         val recipe: Recipe = Recipe(
             pid = 1235L,
-            name = "Kartoshechka",
-            description = "lalalalallalal",
+            title = "Kartoshechka",
             author = "Neshik",
             ingredients = ArrayList(),
             image = "https://fatbook.b-cdn.net/root/upal.jpg",
             forks = 123456789,
             createDate = "10.09.2022", identifier = id
         )
-        recipe.recipePortionFats = 1.9
 
         recipeViewModel.selectedRecipe.value = recipe
 

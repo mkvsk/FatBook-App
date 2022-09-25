@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.rv_ingredient_to_recipe_old.view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener
 
 class AddIngredientToRecipeAdapter :

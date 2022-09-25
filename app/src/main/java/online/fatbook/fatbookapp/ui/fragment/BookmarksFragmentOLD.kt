@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.Recipe
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentBookmarksOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory

@@ -6,8 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
-import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateAddIngredientsBinding
 import online.fatbook.fatbookapp.ui.adapters.IngredientsAdapter
 

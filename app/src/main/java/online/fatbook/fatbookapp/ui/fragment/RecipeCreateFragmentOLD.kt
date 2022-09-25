@@ -22,8 +22,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.Recipe
-import online.fatbook.fatbookapp.core.RecipeIngredient
+import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter
@@ -99,8 +99,7 @@ class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun saveRecipe() {
-        recipe!!.name = binding!!.editTextRecipeAddTitleV1.text.toString()
-        recipe!!.description = binding!!.editTextRecipeAddDescriptionV1.text.toString()
+        recipe!!.title = binding!!.editTextRecipeAddTitleV1.text.toString()
         recipe!!.image = StringUtils.EMPTY
         recipe!!.author = userViewModel!!.user.value!!.username
         recipe!!.createDate = RecipeUtils.regDateFormat.format(Date())
