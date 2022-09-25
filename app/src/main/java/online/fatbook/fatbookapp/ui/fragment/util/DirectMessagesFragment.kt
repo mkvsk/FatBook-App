@@ -6,19 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.databinding.FragmentBadgesBinding
+import online.fatbook.fatbookapp.databinding.FragmentDirectMessagesBinding
 
-class BadgesFragment : Fragment() {
 
-    private var binding: FragmentBadgesBinding? = null
+class DirectMessagesFragment : Fragment() {
+
+    private var binding: FragmentDirectMessagesBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBadgesBinding.inflate(inflater, container, false)
+        binding = FragmentDirectMessagesBinding.inflate(inflater, container, false)
         return binding!!.root
     }
-
 
 }

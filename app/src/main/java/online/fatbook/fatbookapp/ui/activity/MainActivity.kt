@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_register_email -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_verification_code -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_register_password -> bottom_navigation.visibility = View.GONE
-                R.id.navigation_sregister_username -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_register_username -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_login -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_login_new_pass -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_account_created -> bottom_navigation.visibility = View.GONE

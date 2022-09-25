@@ -12,7 +12,7 @@
         android:title="@string/nav_search" />
 
     <item
-        android:id="@+id/navigation_recipe_create"
+        android:id="@+id/navigation_recipe_create_old"
         android:icon="@drawable/ic_bottomnav_add_recipe"
         android:title="@string/nav_recipe_create" />
 

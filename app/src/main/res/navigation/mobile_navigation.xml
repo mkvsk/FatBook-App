@@ -12,8 +12,13 @@
         tools:layout="@layout/fragment_feed">
 
         <action
-            android:id="@+id/action_go_to_recipe_view"
+            android:id="@+id/action_go_to_recipe_view_from_feed"
             app:destination="@id/navigation_recipe_view"
+            app:popUpTo="@id/navigation_feed" />
+
+        <action
+            android:id="@+id/action_go_to_direct_messages_from_feed"
+            app:destination="@id/navigation_direct_messages"
             app:popUpTo="@id/navigation_feed" />
 
     </fragment>
@@ -25,7 +30,7 @@
         tools:layout="@layout/fragment_ingredients_old" />
 
     <fragment
-        android:id="@+id/navigation_recipe_create"
+        android:id="@+id/navigation_recipe_create_old"
         android:name="online.fatbook.fatbookapp.ui.fragment.RecipeCreateFragmentOLD"
         android:label="@string/mobile_nav_recipe_create"
         tools:layout="@layout/fragment_recipe_create_old">
@@ -33,7 +38,7 @@
         <action
             android:id="@+id/action_go_to_add_ingredient"
             app:destination="@id/navigation_add_ingredient"
-            app:popUpTo="@id/navigation_recipe_create" />
+            app:popUpTo="@id/navigation_recipe_create_old" />
 
     </fragment>
 
@@ -58,7 +63,7 @@
         tools:layout="@layout/fragment_user_profile_old">
 
         <action
-            android:id="@+id/action_go_to_recipe_view_from_user_profile"
+            android:id="@+id/action_go_to_recipe_view_from_user_profile_old"
             app:destination="@id/navigation_recipe_view"
             app:popUpTo="@id/navigation_user_profile_old" />
 
@@ -127,7 +132,7 @@
         android:id="@+id/navigation_login_new_pass"
         android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginNewPassFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_login_new_pass"></fragment>
+        tools:layout="@layout/fragment_login_new_pass" />
 
     <fragment
         android:id="@+id/navigation_register_email"
@@ -162,12 +167,12 @@
 
         <action
             android:id="@+id/action_go_to_register_username"
-            app:destination="@id/navigation_sregister_username"
+            app:destination="@id/navigation_register_username"
             app:popUpTo="@id/navigation_register_password" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_sregister_username"
+        android:id="@+id/navigation_register_username"
         android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.RegisterUsernameFragment"
         android:label="@null"
         tools:layout="@layout/fragment_register_username">
@@ -175,7 +180,7 @@
         <action
             android:id="@+id/action_go_to_account_created"
             app:destination="@id/navigation_account_created"
-            app:popUpTo="@id/navigation_sregister_username" />
+            app:popUpTo="@id/navigation_register_username" />
     </fragment>
 
     <fragment
@@ -211,7 +216,34 @@
             app:destination="@id/navigation_view_image"
             app:popUpTo="@id/navigation_user_profile" />
 
+        <action
+            android:id="@+id/action_go_to_recipe_view_from_user_profile"
+            app:destination="@id/navigation_recipe_view"
+            app:popUpTo="@id/navigation_user_profile" />
+
+        <action
+            android:id="@+id/action_go_to_app_settings_from_user_profile"
+            app:destination="@id/navigation_app_settings"
+            app:popUpTo="@id/navigation_user_profile" />
+
+        <action
+            android:id="@+id/action_go_to_badges_from_user_profile"
+            app:destination="@id/navigation_badges"
+            app:popUpTo="@id/navigation_user_profile" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_badges"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.BadgesFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_badges" />
+
+    <fragment
+        android:id="@+id/navigation_app_settings"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.AppSettingsFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_app_settings" />
 
     <fragment
         android:id="@+id/navigation_edit_profile_fragment"
@@ -229,7 +261,31 @@
         android:id="@+id/navigation_recipe_create_first_stage"
         android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeCreateFirstStageFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_recipe_create_first_stage" />
+        tools:layout="@layout/fragment_recipe_create_first_stage">
+
+        <action
+            android:id="@+id/action_go_to_recipe_create_second_stage_from_first_stage"
+            app:destination="@id/navigation_recipe_create_second_stage"
+            app:popUpTo="@id/navigation_recipe_create_first_stage" />
+
+        <action
+            android:id="@+id/action_go_to_recipe_choose_method_or_category_from_first_stage"
+            app:destination="@id/navigation_recipe_choose_method_or_category"
+            app:popUpTo="@id/navigation_recipe_create_first_stage" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_recipe_choose_method_or_category"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeMethodsCategoriesItemsFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_recipe_methods_categories_items" />
+
+    <fragment
+        android:id="@+id/navigation_recipe_create_second_stage"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeCreateSecondStageFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_recipe_create_second_stage" />
 
     <fragment
         android:id="@+id/navigation_recipe_create_add_ingredients"
@@ -247,13 +303,44 @@
         android:id="@+id/navigation_search"
         android:name="online.fatbook.fatbookapp.ui.fragment.util.SearchFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+
+        <action
+            android:id="@+id/action_go_to_feed_from_search"
+            app:destination="@id/navigation_feed"
+            app:popUpTo="@id/navigation_search" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="online.fatbook.fatbookapp.ui.fragment.util.NotificationsFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications">
+
+        <action
+            android:id="@+id/action_go_to_direct_messages_from_notifications"
+            app:destination="@id/navigation_direct_messages"
+            app:popUpTo="@id/navigation_notifications" />
+
+        <action
+            android:id="@+id/action_go_to_followers_from_notifications"
+            app:destination="@id/navigation_follow_fragment"
+            app:popUpTo="@id/navigation_notifications" />
+
+        <action
+            android:id="@+id/action_go_to_recipe_view_from_notifications"
+            app:destination="@id/navigation_recipe_view"
+            app:popUpTo="@id/navigation_notifications" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_direct_messages"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.DirectMessagesFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_direct_messages" />
 
     <!--<fragment
         android:id="@+id/navigation_recipe_view"

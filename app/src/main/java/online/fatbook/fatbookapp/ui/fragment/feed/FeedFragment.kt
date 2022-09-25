@@ -145,7 +145,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         val recipe = userViewModel.feedRecipeList.value!![position]
         recipeViewModel.selectedRecipe.value = recipe
         recipeViewModel.selectedRecipePosition.value = position
-        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_recipe_view)
+        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_recipe_view_from_feed)
     }
 
     override fun onBookmarksClick(recipe: Recipe?, bookmark: Boolean, position: Int) {
