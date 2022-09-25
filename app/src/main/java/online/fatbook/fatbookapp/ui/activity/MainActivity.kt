@@ -9,7 +9,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.User
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel

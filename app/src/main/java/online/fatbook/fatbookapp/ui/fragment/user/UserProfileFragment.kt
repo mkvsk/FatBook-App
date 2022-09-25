@@ -1,16 +1,13 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
-
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.LayoutInflaterCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -20,11 +17,10 @@ import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_user_profile.*
-import kotlinx.android.synthetic.main.fragment_view_image.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.Recipe
-import online.fatbook.fatbookapp.core.User
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
@@ -34,11 +30,6 @@ import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
-import java.text.DecimalFormat
-import kotlin.math.floor
-import kotlin.math.log10
-import kotlin.math.pow
-
 
 class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
@@ -213,8 +204,8 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
         val user = userViewModel.selectedUser.value
 
-        user!!.login = "kit"
-        toolbar_userprofile.title = user!!.login
+        user!!.username = "kit"
+        toolbar_userprofile.title = user!!.username
 
         if (user.recipes == null) {
             textview_recipes_qtt_userprofile.text = "0"
@@ -222,16 +213,16 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             textview_recipes_qtt_userprofile.text = FormatUtils.prettyCount(user.recipes?.size!!)
         }
 
-        if (user.followers == null || user.followers == 0) {
+        if (user.followersAmount == null || user.followersAmount == 0) {
             textview_friends_qtt_userprofile.text = "0"
         } else {
-            textview_friends_qtt_userprofile.text = FormatUtils.prettyCount(user.followers)
+            textview_friends_qtt_userprofile.text = FormatUtils.prettyCount(user.followersAmount!!)
         }
 
-        if (user.name.isNullOrEmpty()) {
+        if (user.title.isNullOrEmpty()) {
             textview_title_userprofile.visibility = View.GONE
         } else {
-            textview_title_userprofile.text = user.name
+            textview_title_userprofile.text = user.title
         }
 
         if (user.website.isNullOrEmpty()) {
@@ -248,10 +239,10 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             textview_bio_userprofile.text = user.bio
         }
 
-        user.image = "https://fatbook.b-cdn.net/root/upal.jpg"
+        user.profileImage = "https://fatbook.b-cdn.net/root/upal.jpg"
         Glide
             .with(requireContext())
-            .load(user.image!!)
+            .load(user.profileImage!!)
             .into(imageview_userphoto_userprofile)
 
         user.online = true

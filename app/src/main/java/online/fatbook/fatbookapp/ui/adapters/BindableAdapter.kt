@@ -1,6 +1,6 @@
 package online.fatbook.fatbookapp.ui.adapters
 
-import online.fatbook.fatbookapp.core.User
+import online.fatbook.fatbookapp.core.user.User
 
 interface BindableAdapter <T> {
     fun setData(data: List<T>?)

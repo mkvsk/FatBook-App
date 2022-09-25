@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_feed.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Recipe
-import online.fatbook.fatbookapp.core.User
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentFeedBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
@@ -160,7 +160,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
 //                    FeedFragment.log.log(Level.INFO, "bookmark SUCCESS")
                     recipeViewModel.selectedRecipe.value = response.body()
-                    loadUser(userViewModel.user.value!!.login!!, position)
+                    loadUser(userViewModel.user.value!!.username!!, position)
                 }
 
                 override fun onFailure(call: Call<Recipe?>, t: Throwable) {
@@ -180,7 +180,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
 //                    FeedFragment.log.log(Level.INFO, "fork SUCCESS")
                     recipeViewModel.selectedRecipe.value = response.body()
-                    loadUser(userViewModel.user.value!!.login!!, position)
+                    loadUser(userViewModel.user.value!!.username!!, position)
                 }
 
                 override fun onFailure(call: Call<Recipe?>, t: Throwable) {

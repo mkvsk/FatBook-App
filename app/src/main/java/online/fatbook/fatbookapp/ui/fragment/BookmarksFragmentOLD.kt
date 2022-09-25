@@ -10,7 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Recipe
-import online.fatbook.fatbookapp.core.User
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentBookmarksOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
@@ -61,7 +61,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun loadRecipes() {
-        RetrofitFactory.apiServiceClient().getUserBookmarks(user!!.login)
+        RetrofitFactory.apiServiceClient().getUserBookmarks(user!!.username)
             .enqueue(object : Callback<ArrayList<Recipe>?> {
                 override fun onResponse(
                     call: Call<ArrayList<Recipe>?>,
@@ -111,7 +111,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
     override fun onBookmarksClick(recipe: Recipe?, bookmark: Boolean, position: Int) {
         recipeList!!.removeAt(position)
         adapter!!.notifyItemRemoved(position)
-        user!!.recipesBookmarked!!.remove(recipe!!.identifier)
+        user!!.recipesFavourites!!.remove(recipe!!.identifier)
         saveUser()
     }
 
@@ -160,7 +160,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun loadUser() {
-        RetrofitFactory.apiServiceClient().getUser(user!!.login)
+        RetrofitFactory.apiServiceClient().getUser(user!!.username)
             .enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if (response.code() == 200) {

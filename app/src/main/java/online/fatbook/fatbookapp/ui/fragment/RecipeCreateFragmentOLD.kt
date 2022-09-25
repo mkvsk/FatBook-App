@@ -102,7 +102,7 @@ class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
         recipe!!.name = binding!!.editTextRecipeAddTitleV1.text.toString()
         recipe!!.description = binding!!.editTextRecipeAddDescriptionV1.text.toString()
         recipe!!.image = StringUtils.EMPTY
-        recipe!!.author = userViewModel!!.user.value!!.login
+        recipe!!.author = userViewModel!!.user.value!!.username
         recipe!!.createDate = RecipeUtils.regDateFormat.format(Date())
         save()
         NavHostFragment.findNavController(this).popBackStack()

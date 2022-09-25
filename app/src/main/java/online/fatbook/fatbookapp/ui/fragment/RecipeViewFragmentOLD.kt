@@ -25,7 +25,7 @@ import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Recipe
 import online.fatbook.fatbookapp.core.RecipeIngredient
-import online.fatbook.fatbookapp.core.User
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter
@@ -201,7 +201,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun loadUser() {
-        RetrofitFactory.apiServiceClient().getUser(user!!.login)
+        RetrofitFactory.apiServiceClient().getUser(user!!.username)
             .enqueue(object : Callback<User?> {
                 override fun onResponse(call: Call<User?>, response: Response<User?>) {
 //                    RecipeViewFragment.log.log(Level.INFO, "user load SUCCESS")
@@ -262,7 +262,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
         val activity = (activity as AppCompatActivity?)!!
         activity.setSupportActionBar(binding!!.toolbarRecipeViewOld)
         binding!!.toolbarRecipeViewOld.setNavigationOnClickListener { view: View? -> navigateBack() }
-        if (recipe!!.author == userViewModel!!.user.value!!.login) {
+        if (recipe!!.author == userViewModel!!.user.value!!.username) {
             setHasOptionsMenu(true)
             binding!!.kuzyaRecipeView.visibility = View.GONE
         } else {
@@ -470,10 +470,10 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
         binding!!.textViewRecipeViewUsername.text = recipe!!.author
         binding!!.textViewRecipeViewForksQuantity.text = recipe!!.forks.toString()
         binding!!.editTextRecipeViewDescription.setText(recipe!!.description)
-        if (recipe!!.author == user!!.login) {
+        if (recipe!!.author == user!!.username) {
             binding!!.imageViewRecipeViewIconBookmarks.visibility = View.INVISIBLE
         } else {
-            toggleBookmarks(user!!.recipesBookmarked!!.contains(recipe!!.identifier))
+            toggleBookmarks(user!!.recipesFavourites!!.contains(recipe!!.identifier))
         }
         toggleForks(user!!.recipesForked!!.contains(recipe!!.identifier))
     }

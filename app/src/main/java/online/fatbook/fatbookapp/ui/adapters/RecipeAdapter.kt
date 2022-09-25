@@ -11,15 +11,11 @@ import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.Recipe
-import online.fatbook.fatbookapp.core.User
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.RecipeUtils
 import org.apache.commons.lang3.StringUtils
-import java.text.DecimalFormat
-import kotlin.math.floor
-import kotlin.math.log10
-import kotlin.math.pow
 
 @Log
 class RecipeAdapter :
@@ -83,13 +79,13 @@ class RecipeAdapter :
                 itemView.imageView_rv_card_recipe_fork,
                 user.recipesForked!!.contains(recipe.identifier)
             )
-            if (recipe.author == user.login) {
+            if (recipe.author == user.username) {
                 itemView.imageView_rv_card_recipe_bookmarks.visibility = View.INVISIBLE
             } else {
                 itemView.imageView_rv_card_recipe_bookmarks.visibility = View.VISIBLE
                 toggleFavourites(
                     itemView.imageView_rv_card_recipe_bookmarks,
-                    user.recipesBookmarked!!.contains(recipe.identifier)
+                    user.recipesFavourites!!.contains(recipe.identifier)
                 )
             }
             if (StringUtils.isNotEmpty(recipe.image)) {

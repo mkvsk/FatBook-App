@@ -21,13 +21,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import lombok.extern.java.Log
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.*
-import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
@@ -43,7 +42,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import java.util.logging.Level
 
 @Log
 class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
@@ -96,7 +94,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
                     binding!!.buttonUserProfileChangePhoto.visibility = View.VISIBLE
                     binding!!.buttonUserProfileDeletePhoto.visibility = View.VISIBLE
                 } else {
-                    if (StringUtils.isEmpty(user!!.image)) {
+                    if (StringUtils.isEmpty(user!!.profileImage)) {
                         binding!!.buttonUserProfileAddPhoto.visibility = View.VISIBLE
                         binding!!.buttonUserProfileChangePhoto.visibility = View.GONE
                         binding!!.buttonUserProfileDeletePhoto.visibility = View.GONE
@@ -121,7 +119,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
         binding!!.buttonUserProfileDeletePhoto.setOnClickListener {
             selectedImageUri = null
             userPhoto = null
-            user!!.image = (StringUtils.EMPTY)
+            user!!.profileImage = (StringUtils.EMPTY)
             fillUserProfile()
             if (updateImage) {
                 updateImage()
@@ -147,7 +145,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun loadUser() {
-        RetrofitFactory.apiServiceClient().getUser(user!!.login)
+        RetrofitFactory.apiServiceClient().getUser(user!!.username)
             .enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
 //                    UserProfileFragment.log.log(
@@ -178,28 +176,28 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun fillUserProfile() {
-        binding!!.toolbarUserProfile.title = user!!.login
-        binding!!.editTextProfileName.setText(user!!.name)
+        binding!!.toolbarUserProfile.title = user!!.username
+        binding!!.editTextProfileName.setText(user!!.title)
         binding!!.editTextProfileBio.setText(user!!.bio)
         adapter!!.setData(user!!.recipes, user)
         adapter!!.notifyDataSetChanged()
     }
 
     private fun updateImage() {
-        if (StringUtils.isNotEmpty(user!!.image)) {
+        if (StringUtils.isNotEmpty(user!!.profileImage)) {
             Glide
                 .with(
                     layoutInflater
                         .context
                 )
-                .load(user!!.image)
+                .load(user!!.profileImage)
                 .into(binding!!.imageViewProfilePhoto)
             Glide
                 .with(
                     layoutInflater
                         .context
                 )
-                .load(user!!.image)
+                .load(user!!.profileImage)
                 .into(binding!!.imageViewUserProfilePhotoBgr)
         } else {
             binding!!.imageViewProfilePhoto.setImageDrawable(resources.getDrawable(R.drawable.ic_default_recipe_image))
@@ -293,7 +291,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
         binding!!.editTextProfileBio.isEnabled = allow
         if (allow) {
             binding!!.linearlayoutButtonsUserImage.visibility = View.VISIBLE
-            if (userPhoto == null && StringUtils.isEmpty(user!!.image)) {
+            if (userPhoto == null && StringUtils.isEmpty(user!!.profileImage)) {
                 binding!!.buttonUserProfileAddPhoto.visibility = View.VISIBLE
                 binding!!.buttonUserProfileChangePhoto.visibility = View.GONE
                 binding!!.buttonUserProfileDeletePhoto.visibility = View.GONE
@@ -323,7 +321,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
         binding!!.editTextProfileName.setText(strName.trim { it <= ' ' })
         val strBio = binding!!.editTextProfileBio.text.toString()
         binding!!.editTextProfileBio.setText(strBio.replace("\n", " ").trim { it <= ' ' })
-        user!!.name = binding!!.editTextProfileName.text.toString()
+        user!!.title = binding!!.editTextProfileName.text.toString()
         user!!.bio = binding!!.editTextProfileBio.text.toString()
         saveUser()
     }
@@ -358,7 +356,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
             val fileName = "image" + userPhoto!!.name.substring(userPhoto!!.name.indexOf('.'))
             val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
             RetrofitFactory.apiServiceClient()
-                .uploadUserImage(file, FileUtils.TAG_USER, user!!.login)
+                .uploadUserImage(file, FileUtils.TAG_USER, user!!.username)
                 .enqueue(object : Callback<User?> {
                     override fun onResponse(call: Call<User?>, response: Response<User?>) {
                         if (response.code() == 200) {
