@@ -40,8 +40,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserProfileBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -50,11 +49,18 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        progressbar_userprofile.visibility = View.VISIBLE
+
+        if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
+            setupViewForCurrentUserProfile()
+        } else {
+            setupViewForSelectedUserProfile()
+        }
+
         button_friends.setOnClickListener {
             //TODO remove logout
             val sharedPreferences = requireActivity().getSharedPreferences(
-                Constants.SP_TAG,
-                Context.MODE_PRIVATE
+                Constants.SP_TAG, Context.MODE_PRIVATE
             )
             val editor = sharedPreferences.edit()
             editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
@@ -62,11 +68,6 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             editor.apply()
             startActivity(Intent(requireActivity(), SplashActivity::class.java))
             requireActivity().finish()
-        }
-
-        progressbarLayout_userprofile.visibility = View.GONE
-        if (!userViewModel.selectedUsername.value.isNullOrEmpty()) {
-            loadData()
         }
 
         this.toolbar_userprofile.navigationIcon = null
@@ -81,7 +82,8 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         }
 
         imageview_userphoto_userprofile.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_view_image_from_user_profile)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_view_image_from_user_profile)
         }
 
 
@@ -126,8 +128,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                 textview_bio_userprofile.maxLines = Integer.MAX_VALUE
                 imageview_ic_expand.setImageDrawable(
                     ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.ic_expand_less
+                        requireContext(), R.drawable.ic_expand_less
                     )
                 )
                 expanded = true
@@ -135,8 +136,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                 textview_bio_userprofile.maxLines = 3
                 imageview_ic_expand.setImageDrawable(
                     ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.ic_expand_more
+                        requireContext(), R.drawable.ic_expand_more
                     )
                 )
                 expanded = false
@@ -200,12 +200,26 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         })
     }
 
-    private fun drawData() {
+    private fun setupViewForCurrentUserProfile() {
+        //TODO draw for current user
+        loadData(userViewModel.user.value!!.username!!, true)
+    }
 
-        val user = userViewModel.selectedUser.value
+    private fun setupViewForSelectedUserProfile() {
+        //TODO draw for selected user
+        loadData(userViewModel.selectedUsername.value!!, false)
+    }
 
-        user!!.username = "kit"
-        toolbar_userprofile.title = user!!.username
+    private fun drawData(user: User) {
+
+        if (user.username == userViewModel.user.value!!.username) {
+            //мы на своем профиле
+        } else {
+            //мы на чужом профиле
+        }
+
+        user.username = "kit"
+        toolbar_userprofile.title = user.username
 
         if (user.recipes == null) {
             textview_recipes_qtt_userprofile.text = "0"
@@ -240,10 +254,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         }
 
         user.profileImage = "https://fatbook.b-cdn.net/root/upal.jpg"
-        Glide
-            .with(requireContext())
-            .load(user.profileImage!!)
-            .into(imageview_userphoto_userprofile)
+        Glide.with(requireContext()).load(user.profileImage!!).into(imageview_userphoto_userprofile)
 
         user.online = true
         if (user.online!!) {
@@ -253,27 +264,30 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         }
     }
 
-    //TODO ШЕФ СЮДА ПАСМАТРИ АЛООООООООООООООООООООООООООООООООООООООООООООООО
-    private fun loadData() {
-        userViewModel.getUserByUsername(
-            userViewModel.selectedUsername.value.toString(),
-            object : ResultCallback<User> {
-                override fun onResult(value: User?) {
-                    drawData()
-                    progressbarLayout_userprofile.visibility = View.GONE
+    private fun loadData(username: String, updateCurrentUser: Boolean) {
+        userViewModel.getUserByUsername(username, object : ResultCallback<User> {
+            override fun onResult(value: User?) {
+                value?.let {
+                    if (updateCurrentUser) {
+                        userViewModel.user.value = value
+                        drawData(userViewModel.user.value!!)
+                    } else {
+                        userViewModel.selectedUser.value = value
+                        drawData(userViewModel.selectedUser.value!!)
+                    }
                 }
+            }
 
-                override fun onFailure(value: User?) {
+            override fun onFailure(value: User?) {
 
-                }
-            })
+            }
+        })
     }
 
     private fun focusOnRecipes() {
         nsv_userprofile.post {
             nsv_userprofile.scrollTo(
-                0,
-                cardview_userprofile.bottom
+                0, cardview_userprofile.bottom
             )
         }
     }
@@ -290,5 +304,9 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         Log.d("fork click", position.toString())
     }
 
-
+    override fun onDestroy() {
+        userViewModel.selectedUsername.value = null
+        userViewModel.selectedUser.value = null
+        super.onDestroy()
+    }
 }

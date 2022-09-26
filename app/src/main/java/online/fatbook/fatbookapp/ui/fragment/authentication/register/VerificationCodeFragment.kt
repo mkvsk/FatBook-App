@@ -27,6 +27,7 @@ import org.apache.commons.lang3.StringUtils
 class VerificationCodeFragment : Fragment() {
 
     private var reconnectCount = 1
+    private var isReconnectCancelled = false
 
     private var binding: FragmentVerificationCodeBinding? = null
 
@@ -82,6 +83,7 @@ class VerificationCodeFragment : Fragment() {
                     authViewModel.vCode.value
                 )
             ) {
+                isReconnectCancelled = false
                 confirmVCode(fragment_verification_code_edittext_vc.text.toString())
             } else {
                 hideKeyboard(fragment_verification_code_edittext_vc)
@@ -139,11 +141,11 @@ class VerificationCodeFragment : Fragment() {
             )
         )
 
-            fragment_verification_code_edittext_vc.background =
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.round_corner_edittext
-                )
+        fragment_verification_code_edittext_vc.background =
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.round_corner_edittext
+            )
     }
 
     private fun confirmVCode(vCode: String) {
@@ -161,28 +163,42 @@ class VerificationCodeFragment : Fragment() {
                             navigateToRegisterPassword()
                         }
                         1 -> {
-                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_1), true)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_1),
+                                true
+                            )
                         }
                         2 -> {
-                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500), true)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_2_500),
+                                true
+                            )
                         }
                         3 -> {
-                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_3), true)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_3),
+                                true
+                            )
                         }
                         else -> {
-                            showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500), true)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_2_500),
+                                true
+                            )
                         }
                     }
                 }
 
                 override fun onFailure(value: AuthenticationResponse?) {
-                    if (reconnectCount < 6) {
-                        reconnectCount++
-                        confirmVCode(vCode)
-                    } else {
-                        hideKeyboard(fragment_register_username_edittext_username)
-                        showErrorMessage(getString(R.string.dialog_register_error), false)
-                        progressbar_register_vc.visibility = View.GONE
+                    if (!isReconnectCancelled) {
+                        if (reconnectCount < 6) {
+                            reconnectCount++
+                            confirmVCode(vCode)
+                        } else {
+                            hideKeyboard(fragment_register_username_edittext_username)
+                            showErrorMessage(getString(R.string.dialog_register_error), false)
+                            progressbar_register_vc.visibility = View.GONE
+                        }
                     }
                 }
             })
@@ -199,8 +215,9 @@ class VerificationCodeFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (progressbar_register_vc.visibility == View.VISIBLE) {
-                        progressbar_register_vc.visibility = View.GONE
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
+                        progressbar_register_vc.visibility = View.GONE
+                        isReconnectCancelled = true
                     } else {
                         popBackStack()
                     }

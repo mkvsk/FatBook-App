@@ -121,11 +121,10 @@
         android:label="@null"
         tools:layout="@layout/fragment_login">
 
-        <!--        <action-->
-        <!--            android:id="@+id/action_go_to_verification_code"-->
-        <!--            app:destination="@id/navigation_verification_code"-->
-        <!--            app:popUpTo="@id/navigation_register_email"-->
-        <!--            />-->
+        <action
+            android:id="@+id/action_go_to_login_new_pass_from_login"
+            app:destination="@id/navigation_login_new_pass"
+            app:popUpTo="@id/navigation_login" />
     </fragment>
 
     <fragment

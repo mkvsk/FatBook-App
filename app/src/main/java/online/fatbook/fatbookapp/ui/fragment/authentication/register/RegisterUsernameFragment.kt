@@ -27,6 +27,7 @@ import java.util.regex.Pattern
 class RegisterUsernameFragment : Fragment() {
 
     private var reconnectCount = 1
+    private var isReconnectCancelled = false
 
     private var binding: FragmentRegisterUsernameBinding? = null
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
@@ -45,6 +46,7 @@ class RegisterUsernameFragment : Fragment() {
             if (usernameValidate()) {
                 authViewModel.username.value =
                     fragment_register_username_edittext_username.text.toString()
+                isReconnectCancelled = false
                 createNewUser()
             } else {
                 hideKeyboard(fragment_register_username_edittext_username)
@@ -115,13 +117,15 @@ class RegisterUsernameFragment : Fragment() {
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                if (reconnectCount < 6) {
-                    reconnectCount++
-                    createNewUser()
-                } else {
-                    hideKeyboard(fragment_register_username_edittext_username)
-                    showErrorMessage(getString(R.string.dialog_register_error), false)
-                    progressbar_register_username.visibility = View.GONE
+                if (!isReconnectCancelled) {
+                    if (reconnectCount < 6) {
+                        reconnectCount++
+                        createNewUser()
+                    } else {
+                        hideKeyboard(fragment_register_username_edittext_username)
+                        showErrorMessage(getString(R.string.dialog_register_error), false)
+                        progressbar_register_username.visibility = View.GONE
+                    }
                 }
             }
         })
@@ -165,6 +169,7 @@ class RegisterUsernameFragment : Fragment() {
                     if (progressbar_register_username.visibility == View.VISIBLE) {
                         progressbar_register_username.visibility = View.GONE
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
+                        isReconnectCancelled = true
                     } else {
                         popBackStack()
                     }

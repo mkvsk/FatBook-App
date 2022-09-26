@@ -57,7 +57,11 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         super.onViewCreated(view, savedInstanceState)
         setupSwipeRefresh()
         setupMenu()
-        login()
+        if (userViewModel.user.value == null) {
+            login()
+        } else {
+            loadUserInfo()
+        }
 
 //        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 //        if (recipeViewModel.selectedRecipePosition.value != null) {

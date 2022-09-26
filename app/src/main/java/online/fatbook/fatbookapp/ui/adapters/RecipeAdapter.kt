@@ -80,11 +80,11 @@ class RecipeAdapter :
                 user.recipesForked!!.contains(recipe.identifier)
             )
             if (recipe.author == user.username) {
-                itemView.imageView_rv_card_recipe_bookmarks.visibility = View.INVISIBLE
+                itemView.imageView_rv_card_recipe_favourites.visibility = View.INVISIBLE
             } else {
-                itemView.imageView_rv_card_recipe_bookmarks.visibility = View.VISIBLE
+                itemView.imageView_rv_card_recipe_favourites.visibility = View.VISIBLE
                 toggleFavourites(
-                    itemView.imageView_rv_card_recipe_bookmarks,
+                    itemView.imageView_rv_card_recipe_favourites,
                     user.recipesFavourites!!.contains(recipe.identifier)
                 )
             }
@@ -100,15 +100,15 @@ class RecipeAdapter :
             itemView.rv_card_recipe_preview.setOnClickListener {
                 listener!!.onRecipeClick(adapterPosition)
             }
-            itemView.imageView_rv_card_recipe_bookmarks.setOnClickListener {
-                val tag = itemView.imageView_rv_card_recipe_bookmarks.tag as String
+            itemView.imageView_rv_card_recipe_favourites.setOnClickListener {
+                val tag = itemView.imageView_rv_card_recipe_favourites.tag as String
                 when (tag) {
                     RecipeUtils.TAG_BOOKMARKS_UNCHECKED -> {
-                        toggleFavourites(itemView.imageView_rv_card_recipe_bookmarks, true)
+                        toggleFavourites(itemView.imageView_rv_card_recipe_favourites, true)
                         listener!!.onBookmarksClick(data[adapterPosition], true, adapterPosition)
                     }
                     RecipeUtils.TAG_BOOKMARKS_CHECKED -> {
-                        toggleFavourites(itemView.imageView_rv_card_recipe_bookmarks, false)
+                        toggleFavourites(itemView.imageView_rv_card_recipe_favourites, false)
                         listener!!.onBookmarksClick(data[adapterPosition], false, adapterPosition)
                     }
                 }

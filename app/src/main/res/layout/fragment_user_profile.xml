@@ -8,7 +8,7 @@
     tools:context=".ui.fragment.user.UserProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progressbarLayout_userprofile"
+        android:id="@+id/progressbar_userprofile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="10dp"

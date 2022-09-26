@@ -26,6 +26,7 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 class RegisterEmailFragment : Fragment() {
 
     private var reconnectCount = 1
+    private var isReconnectCancelled = false
 
     private var binding: FragmentRegisterEmailBinding? = null
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
@@ -45,6 +46,7 @@ class RegisterEmailFragment : Fragment() {
                     authViewModel.isTimerRunning.value = false
                     authViewModel.currentCountdown.value = 0
                     authViewModel.cancelTimer()
+                    isReconnectCancelled = false
                     emailCheck(fragment_register_email_edittext_email.text.toString())
                 } else {
                     navigateToVerificationCode()
@@ -82,6 +84,7 @@ class RegisterEmailFragment : Fragment() {
                     if (progressbar_register_email.visibility == View.VISIBLE) {
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
                         progressbar_register_email.visibility = View.GONE
+                        isReconnectCancelled = true
                     } else {
                         popBackStack()
                     }
@@ -159,13 +162,15 @@ class RegisterEmailFragment : Fragment() {
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                if (reconnectCount < 6) {
-                    reconnectCount++
-                    emailCheck(email)
-                } else {
-                    showErrorMessage(getString(R.string.dialog_register_error), false)
-                    hideKeyboard(fragment_register_email_edittext_email)
-                    progressbar_register_email.visibility = View.GONE
+                if (!isReconnectCancelled) {
+                    if (reconnectCount < 6) {
+                        reconnectCount++
+                        emailCheck(email)
+                    } else {
+                        showErrorMessage(getString(R.string.dialog_register_error), false)
+                        hideKeyboard(fragment_register_email_edittext_email)
+                        progressbar_register_email.visibility = View.GONE
+                    }
                 }
             }
         })

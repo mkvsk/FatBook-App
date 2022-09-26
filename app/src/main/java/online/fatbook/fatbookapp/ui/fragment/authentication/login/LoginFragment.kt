@@ -6,10 +6,16 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_login.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.authentication.LoginResponse
 import online.fatbook.fatbookapp.databinding.FragmentLoginBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
@@ -34,7 +40,17 @@ class LoginFragment : Fragment() {
 
         fragment_login_button_login.setOnClickListener {
             hideKeyboard(fragment_login_edittext_password)
+            login(
+                fragment_login_edittext_username.text.toString(),
+                fragment_login_edittext_password.text.toString()
+            )
         }
+
+        fragment_login_forgot_password_link.setOnClickListener {
+            Toast.makeText(requireContext(), "to be implemented", Toast.LENGTH_SHORT).show()
+//            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_login_new_pass_from_login)
+        }
+
         fragment_login_edittext_username.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -79,6 +95,21 @@ class LoginFragment : Fragment() {
 
     }
 
+    private fun login(username: String, password: String) {
+        val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("username", username)
+            .addFormDataPart("password", password).build()
+        authViewModel.login(request, object : ResultCallback<LoginResponse> {
+            override fun onResult(value: LoginResponse?) {
+
+            }
+
+            override fun onFailure(value: LoginResponse?) {
+
+            }
+        })
+    }
+
     private fun checkEditTextIsFilled(view: View, filled: Boolean) {
         if (filled) {
             view.background =
@@ -103,17 +134,4 @@ class LoginFragment : Fragment() {
             )
         )
     }
-
-//    private fun login() {
-////        showErrorMessage(getString(R.string.dialog_wrong_data_login))
-//        authViewModel.login(
-//            fragment_login_edittext_username.text.toString(),
-//            fragment_login_edittext_password.text.toString(), object : ResultCallback<User> {
-//                override fun onResult(value: User?) {
-//                    //TODO save user data to room
-//                }
-//            }
-//        )
-//    }
-
 }
