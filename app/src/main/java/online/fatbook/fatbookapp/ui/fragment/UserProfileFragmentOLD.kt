@@ -212,7 +212,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.user_profile_menu, menu)
+        inflater.inflate(R.menu.user_profile_menu_old, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
