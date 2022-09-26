@@ -3,13 +3,19 @@ package online.fatbook.fatbookapp.ui.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_feed.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.authentication.LoginResponse
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentFeedBinding
@@ -18,6 +24,7 @@ import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
+import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
@@ -29,44 +36,94 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteListener {
+
     private var binding: FragmentFeedBinding? = null
     private var adapter: RecipeAdapter? = null
 
+    private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentFeedBinding.inflate(inflater, container, false)
         super.onCreate(savedInstanceState)
-
         setHasOptionsMenu(true)
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        setupSwipeRefresh()
+        setupMenu()
+        login()
 
+//        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 //        if (recipeViewModel.selectedRecipePosition.value != null) {
 //            if (userViewModel.user.value != null) {
 //                loadUser(recipeViewModel.selectedRecipePosition.value)
 //            }
 //        }
+//        setupAdapter()
+//        addObservers()
+//        loadUser(
+//            requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE)
+//                .getString(UserUtils.USER_LOGIN, StringUtils.EMPTY)!!, null
+//        )
+    }
 
-        binding!!.swipeRefreshBookmarks.setColorSchemeColors(resources.getColor(R.color.color_pink_a200))
-        binding!!.swipeRefreshBookmarks.setOnRefreshListener { loadData() }
-        setupAdapter()
-        setupMenu()
-        userViewModel.feedRecipeList.value = userViewModel.feedRecipeList.value
-        addObservers()
+    //    ==========================================================================================
 
-        loadUser(
-            requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE)
-                .getString(UserUtils.USER_LOGIN, StringUtils.EMPTY)!!, null
+    private fun login() {
+        progressbar_feed.visibility = View.VISIBLE
+        val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("username", authViewModel.username.value!!)
+            .addFormDataPart("password", authViewModel.password.value!!).build()
+        authViewModel.login(request, object : ResultCallback<LoginResponse> {
+            override fun onResult(value: LoginResponse?) {
+                saveTokens(value!!)
+                println("User ${authViewModel.username.value} logged in")
+            }
+
+            override fun onFailure(value: LoginResponse?) {
+                login()
+            }
+        })
+    }
+
+    private fun saveTokens(value: LoginResponse) {
+        authViewModel.jwtAccess.value = value.access_token
+        authViewModel.jwtRefresh.value = value.refresh_token
+        RetrofitFactory.updateJWT(value.access_token!!)
+        loadUserInfo()
+    }
+
+    private fun loadUserInfo() {
+        userViewModel.getUserByUsername(
+            authViewModel.username.value!!,
+            object : ResultCallback<User> {
+                override fun onResult(value: User?) {
+                    userViewModel.user.value = value
+                    progressbar_feed.visibility = View.GONE
+                }
+
+                override fun onFailure(value: User?) {
+                    loadUserInfo()
+                }
+            })
+    }
+
+    private fun setupSwipeRefresh() {
+        swipe_refresh_bookmarks.setColorSchemeColors(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.color_pink_a200
+            )
         )
+        swipe_refresh_bookmarks.setOnRefreshListener {
+//            loadData()
+        }
     }
 
     private fun setupMenu() {
@@ -83,7 +140,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_direct_messages -> {
-                NavHostFragment.findNavController(this).navigate(R.id.action_go_to_direct_messages_from_feed)
+                NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_go_to_direct_messages_from_feed)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -105,9 +163,9 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             val temp: ArrayList<Recipe> = ArrayList()
             for (r in userViewModel.feedRecipeList.value!!) {
                 if (StringUtils.containsIgnoreCase(
-                        r.title,
-                        text
-                    )) {
+                        r.title, text
+                    )
+                ) {
                     temp.add(r)
                 }
             }
@@ -131,8 +189,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         RetrofitFactory.apiServiceClient().getFeed(0L)
             .enqueue(object : Callback<ArrayList<Recipe>?> {
                 override fun onResponse(
-                    call: Call<ArrayList<Recipe>?>,
-                    response: Response<ArrayList<Recipe>?>
+                    call: Call<ArrayList<Recipe>?>, response: Response<ArrayList<Recipe>?>
                 ) {
                     if (response.body() != null) {
                         userViewModel.feedRecipeList.value = response.body()
@@ -205,7 +262,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             startActivity(Intent(requireActivity(), SplashActivity::class.java))
             requireActivity().finish()
         } else {
-            RetrofitFactory.apiServiceClient().getUser(login)
+            RetrofitFactory.apiServiceClient().getUserByUsername(login)
                 .enqueue(object : Callback<User?> {
                     override fun onResponse(call: Call<User?>, response: Response<User?>) {
                         if (response.code() == 200) {

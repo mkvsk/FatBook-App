@@ -23,12 +23,16 @@ class UserRepository(private val context: Context) {
 
     fun getUserByUsername(username: String, callback: ResultCallback<User>) =
         scope.launch(Dispatchers.IO) {
-            val call = RetrofitFactory.apiServiceClient().getUser(username)
+            val call = RetrofitFactory.apiServiceClient().getUserByUsername(username)
 
             call.enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     Log.d("LOAD USER", response.body().toString())
-                    callback.onResult(response.body())
+                    if (response.body() == null) {
+                        callback.onFailure(null)
+                    } else {
+                        callback.onResult(response.body())
+                    }
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {

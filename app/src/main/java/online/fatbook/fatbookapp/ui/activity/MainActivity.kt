@@ -9,13 +9,16 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.Constants.FEED_TAG
+import online.fatbook.fatbookapp.util.Constants.SP_TAG
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
 import online.fatbook.fatbookapp.util.ProgressBarUtil
 import online.fatbook.fatbookapp.util.UserUtils
 import org.apache.commons.lang3.StringUtils
@@ -44,28 +47,12 @@ class MainActivity : AppCompatActivity() {
 //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 //                R.id.navigation_feed, R.id.navigation_ingredients, R.id.navigation_recipe_create, R.id.navigation_bookmarks, R.id.navigation_user_profile)
 //                .build();
-        val launchFeed = intent.getBooleanExtra(FEED_TAG, false)
-        if (launchFeed) {
+        if (intent.getBooleanExtra(FEED_TAG, false)) {
+            val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
+            authViewModel!!.username.value = sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
+            authViewModel!!.password.value = sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
             navController!!.navigate(R.id.action_go_to_feed_from_welcome)
         }
-//        loadData()
-    }
-
-    private fun loadData() {
-        val user = intent.getSerializableExtra(UserUtils.TAG_USER) as User?
-        val sharedPreferences = getSharedPreferences(UserUtils.APP_PREFS, MODE_PRIVATE)
-        if (StringUtils.isEmpty(
-                sharedPreferences.getString(
-                    UserUtils.USER_LOGIN,
-                    StringUtils.EMPTY
-                )
-            )
-        ) {
-            //        val editor = sharedPreferences.edit()
-//            editor.putString(UserUtils.USER_LOGIN, user!!.login)
-            //          editor.apply()
-        }
-        userViewModel!!.user.value = user
     }
 
     private fun setupNavigation() {
@@ -77,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_search -> navController!!.navigate(R.id.action_go_to_search)
                 R.id.navigation_recipe_create -> navController!!.navigate(R.id.action_go_to_recipe_create)
                 R.id.navigation_notifications -> navController!!.navigate(R.id.action_go_to_notifications)
-                R.id.navigation_user_profile-> navController!!.navigate(R.id.action_go_to_profile)
+                R.id.navigation_user_profile -> navController!!.navigate(R.id.action_go_to_profile)
             }
             true
         }

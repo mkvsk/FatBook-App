@@ -8,7 +8,7 @@
     tools:context=".ui.fragment.authentication.register.RegisterUsernameFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progressbarLayout_register_username"
+        android:id="@+id/progressbar_register_username"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="10dp"

@@ -24,24 +24,6 @@ class AuthenticationRepository(private val context: Context) {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
-    fun usernameCheck(username: String, callback: ResultCallback<Boolean>) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().usernameCheck(username)
-
-            call.enqueue(object : Callback<Boolean> {
-                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                    Log.d("USERNAME CHECK", response.body().toString())
-                    callback.onResult(response.body())
-                }
-
-                override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                    Log.d("USERNAME CHECK", "error")
-                    t.printStackTrace()
-                }
-            })
-        }
-    }
-
     fun emailCheck(email: String, callback: ResultCallback<AuthenticationResponse>) {
         scope.launch {
             val call = RetrofitFactory.apiServiceClient().emailCheck(email)
@@ -127,7 +109,7 @@ class AuthenticationRepository(private val context: Context) {
                 override fun onResponse(
                     call: Call<AuthenticationResponse>, response: Response<AuthenticationResponse>
                 ) {
-                    Log.d("VCODE CONFIRM", response.body().toString())
+                    Log.d("VCODE CONFIRMATION", response.body().toString())
                     if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
@@ -136,7 +118,7 @@ class AuthenticationRepository(private val context: Context) {
                 }
 
                 override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
-                    Log.d("VCODE CONFIRM", "error")
+                    Log.d("VCODE CONFIRMATION", "error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }

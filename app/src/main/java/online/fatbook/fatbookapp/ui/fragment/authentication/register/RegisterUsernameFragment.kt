@@ -3,12 +3,15 @@ package online.fatbook.fatbookapp.ui.fragment.authentication.register
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import kotlinx.android.synthetic.main.fragment_register_email.*
 import kotlinx.android.synthetic.main.fragment_register_username.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -22,13 +25,14 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 import java.util.regex.Pattern
 
 class RegisterUsernameFragment : Fragment() {
-    private var binding: FragmentRegisterUsernameBinding? = null
 
+    private var reconnectCount = 1
+
+    private var binding: FragmentRegisterUsernameBinding? = null
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentRegisterUsernameBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -37,13 +41,14 @@ class RegisterUsernameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        addObservers()
         fragment_register_username_button_next.setOnClickListener {
             if (usernameValidate()) {
-                authViewModel.usernameCheck(fragment_register_username_edittext_username.text.toString())
+                authViewModel.username.value =
+                    fragment_register_username_edittext_username.text.toString()
+                createNewUser()
             } else {
                 hideKeyboard(fragment_register_username_edittext_username)
-                showErrorMessage(getString(R.string.dialog_register_username_invalid))
+                showErrorMessage(getString(R.string.dialog_register_username_invalid), true)
             }
         }
 
@@ -63,89 +68,116 @@ class RegisterUsernameFragment : Fragment() {
                         getString(R.string.dialog_register_username)
                     fragment_register_username_dialog_text.setTextColor(
                         ContextCompat.getColor(
-                            requireContext(),
-                            R.color.main_text
+                            requireContext(), R.color.main_text
                         )
                     )
                 }
-//                fragment_register_username_edittext_username.setText(s.toString().lowercase())
+            }
+        })
+
+        handleBackPressed()
+    }
+
+    private fun createNewUser() {
+        Log.d("REGISTER attempt", reconnectCount.toString())
+        progressbar_register_username.visibility = View.VISIBLE
+        hideKeyboard(fragment_register_username_edittext_username)
+        authViewModel.register(AuthenticationRequest(
+            authViewModel.username.value,
+            authViewModel.password.value,
+            authViewModel.userEmail.value
+        ), object : ResultCallback<AuthenticationResponse> {
+            override fun onResult(value: AuthenticationResponse?) {
+                progressbar_register_username.visibility = View.GONE
+                value?.let {
+                    when (it.code) {
+                        0 -> {
+                            navigateToAccountCreated()
+                        }
+                        4 -> {
+                            hideKeyboard(fragment_register_username_edittext_username)
+                            showErrorMessage(
+                                getString(R.string.dialog_register_email_error), true
+                            )
+                        }
+                        5 -> {
+                            hideKeyboard(fragment_register_username_edittext_username)
+                            showErrorMessage(
+                                getString(R.string.dialog_register_username_unavailable), true
+                            )
+                        }
+                        else -> {
+                            hideKeyboard(fragment_register_username_edittext_username)
+                            showErrorMessage(getString(R.string.dialog_register_error), true)
+                        }
+                    }
+                }
             }
 
+            override fun onFailure(value: AuthenticationResponse?) {
+                if (reconnectCount < 6) {
+                    reconnectCount++
+                    createNewUser()
+                } else {
+                    hideKeyboard(fragment_register_username_edittext_username)
+                    showErrorMessage(getString(R.string.dialog_register_error), false)
+                    progressbar_register_username.visibility = View.GONE
+                }
+            }
         })
     }
 
-    private fun addObservers() {
-        authViewModel.usernameAvailable.observe(viewLifecycleOwner) {
-            if (it!!) {
-                authViewModel.username.value =
-                    fragment_register_username_edittext_username.text.toString()
-                createNewUser()
-            } else {
-                hideKeyboard(fragment_register_username_edittext_username)
-                showErrorMessage(getString(R.string.dialog_register_username_unavailable))
-            }
-        }
-    }
-
-    private fun showErrorMessage(message: String) {
+    private fun showErrorMessage(message: String, dyeEditText: Boolean) {
         fragment_register_username_button_next.isEnabled = false
         fragment_register_username_dialog_text.setTextColor(
             ContextCompat.getColor(
-                requireContext(),
-                R.color.dialogErrorMess_text
+                requireContext(), R.color.dialogErrorMess_text
+            )
+        )
+        fragment_register_username_dialog_text.text = message;
+        if (dyeEditText) {
+            fragment_register_username_edittext_username.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
+        }
+    }
+
+    private fun showDefaultMessage(message: String) {
+        fragment_register_username_button_next.isEnabled = false
+        fragment_register_username_dialog_text.setTextColor(
+            ContextCompat.getColor(
+                requireContext(), R.color.dialogErrorMess_text
             )
         )
         fragment_register_username_dialog_text.text = message;
         fragment_register_username_edittext_username.background =
-            ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
-    }
-
-    private fun createNewUser() {
-        progressbarLayout_register_username.visibility = View.VISIBLE
-        authViewModel.register(
-            AuthenticationRequest(
-                authViewModel.username.value,
-                authViewModel.password.value,
-                authViewModel.userEmail.value
-            ), object : ResultCallback<AuthenticationResponse> {
-                override fun onResult(value: AuthenticationResponse?) {
-                    progressbarLayout_register_username.visibility = View.GONE
-                    value?.let {
-                        when (it.code) {
-                            0 -> {
-                                navigateToAccountCreated()
-                            }
-                            4 -> {
-                                showErrorMessage(getString(R.string.dialog_register_email_error))
-                            }
-                            5 -> {
-                                showErrorMessage(getString(R.string.dialog_register_username_unavailable))
-                            }
-                            else -> {
-                                showErrorMessage(getString(R.string.dialog_register_error))
-                            }
-                        }
-                    }
-
-                }
-
-                override fun onFailure(value: AuthenticationResponse?) {
-
-                }
-            }
-        )
+            ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext)
     }
 
     private fun navigateToAccountCreated() {
-//        authViewModel.userEmail.value = StringUtils.EMPTY
-        NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_account_created)
+        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_account_created)
+    }
+
+    private fun handleBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (progressbar_register_username.visibility == View.VISIBLE) {
+                        progressbar_register_username.visibility = View.GONE
+                        showDefaultMessage(getString(R.string.dialog_register_email_error))
+                    } else {
+                        popBackStack()
+                    }
+                }
+            })
+    }
+
+    private fun popBackStack() {
+        NavHostFragment.findNavController(this).popBackStack()
     }
 
     private fun usernameValidate(): Boolean {
         return Pattern.compile(USERNAME_REGEX)
             .matcher(fragment_register_username_edittext_username.text).matches()
-//        return true
-
     }
 }

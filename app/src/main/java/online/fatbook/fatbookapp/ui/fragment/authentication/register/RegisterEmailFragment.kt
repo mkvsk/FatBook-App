@@ -25,14 +25,13 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 
 class RegisterEmailFragment : Fragment() {
 
-    private var reconnectCount = 5
+    private var reconnectCount = 1
 
     private var binding: FragmentRegisterEmailBinding? = null
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentRegisterEmailBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -81,9 +80,9 @@ class RegisterEmailFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (progressbar_register_email.visibility == View.VISIBLE) {
+                        showDefaultMessage(getString(R.string.dialog_register_email_error))
                         progressbar_register_email.visibility = View.GONE
                     } else {
-                        showDefaultMessage(getString(R.string.dialog_register_email_error))
                         popBackStack()
                     }
                 }
@@ -127,42 +126,42 @@ class RegisterEmailFragment : Fragment() {
 
 
     private fun emailCheck(email: String) {
+        Log.d("EMAIL CHECK attempt", reconnectCount.toString())
         progressbar_register_email.visibility = View.VISIBLE
         hideKeyboard(fragment_register_email_edittext_email)
         authViewModel.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                when (value?.code) {
-                    0 -> {
-                        authViewModel.userEmail.value = value.email
-                        if (!authViewModel.isTimerRunning.value!!) {
-                            authViewModel.isTimerRunning.value = true
-                            authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
+                progressbar_register_email.visibility = View.GONE
+                value?.let {
+                    when (it.code) {
+                        0 -> {
+                            authViewModel.userEmail.value = value.email
+                            if (!authViewModel.isTimerRunning.value!!) {
+                                authViewModel.isTimerRunning.value = true
+                                authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
+                            }
+                            authViewModel.vCode.value = value.vcode
+                            Log.d("CODE ======================= ", value.vcode!!)
+                            Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG).show()
+                            navigateToVerificationCode()
                         }
-                        authViewModel.vCode.value = value.vcode
-                        Log.d("CODE ======================= ", value.vcode!!)
-                        Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG).show()
-                        navigateToVerificationCode()
-                    }
-                    4 -> {
-                        hideKeyboard(fragment_register_email_edittext_email)
-                        showErrorMessage(
-                            getString(R.string.dialog_email_used_register_email),
-                            true
-                        )
-                        progressbar_register_email.visibility = View.GONE
-                    }
-                    else -> {
-                        hideKeyboard(fragment_register_email_edittext_email)
-                        showErrorMessage(getString(R.string.dialog_register_error), true)
-                        progressbar_register_email.visibility = View.GONE
+                        4 -> {
+                            showErrorMessage(
+                                getString(R.string.dialog_email_used_register_email),
+                                true
+                            )
+                        }
+                        else -> {
+                            showErrorMessage(getString(R.string.dialog_register_error), true)
+                        }
                     }
                 }
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                if (reconnectCount != 0) {
+                if (reconnectCount < 6) {
+                    reconnectCount++
                     emailCheck(email)
-                    reconnectCount--
                 } else {
                     showErrorMessage(getString(R.string.dialog_register_error), false)
                     hideKeyboard(fragment_register_email_edittext_email)

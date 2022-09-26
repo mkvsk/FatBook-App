@@ -25,26 +25,11 @@ class AuthenticationViewModel : ViewModel() {
 
     var vCode = MutableLiveData<String?>()
 
-    var usernameAvailable = MutableLiveData<Boolean?>()
-
     var currentCountdown = MutableLiveData<Long?>()
     var isTimerRunning = MutableLiveData(false)
     val resendVCTimer = MutableLiveData(10L)
 
     private var timer: CountDownTimer? = null
-
-    fun usernameCheck(username: String) {
-        repository.usernameCheck(username, object : ResultCallback<Boolean> {
-            override fun onResult(value: Boolean?) {
-                value?.let {
-                    usernameAvailable.value = it
-                }
-            }
-
-            override fun onFailure(value: Boolean?) {
-            }
-        })
-    }
 
     fun startTimer(seconds: Long) {
         Log.d("CODE SENT TO: ", userEmail.value.toString())
@@ -74,9 +59,7 @@ class AuthenticationViewModel : ViewModel() {
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                value?.let {
-                    callback.onFailure(it)
-                }
+                callback.onFailure(value)
             }
         })
     }
@@ -90,6 +73,7 @@ class AuthenticationViewModel : ViewModel() {
             }
 
             override fun onFailure(value: LoginResponse?) {
+                callback.onFailure(value)
             }
         })
     }
@@ -103,11 +87,14 @@ class AuthenticationViewModel : ViewModel() {
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
+                callback.onFailure(value)
             }
         })
     }
 
-    fun confirmVCode(vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>) {
+    fun confirmVCode(
+        vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>
+    ) {
         repository.confirmVCode(vCode, email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
                 value?.let {
@@ -116,9 +103,7 @@ class AuthenticationViewModel : ViewModel() {
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                value?.let {
-                    callback.onFailure(it)
-                }
+                callback.onFailure(value)
             }
         })
     }

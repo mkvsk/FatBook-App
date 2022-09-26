@@ -8,7 +8,7 @@
     tools:context=".ui.fragment.authentication.register.AccountCreatedFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progressbarLayout_account_created"
+        android:id="@+id/progressbar_account_created"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="10dp"

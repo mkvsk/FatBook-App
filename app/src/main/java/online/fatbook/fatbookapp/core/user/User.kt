@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.core.user
 
 import online.fatbook.fatbookapp.core.recipe.Recipe
+import org.apache.commons.lang3.builder.ToStringBuilder
 import java.io.Serializable
 
 data class User(

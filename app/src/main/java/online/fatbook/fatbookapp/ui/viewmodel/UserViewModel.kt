@@ -1,6 +1,5 @@
 package online.fatbook.fatbookapp.ui.viewmodel
 
-import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -12,7 +11,6 @@ import online.fatbook.fatbookapp.util.ContextHolder
 class UserViewModel : ViewModel() {
 
     private val repository by lazy { UserRepository(ContextHolder.get()) }
-    private val handler by lazy { Handler() }
 
     val user = MutableLiveData<User>()
     val recipeList = MutableLiveData<ArrayList<Recipe>>()
@@ -27,13 +25,12 @@ class UserViewModel : ViewModel() {
         repository.getUserByUsername(username, object : ResultCallback<User> {
             override fun onResult(value: User?) {
                 value?.let {
-                    selectedUser.value = it
                     callback.onResult(it)
                 }
             }
 
             override fun onFailure(value: User?) {
-
+                callback.onResult(value)
             }
         })
     }

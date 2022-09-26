@@ -160,7 +160,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun loadUser() {
-        RetrofitFactory.apiServiceClient().getUser(user!!.username)
+        RetrofitFactory.apiServiceClient().getUserByUsername(user!!.username)
             .enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if (response.code() == 200) {

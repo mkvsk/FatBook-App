@@ -201,7 +201,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun loadUser() {
-        RetrofitFactory.apiServiceClient().getUser(user!!.username)
+        RetrofitFactory.apiServiceClient().getUserByUsername(user!!.username)
             .enqueue(object : Callback<User?> {
                 override fun onResponse(call: Call<User?>, response: Response<User?>) {
 //                    RecipeViewFragment.log.log(Level.INFO, "user load SUCCESS")
