@@ -49,7 +49,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        progressbar_userprofile.visibility = View.VISIBLE
+//        progressbar_userprofile.visibility = View.VISIBLE
 
         if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
             setupViewForCurrentUserProfile()
@@ -70,7 +70,6 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             requireActivity().finish()
         }
 
-        this.toolbar_userprofile.navigationIcon = null
 
         imageview_recipes_qtt_userprofile.setOnClickListener {
             focusOnRecipes()
@@ -101,21 +100,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 ////            set.start()
 
         nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
-            if (!expanded) {
-                if (scrollY >= 1044) {
-                    floating_button_up.visibility = View.VISIBLE
-                }
-                if (scrollY < 1044) {
-                    floating_button_up.visibility = View.GONE
-                }
-            } else {
-                if (scrollY >= 1200) {
-                    floating_button_up.visibility = View.VISIBLE
-                }
-                if (scrollY < 1200) {
-                    floating_button_up.visibility = View.GONE
-                }
-            }
+            showButtonUp(scrollY)
         })
 
         floating_button_up.setOnClickListener {
@@ -123,24 +108,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         }
 
         imageview_ic_expand.setOnClickListener {
-            TransitionManager.go(Scene(cardview_userprofile), AutoTransition())
-            if (!expanded) {
-                textview_bio_userprofile.maxLines = Integer.MAX_VALUE
-                imageview_ic_expand.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(), R.drawable.ic_expand_less
-                    )
-                )
-                expanded = true
-            } else {
-                textview_bio_userprofile.maxLines = 3
-                imageview_ic_expand.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(), R.drawable.ic_expand_more
-                    )
-                )
-                expanded = false
-            }
+            animateTextExpand()
         }
 
         button_messages.setOnClickListener {
@@ -200,67 +168,170 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         })
     }
 
+    private fun animateTextExpand() {
+        TransitionManager.go(Scene(cardview_userprofile), AutoTransition())
+        if (!expanded) {
+            textview_bio_userprofile.maxLines = Integer.MAX_VALUE
+            imageview_ic_expand.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(), R.drawable.ic_expand_less
+                )
+            )
+            expanded = true
+        } else {
+            textview_bio_userprofile.maxLines = 3
+            imageview_ic_expand.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(), R.drawable.ic_expand_more
+                )
+            )
+            expanded = false
+        }
+    }
+
+    private fun showButtonUp(scrollY: Int) {
+        if (!expanded) {
+            if (scrollY >= 1044) {
+                floating_button_up.visibility = View.VISIBLE
+            }
+            if (scrollY < 1044) {
+                floating_button_up.visibility = View.GONE
+            }
+        } else {
+            if (scrollY >= 1200) {
+                floating_button_up.visibility = View.VISIBLE
+            }
+            if (scrollY < 1200) {
+                floating_button_up.visibility = View.GONE
+            }
+        }
+    }
+
     private fun setupViewForCurrentUserProfile() {
-        //TODO draw for current user
+        ll_btns_follow_message.visibility = View.GONE
+        tabLayout_userprofile.visibility = View.VISIBLE
+        toolbar_userprofile.navigationIcon = null
         loadData(userViewModel.user.value!!.username!!, true)
     }
 
     private fun setupViewForSelectedUserProfile() {
-        //TODO draw for selected user
+        ll_btns_follow_message.visibility = View.VISIBLE
+        tabLayout_userprofile.visibility = View.GONE
+        toolbar_userprofile.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
         loadData(userViewModel.selectedUsername.value!!, false)
     }
 
     private fun drawData(user: User) {
-
         if (user.username == userViewModel.user.value!!.username) {
-            //мы на своем профиле
+            toolbar_userprofile.title = user.username
+
+            if (user.recipes == null) {
+                textview_recipes_qtt_userprofile.text = "0"
+            } else {
+                textview_recipes_qtt_userprofile.text =
+                    FormatUtils.prettyCount(user.recipes?.size!!)
+            }
+
+            if (user.followersAmount == null || user.followersAmount == 0) {
+                textview_friends_qtt_userprofile.text = "0"
+            } else {
+                textview_friends_qtt_userprofile.text =
+                    FormatUtils.prettyCount(user.followersAmount!!)
+            }
+
+            if (user.profileImage.isNullOrEmpty()) {
+                Glide.with(requireContext()).load(R.drawable.ic_default_userphoto)
+                    .into(imageview_userphoto_userprofile)
+            } else {
+                Glide.with(requireContext()).load(user.profileImage!!)
+                    .into(imageview_userphoto_userprofile)
+            }
+
+            if (user.title.isNullOrEmpty()) {
+                textview_title_userprofile.visibility = View.GONE
+            } else {
+                textview_title_userprofile.text = user.title
+            }
+
+            if (user.website.isNullOrEmpty()) {
+                textview_website_userprofile.visibility = View.GONE
+                imageview_ic_website.visibility = View.GONE
+            } else {
+                textview_website_userprofile.text = user.website
+            }
+
+            if (user.bio.isNullOrEmpty()) {
+                expandableLayout.visibility = View.GONE
+                imageview_ic_expand.visibility = View.GONE
+            } else {
+                textview_bio_userprofile.text = user.bio
+                if (textview_bio_userprofile.lineCount <= textview_bio_userprofile.maxLines) {
+                    imageview_ic_expand.visibility = View.GONE
+                } else {
+                    imageview_ic_expand.visibility = View.VISIBLE
+                }
+            }
+
+            if (user.online!!) {
+                imageview_is_online.visibility = View.VISIBLE
+            } else {
+                imageview_is_online.visibility = View.INVISIBLE
+            }
         } else {
-            //мы на чужом профиле
-        }
+            toolbar_userprofile.title = user.username
 
-        user.username = "kit"
-        toolbar_userprofile.title = user.username
+            if (user.recipes == null) {
+                textview_recipes_qtt_userprofile.text = "0"
+            } else {
+                textview_recipes_qtt_userprofile.text =
+                    FormatUtils.prettyCount(user.recipes?.size!!)
+            }
 
-        if (user.recipes == null) {
-            textview_recipes_qtt_userprofile.text = "0"
-        } else {
-            textview_recipes_qtt_userprofile.text = FormatUtils.prettyCount(user.recipes?.size!!)
-        }
+            if (user.followersAmount == null || user.followersAmount == 0) {
+                textview_friends_qtt_userprofile.text = "0"
+            } else {
+                textview_friends_qtt_userprofile.text =
+                    FormatUtils.prettyCount(user.followersAmount!!)
+            }
 
-        if (user.followersAmount == null || user.followersAmount == 0) {
-            textview_friends_qtt_userprofile.text = "0"
-        } else {
-            textview_friends_qtt_userprofile.text = FormatUtils.prettyCount(user.followersAmount!!)
-        }
+            if (user.profileImage.isNullOrEmpty()) {
+                Glide.with(requireContext()).load(R.drawable.ic_default_userphoto)
+                    .into(imageview_userphoto_userprofile)
+            } else {
+                Glide.with(requireContext()).load(user.profileImage!!)
+                    .into(imageview_userphoto_userprofile)
+            }
 
-        if (user.title.isNullOrEmpty()) {
-            textview_title_userprofile.visibility = View.GONE
-        } else {
-            textview_title_userprofile.text = user.title
-        }
+            if (user.title.isNullOrEmpty()) {
+                textview_title_userprofile.visibility = View.GONE
+            } else {
+                textview_title_userprofile.text = user.title
+            }
 
-        if (user.website.isNullOrEmpty()) {
-            textview_website_userprofile.visibility = View.GONE
-            imageview_ic_website.visibility = View.GONE
-        } else {
-            textview_website_userprofile.text = user.website
-        }
+            if (user.website.isNullOrEmpty()) {
+                textview_website_userprofile.visibility = View.GONE
+                imageview_ic_website.visibility = View.GONE
+            } else {
+                textview_website_userprofile.text = user.website
+            }
 
-        if (user.bio.isNullOrEmpty()) {
-            expandableLayout.visibility = View.GONE
-            imageview_ic_expand.visibility = View.GONE
-        } else {
-            textview_bio_userprofile.text = user.bio
-        }
+            if (user.bio.isNullOrEmpty()) {
+                expandableLayout.visibility = View.GONE
+                imageview_ic_expand.visibility = View.GONE
+            } else {
+                textview_bio_userprofile.text = user.bio
+                if (textview_bio_userprofile.lineCount <= textview_bio_userprofile.maxLines) {
+                    imageview_ic_expand.visibility = View.GONE
+                } else {
+                    imageview_ic_expand.visibility = View.VISIBLE
+                }
+            }
 
-        user.profileImage = "https://fatbook.b-cdn.net/root/upal.jpg"
-        Glide.with(requireContext()).load(user.profileImage!!).into(imageview_userphoto_userprofile)
-
-        user.online = true
-        if (user.online!!) {
-            imageview_is_online.visibility = View.VISIBLE
-        } else {
-            imageview_is_online.visibility = View.INVISIBLE
+            if (user.online!!) {
+                imageview_is_online.visibility = View.VISIBLE
+            } else {
+                imageview_is_online.visibility = View.INVISIBLE
+            }
         }
     }
 
@@ -306,7 +377,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
     override fun onDestroy() {
         userViewModel.selectedUsername.value = null
-        userViewModel.selectedUser.value = null
+//        userViewModel.selectedUser.value = null
         super.onDestroy()
     }
 }
