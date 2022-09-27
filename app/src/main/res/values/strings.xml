@@ -296,6 +296,8 @@
     <string name="menu_user_profile_logout">Logout</string>
     <string name="menu_user_profile_app_settings">App settings</string>
     <string name="menu_user_profile_edit_user_profile">Edit profile</string>
+    <string name="menu_user_profile_users_badges">My Badges</string>
+
 
 
 

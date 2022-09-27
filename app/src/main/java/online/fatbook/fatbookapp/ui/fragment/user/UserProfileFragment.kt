@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -52,24 +50,11 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 //        progressbar_userprofile.visibility = View.VISIBLE
 
         if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
+            setupMenu()
             setupViewForCurrentUserProfile()
         } else {
             setupViewForSelectedUserProfile()
         }
-
-        button_friends.setOnClickListener {
-            //TODO remove logout
-            val sharedPreferences = requireActivity().getSharedPreferences(
-                Constants.SP_TAG, Context.MODE_PRIVATE
-            )
-            val editor = sharedPreferences.edit()
-            editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
-            editor.putString(Constants.SP_TAG_PASSWORD, StringUtils.EMPTY)
-            editor.apply()
-            startActivity(Intent(requireActivity(), SplashActivity::class.java))
-            requireActivity().finish()
-        }
-
 
         imageview_recipes_qtt_userprofile.setOnClickListener {
             focusOnRecipes()
@@ -166,6 +151,65 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             }
 
         })
+    }
+
+    private fun setupMenu() {
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.user_profile_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_user_profile_edit_profile -> {
+                openEditProfile()
+                true
+            }
+            R.id.menu_user_profile_badges -> {
+                openBadges()
+                true
+            }
+            R.id.menu_user_profile_app_settings -> {
+                openAppSettings()
+                true
+            }
+            R.id.menu_user_profile_app_info -> {
+                true
+            }
+            R.id.menu_user_profile_logout -> {
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun openBadges() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_badges_from_user_profile)
+    }
+
+    private fun openAppSettings() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_app_settings_from_user_profile)
+    }
+
+    private fun logout() {
+        val sharedPreferences = requireActivity().getSharedPreferences(
+            Constants.SP_TAG, Context.MODE_PRIVATE
+        )
+        val editor = sharedPreferences.edit()
+        editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
+        editor.putString(Constants.SP_TAG_PASSWORD, StringUtils.EMPTY)
+        editor.apply()
+        startActivity(Intent(requireActivity(), SplashActivity::class.java))
+        requireActivity().finish()
+    }
+
+    private fun openEditProfile() {
+        NavHostFragment.findNavController(this)
+            .navigate(R.id.action_go_to_edit_profile)
     }
 
     private fun animateTextExpand() {

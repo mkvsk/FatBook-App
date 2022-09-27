@@ -11,6 +11,11 @@
         android:title="@string/menu_user_profile_edit_user_profile" />
 
     <item
+        android:id="@+id/menu_user_profile_badges"
+        android:title="@string/menu_user_profile_users_badges"
+        />
+
+    <item
         android:id="@+id/menu_user_profile_app_settings"
         android:title="@string/menu_user_profile_app_settings" />
 
@@ -21,5 +26,7 @@
     <item
         android:id="@+id/menu_user_profile_logout"
         android:title="@string/menu_user_profile_logout" />
+
+
 
 </menu>
