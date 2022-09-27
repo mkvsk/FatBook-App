@@ -1,6 +1,8 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -177,6 +179,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                 true
             }
             R.id.menu_user_profile_app_info -> {
+                showAppInfoDialog()
                 true
             }
             R.id.menu_user_profile_logout -> {
@@ -186,6 +189,12 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun showAppInfoDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(R.layout.dialog_app_info)
+        builder.setPositiveButton(getString(R.string.alert_dialog_btn_close)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
+        builder.show()    }
 
     private fun openBadges() {
         NavHostFragment.findNavController(this).navigate(R.id.action_go_to_badges_from_user_profile)
