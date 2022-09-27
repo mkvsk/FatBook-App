@@ -49,7 +49,11 @@ class RegisterEmailFragment : Fragment() {
                     isReconnectCancelled = false
                     emailCheck(fragment_register_email_edittext_email.text.toString())
                 } else {
-                    navigateToVerificationCode()
+                    if (authViewModel.isTimerRunning.value == false) {
+                        emailCheck(fragment_register_email_edittext_email.text.toString())
+                    } else {
+                        navigateToVerificationCode()
+                    }
                 }
             } else {
                 hideKeyboard(fragment_register_email_edittext_email)
@@ -135,9 +139,9 @@ class RegisterEmailFragment : Fragment() {
         authViewModel.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
                 progressbar_register_email.visibility = View.GONE
-                value?.let {
-                    when (it.code) {
-                        0 -> {
+                when (value!!.code) {
+                    0 -> {
+                        if (!isReconnectCancelled) {
                             authViewModel.userEmail.value = value.email
                             if (!authViewModel.isTimerRunning.value!!) {
                                 authViewModel.isTimerRunning.value = true
@@ -145,18 +149,19 @@ class RegisterEmailFragment : Fragment() {
                             }
                             authViewModel.vCode.value = value.vcode
                             Log.d("CODE ======================= ", value.vcode!!)
-                            Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG)
+                                .show()
                             navigateToVerificationCode()
                         }
-                        4 -> {
-                            showErrorMessage(
-                                getString(R.string.dialog_email_used_register_email),
-                                true
-                            )
-                        }
-                        else -> {
-                            showErrorMessage(getString(R.string.dialog_register_error), true)
-                        }
+                    }
+                    4 -> {
+                        showErrorMessage(
+                            getString(R.string.dialog_email_used_register_email),
+                            true
+                        )
+                    }
+                    else -> {
+                        showErrorMessage(getString(R.string.dialog_register_error), true)
                     }
                 }
             }

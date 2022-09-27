@@ -124,14 +124,14 @@
     <string name="btn_login_login">Войти</string>
     <string name="forgot_password">не помню  пароль</string>
     <string name="dialog_login">Рад снова встретиться с вами!</string>
-    <string name="adds_new_password_login_new_pass">Введите новый пароль и повторите:</string>
+    <string name="adds_new_password_new_pass">Введите новый пароль и повторите:</string>
     <string name="btn_next_login_new_pass">далее</string>
     <string name="btn_next_register_email">далее</string>
     <string name="btn_next_register_password">далее</string>
     <string name="btn_next_register_username">далее</string>
     <string name="btn_next_account_created">далее</string>
     <string name="btn_next_verification_code">далее</string>
-    <string name="dialog_login_new_pass">Введите 6-16 символов, используя только буквы и цифры</string>
+    <string name="dialog_new_pass">Введите 6-16 символов, используя только буквы и цифры</string>
     <string name="adds_register_email">Введите электронную почту:</string>
     <string name="dialog_register_email_error">Только один аккаунт можно зарегистрировать на электронный адрес</string>
     <string name="dialog_wrong_data_register_email">Адрес почты  указан некорректно</string>
@@ -159,7 +159,7 @@
     <string name="btn_messages">Написать сообщение</string>
     <string name="hint_new_password_login_new_pass">Новый пароль</string>
     <string name="hint_repeat_new_password_login_new_pass">Повторите пароль</string>
-    <string name="dialog_register_new_pass_passwords_not_match">Пароли не совпадают</string>
+    <string name="dialog_new_pass_passwords_do_not_match">Пароли не совпадают</string>
     <string name="dialog_wrong_verification_code_1">Этот код уже подтвержден</string>
     <string name="dialog_wrong_verification_code_3">Код уже недействителен</string>
     <string name="set_cooking_time_tmpl_hours">%d ч</string>
@@ -178,4 +178,8 @@
     <string name="menu_user_profile_app_settings">Настройки приложения</string>
     <string name="menu_user_profile_edit_user_profile">Редактировать профиль</string>
     <string name="menu_user_profile_users_badges">Мои значки</string>
+    <string name="btn_next">далее</string>
+    <string name="dialog_recover_pass_vcode">Проверочный код отправлен на почту \n %s</string>
+    <string name="dialog_recover_pass_user_not_found">Пользователь не найден</string>
+    <string name="dialog_connection_error">Что-то пошло не так, попробуйте снова позже</string>
 </resources>

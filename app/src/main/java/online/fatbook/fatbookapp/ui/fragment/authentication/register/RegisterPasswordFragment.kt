@@ -74,6 +74,7 @@ class RegisterPasswordFragment : Fragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
     }
 
+    //TODO remove
     private fun passwordValidate(): Boolean {
         return true
 //        return Pattern.compile(PASSWORD_REGEX).matcher(fragment_register_password_edittext_password.text.toString()).matches()

@@ -34,6 +34,15 @@ interface NetworkInfoService {
     @POST("login")
     fun login(@Body request: RequestBody?): Call<LoginResponse>
 
+    @POST("auth/recover")
+    fun recoverPassword(@Query(value = "identifier") identifier: String?): Call<AuthenticationResponse>
+
+    @POST("auth/change")
+    fun changePassword(
+        @Query(value = "username") username: String?,
+        @Query(value = "password") password: String?
+    ): Call<AuthenticationResponse>
+
     /**
      * User
      */

@@ -14,13 +14,11 @@ import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
-import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.Constants.FEED_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
 import online.fatbook.fatbookapp.util.ProgressBarUtil
-import online.fatbook.fatbookapp.util.UserUtils
 import org.apache.commons.lang3.StringUtils
 
 class MainActivity : AppCompatActivity() {
@@ -77,9 +75,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_register_password -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_register_username -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_login -> bottom_navigation.visibility = View.GONE
-                R.id.navigation_login_new_pass -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_new_pass -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_account_created -> bottom_navigation.visibility = View.GONE
                 R.id.navigation_view_image -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_login_recover_pass -> bottom_navigation.visibility = View.GONE
+                R.id.navigation_login_recover_pass_vcode -> bottom_navigation.visibility = View.GONE
 
                 else -> bottom_navigation.visibility = View.VISIBLE
             }

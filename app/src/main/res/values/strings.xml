@@ -29,13 +29,13 @@
     <string name="dialog_wrong_data_login">Wrong data\n Try again or click\n \"<u>forgot password</u>\"</string>
 
     ///fragment login new pass
-    <string name="title_app_name_login_new_pass" translatable="false">FatBook</string>
-    <string name="adds_new_password_login_new_pass">Set new password and repeat:</string>
+    <string name="title_app_name_new_pass" translatable="false">FatBook</string>
+    <string name="adds_new_password_new_pass">Set new password and repeat:</string>
     <string name="hint_new_password_login_new_pass">New password</string>
     <string name="hint_repeat_new_password_login_new_pass">Repeat password</string>
     <string name="btn_next_login_new_pass">next</string>
-    <string name="dialog_login_new_pass">Password must be 6–16 \n characters long and \n contains only numbers \n and letters</string>
-    <string name="dialog_register_new_pass_passwords_not_match">Passwords do not match</string>
+    <string name="dialog_new_pass">Password must be 6–16 \n characters long and \n contains only numbers \n and letters</string>
+    <string name="dialog_new_pass_passwords_do_not_match">Passwords do not match</string>
 
     ///fragment register e-mail
     <string name="title_app_name_register_email" translatable="false">FatBook</string>
@@ -297,9 +297,8 @@
     <string name="menu_user_profile_app_settings">App settings</string>
     <string name="menu_user_profile_edit_user_profile">Edit profile</string>
     <string name="menu_user_profile_users_badges">My Badges</string>
-
-
-
-
-
+    <string name="btn_next">Next</string>
+    <string name="dialog_recover_pass_vcode">Verification code was \n sent to e-mail \n %s</string>
+    <string name="dialog_recover_pass_user_not_found">User not found</string>
+    <string name="dialog_connection_error">Something went wrong,\ntry again later</string>
 </resources>

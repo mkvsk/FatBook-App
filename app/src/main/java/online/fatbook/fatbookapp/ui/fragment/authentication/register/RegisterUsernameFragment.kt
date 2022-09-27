@@ -11,7 +11,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_register_email.*
 import kotlinx.android.synthetic.main.fragment_register_username.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -94,7 +93,9 @@ class RegisterUsernameFragment : Fragment() {
                 value?.let {
                     when (it.code) {
                         0 -> {
-                            navigateToAccountCreated()
+                            if (!isReconnectCancelled) {
+                                navigateToAccountCreated()
+                            }
                         }
                         4 -> {
                             hideKeyboard(fragment_register_username_edittext_username)
@@ -138,7 +139,7 @@ class RegisterUsernameFragment : Fragment() {
                 requireContext(), R.color.dialogErrorMess_text
             )
         )
-        fragment_register_username_dialog_text.text = message;
+        fragment_register_username_dialog_text.text = message
         if (dyeEditText) {
             fragment_register_username_edittext_username.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)

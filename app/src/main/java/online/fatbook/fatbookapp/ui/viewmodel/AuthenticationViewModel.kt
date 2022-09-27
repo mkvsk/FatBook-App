@@ -16,6 +16,8 @@ class AuthenticationViewModel : ViewModel() {
 
     private val repository by lazy { AuthenticationRepository(ContextHolder.get()) }
 
+    var isUserAuthenticated = MutableLiveData(false)
+
     var userEmail = MutableLiveData("")
     var password = MutableLiveData("")
     var username = MutableLiveData("")
@@ -31,8 +33,18 @@ class AuthenticationViewModel : ViewModel() {
 
     private var timer: CountDownTimer? = null
 
+    var recoverIdentifier = MutableLiveData("")
+    var recoverEmail = MutableLiveData("")
+    var recoverUsername = MutableLiveData("")
+
     fun startTimer(seconds: Long) {
-        Log.d("CODE SENT TO: ", userEmail.value.toString())
+        Log.d(
+            "CODE SENT TO", if (userEmail.value.isNullOrEmpty()) {
+                recoverIdentifier.value.toString()
+            } else {
+                userEmail.value.toString()
+            }
+        )
         timer = object : CountDownTimer(seconds * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 currentCountdown.value = millisUntilFinished / 1000
@@ -67,9 +79,7 @@ class AuthenticationViewModel : ViewModel() {
     fun login(request: RequestBody, callback: ResultCallback<LoginResponse>) {
         repository.login(request, object : ResultCallback<LoginResponse> {
             override fun onResult(value: LoginResponse?) {
-                value?.let {
-                    callback.onResult(it)
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: LoginResponse?) {
@@ -96,6 +106,34 @@ class AuthenticationViewModel : ViewModel() {
         vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>
     ) {
         repository.confirmVCode(vCode, email, object : ResultCallback<AuthenticationResponse> {
+            override fun onResult(value: AuthenticationResponse?) {
+                value?.let {
+                    callback.onResult(it)
+                }
+            }
+
+            override fun onFailure(value: AuthenticationResponse?) {
+                callback.onFailure(value)
+            }
+        })
+    }
+
+    fun recoverPassword(identifier: String, callback: ResultCallback<AuthenticationResponse>) {
+        repository.recoverPassword(identifier, object : ResultCallback<AuthenticationResponse> {
+            override fun onResult(value: AuthenticationResponse?) {
+                value?.let {
+                    callback.onResult(it)
+                }
+            }
+
+            override fun onFailure(value: AuthenticationResponse?) {
+                callback.onFailure(value)
+            }
+        })
+    }
+
+    fun changePassword(username: String, password: String, callback: ResultCallback<AuthenticationResponse>) {
+        repository.changePassword(username, password, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
                 value?.let {
                     callback.onResult(it)

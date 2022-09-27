@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -27,6 +28,7 @@ import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import online.fatbook.fatbookapp.util.UserUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
@@ -57,11 +59,14 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         super.onViewCreated(view, savedInstanceState)
         setupSwipeRefresh()
         setupMenu()
-        if (userViewModel.user.value == null) {
+        if (!authViewModel.isUserAuthenticated.value!!) {
             login()
-        } else {
+        } else if (userViewModel.user.value == null) {
             loadUserInfo()
+        } else {
+            swipe_refresh_feed.isEnabled = true
         }
+
 
 //        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 //        if (recipeViewModel.selectedRecipePosition.value != null) {
@@ -77,8 +82,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //        )
     }
 
-    //    ==========================================================================================
-
     private fun login() {
         progressbar_feed.visibility = View.VISIBLE
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -86,8 +89,14 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             .addFormDataPart("password", authViewModel.password.value!!).build()
         authViewModel.login(request, object : ResultCallback<LoginResponse> {
             override fun onResult(value: LoginResponse?) {
-                saveTokens(value!!)
-                println("User ${authViewModel.username.value} logged in")
+                if (value == null || value.access_token.isNullOrEmpty()) {
+                    Log.d("LOGOUT", "${authViewModel.username.value}")
+                    logout()
+                } else {
+                    saveTokens(value)
+                    authViewModel.isUserAuthenticated.value = true
+                    Log.d("LOGIN", "${authViewModel.username.value}")
+                }
             }
 
             override fun onFailure(value: LoginResponse?) {
@@ -110,6 +119,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                 override fun onResult(value: User?) {
                     userViewModel.user.value = value
                     progressbar_feed.visibility = View.GONE
+                    swipe_refresh_feed.isEnabled = true
+//                    loadFeed()
                 }
 
                 override fun onFailure(value: User?) {
@@ -119,14 +130,17 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun setupSwipeRefresh() {
-        swipe_refresh_bookmarks.setColorSchemeColors(
+        swipe_refresh_feed.isEnabled = false
+        swipe_refresh_feed.isRefreshing = false
+        swipe_refresh_feed.setColorSchemeColors(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.color_pink_a200
             )
         )
-        swipe_refresh_bookmarks.setOnRefreshListener {
-//            loadData()
+        swipe_refresh_feed.setOnRefreshListener {
+            swipe_refresh_feed.isRefreshing = false
+//            loadFeed()
         }
     }
 
@@ -144,13 +158,28 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_direct_messages -> {
-                NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_direct_messages_from_feed)
+//                NavHostFragment.findNavController(this)
+//                    .navigate(R.id.action_go_to_direct_messages_from_feed)
+                logout()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun logout() {
+        val sharedPreferences = requireActivity().getSharedPreferences(
+            Constants.SP_TAG, Context.MODE_PRIVATE
+        )
+        val editor = sharedPreferences.edit()
+        editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
+        editor.putString(Constants.SP_TAG_PASSWORD, StringUtils.EMPTY)
+        editor.apply()
+        startActivity(Intent(requireActivity(), SplashActivity::class.java))
+        requireActivity().finish()
+    }
+
+    //===========================================================================================
 
     private fun addObservers() {
         userViewModel.user.observe(viewLifecycleOwner) {
@@ -189,7 +218,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     //TODO убрать костыль в запросе
-    private fun loadData() {
+    private fun loadFeed() {
         RetrofitFactory.apiServiceClient().getFeed(0L)
             .enqueue(object : Callback<ArrayList<Recipe>?> {
                 override fun onResponse(
@@ -198,7 +227,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                     if (response.body() != null) {
                         userViewModel.feedRecipeList.value = response.body()
                     }
-                    swipe_refresh_bookmarks.isRefreshing = false
+                    swipe_refresh_feed.isRefreshing = false
 //                    loadUser(null)
                 }
 
@@ -292,7 +321,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //                            FeedFragment.log.log(Level.INFO, "user load FAILED " + response.code())
                         }
                         if (binding != null) {
-                            binding!!.swipeRefreshBookmarks.isRefreshing = false
+                            swipe_refresh_feed.isRefreshing = false
                         }
                     }
 

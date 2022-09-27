@@ -122,16 +122,54 @@
         tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_go_to_login_new_pass_from_login"
-            app:destination="@id/navigation_login_new_pass"
+            android:id="@+id/action_go_to_login_recover_pass_from_login"
+            app:destination="@id/navigation_login_recover_pass"
             app:popUpTo="@id/navigation_login" />
+
+        <action
+            android:id="@+id/action_go_to_feed_from_login"
+            app:destination="@id/navigation_feed"
+            app:popUpTo="@id/mobile_navigation" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_login_new_pass"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginNewPassFragment"
+        android:id="@+id/navigation_login_recover_pass"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginRecoverPassword"
         android:label="@null"
-        tools:layout="@layout/fragment_login_new_pass" />
+        tools:layout="@layout/fragment_login_recover_pass" >
+
+        <action
+            android:id="@+id/action_go_to_login_recover_pass_vcode_from_recover_pass"
+            app:destination="@id/navigation_login_recover_pass_vcode"
+            app:popUpTo="@id/navigation_login_recover_pass" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_login_recover_pass_vcode"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginRecoverPasswordVCodeFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_login_recover_pass_verification_code" >
+
+        <action
+            android:id="@+id/action_go_to_new_pass_from_login_vcode"
+            app:destination="@id/navigation_new_pass"
+            app:popUpTo="@id/navigation_login_recover_pass_vcode"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_new_pass"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.NewPassFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_new_pass">
+
+        <action
+            android:id="@+id/action_go_to_feed_from_new_pass"
+            app:destination="@id/navigation_feed"
+            app:popUpTo="@id/mobile_navigation"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_register_email"

@@ -59,7 +59,7 @@ class AuthenticationRepository(private val context: Context) {
                 ) {
                     Log.d("LOGIN", response.body().toString())
                     if (response.body() == null) {
-                        callback.onFailure(null)
+                        callback.onResult(null)
                     } else {
                         callback.onResult(response.body())
                     }
@@ -123,6 +123,59 @@ class AuthenticationRepository(private val context: Context) {
                     callback.onFailure(null)
                 }
             })
+        }
+    }
+
+    fun recoverPassword(identifier: String, callback: ResultCallback<AuthenticationResponse>) {
+        scope.launch {
+            val call = RetrofitFactory.apiServiceClient().recoverPassword(identifier)
+
+            call.enqueue(object : Callback<AuthenticationResponse> {
+                override fun onResponse(
+                    call: Call<AuthenticationResponse>, response: Response<AuthenticationResponse>
+                ) {
+                    Log.d("RECOVER", response.body().toString())
+                    if (response.body() == null) {
+                        callback.onFailure(null)
+                    } else {
+                        callback.onResult(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+                    Log.d("RECOVER", "error")
+                    t.printStackTrace()
+                    callback.onFailure(null)
+                }
+            })
+        }
+    }
+
+    fun changePassword(
+        username: String, password: String, callback: ResultCallback<AuthenticationResponse>
+    ) {
+        scope.launch {
+            val call = RetrofitFactory.apiServiceClient().changePassword(username, password)
+
+            call.enqueue(object : Callback<AuthenticationResponse> {
+                override fun onResponse(
+                    call: Call<AuthenticationResponse>, response: Response<AuthenticationResponse>
+                ) {
+                    Log.d("CHANGE", response.body().toString())
+                    if (response.body() == null) {
+                        callback.onFailure(null)
+                    } else {
+                        callback.onResult(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
+                    Log.d("CHANGE", "error")
+                    t.printStackTrace()
+                    callback.onFailure(null)
+                }
+            })
+
         }
     }
 }

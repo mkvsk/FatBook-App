@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/start_fragments_bgr"
-    tools:context=".ui.fragment.authentication.register.VerificationCodeFragment">
+    tools:context=".ui.fragment.authentication.register.RegisterUsernameFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progressbar_register_vc"
+        android:id="@+id/progressbar_login_recover_pass"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="10dp"
@@ -38,7 +38,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/fragment_verification_code_header"
+        android:id="@+id/fragment_login_recover_pass_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
@@ -49,87 +49,77 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/fragment_verification_code_title"
+            android:id="@+id/fragment_login_recover_pass_title"
             style="@style/txtWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@null" />
 
         <TextView
-            android:id="@+id/fragment_verification_code_appname"
+            android:id="@+id/fragment_login_recover_pass_appname"
             style="@style/txtAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/fragment_verification_code_button_next"
-        android:layout_height="@dimen/btn_pink_h"
-        android:layout_width="@dimen/btn_pink_w"
-        android:background="@drawable/selector_btn_main"
-        style="@style/btnPink"
-        android:elevation="4dp"
-        android:translationZ="2dp"
-        android:text="@string/btn_next_verification_code"
-        android:enabled="false"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
     <TextView
-        android:id="@+id/fragment_verification_code_resend_link"
-        style="@style/registerUnderlinedText"
-        android:layout_marginTop="@dimen/start_fragments_link_spacing"
-        android:text="@string/resend_verification_code"
-        android:visibility="visible"
-        app:layout_constraintRight_toRightOf="@id/fragment_verification_code_button_next"
-        app:layout_constraintTop_toBottomOf="@id/fragment_verification_code_button_next" />
-
-    <TextView
-        android:id="@+id/fragment_verification_code_additional_text"
+        android:id="@+id/fragment_login_recover_pass_additional_text"
         style="@style/registerAdditionalText"
         android:layout_marginBottom="@dimen/start_fragments_add_text_spacing"
-        android:text="@string/adds_verification_code"
+        android:text="text"
+        app:layout_constraintBottom_toTopOf="@id/fragment_login_recover_pass_edittext_username"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/fragment_login_recover_pass_edittext_username"
+        style="@style/authenticationEditText"
+        android:layout_marginBottom="@dimen/start_fragments_element_spacing"
+        android:background="@drawable/round_corner_edittext"
+        android:hint="username or email"
+        android:inputType="text"
+        android:maxLength="20"
+        app:layout_constraintBottom_toTopOf="@id/fragment_login_recover_pass_button_next"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fragment_login_recover_pass_button_next"
+        style="@style/btnPink"
+        android:layout_width="@dimen/btn_pink_w"
+        android:layout_height="@dimen/btn_pink_h"
+        android:background="@drawable/selector_btn_main"
+        android:elevation="4dp"
+        android:enabled="false"
+        android:text="@string/btn_next"
+        android:translationZ="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fragment_verification_code_edittext_vc"/>
-
-        <EditText
-            android:id="@+id/fragment_verification_code_edittext_vc"
-            style="@style/authenticationEditText"
-            android:background="@drawable/round_corner_edittext"
-            android:hint="@string/hint_verification_code"
-            android:inputType="number"
-            android:maxLines="1"
-            android:maxLength="6"
-            android:layout_marginBottom="@dimen/start_fragments_element_spacing"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragment_verification_code_button_next"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/fragment_verification_code_kuzya_dialog"
+        android:id="@+id/fragment_login_recover_pass_kuzya_dialog"
         android:layout_width="@dimen/kuzya_w"
         android:layout_height="@dimen/kuzya_h"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/cat_dialog_verification_code"
-        app:layout_constraintBottom_toTopOf="@id/fragment_verification_code_app_version"
+        android:src="@drawable/cat_dialog_set_login"
+        app:layout_constraintBottom_toTopOf="@id/fragment_login_recover_pass_app_version"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/fragment_verification_code_dialog_text"
+        android:id="@+id/fragment_login_recover_pass_dialog_text"
         style="@style/txtKuzyaDialog"
         android:layout_marginEnd="30dp"
         android:paddingTop="15dp"
-        android:text="@string/dialog_verification_code"
-        app:layout_constraintRight_toRightOf="@id/fragment_verification_code_kuzya_dialog"
-        app:layout_constraintTop_toTopOf="@id/fragment_verification_code_kuzya_dialog" />
+        android:text="text"
+        app:layout_constraintRight_toRightOf="@id/fragment_login_recover_pass_kuzya_dialog"
+        app:layout_constraintTop_toTopOf="@id/fragment_login_recover_pass_kuzya_dialog" />
 
     <TextView
-        android:id="@+id/fragment_verification_code_app_version"
+        android:id="@+id/fragment_login_recover_pass_app_version"
         style="@style/txtVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
