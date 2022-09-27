@@ -158,9 +158,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_direct_messages -> {
-//                NavHostFragment.findNavController(this)
-//                    .navigate(R.id.action_go_to_direct_messages_from_feed)
-                logout()
+                NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_go_to_direct_messages_from_feed)
                 true
             }
             else -> super.onOptionsItemSelected(item)

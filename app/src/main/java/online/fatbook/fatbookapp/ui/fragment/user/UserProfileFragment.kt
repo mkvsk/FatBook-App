@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -156,6 +158,8 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     }
 
     private fun setupMenu() {
+        val activity = (activity as AppCompatActivity?)!!
+        activity.setSupportActionBar(toolbar_userprofile)
         setHasOptionsMenu(true)
     }
 
