@@ -4,6 +4,6 @@ import java.io.Serializable
 
 data class Ingredient(
     var pid: Long? = null,
-    var name: String? = "",
+    var title: String? = "",
     var units: ArrayList<IngredientUnitRatio>? = ArrayList()
 ) : Serializable

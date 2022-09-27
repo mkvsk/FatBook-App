@@ -85,7 +85,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
         try {
             val temp: ArrayList<Ingredient> = ArrayList()
             for (i in ingredientList!!) {
-                if (StringUtils.containsIgnoreCase(i!!.name, text)) {
+                if (StringUtils.containsIgnoreCase(i!!.title, text)) {
                     temp.add(i)
                 }
             }
@@ -136,7 +136,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
     override fun onIngredientClick(previousItem: Int, selectedItem: Int, ingredient: Ingredient?) {
         selectedIngredient = ingredient
         binding!!.textViewSelectedIngredient.setTextColor(resources.getColor(R.color.color_pink_a200))
-        binding!!.textViewSelectedIngredient.text = ingredient!!.name
+        binding!!.textViewSelectedIngredient.text = ingredient!!.title
         adapter!!.notifyItemChanged(previousItem)
         adapter!!.notifyItemChanged(selectedItem)
         activateButtonSave()

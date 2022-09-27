@@ -179,7 +179,7 @@ class IngredientsFragmentOLD : Fragment() {
                 val name = editTextName.text.toString()
                 if (StringUtils.isNotEmpty(name) && name.length >= 3) {
                     ingredientToAdd = Ingredient()
-                    ingredientToAdd!!.name = name
+                    ingredientToAdd!!.title = name
                     saveIngredient()
                     dialog.dismiss()
                 } else {

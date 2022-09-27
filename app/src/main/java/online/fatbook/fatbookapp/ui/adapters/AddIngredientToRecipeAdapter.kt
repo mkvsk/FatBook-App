@@ -38,7 +38,7 @@ class AddIngredientToRecipeAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(ingredient: Ingredient, position: Int) {
-            itemView.textView_ingredient_to_recipe.text = ingredient.name
+            itemView.textView_ingredient_to_recipe.text = ingredient.title
             itemView.rv_item_card.setCardBackgroundColor(itemView.context.resources.getColor(R.color.white))
             if (selectedItem == position) {
                 itemView.rv_item_card.setCardBackgroundColor(itemView.context.resources.getColor(R.color.color_lime_500))

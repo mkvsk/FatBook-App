@@ -38,7 +38,7 @@ class IngredientsAdapter :
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(ingredient: Ingredient?) {
-            itemView.textview_ingredient_title_rv_ingredient.text = ingredient!!.name
+            itemView.textview_ingredient_title_rv_ingredient.text = ingredient!!.title
         }
     }
 

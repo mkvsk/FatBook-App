@@ -49,7 +49,7 @@ class ViewRecipeIngredientAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(recipeIngredient: RecipeIngredient) {
-            itemView.textView_ingredient_in_recipe.text = recipeIngredient.ingredient!!.name
+            itemView.textView_ingredient_in_recipe.text = recipeIngredient.ingredient!!.title
             val quantityName =
                 recipeIngredient.quantity.toString() + " " + recipeIngredient.unit!!.getDisplayName(
                     itemView.context
