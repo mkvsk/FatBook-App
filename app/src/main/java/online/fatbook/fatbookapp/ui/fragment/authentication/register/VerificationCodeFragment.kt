@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_register_email.*
 import kotlinx.android.synthetic.main.fragment_register_username.*
 import kotlinx.android.synthetic.main.fragment_verification_code.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
+import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse

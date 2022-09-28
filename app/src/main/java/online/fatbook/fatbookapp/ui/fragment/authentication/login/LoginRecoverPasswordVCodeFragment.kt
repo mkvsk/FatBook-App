@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_login_recover_pass_verification_code.*
-import kotlinx.android.synthetic.main.fragment_verification_code.progressbar_register_vc
+import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
@@ -160,13 +160,13 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
     private fun confirmVCode(vCode: String) {
         Log.d("VCODE CONFIRM attempt", reconnectCount.toString())
         hideKeyboard(fragment_login_recover_pass_vcode_edittext_vc)
-        progressbar_register_vc.visibility = View.VISIBLE
+        progress_overlay_auth.visibility = View.VISIBLE
         authViewModel.confirmVCode(
             vCode,
             authViewModel.recoverEmail.value!!,
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
-                    progressbar_register_vc.visibility = View.GONE
+                    progress_overlay_auth.visibility = View.GONE
                     when (value!!.code) {
                         0 -> {
                             if (!isReconnectCancelled) {
@@ -208,7 +208,7 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
                         } else {
                             hideKeyboard(fragment_login_recover_pass_vcode_edittext_vc)
                             showErrorMessage(getString(R.string.dialog_register_error), false)
-                            progressbar_register_vc.visibility = View.GONE
+                            progress_overlay_auth.visibility = View.GONE
                         }
                     }
                 }
@@ -224,9 +224,9 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progressbar_register_vc.visibility == View.VISIBLE) {
+                    if (progress_overlay_auth.visibility == View.VISIBLE) {
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
-                        progressbar_register_vc.visibility = View.GONE
+                        progress_overlay_auth.visibility = View.GONE
                         isReconnectCancelled = true
                     } else {
                         popBackStack()

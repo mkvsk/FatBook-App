@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_login_recover_pass.*
+import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
@@ -80,11 +81,11 @@ class LoginRecoverPassword : Fragment() {
 
     private fun recoverPassword(identifier: String) {
         Log.d("RECOVER PASSWORD attempt", reconnectCount.toString())
-        progressbar_login_recover_pass.visibility = View.VISIBLE
+        progress_overlay_auth.visibility = View.VISIBLE
         hideKeyboard(fragment_login_recover_pass_edittext_username)
         authViewModel.recoverPassword(identifier, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                progressbar_login_recover_pass.visibility = View.GONE
+                progress_overlay_auth.visibility = View.GONE
                 if (!isReconnectCancelled) {
                     when (value!!.code) {
                         0 -> {
@@ -117,7 +118,7 @@ class LoginRecoverPassword : Fragment() {
                     } else {
                         showErrorMessage(getString(R.string.dialog_register_error))
                         hideKeyboard(fragment_login_recover_pass_edittext_username)
-                        progressbar_login_recover_pass.visibility = View.GONE
+                        progress_overlay_auth.visibility = View.GONE
                     }
                 }
             }
@@ -168,8 +169,8 @@ class LoginRecoverPassword : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progressbar_login_recover_pass.visibility == View.VISIBLE) {
-                        progressbar_login_recover_pass.visibility = View.GONE
+                    if (progress_overlay_auth.visibility == View.VISIBLE) {
+                        progress_overlay_auth.visibility = View.GONE
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
                         isReconnectCancelled = true
                     } else {
