@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_register_username.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
@@ -81,7 +82,7 @@ class RegisterUsernameFragment : Fragment() {
 
     private fun createNewUser() {
         Log.d("REGISTER attempt", reconnectCount.toString())
-        progressbar_register_username.visibility = View.VISIBLE
+        progress_overlay_auth.visibility = View.VISIBLE
         hideKeyboard(fragment_register_username_edittext_username)
         authViewModel.register(AuthenticationRequest(
             authViewModel.username.value,
@@ -89,7 +90,7 @@ class RegisterUsernameFragment : Fragment() {
             authViewModel.userEmail.value
         ), object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                progressbar_register_username.visibility = View.GONE
+                progress_overlay_auth.visibility = View.GONE
                 value?.let {
                     when (it.code) {
                         0 -> {
@@ -125,7 +126,7 @@ class RegisterUsernameFragment : Fragment() {
                     } else {
                         hideKeyboard(fragment_register_username_edittext_username)
                         showErrorMessage(getString(R.string.dialog_register_error), false)
-                        progressbar_register_username.visibility = View.GONE
+                        progress_overlay_auth.visibility = View.GONE
                     }
                 }
             }
@@ -167,8 +168,8 @@ class RegisterUsernameFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progressbar_register_username.visibility == View.VISIBLE) {
-                        progressbar_register_username.visibility = View.GONE
+                    if (progress_overlay_auth.visibility == View.VISIBLE) {
+                        progress_overlay_auth.visibility = View.GONE
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
                         isReconnectCancelled = true
                     } else {

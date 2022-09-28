@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_new_pass.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
@@ -112,7 +113,7 @@ class NewPassFragment : Fragment() {
     }
 
     private fun changePassword(password: String) {
-        progressbar_new_pass.visibility = View.VISIBLE
+        progress_overlay_auth.visibility = View.VISIBLE
 //        authViewModel.username.value = authViewModel.recoverUsername.value
 //        authViewModel.password.value = value
 
@@ -124,7 +125,7 @@ class NewPassFragment : Fragment() {
             password,
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
-                    progressbar_new_pass.visibility = View.GONE
+                    progress_overlay_auth.visibility = View.GONE
                     when (value!!.code) {
                         0 -> {
                             if (!isReconnectCancelled) {
@@ -146,7 +147,7 @@ class NewPassFragment : Fragment() {
                         } else {
                             hideKeyboard(fragment_login_edittext_password)
                             showErrorMessage(getString(R.string.dialog_connection_error))
-                            progressbar_login.visibility = View.GONE
+                            progress_overlay_auth.visibility = View.GONE
                         }
                     }
                 }
@@ -162,8 +163,8 @@ class NewPassFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progressbar_new_pass.visibility == View.VISIBLE) {
-                        progressbar_new_pass.visibility = View.GONE
+                    if (progress_overlay_auth.visibility == View.VISIBLE) {
+                        progress_overlay_auth.visibility = View.GONE
                         showDefaultMessage(getString(R.string.dialog_new_pass))
                         isReconnectCancelled = true
                     } else {

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.android.synthetic.main.fragment_app_settings.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentAppSettingsBinding
 
@@ -25,12 +26,13 @@ class AppSettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         switch_app_theme.setOnCheckedChangeListener { _, isChecked ->
+            progress_overlay.visibility = View.VISIBLE
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
+            progress_overlay.visibility = View.GONE
         }
     }
 }

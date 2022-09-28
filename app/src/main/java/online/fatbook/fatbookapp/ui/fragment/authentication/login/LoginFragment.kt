@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_register_username.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
@@ -113,7 +113,7 @@ class LoginFragment : Fragment() {
 
     private fun login(username: String, password: String) {
         Log.d("LOGIN attempt", reconnectCount.toString())
-        progressbar_login.visibility = View.VISIBLE
+        progress_overlay_auth.visibility = View.VISIBLE
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("username", username)
             .addFormDataPart("password", password).build()
@@ -131,7 +131,7 @@ class LoginFragment : Fragment() {
                         navigateToFeed()
                     } else {
                         showErrorMessage("Sequence not found")
-                        progressbar_login.visibility = View.GONE
+                        progress_overlay_auth.visibility = View.GONE
                     }
                 }
             }
@@ -144,7 +144,7 @@ class LoginFragment : Fragment() {
                     } else {
                         hideKeyboard(fragment_login_edittext_password)
                         showErrorMessage(getString(R.string.dialog_register_error))
-                        progressbar_login.visibility = View.GONE
+                        progress_overlay_auth.visibility = View.GONE
                     }
                 }
             }
@@ -160,8 +160,8 @@ class LoginFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progressbar_login.visibility == View.VISIBLE) {
-                        progressbar_login.visibility = View.GONE
+                    if (progress_overlay_auth.visibility == View.VISIBLE) {
+                        progress_overlay_auth.visibility = View.GONE
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
                         isReconnectCancelled = true
                     } else {

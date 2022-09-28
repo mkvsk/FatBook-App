@@ -6,6 +6,7 @@
     android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.SearchFragment">
 
+    <include layout="@layout/include_progress_overlay" />
 
     <SeekBar
         android:id="@+id/seekBar"

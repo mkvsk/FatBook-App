@@ -5,13 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_feed.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
@@ -83,7 +83,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun login() {
-        progressbar_feed.visibility = View.VISIBLE
+        progress_overlay.visibility = View.VISIBLE
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("username", authViewModel.username.value!!)
             .addFormDataPart("password", authViewModel.password.value!!).build()
@@ -118,7 +118,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             object : ResultCallback<User> {
                 override fun onResult(value: User?) {
                     userViewModel.user.value = value
-                    progressbar_feed.visibility = View.GONE
+                    progress_overlay.visibility = View.GONE
                     swipe_refresh_feed.isEnabled = true
 //                    loadFeed()
                 }

@@ -24,7 +24,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_ingredients"
+        android:id="@+id/navigation_ingredients_old"
         android:name="online.fatbook.fatbookapp.ui.fragment.IngredientsFragmentOLD"
         android:label="@string/mobile_nav_ingredients"
         tools:layout="@layout/fragment_ingredients_old" />
@@ -36,22 +36,22 @@
         tools:layout="@layout/fragment_recipe_create_old">
 
         <action
-            android:id="@+id/action_go_to_add_ingredient"
-            app:destination="@id/navigation_add_ingredient"
+            android:id="@+id/action_go_to_add_ingredient_old"
+            app:destination="@id/navigation_add_ingredient_old"
             app:popUpTo="@id/navigation_recipe_create_old" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_bookmarks"
+        android:id="@+id/navigation_bookmarks_old"
         android:name="online.fatbook.fatbookapp.ui.fragment.BookmarksFragmentOLD"
         android:label="@string/mobile_nav_bookmarks"
         tools:layout="@layout/fragment_bookmarks_old">
 
         <action
-            android:id="@+id/action_go_to_recipe_view_from_bookmarks"
+            android:id="@+id/action_go_to_recipe_view_from_bookmarks_old"
             app:destination="@id/navigation_recipe_view"
-            app:popUpTo="@id/navigation_bookmarks" />
+            app:popUpTo="@id/navigation_bookmarks_old" />
 
     </fragment>
 
@@ -87,7 +87,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_add_ingredient"
+        android:id="@+id/navigation_add_ingredient_old"
         android:name="online.fatbook.fatbookapp.ui.fragment.RecipeAddIngredientFragmentOLD"
         android:label="@string/mobile_nav_recipe_add_ingredient"
         tools:layout="@layout/fragment_add_ingredient_old" />

@@ -105,7 +105,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
         recipeViewModel!!.selectedRecipe.value = recipe
         recipeViewModel!!.selectedRecipePosition.value = position
         NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_recipe_view_from_bookmarks)
+            .navigate(R.id.action_go_to_recipe_view_from_bookmarks_old)
     }
 
     override fun onBookmarksClick(recipe: Recipe?, bookmark: Boolean, position: Int) {

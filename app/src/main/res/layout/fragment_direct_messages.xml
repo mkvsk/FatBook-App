@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.util.DirectMessagesFragment">
 
+    <include layout="@layout/include_progress_overlay" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
