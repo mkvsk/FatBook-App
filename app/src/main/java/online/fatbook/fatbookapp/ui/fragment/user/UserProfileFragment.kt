@@ -418,7 +418,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
     private fun focusOnRecipes() {
         nsv_userprofile.post {
-            nsv_userprofile.scrollTo(
+            nsv_userprofile.smoothScrollTo(
                 0, cardview_userprofile.bottom
             )
         }
