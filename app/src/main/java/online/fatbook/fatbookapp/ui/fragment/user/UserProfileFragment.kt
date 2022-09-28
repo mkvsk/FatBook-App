@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
+import android.animation.AnimatorListenerAdapter
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.Recipe
@@ -30,8 +32,10 @@ import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.FormatUtils
+import online.fatbook.fatbookapp.util.ProgressBarUtil
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
+
 
 class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
@@ -51,8 +55,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        progressbar_userprofile.visibility = View.VISIBLE
-
+        progress_overlay.visibility = View.VISIBLE
         if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
             setupMenu()
             setupViewForCurrentUserProfile()
@@ -390,6 +393,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                 imageview_is_online.visibility = View.INVISIBLE
             }
         }
+        progress_overlay.visibility = View.GONE
     }
 
     private fun loadData(username: String, updateCurrentUser: Boolean) {

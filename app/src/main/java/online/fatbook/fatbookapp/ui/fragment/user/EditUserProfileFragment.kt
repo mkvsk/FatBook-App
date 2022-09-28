@@ -9,10 +9,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.user.User
@@ -24,8 +26,6 @@ import org.apache.commons.lang3.StringUtils
 
 class EditUserProfileFragment : Fragment() {
     private var binding: FragmentEditProfileBinding? = null
-    private var savedScrollX: Int = 0
-    private var savedScrollY: Int = 0
 
     private var bioTextLength: Int = 0
     private var strBio: String? = null
@@ -35,9 +35,6 @@ class EditUserProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Log.i("view:", "onCreate")
-
     }
 
     override fun onCreateView(
@@ -53,7 +50,6 @@ class EditUserProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         loadData(userViewModel.user.value!!.username!!)
-
 
         edittext_profile_title.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -72,12 +68,23 @@ class EditUserProfileFragment : Fragment() {
 
         })
 
+        edittext_profile_website.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
+
         edittext_profile_bio.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                button_save_edit_userprofile.visibility = View.VISIBLE
                 bioTextLength =
                     edittext_profile_bio.filters.filterIsInstance<InputFilter.LengthFilter>()
                         .firstOrNull()?.max!!
@@ -101,15 +108,13 @@ class EditUserProfileFragment : Fragment() {
                 edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " ")
             )
             hideKeyboard(edittext_profile_bio)
+            Toast.makeText(requireContext(), "User update", Toast.LENGTH_SHORT)
         }
 
-//        val loadingDialog = LoadingDialog(requireContext())
-
-//        loadingDialog.startLoading()
-        progressbarLayout_edit_userprofile.visibility = View.VISIBLE
+        progress_overlay.visibility = View.VISIBLE
         val handler = Handler()
         handler.postDelayed({
-            progressbarLayout_edit_userprofile.visibility = View.GONE
+            progress_overlay.visibility = View.GONE
             //                loadingDialog.isDismiss()
         }, 1500)
 
