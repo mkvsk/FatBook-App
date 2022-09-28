@@ -29,20 +29,6 @@
             local:titleTextColor="@color/main_text"
             local:titleTextAppearance="@style/txtToolbar" />
 
-        <!--        <com.google.android.material.appbar.MaterialToolbar-->
-        <!--            android:id="@+id/toolbar_recipe_view"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="?attr/actionBarSize"-->
-        <!--            android:background="@color/theme_toolbar_color"-->
-        <!--            android:theme="@style/ToolbarTheme"-->
-        <!--            app:buttonGravity="center_vertical"-->
-        <!--            app:layout_scrollFlags="scroll|enterAlways"-->
-        <!--            app:navigationIcon="@drawable/ic_arrow_back"-->
-        <!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-        <!--            app:title="FatBook"-->
-        <!--            app:titleTextColor="@color/theme_toolbar_text_color">-->
-
-        <!--        </com.google.android.material.appbar.MaterialToolbar>-->
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

@@ -106,7 +106,7 @@ class EditUserProfileFragment : Fragment() {
                 edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " ")
             )
             hideKeyboard(edittext_profile_bio)
-            Toast.makeText(requireContext(), "User update", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "Data updated", Toast.LENGTH_SHORT).show()
         }
 
         progress_overlay.visibility = View.VISIBLE

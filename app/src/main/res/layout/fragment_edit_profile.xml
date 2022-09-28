@@ -7,7 +7,7 @@
     android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.user.EditUserProfileFragment">
 
-    <include layout="@layout/include_progress_overlay"/>
+    <include layout="@layout/include_progress_overlay" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_edit_userprofile"
@@ -26,23 +26,8 @@
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="edit_profile"
-            local:titleTextColor="@color/main_text"
-            local:titleTextAppearance="@style/txtToolbar" />
-
-<!--        <com.google.android.material.appbar.MaterialToolbar-->
-<!--            android:id="@+id/toolbar_edit_userprofile"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?attr/actionBarSize"-->
-<!--            android:background="@color/theme_toolbar_color"-->
-<!--            android:theme="@style/ToolbarTheme"-->
-<!--            app:buttonGravity="center_vertical"-->
-<!--            app:layout_scrollFlags="scroll|enterAlways"-->
-<!--            app:navigationIcon="@drawable/ic_arrow_back"-->
-<!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-<!--            app:title="edit_profile"-->
-<!--            app:titleTextColor="@color/theme_toolbar_text_color">-->
-
-<!--        </com.google.android.material.appbar.MaterialToolbar>-->
+            local:titleTextAppearance="@style/txtToolbar"
+            local:titleTextColor="@color/main_text" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -60,10 +45,10 @@
             android:layout_marginStart="@dimen/cards_margin_start"
             app:cardElevation="6dp"
             app:cardPreventCornerOverlap="false"
+            app:contentPaddingBottom="10dp"
             app:contentPaddingLeft="10dp"
             app:contentPaddingRight="20dp"
             app:contentPaddingTop="10dp"
-            app:contentPaddingBottom="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -77,8 +62,11 @@
                     android:id="@+id/imageview_userphoto_edit_userprofile"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:background="@drawable/ic_default_userphoto"
+                    android:background="@color/theme_cardview_bgr"
+                    android:elevation="4dp"
                     android:scaleType="centerCrop"
+                    android:src="@drawable/ic_default_userphoto"
+                    android:translationZ="2dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -191,8 +179,9 @@
                     android:gravity="start"
                     android:hint="Bio"
                     android:maxLength="635"
-                    android:maxLines="20"
-                    android:minLines="10"
+                    android:maxLines="15"
+                    android:minLines="5"
+                    android:scrollbars="vertical"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="5dp"
                     android:textAppearance="@style/editProfileText"
@@ -212,18 +201,19 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_save_edit_userprofile"
+                    style="@style/btnsMain"
                     android:layout_width="@dimen/btn_main_w"
                     android:layout_height="@dimen/btn_main_h"
-                    style="@style/btnsMain"
-                    android:background="@drawable/selector_btn_main"
                     android:layout_marginVertical="@dimen/btn_spacing"
+                    android:background="@drawable/selector_btn_main"
                     android:elevation="4dp"
-                    android:translationZ="2dp"
                     android:text="Save"
+                    android:clickable="true"
+                    android:translationZ="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edittext_profile_bio"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@id/edittext_profile_bio" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
