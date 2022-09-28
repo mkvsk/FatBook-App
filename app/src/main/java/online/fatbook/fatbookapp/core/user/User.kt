@@ -1,8 +1,10 @@
 package online.fatbook.fatbookapp.core.user
 
 import online.fatbook.fatbookapp.core.recipe.Recipe
-import org.apache.commons.lang3.builder.ToStringBuilder
 import java.io.Serializable
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 data class User(
     var pid: Long? = null,
@@ -14,19 +16,20 @@ data class User(
     var email: String? = "",
     var regDate: String? = "",
     var lastAction: String? = "",
-    var recipeAmount: Int? = 0,
-    var followingAmount: Int? = 0,
-    var followersAmount: Int? = 0,
     var role: UserRole? = UserRole.USER,
     var recipes: ArrayList<Recipe>? = ArrayList(),
     var recipesForked: ArrayList<Long>? = ArrayList(),
     var recipesFavourites: ArrayList<Long>? = ArrayList(),
     var listFollowing: ArrayList<UserSimpleObject>? = ArrayList(),
     var listFollowers: ArrayList<UserSimpleObject>? = ArrayList(),
-
-    //TODO lastAction не более 5 минут назад
-    var online: Boolean? = false
+    var recipeAmount: Int? = recipes?.size,
+    var followingAmount: Int? = listFollowing?.size,
+    var followersAmount: Int? = listFollowers?.size,
+    var isSimpleObject: Boolean = recipes == null
 ) : Serializable {
+
+    val online: Boolean
+        get() = Duration.between(LocalDateTime.parse(lastAction), LocalDateTime.now()).toMinutes() < 10
 
     fun convertToSimpleObject(): UserSimpleObject {
         return UserSimpleObject(pid, username, title, profileImage)
