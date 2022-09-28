@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -53,13 +54,19 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         progress_overlay.visibility = View.VISIBLE
+        val handler = Handler()
+        handler.postDelayed({
+            progress_overlay.visibility = View.GONE
+            //                loadingDialog.isDismiss()
+        }, 1500)
+
         if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
             setupMenu()
             setupViewForCurrentUserProfile()
         } else {
             setupViewForSelectedUserProfile()
         }
-        progress_overlay.visibility = View.GONE
+
 
         imageview_recipes_qtt_userprofile.setOnClickListener {
             focusOnRecipes()
@@ -391,6 +398,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                 imageview_is_online.visibility = View.INVISIBLE
             }
         }
+//        progress_overlay.visibility = View.GONE
     }
 
     private fun loadData(username: String, updateCurrentUser: Boolean) {
