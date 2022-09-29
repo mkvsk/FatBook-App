@@ -29,7 +29,7 @@
             local:title="my_profile"
             local:titleTextAppearance="@style/txtToolbar"
             local:titleTextColor="@color/main_text"
-            local:subtitle="was online 5 minutes ago"
+            local:subtitle="@string/subtitle_offline"
             local:subtitleTextAppearance="@style/txtSubtitleToolbar"
             local:subtitleTextColor="@color/theme_toolbar_subtitle_text_color"
             />
@@ -346,11 +346,11 @@
             style="@style/floatingBtnFocusOnTab"
             android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
             android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:elevation="10dp"
             android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:maxImageSize="16dp" />
 
