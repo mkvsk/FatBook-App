@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredients
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.databinding.FragmentIngredientsOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.IngredientsAdapter
@@ -28,8 +28,8 @@ import retrofit2.Response
 @Log
 class IngredientsFragmentOLD : Fragment() {
     private var binding: FragmentIngredientsOldBinding? = null
-    private var ingredientToAdd: Ingredients? = null
-    private var ingredientList: List<Ingredients>? = null
+    private var ingredientToAdd: Ingredient? = null
+    private var ingredientList: List<Ingredient>? = null
     private var staticDataViewModel: StaticDataViewModel? = null
     private var adapter: IngredientsAdapter? = null
 
@@ -42,13 +42,13 @@ class IngredientsFragmentOLD : Fragment() {
         staticDataViewModel = ViewModelProvider(requireActivity())[StaticDataViewModel::class.java]
         ingredientList = ArrayList()
         setupAdapter()
-        if (staticDataViewModel!!.ingredients.value == null) {
+        if (staticDataViewModel!!.ingredient.value == null) {
             loadIngredients()
         }
         setupSwipeRefresh()
-        staticDataViewModel!!.ingredients.observe(viewLifecycleOwner) { ingredients: List<Ingredients?>? ->
+        staticDataViewModel!!.ingredient.observe(viewLifecycleOwner) { ingredients: List<Ingredient?>? ->
             binding!!.swipeRefreshBookmarks.isRefreshing = false
-            ingredientList = staticDataViewModel!!.ingredients.value
+            ingredientList = staticDataViewModel!!.ingredient.value
             adapter!!.setData(ingredientList)
             adapter!!.notifyDataSetChanged()
         }
@@ -125,16 +125,16 @@ class IngredientsFragmentOLD : Fragment() {
 
     private fun loadIngredients() {
         RetrofitFactory.apiServiceClient().allIngredients().enqueue(object :
-            Callback<List<Ingredients>?> {
+            Callback<List<Ingredient>?> {
             override fun onResponse(
-                call: Call<List<Ingredients>?>,
-                response: Response<List<Ingredients>?>
+                    call: Call<List<Ingredient>?>,
+                    response: Response<List<Ingredient>?>
             ) {
-                staticDataViewModel!!.ingredients.value = response.body()
+                staticDataViewModel!!.ingredient.value = response.body()
 //                IngredientsFragment.log.log(Level.INFO, "ingredient list load: SUCCESS")
             }
 
-            override fun onFailure(call: Call<List<Ingredients>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<Ingredient>?>, t: Throwable) {
 //                IngredientsFragment.log.log(Level.INFO, "ingredient list load: FAILED")
                 showErrorMsg()
             }
@@ -178,7 +178,7 @@ class IngredientsFragmentOLD : Fragment() {
             button.setOnClickListener { view: View? ->
                 val name = editTextName.text.toString()
                 if (StringUtils.isNotEmpty(name) && name.length >= 3) {
-                    ingredientToAdd = Ingredients()
+                    ingredientToAdd = Ingredient()
                     ingredientToAdd!!.title = name
                     saveIngredient()
                     dialog.dismiss()

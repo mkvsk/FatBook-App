@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.rv_ingredient_to_recipe_old.view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredients
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener
 
 class AddIngredientToRecipeAdapter :
-    RecyclerView.Adapter<AddIngredientToRecipeAdapter.ViewHolder>(), BindableAdapter<Ingredients> {
+    RecyclerView.Adapter<AddIngredientToRecipeAdapter.ViewHolder>(), BindableAdapter<Ingredient> {
 
     private var selectedItem = -1
     private var listener: OnAddIngredientItemClickListener? = null
-    private var data: List<Ingredients> = ArrayList()
+    private var data: List<Ingredient> = ArrayList()
 
     fun setClickListener(listener: OnAddIngredientItemClickListener?) {
         this.listener = listener
@@ -37,7 +37,7 @@ class AddIngredientToRecipeAdapter :
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(ingredient: Ingredients, position: Int) {
+        fun bind(ingredient: Ingredient, position: Int) {
             itemView.textView_ingredient_to_recipe.text = ingredient.title
             itemView.rv_item_card.setCardBackgroundColor(itemView.context.resources.getColor(R.color.white))
             if (selectedItem == position) {
@@ -52,7 +52,7 @@ class AddIngredientToRecipeAdapter :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<Ingredients>?) {
+    override fun setData(data: List<Ingredient>?) {
         data?.let {
             this.data = it
             notifyDataSetChanged()

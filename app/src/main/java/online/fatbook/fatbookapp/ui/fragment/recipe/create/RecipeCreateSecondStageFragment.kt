@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredients
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateSecondStageBinding
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
@@ -32,12 +32,12 @@ class RecipeCreateSecondStageFragment : Fragment() {
     }
 
     private fun loadIngredients() {
-        staticDataViewModel.getAllIngredients(object : ResultCallback<List<Ingredients>> {
-            override fun onResult(value: List<Ingredients>?) {
-                staticDataViewModel.ingredients.value = value
+        staticDataViewModel.getAllIngredients(object : ResultCallback<List<Ingredient>> {
+            override fun onResult(value: List<Ingredient>?) {
+                staticDataViewModel.ingredient.value = value
             }
 
-            override fun onFailure(value: List<Ingredients>?) {
+            override fun onFailure(value: List<Ingredient>?) {
             }
         })
 

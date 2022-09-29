@@ -9,8 +9,7 @@ import kotlinx.coroutines.launch
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredients
-import online.fatbook.fatbookapp.core.user.User
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
@@ -76,14 +75,14 @@ class StaticDataRepository(private val context: Context) {
         }
     }
 
-    fun getAllIngredients(callback: ResultCallback<List<Ingredients>>) {
+    fun getAllIngredients(callback: ResultCallback<List<Ingredient>>) {
         scope.launch {
             val call = RetrofitFactory.apiServiceClient().getAllIngredients()
 
-            call.enqueue(object : Callback<List<Ingredients>> {
+            call.enqueue(object : Callback<List<Ingredient>> {
                 override fun onResponse(
-                    call: Call<List<Ingredients>>,
-                    response: Response<List<Ingredients>>
+                        call: Call<List<Ingredient>>,
+                        response: Response<List<Ingredient>>
                 ) {
                     Log.d("GET ALL INGREDIENTS", response.body().toString())
                     if (response.body() == null) {
@@ -93,7 +92,7 @@ class StaticDataRepository(private val context: Context) {
                     }
                 }
 
-                override fun onFailure(call: Call<List<Ingredients>>, t: Throwable) {
+                override fun onFailure(call: Call<List<Ingredient>>, t: Throwable) {
                     Log.d("GET ALL INGREDIENTS", "error")
                     t.printStackTrace()
                     callback.onFailure(null)
