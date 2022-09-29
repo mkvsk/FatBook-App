@@ -207,14 +207,16 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(R.layout.dialog_app_info)
         builder.setPositiveButton(getString(R.string.alert_dialog_btn_close)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
-        builder.show()    }
+        builder.show()
+    }
 
     private fun openBadges() {
         NavHostFragment.findNavController(this).navigate(R.id.action_go_to_badges_from_user_profile)
     }
 
     private fun openAppSettings() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_app_settings_from_user_profile)
+        NavHostFragment.findNavController(this)
+            .navigate(R.id.action_go_to_app_settings_from_user_profile)
     }
 
     private fun logout() {
@@ -291,6 +293,12 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         if (user.username == userViewModel.user.value!!.username) {
             toolbar_userprofile.title = user.username
 
+            if (user.online) {
+                toolbar_userprofile.subtitle = "Online"
+            } else {
+                toolbar_userprofile.subtitle = "Offline"
+            }
+
             if (user.recipes == null) {
                 textview_recipes_qtt_userprofile.text = "0"
             } else {
@@ -345,6 +353,12 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             }
         } else {
             toolbar_userprofile.title = user.username
+
+            if (user.online) {
+                toolbar_userprofile.subtitle = "Online"
+            } else {
+                toolbar_userprofile.subtitle = "Offline"
+            }
 
             if (user.recipes == null) {
                 textview_recipes_qtt_userprofile.text = "0"

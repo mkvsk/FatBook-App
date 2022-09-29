@@ -61,6 +61,7 @@
     <color name="theme_primary_bgr">#ECEFF1</color>
     <color name="theme_toolbar_color">#ECEFF1</color>
     <color name="theme_toolbar_text_color">#263238</color>
+    <color name="theme_toolbar_subtitle_text_color">#B0BEC5</color>
     <color name="theme_toolbar_ic_color">#263238</color>
     <color name="theme_cardview_bgr">#FFFFFFFF</color>
 
@@ -224,8 +225,14 @@
 
     <style name="txtToolbar">
         <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="titleTextColor">@color/theme_toolbar_text_color</item>
+    </style>
+
+    <style name="txtSubtitleToolbar">
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">11sp</item>
+        <item name="titleTextColor">@color/theme_toolbar_subtitle_text_color</item>
     </style>
 
     <style name="txtRecipePreviewAdds">

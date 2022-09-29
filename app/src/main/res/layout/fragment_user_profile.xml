@@ -28,22 +28,11 @@
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="my_profile"
             local:titleTextAppearance="@style/txtToolbar"
-            local:titleTextColor="@color/main_text" />
-
-        <!--        <com.google.android.material.appbar.MaterialToolbar-->
-        <!--            android:id="@+id/toolbar_userprofile"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="?attr/actionBarSize"-->
-        <!--            android:background="@color/theme_toolbar_color"-->
-        <!--            android:theme="@style/ToolbarTheme"-->
-        <!--            app:buttonGravity="center_vertical"-->
-        <!--            app:layout_scrollFlags="scroll|enterAlways"-->
-        <!--            app:navigationIcon="@drawable/ic_back"-->
-        <!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-        <!--            app:title="my_profile"-->
-        <!--            app:titleTextColor="@color/theme_toolbar_text_color">-->
-
-        <!--        </com.google.android.material.appbar.MaterialToolbar>-->
+            local:titleTextColor="@color/main_text"
+            local:subtitle="was online 5 minutes ago"
+            local:subtitleTextAppearance="@style/txtSubtitleToolbar"
+            local:subtitleTextColor="@color/theme_toolbar_subtitle_text_color"
+            />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -75,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/cards_margin_start"
                     app:cardElevation="6dp"
+                    app:cardPreventCornerOverlap="false"
                     app:contentPaddingBottom="10dp"
                     app:contentPaddingLeft="10dp"
                     app:contentPaddingRight="20dp"
@@ -87,6 +77,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/textview_was_online"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            android:text="last seen 5 minutes ago"-->
+<!--                            android:textSize="9sp"-->
+<!--                            android:fontFamily="@font/roboto_regular"-->
+<!--                            android:textColor="@color/blue_grey_200"-->
+<!--                            android:background="@drawable/round_corner_rect_blue_grey_50"-->
+<!--                            android:paddingHorizontal="5dp"-->
+<!--                            />-->
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageview_recipes_qtt_userprofile"
@@ -252,12 +256,13 @@
                         <LinearLayout
                             android:id="@+id/ll_btns_follow_message"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:layout_marginTop="10dp"
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:visibility="visible"
-                            app:layout_constraintTop_toBottomOf="@id/expandableLayout">
+                            app:layout_constraintTop_toBottomOf="@id/expandableLayout"
+                            app:layout_constraintBottom_toBottomOf="parent">
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/button_friends"
