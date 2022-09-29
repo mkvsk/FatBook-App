@@ -52,6 +52,10 @@ class RecipeCreateFirstStageFragment : Fragment() {
             staticDataViewModel.loadCookingMethod.value = false
             navigation(false)
         }
+
+        button_next_recipe_create_1_stage.setOnClickListener {
+            navigation(true)
+        }
     }
 
     private fun navigation(nextStep: Boolean) {

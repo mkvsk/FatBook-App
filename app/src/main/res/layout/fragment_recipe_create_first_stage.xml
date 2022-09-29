@@ -438,7 +438,7 @@
                             android:background="@drawable/selector_btn_main"
                             android:elevation="4dp"
                             android:translationZ="2dp"
-                            android:enabled="false"
+                            android:enabled="true"
                             android:text="Next"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
