@@ -13,8 +13,7 @@
         android:id="@+id/appBarLayout_userprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        app:elevation="10dp">
+        tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar_userprofile"

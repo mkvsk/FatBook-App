@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -54,17 +53,19 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         progress_overlay.visibility = View.VISIBLE
-        val handler = Handler()
-        handler.postDelayed({
-            progress_overlay.visibility = View.GONE
-            //                loadingDialog.isDismiss()
-        }, 1500)
+//        val handler = Handler()
+//        handler.postDelayed({
+//            progress_overlay.visibility = View.GONE
+//            //                loadingDialog.isDismiss()
+//        }, 1500)
 
         if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
             setupMenu()
-            setupViewForCurrentUserProfile()
+            toolbar_userprofile.title = userViewModel.user.value!!.username
+            setupViewForLoggedInUser()
         } else {
-            setupViewForSelectedUserProfile()
+            toolbar_userprofile.title = userViewModel.selectedUsername.value!!
+            setupViewForSelectedUser()
         }
 
 
@@ -272,14 +273,14 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         }
     }
 
-    private fun setupViewForCurrentUserProfile() {
+    private fun setupViewForLoggedInUser() {
         ll_btns_follow_message.visibility = View.GONE
         tabLayout_userprofile.visibility = View.VISIBLE
         toolbar_userprofile.navigationIcon = null
         loadData(userViewModel.user.value!!.username!!, true)
     }
 
-    private fun setupViewForSelectedUserProfile() {
+    private fun setupViewForSelectedUser() {
         ll_btns_follow_message.visibility = View.VISIBLE
         tabLayout_userprofile.visibility = View.GONE
         toolbar_userprofile.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
@@ -392,13 +393,13 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                 }
             }
 
-            if (user.online!!) {
+            if (user.online) {
                 imageview_is_online.visibility = View.VISIBLE
             } else {
                 imageview_is_online.visibility = View.INVISIBLE
             }
         }
-//        progress_overlay.visibility = View.GONE
+        progress_overlay.visibility = View.GONE
     }
 
     private fun loadData(username: String, updateCurrentUser: Boolean) {
