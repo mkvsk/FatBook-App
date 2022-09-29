@@ -280,7 +280,14 @@
         android:id="@+id/navigation_app_settings"
         android:name="online.fatbook.fatbookapp.ui.fragment.util.AppSettingsFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_app_settings" />
+        tools:layout="@layout/fragment_app_settings" >
+
+        <action
+            android:id="@+id/action_go_to_user_profile_from_app_settings"
+            app:destination="@id/navigation_user_profile"
+            app:popUpTo="@id/mobile_navigation"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_edit_profile_fragment"

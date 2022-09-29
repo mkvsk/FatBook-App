@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredients
 import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentAddIngredientOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.AddIngredientToRecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener
-import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import org.apache.commons.lang3.StringUtils
@@ -30,15 +30,15 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
     private var binding: FragmentAddIngredientOldBinding? = null
     private var adapter: AddIngredientToRecipeAdapter? = null
     private var recipeViewModel: RecipeViewModel? = null
-    private var ingredientViewModel: IngredientViewModel? = null
-    private var selectedIngredient: Ingredient? = null
-    private var ingredientList: List<Ingredient?>? = null
+    private var staticDataViewModel: StaticDataViewModel? = null
+    private var selectedIngredient: Ingredients? = null
+    private var ingredientList: List<Ingredients?>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         recipeViewModel = ViewModelProvider(requireActivity())[RecipeViewModel::class.java]
-        ingredientViewModel = ViewModelProvider(requireActivity())[IngredientViewModel::class.java]
+        staticDataViewModel = ViewModelProvider(requireActivity())[StaticDataViewModel::class.java]
         binding!!.btnAddIngredientToRecipe.isEnabled = false
         binding!!.textViewSelectedIngredient.setTextColor(resources.getColor(R.color.color_blue_grey_200))
         binding!!.toolbarAddIngredientToRecipe.setNavigationOnClickListener {
@@ -63,7 +63,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
 
             override fun afterTextChanged(editable: Editable) {}
         })
-        ingredientViewModel!!.ingredientList.observe(viewLifecycleOwner) {
+        staticDataViewModel!!.ingredients.observe(viewLifecycleOwner) {
             ingredientList = it
             adapter!!.setData(it)
         }
@@ -83,7 +83,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
 
     private fun filter(text: String) {
         try {
-            val temp: ArrayList<Ingredient> = ArrayList()
+            val temp: ArrayList<Ingredients> = ArrayList()
             for (i in ingredientList!!) {
                 if (StringUtils.containsIgnoreCase(i!!.title, text)) {
                     temp.add(i)
@@ -97,16 +97,16 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
 
     private fun loadIngredients() {
         RetrofitFactory.apiServiceClient().allIngredients().enqueue(object :
-            Callback<List<Ingredient>?> {
+            Callback<List<Ingredients>?> {
             override fun onResponse(
-                call: Call<List<Ingredient>?>,
-                response: Response<List<Ingredient>?>
+                call: Call<List<Ingredients>?>,
+                response: Response<List<Ingredients>?>
             ) {
-                ingredientViewModel!!.ingredientList.value = response.body()
+                staticDataViewModel!!.ingredients.value = response.body()
 //                RecipeAddIngredientFragment.log.log(Level.INFO, "ingredient list load: SUCCESS")
             }
 
-            override fun onFailure(call: Call<List<Ingredient>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<Ingredients>?>, t: Throwable) {
 //                RecipeAddIngredientFragment.log.log(Level.INFO, "ingredient list load: FAILED")
             }
         })
@@ -133,7 +133,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
         rv.adapter = adapter
     }
 
-    override fun onIngredientClick(previousItem: Int, selectedItem: Int, ingredient: Ingredient?) {
+    override fun onIngredientClick(previousItem: Int, selectedItem: Int, ingredient: Ingredients?) {
         selectedIngredient = ingredient
         binding!!.textViewSelectedIngredient.setTextColor(resources.getColor(R.color.color_pink_a200))
         binding!!.textViewSelectedIngredient.text = ingredient!!.title

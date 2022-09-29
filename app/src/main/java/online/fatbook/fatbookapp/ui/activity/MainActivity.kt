@@ -10,7 +10,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
-import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private var binding: ActivityMainBinding? = null
     private var recipeViewModel: RecipeViewModel? = null
     private var userViewModel: UserViewModel? = null
-    private var ingredientViewModel: IngredientViewModel? = null
+    private var staticDataViewModel: StaticDataViewModel? = null
     private var authViewModel: AuthenticationViewModel? = null
     private var navController: NavController? = null
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         recipeViewModel = ViewModelProvider(this)[RecipeViewModel::class.java]
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-        ingredientViewModel = ViewModelProvider(this)[IngredientViewModel::class.java]
+        staticDataViewModel = ViewModelProvider(this)[StaticDataViewModel::class.java]
 
         authViewModel = ViewModelProvider(this)[AuthenticationViewModel::class.java]
 
@@ -49,6 +49,9 @@ class MainActivity : AppCompatActivity() {
             val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
             authViewModel!!.username.value = sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
             authViewModel!!.password.value = sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
+
+//            sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)
+//            nav_host_fragment_activity_main.childFragmentManager.fragments.get(0)
             navController!!.navigate(R.id.action_go_to_feed_from_welcome)
         }
     }

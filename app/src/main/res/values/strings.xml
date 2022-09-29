@@ -301,4 +301,6 @@
     <string name="dialog_recover_pass_vcode">Verification code was \n sent to e-mail \n %s</string>
     <string name="dialog_recover_pass_user_not_found">User not found</string>
     <string name="dialog_connection_error">Something went wrong,\ntry again later</string>
+    <string name="subtitle_online">Online</string>
+    <string name="subtitle_offline">Offline</string>
 </resources>

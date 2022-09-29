@@ -5,8 +5,10 @@ import okhttp3.RequestBody
 import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
 import online.fatbook.fatbookapp.core.authentication.LoginResponse
+import online.fatbook.fatbookapp.core.recipe.CookingCategory
+import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.Recipe
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredients
 import online.fatbook.fatbookapp.core.user.User
 import retrofit2.Call
 import retrofit2.http.*
@@ -49,6 +51,18 @@ interface NetworkInfoService {
     @GET("user/get/username")
     fun getUserByUsername(@Query(value = "username") username: String?): Call<User>
 
+    /**
+     * Static data
+     */
+    @GET("data/ingredient/get/all")
+    fun getAllIngredients() : Call<List<Ingredients>>
+
+    @GET("data/category/get/all")
+    fun getAllCookingCategories() : Call<List<CookingCategory>>
+
+    @GET("data/method/get/all")
+    fun getAllCookingMethods() : Call<List<CookingMethod>>
+
 //    ==========================================================================================
 
     @POST("user/create")
@@ -75,10 +89,10 @@ interface NetworkInfoService {
      * Ingredients
      */
     @POST("ingredient/add")
-    fun addIngredient(@Body ingredient: Ingredient?): Call<Void>
+    fun addIngredient(@Body ingredient: Ingredients?): Call<Void>
 
     @GET("ingredient/get/all")
-    fun allIngredients(): Call<List<Ingredient>>
+    fun allIngredients(): Call<List<Ingredients>>
 
     /**
      * Recipe

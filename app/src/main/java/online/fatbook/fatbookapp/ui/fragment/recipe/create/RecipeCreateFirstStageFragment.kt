@@ -13,14 +13,19 @@ import android.widget.FrameLayout
 import android.widget.TimePicker
 import android.widget.TimePicker.OnTimeChangedListener
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateFirstStageBinding
+import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
+import online.fatbook.fatbookapp.util.obtainViewModel
 
 
 class RecipeCreateFirstStageFragment : Fragment() {
     private var binding: FragmentRecipeCreateFirstStageBinding? = null
+
+    private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +42,26 @@ class RecipeCreateFirstStageFragment : Fragment() {
             configureAlertDialog()
         }
 
+
+        textview_cooking_method_recipe_create_1_stage.setOnClickListener {
+            staticDataViewModel.loadCookingMethod.value = true
+            navigation(false)
+        }
+
+        textview_category_recipe_create_1_stage.setOnClickListener {
+            staticDataViewModel.loadCookingMethod.value = false
+            navigation(false)
+        }
+    }
+
+    private fun navigation(nextStep: Boolean) {
+        if (nextStep) {
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_recipe_create_second_stage_from_first_stage)
+        } else {
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_recipe_choose_method_or_category_from_first_stage)
+        }
     }
 
     private fun configureAlertDialog() {
@@ -79,7 +104,6 @@ class RecipeCreateFirstStageFragment : Fragment() {
         })
 
     }
-
 
 
 }

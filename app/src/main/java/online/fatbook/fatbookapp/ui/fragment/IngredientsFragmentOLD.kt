@@ -14,11 +14,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredients
 import online.fatbook.fatbookapp.databinding.FragmentIngredientsOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.IngredientsAdapter
-import online.fatbook.fatbookapp.ui.viewmodel.IngredientViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
@@ -28,9 +28,9 @@ import retrofit2.Response
 @Log
 class IngredientsFragmentOLD : Fragment() {
     private var binding: FragmentIngredientsOldBinding? = null
-    private var ingredientToAdd: Ingredient? = null
-    private var ingredientList: List<Ingredient>? = null
-    private var ingredientViewModel: IngredientViewModel? = null
+    private var ingredientToAdd: Ingredients? = null
+    private var ingredientList: List<Ingredients>? = null
+    private var staticDataViewModel: StaticDataViewModel? = null
     private var adapter: IngredientsAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,16 +39,16 @@ class IngredientsFragmentOLD : Fragment() {
         binding!!.fabIngredientsAdd.setOnClickListener {
             configureAlertDialog()
         }
-        ingredientViewModel = ViewModelProvider(requireActivity())[IngredientViewModel::class.java]
+        staticDataViewModel = ViewModelProvider(requireActivity())[StaticDataViewModel::class.java]
         ingredientList = ArrayList()
         setupAdapter()
-        if (ingredientViewModel!!.ingredientList.value == null) {
+        if (staticDataViewModel!!.ingredients.value == null) {
             loadIngredients()
         }
         setupSwipeRefresh()
-        ingredientViewModel!!.ingredientList.observe(viewLifecycleOwner) { ingredients: List<Ingredient?>? ->
+        staticDataViewModel!!.ingredients.observe(viewLifecycleOwner) { ingredients: List<Ingredients?>? ->
             binding!!.swipeRefreshBookmarks.isRefreshing = false
-            ingredientList = ingredientViewModel!!.ingredientList.value
+            ingredientList = staticDataViewModel!!.ingredients.value
             adapter!!.setData(ingredientList)
             adapter!!.notifyDataSetChanged()
         }
@@ -125,16 +125,16 @@ class IngredientsFragmentOLD : Fragment() {
 
     private fun loadIngredients() {
         RetrofitFactory.apiServiceClient().allIngredients().enqueue(object :
-            Callback<List<Ingredient>?> {
+            Callback<List<Ingredients>?> {
             override fun onResponse(
-                call: Call<List<Ingredient>?>,
-                response: Response<List<Ingredient>?>
+                call: Call<List<Ingredients>?>,
+                response: Response<List<Ingredients>?>
             ) {
-                ingredientViewModel!!.ingredientList.value = response.body()
+                staticDataViewModel!!.ingredients.value = response.body()
 //                IngredientsFragment.log.log(Level.INFO, "ingredient list load: SUCCESS")
             }
 
-            override fun onFailure(call: Call<List<Ingredient>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<Ingredients>?>, t: Throwable) {
 //                IngredientsFragment.log.log(Level.INFO, "ingredient list load: FAILED")
                 showErrorMsg()
             }
@@ -178,7 +178,7 @@ class IngredientsFragmentOLD : Fragment() {
             button.setOnClickListener { view: View? ->
                 val name = editTextName.text.toString()
                 if (StringUtils.isNotEmpty(name) && name.length >= 3) {
-                    ingredientToAdd = Ingredient()
+                    ingredientToAdd = Ingredients()
                     ingredientToAdd!!.title = name
                     saveIngredient()
                     dialog.dismiss()

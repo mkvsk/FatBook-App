@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.ui.fragment.util
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -11,6 +12,8 @@ import kotlinx.android.synthetic.main.fragment_app_settings.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentAppSettingsBinding
+import online.fatbook.fatbookapp.util.Constants
+import org.apache.commons.lang3.StringUtils
 
 class AppSettingsFragment : Fragment() {
     private var binding: FragmentAppSettingsBinding? = null
@@ -37,9 +40,18 @@ class AppSettingsFragment : Fragment() {
         }
 
         switch_app_theme.setOnCheckedChangeListener { _, isChecked ->
+            val sharedPreferences = requireActivity().getSharedPreferences(
+                Constants.SP_TAG, Context.MODE_PRIVATE
+            )
+            val editor = sharedPreferences.edit()
+
             if (isChecked) {
+                editor.putBoolean(Constants.SP_TAG_DARK_MODE, true)
+                editor.apply()
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
+                editor.putBoolean(Constants.SP_TAG_DARK_MODE, false)
+                editor.apply()
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }

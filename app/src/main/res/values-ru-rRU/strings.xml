@@ -182,4 +182,6 @@
     <string name="dialog_recover_pass_vcode">Проверочный код отправлен на почту \n %s</string>
     <string name="dialog_recover_pass_user_not_found">Пользователь не найден</string>
     <string name="dialog_connection_error">Что-то пошло не так, попробуйте снова позже</string>
+    <string name="subtitle_online">В сети</string>
+    <string name="subtitle_offline">Не в сети</string>
 </resources>

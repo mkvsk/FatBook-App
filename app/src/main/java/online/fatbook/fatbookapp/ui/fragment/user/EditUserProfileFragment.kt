@@ -9,10 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
+import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.user.User
@@ -31,10 +34,6 @@ class EditUserProfileFragment : Fragment() {
 
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +46,17 @@ class EditUserProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        handleBackPressed()
         loadData(userViewModel.user.value!!.username!!)
+
+        toolbar_edit_userprofile.setNavigationOnClickListener {
+            if (progress_overlay.visibility == View.VISIBLE) {
+                progress_overlay.visibility = View.GONE
+//                        isReconnectCancelled = true
+            } else {
+                popBackStack()
+            }
+        }
 
         edittext_profile_title.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -122,8 +131,8 @@ class EditUserProfileFragment : Fragment() {
         userViewModel.getUserByUsername(username, object : ResultCallback<User> {
             override fun onResult(value: User?) {
                 value?.let {
-                        userViewModel.user.value = value
-                        drawData(userViewModel.user.value!!)
+                    userViewModel.user.value = value
+                    drawData(userViewModel.user.value!!)
                 }
             }
 
@@ -159,5 +168,24 @@ class EditUserProfileFragment : Fragment() {
             Glide.with(requireContext()).load(R.drawable.ic_default_userphoto)
                 .into(imageview_userphoto_edit_userprofile)
         }
+    }
+
+    private fun handleBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (progress_overlay.visibility == View.VISIBLE) {
+                        progress_overlay.visibility = View.GONE
+//                        isReconnectCancelled = true
+                    } else {
+                        popBackStack()
+                    }
+                }
+            })
+    }
+
+    private fun popBackStack() {
+        NavHostFragment.findNavController(this).popBackStack()
     }
 }

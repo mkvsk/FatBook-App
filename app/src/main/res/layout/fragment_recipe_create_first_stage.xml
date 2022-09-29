@@ -325,7 +325,7 @@
                             app:layout_constraintTop_toBottomOf="@id/ll_et_servings_time" />
 
                         <TextView
-                            android:id="@+id/edittext_cooking_method_recipe_create_1_stage"
+                            android:id="@+id/textview_cooking_method_recipe_create_1_stage"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_marginTop="@dimen/titles_spacing_recipe_create"
@@ -355,10 +355,10 @@
                             android:layout_marginTop="@dimen/elements_spacing_recipe_create"
                             android:text="Category:"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/edittext_cooking_method_recipe_create_1_stage" />
+                            app:layout_constraintTop_toBottomOf="@id/textview_cooking_method_recipe_create_1_stage" />
 
                         <TextView
-                            android:id="@+id/edittext_category_recipe_create_1_stage"
+                            android:id="@+id/textview_category_recipe_create_1_stage"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_marginTop="@dimen/titles_spacing_recipe_create"
@@ -368,7 +368,6 @@
                             android:drawableTint="@color/main_text"
                             android:ellipsize="end"
                             android:text="Сhoose category"
-                            android:enabled="false"
                             android:gravity="center|left"
                             android:lines="1"
                             android:elevation="1dp"
@@ -404,7 +403,7 @@
                             android:textSize="15sp"
                             app:layout_constraintLeft_toRightOf="@id/imageview_ic_privacy_recipe_create_1_stage"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/edittext_category_recipe_create_1_stage" />
+                            app:layout_constraintTop_toBottomOf="@id/textview_category_recipe_create_1_stage" />
 
 
                         <androidx.appcompat.widget.SwitchCompat

@@ -293,12 +293,6 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         if (user.username == userViewModel.user.value!!.username) {
             toolbar_userprofile.title = user.username
 
-            if (user.online) {
-                toolbar_userprofile.subtitle = "Online"
-            } else {
-                toolbar_userprofile.subtitle = "Offline"
-            }
-
             if (user.recipes == null) {
                 textview_recipes_qtt_userprofile.text = "0"
             } else {
@@ -346,20 +340,17 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                 }
             }
 
-            if (user.online!!) {
+            if (user.online) {
                 imageview_is_online.visibility = View.VISIBLE
+                toolbar_userprofile.subtitle = getString(R.string.subtitle_online)
+
             } else {
                 imageview_is_online.visibility = View.INVISIBLE
+                toolbar_userprofile.subtitle = getString(R.string.subtitle_offline)
             }
         } else {
             toolbar_userprofile.title = user.username
 
-            if (user.online) {
-                toolbar_userprofile.subtitle = "Online"
-            } else {
-                toolbar_userprofile.subtitle = "Offline"
-            }
-
             if (user.recipes == null) {
                 textview_recipes_qtt_userprofile.text = "0"
             } else {
@@ -409,8 +400,11 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
             if (user.online) {
                 imageview_is_online.visibility = View.VISIBLE
+                toolbar_userprofile.subtitle = getString(R.string.subtitle_online)
+
             } else {
                 imageview_is_online.visibility = View.INVISIBLE
+                toolbar_userprofile.subtitle = getString(R.string.subtitle_offline)
             }
         }
         progress_overlay.visibility = View.GONE
