@@ -7,12 +7,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.view.*
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
+import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
 
 class StaticDataAdapter :
     RecyclerView.Adapter<StaticDataAdapter.ViewHolder>(), BindableAdapter<StaticDataObject> {
 
     private var data: List<StaticDataObject> = ArrayList()
+    var listener: OnStaticDataClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -33,13 +37,25 @@ class StaticDataAdapter :
         }
     }
 
+    fun setClickListener(listener: OnStaticDataClickListener) {
+        this.listener = listener
+    }
+
     override fun getItemCount(): Int {
         return data.size
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: StaticDataObject?) {
             itemView.textview_rv_recipe_methods_categories_items.text = value!!.title
+
+            itemView.textview_rv_recipe_methods_categories_items.setOnClickListener {
+                if (value is CookingMethod) {
+                    listener?.onItemClick(data[bindingAdapterPosition])
+                } else {
+                    listener?.onItemClickChoose(data[bindingAdapterPosition])
+                }
+            }
         }
     }
 }

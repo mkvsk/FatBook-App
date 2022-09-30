@@ -15,7 +15,7 @@ data class Recipe(
     var portions: Int? = 0,
     var cookingTime: String? = "",
     var cookingMethod: CookingMethod? = null,
-    var cookingCategory: CookingCategory? = null,
+    var cookingCategories: ArrayList<CookingCategory>? = ArrayList(),
     var isPrivate: Boolean? = false,
     var ingredients: ArrayList<RecipeIngredient>? = ArrayList(),
     var kcalPerPortion: Double? = 0.0,

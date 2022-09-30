@@ -14,14 +14,19 @@ import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
+import kotlinx.android.synthetic.main.fragment_recipe_methods_categories_items.*
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.core.recipe.CookingMethod
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateFirstStageBinding
+import online.fatbook.fatbookapp.ui.adapters.StaticDataAdapter
+import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
 
 class RecipeCreateFirstStageFragment : Fragment() {
     private var binding: FragmentRecipeCreateFirstStageBinding? = null
-
+    private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
 
     override fun onCreateView(
@@ -34,11 +39,13 @@ class RecipeCreateFirstStageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        recipeViewModel.newRecipe.value = Recipe()
+
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.WRAP_CONTENT)
         textview_set_time_recipe_create_1_stage.setOnClickListener {
             configureAlertDialog()
         }
-
 
         textview_cooking_method_recipe_create_1_stage.setOnClickListener {
             staticDataViewModel.loadCookingMethod.value = true
