@@ -32,10 +32,12 @@
     <color name="ic_color">#FFFFFFFF</color>
     <color name="editText_catdialog_bgr">#37474F</color>
 
-    <color name="btnEnabledColor">#FF4081</color>
-    <color name="btnEnabledColor_text">#FFFFFFFF</color>
-    <color name="btnDisabledColor">#37474F</color>
-    <color name="btnDisabledColor_text">#546E7A</color>
+    <color name="btn_enabled_color">#FF4081</color>
+    <color name="btn_enabled_color_text">#FFFFFFFF</color>
+    <color name="btn_disabled_color_auth">#37474F</color>
+    <color name="btn_disabled_color_fragments">#263238</color>
+    <color name="btn_disabled_color_text">#546E7A</color>
+    <color name="btn_pressed_color">#546E7A</color>
 
     <color name="dialogErrorMess_text">#FF4081</color>
 
@@ -192,7 +194,7 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="btnsMain">
+    <style name="buttons_main_style">
         <item name="android:textColor">@color/text_color</item>
         <item name="cornerRadius">30dp</item>
         <item name="android:textAppearance">@style/myBtnsTextAppearance</item>

@@ -366,11 +366,11 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_add_recipe_add_ingredients"
-                style="@style/btnsMain"
+                style="@style/buttons_main_style"
                 android:layout_width="@dimen/btn_main_w"
                 android:layout_height="@dimen/btn_main_h"
                 android:layout_marginVertical="@dimen/btn_spacing"
-                android:background="@drawable/selector_btn_main"
+                android:background="@drawable/selector_btn_in_auth"
                 android:elevation="4dp"
                 android:translationZ="2dp"
                 android:enabled="false"

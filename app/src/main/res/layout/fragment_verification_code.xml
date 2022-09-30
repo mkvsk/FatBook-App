@@ -39,7 +39,7 @@
         android:id="@+id/fragment_verification_code_button_next"
         android:layout_height="@dimen/btn_pink_h"
         android:layout_width="@dimen/btn_pink_w"
-        android:background="@drawable/selector_btn_main"
+        android:background="@drawable/selector_btn_in_auth"
         style="@style/btnPink"
         android:elevation="4dp"
         android:translationZ="2dp"

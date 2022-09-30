@@ -266,21 +266,21 @@
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/button_friends"
-                                style="@style/btnsMain"
+                                style="@style/buttons_main_style"
                                 android:layout_width="@dimen/btn_main_w"
                                 android:layout_height="@dimen/btn_main_h"
                                 android:layout_marginEnd="35dp"
-                                android:background="@drawable/selector_btn_main"
+                                android:background="@drawable/selector_btn_in_fragments"
                                 android:elevation="4dp"
                                 android:text="@string/btn_follow"
                                 android:translationZ="2dp" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/button_messages"
-                                style="@style/btnsMain"
+                                style="@style/buttons_main_style"
                                 android:layout_width="@dimen/btn_main_w"
                                 android:layout_height="@dimen/btn_main_h"
-                                android:background="@drawable/selector_btn_main"
+                                android:background="@drawable/selector_btn_in_fragments"
                                 android:elevation="4dp"
                                 android:text="@string/btn_messages"
                                 android:translationZ="2dp" />

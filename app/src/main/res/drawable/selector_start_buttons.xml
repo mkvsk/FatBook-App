@@ -9,14 +9,14 @@
 
     <item android:state_enabled="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/btnEnabledColor" />
+            <solid android:color="@color/btn_enabled_color" />
             <corners android:radius="30dp"/>
         </shape>
     </item>
 
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
-            <solid android:color="@color/btnDisabledColor" />
+            <solid android:color="@color/btn_disabled_color_auth" />
             <corners android:radius="30dp"/>
         </shape>
     </item>
