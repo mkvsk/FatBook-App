@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateAddIngredientsBinding
-import online.fatbook.fatbookapp.ui.adapters.IngredientsAdapter
+import online.fatbook.fatbookapp.ui.adapters.StaticDataAdapter
 
 class RecipeCreateAddIngredientsFragment : Fragment() {
 
@@ -25,7 +25,7 @@ class RecipeCreateAddIngredientsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = IngredientsAdapter()
+        val adapter = StaticDataAdapter()
         val ingredientList = ArrayList<Ingredient>()
         ingredientList.add(Ingredient(0L ,"Kartoshka"))
         ingredientList.add(Ingredient(0L ,"Kartoshka"))
@@ -52,7 +52,7 @@ class RecipeCreateAddIngredientsFragment : Fragment() {
         ingredientList.add(Ingredient(0L ,"Kartoshka"))
         ingredientList.add(Ingredient(0L ,"Kartoshka"))
 
-        adapter.setData(ingredientList)
+//        adapter.setData(ingredientList)
         rv_ingredients_recipe_add_ingredients.adapter = adapter
     }
 }

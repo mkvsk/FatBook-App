@@ -5,18 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.rv_ingredient.view.*
+import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
+import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 
-class IngredientsAdapter :
-    RecyclerView.Adapter<IngredientsAdapter.ViewHolder>(), BindableAdapter<Ingredient> {
+class StaticDataAdapter :
+    RecyclerView.Adapter<StaticDataAdapter.ViewHolder>(), BindableAdapter<StaticDataObject> {
 
-    private var data: List<Ingredient> = ArrayList()
+    private var data: List<StaticDataObject> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.rv_ingredient, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.rv_recipe_methods_categories_items, parent, false)
         )
     }
 
@@ -25,9 +26,9 @@ class IngredientsAdapter :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<Ingredient>?) {
+    override fun setData(data: List<StaticDataObject>?) {
         data?.let {
-            this.data = it as ArrayList<Ingredient>
+            this.data = it as ArrayList<StaticDataObject>
             notifyDataSetChanged()
         }
     }
@@ -37,9 +38,8 @@ class IngredientsAdapter :
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(ingredient: Ingredient?) {
-            itemView.textview_ingredient_title_rv_ingredient.text = ingredient!!.title
+        fun bind(value: StaticDataObject?) {
+            itemView.textview_rv_recipe_methods_categories_items.text = value!!.title
         }
     }
-
 }

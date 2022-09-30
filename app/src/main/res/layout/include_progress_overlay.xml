@@ -2,7 +2,7 @@
     android:id="@+id/progress_overlay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:elevation="8dp"
+    android:elevation="1dp"
     android:animateLayoutChanges="true"
     android:background="@color/theme_primary_bgr"
     android:clickable="true"

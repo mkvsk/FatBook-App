@@ -17,7 +17,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.databinding.FragmentIngredientsOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
-import online.fatbook.fatbookapp.ui.adapters.IngredientsAdapter
+import online.fatbook.fatbookapp.ui.adapters.StaticDataAdapter
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import org.apache.commons.lang3.StringUtils
@@ -31,7 +31,7 @@ class IngredientsFragmentOLD : Fragment() {
     private var ingredientToAdd: Ingredient? = null
     private var ingredientList: List<Ingredient>? = null
     private var staticDataViewModel: StaticDataViewModel? = null
-    private var adapter: IngredientsAdapter? = null
+    private var adapter: StaticDataAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +49,7 @@ class IngredientsFragmentOLD : Fragment() {
         staticDataViewModel!!.ingredient.observe(viewLifecycleOwner) { ingredients: List<Ingredient?>? ->
             binding!!.swipeRefreshBookmarks.isRefreshing = false
             ingredientList = staticDataViewModel!!.ingredient.value
-            adapter!!.setData(ingredientList)
+//            adapter!!.setData(ingredientList)
             adapter!!.notifyDataSetChanged()
         }
         //
@@ -81,8 +81,8 @@ class IngredientsFragmentOLD : Fragment() {
 
     private fun setupAdapter() {
         val rv = binding!!.rvIngredients
-        adapter = IngredientsAdapter()
-        adapter!!.setData(ingredientList)
+        adapter = StaticDataAdapter()
+//        adapter!!.setData(ingredientList)
         rv.adapter = adapter
     }
 
