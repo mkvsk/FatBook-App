@@ -187,15 +187,21 @@
 
     <style name="btnPink">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textColor">@color/text_color_buttons_auth</item>
         <item name="cornerRadius">30dp</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="textAllCaps">true</item>
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="buttons_main_style">
-        <item name="android:textColor">@color/text_color</item>
+    <style name="buttons_auth_style">
+        <item name="android:textColor">@color/text_color_buttons_auth</item>
+        <item name="cornerRadius">30dp</item>
+        <item name="android:textAppearance">@style/myBtnsTextAppearance</item>
+    </style>
+
+    <style name="buttons_in_fragments_style">
+        <item name="android:textColor">@color/text_color_buttons_in_fragments</item>
         <item name="cornerRadius">30dp</item>
         <item name="android:textAppearance">@style/myBtnsTextAppearance</item>
     </style>

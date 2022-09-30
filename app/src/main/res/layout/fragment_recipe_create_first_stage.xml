@@ -431,14 +431,14 @@
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/button_next_recipe_create_1_stage"
-                            style="@style/buttons_main_style"
                             android:layout_width="@dimen/btn_main_w"
                             android:layout_height="@dimen/btn_main_h"
                             android:layout_marginVertical="@dimen/btn_spacing"
-                            android:background="@drawable/selector_btn_in_auth"
+                            style="@style/buttons_in_fragments_style"
+                            android:background="@drawable/selector_btn_in_fragments"
+                            android:enabled="false"
                             android:elevation="4dp"
                             android:translationZ="2dp"
-                            android:enabled="true"
                             android:text="Next"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +13,9 @@
         android:id="@+id/appBarLayout_recipe_methods_categories_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
 
         <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar_recipe_methods_categories_items"
@@ -29,39 +31,42 @@
             local:titleTextColor="@color/main_text"
             local:titleTextAppearance="@style/txtToolbar" />
 
-
-        <!--        <com.google.android.material.appbar.MaterialToolbar-->
-<!--            android:id="@+id/toolbar_recipe_methods_categories_items"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?attr/actionBarSize"-->
-<!--            android:background="@color/theme_toolbar_color"-->
-<!--            android:theme="@style/ToolbarTheme"-->
-<!--            app:buttonGravity="center_vertical"-->
-<!--            app:layout_scrollFlags="scroll|enterAlways"-->
-<!--            app:navigationIcon="@drawable/ic_arrow_back"-->
-<!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-<!--            app:title="methods_categories"-->
-<!--            app:titleTextColor="@color/theme_toolbar_text_color">-->
-
-<!--        </com.google.android.material.appbar.MaterialToolbar>-->
     </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/swipe_refresh_recipe_methods_categories_items"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recipe_methods_categories_items"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="0dp"
             android:paddingTop="10dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
-            tools:listitem="@layout/rv_recipe_methods_categories_items" />
+            app:fastScrollEnabled="true"
+            app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
+            app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
+            app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
+            app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout_recipe_methods_categories_items"
+            app:layout_constraintBottom_toTopOf="@id/button_save_recipe_methods_categories_items"
+            tools:listitem="@layout/rv_recipe_methods_categories_items"
+            />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_save_recipe_methods_categories_items"
+                android:layout_width="@dimen/btn_main_w"
+                android:layout_height="@dimen/btn_main_h"
+                style="@style/buttons_in_fragments_style"
+                android:background="@drawable/selector_btn_in_fragments"
+                android:enabled="false"
+                android:elevation="4dp"
+                android:translationZ="2dp"
+                android:text="Save"
+                android:layout_marginBottom="70dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
