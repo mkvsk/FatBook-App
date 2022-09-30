@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.rv_ingredient.view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredients
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 
 class IngredientsAdapter :
-    RecyclerView.Adapter<IngredientsAdapter.ViewHolder>(), BindableAdapter<Ingredients> {
+    RecyclerView.Adapter<IngredientsAdapter.ViewHolder>(), BindableAdapter<Ingredient> {
 
-    private var data: List<Ingredients> = ArrayList()
+    private var data: List<Ingredient> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -25,9 +25,9 @@ class IngredientsAdapter :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<Ingredients>?) {
+    override fun setData(data: List<Ingredient>?) {
         data?.let {
-            this.data = it as ArrayList<Ingredients>
+            this.data = it as ArrayList<Ingredient>
             notifyDataSetChanged()
         }
     }
@@ -37,7 +37,7 @@ class IngredientsAdapter :
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(ingredient: Ingredients?) {
+        fun bind(ingredient: Ingredient?) {
             itemView.textview_ingredient_title_rv_ingredient.text = ingredient!!.title
         }
     }

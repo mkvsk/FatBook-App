@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModel
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredients
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.repository.StaticDataRepository
 import online.fatbook.fatbookapp.util.ContextHolder
 
 class StaticDataViewModel : ViewModel() {
 
-    val ingredients = MutableLiveData<List<Ingredients>>()
+    val ingredient = MutableLiveData<List<Ingredient>>()
     val cookingMethods = MutableLiveData<List<CookingMethod>>()
     val cookingCategories = MutableLiveData<List<CookingCategory>>()
 
@@ -47,15 +47,15 @@ class StaticDataViewModel : ViewModel() {
         })
     }
 
-    fun getAllIngredients(callback: ResultCallback<List<Ingredients>>) {
-        repository.getAllIngredients(object : ResultCallback<List<Ingredients>> {
-            override fun onResult(value: List<Ingredients>?) {
+    fun getAllIngredients(callback: ResultCallback<List<Ingredient>>) {
+        repository.getAllIngredients(object : ResultCallback<List<Ingredient>> {
+            override fun onResult(value: List<Ingredient>?) {
                 value?.let {
                     callback.onResult(it)
                 }
             }
 
-            override fun onFailure(value: List<Ingredients>?) {
+            override fun onFailure(value: List<Ingredient>?) {
                 callback.onFailure(value)
             }
 

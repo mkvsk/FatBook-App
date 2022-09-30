@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredients
+import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentAddIngredientOldBinding
@@ -31,8 +31,8 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
     private var adapter: AddIngredientToRecipeAdapter? = null
     private var recipeViewModel: RecipeViewModel? = null
     private var staticDataViewModel: StaticDataViewModel? = null
-    private var selectedIngredient: Ingredients? = null
-    private var ingredientList: List<Ingredients?>? = null
+    private var selectedIngredient: Ingredient? = null
+    private var ingredientList: List<Ingredient?>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,7 +63,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
 
             override fun afterTextChanged(editable: Editable) {}
         })
-        staticDataViewModel!!.ingredients.observe(viewLifecycleOwner) {
+        staticDataViewModel!!.ingredient.observe(viewLifecycleOwner) {
             ingredientList = it
             adapter!!.setData(it)
         }
@@ -83,7 +83,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
 
     private fun filter(text: String) {
         try {
-            val temp: ArrayList<Ingredients> = ArrayList()
+            val temp: ArrayList<Ingredient> = ArrayList()
             for (i in ingredientList!!) {
                 if (StringUtils.containsIgnoreCase(i!!.title, text)) {
                     temp.add(i)
@@ -97,16 +97,16 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
 
     private fun loadIngredients() {
         RetrofitFactory.apiServiceClient().allIngredients().enqueue(object :
-            Callback<List<Ingredients>?> {
+            Callback<List<Ingredient>?> {
             override fun onResponse(
-                call: Call<List<Ingredients>?>,
-                response: Response<List<Ingredients>?>
+                    call: Call<List<Ingredient>?>,
+                    response: Response<List<Ingredient>?>
             ) {
-                staticDataViewModel!!.ingredients.value = response.body()
+                staticDataViewModel!!.ingredient.value = response.body()
 //                RecipeAddIngredientFragment.log.log(Level.INFO, "ingredient list load: SUCCESS")
             }
 
-            override fun onFailure(call: Call<List<Ingredients>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<Ingredient>?>, t: Throwable) {
 //                RecipeAddIngredientFragment.log.log(Level.INFO, "ingredient list load: FAILED")
             }
         })
@@ -133,7 +133,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
         rv.adapter = adapter
     }
 
-    override fun onIngredientClick(previousItem: Int, selectedItem: Int, ingredient: Ingredients?) {
+    override fun onIngredientClick(previousItem: Int, selectedItem: Int, ingredient: Ingredient?) {
         selectedIngredient = ingredient
         binding!!.textViewSelectedIngredient.setTextColor(resources.getColor(R.color.color_pink_a200))
         binding!!.textViewSelectedIngredient.text = ingredient!!.title
