@@ -17,7 +17,7 @@ class RecipeViewModel : ViewModel() {
     var selectedRecipe = MutableLiveData<Recipe?>()
     var newRecipe = MutableLiveData<Recipe?>()
     var newRecipeIngredient = MutableLiveData<RecipeIngredient?>()
-    var newRecipeIngredients = MutableLiveData<List<RecipeIngredient?>>()
+    var newRecipeIngredients = MutableLiveData<ArrayList<RecipeIngredient?>>()
     var newRecipeCookingMethod = MutableLiveData<CookingMethod?>()
-    var newRecipeCookingCategories = MutableLiveData<List<CookingCategory?>>()
+    var newRecipeCookingCategories = MutableLiveData<ArrayList<CookingCategory?>>()
 }

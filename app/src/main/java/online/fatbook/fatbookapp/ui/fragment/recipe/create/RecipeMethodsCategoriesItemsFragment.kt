@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_recipe_methods_categories_items.*
-import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
@@ -28,8 +27,7 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
     private var adapter: StaticDataAdapter? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentRecipeMethodsCategoriesItemsBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -42,6 +40,9 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
         if (staticDataViewModel.loadCookingMethod.value!!) {
             loadCookingMethods()
         } else {
+            // show menu
+            // on item click listener:
+            //
             loadCookingCategories()
         }
     }
@@ -79,20 +80,20 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
 
     override fun onItemClick(item: StaticDataObject) {
         Log.i("SELECTED METHOD", "${item.title}")
-        recipeViewModel.newRecipe.value!!.cookingMethod = item as CookingMethod
-
-        recipeViewModel.newRecipeCookingMethod.value = item
-        NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_recipe_create_from_method_or_category)
+        recipeViewModel.newRecipeCookingMethod.value = item as CookingMethod
+        recipeViewModel.newRecipe.value!!.cookingMethod = recipeViewModel.newRecipeCookingMethod.value
+        NavHostFragment.findNavController(this).popBackStack()
     }
 
     override fun onItemClickChoose(item: StaticDataObject) {
-
-        if (recipeViewModel.newRecipe.value!!.cookingCategories!!.contains(item as CookingCategory)) {
-            recipeViewModel.newRecipe.value!!.cookingCategories!!.remove(item as CookingCategory)
+        if (recipeViewModel.newRecipeCookingCategories.value!!.contains(item as CookingCategory)) {
+            recipeViewModel.newRecipeCookingCategories.value!!.remove(item)
         } else {
-            recipeViewModel.newRecipe.value!!.cookingCategories!!.add(item as CookingCategory)
+            recipeViewModel.newRecipeCookingCategories.value!!.add(item)
         }
+
+        Log.i("============================================================", "")
         Log.i("SELECTED CATEGORIES", "${recipeViewModel.newRecipe.value!!.cookingCategories}")
+        Log.i("============================================================", "")
     }
 }

@@ -53,6 +53,13 @@ class StaticDataAdapter :
                 if (value is CookingMethod) {
                     listener?.onItemClick(data[bindingAdapterPosition])
                 } else {
+                    if (!itemView.textview_rv_recipe_methods_categories_items.isSelected) {
+                        itemView.textview_rv_recipe_methods_categories_items.isChecked = true;
+                        itemView.textview_rv_recipe_methods_categories_items.isSelected = true;
+                    } else {
+                        itemView.textview_rv_recipe_methods_categories_items.isChecked = false;
+                        itemView.textview_rv_recipe_methods_categories_items.isSelected = false;
+                    }
                     listener?.onItemClickChoose(data[bindingAdapterPosition])
                 }
             }
