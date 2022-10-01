@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_recipe_methods_categories_items.*
+import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.*
+import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
@@ -79,6 +82,8 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
         recipeViewModel.newRecipe.value!!.cookingMethod = item as CookingMethod
 
         recipeViewModel.newRecipeCookingMethod.value = item
+        NavHostFragment.findNavController(this)
+            .navigate(R.id.action_go_to_recipe_create_from_method_or_category)
     }
 
     override fun onItemClickChoose(item: StaticDataObject) {

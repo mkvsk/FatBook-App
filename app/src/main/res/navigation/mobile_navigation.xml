@@ -323,7 +323,14 @@
         android:id="@+id/navigation_recipe_choose_method_or_category"
         android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeMethodsCategoriesItemsFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_recipe_methods_categories_items" />
+        tools:layout="@layout/fragment_recipe_methods_categories_items">
+
+        <action
+            android:id="@+id/action_go_to_recipe_create_from_method_or_category"
+            app:destination="@+id/navigation_recipe_create"
+            />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_recipe_create_second_stage"

@@ -60,6 +60,10 @@ class RecipeCreateFirstStageFragment : Fragment() {
         button_next_recipe_create_1_stage.setOnClickListener {
             navigation(true)
         }
+
+        if (recipeViewModel.newRecipeCookingMethod.value != null) {
+            textview_cooking_method_recipe_create_1_stage.text = recipeViewModel.newRecipeCookingMethod.value!!.title
+        }
     }
 
     private fun navigation(nextStep: Boolean) {
