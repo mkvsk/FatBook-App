@@ -2,11 +2,11 @@ package online.fatbook.fatbookapp.ui.fragment.recipe.create
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_recipe_methods_categories_items.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -36,14 +36,39 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (recipeViewModel.newRecipeCookingCategories.value == null) {
+            recipeViewModel.newRecipeCookingCategories.value = ArrayList()
+        }
+
         setupItemsAdapter()
         if (staticDataViewModel.loadCookingMethod.value!!) {
             loadCookingMethods()
         } else {
-            // show menu
-            // on item click listener:
-            //
+            setupMenu()
             loadCookingCategories()
+        }
+    }
+
+    private fun setupMenu() {
+        val activity = (activity as AppCompatActivity?)!!
+        activity.setSupportActionBar(toolbar_recipe_methods_categories_items)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.add_categories_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_add_categories -> {
+                recipeViewModel.newRecipe.value!!.cookingCategories =
+                    recipeViewModel.newRecipeCookingCategories.value as ArrayList<CookingCategory>
+                NavHostFragment.findNavController(this).popBackStack()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -59,6 +84,16 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
             override fun onResult(value: List<CookingCategory>?) {
                 staticDataViewModel.cookingCategories.value = value
                 adapter?.setData(value)
+
+                val list: ArrayList<Int> = ArrayList()
+                if (!recipeViewModel.newRecipe.value!!.cookingCategories.isNullOrEmpty()) {
+                    for (i in recipeViewModel.newRecipe.value!!.cookingCategories!!) {
+                        if (value!!.contains(i)) {
+                            list.add(value.indexOf(i))
+                        }
+                    }
+                }
+                adapter?.setSelected(list)
             }
 
             override fun onFailure(value: List<CookingCategory>?) {
@@ -71,6 +106,12 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
             override fun onResult(value: List<CookingMethod>?) {
                 staticDataViewModel.cookingMethods.value = value
                 adapter?.setData(value)
+
+                val list: ArrayList<Int> = ArrayList()
+                if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
+                    list.add(value!!.indexOf(recipeViewModel.newRecipe.value!!.cookingMethod!!))
+                }
+                adapter?.setSelected(list)
             }
 
             override fun onFailure(value: List<CookingMethod>?) {
@@ -81,7 +122,8 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
     override fun onItemClick(item: StaticDataObject) {
         Log.i("SELECTED METHOD", "${item.title}")
         recipeViewModel.newRecipeCookingMethod.value = item as CookingMethod
-        recipeViewModel.newRecipe.value!!.cookingMethod = recipeViewModel.newRecipeCookingMethod.value
+        recipeViewModel.newRecipe.value!!.cookingMethod =
+            recipeViewModel.newRecipeCookingMethod.value
         NavHostFragment.findNavController(this).popBackStack()
     }
 
@@ -93,7 +135,7 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
         }
 
         Log.i("============================================================", "")
-        Log.i("SELECTED CATEGORIES", "${recipeViewModel.newRecipe.value!!.cookingCategories}")
+        Log.i("SELECTED CATEGORIES", "${recipeViewModel.newRecipeCookingCategories.value!!}")
         Log.i("============================================================", "")
     }
 }

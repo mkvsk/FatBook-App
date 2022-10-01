@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +41,9 @@ class RecipeCreateFirstStageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recipeViewModel.newRecipe.value = Recipe()
+        if (recipeViewModel.newRecipe.value == null) {
+            recipeViewModel.newRecipe.value = Recipe()
+        }
 
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.WRAP_CONTENT)
         textview_set_time_recipe_create_1_stage.setOnClickListener {
@@ -61,9 +64,15 @@ class RecipeCreateFirstStageFragment : Fragment() {
             navigation(true)
         }
 
-        if (recipeViewModel.newRecipeCookingMethod.value != null) {
-            textview_cooking_method_recipe_create_1_stage.text = recipeViewModel.newRecipeCookingMethod.value!!.title
+        if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
+            textview_cooking_method_recipe_create_1_stage.text = recipeViewModel.newRecipe.value!!.cookingMethod!!.title
         }
+
+        if (recipeViewModel.newRecipe.value!!.cookingCategories!!.isNotEmpty()) {
+            textview_category_recipe_create_1_stage.text = recipeViewModel.newRecipe.value!!.cookingCategories!!.joinToString(", ")
+        }
+
+        Log.d("NEW RECIPE", "${recipeViewModel.newRecipe.value}")
     }
 
     private fun navigation(nextStep: Boolean) {

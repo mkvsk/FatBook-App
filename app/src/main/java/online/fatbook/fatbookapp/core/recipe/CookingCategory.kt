@@ -6,6 +6,6 @@ data class CookingCategory(
     var pid: Long? = null
 ) : Serializable, StaticDataObject() {
     override fun toString(): String {
-        return "CookingCategory: (pid=$pid, title=$title)"
+        return title.toString()
     }
 }

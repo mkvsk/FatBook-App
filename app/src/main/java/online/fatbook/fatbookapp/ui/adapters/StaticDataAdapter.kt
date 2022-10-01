@@ -17,6 +17,7 @@ class StaticDataAdapter :
 
     private var data: List<StaticDataObject> = ArrayList()
     var listener: OnStaticDataClickListener? = null
+    var selectedItems: List<Int>? = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -45,8 +46,21 @@ class StaticDataAdapter :
         return data.size
     }
 
+    fun setSelected(arrayList: List<Int>) {
+        selectedItems = arrayList
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: StaticDataObject?) {
+
+            if (selectedItems!!.contains(bindingAdapterPosition)) {
+                itemView.textview_rv_recipe_methods_categories_items.isChecked = true
+                itemView.textview_rv_recipe_methods_categories_items.isSelected = true
+            } else {
+                itemView.textview_rv_recipe_methods_categories_items.isChecked = false
+                itemView.textview_rv_recipe_methods_categories_items.isSelected = false
+            }
+
             itemView.textview_rv_recipe_methods_categories_items.text = value!!.title
 
             itemView.textview_rv_recipe_methods_categories_items.setOnClickListener {
@@ -54,11 +68,11 @@ class StaticDataAdapter :
                     listener?.onItemClick(data[bindingAdapterPosition])
                 } else {
                     if (!itemView.textview_rv_recipe_methods_categories_items.isSelected) {
-                        itemView.textview_rv_recipe_methods_categories_items.isChecked = true;
-                        itemView.textview_rv_recipe_methods_categories_items.isSelected = true;
+                        itemView.textview_rv_recipe_methods_categories_items.isChecked = true
+                        itemView.textview_rv_recipe_methods_categories_items.isSelected = true
                     } else {
-                        itemView.textview_rv_recipe_methods_categories_items.isChecked = false;
-                        itemView.textview_rv_recipe_methods_categories_items.isSelected = false;
+                        itemView.textview_rv_recipe_methods_categories_items.isChecked = false
+                        itemView.textview_rv_recipe_methods_categories_items.isSelected = false
                     }
                     listener?.onItemClickChoose(data[bindingAdapterPosition])
                 }
