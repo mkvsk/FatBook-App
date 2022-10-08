@@ -507,7 +507,7 @@
     <color name="toggle_not_selected_color">#ECEFF1</color>
     <color name="toggle_not_selected_color_text">#263238</color>
 
-    <color name="recipe_rv_items_bgr">#FFFFFFFF</color>
+    <color name="recipe_rv_items_bgr">#ECEFF1</color>
 
     <style name="roundBtnRemoveIngredient" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
         <item name="backgroundTint">#263238</item>
@@ -581,6 +581,27 @@
 
     <color name="tv_date_color">#B0BEC5</color>
 
+    <color name="method_categories_selected_stroke_color">#FF4081</color>
+    <color name="method_categories_color_text">#FF4081</color>
+    <color name="method_categories_not_selected_color">#ECEFF1</color>
+    <color name="method_categories_not_selected_color_text">#263238</color>
+
+    <style name="myMaterialCardMethodCategories" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/method_categories_not_selected_color</item>
+        <item name="android:translationZ">6dp</item>
+        <item name="android:shadowRadius">10</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_card_custom_corners_rv_method_categories
+        </item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners_rv_method_categories" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+    </style>
 
     ///v1.0.0
 
