@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/recipe_rv_items_bgr"
+    android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.recipe.create.RecipeMethodsCategoriesItemsFragment">
 
     <include layout="@layout/include_progress_overlay" />
@@ -13,9 +13,9 @@
         android:id="@+id/appBarLayout_recipe_methods_categories_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar_recipe_methods_categories_items"
@@ -28,44 +28,44 @@
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="methods_categories"
-            local:titleTextColor="@color/main_text"
-            local:titleTextAppearance="@style/txtToolbar" />
+            local:titleTextAppearance="@style/txtToolbar"
+            local:titleTextColor="@color/main_text" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recipe_methods_categories_items"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:paddingTop="10dp"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            app:fastScrollEnabled="true"
-            app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-            app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-            app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-            app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout_recipe_methods_categories_items"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/rv_recipe_methods_categories_items"
-            />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_recipe_methods_categories_items"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingTop="10dp"
+        app:fastScrollEnabled="true"
+        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
+        app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
+        app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
+        app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout_recipe_methods_categories_items"
+        tools:listitem="@layout/rv_recipe_methods_categories_items" />
 
-<!--            <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:id="@+id/button_save_recipe_methods_categories_items"-->
-<!--                android:layout_width="@dimen/btn_main_w"-->
-<!--                android:layout_height="@dimen/btn_main_h"-->
-<!--                style="@style/buttons_in_fragments_style"-->
-<!--                android:background="@drawable/selector_btn_in_fragments"-->
-<!--                android:enabled="false"-->
-<!--                android:elevation="4dp"-->
-<!--                android:translationZ="2dp"-->
-<!--                android:text="Save"-->
-<!--                android:layout_marginBottom="70dp"-->
-<!--                app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent" />-->
+    <!--            <androidx.appcompat.widget.AppCompatButton-->
+    <!--                android:id="@+id/button_save_recipe_methods_categories_items"-->
+    <!--                android:layout_width="@dimen/btn_main_w"-->
+    <!--                android:layout_height="@dimen/btn_main_h"-->
+    <!--                style="@style/buttons_in_fragments_style"-->
+    <!--                android:background="@drawable/selector_btn_in_fragments"-->
+    <!--                android:enabled="false"-->
+    <!--                android:elevation="4dp"-->
+    <!--                android:translationZ="2dp"-->
+    <!--                android:text="Save"-->
+    <!--                android:layout_marginBottom="70dp"-->
+    <!--                app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--                app:layout_constraintRight_toRightOf="parent"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent" />-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
