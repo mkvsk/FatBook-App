@@ -65,11 +65,13 @@ class RecipeCreateFirstStageFragment : Fragment() {
         }
 
         if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
-            textview_cooking_method_recipe_create_1_stage.text = recipeViewModel.newRecipe.value!!.cookingMethod!!.title
+            textview_cooking_method_recipe_create_1_stage.text =
+                recipeViewModel.newRecipe.value!!.cookingMethod!!.title
         }
 
         if (recipeViewModel.newRecipe.value!!.cookingCategories!!.isNotEmpty()) {
-            recipeViewModel.newRecipe.value!!.cookingCategories!!.joinToString { "${it.title}" }
+            textview_category_recipe_create_1_stage.text =
+                recipeViewModel.newRecipe.value!!.cookingCategories!!.joinToString { "${it.title}" }
         }
 
         Log.d("NEW RECIPE", "${recipeViewModel.newRecipe.value}")

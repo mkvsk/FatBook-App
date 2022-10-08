@@ -34,6 +34,7 @@ class StaticDataAdapter :
     @SuppressLint("NotifyDataSetChanged")
     override fun setData(data: List<StaticDataObject>?) {
         data?.let {
+            this.data.sortedBy { staticDataObject -> staticDataObject.title }
             this.data = it as ArrayList<StaticDataObject>
             notifyDataSetChanged()
         }
@@ -62,14 +63,16 @@ class StaticDataAdapter :
 
             itemView.textview_rv_recipe_methods_categories_items.text = value!!.title
 
-            itemView.textview_rv_recipe_methods_categories_items.setOnClickListener {
+            itemView.cardview_rv_recipe_methods_categories_items.setOnClickListener {
                 if (value is CookingMethod) {
                     listener?.onItemClick(data[bindingAdapterPosition])
                 } else {
                     if (!itemView.textview_rv_recipe_methods_categories_items.isSelected) {
                         selectItem(itemView.cardview_rv_recipe_methods_categories_items)
+                        itemView.textview_rv_recipe_methods_categories_items.isSelected = true
                     } else {
                         unselectItem(itemView.cardview_rv_recipe_methods_categories_items)
+                        itemView.textview_rv_recipe_methods_categories_items.isSelected = false
                     }
                     listener?.onItemClickChoose(data[bindingAdapterPosition])
                 }
@@ -78,12 +81,14 @@ class StaticDataAdapter :
     }
 
     private fun selectItem(cardView: MaterialCardView) {
-        //TODO
-        //draw pink
+        cardView.isChecked = true
+        cardView.isSelected = true
+        cardView.strokeWidth = 5
     }
 
     private fun unselectItem(cardView: MaterialCardView) {
-        //TODO
-        //draw default colors
+        cardView.isChecked = false
+        cardView.isSelected = false
+        cardView.strokeWidth = 0
     }
 }

@@ -24,12 +24,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_ingredients_old"
-        android:name="online.fatbook.fatbookapp.ui.fragment.IngredientsFragmentOLD"
-        android:label="@string/mobile_nav_ingredients"
-        tools:layout="@layout/fragment_ingredients_old" />
-
-    <fragment
         android:id="@+id/navigation_recipe_create_old"
         android:name="online.fatbook.fatbookapp.ui.fragment.RecipeCreateFragmentOLD"
         android:label="@string/mobile_nav_recipe_create"

@@ -13,12 +13,15 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="@dimen/cards_margin_end"
         android:layout_marginBottom="10dp"
+        app:rippleColor="@color/colorPrimaryRipple"
+        app:strokeColor="@color/pink_a200"
+        app:strokeWidth="0dp"
         app:cardElevation="6dp"
         app:cardPreventCornerOverlap="false"
+        app:contentPaddingLeft="5dp"
+        app:contentPaddingRight="5dp"
         app:contentPaddingBottom="5dp"
-        app:contentPaddingLeft="20dp"
-        app:contentPaddingRight="20dp"
-        app:contentPaddingTop="20dp"
+        app:contentPaddingTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -26,6 +29,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_rv_method_categories"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -34,7 +38,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/null_radio_button"
-                android:paddingBottom="5dp"
                 android:src="@drawable/rv_boiling"
                 app:layout_constraintBottom_toTopOf="@id/textview_rv_recipe_methods_categories_items"
                 app:layout_constraintDimensionRatio="H,1:1"
@@ -46,39 +49,20 @@
                 android:id="@+id/textview_rv_recipe_methods_categories_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoSizeMaxTextSize="15sp"
-                android:autoSizeMinTextSize="9sp"
-                android:autoSizeStepGranularity="2sp"
-                android:autoSizeTextType="uniform"
+               android:textSize="11sp"
                 android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Method or categories of cooking"
                 android:fontFamily="@font/roboto_regular"
+                android:lines="2"
+                android:maxLines="2"
+                android:text="Method"
+                android:gravity="center"
                 android:textColor="@drawable/method_categories_text_selector"
-                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/imageview__rv_recipe_methods_categories_items"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-
-    <!--    <RadioButton-->
-    <!--        android:id="@+id/textview_rv_recipe_methods_categories_items"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="28dp"-->
-    <!--        android:layout_marginStart="2dp"-->
-    <!--        android:layout_weight="1"-->
-    <!--        android:background="@drawable/radio_selector"-->
-    <!--        android:button="@drawable/null_radio_button"-->
-    <!--        android:elevation="1dp"-->
-    <!--        android:fontFamily="@font/roboto_medium"-->
-    <!--        android:gravity="center"-->
-    <!--        android:text="Easy"-->
-    <!--        android:textColor="@drawable/radio_text_selector"-->
-    <!--        android:textSize="15sp"-->
-    <!--        android:translationZ="1dp"-->
-    <!--        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
