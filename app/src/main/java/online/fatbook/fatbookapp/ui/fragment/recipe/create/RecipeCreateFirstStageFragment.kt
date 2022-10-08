@@ -69,7 +69,7 @@ class RecipeCreateFirstStageFragment : Fragment() {
         }
 
         if (recipeViewModel.newRecipe.value!!.cookingCategories!!.isNotEmpty()) {
-            textview_category_recipe_create_1_stage.text = recipeViewModel.newRecipe.value!!.cookingCategories!!.joinToString(", ")
+            recipeViewModel.newRecipe.value!!.cookingCategories!!.joinToString { "${it.title}" }
         }
 
         Log.d("NEW RECIPE", "${recipeViewModel.newRecipe.value}")

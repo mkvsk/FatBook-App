@@ -9,7 +9,6 @@ import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
-import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
 
 class StaticDataAdapter :

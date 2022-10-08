@@ -6,7 +6,7 @@ import android.provider.Settings
 import java.util.*
 
 
-object AppInfo {
+object  AppInfo {
 
     val appName = ContextHolder.get().applicationName()
     val appVersion = getVersionName()
@@ -15,6 +15,7 @@ object AppInfo {
         Settings.Secure.getString(ContextHolder.get().contentResolver, Settings.Secure.ANDROID_ID)
     val osVersion = Build.VERSION.RELEASE
     val acceptLanguage = getLanguage()
+    val locale = getCurrentLocale()
 
     const val osType = "Android"
 
@@ -56,6 +57,10 @@ object AppInfo {
         } else {
             Locale.getDefault().language
         }
+    }
+
+    private fun getCurrentLocale(): Locale {
+        return Locale.getDefault()
     }
 
 }
