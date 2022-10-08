@@ -26,33 +26,6 @@ class RecipeCreateAddIngredientsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = StaticDataAdapter()
-        val ingredientList = ArrayList<Ingredient>()
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-        ingredientList.add(Ingredient(0L ,"Kartoshka"))
-
-//        adapter.setData(ingredientList)
         rv_ingredients_recipe_add_ingredients.adapter = adapter
     }
 }

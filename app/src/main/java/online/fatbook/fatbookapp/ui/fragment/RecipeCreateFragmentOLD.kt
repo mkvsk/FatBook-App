@@ -165,7 +165,6 @@ class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
         recipe = Recipe()
         recipe!!.ingredients = ArrayList()
         recipe!!.forks = 0
-        recipe!!.identifier = 0L
     }
 
     private fun niceCheck() {

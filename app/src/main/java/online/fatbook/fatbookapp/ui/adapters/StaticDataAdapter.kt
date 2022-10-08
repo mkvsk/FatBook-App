@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
@@ -53,11 +55,9 @@ class StaticDataAdapter :
         fun bind(value: StaticDataObject?) {
 
             if (selectedItems!!.contains(bindingAdapterPosition)) {
-                itemView.textview_rv_recipe_methods_categories_items.isChecked = true
-                itemView.textview_rv_recipe_methods_categories_items.isSelected = true
+                selectItem(itemView.cardview_rv_recipe_methods_categories_items)
             } else {
-                itemView.textview_rv_recipe_methods_categories_items.isChecked = false
-                itemView.textview_rv_recipe_methods_categories_items.isSelected = false
+                unselectItem(itemView.cardview_rv_recipe_methods_categories_items)
             }
 
             itemView.textview_rv_recipe_methods_categories_items.text = value!!.title
@@ -67,15 +67,23 @@ class StaticDataAdapter :
                     listener?.onItemClick(data[bindingAdapterPosition])
                 } else {
                     if (!itemView.textview_rv_recipe_methods_categories_items.isSelected) {
-                        itemView.textview_rv_recipe_methods_categories_items.isChecked = true
-                        itemView.textview_rv_recipe_methods_categories_items.isSelected = true
+                        selectItem(itemView.cardview_rv_recipe_methods_categories_items)
                     } else {
-                        itemView.textview_rv_recipe_methods_categories_items.isChecked = false
-                        itemView.textview_rv_recipe_methods_categories_items.isSelected = false
+                        unselectItem(itemView.cardview_rv_recipe_methods_categories_items)
                     }
                     listener?.onItemClickChoose(data[bindingAdapterPosition])
                 }
             }
         }
+    }
+
+    private fun selectItem(cardView: MaterialCardView) {
+        //TODO
+        //draw pink
+    }
+
+    private fun unselectItem(cardView: MaterialCardView) {
+        //TODO
+        //draw default colors
     }
 }

@@ -5,8 +5,7 @@ import android.os.LocaleList
 import android.provider.Settings
 import java.util.*
 
-
-object  AppInfo {
+object AppInfo {
 
     val appName = ContextHolder.get().applicationName()
     val appVersion = getVersionName()
@@ -21,8 +20,7 @@ object  AppInfo {
 
     private fun getVersionName(): String {
         return ContextHolder.get().packageManager.getPackageInfo(
-            ContextHolder.get().packageName,
-            0
+            ContextHolder.get().packageName, 0
         ).versionName
     }
 
