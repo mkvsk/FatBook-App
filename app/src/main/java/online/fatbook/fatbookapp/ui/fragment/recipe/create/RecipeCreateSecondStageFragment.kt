@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
+import kotlinx.android.synthetic.main.fragment_recipe_create_second_stage.*
+import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateSecondStageBinding
@@ -29,6 +32,11 @@ class RecipeCreateSecondStageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         loadIngredients()
+
+        button_add_ingredient_recipe_create_2_stage.setOnClickListener {
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_add_ingredient_from_second_stage)
+        }
     }
 
     private fun loadIngredients() {

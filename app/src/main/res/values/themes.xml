@@ -98,6 +98,24 @@
         <item name="android:layout_gravity">bottom</item>
     </style>
 
+    <style name="myMaterialCardRightTopBottomRounded" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">6dp</item>
+        <item name="android:shadowRadius">10</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_card_custom_corners_right_top_bottom
+        </item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners_right_top_bottom" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">30dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
     <style name="myMaterialCardRight" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
         <item name="elevation">4dp</item>

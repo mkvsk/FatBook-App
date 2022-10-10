@@ -93,7 +93,7 @@
                         style="@style/buttons_in_fragments_style"
                         android:layout_width="@dimen/btn_main_w"
                         android:layout_height="@dimen/btn_main_h"
-                        android:layout_marginVertical="@dimen/btn_spacing"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/selector_btn_in_fragments"
                         android:elevation="4dp"
                         android:enabled="true"
@@ -121,6 +121,7 @@
                         android:layout_marginStart="@dimen/cards_margin_start"
                         android:layout_marginTop="@dimen/titles_spacing_recipe_create"
                         android:layout_marginEnd="@dimen/cards_margin_end"
+                        android:layout_marginBottom="1dp"
                         android:backgroundTint="@color/theme_primary_bgr"
                         app:cardPreventCornerOverlap="false"
                         app:contentPaddingBottom="5dp"
@@ -231,7 +232,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardview_left_recipe_create_2_stage"
-                style="@style/myMaterialCardLeft"
+                style="@style/myMaterialCardRightTopBottomRounded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/elements_spacing_recipe_create"
@@ -242,7 +243,6 @@
                 app:contentPaddingLeft="@dimen/cards_margin_start"
                 app:contentPaddingRight="@dimen/content_padding_10"
                 app:contentPaddingTop="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardview_right_recipe_create_2_stage">
