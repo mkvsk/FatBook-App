@@ -31,24 +31,9 @@ class RecipeCreateSecondStageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadIngredients()
-
         button_add_ingredient_recipe_create_2_stage.setOnClickListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_add_ingredient_from_second_stage)
         }
-    }
-
-    private fun loadIngredients() {
-        staticDataViewModel.getAllIngredients(object : ResultCallback<List<Ingredient>> {
-            override fun onResult(value: List<Ingredient>?) {
-                staticDataViewModel.ingredient.value = value
-            }
-
-            override fun onFailure(value: List<Ingredient>?) {
-            }
-        })
-
-        //
     }
 }
