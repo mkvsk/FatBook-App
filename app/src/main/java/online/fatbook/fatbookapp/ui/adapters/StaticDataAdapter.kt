@@ -34,7 +34,6 @@ class StaticDataAdapter :
     @SuppressLint("NotifyDataSetChanged")
     override fun setData(data: List<StaticDataObject>?) {
         data?.let {
-            this.data.sortedBy { staticDataObject -> staticDataObject.title }
             this.data = it as ArrayList<StaticDataObject>
             notifyDataSetChanged()
         }

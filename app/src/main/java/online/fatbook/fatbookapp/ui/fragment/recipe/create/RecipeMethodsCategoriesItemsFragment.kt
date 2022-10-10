@@ -79,16 +79,27 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
         rv.adapter = adapter
     }
 
+    //TODO sort by title
     private fun loadCookingCategories() {
         staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
             override fun onResult(value: List<CookingCategory>?) {
+                Log.d("VALUE OLD", "$value")
+
+                value as ArrayList
+                val filter = value.single { it.title == "Other" || it.title == "Другое" }
+                value.remove(filter)
+                value.add(0, filter)
+
+                Log.d("VALUE NEW", "$value")
+
                 staticDataViewModel.cookingCategories.value = value
+
                 adapter?.setData(value)
 
                 val list: ArrayList<Int> = ArrayList()
                 if (!recipeViewModel.newRecipe.value!!.cookingCategories.isNullOrEmpty()) {
                     for (i in recipeViewModel.newRecipe.value!!.cookingCategories!!) {
-                        if (value!!.contains(i)) {
+                        if (value.contains(i)) {
                             list.add(value.indexOf(i))
                         }
                     }
@@ -101,15 +112,25 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
         })
     }
 
+    //TODO sort by title
     private fun loadCookingMethods() {
         staticDataViewModel.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {
             override fun onResult(value: List<CookingMethod>?) {
+                Log.d("VALUE OLD", "$value")
+
+                value as ArrayList
+                val filter = value.single { it.title == "Other" || it.title == "Другое" }
+                value.remove(filter)
+                value.add(0, filter)
+
+                Log.d("VALUE NEW", "$value")
+
                 staticDataViewModel.cookingMethods.value = value
                 adapter?.setData(value)
 
                 val list: ArrayList<Int> = ArrayList()
                 if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
-                    list.add(value!!.indexOf(recipeViewModel.newRecipe.value!!.cookingMethod!!))
+                    list.add(value.indexOf(recipeViewModel.newRecipe.value!!.cookingMethod!!))
                 }
                 adapter?.setSelected(list)
             }

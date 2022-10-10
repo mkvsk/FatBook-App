@@ -5,25 +5,32 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import kotlinx.android.synthetic.main.fragment_recipe_methods_categories_items.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
+import online.fatbook.fatbookapp.core.recipe.Difficulty
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateFirstStageBinding
-import online.fatbook.fatbookapp.ui.adapters.StaticDataAdapter
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
+import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
+
 
 class RecipeCreateFirstStageFragment : Fragment() {
     private var binding: FragmentRecipeCreateFirstStageBinding? = null
@@ -61,6 +68,7 @@ class RecipeCreateFirstStageFragment : Fragment() {
         }
 
         button_next_recipe_create_1_stage.setOnClickListener {
+            fillRecipe()
             navigation(true)
         }
 
@@ -75,6 +83,68 @@ class RecipeCreateFirstStageFragment : Fragment() {
         }
 
         Log.d("NEW RECIPE", "${recipeViewModel.newRecipe.value}")
+
+        edittext_title_recipe_create_1_stage.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!s.isNullOrEmpty()) {
+                    toolbar_recipe_create_1_stage.title = edittext_title_recipe_create_1_stage.text
+                    button_next_recipe_create_1_stage.isEnabled = true
+                } else {
+                    button_next_recipe_create_1_stage.isEnabled = false
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+
+        edittext_portions_qtt_recipe_create_1_stage.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (edittext_portions_qtt_recipe_create_1_stage.length() > 1) {
+                    hideKeyboard(edittext_portions_qtt_recipe_create_1_stage)
+                }
+            }
+        })
+    }
+
+    private fun fillRecipe() {
+        recipeViewModel.newRecipe.value!!.title =
+            edittext_title_recipe_create_1_stage.text.toString().replace("\\s+".toRegex(), " ").trim()
+        edittext_title_recipe_create_1_stage.setText(recipeViewModel.newRecipe.value!!.title)
+
+        if (rb_lvl_easy.isChecked) {
+            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.EASY
+        }
+        if (rb_lvl_normal.isChecked) {
+            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.NORMAL
+        }
+        if (rb_lvl_hard.isChecked) {
+            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.HARD
+        }
+
+        recipeViewModel.newRecipe.value!!.portions =
+            edittext_portions_qtt_recipe_create_1_stage.text.toString().toIntOrNull()
+
+        recipeViewModel.newRecipe.value!!.cookingTime =
+            textview_set_time_recipe_create_1_stage.text.toString()
+
+        if (switch_private_recipe_recipe_create_1_stage.isChecked) {
+            recipeViewModel.newRecipe.value!!.isPrivate
+        } else {
+            recipeViewModel.newRecipe.value!!.isPrivate = false
+        }
+
+        Log.d("NEW RECIPE:", "${recipeViewModel.newRecipe.value}")
     }
 
     private fun navigation(nextStep: Boolean) {

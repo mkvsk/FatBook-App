@@ -257,7 +257,7 @@
                         app:layout_constraintTop_toBottomOf="@id/ll_titles_servings_time">
 
                         <EditText
-                            android:id="@+id/edittext_servings_qtt_recipe_create_1_stage"
+                            android:id="@+id/edittext_portions_qtt_recipe_create_1_stage"
                             android:layout_width="0dp"
                             android:layout_height="30dp"
                             android:layout_marginTop="@dimen/titles_spacing_recipe_create"
@@ -272,6 +272,7 @@
                             android:inputType="number"
                             android:lines="1"
                             android:maxLength="6"
+                            android:nextFocusForward="@id/textview_set_time_recipe_create_1_stage"
                             android:paddingHorizontal="10dp"
                             android:textAppearance="@style/recipeCreateEditTextStyle" />
 
@@ -418,7 +419,7 @@
                         android:layout_marginVertical="@dimen/btn_spacing"
                         android:background="@drawable/selector_btn_in_fragments"
                         android:elevation="4dp"
-                        android:enabled="true"
+                        android:enabled="false"
                         android:text="Next"
                         android:translationZ="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
