@@ -27,6 +27,6 @@ data class Ingredient(
         }
 
     override fun toString(): String {
-        return "Ingredient: (pid=$pid, title=$title, locales=$locales)"
+        return "Ingredient: (pid=$pid, title=$title, units=$units, locales=$locales)"
     }
 }

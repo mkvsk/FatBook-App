@@ -4,26 +4,22 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.view.*
+import kotlinx.android.synthetic.main.rv_recipe_ingredient.view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.StaticDataObject
-import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
+import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeIngredientItemClickListener
 
 class RecipeIngredientAdapter :
-    RecyclerView.Adapter<RecipeIngredientAdapter.ViewHolder>(), BindableAdapter<StaticDataObject> {
+    RecyclerView.Adapter<RecipeIngredientAdapter.ViewHolder>(), BindableAdapter<RecipeIngredient> {
 
-    private var data: List<StaticDataObject> = ArrayList()
-    var listener: OnStaticDataClickListener? = null
-    var selectedItems: List<Int>? = ArrayList()
+    private var data: List<RecipeIngredient> = ArrayList()
+    var listener: OnRecipeIngredientItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_recipe_methods_categories_items, parent, false)
+                .inflate(R.layout.rv_recipe_ingredient, parent, false)
         )
     }
 
@@ -32,14 +28,14 @@ class RecipeIngredientAdapter :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<StaticDataObject>?) {
+    override fun setData(data: List<RecipeIngredient>?) {
         data?.let {
-            this.data = it as ArrayList<StaticDataObject>
+            this.data = it as ArrayList<RecipeIngredient>
             notifyDataSetChanged()
         }
     }
 
-    fun setClickListener(listener: OnStaticDataClickListener) {
+    fun setClickListener(listener: OnRecipeIngredientItemClickListener) {
         this.listener = listener
     }
 
@@ -47,47 +43,14 @@ class RecipeIngredientAdapter :
         return data.size
     }
 
-    fun setSelected(arrayList: List<Int>) {
-        selectedItems = arrayList
-    }
-
+    //TODO заполнить данные
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(value: StaticDataObject?) {
-
-            if (selectedItems!!.contains(bindingAdapterPosition)) {
-                selectItem(itemView.cardview_rv_recipe_methods_categories_items)
-            } else {
-                unselectItem(itemView.cardview_rv_recipe_methods_categories_items)
-            }
-
-            itemView.textview_rv_recipe_methods_categories_items.text = value!!.title
-
-            itemView.cardview_rv_recipe_methods_categories_items.setOnClickListener {
-                if (value is CookingMethod) {
-                    listener?.onItemClick(data[bindingAdapterPosition])
-                } else {
-                    if (!itemView.textview_rv_recipe_methods_categories_items.isSelected) {
-                        selectItem(itemView.cardview_rv_recipe_methods_categories_items)
-                        itemView.textview_rv_recipe_methods_categories_items.isSelected = true
-                    } else {
-                        unselectItem(itemView.cardview_rv_recipe_methods_categories_items)
-                        itemView.textview_rv_recipe_methods_categories_items.isSelected = false
-                    }
-                    listener?.onItemClickChoose(data[bindingAdapterPosition])
-                }
+        fun bind(value: RecipeIngredient?) {
+            itemView.textview_ingredient_title_rv_added_ingredient.text = value!!.ingredient!!.title
+            itemView.button_remove_rv_added_ingredient.setOnClickListener {
+                listener!!.onRecipeIngredientDelete(bindingAdapterPosition)
             }
         }
     }
 
-    private fun selectItem(cardView: MaterialCardView) {
-        cardView.isChecked = true
-        cardView.isSelected = true
-        cardView.strokeWidth = 5
-    }
-
-    private fun unselectItem(cardView: MaterialCardView) {
-        cardView.isChecked = false
-        cardView.isSelected = false
-        cardView.strokeWidth = 0
-    }
 }

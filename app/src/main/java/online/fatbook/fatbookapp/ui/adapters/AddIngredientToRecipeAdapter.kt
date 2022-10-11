@@ -8,16 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.rv_ingredient_to_recipe_old.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
-import online.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener
+import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
 
 class AddIngredientToRecipeAdapter :
     RecyclerView.Adapter<AddIngredientToRecipeAdapter.ViewHolder>(), BindableAdapter<Ingredient> {
 
     private var selectedItem = -1
-    private var listener: OnAddIngredientItemClickListener? = null
+    private var listener: OnIngredientItemClickListener? = null
     private var data: List<Ingredient> = ArrayList()
 
-    fun setClickListener(listener: OnAddIngredientItemClickListener?) {
+    fun setClickListener(listener: OnIngredientItemClickListener?) {
         this.listener = listener
     }
 

@@ -16,7 +16,7 @@ import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentAddIngredientOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.AddIngredientToRecipeAdapter
-import online.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener
+import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
@@ -26,7 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @Log
-class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListener {
+class RecipeAddIngredientFragmentOLD : Fragment(), OnIngredientItemClickListener {
     private var binding: FragmentAddIngredientOldBinding? = null
     private var adapter: AddIngredientToRecipeAdapter? = null
     private var recipeViewModel: RecipeViewModel? = null
@@ -63,7 +63,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
 
             override fun afterTextChanged(editable: Editable) {}
         })
-        staticDataViewModel!!.ingredient.observe(viewLifecycleOwner) {
+        staticDataViewModel!!.ingredients.observe(viewLifecycleOwner) {
             ingredientList = it
             adapter!!.setData(it)
         }
@@ -102,7 +102,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnAddIngredientItemClickListe
                     call: Call<List<Ingredient>?>,
                     response: Response<List<Ingredient>?>
             ) {
-                staticDataViewModel!!.ingredient.value = response.body()
+                staticDataViewModel!!.ingredients.value = response.body()
 //                RecipeAddIngredientFragment.log.log(Level.INFO, "ingredient list load: SUCCESS")
             }
 

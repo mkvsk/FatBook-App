@@ -11,7 +11,7 @@ import online.fatbook.fatbookapp.util.ContextHolder
 
 class StaticDataViewModel : ViewModel() {
 
-    val ingredient = MutableLiveData<List<Ingredient>>()
+    val ingredients = MutableLiveData<List<Ingredient>>()
     val cookingMethods = MutableLiveData<List<CookingMethod>>()
     val cookingCategories = MutableLiveData<List<CookingCategory>>()
 
