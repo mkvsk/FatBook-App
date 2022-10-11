@@ -81,7 +81,6 @@
                         android:id="@+id/rv_ingredients_recipe_create_2_stage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingRight="10dp"
                         android:layout_marginTop="@dimen/titles_spacing_recipe_create"
                         android:clipToPadding="false"
                         android:overScrollMode="never"
