@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_remove_rv_ingredient"
+        android:id="@+id/button_remove_rv_added_ingredient"
         style="@style/roundBtnRemoveIngredient"
         android:layout_width="@dimen/round_btn_remove_ingredient_w_h"
         android:layout_height="@dimen/round_btn_remove_ingredient_w_h"
@@ -19,7 +19,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageview_rv_recipe_ingredient"
+            android:id="@+id/imageview_rv_recipe_added_ingredient"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginStart="3dp"
@@ -34,7 +34,7 @@
             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
         <TextView
-            android:id="@+id/textview_ingredient_title_rv_ingredient"
+            android:id="@+id/textview_ingredient_title_rv_added_ingredient"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textview_ingredient_kcals_title_rv_ingredient"
+            android:id="@+id/textview_ingredient_kcals_title_rv_added_ingredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="6dp"
@@ -59,11 +59,11 @@
             android:textAppearance="@style/recipeCreateIngredientsTextStyle"
             android:textColor="@color/rv_ingredients_kcals"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/textview_ingredient_title_rv_ingredient"
+            app:layout_constraintLeft_toRightOf="@id/textview_ingredient_title_rv_added_ingredient"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textview_ingredient_qtt_title_rv_ingredient"
+            android:id="@+id/textview_ingredient_qtt_title_rv_added_ingredient"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/cards_margin_end"
@@ -78,6 +78,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </LinearLayout>

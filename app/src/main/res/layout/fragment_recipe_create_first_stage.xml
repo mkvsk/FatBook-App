@@ -173,13 +173,13 @@
                             android:layout_height="28dp"
                             android:layout_marginStart="2dp"
                             android:layout_weight="1"
-                            android:background="@drawable/radio_selector"
+                            android:background="@drawable/selector_radio_btns"
                             android:button="@drawable/null_radio_button"
                             android:elevation="1dp"
                             android:fontFamily="@font/roboto_medium"
                             android:gravity="center"
                             android:text="Easy"
-                            android:textColor="@drawable/radio_text_selector"
+                            android:textColor="@drawable/selector_radio_text"
                             android:textSize="15sp"
                             android:translationZ="1dp" />
 
@@ -189,13 +189,13 @@
                             android:layout_height="28dp"
                             android:layout_marginHorizontal="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/radio_selector"
+                            android:background="@drawable/selector_radio_btns"
                             android:button="@drawable/null_radio_button"
                             android:elevation="1dp"
                             android:fontFamily="@font/roboto_medium"
                             android:gravity="center"
                             android:text="Normal"
-                            android:textColor="@drawable/radio_text_selector"
+                            android:textColor="@drawable/selector_radio_text"
                             android:textSize="15sp"
                             android:translationZ="1dp" />
 
@@ -205,13 +205,13 @@
                             android:layout_height="28dp"
                             android:layout_marginEnd="2dp"
                             android:layout_weight="1"
-                            android:background="@drawable/radio_selector"
+                            android:background="@drawable/selector_radio_btns"
                             android:button="@drawable/null_radio_button"
                             android:elevation="1dp"
                             android:fontFamily="@font/roboto_medium"
                             android:gravity="center"
                             android:text="Hard"
-                            android:textColor="@drawable/radio_text_selector"
+                            android:textColor="@drawable/selector_radio_text"
                             android:textSize="15sp"
                             android:translationZ="1dp" />
 

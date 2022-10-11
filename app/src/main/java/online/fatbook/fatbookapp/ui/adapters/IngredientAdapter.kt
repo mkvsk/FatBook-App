@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
+import kotlinx.android.synthetic.main.rv_ingredient.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.ui.listeners.OnAddIngredientItemClickListener
@@ -50,21 +52,56 @@ class IngredientAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: Ingredient?) {
+            if (selectedItemPosition!! == bindingAdapterPosition) {
+                selectItem(
+                    itemView.cardview_rv_recipe_ingredient,
+                    itemView.textview_ingredient_title_rv_ingredient
+                )
+            } else {
+                unselectItem(
+                    itemView.cardview_rv_recipe_ingredient,
+                    itemView.textview_ingredient_title_rv_ingredient
+                )
+            }
 
+            itemView.textview_ingredient_title_rv_ingredient.text = value!!.title
 
+            itemView.textview_ingredient_title_rv_ingredient.setOnClickListener {
+
+                if (itemView.cardview_rv_recipe_ingredient.isSelected
+                    || itemView.textview_ingredient_title_rv_ingredient.isSelected
+                    || itemView.textview_ingredient_kcals_title_rv_ingredient.isSelected
+                ) {
+                    selectItem(
+                        itemView.cardview_rv_recipe_ingredient,
+                        itemView.textview_ingredient_title_rv_ingredient
+                    )
+                } else {
+                    unselectItem(
+                        itemView.cardview_rv_recipe_ingredient,
+                        itemView.textview_ingredient_title_rv_ingredient
+                    )
+                }
+            }
 
         }
     }
 
-    private fun selectItem() {
-//        cardView.isChecked = true
-//        cardView.isSelected = true
-//        cardView.strokeWidth = 5
+    private fun selectItem(
+        cardView: MaterialCardView,
+        textView: TextView
+    ) {
+        cardView.isChecked = true
+        cardView.isSelected = true
+        textView.isSelected = true
     }
 
-    private fun unselectItem() {
-//        cardView.isChecked = false
-//        cardView.isSelected = false
-//        cardView.strokeWidth = 0
+    private fun unselectItem(
+        cardView: MaterialCardView,
+        textView: TextView
+    ) {
+        cardView.isChecked = false
+        cardView.isSelected = false
+        textView.isSelected = false
     }
 }
