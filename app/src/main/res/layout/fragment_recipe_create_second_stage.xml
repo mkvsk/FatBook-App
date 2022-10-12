@@ -93,7 +93,7 @@
                         style="@style/buttons_in_fragments_style"
                         android:layout_width="@dimen/btn_main_w"
                         android:layout_height="@dimen/btn_main_h"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="20dp"
                         android:background="@drawable/selector_btn_in_fragments"
                         android:elevation="4dp"
                         android:enabled="true"
@@ -111,6 +111,7 @@
                         android:layout_marginStart="@dimen/cards_margin_start"
                         android:layout_marginTop="20dp"
                         android:text="Nutrition facts:"
+                        android:visibility="invisible"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/button_add_ingredient_recipe_create_2_stage" />
 
@@ -123,6 +124,7 @@
                         android:layout_marginEnd="@dimen/cards_margin_end"
                         android:layout_marginBottom="1dp"
                         android:backgroundTint="@color/theme_primary_bgr"
+                        android:visibility="gone"
                         app:cardPreventCornerOverlap="false"
                         app:contentPaddingBottom="5dp"
                         app:contentPaddingLeft="10dp"
@@ -279,6 +281,21 @@
                         tools:listitem="@layout/rv_cooking_step_recipe_create_stage_2_template" />
 
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/button_add_cooking_step"
+                        style="@style/buttons_in_fragments_style"
+                        android:layout_width="@dimen/btn_main_w"
+                        android:layout_height="@dimen/btn_main_h"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/selector_btn_in_fragments"
+                        android:elevation="4dp"
+                        android:enabled="true"
+                        android:text="Add description"
+                        android:translationZ="2dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rv_steps_recipe_create_2_stage" />
+
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/button_save_recipe_create_2_stage"
                         style="@style/buttons_in_fragments_style"
                         android:layout_width="@dimen/btn_main_w"
@@ -286,7 +303,8 @@
                         android:layout_marginVertical="@dimen/btn_spacing"
                         android:background="@drawable/selector_btn_in_fragments"
                         android:elevation="4dp"
-                        android:enabled="false"
+                        android:visibility="gone"
+                        android:enabled="true"
                         android:text="Save"
                         android:translationZ="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"

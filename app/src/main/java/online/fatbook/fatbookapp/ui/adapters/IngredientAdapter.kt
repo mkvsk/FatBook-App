@@ -1,7 +1,6 @@
 package online.fatbook.fatbookapp.ui.adapters
 
 import android.annotation.SuppressLint
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.rv_ingredient.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
-import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnitRatio
 import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
 
 class IngredientAdapter :
@@ -53,19 +51,22 @@ class IngredientAdapter :
             if (selectedIngredient!! == data[bindingAdapterPosition]) {
                 selectItem(
                     itemView.cardview_rv_recipe_ingredient,
-                    itemView.textview_ingredient_title_rv_ingredient
+                    itemView.textview_ingredient_title_rv_ingredient,
+                    itemView.textview_ingredient_kcals_title_rv_ingredient
                 )
             } else {
                 unselectItem(
                     itemView.cardview_rv_recipe_ingredient,
-                    itemView.textview_ingredient_title_rv_ingredient
+                    itemView.textview_ingredient_title_rv_ingredient,
+                    itemView.textview_ingredient_kcals_title_rv_ingredient
                 )
             }
 
             itemView.textview_ingredient_title_rv_ingredient.text = value!!.title
 
             val tmp = value.units?.get(0)?.kcal.toString()
-            itemView.textview_ingredient_kcals_title_rv_ingredient.text = String.format("%s kcal/100 gram", tmp)
+            itemView.textview_ingredient_kcals_title_rv_ingredient.text =
+                String.format("%s kcal/100 gram", tmp)
 
             if (itemView.cardview_rv_recipe_ingredient.isClickable) {
                 itemView.cardview_rv_recipe_ingredient.setOnClickListener {
@@ -79,22 +80,25 @@ class IngredientAdapter :
         }
     }
 
-    //TODO перекрасить карточку editTextRecipeViewDescription.setBackgroundResource(R.drawable.round_corner_edittext)
     private fun selectItem(
         cardView: MaterialCardView,
-        textView: TextView
+        textView: TextView,
+        textViewKcalGram: TextView
     ) {
         cardView.isClickable = false
         cardView.setBackgroundResource(R.drawable.select_ingredient_round_corner)
         textView.isSelected = true
+        textViewKcalGram.isSelected = true
     }
 
     private fun unselectItem(
         cardView: MaterialCardView,
-        textView: TextView
+        textView: TextView,
+        textViewKcalGram: TextView
     ) {
         cardView.isClickable = true
         cardView.setBackgroundResource(R.drawable.unselect_ingredient_round_corner)
         textView.isSelected = false
+        textViewKcalGram.isSelected = false
     }
 }

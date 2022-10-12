@@ -70,7 +70,6 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
             override fun onFailure(value: List<Ingredient>?) {
             }
         })
-
     }
 
     override fun onIngredientClick(previousItem: Int, selectedItem: Int, ingredient: Ingredient?) {

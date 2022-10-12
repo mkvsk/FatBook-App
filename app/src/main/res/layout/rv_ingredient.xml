@@ -57,7 +57,7 @@
                 android:maxLines="1"
                 android:text="@string/string_format_kcal_qtt_per_100_gram"
                 android:textAppearance="@style/recipeCreateIngredientsTextStyle"
-                android:textColor="@color/rv_ingredients_kcals"
+                android:textColor="@drawable/selector_recipe_ingredient_adds_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/textview_ingredient_title_rv_ingredient"
                 app:layout_constraintRight_toRightOf="parent"
