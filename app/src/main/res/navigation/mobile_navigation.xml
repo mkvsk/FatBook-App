@@ -328,7 +328,18 @@
             android:id="@+id/action_go_to_add_ingredient_from_second_stage"
             app:destination="@id/navigation_recipe_create_add_ingredients"
             app:popUpTo="@id/navigation_recipe_create_second_stage" />
+
+        <action
+            android:id="@+id/action_go_to_create_cooking_step_from_second_stage"
+            app:destination="@id/navigation_recipe_create_cooking_step"
+            app:popUpTo="navigation_recipe_create_second_stage" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_recipe_create_cooking_step"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeCreateCookingStepFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_recipe_create_cooking_step" />
 
     <fragment
         android:id="@+id/navigation_recipe_create_add_ingredients"

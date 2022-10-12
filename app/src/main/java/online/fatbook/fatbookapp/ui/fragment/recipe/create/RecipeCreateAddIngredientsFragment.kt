@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateAddIngredientsBinding
 import online.fatbook.fatbookapp.ui.adapters.IngredientAdapter
@@ -16,6 +17,7 @@ import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
+import org.apache.commons.lang3.StringUtils
 
 class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickListener {
 
@@ -23,6 +25,7 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private var adapter: IngredientAdapter? = null
+    private var unitsList: List<IngredientUnit>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +54,12 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
             recipeViewModel.newRecipe.value!!.ingredients!!.add(recipeIngredient)
             NavHostFragment.findNavController(this).popBackStack()
         }
+
+        setupUnitPicker()
+    }
+
+    private fun setupUnitPicker() {
+
     }
 
     private fun setupIngredientsAdapter() {
