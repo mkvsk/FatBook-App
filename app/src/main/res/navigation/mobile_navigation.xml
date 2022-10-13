@@ -332,7 +332,7 @@
         <action
             android:id="@+id/action_go_to_create_cooking_step_from_second_stage"
             app:destination="@id/navigation_recipe_create_cooking_step"
-            app:popUpTo="navigation_recipe_create_second_stage" />
+            app:popUpTo="@id/navigation_recipe_create_second_stage" />
     </fragment>
 
     <fragment

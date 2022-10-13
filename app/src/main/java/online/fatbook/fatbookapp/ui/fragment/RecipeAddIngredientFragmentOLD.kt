@@ -51,7 +51,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnIngredientItemClickListener
             recipeIngredient.ingredient = selectedIngredient
             recipeIngredient.quantity =
                 binding!!.editTextIngredientQuantity.text.toString().toDouble()
-            recipeIngredient.unit = IngredientUnit.values()[binding!!.pickerIngredientUnit.value]
+            recipeIngredient.unit = IngredientUnit.values()[binding!!.pickerIngredientUnitOld.value]
             recipeViewModel!!.selectedRecipeIngredient.value = recipeIngredient
             NavHostFragment.findNavController(this).popBackStack()
         }
@@ -120,9 +120,9 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnIngredientItemClickListener
             IngredientUnit.TEA_SPOON.getMultiplyNaming(requireContext()),
             IngredientUnit.TABLE_SPOON.getMultiplyNaming(requireContext())
         )
-        binding!!.pickerIngredientUnit.minValue = 0
-        binding!!.pickerIngredientUnit.maxValue = unitData.size - 1
-        binding!!.pickerIngredientUnit.displayedValues = unitData
+        binding!!.pickerIngredientUnitOld.minValue = 0
+        binding!!.pickerIngredientUnitOld.maxValue = unitData.size - 1
+        binding!!.pickerIngredientUnitOld.displayedValues = unitData
     }
 
     private fun setupAdapter() {

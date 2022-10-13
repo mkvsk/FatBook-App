@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardview_rv_recipe_ingredient"
+        android:id="@+id/cardview_rv_ingredient"
         style="@style/myMaterialCardMethodCategories"
         android:layout_width="match_parent"
         android:layout_height="30dp"

@@ -48,15 +48,15 @@ class IngredientAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: Ingredient?) {
-            if (selectedIngredient!! == data[bindingAdapterPosition]) {
+            if (selectedIngredient!!.title == data[bindingAdapterPosition].title) {
                 selectItem(
-                    itemView.cardview_rv_recipe_ingredient,
+                    itemView.cardview_rv_ingredient,
                     itemView.textview_ingredient_title_rv_ingredient,
                     itemView.textview_ingredient_kcals_title_rv_ingredient
                 )
             } else {
                 unselectItem(
-                    itemView.cardview_rv_recipe_ingredient,
+                    itemView.cardview_rv_ingredient,
                     itemView.textview_ingredient_title_rv_ingredient,
                     itemView.textview_ingredient_kcals_title_rv_ingredient
                 )
@@ -68,8 +68,8 @@ class IngredientAdapter :
             itemView.textview_ingredient_kcals_title_rv_ingredient.text =
                 String.format("%s kcal/100 gram", tmp)
 
-            if (itemView.cardview_rv_recipe_ingredient.isClickable) {
-                itemView.cardview_rv_recipe_ingredient.setOnClickListener {
+            if (itemView.cardview_rv_ingredient.isClickable) {
+                itemView.cardview_rv_ingredient.setOnClickListener {
                     listener!!.onIngredientClick(
                         data.indexOf(selectedIngredient),
                         bindingAdapterPosition,

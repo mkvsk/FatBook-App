@@ -28,6 +28,8 @@
     <color name="blue_grey_100">#CFD8DC</color>
 
     <color name="main_text">#FFFFFFFF</color>
+<!--    TODO ET selector-->
+    <color name="hint_text">#546E7A</color>
     <color name="start_fragments_bgr">#263238</color>
     <color name="ic_color">#FFFFFFFF</color>
     <color name="editText_catdialog_bgr">#37474F</color>
