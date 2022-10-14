@@ -179,12 +179,19 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     //TODO sdelat' K P A C U B O
     private fun filter(text: String) {
         try {
-            val temp: ArrayList<Ingredient> = ArrayList()
-            for (r in staticDataViewModel.ingredients.value!!) {
-                if (StringUtils.containsIgnoreCase(r.title, text)) {
-                    temp.add(r)
-                }
+            var temp: List<Ingredient> = ArrayList()
+//            for (r in staticDataViewModel.ingredients.value!!) {
+//                if (StringUtils.containsIgnoreCase(r.title, text)) {
+//                    temp.add(r)
+//                }
+//            }
+            temp = staticDataViewModel.ingredients.value!!.filter {
+                StringUtils.startsWithIgnoreCase(
+                    it.title,
+                    text
+                )
             }
+
             adapter!!.setData(temp)
         } catch (e: Exception) {
             e.printStackTrace()
