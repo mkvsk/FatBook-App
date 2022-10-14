@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,7 @@ class IngredientAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: Ingredient?) {
-            if (selectedIngredient!!.title == data[bindingAdapterPosition].title) {
+            if (selectedIngredient!!.title == value!!.title) {
                 selectItem(
                     itemView.cardview_rv_ingredient,
                     itemView.textview_ingredient_title_rv_ingredient,

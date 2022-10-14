@@ -127,10 +127,9 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     }
 
     override fun onIngredientClick(previousItem: Int, selectedItem: Int, ingredient: Ingredient?) {
-        adapter!!.selectedIngredient = staticDataViewModel.ingredients.value!![selectedItem]
-//        adapter!!.notifyItemChanged(previousItem)
-//        adapter!!.notifyItemChanged(selectedItem)
-        adapter!!.notifyDataSetChanged()
+        adapter!!.selectedIngredient = staticDataViewModel.ingredients.value!!.find { it.title == ingredient!!.title }
+        adapter!!.notifyItemChanged(previousItem)
+        adapter!!.notifyItemChanged(selectedItem)
         recipeViewModel.newRecipeAddIngredient.value = ingredient
 
         textView_selected_ingredient_recipe_add_ingredients.text = ingredient!!.title
@@ -151,7 +150,6 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
         tv_ingredient_fats_recipe_add_ingredients.text = nutritionFacts?.fats.toString()
         tv_ingredient_carbs_recipe_add_ingredients.text = nutritionFacts?.carbs.toString()
 
-        Log.d("TAG--------------------------", "$nutritionFacts")
         showNutritionFacts(true)
     }
 
