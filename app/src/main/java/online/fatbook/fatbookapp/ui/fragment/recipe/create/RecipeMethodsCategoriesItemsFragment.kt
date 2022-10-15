@@ -42,9 +42,11 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
 
         setupItemsAdapter()
         if (staticDataViewModel.loadCookingMethod.value!!) {
+            toolbar_recipe_methods_categories_items.setTitle(R.string.toolbar_title_cooking_method)
             loadCookingMethods()
         } else {
             setupMenu()
+            toolbar_recipe_methods_categories_items.setTitle(R.string.toolbar_title_cooking_categories)
             loadCookingCategories()
         }
     }

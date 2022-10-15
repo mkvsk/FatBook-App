@@ -345,7 +345,13 @@
         android:id="@+id/navigation_recipe_create_add_ingredients"
         android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeCreateAddIngredientsFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_recipe_create_add_ingredients" />
+        tools:layout="@layout/fragment_recipe_create_add_ingredients" >
+
+        <action
+            android:id="@+id/action_go_to_second_stage_from_ingredients"
+            app:destination="@id/navigation_recipe_create_second_stage"
+            app:popUpTo="@id/navigation_recipe_create_second_stage"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_view_image"

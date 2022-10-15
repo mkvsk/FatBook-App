@@ -3,13 +3,17 @@ package online.fatbook.fatbookapp.ui.fragment.recipe.create
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
+import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
@@ -19,6 +23,7 @@ import online.fatbook.fatbookapp.ui.adapters.IngredientAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
+import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 
@@ -44,25 +49,13 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupIngredientsAdapter()
+        progress_overlay.visibility = View.VISIBLE
         loadIngredients()
-
-        button_add_recipe_add_ingredients.setOnClickListener {
-            selectedUnit = units[picker_ingredient_unit.value]
-            selectedQtt =
-                editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
-
-            val recipeIngredient = RecipeIngredient(
-                pid = null,
-                ingredient = recipeViewModel.newRecipeAddIngredient.value,
-                unit = selectedUnit,
-                quantity = selectedQtt
-            )
-            recipeViewModel.newRecipe.value!!.ingredients!!.add(recipeIngredient)
-            NavHostFragment.findNavController(this).popBackStack()
-        }
-
+        setupIngredientsAdapter()
         setupUnitPicker(null)
+        setupMenu()
+//        handleBackPressed()
+        progress_overlay.visibility = View.GONE
 
         edittext_search_recipe_add_ingredients.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -77,33 +70,97 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
 
         })
 
-        showNutritionFacts(false)
-
         editText_ingredient_quantity_recipe_add_ingredients.addTextChangedListener(object :
             TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
+                checkData()
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                button_add_recipe_add_ingredients.isEnabled =
-                    !(editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty() || editText_ingredient_quantity_recipe_add_ingredients.text.toString()
-                        .toDouble() == 0.0)
+                checkData()
             }
 
             override fun afterTextChanged(s: Editable?) {
+                checkData()
             }
 
         })
     }
 
-    private fun showNutritionFacts(show: Boolean) {
-        if (show) {
-            textview_nutrition_facts_title_recipe_add_ingredients.visibility = View.VISIBLE
-            cardview_nutrition_facts_recipe_add_ingredients.visibility = View.VISIBLE
+    private fun handleBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    popBackStack()
+                }
+            })
+    }
+
+    private fun popBackStack() {
+        NavHostFragment.findNavController(this).popBackStack()
+    }
+
+    private fun setupMenu() {
+        val activity = (activity as AppCompatActivity?)!!
+        activity.setSupportActionBar(toolbar_recipe_add_ingredients)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.add_recipe_ingredient_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_add_ingredient_to_recipe -> {
+                //TODO fix
+                checkData()
+                addIngredient()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun addIngredient() {
+        selectedUnit = units[picker_ingredient_unit.value]
+
+        selectedQtt = if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()
+        ) {
+            1.0
         } else {
-            textview_nutrition_facts_title_recipe_add_ingredients.visibility = View.GONE
-            cardview_nutrition_facts_recipe_add_ingredients.visibility = View.GONE
+            editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
+        }
+
+        val recipeIngredient = RecipeIngredient(
+            pid = null,
+            ingredient = recipeViewModel.newRecipeAddIngredient.value,
+            unit = selectedUnit,
+            quantity = selectedQtt
+        )
+        recipeViewModel.newRecipe.value!!.ingredients!!.add(recipeIngredient)
+        NavHostFragment.findNavController(this).popBackStack()
+    }
+
+    private fun checkData() {
+        if (editText_ingredient_quantity_recipe_add_ingredients.text.toString().isNotEmpty()
+            && editText_ingredient_quantity_recipe_add_ingredients.text.toString()
+                .toDouble() != 0.0
+        ) {
+            editText_ingredient_quantity_recipe_add_ingredients.background =
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.round_corner_ingredient_qtt_units
+                )
+        } else {
+            editText_ingredient_quantity_recipe_add_ingredients.isFocusable
+            editText_ingredient_quantity_recipe_add_ingredients.background =
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.round_corner_ingredient_qtt_units_stroke
+                )
         }
     }
 
@@ -127,7 +184,8 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     }
 
     override fun onIngredientClick(previousItem: Int, selectedItem: Int, ingredient: Ingredient?) {
-        adapter!!.selectedIngredient = staticDataViewModel.ingredients.value!!.find { it.title == ingredient!!.title }
+        adapter!!.selectedIngredient =
+            staticDataViewModel.ingredients.value!!.find { it.title == ingredient!!.title }
         adapter!!.notifyItemChanged(previousItem)
         adapter!!.notifyItemChanged(selectedItem)
         recipeViewModel.newRecipeAddIngredient.value = ingredient
@@ -149,8 +207,6 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
         tv_ingredient_proteins_recipe_add_ingredients.text = nutritionFacts?.proteins.toString()
         tv_ingredient_fats_recipe_add_ingredients.text = nutritionFacts?.fats.toString()
         tv_ingredient_carbs_recipe_add_ingredients.text = nutritionFacts?.carbs.toString()
-
-        showNutritionFacts(true)
     }
 
     private fun setupUnitPicker(ingredient: Ingredient?) {
