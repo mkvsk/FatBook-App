@@ -7,7 +7,9 @@
     android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.recipe.create.RecipeCreateAddIngredientsFragment">
 
-    <include layout="@layout/include_progress_overlay" android:elevation="10dp" />
+    <include
+        layout="@layout/include_progress_overlay"
+        android:elevation="10dp" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_recipe_add_ingredients"
@@ -92,9 +94,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/cards_margin_start"
+            android:layout_marginBottom="10dp"
             app:cardElevation="6dp"
             app:cardPreventCornerOverlap="false"
-            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@id/cardview_left_recipe_add_ingredients"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -103,7 +105,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -123,19 +124,21 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
+                    android:fadingEdge="horizontal"
+                    android:fadingEdgeLength="50dp"
+                    android:requiresFadingEdge="vertical"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:listitem="@layout/rv_ingredient" />
 
-                <ImageView
-                    android:id="@+id/imageview_bottom_gradient_recipe_add_ingredients"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="-15dp"
-                    android:src="@drawable/card_view_gradient"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageview_bottom_gradient_recipe_add_ingredients"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="15dp"-->
+<!--                    android:src="@drawable/card_view_gradient_with_shape"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintRight_toLeftOf="parent"-->
+<!--                    app:layout_constraintRight_toRightOf="parent" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -291,17 +294,17 @@
                             android:id="@+id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/no_data_dots"
-                            android:lines="2"
-                            android:autoSizeMinTextSize="9sp"
                             android:autoSizeMaxTextSize="15sp"
+                            android:autoSizeMinTextSize="9sp"
                             android:autoSizeStepGranularity="1sp"
                             android:autoSizeTextType="uniform"
-                            android:textAlignment="gravity"
-                            android:gravity="center_vertical|center"
                             android:fontFamily="@font/roboto_medium"
-                            android:textColor="@color/main_text"
+                            android:gravity="center_vertical|center"
+                            android:lines="2"
                             android:maxLength="20"
+                            android:text="@string/no_data_dots"
+                            android:textAlignment="gravity"
+                            android:textColor="@color/main_text"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toRightOf="@id/imageview_ic_portion_kcals"
                             app:layout_constraintTop_toTopOf="parent" />
