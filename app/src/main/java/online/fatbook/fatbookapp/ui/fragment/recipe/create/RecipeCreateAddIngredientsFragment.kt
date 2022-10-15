@@ -54,8 +54,8 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
         setupIngredientsAdapter()
         setupUnitPicker(null)
         setupMenu()
-//        handleBackPressed()
         progress_overlay.visibility = View.GONE
+//        handleBackPressed()
 
         edittext_search_recipe_add_ingredients.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

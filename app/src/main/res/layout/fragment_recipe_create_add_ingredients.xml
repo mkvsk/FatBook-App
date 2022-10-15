@@ -78,307 +78,317 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardview_right_recipe_add_ingredients"
-        style="@style/myMaterialCardRight"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/cards_margin_start"
-        app:cardElevation="6dp"
-        app:cardPreventCornerOverlap="false"
-        app:layout_constraintBottom_toTopOf="@id/cardview_left_recipe_add_ingredients"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout_recipe_add_ingredients">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardview_right_recipe_add_ingredients"
+            style="@style/myMaterialCardRight"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/cards_margin_start"
+            app:cardElevation="6dp"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintBottom_toTopOf="@id/cardview_left_recipe_add_ingredients"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_ingredients_recipe_add_ingredients"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
-                app:fastScrollEnabled="true"
-                app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-                app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-                app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-                app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/rv_ingredient" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/imageview_bottom_gradient_recipe_add_ingredients"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="-15dp"
-                android:src="@drawable/card_view_gradient"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_ingredients_recipe_add_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    app:fastScrollEnabled="true"
+                    app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
+                    app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
+                    app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
+                    app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/rv_ingredient" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardview_left_recipe_add_ingredients"
-        style="@style/myMaterialCardLeft"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/elements_spacing_recipe_create"
-        android:layout_marginEnd="@dimen/cards_margin_end"
-        app:cardElevation="6dp"
-        app:cardPreventCornerOverlap="false"
-        app:contentPaddingBottom="10dp"
-        app:contentPaddingLeft="10dp"
-        app:contentPaddingRight="10dp"
-        app:contentPaddingTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardview_right_recipe_add_ingredients">
+                <ImageView
+                    android:id="@+id/imageview_bottom_gradient_recipe_add_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="-15dp"
+                    android:src="@drawable/card_view_gradient"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardview_left_recipe_add_ingredients"
+            style="@style/myMaterialCardLeft"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/elements_spacing_recipe_create"
+            android:layout_marginEnd="@dimen/cards_margin_end"
+            app:cardElevation="6dp"
+            app:cardPreventCornerOverlap="false"
+            app:contentPaddingBottom="10dp"
+            app:contentPaddingLeft="10dp"
+            app:contentPaddingRight="10dp"
+            app:contentPaddingTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/cardview_right_recipe_add_ingredients">
 
-            <TextView
-                android:id="@+id/textView_selected_ingredient_recipe_add_ingredients"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/cards_margin_start"
-                android:autoSizeMaxTextSize="15sp"
-                android:autoSizeMinTextSize="9sp"
-                android:autoSizeStepGranularity="2sp"
-                android:fontFamily="@font/roboto_medium"
-                android:gravity="center"
-                android:maxLines="2"
-                android:text="@string/no_data_dots"
-                android:textColor="@color/color_pink_a200"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textview_quantity_recipe_add_ingredients"
-                style="@style/recipeCreateTitlesTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/cards_margin_start"
-                android:layout_marginTop="@dimen/elements_spacing_recipe_create"
-                android:text="Quantity:"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView_selected_ingredient_recipe_add_ingredients" />
-
-            <LinearLayout
-                android:id="@+id/ll_qqt_units"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:gravity="fill"
-                android:orientation="horizontal"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_quantity_recipe_add_ingredients">
-
-                <EditText
-                    android:id="@+id/editText_ingredient_quantity_recipe_add_ingredients"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_corner_ingredient_qtt_units_stroke"
-                    android:elevation="4dp"
-                    android:hint="@string/hint_quantity"
-                    android:lines="1"
-                    android:inputType="numberDecimal"
-                    android:maxLength="8"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/recipeCreateEditTextStyle"
-                    android:translationZ="1dp" />
-
-                <com.shawnlin.numberpicker.NumberPicker
-                    android:id="@+id/picker_ingredient_unit"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_corner_ingredient_qtt_units"
-                    android:divider="@android:color/transparent"
-                    android:elevation="4dp"
-                    android:translationZ="1dp"
-                    app:np_height="175dp"
-                    app:np_itemSpacing="5dp"
-                    app:np_orientation="vertical"
-                    app:np_selectedTextColor="@color/color_blue_grey_600"
-                    app:np_selectedTextSize="15sp"
-                    app:np_textColor="@color/color_blue_grey_200"
-                    app:np_textSize="13sp"
-                    app:np_width="65dp" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textview_nutrition_facts_title_recipe_add_ingredients"
-                style="@style/recipeCreateTitlesTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/cards_margin_start"
-                android:layout_marginTop="@dimen/elements_spacing_recipe_create"
-                android:text="Nutrition facts:"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_qqt_units" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardview_nutrition_facts_recipe_add_ingredients"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginStart="@dimen/cards_margin_start"
-                android:layout_marginTop="@dimen/titles_spacing_recipe_create"
-                android:layout_marginEnd="@dimen/cards_margin_end"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="@color/theme_primary_bgr"
-                app:cardPreventCornerOverlap="false"
-                app:contentPaddingBottom="5dp"
-                app:contentPaddingLeft="10dp"
-                app:contentPaddingRight="10dp"
-                app:contentPaddingTop="5dp"
+                android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_nutrition_facts_title_recipe_add_ingredients"
-                app:shapeAppearance="@style/ShapeAppearanceOverlay.App.AllCornerSize20Percent">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
+                    android:id="@+id/textView_selected_ingredient_recipe_add_ingredients"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/cards_margin_start"
+                    android:autoSizeMaxTextSize="15sp"
+                    android:autoSizeMinTextSize="9sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="@string/no_data_dots"
+                    android:textColor="@color/color_pink_a200"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textview_quantity_recipe_add_ingredients"
+                    style="@style/recipeCreateTitlesTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/cards_margin_start"
+                    android:layout_marginTop="@dimen/elements_spacing_recipe_create"
+                    android:text="Quantity:"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView_selected_ingredient_recipe_add_ingredients" />
+
+                <LinearLayout
+                    android:id="@+id/ll_qqt_units"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="66dp"
+                    android:gravity="fill"
+                    android:orientation="horizontal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textview_quantity_recipe_add_ingredients">
 
-                    <ImageView
-                        android:id="@+id/imageview_ic_portion_kcals"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_kcals_nutrition_card"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no_data_dots"
+                    <EditText
+                        android:id="@+id/editText_ingredient_quantity_recipe_add_ingredients"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_ingredient_qtt_units_stroke"
+                        android:elevation="4dp"
+                        android:hint="@string/hint_quantity"
+                        android:inputType="numberDecimal"
+                        android:lines="1"
+                        android:maxLength="8"
                         android:textAlignment="center"
                         android:textAppearance="@style/recipeCreateEditTextStyle"
-                        android:textColor="@color/main_text"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/imageview_ic_portion_kcals"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:translationZ="1dp" />
 
-                    <TextView
-                        android:id="@+id/tv_title_proteins"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="Proteins"
-                        android:textAppearance="@style/recipeCreateTitlesTextStyle"
-                        android:textColor="@color/rv_ingredients_kcals"
-                        app:layout_constraintLeft_toRightOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <com.shawnlin.numberpicker.NumberPicker
+                        android:id="@+id/picker_ingredient_unit"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_ingredient_qtt_units"
+                        android:divider="@android:color/transparent"
+                        android:elevation="4dp"
+                        android:translationZ="1dp"
+                        app:np_height="175dp"
+                        app:np_itemSpacing="5dp"
+                        app:np_orientation="vertical"
+                        app:np_selectedTextColor="@color/color_blue_grey_600"
+                        app:np_selectedTextSize="15sp"
+                        app:np_textColor="@color/color_blue_grey_200"
+                        app:np_textSize="13sp"
+                        app:np_width="65dp" />
 
-                    <TextView
-                        android:id="@+id/tv_title_fats"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fats"
-                        android:textAppearance="@style/recipeCreateTitlesTextStyle"
-                        android:textColor="@color/rv_ingredients_kcals"
-                        app:layout_constraintLeft_toRightOf="@id/tv_title_proteins"
-                        app:layout_constraintRight_toLeftOf="@id/tv_title_carbs"
-                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_title_carbs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/cards_margin_end"
-                        android:text="Carbs"
-                        android:textAppearance="@style/recipeCreateTitlesTextStyle"
-                        android:textColor="@color/rv_ingredients_kcals"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/textview_nutrition_facts_title_recipe_add_ingredients"
+                    style="@style/recipeCreateTitlesTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/cards_margin_start"
+                    android:layout_marginTop="@dimen/elements_spacing_recipe_create"
+                    android:text="Nutrition facts:"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ll_qqt_units" />
 
-                    <TextView
-                        android:id="@+id/tv_ingredient_proteins_recipe_add_ingredients"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no_data_dots"
-                        android:textAppearance="@style/recipeCreateTitlesTextStyle"
-                        android:textColor="@color/main_text"
-                        app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_title_proteins" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardview_nutrition_facts_recipe_add_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="@dimen/cards_margin_start"
+                    android:layout_marginTop="@dimen/titles_spacing_recipe_create"
+                    android:layout_marginEnd="@dimen/cards_margin_end"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="@color/theme_primary_bgr"
+                    app:cardPreventCornerOverlap="false"
+                    app:contentPaddingBottom="5dp"
+                    app:contentPaddingLeft="10dp"
+                    app:contentPaddingRight="10dp"
+                    app:contentPaddingTop="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textview_nutrition_facts_title_recipe_add_ingredients"
+                    app:shapeAppearance="@style/ShapeAppearanceOverlay.App.AllCornerSize20Percent">
 
-                    <TextView
-                        android:id="@+id/tv_ingredient_fats_recipe_add_ingredients"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no_data_dots"
-                        android:textAppearance="@style/recipeCreateTitlesTextStyle"
-                        android:textColor="@color/main_text"
-                        app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_title_fats" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/tv_ingredient_carbs_recipe_add_ingredients"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no_data_dots"
-                        android:textAppearance="@style/recipeCreateTitlesTextStyle"
-                        android:textColor="@color/main_text"
-                        app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_title_carbs" />
+                        <ImageView
+                            android:id="@+id/imageview_ic_portion_kcals"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_kcals_nutrition_card"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_data_dots"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/recipeCreateEditTextStyle"
+                            android:textColor="@color/main_text"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@id/imageview_ic_portion_kcals"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_title_proteins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="Proteins"
+                            android:textAppearance="@style/recipeCreateTitlesTextStyle"
+                            android:textColor="@color/rv_ingredients_kcals"
+                            app:layout_constraintLeft_toRightOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_title_fats"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fats"
+                            android:textAppearance="@style/recipeCreateTitlesTextStyle"
+                            android:textColor="@color/rv_ingredients_kcals"
+                            app:layout_constraintLeft_toRightOf="@id/tv_title_proteins"
+                            app:layout_constraintRight_toLeftOf="@id/tv_title_carbs"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_title_carbs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/cards_margin_end"
+                            android:text="Carbs"
+                            android:textAppearance="@style/recipeCreateTitlesTextStyle"
+                            android:textColor="@color/rv_ingredients_kcals"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_ingredient_proteins_recipe_add_ingredients"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_data_dots"
+                            android:textAppearance="@style/recipeCreateTitlesTextStyle"
+                            android:textColor="@color/main_text"
+                            app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_title_proteins" />
+
+                        <TextView
+                            android:id="@+id/tv_ingredient_fats_recipe_add_ingredients"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_data_dots"
+                            android:textAppearance="@style/recipeCreateTitlesTextStyle"
+                            android:textColor="@color/main_text"
+                            app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_title_fats" />
+
+                        <TextView
+                            android:id="@+id/tv_ingredient_carbs_recipe_add_ingredients"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_data_dots"
+                            android:textAppearance="@style/recipeCreateTitlesTextStyle"
+                            android:textColor="@color/main_text"
+                            app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_title_carbs" />
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            <!--            <androidx.appcompat.widget.AppCompatButton-->
-            <!--                android:id="@+id/button_add_recipe_add_ingredients"-->
-            <!--                style="@style/buttons_in_fragments_style"-->
-            <!--                android:layout_width="@dimen/btn_main_w"-->
-            <!--                android:layout_height="@dimen/btn_main_h"-->
-            <!--                android:layout_marginVertical="@dimen/btn_spacing"-->
-            <!--                android:background="@drawable/selector_btn_in_fragments"-->
-            <!--                android:elevation="4dp"-->
-            <!--                android:enabled="false"-->
-            <!--                android:text="Add"-->
-            <!--                android:translationZ="2dp"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintLeft_toLeftOf="parent"-->
-            <!--                app:layout_constraintRight_toRightOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@id/cardview_nutrition_facts_recipe_add_ingredients" />-->
+                <!--            <androidx.appcompat.widget.AppCompatButton-->
+                <!--                android:id="@+id/button_add_recipe_add_ingredients"-->
+                <!--                style="@style/buttons_in_fragments_style"-->
+                <!--                android:layout_width="@dimen/btn_main_w"-->
+                <!--                android:layout_height="@dimen/btn_main_h"-->
+                <!--                android:layout_marginVertical="@dimen/btn_spacing"-->
+                <!--                android:background="@drawable/selector_btn_in_fragments"-->
+                <!--                android:elevation="4dp"-->
+                <!--                android:enabled="false"-->
+                <!--                android:text="Add"-->
+                <!--                android:translationZ="2dp"-->
+                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                app:layout_constraintLeft_toLeftOf="parent"-->
+                <!--                app:layout_constraintRight_toRightOf="parent"-->
+                <!--                app:layout_constraintTop_toBottomOf="@id/cardview_nutrition_facts_recipe_add_ingredients" />-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
