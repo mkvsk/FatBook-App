@@ -19,4 +19,8 @@ object FormatUtils {
             DecimalFormat().format(numValue)
         }
     }
+
+    fun prettyNutriFak(value: Double): String {
+        return DecimalFormat("#0.00").format(value)
+    }
 }

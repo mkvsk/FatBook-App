@@ -9,10 +9,17 @@ import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.NavHostFragment
+import androidx.transition.AutoTransition
+import androidx.transition.Scene
+import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
+import kotlinx.android.synthetic.main.fragment_user_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
+import okhttp3.internal.format
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
@@ -23,6 +30,7 @@ import online.fatbook.fatbookapp.ui.adapters.IngredientAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
+import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
@@ -53,9 +61,40 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
         loadIngredients()
         setupIngredientsAdapter()
         setupUnitPicker(null)
-        setupMenu()
         progress_overlay.visibility = View.GONE
 //        handleBackPressed()
+
+        cardview_left_recipe_add_ingredients.visibility = View.GONE
+        textView_selected_ingredient_recipe_add_ingredients.doOnTextChanged { _, _, _, _ ->
+            TransitionManager.go(Scene(cardview_left_recipe_add_ingredients), AutoTransition())
+            TransitionManager.go(Scene(cardview_right_recipe_add_ingredients), AutoTransition())
+            cardview_left_recipe_add_ingredients.visibility = View.VISIBLE
+            setupMenu()
+            editText_ingredient_quantity_recipe_add_ingredients.addTextChangedListener(object :
+                TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                    checkData()
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    checkData()
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    checkData()
+                    if (s!!.isEmpty()) {
+                        recipeViewModel.newRecipeAddIngredient.value?.let { setNutritionFacts(it) }
+                    } else {
+                        recipeViewModel.newRecipeAddIngredient.value?.let { calculateNutrition(it) }
+                    }
+                }
+            })
+        }
 
         edittext_search_recipe_add_ingredients.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -70,21 +109,31 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
 
         })
 
-        editText_ingredient_quantity_recipe_add_ingredients.addTextChangedListener(object :
-            TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                checkData()
-            }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                checkData()
-            }
+    }
 
-            override fun afterTextChanged(s: Editable?) {
-                checkData()
-            }
+    private fun calculateNutrition(ingredient: Ingredient) {
+        val nutritionFacts = ingredient.units!!.find { it.unit!! == selectedUnit }
 
-        })
+        val newQtt = editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
+        val kcal = nutritionFacts!!.kcal!!
+        val proteins = nutritionFacts.proteins!!
+        val fats = nutritionFacts.fats!!
+        val carbs = nutritionFacts.carbs!!
+
+        val newKcal = (kcal / 100 * newQtt)
+        val newProteins = (proteins / 100 * newQtt)
+        val newFats = (fats / 100 * newQtt)
+        val newCarbs = (carbs / 100 * newQtt)
+
+        textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
+            String.format(
+                "%s kcal",
+                FormatUtils.prettyNutriFak(newKcal)
+            )
+        tv_ingredient_proteins_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newProteins)
+        tv_ingredient_fats_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newFats)
+        tv_ingredient_carbs_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newCarbs)
     }
 
     private fun handleBackPressed() {
@@ -193,17 +242,19 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
         textView_selected_ingredient_recipe_add_ingredients.text = ingredient!!.title
         setupUnitPicker(ingredient)
 
-        setNutritionFacts(ingredient)
+        if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()) {
+            setNutritionFacts(ingredient)
+        } else {
+            calculateNutrition(ingredient)
+        }
     }
 
     private fun setNutritionFacts(ingredient: Ingredient) {
         val nutritionFacts = ingredient.units!!.find { it.unit!! == selectedUnit }
-
         val kcal = nutritionFacts?.kcal.toString()
         val qtt = nutritionFacts?.amount.toString()
         textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
             String.format("%s kcal/%s gram", kcal, qtt)
-
         tv_ingredient_proteins_recipe_add_ingredients.text = nutritionFacts?.proteins.toString()
         tv_ingredient_fats_recipe_add_ingredients.text = nutritionFacts?.fats.toString()
         tv_ingredient_carbs_recipe_add_ingredients.text = nutritionFacts?.carbs.toString()
