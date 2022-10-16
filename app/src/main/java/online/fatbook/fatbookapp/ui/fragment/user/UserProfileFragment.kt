@@ -17,6 +17,7 @@ import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R

@@ -13,6 +13,7 @@
         <item name="android:statusBarColor">@color/blue_grey_900</item>
         <item name="android:navigationBarColor">@color/color_blue_grey_900</item>
         <item name="colorControlHighlight">@color/colorPrimaryRipple</item>
+        <item name="android:textColorHint">@color/blue_grey_600</item>
         <!-- Customize your theme here. -->
         <!--        <item name="toolbarStyle">@style/ToolbarTheme</item>-->
         <!--        <item name="materialTimePickerTheme">@style/TimePicker</item>-->
@@ -28,7 +29,6 @@
     <color name="blue_grey_100">#CFD8DC</color>
 
     <color name="main_text">#FFFFFFFF</color>
-<!--    TODO ET selector-->
     <color name="hint_text">#546E7A</color>
     <color name="start_fragments_bgr">#263238</color>
     <color name="ic_color">#FFFFFFFF</color>
@@ -102,8 +102,6 @@
 
     <style name="myMaterialCardRightTopBottomRounded" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="elevation">4dp</item>
-        <item name="android:translationZ">6dp</item>
         <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_right_top_bottom
@@ -120,9 +118,6 @@
 
     <style name="myMaterialCardRight" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="elevation">4dp</item>
-        <item name="android:translationZ">6dp</item>
-        <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_right
         </item>
@@ -133,13 +128,11 @@
         <item name="cornerSizeTopRight">0dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
-        <item name="cornerSizeBottomLeft">30dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
     </style>
 
     <style name="myMaterialCardLeft" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="elevation">4dp</item>
-        <item name="android:translationZ">6dp</item>
         <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_left
@@ -148,7 +141,7 @@
 
     <style name="ShapeAppearanceOverlay_card_custom_corners_left" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
@@ -156,7 +149,6 @@
 
     <style name="myMaterialCardRecipePreview" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="android:translationZ">6dp</item>
         <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_recipe_preview

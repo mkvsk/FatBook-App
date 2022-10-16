@@ -48,14 +48,11 @@ class RecipeIngredientAdapter :
         fun bind(value: RecipeIngredient?) {
             itemView.textview_ingredient_title_rv_added_ingredient.text = value!!.ingredient!!.title
 
-            val kcal = value.ingredient!!.units?.get(0)?.kcal.toString()
             itemView.textview_ingredient_kcals_title_rv_added_ingredient.text =
-                String.format("%s kcal", kcal)
+                String.format("%s kcal", value.kcal)
 
-            val qtt = value.ingredient!!.units?.get(0)?.amount.toString()
             itemView.textview_ingredient_qtt_title_rv_added_ingredient.text =
-                String.format("%s gr", qtt)
-
+                String.format("%s %s", value.quantity, value.unit!!.name)
 
             itemView.button_remove_rv_added_ingredient.setOnClickListener {
                 listener!!.onRecipeIngredientDelete(bindingAdapterPosition)

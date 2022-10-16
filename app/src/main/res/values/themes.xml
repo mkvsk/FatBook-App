@@ -13,6 +13,7 @@
         <item name="android:statusBarColor">@color/blue_grey_200</item>
         <item name="android:navigationBarColor">@color/blue_grey_50</item>
         <item name="colorControlHighlight">@color/colorPrimaryRipple</item>
+        <item name="android:textColorHint">@color/blue_grey_200</item>
         <!-- Customize your theme here. -->
         <!--        <item name="toolbarStyle">@style/ToolbarTheme</item>-->
         <!--        <item name="materialTimePickerTheme">@style/TimePicker</item>-->
@@ -132,7 +133,7 @@
         <item name="cornerSizeTopRight">0dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
-        <item name="cornerSizeBottomLeft">30dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
     </style>
 
     <style name="myMaterialCardLeft" parent="@style/Widget.MaterialComponents.CardView">
@@ -147,7 +148,7 @@
 
     <style name="ShapeAppearanceOverlay_card_custom_corners_left" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>

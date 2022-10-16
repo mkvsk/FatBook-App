@@ -3,13 +3,11 @@ package online.fatbook.fatbookapp.ui.fragment.recipe.create
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.NavHostFragment
@@ -17,9 +15,7 @@ import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
-import kotlinx.android.synthetic.main.fragment_user_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
-import okhttp3.internal.format
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
@@ -31,7 +27,7 @@ import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.FormatUtils
-import online.fatbook.fatbookapp.util.hideKeyboard
+import online.fatbook.fatbookapp.util.RecipeUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 
@@ -263,8 +259,31 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     private fun setupUnitPicker(ingredient: Ingredient?) {
         val unitData: Array<String>
 
+        //TODO добавить все доступные юниты сортируя по ГР\МЛ
         if (ingredient != null) {
-            units = ingredient.units!!.map { it.unit!! }
+            val currentUnit = ingredient.units!![0].unit
+
+            units = RecipeUtils.getAllAvailableUnits()
+
+            when (currentUnit) {
+                IngredientUnit.GRAM -> {
+                    units as ArrayList
+                    Log.d("ALL UNITS:", "$units")
+                    Log.d("------------------------------------------------------------", "")
+
+                    (units as java.util.ArrayList<IngredientUnit>).remove(currentUnit)
+                    Log.d("REMOVE GR UNITS:", "$units")
+                    Log.d("------------------------------------------------------------", "")
+
+                    (units as java.util.ArrayList<IngredientUnit>)[0] = currentUnit
+                    Log.d("NEW UNITS:", "$units")
+                    Log.d("------------------------------------------------------------", "")
+
+                }
+                IngredientUnit.ML -> {
+//ml[0]
+                }
+            }
             unitData = units.map { it.getMultiplyNaming(requireContext()) }.toTypedArray()
 
             selectedUnit = units[0]

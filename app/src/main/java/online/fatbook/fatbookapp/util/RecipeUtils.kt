@@ -1,7 +1,9 @@
 package online.fatbook.fatbookapp.util
 
+import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 object RecipeUtils {
     const val TAG_BOOKMARKS_CHECKED = "tag_bookmarks_checked"
@@ -13,8 +15,21 @@ object RecipeUtils {
         "yyyy-MM-dd",
         Locale.US
     ) //    public String stripIngredientQuantity(double value) {
+
     //        if (StringUtils.endsWith(String.valueOf(value), "0")) {
     //
     //        }
     //    }
+    fun getAllAvailableUnits(): List<IngredientUnit> {
+        val list = LinkedList<IngredientUnit>()
+        list.add(IngredientUnit.GRAM)
+        list.add(IngredientUnit.KG)
+        list.add(IngredientUnit.PCS)
+        list.add(IngredientUnit.TEA_SPOON)
+        list.add(IngredientUnit.TABLE_SPOON)
+        list.add(IngredientUnit.ML)
+        list.add(IngredientUnit.L)
+        list.add(IngredientUnit.CUP)
+        return list
+    }
 }
