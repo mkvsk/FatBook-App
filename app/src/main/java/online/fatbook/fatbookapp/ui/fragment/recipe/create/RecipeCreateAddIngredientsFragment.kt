@@ -111,7 +111,8 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     private fun calculateNutrition(ingredient: Ingredient) {
         val nutritionFacts = ingredient.units!!.find { it.unit!! == selectedUnit }
 
-        val newQtt = editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
+        val newQtt =
+            editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
         val kcal = nutritionFacts!!.kcal!!
         val proteins = nutritionFacts.proteins!!
         val fats = nutritionFacts.fats!!
@@ -127,7 +128,8 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
                 "%s kcal",
                 FormatUtils.prettyNutriFak(newKcal)
             )
-        tv_ingredient_proteins_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newProteins)
+        tv_ingredient_proteins_recipe_add_ingredients.text =
+            FormatUtils.prettyNutriFak(newProteins)
         tv_ingredient_fats_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newFats)
         tv_ingredient_carbs_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newCarbs)
     }
@@ -258,8 +260,6 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
 
     private fun setupUnitPicker(ingredient: Ingredient?) {
         val unitData: Array<String>
-
-        //TODO добавить все доступные юниты сортируя по ГР\МЛ
         if (ingredient != null) {
             val currentUnit = ingredient.units!![0].unit
 
@@ -268,20 +268,13 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
             when (currentUnit) {
                 IngredientUnit.GRAM -> {
                     units as ArrayList
-                    Log.d("ALL UNITS:", "$units")
-                    Log.d("------------------------------------------------------------", "")
-
                     (units as java.util.ArrayList<IngredientUnit>).remove(currentUnit)
-                    Log.d("REMOVE GR UNITS:", "$units")
-                    Log.d("------------------------------------------------------------", "")
-
                     (units as java.util.ArrayList<IngredientUnit>)[0] = currentUnit
-                    Log.d("NEW UNITS:", "$units")
-                    Log.d("------------------------------------------------------------", "")
-
                 }
                 IngredientUnit.ML -> {
-//ml[0]
+                    units as ArrayList
+                    (units as java.util.ArrayList<IngredientUnit>).remove(currentUnit)
+                    (units as java.util.ArrayList<IngredientUnit>)[0] = currentUnit
                 }
             }
             unitData = units.map { it.getMultiplyNaming(requireContext()) }.toTypedArray()

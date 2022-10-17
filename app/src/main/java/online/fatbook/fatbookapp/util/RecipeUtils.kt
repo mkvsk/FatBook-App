@@ -21,9 +21,9 @@ object RecipeUtils {
     //        }
     //    }
     fun getAllAvailableUnits(): List<IngredientUnit> {
-        val list = LinkedList<IngredientUnit>()
-        list.add(IngredientUnit.GRAM)
+        val list = ArrayList<IngredientUnit>()
         list.add(IngredientUnit.KG)
+        list.add(IngredientUnit.GRAM)
         list.add(IngredientUnit.PCS)
         list.add(IngredientUnit.TEA_SPOON)
         list.add(IngredientUnit.TABLE_SPOON)
