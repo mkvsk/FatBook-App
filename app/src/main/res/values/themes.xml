@@ -102,8 +102,6 @@
 
     <style name="myMaterialCardRightTopBottomRounded" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="elevation">4dp</item>
-        <item name="android:translationZ">6dp</item>
         <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_right_top_bottom
@@ -112,17 +110,14 @@
 
     <style name="ShapeAppearanceOverlay_card_custom_corners_right_top_bottom" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
-        <item name="cornerSizeBottomRight">30dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
     <style name="myMaterialCardRight" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="elevation">4dp</item>
-        <item name="android:translationZ">6dp</item>
-        <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_right
         </item>
@@ -138,9 +133,6 @@
 
     <style name="myMaterialCardLeft" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="elevation">4dp</item>
-        <item name="android:translationZ">6dp</item>
-        <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_left
         </item>
@@ -156,8 +148,6 @@
 
     <style name="myMaterialCardRecipePreview" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="android:translationZ">6dp</item>
-        <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_recipe_preview
         </item>
@@ -165,16 +155,14 @@
 
     <style name="ShapeAppearanceOverlay_card_custom_corners_recipe_preview" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
-        <item name="cornerSizeBottomRight">30dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
     <style name="myMaterialCardRecipeViewImage" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="android:translationZ">6dp</item>
-        <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_recipe_view_image
         </item>
@@ -183,15 +171,13 @@
     <style name="ShapeAppearanceOverlay_card_custom_corners_recipe_view_image" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">0dp</item>
-        <item name="cornerSizeTopLeft">30dp</item>
+        <item name="cornerSizeTopLeft">20dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
-        <item name="cornerSizeBottomLeft">30dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
     </style>
 
     <style name="myMaterialCardRecipeView" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
-        <item name="android:translationZ">6dp</item>
-        <item name="android:shadowRadius">10</item>
         <item name="shapeAppearanceOverlay">
             @style/ShapeAppearanceOverlay_card_custom_corners_recipe_view
         </item>
@@ -199,9 +185,9 @@
 
     <style name="ShapeAppearanceOverlay_card_custom_corners_recipe_view" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
-        <item name="cornerSizeBottomRight">30dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
@@ -447,10 +433,10 @@
 
     <style name="ShapeAppearanceOverlay_card_custom_round_corners" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">30dp</item>
-        <item name="cornerSizeTopLeft">30dp</item>
-        <item name="cornerSizeBottomRight">30dp</item>
-        <item name="cornerSizeBottomLeft">30dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
     </style>
 
     <style name="followUsernameTextStyle">
