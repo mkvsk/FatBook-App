@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
+import androidx.transition.AutoTransition
+import androidx.transition.Scene
+import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
 import kotlinx.android.synthetic.main.fragment_recipe_create_second_stage.*
 import online.fatbook.fatbookapp.R
@@ -62,6 +65,7 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     }
 
     override fun onRecipeIngredientDelete(selectedItem: Int) {
+        TransitionManager.go(Scene(cardview_right_recipe_create_2_stage), AutoTransition())
         recipeViewModel.newRecipe.value!!.ingredients!!.removeAt(selectedItem)
         adapter!!.notifyItemRemoved(selectedItem)
     }

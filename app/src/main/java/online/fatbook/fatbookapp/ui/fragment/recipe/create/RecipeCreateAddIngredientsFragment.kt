@@ -88,6 +88,9 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
                     } else {
                         recipeViewModel.newRecipeAddIngredient.value?.let { calculateNutrition(it) }
                     }
+//                    if (selectedUnit == recipeViewModel.newRecipeAddIngredient.value?.units!![0].unit) {
+//                        recipeViewModel.newRecipeAddIngredient.value?.let { calculateNutrition(it) }
+//                    }
                 }
             })
         }
@@ -104,8 +107,6 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
             }
 
         })
-
-
     }
 
     private fun calculateNutrition(ingredient: Ingredient) {
@@ -252,7 +253,7 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
         val kcal = nutritionFacts?.kcal.toString()
         val qtt = nutritionFacts?.amount.toString()
         textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
-            String.format("%s kcal/%s gram", kcal, qtt)
+            String.format("%s kcal/%s %s", kcal, qtt, ingredient.units[0].unit)
         tv_ingredient_proteins_recipe_add_ingredients.text = nutritionFacts?.proteins.toString()
         tv_ingredient_fats_recipe_add_ingredients.text = nutritionFacts?.fats.toString()
         tv_ingredient_carbs_recipe_add_ingredients.text = nutritionFacts?.carbs.toString()
@@ -283,7 +284,10 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
 
             picker_ingredient_unit.setOnValueChangedListener { _, _, newVal ->
                 selectedUnit = units[newVal]
-                setNutritionFacts(ingredient)
+
+                if (selectedUnit == ingredient.units[0].unit) {
+                    setNutritionFacts(ingredient)
+                }
             }
         } else {
             unitData = arrayOf("unit")
@@ -295,22 +299,15 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
         picker_ingredient_unit.value = 0
     }
 
-    //TODO sdelat' K P A C U B O
     private fun filter(text: String) {
         try {
             var temp: List<Ingredient> = ArrayList()
-//            for (r in staticDataViewModel.ingredients.value!!) {
-//                if (StringUtils.containsIgnoreCase(r.title, text)) {
-//                    temp.add(r)
-//                }
-//            }
             temp = staticDataViewModel.ingredients.value!!.filter {
                 StringUtils.startsWithIgnoreCase(
                     it.title,
                     text
                 )
             }
-
             adapter!!.setData(temp)
         } catch (e: Exception) {
             e.printStackTrace()
