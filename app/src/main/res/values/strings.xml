@@ -265,7 +265,7 @@
     //CUP
     <string name="IngredientUnit_CUP_SINGLE_NAMING">Cup</string>
     <string name="IngredientUnit_CUP_MULTIPLY_NAMING">Cups</string>
-    <string name="IngredientUnit_CUPL_DISPLAY_NAME">cup</string>
+    <string name="IngredientUnit_CUP_DISPLAY_NAME">cup</string>
 
     //in code
     <string name="ERROR_CREATING_USER" translatable="false">ERROR CREATING USER</string>

@@ -3,7 +3,6 @@ package online.fatbook.fatbookapp.ui.fragment.recipe.create
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -20,6 +19,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
+import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnitRatio
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateAddIngredientsBinding
 import online.fatbook.fatbookapp.ui.adapters.IngredientAdapter
@@ -74,17 +74,15 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
                     count: Int,
                     after: Int
                 ) {
-                    checkData()
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    checkData()
                 }
 
                 override fun afterTextChanged(s: Editable?) {
                     checkData()
                     if (s!!.isEmpty()) {
-                        recipeViewModel.newRecipeAddIngredient.value?.let { setNutritionFacts(it) }
+                        recipeViewModel.newRecipeAddIngredient.value?.let { setDefaultNutritionFacts(it) }
                     } else {
                         recipeViewModel.newRecipeAddIngredient.value?.let { calculateNutrition(it) }
                     }
@@ -110,29 +108,38 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     }
 
     private fun calculateNutrition(ingredient: Ingredient) {
-        val nutritionFacts = ingredient.units!!.find { it.unit!! == selectedUnit }
+        val nutritionFacts = ingredient.units!![0]
+        if (selectedUnit == IngredientUnit.GRAM ||
+            selectedUnit == IngredientUnit.ML
+        ) {
+            if (nutritionFacts.unit == selectedUnit) {
+                val newQtt =
+                    editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
+                val kcal = nutritionFacts.kcal!!
+                val proteins = nutritionFacts.proteins!!
+                val fats = nutritionFacts.fats!!
+                val carbs = nutritionFacts.carbs!!
+                val newKcal = (kcal / 100 * newQtt)
 
-        val newQtt =
-            editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
-        val kcal = nutritionFacts!!.kcal!!
-        val proteins = nutritionFacts.proteins!!
-        val fats = nutritionFacts.fats!!
-        val carbs = nutritionFacts.carbs!!
+                val newProteins = (proteins / 100 * newQtt)
+                val newFats = (fats / 100 * newQtt)
+                val newCarbs = (carbs / 100 * newQtt)
+                textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
+                    String.format(
+                        "%s kcal",
+                        FormatUtils.prettyNutriFak(newKcal)
+                    )
 
-        val newKcal = (kcal / 100 * newQtt)
-        val newProteins = (proteins / 100 * newQtt)
-        val newFats = (fats / 100 * newQtt)
-        val newCarbs = (carbs / 100 * newQtt)
-
-        textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
-            String.format(
-                "%s kcal",
-                FormatUtils.prettyNutriFak(newKcal)
-            )
-        tv_ingredient_proteins_recipe_add_ingredients.text =
-            FormatUtils.prettyNutriFak(newProteins)
-        tv_ingredient_fats_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newFats)
-        tv_ingredient_carbs_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newCarbs)
+                tv_ingredient_proteins_recipe_add_ingredients.text =
+                    FormatUtils.prettyNutriFak(newProteins)
+                tv_ingredient_fats_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newFats)
+                tv_ingredient_carbs_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newCarbs)
+            } else {
+                setDefaultNutritionFacts(ingredient)
+            }
+        } else {
+            setDefaultNutritionFacts(ingredient)
+        }
     }
 
     private fun handleBackPressed() {
@@ -242,21 +249,21 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
         setupUnitPicker(ingredient)
 
         if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()) {
-            setNutritionFacts(ingredient)
+            setDefaultNutritionFacts(ingredient)
         } else {
             calculateNutrition(ingredient)
         }
     }
 
-    private fun setNutritionFacts(ingredient: Ingredient) {
-        val nutritionFacts = ingredient.units!!.find { it.unit!! == selectedUnit }
-        val kcal = nutritionFacts?.kcal.toString()
-        val qtt = nutritionFacts?.amount.toString()
+    private fun setDefaultNutritionFacts(ingredient: Ingredient) {
+        val nutritionFacts = ingredient.units!![0]
+        val kcal = nutritionFacts.kcal.toString()
+        val qtt = nutritionFacts.amount.toString()
         textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
             String.format("%s kcal/%s %s", kcal, qtt, ingredient.units[0].unit)
-        tv_ingredient_proteins_recipe_add_ingredients.text = nutritionFacts?.proteins.toString()
-        tv_ingredient_fats_recipe_add_ingredients.text = nutritionFacts?.fats.toString()
-        tv_ingredient_carbs_recipe_add_ingredients.text = nutritionFacts?.carbs.toString()
+        tv_ingredient_proteins_recipe_add_ingredients.text = nutritionFacts.proteins.toString()
+        tv_ingredient_fats_recipe_add_ingredients.text = nutritionFacts.fats.toString()
+        tv_ingredient_carbs_recipe_add_ingredients.text = nutritionFacts.carbs.toString()
     }
 
     private fun setupUnitPicker(ingredient: Ingredient?) {
@@ -284,7 +291,9 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
                 selectedUnit = units[newVal]
 
                 if (selectedUnit == ingredient.units[0].unit) {
-                    setNutritionFacts(ingredient)
+                    setDefaultNutritionFacts(ingredient)
+                } else {
+                    calculateNutrition(ingredient)
                 }
             }
         } else {
@@ -299,8 +308,7 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
 
     private fun filter(text: String) {
         try {
-            var temp: List<Ingredient> = ArrayList()
-            temp = staticDataViewModel.ingredients.value!!.filter {
+            val temp = staticDataViewModel.ingredients.value!!.filter {
                 StringUtils.startsWithIgnoreCase(
                     it.title,
                     text

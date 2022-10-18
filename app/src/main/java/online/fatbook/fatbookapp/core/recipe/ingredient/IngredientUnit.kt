@@ -39,14 +39,14 @@ enum class IngredientUnit(
         R.string.IngredientUnit_ML_DISPLAY_NAME
     ),
     L(
-        R.string.IngredientUnit_ML_SINGLE_NAMING,
-        R.string.IngredientUnit_ML_MULTIPLY_NAMING,
-        R.string.IngredientUnit_ML_DISPLAY_NAME
+        R.string.IngredientUnit_L_SINGLE_NAMING,
+        R.string.IngredientUnit_L_MULTIPLY_NAMING,
+        R.string.IngredientUnit_L_DISPLAY_NAME
     ),
     CUP(
-        R.string.IngredientUnit_ML_SINGLE_NAMING,
-        R.string.IngredientUnit_ML_MULTIPLY_NAMING,
-        R.string.IngredientUnit_ML_DISPLAY_NAME
+        R.string.IngredientUnit_CUP_SINGLE_NAMING,
+        R.string.IngredientUnit_CUP_MULTIPLY_NAMING,
+        R.string.IngredientUnit_CUP_DISPLAY_NAME
     );
 
     fun getSingleNaming(context: Context): String {

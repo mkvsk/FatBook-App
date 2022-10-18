@@ -174,7 +174,7 @@
     <string name="IngredientUnit_L_DISPLAY_NAME">л</string>
     <string name="IngredientUnit_CUP_SINGLE_NAMING">Стакан</string>
     <string name="IngredientUnit_CUP_MULTIPLY_NAMING">Стаканы</string>
-    <string name="IngredientUnit_CUPL_DISPLAY_NAME">ст</string>
+    <string name="IngredientUnit_CUP_DISPLAY_NAME">ст</string>
     <string name="menu_user_profile_app_settings">Настройки приложения</string>
     <string name="menu_user_profile_edit_user_profile">Редактировать профиль</string>
     <string name="menu_user_profile_users_badges">Мои значки</string>
