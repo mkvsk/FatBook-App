@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
 import androidx.transition.AutoTransition
@@ -47,7 +48,7 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
                 .navigate(R.id.action_go_to_add_ingredient_from_second_stage)
         }
 
-        button_add_cooking_step.setOnClickListener {
+        cardview_add_cooking_step.setOnClickListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_create_cooking_step_from_second_stage)
         }

@@ -39,7 +39,7 @@
     <color name="btn_disabled_color_auth">#ECEFF1</color>
     <color name="btn_disabled_color_fragments">#ECEFF1</color>
     <color name="btn_disabled_color_text">#B0BEC5</color>
-    <color name="btn_pressed_color">#FFFFFFFF</color>
+    <color name="btn_pressed_color">#33FF4081</color>
 
     <color name="dialogErrorMess_text">#FF4081</color>
 
@@ -295,6 +295,15 @@
         <item name="android:src">@drawable/ic_up</item>
         <item name="fabCustomSize">@dimen/round_btn_edit_userprofile_w_h</item>
         <item name="tint">@color/ic_up_color</item>
+    </style>
+
+    <style name="floatingBtnSaveNewRecipe" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="backgroundTint">@color/pink_a200</item>
+        <item name="elevation">4dp</item>
+        <item name="android:translationZ">2dp</item>
+        <item name="android:src">@drawable/ic_save_new_recipe</item>
+        <item name="fabCustomSize">@dimen/round_btn_save_new_recipe</item>
+        <item name="tint">@color/white</item>
     </style>
 
     <style name="txtWelcome">

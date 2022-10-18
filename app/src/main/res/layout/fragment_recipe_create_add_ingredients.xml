@@ -115,7 +115,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
+                    android:fadingEdge="horizontal"
+                    android:fadingEdgeLength="50dp"
                     android:overScrollMode="never"
+                    android:requiresFadingEdge="vertical"
                     app:fastScrollEnabled="true"
                     app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
                     app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
@@ -124,21 +127,18 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:fadingEdge="horizontal"
-                    android:fadingEdgeLength="50dp"
-                    android:requiresFadingEdge="vertical"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:listitem="@layout/rv_ingredient" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/imageview_bottom_gradient_recipe_add_ingredients"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="15dp"-->
-<!--                    android:src="@drawable/card_view_gradient_with_shape"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintRight_toLeftOf="parent"-->
-<!--                    app:layout_constraintRight_toRightOf="parent" />-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/imageview_bottom_gradient_recipe_add_ingredients"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginBottom="15dp"-->
+                <!--                    android:src="@drawable/card_view_gradient_with_shape"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintRight_toLeftOf="parent"-->
+                <!--                    app:layout_constraintRight_toRightOf="parent" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -217,7 +217,7 @@
                         android:hint="@string/hint_quantity"
                         android:inputType="numberDecimal"
                         android:lines="1"
-                        android:maxLength="8"
+                        android:maxLength="5"
                         android:textAlignment="center"
                         android:textAppearance="@style/recipeCreateEditTextStyle"
                         android:translationZ="1dp" />
@@ -265,6 +265,8 @@
                     android:layout_marginEnd="@dimen/cards_margin_end"
                     android:layout_marginBottom="10dp"
                     android:backgroundTint="@color/theme_primary_bgr"
+                    android:translationZ="2dp"
+                    app:cardElevation="4dp"
                     app:cardPreventCornerOverlap="false"
                     app:contentPaddingBottom="5dp"
                     app:contentPaddingLeft="10dp"
@@ -346,6 +348,7 @@
                             android:id="@+id/tv_ingredient_proteins_recipe_add_ingredients"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:maxLength="5"
                             android:text="@string/no_data_dots"
                             android:textAppearance="@style/recipeCreateTitlesTextStyle"
                             android:textColor="@color/main_text"
@@ -356,6 +359,7 @@
                             android:id="@+id/tv_ingredient_fats_recipe_add_ingredients"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:maxLength="5"
                             android:text="@string/no_data_dots"
                             android:textAppearance="@style/recipeCreateTitlesTextStyle"
                             android:textColor="@color/main_text"
@@ -366,6 +370,7 @@
                             android:id="@+id/tv_ingredient_carbs_recipe_add_ingredients"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:maxLength="5"
                             android:text="@string/no_data_dots"
                             android:textAppearance="@style/recipeCreateTitlesTextStyle"
                             android:textColor="@color/main_text"
