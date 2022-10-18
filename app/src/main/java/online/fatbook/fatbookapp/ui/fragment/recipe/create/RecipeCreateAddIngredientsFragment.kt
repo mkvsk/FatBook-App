@@ -37,7 +37,7 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private var adapter: IngredientAdapter? = null
-    private var units: List<IngredientUnit> = ArrayList()
+    private var units: ArrayList<IngredientUnit> = ArrayList()
 
     private var selectedUnit: IngredientUnit? = null
     private var selectedQtt: Double = 0.0
@@ -268,14 +268,12 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
 
             when (currentUnit) {
                 IngredientUnit.GRAM -> {
-                    units as ArrayList
-                    (units as java.util.ArrayList<IngredientUnit>).remove(currentUnit)
-                    (units as java.util.ArrayList<IngredientUnit>)[0] = currentUnit
+                    units.remove(currentUnit)
+                    units[0] = currentUnit
                 }
                 IngredientUnit.ML -> {
-                    units as ArrayList
-                    (units as java.util.ArrayList<IngredientUnit>).remove(currentUnit)
-                    (units as java.util.ArrayList<IngredientUnit>)[0] = currentUnit
+                    units.remove(currentUnit)
+                    units[0] = currentUnit
                 }
             }
             unitData = units.map { it.getMultiplyNaming(requireContext()) }.toTypedArray()
