@@ -15,20 +15,20 @@
         app:maxImageSize="15dp" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardview_rv_cooking_step"
+        android:id="@+id/cardview_cooking_step"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="3dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginVertical="8dp"
-        android:elevation="6dp"
+        app:cardElevation="4dp"
+        android:translationZ="2dp"
         app:contentPadding="5dp"
         android:backgroundTint="@color/theme_primary_bgr"
-        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize15Percent">
+        style="@style/myMaterialCardAdditionalInfo">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="7dp">
+            android:layout_height="match_parent">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageview_photo_rv_cooking_step"

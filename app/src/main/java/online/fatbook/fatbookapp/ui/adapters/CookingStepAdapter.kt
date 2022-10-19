@@ -35,40 +35,31 @@ class CookingStepAdapter :
         }
     }
 
-    override fun getItemCount(): Int {
-        return data.size
-    }
-
     fun setClickListener(listener: OnCookingStepClickListener) {
         this.listener = listener
     }
 
+    override fun getItemCount(): Int {
+        return data.size
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: CookingStep?) {
-            itemView.textview_description_rv_cooking_step.text = value!!.description.toString()
 
-//            if (selectedItems!!.contains(bindingAdapterPosition)) {
-//                selectItem(itemView.cardview_rv_recipe_methods_categories_items)
-//            } else {
-//                unselectItem(itemView.cardview_rv_recipe_methods_categories_items)
+            itemView.textview_description_rv_cooking_step.text = value!!.description
+
+//            itemView.cardview_cooking_step.isClickable
+//            itemView.cardview_cooking_step.setOnClickListener {
+//                listener!!.onCookingStepClick(
+//                    data.indexOf(selectedStep),
+//                    bindingAdapterPosition,
+//                    value
+//                )
 //            }
-//
-//            itemView.textview_rv_recipe_methods_categories_items.text = value!!.title
-//
-//            itemView.cardview_rv_recipe_methods_categories_items.setOnClickListener {
-//                if (value is CookingMethod) {
-//                    listener?.onItemClick(data[bindingAdapterPosition])
-//                } else {
-//                    if (!itemView.textview_rv_recipe_methods_categories_items.isSelected) {
-//                        selectItem(itemView.cardview_rv_recipe_methods_categories_items)
-//                        itemView.textview_rv_recipe_methods_categories_items.isSelected = true
-//                    } else {
-//                        unselectItem(itemView.cardview_rv_recipe_methods_categories_items)
-//                        itemView.textview_rv_recipe_methods_categories_items.isSelected = false
-//                    }
-//                    listener?.onItemClickChoose(data[bindingAdapterPosition])
-//                }
-//            }
+
+            itemView.button_remove_rv_cooking_step.setOnClickListener {
+                listener!!.onRecipeCookingStepDelete(bindingAdapterPosition)
+            }
         }
     }
 }

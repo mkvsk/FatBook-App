@@ -627,10 +627,10 @@
 
     <style name="ShapeAppearanceOverlay_card_custom_corners_additional_info" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">20dp</item>
-        <item name="cornerSizeTopLeft">20dp</item>
-        <item name="cornerSizeBottomRight">20dp</item>
-        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeTopRight">15dp</item>
+        <item name="cornerSizeTopLeft">15dp</item>
+        <item name="cornerSizeBottomRight">15dp</item>
+        <item name="cornerSizeBottomLeft">15dp</item>
     </style>
     ///v1.0.0
 
