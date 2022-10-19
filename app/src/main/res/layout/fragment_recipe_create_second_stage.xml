@@ -9,16 +9,16 @@
 
     <include layout="@layout/include_progress_overlay" />
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/button_save_new_recipe"-->
-<!--        android:layout_width="56dp"-->
-<!--        android:layout_height="56dp"-->
-<!--        style="@style/floatingBtnSaveNewRecipe"-->
-<!--        android:visibility="visible"-->
-<!--        app:maxImageSize="32dp"-->
-<!--        android:layout_gravity="bottom|right"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:layout_marginBottom="20dp" />-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_save_new_recipe"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            style="@style/floatingBtnSaveNewRecipe"
+            android:visibility="visible"
+            app:maxImageSize="32dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_recipe_create_2_stage"
@@ -120,8 +120,7 @@
                         android:layout_height="20dp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/button_add_ingredient_recipe_create_2_stage"
-                        />
+                        app:layout_constraintTop_toBottomOf="@id/button_add_ingredient_recipe_create_2_stage" />
 
                     <TextView
                         android:id="@+id/textview_nutrition_facts_title_recipe_create_2_stage"
@@ -144,9 +143,9 @@
                         android:layout_marginEnd="@dimen/cards_margin_end"
                         android:layout_marginBottom="10dp"
                         android:backgroundTint="@color/theme_primary_bgr"
+                        android:translationZ="2dp"
                         android:visibility="visible"
                         app:cardElevation="4dp"
-                        android:translationZ="2dp"
                         app:cardPreventCornerOverlap="false"
                         app:contentPaddingBottom="5dp"
                         app:contentPaddingLeft="10dp"
@@ -176,7 +175,6 @@
                                 android:id="@+id/textview_portion_kcals_qtt_recipe_create_2_stage"
                                 android:layout_width="80dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/no_data_dots"
                                 android:autoSizeMaxTextSize="15sp"
                                 android:autoSizeMinTextSize="9sp"
                                 android:autoSizeStepGranularity="1sp"
@@ -185,6 +183,7 @@
                                 android:gravity="center_vertical|center"
                                 android:lines="2"
                                 android:maxLength="20"
+                                android:text="@string/no_data_dots"
                                 android:textAlignment="gravity"
                                 android:textColor="@color/main_text"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -228,8 +227,8 @@
                                 android:id="@+id/tv_qtt_proteins"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/no_data_dots"
                                 android:maxLength="5"
+                                android:text="@string/no_data_dots"
                                 android:textAppearance="@style/recipeCreateTitlesTextStyle"
                                 android:textColor="@color/main_text"
                                 app:layout_constraintBottom_toBottomOf="@id/textview_portion_kcals_qtt_recipe_create_2_stage"
@@ -239,8 +238,8 @@
                                 android:id="@+id/tv_qtt_fats"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/no_data_dots"
                                 android:maxLength="5"
+                                android:text="@string/no_data_dots"
                                 android:textAppearance="@style/recipeCreateTitlesTextStyle"
                                 android:textColor="@color/main_text"
                                 app:layout_constraintBottom_toBottomOf="@id/textview_portion_kcals_qtt_recipe_create_2_stage"
@@ -250,8 +249,8 @@
                                 android:id="@+id/tv_qtt_carbs"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/no_data_dots"
                                 android:maxLength="5"
+                                android:text="@string/no_data_dots"
                                 android:textAppearance="@style/recipeCreateTitlesTextStyle"
                                 android:textColor="@color/main_text"
                                 app:layout_constraintBottom_toBottomOf="@id/textview_portion_kcals_qtt_recipe_create_2_stage"
@@ -276,17 +275,14 @@
                 app:contentPaddingBottom="10dp"
                 app:contentPaddingLeft="@dimen/cards_margin_start"
                 app:contentPaddingTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardview_right_recipe_create_2_stage">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/textview_steps_title_recipe_create_2_stage"
@@ -306,7 +302,6 @@
                         android:clipToPadding="false"
                         android:overScrollMode="never"
                         android:visibility="visible"
-                        tools:itemCount="1"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@id/textview_steps_title_recipe_create_2_stage"
                         tools:listitem="@layout/rv_cooking_step_preview" />
@@ -316,19 +311,17 @@
                         style="@style/myMaterialCardAdditionalInfo"
                         android:layout_width="match_parent"
                         android:layout_height="90dp"
-                        android:layout_marginVertical="8dp"
                         android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="8dp"
+                        android:clickable="true"
+                        android:translationZ="2dp"
+                        app:cardElevation="4dp"
                         app:cardPreventCornerOverlap="false"
                         app:contentPadding="5dp"
-                        app:cardElevation="4dp"
-                        android:translationZ="2dp"
-                        android:clickable="true"
-                        app:rippleColor="@color/colorPrimaryRipple"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="20dp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rv_steps_recipe_create_2_stage">
+                        app:layout_constraintTop_toBottomOf="@id/rv_steps_recipe_create_2_stage"
+                        app:rippleColor="@color/colorPrimaryRipple">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -351,12 +344,12 @@
                                 style="@style/recipeCreateStepDescriptionPreview"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_marginVertical="5dp"
                                 android:background="@null"
                                 android:ellipsize="end"
                                 android:gravity="start"
                                 android:maxLines="6"
                                 android:paddingHorizontal="5dp"
-                                android:layout_marginVertical="5dp"
                                 android:text="Add description..."
                                 android:textColor="@color/hint_text"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -367,6 +360,15 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/tv_empty2"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/cardview_add_cooking_step"
+                        />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
