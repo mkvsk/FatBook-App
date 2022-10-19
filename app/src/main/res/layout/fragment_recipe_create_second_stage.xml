@@ -312,7 +312,7 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@id/textview_steps_title_recipe_create_2_stage"
                         tools:itemCount="1"
-                        tools:listitem="@layout/rv_cooking_step_recipe_create_stage_2_template" />
+                        tools:listitem="@layout/rv_cooking_step_preview" />
 
 
                     <com.google.android.material.card.MaterialCardView
