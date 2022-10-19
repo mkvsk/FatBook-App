@@ -1,16 +1,17 @@
 package online.fatbook.fatbookapp.ui.fragment.recipe.create
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
 import androidx.navigation.fragment.NavHostFragment
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_recipe_create_second_stage.*
-import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateSecondStageBinding
@@ -59,6 +60,26 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
         ingredientsAdapter!!.setData(recipeViewModel.newRecipe.value!!.ingredients)
         cookingStepsAdapter!!.setData(recipeViewModel.newRecipe.value!!.steps)
+
+        recipeViewModel.selectedCookingStep.value = null
+
+        nsv_recipe_create_2_stage.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+//            showButtonUp(scrollY)
+
+            if (scrollY > 200) {
+                floating_button_up_recipe_create.visibility = View.VISIBLE
+            } else {
+                floating_button_up_recipe_create.visibility = View.GONE
+            }
+
+            floating_button_up_recipe_create.setOnClickListener {
+                nsv_recipe_create_2_stage.post{
+                    nsv_recipe_create_2_stage.smoothScrollTo(0, 0)
+                }
+            }
+
+            Log.d("SCROLL Y:", "$scrollY")
+        })
     }
 
     private fun setupIngredientsAdapter() {
@@ -81,14 +102,19 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         rv.adapter = cookingStepsAdapter
     }
 
-    override fun onCookingStepClick(selectedStep: Int, step: Int, value: CookingStep) {
-
+    override fun onCookingStepClick(value: CookingStep, itemPosition: Int) {
+//        TODO edit step
+        Log.d("SELECTED STEP:", "$value")
+        recipeViewModel.selectedCookingStep.value = value
+        recipeViewModel.selectedCookingStepPosition.value = itemPosition
+        NavHostFragment.findNavController(this)
+            .navigate(R.id.action_go_to_create_cooking_step_from_second_stage)
     }
 
-    override fun onRecipeCookingStepDelete(selectedItem: Int) {
-        TransitionManager.go(Scene(rv_card_recipe_preview), AutoTransition())
-        recipeViewModel.newRecipe.value!!.steps!!.removeAt(selectedItem)
-        cookingStepsAdapter!!.notifyItemRemoved(selectedItem)
+    override fun onRecipeCookingStepDelete(itemPosition: Int) {
+        TransitionManager.go(Scene(rv_steps_recipe_create_2_stage), AutoTransition())
+        recipeViewModel.newRecipe.value!!.steps!!.removeAt(itemPosition)
+        cookingStepsAdapter!!.notifyItemRemoved(itemPosition)
     }
 
 

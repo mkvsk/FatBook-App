@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import kotlinx.android.synthetic.main.rv_cooking_step_preview.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
+import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 
 class CookingStepAdapter :
     RecyclerView.Adapter<CookingStepAdapter.ViewHolder>(), BindableAdapter<CookingStep> {
@@ -59,6 +61,12 @@ class CookingStepAdapter :
 
             itemView.button_remove_rv_cooking_step.setOnClickListener {
                 listener!!.onRecipeCookingStepDelete(bindingAdapterPosition)
+
+                Log.d("REMOVE STEP:", "remover step number= ${value.stepNumber}")
+            }
+
+            itemView.cardview_cooking_step.setOnClickListener {
+                listener!!.onCookingStepClick(value, bindingAdapterPosition)
             }
         }
     }

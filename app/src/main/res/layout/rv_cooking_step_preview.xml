@@ -23,6 +23,8 @@
         app:cardElevation="4dp"
         android:translationZ="2dp"
         app:contentPadding="5dp"
+        android:clickable="true"
+        app:rippleColor="@color/colorPrimaryRipple"
         android:backgroundTint="@color/theme_primary_bgr"
         style="@style/myMaterialCardAdditionalInfo">
 
@@ -47,7 +49,7 @@
                 style="@style/recipeCreateStepDescriptionPreview"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                android:textAlignment="viewStart"
                 android:ellipsize="end"
                 android:maxLines="6"
                 android:paddingHorizontal="5dp"

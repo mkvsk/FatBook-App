@@ -9,16 +9,16 @@
 
     <include layout="@layout/include_progress_overlay" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_save_new_recipe"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            style="@style/floatingBtnSaveNewRecipe"
-            android:visibility="visible"
-            app:maxImageSize="32dp"
-            android:layout_gravity="bottom|right"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_button_up_recipe_create"
+        style="@style/floatingBtnFocusOnTab"
+        android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
+        android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
+        android:layout_gravity="bottom|right"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        app:maxImageSize="16dp" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_recipe_create_2_stage"
@@ -267,9 +267,10 @@
                 android:id="@+id/cardview_left_recipe_create_2_stage"
                 style="@style/myMaterialCardLeft"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/elements_spacing_recipe_create"
                 android:layout_marginEnd="@dimen/cards_margin_end"
+                android:minHeight="700dp"
                 app:cardElevation="6dp"
                 app:cardPreventCornerOverlap="false"
                 app:contentPaddingBottom="10dp"
@@ -367,8 +368,7 @@
                         android:layout_height="20dp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cardview_add_cooking_step"
-                        />
+                        app:layout_constraintTop_toBottomOf="@id/cardview_add_cooking_step" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

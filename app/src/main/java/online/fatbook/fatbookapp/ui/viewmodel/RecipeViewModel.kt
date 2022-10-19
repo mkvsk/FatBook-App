@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
+import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
@@ -23,4 +24,7 @@ class RecipeViewModel : ViewModel() {
 
     var newRecipeAddIngredient = MutableLiveData<Ingredient?>()
     var newRecipeAddRecipeIngredient = MutableLiveData<RecipeIngredient?>()
+
+    var selectedCookingStep = MutableLiveData<CookingStep?>()
+    var selectedCookingStepPosition = MutableLiveData<Int?>()
 }
