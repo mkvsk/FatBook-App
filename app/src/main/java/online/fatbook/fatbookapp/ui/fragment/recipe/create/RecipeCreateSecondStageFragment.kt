@@ -85,10 +85,10 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     }
 
     private fun checkSteps(currentStepsQtt: Int) {
-        if (currentStepsQtt == 3) {
+        if (currentStepsQtt == maxStepsQtt) {
             cardview_add_cooking_step.visibility = View.GONE
         }
-        if (currentStepsQtt < 3) {
+        if (currentStepsQtt < maxStepsQtt) {
             TransitionManager.go(Scene(cardview_add_cooking_step), AutoTransition())
             cardview_add_cooking_step.visibility = View.VISIBLE
         }
