@@ -34,6 +34,9 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     private var ingredientsAdapter: RecipeIngredientAdapter? = null
     private var cookingStepsAdapter: CookingStepAdapter? = null
 
+    private var currentStepsQtt: Int? = 0
+    private var maxStepsQtt = 10
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +48,9 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        currentStepsQtt = recipeViewModel.newRecipe.value!!.steps!!.size
+        checkSteps(currentStepsQtt!!)
+
         button_add_ingredient_recipe_create_2_stage.setOnClickListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_add_ingredient_from_second_stage)
@@ -54,7 +60,6 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_create_cooking_step_from_second_stage)
         }
-
         setupIngredientsAdapter()
         setupCookingStepsAdapter()
 
@@ -63,23 +68,32 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
         recipeViewModel.selectedCookingStep.value = null
 
-        nsv_recipe_create_2_stage.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-//            showButtonUp(scrollY)
+        nsv_recipe_create_2_stage.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
 
-            if (scrollY > 200) {
+            if (scrollY > 250) {
                 floating_button_up_recipe_create.visibility = View.VISIBLE
             } else {
                 floating_button_up_recipe_create.visibility = View.GONE
             }
 
             floating_button_up_recipe_create.setOnClickListener {
-                nsv_recipe_create_2_stage.post{
+                nsv_recipe_create_2_stage.post {
                     nsv_recipe_create_2_stage.smoothScrollTo(0, 0)
                 }
             }
-
-            Log.d("SCROLL Y:", "$scrollY")
         })
+    }
+
+    private fun checkSteps(currentStepsQtt: Int) {
+        if (currentStepsQtt == 3) {
+            cardview_add_cooking_step.visibility = View.GONE
+        }
+        if (currentStepsQtt < 3) {
+            TransitionManager.go(Scene(cardview_add_cooking_step), AutoTransition())
+            cardview_add_cooking_step.visibility = View.VISIBLE
+        }
+        textview_steps_title_recipe_create_2_stage.text =
+            String.format("Cooking steps: (%s/%s)", currentStepsQtt, maxStepsQtt)
     }
 
     private fun setupIngredientsAdapter() {
@@ -103,8 +117,6 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     }
 
     override fun onCookingStepClick(value: CookingStep, itemPosition: Int) {
-//        TODO edit step
-        Log.d("SELECTED STEP:", "$value")
         recipeViewModel.selectedCookingStep.value = value
         recipeViewModel.selectedCookingStepPosition.value = itemPosition
         NavHostFragment.findNavController(this)
@@ -115,7 +127,18 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         TransitionManager.go(Scene(rv_steps_recipe_create_2_stage), AutoTransition())
         recipeViewModel.newRecipe.value!!.steps!!.removeAt(itemPosition)
         cookingStepsAdapter!!.notifyItemRemoved(itemPosition)
+
+        if (currentStepsQtt != 0) {
+            currentStepsQtt = recipeViewModel.newRecipe.value!!.steps!!.size
+            checkSteps(currentStepsQtt!!)
+        }
     }
 
+    override fun onPause() {
+        super.onPause()
+    }
 
+    override fun onResume() {
+        super.onResume()
+    }
 }
