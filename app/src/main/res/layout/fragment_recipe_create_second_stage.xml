@@ -370,11 +370,23 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cardview_add_cooking_step" />
 
+                    <!--                    <androidx.appcompat.widget.AppCompatButton-->
+                    <!--                        android:id="@+id/qqqq"-->
+                    <!--                        style="@style/buttons_in_fragments_style"-->
+                    <!--                        android:layout_width="@dimen/btn_main_w"-->
+                    <!--                        android:layout_height="@dimen/btn_main_h"-->
+                    <!--                        android:layout_marginTop="10dp"-->
+                    <!--                        android:background="@drawable/selector_btn_in_fragments"-->
+                    <!--                        android:elevation="4dp"-->
+                    <!--                        android:enabled="true"-->
+                    <!--                        android:text="Add description"-->
+                    <!--                        android:translationZ="2dp"-->
+                    <!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+                    <!--                        app:layout_constraintRight_toRightOf="parent"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/tv_empty2" />-->
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </com.google.android.material.card.MaterialCardView>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

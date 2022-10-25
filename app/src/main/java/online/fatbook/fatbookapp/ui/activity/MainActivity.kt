@@ -10,10 +10,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
-import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.*
 import online.fatbook.fatbookapp.util.Constants.FEED_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
@@ -28,12 +25,14 @@ class MainActivity : AppCompatActivity() {
     private var staticDataViewModel: StaticDataViewModel? = null
     private var authViewModel: AuthenticationViewModel? = null
     private var navController: NavController? = null
+    private var searchViewModel : SearchViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         recipeViewModel = ViewModelProvider(this)[RecipeViewModel::class.java]
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         staticDataViewModel = ViewModelProvider(this)[StaticDataViewModel::class.java]
+        searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
 
         authViewModel = ViewModelProvider(this)[AuthenticationViewModel::class.java]
 

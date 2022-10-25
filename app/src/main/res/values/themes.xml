@@ -30,6 +30,7 @@
 
     <color name="main_text">#263238</color>
     <color name="hint_text">#B0BEC5</color>
+    <color name="sheet_line_tint">#ECEFF1</color>
     <color name="start_fragments_bgr">#FFFFFFFF</color>
     <color name="ic_color">#263238</color>
     <color name="editText_catdialog_bgr">#ECEFF1</color>
