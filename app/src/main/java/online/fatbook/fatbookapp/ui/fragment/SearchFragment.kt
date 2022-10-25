@@ -1,12 +1,18 @@
 package online.fatbook.fatbookapp.ui.fragment
 
+import android.R
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.AlignContent
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_search.*
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -17,6 +23,7 @@ import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
+
 
 class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItemClickListener {
 
@@ -37,6 +44,16 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (searchViewModel.categories.value.isNullOrEmpty()) {
+            searchViewModel.categories.value = ArrayList()
+        }
+        if (searchViewModel.methods.value.isNullOrEmpty()) {
+            searchViewModel.methods.value = ArrayList()
+        }
+        if (searchViewModel.difficulty.value.isNullOrEmpty()) {
+            searchViewModel.difficulty.value = ArrayList()
+        }
 
         loadCategories()
         setupCategoriesAdapter()
@@ -95,6 +112,11 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
 
     private fun setupMethodsAdapter() {
         val rv = rv_cooking_methods_search
+        val layoutManager = FlexboxLayoutManager(context)
+        layoutManager.flexDirection = FlexDirection.ROW
+        layoutManager.flexWrap = FlexWrap.WRAP
+        layoutManager.justifyContent = JustifyContent.FLEX_START
+        rv.layoutManager = layoutManager
         adapterMethods = SearchAdapter()
         adapterMethods!!.setClickListener(this)
         rv.adapter = adapterMethods
@@ -130,6 +152,11 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
 
     private fun setupCategoriesAdapter() {
         val rv = rv_cooking_categories_search
+        val layoutManager = FlexboxLayoutManager(context)
+        layoutManager.flexDirection = FlexDirection.ROW
+        layoutManager.flexWrap = FlexWrap.WRAP
+        layoutManager.justifyContent = JustifyContent.FLEX_START
+        rv.layoutManager = layoutManager
         adapterCategories = SearchAdapter()
         adapterCategories!!.setClickListener(this)
         rv.adapter = adapterCategories
@@ -143,24 +170,28 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 
-    override fun onItemClick(item: StaticDataObject) {
-    }
+    override fun onItemClick(item: StaticDataObject) {}
 
     override fun onItemClickChoose(item: StaticDataObject) {
-//        if (recipeViewModel.newRecipeCookingCategories.value!!.contains(item as CookingCategory)) {
-//            recipeViewModel.newRecipeCookingCategories.value!!.remove(item)
-//        } else {
-//            recipeViewModel.newRecipeCookingCategories.value!!.add(item)
-//        }
 
-        if (item is CookingCategory) {
-//            searchViewModel.categories.value!!.contains(item as CookingCategory)
-        }
-        if (item is CookingMethod) {
-
-        }
-        if (item is CookingDifficulty) {
-
+        when (item) {
+            is CookingCategory -> {
+                if (searchViewModel.categories.value!!.contains(item)) {
+                    searchViewModel.categories.value!!.remove(item)
+                } else {
+                    searchViewModel.categories.value!!.add(item)
+                }
+            }
+            is CookingMethod -> {
+                if (searchViewModel.methods.value!!.contains(item)) {
+                    searchViewModel.methods.value!!.remove(item)
+                } else {
+                    searchViewModel.methods.value!!.add(item)
+                }
+            }
+//            is CookingDifficulty -> {
+//
+//            }
         }
     }
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.view.*
@@ -55,9 +56,9 @@ class SearchAdapter :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: StaticDataObject?) {
             if (selectedItems!!.contains(bindingAdapterPosition)) {
-                selectItem(itemView.cardview_rv_search)
+                selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
             } else {
-                unselectItem(itemView.cardview_rv_search)
+                unselectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
             }
 
             itemView.textview_item_title_rv_search.text = value!!.title
@@ -65,11 +66,11 @@ class SearchAdapter :
             itemView.cardview_rv_search.setOnClickListener {
 
                 if (!itemView.textview_item_title_rv_search.isSelected) {
-                    selectItem(itemView.cardview_rv_search)
-                    itemView.textview_item_title_rv_search.isSelected = true
+                    selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
                 } else {
-                    unselectItem(itemView.cardview_rv_search)
-                    itemView.textview_item_title_rv_search.isSelected = false
+                    unselectItem(
+                        itemView.cardview_rv_search, itemView.textview_item_title_rv_search
+                    )
                 }
                 listener?.onItemClickChoose(data[bindingAdapterPosition])
             }
@@ -77,15 +78,13 @@ class SearchAdapter :
     }
 }
 
-private fun selectItem(cardView: MaterialCardView) {
-    cardView.isChecked = true
-    cardView.isSelected = true
-    cardView.strokeWidth = 5
+private fun selectItem(cardView: MaterialCardView, textView: TextView) {
+    cardView.setBackgroundResource(R.drawable.select_search_item_round_corner)
+    textView.isSelected = true
 }
 
-private fun unselectItem(cardView: MaterialCardView) {
-    cardView.isChecked = false
-    cardView.isSelected = false
-    cardView.strokeWidth = 0
+private fun unselectItem(cardView: MaterialCardView, textView: TextView) {
+    cardView.setBackgroundResource(R.drawable.unselect_search_item_round_corner)
+    textView.isSelected = false
 }
 

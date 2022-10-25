@@ -619,6 +619,10 @@
         <item name="cornerSizeBottomLeft">20dp</item>
     </style>
 
+    <color name="search_item_not_selected_color">#263238</color>
+    <color name="search_item_selected_color_text">#FFFFFF</color>
+    <color name="search_item_not_selected_color_text">#263238</color>
+
     <style name="myMaterialCardAdditionalInfo" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_primary_bgr</item>
         <item name="shapeAppearanceOverlay">

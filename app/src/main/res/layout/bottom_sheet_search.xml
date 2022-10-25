@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sheet_search"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="2dp"
     android:background="@drawable/bottom_sheet_search_bgr"
     android:elevation="4dp"
-    android:layout_marginHorizontal="2dp"
     android:orientation="vertical"
     app:behavior_peekHeight="40dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -19,156 +19,172 @@
         android:scaleType="centerCrop"
         android:src="@drawable/sheet_lines" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingVertical="20dp">
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:fadingEdge="horizontal"
+        android:fadingEdgeLength="50dp"
+        android:overScrollMode="never"
+        android:requiresFadingEdge="vertical"
+        app:fastScrollEnabled="true"
+        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
+        app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
+        app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
+        app:fastScrollVerticalTrackDrawable="@drawable/line_drawable">
 
-        <TextView
-            android:id="@+id/textview_title_cooking_method_search"
-            style="@style/recipeCreateTitlesTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_cooking_method_small"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/main_text"
-            android:text="Cooking method:"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_cooking_methods_search"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_title_cooking_method_search"
-            app:spanCount="3"
-            tools:listitem="@layout/rv_search" />
+            android:layout_height="match_parent"
+            android:paddingVertical="20dp">
 
-        <TextView
-            android:id="@+id/textview_title_category_search"
-            style="@style/recipeCreateTitlesTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_category_small"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/main_text"
-            android:text="Category:"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_cooking_methods_search" />
+            <TextView
+                android:id="@+id/textview_title_cooking_method_search"
+                style="@style/recipeCreateTitlesTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_cooking_method_small"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/main_text"
+                android:text="Cooking method:"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_cooking_categories_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_title_category_search"
-            app:spanCount="3"
-            tools:listitem="@layout/rv_search" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cooking_methods_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_title_cooking_method_search"
+                app:spanCount="4"
+                tools:listitem="@layout/rv_search" />
 
-        <TextView
-            android:id="@+id/textview_title_difficulty_search"
-            style="@style/recipeCreateTitlesTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_difficulty_small"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/main_text"
-            android:text="Difficulty:"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_cooking_categories_search" />
+            <TextView
+                android:id="@+id/textview_title_category_search"
+                style="@style/recipeCreateTitlesTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_category_small"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/main_text"
+                android:text="Category:"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_cooking_methods_search" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_difficulty_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_title_difficulty_search"
-            app:spanCount="3"
-            tools:itemCount="3"
-            tools:listitem="@layout/rv_search" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cooking_categories_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_title_category_search"
+                app:spanCount="4"
+                tools:listitem="@layout/rv_search" />
 
-        <TextView
-            android:id="@+id/textview_title_kcals_search"
-            style="@style/recipeCreateTitlesTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_kcals_small"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/main_text"
-            android:text="Set calories limit per portion: "
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_difficulty_search" />
+            <TextView
+                android:id="@+id/textview_title_difficulty_search"
+                style="@style/recipeCreateTitlesTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_difficulty_small"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/main_text"
+                android:text="Difficulty:"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_cooking_categories_search" />
 
-        <TextView
-            android:id="@+id/textview_kcals_limit_setted_search"
-            style="@style/recipeCreateTitlesTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="0"
-            android:textColor="@color/pink_a200"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/textview_title_kcals_search"
-            app:layout_constraintLeft_toRightOf="@id/textview_title_kcals_search" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_difficulty_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_title_difficulty_search"
+                app:spanCount="3"
+                tools:itemCount="3"
+                tools:listitem="@layout/rv_search" />
 
-        <SeekBar
-            android:id="@+id/seekbar_kcals_limit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="15dp"
-            android:max="1500"
-            android:min="0"
-            android:progress="25"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_title_kcals_search" />
+            <TextView
+                android:id="@+id/textview_title_kcals_search"
+                style="@style/recipeCreateTitlesTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_kcals_small"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/main_text"
+                android:text="Set calories limit per portion: "
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_difficulty_search" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_apply_search"
-            style="@style/buttons_in_fragments_style"
-            android:layout_width="@dimen/btn_main_w"
-            android:layout_height="@dimen/btn_main_h"
-            android:layout_marginVertical="@dimen/btn_spacing"
-            android:background="@drawable/selector_btn_in_fragments"
-            android:elevation="4dp"
-            android:enabled="true"
-            android:text="Apply"
-            android:translationZ="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/seekbar_kcals_limit" />
+            <TextView
+                android:id="@+id/textview_kcals_limit_setted_search"
+                style="@style/recipeCreateTitlesTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0"
+                android:textColor="@color/pink_a200"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/textview_title_kcals_search"
+                app:layout_constraintLeft_toRightOf="@id/textview_title_kcals_search" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <SeekBar
+                android:id="@+id/seekbar_kcals_limit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="15dp"
+                android:max="1500"
+                android:min="0"
+                android:progress="25"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_title_kcals_search" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_apply_search"
+                style="@style/buttons_in_fragments_style"
+                android:layout_width="@dimen/btn_main_w"
+                android:layout_height="@dimen/btn_main_h"
+                android:layout_marginVertical="@dimen/btn_spacing"
+                android:background="@drawable/selector_btn_in_fragments"
+                android:elevation="4dp"
+                android:enabled="true"
+                android:text="Apply"
+                android:translationZ="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seekbar_kcals_limit" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>
