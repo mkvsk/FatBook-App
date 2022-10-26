@@ -7,9 +7,9 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="2dp"
     android:background="@drawable/bottom_sheet_search_bgr"
-    android:elevation="4dp"
+    android:elevation="2dp"
     android:orientation="vertical"
-    app:behavior_peekHeight="40dp"
+    app:behavior_peekHeight="30dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <ImageView
@@ -20,6 +20,7 @@
         android:src="@drawable/sheet_lines" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view_bottom_sheet_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
@@ -28,6 +29,7 @@
         android:overScrollMode="never"
         android:requiresFadingEdge="vertical"
         app:fastScrollEnabled="true"
+        android:layout_marginTop="30dp"
         app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
         app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
         app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
@@ -45,7 +47,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
                 android:drawableStart="@drawable/ic_cooking_method_small"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/main_text"
@@ -74,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:drawableStart="@drawable/ic_category_small"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/main_text"
@@ -103,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:drawableStart="@drawable/ic_difficulty_small"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/main_text"
@@ -133,7 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:drawableStart="@drawable/ic_kcals_small"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/main_text"

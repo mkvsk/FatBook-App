@@ -1,29 +1,30 @@
 package online.fatbook.fatbookapp.ui.fragment
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.flexbox.AlignContent
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_search.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.recipe.*
+import online.fatbook.fatbookapp.core.recipe.CookingCategory
+import online.fatbook.fatbookapp.core.recipe.CookingMethod
+import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
 import online.fatbook.fatbookapp.ui.adapters.SearchAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
-
 
 class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItemClickListener {
 
@@ -33,6 +34,8 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
     private var adapterCategories: SearchAdapter? = null
     private var adapterMethods: SearchAdapter? = null
     private var adapterDifficulty: SearchAdapter? = null
+
+    private lateinit var bottomSheetSearchFilter: BottomSheetBehavior<*>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,19 +59,29 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
         }
 
         loadCategories()
-        setupCategoriesAdapter()
         loadMethods()
-        setupMethodsAdapter()
-
         loadDifficulty()
+
+        setupCategoriesAdapter()
+        setupMethodsAdapter()
         setupDifficultyAdapter()
 
-        BottomSheetBehavior.from(sheet_search).apply {
-            this.state = BottomSheetBehavior.STATE_COLLAPSED
-        }
+        bottomSheetSearchFilter = BottomSheetBehavior.from(sheet_search)
+        bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
+        bottomSheetSearchFilter.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    scroll_view_bottom_sheet_search.scrollTo(0, 0)
+                }
+            }
 
-        val seekBar: SeekBar = seekbar_kcals_limit
-        seekBar.setOnSeekBarChangeListener(this)
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
+
+        seekbar_kcals_limit.setOnSeekBarChangeListener(this)
+        handleBackPressed()
     }
 
     private fun loadMethods() {
@@ -131,8 +144,8 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
                 value.add(0, filter)
 
                 staticDataViewModel.cookingCategories.value = value
-
-                adapterCategories?.setData(value)
+                //TODO replace value + value to value
+                adapterCategories?.setData(value + value)
 
                 val list: ArrayList<Int> = ArrayList()
                 if (!searchViewModel.categories.value.isNullOrEmpty()) {
@@ -193,5 +206,23 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
 //
 //            }
         }
+    }
+
+    private fun handleBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (bottomSheetSearchFilter.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
+                    } else {
+                        popBackStack()
+                    }
+                }
+            })
+    }
+
+    private fun popBackStack() {
+        NavHostFragment.findNavController(this).popBackStack()
     }
 }
