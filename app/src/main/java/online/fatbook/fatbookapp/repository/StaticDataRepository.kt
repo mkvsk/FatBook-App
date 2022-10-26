@@ -8,6 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
+import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
@@ -16,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.coroutines.CoroutineContext
 
-class StaticDataRepository(private val context: Context) {
+class StaticDataRepository {
 
     private var parentJob = Job()
     private val coroutineContext: CoroutineContext
@@ -33,7 +34,7 @@ class StaticDataRepository(private val context: Context) {
                     response: Response<List<CookingMethod>>
                 ) {
                     Log.d("GET COOKING METHODS", response.body().toString())
-                    if (response.body() == null) {
+                    if (response.body().isNullOrEmpty()) {
                         callback.onFailure(null)
                     } else {
                         callback.onResult(response.body())
@@ -59,7 +60,7 @@ class StaticDataRepository(private val context: Context) {
                     response: Response<List<CookingCategory>>
                 ) {
                     Log.d("GET COOKING CATEGORIES", response.body().toString())
-                    if (response.body() == null) {
+                    if (response.body().isNullOrEmpty()) {
                         callback.onFailure(null)
                     } else {
                         callback.onResult(response.body())
@@ -68,6 +69,32 @@ class StaticDataRepository(private val context: Context) {
 
                 override fun onFailure(call: Call<List<CookingCategory>>, t: Throwable) {
                     Log.d("GET COOKING CATEGORIES", "error")
+                    t.printStackTrace()
+                    callback.onFailure(null)
+                }
+            })
+        }
+    }
+
+    fun getAllCookingDifficulties(callback: ResultCallback<List<CookingDifficulty>>) {
+        scope.launch {
+            val call = RetrofitFactory.apiServiceClient().getAllCookingDifficulties()
+
+            call.enqueue(object : Callback<List<CookingDifficulty>> {
+                override fun onResponse(
+                    call: Call<List<CookingDifficulty>>,
+                    response: Response<List<CookingDifficulty>>
+                ) {
+                    Log.d("GET COOKING DIFFICULTIES", response.body().toString())
+                    if (response.body().isNullOrEmpty()) {
+                        callback.onFailure(null)
+                    } else {
+                        callback.onResult(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<List<CookingDifficulty>>, t: Throwable) {
+                    Log.d("GET COOKING DIFFICULTIES", "error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }
@@ -85,7 +112,7 @@ class StaticDataRepository(private val context: Context) {
                         response: Response<List<Ingredient>>
                 ) {
                     Log.d("GET ALL INGREDIENTS", response.body().toString())
-                    if (response.body() == null) {
+                    if (response.body().isNullOrEmpty()) {
                         callback.onFailure(null)
                     } else {
                         callback.onResult(response.body())

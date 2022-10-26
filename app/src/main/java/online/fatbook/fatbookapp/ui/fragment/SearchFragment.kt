@@ -8,15 +8,16 @@ import android.widget.SeekBar
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_search.*
-import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
+import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
@@ -38,8 +39,7 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
     private lateinit var bottomSheetSearchFilter: BottomSheetBehavior<*>
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -48,23 +48,24 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        progress_overlay.visibility = View.VISIBLE
+
         if (searchViewModel.categories.value.isNullOrEmpty()) {
             searchViewModel.categories.value = ArrayList()
         }
         if (searchViewModel.methods.value.isNullOrEmpty()) {
             searchViewModel.methods.value = ArrayList()
         }
-        if (searchViewModel.difficulty.value.isNullOrEmpty()) {
-            searchViewModel.difficulty.value = ArrayList()
+        if (searchViewModel.difficulties.value.isNullOrEmpty()) {
+            searchViewModel.difficulties.value = ArrayList()
         }
+
+        setupAdapters()
+        setupObservers()
 
         loadCategories()
         loadMethods()
         loadDifficulty()
-
-        setupCategoriesAdapter()
-        setupMethodsAdapter()
-        setupDifficultyAdapter()
 
         bottomSheetSearchFilter = BottomSheetBehavior.from(sheet_search)
         bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -84,6 +85,69 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
         handleBackPressed()
     }
 
+    private fun setupObservers() {
+        staticDataViewModel.cookingMethods.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                println("=========================================================================== cookingMethods updated: ${it.size}")
+            }
+        }
+        staticDataViewModel.cookingCategories.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                println("=========================================================================== cookingCategories updated: ${it.size}")
+            }
+        }
+        staticDataViewModel.cookingDifficulties.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                println("=========================================================================== cookingDifficulties updated: ${it.size}")
+            }
+        }
+    }
+
+    private fun setupAdapters() {
+        adapterCategories = SearchAdapter()
+        setupAdapter(rv_cooking_categories_search, adapterCategories!!)
+
+        adapterMethods = SearchAdapter()
+        setupAdapter(rv_cooking_methods_search, adapterMethods!!)
+
+        adapterDifficulty = SearchAdapter()
+        setupAdapter(rv_cooking_difficulty_search, adapterDifficulty!!)
+    }
+
+    private fun setupAdapter(rv: RecyclerView, adapter: SearchAdapter) {
+        rv.layoutManager = getLayoutManager()
+        adapter.setClickListener(this)
+        rv.adapter = adapter
+    }
+
+    private fun getLayoutManager(): RecyclerView.LayoutManager {
+        return FlexboxLayoutManager(context).apply {
+            this.flexDirection = FlexDirection.ROW
+            this.flexWrap = FlexWrap.WRAP
+            this.justifyContent = JustifyContent.FLEX_START
+        }
+    }
+
+    private fun loadCategories() {
+        staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
+            override fun onResult(value: List<CookingCategory>?) {
+
+                value as ArrayList
+                val filter = value.single { it.title == "Other" || it.title == "Другое" }
+                value.remove(filter)
+                value.add(0, filter)
+
+                staticDataViewModel.cookingCategories.value = value
+                adapterCategories?.setData(value)
+                adapterCategories?.setSelected(getPreselectedCategories())
+            }
+
+            override fun onFailure(value: List<CookingCategory>?) {
+                loadCategories()
+            }
+        })
+    }
+
     private fun loadMethods() {
         staticDataViewModel.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {
             override fun onResult(value: List<CookingMethod>?) {
@@ -95,84 +159,43 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
 
                 staticDataViewModel.cookingMethods.value = value
                 adapterMethods?.setData(value)
-
-                val list: ArrayList<Int> = ArrayList()
-                if (!searchViewModel.methods.value.isNullOrEmpty()) {
-                    for (i in searchViewModel.methods.value!!) {
-                        if (value.contains(i)) {
-                            list.add(value.indexOf(i))
-                        }
-                    }
-                }
-                adapterMethods?.setSelected(list)
+                adapterMethods?.setSelected(getPreselectedMethods())
             }
 
             override fun onFailure(value: List<CookingMethod>?) {
+                loadMethods()
             }
         })
-    }
-
-    private fun setupDifficultyAdapter() {
-        val rv = rv_difficulty_search
-        adapterDifficulty = SearchAdapter()
-        adapterDifficulty!!.setClickListener(this)
-        rv.adapter = adapterDifficulty
     }
 
     private fun loadDifficulty() {
-        //TODO
-    }
-
-    private fun setupMethodsAdapter() {
-        val rv = rv_cooking_methods_search
-        val layoutManager = FlexboxLayoutManager(context)
-        layoutManager.flexDirection = FlexDirection.ROW
-        layoutManager.flexWrap = FlexWrap.WRAP
-        layoutManager.justifyContent = JustifyContent.FLEX_START
-        rv.layoutManager = layoutManager
-        adapterMethods = SearchAdapter()
-        adapterMethods!!.setClickListener(this)
-        rv.adapter = adapterMethods
-    }
-
-    private fun loadCategories() {
-        staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
-            override fun onResult(value: List<CookingCategory>?) {
-                value as ArrayList
-                val filter = value.single { it.title == "Other" || it.title == "Другое" }
-                value.remove(filter)
-                value.add(0, filter)
-
-                staticDataViewModel.cookingCategories.value = value
-                //TODO replace value + value to value
-                adapterCategories?.setData(value + value)
-
-                val list: ArrayList<Int> = ArrayList()
-                if (!searchViewModel.categories.value.isNullOrEmpty()) {
-                    for (i in searchViewModel.categories.value!!) {
-                        if (value.contains(i)) {
-                            list.add(value.indexOf(i))
-                        }
-                    }
-                }
-                adapterCategories?.setSelected(list)
+        staticDataViewModel.getAllCookingDifficulties(object :
+            ResultCallback<List<CookingDifficulty>> {
+            override fun onResult(value: List<CookingDifficulty>?) {
+                staticDataViewModel.cookingDifficulties.value = value
+                adapterDifficulty?.setData(value)
+                adapterDifficulty?.setSelected(getPreselectedDifficulties())
             }
 
-            override fun onFailure(value: List<CookingCategory>?) {
+            override fun onFailure(value: List<CookingDifficulty>?) {
+                loadDifficulty()
             }
         })
     }
 
-    private fun setupCategoriesAdapter() {
-        val rv = rv_cooking_categories_search
-        val layoutManager = FlexboxLayoutManager(context)
-        layoutManager.flexDirection = FlexDirection.ROW
-        layoutManager.flexWrap = FlexWrap.WRAP
-        layoutManager.justifyContent = JustifyContent.FLEX_START
-        rv.layoutManager = layoutManager
-        adapterCategories = SearchAdapter()
-        adapterCategories!!.setClickListener(this)
-        rv.adapter = adapterCategories
+    //TODO shared prefs
+    private fun getPreselectedCategories(): List<Int> {
+        return ArrayList()
+    }
+
+    //TODO shared prefs
+    private fun getPreselectedMethods(): List<Int> {
+        return ArrayList()
+    }
+
+    //TODO shared prefs
+    private fun getPreselectedDifficulties(): List<Int> {
+        return ArrayList()
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -183,9 +206,7 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 
-    override fun onItemClick(item: StaticDataObject) {}
-
-    override fun onItemClickChoose(item: StaticDataObject) {
+    override fun onItemClick(item: StaticDataObject) {
 
         when (item) {
             is CookingCategory -> {
@@ -202,15 +223,18 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
                     searchViewModel.methods.value!!.add(item)
                 }
             }
-//            is CookingDifficulty -> {
-//
-//            }
+            is CookingDifficulty -> {
+                if (searchViewModel.difficulties.value!!.contains(item)) {
+                    searchViewModel.difficulties.value!!.remove(item)
+                } else {
+                    searchViewModel.difficulties.value!!.add(item)
+                }
+            }
         }
     }
 
     private fun handleBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (bottomSheetSearchFilter.state == BottomSheetBehavior.STATE_EXPANDED) {

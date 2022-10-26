@@ -7,15 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.view.*
 import kotlinx.android.synthetic.main.rv_search.view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 
-class SearchAdapter :
-    RecyclerView.Adapter<SearchAdapter.ViewHolder>(), BindableAdapter<StaticDataObject> {
+class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
+    BindableAdapter<StaticDataObject> {
 
     private var data: List<StaticDataObject> = ArrayList()
     var listener: OnSearchItemClickListener? = null
@@ -23,8 +21,7 @@ class SearchAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_search, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.rv_search, parent, false)
         )
     }
 
@@ -72,19 +69,18 @@ class SearchAdapter :
                         itemView.cardview_rv_search, itemView.textview_item_title_rv_search
                     )
                 }
-                listener?.onItemClickChoose(data[bindingAdapterPosition])
+                listener?.onItemClick(data[bindingAdapterPosition])
             }
         }
     }
-}
 
-private fun selectItem(cardView: MaterialCardView, textView: TextView) {
-    cardView.setBackgroundResource(R.drawable.select_search_item_round_corner)
-    textView.isSelected = true
-}
+    private fun selectItem(cardView: MaterialCardView, textView: TextView) {
+        cardView.setBackgroundResource(R.drawable.select_search_item_round_corner)
+        textView.isSelected = true
+    }
 
-private fun unselectItem(cardView: MaterialCardView, textView: TextView) {
-    cardView.setBackgroundResource(R.drawable.unselect_search_item_round_corner)
-    textView.isSelected = false
+    private fun unselectItem(cardView: MaterialCardView, textView: TextView) {
+        cardView.setBackgroundResource(R.drawable.unselect_search_item_round_corner)
+        textView.isSelected = false
+    }
 }
-

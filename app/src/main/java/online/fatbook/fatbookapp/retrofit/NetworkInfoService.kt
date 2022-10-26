@@ -6,6 +6,7 @@ import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
 import online.fatbook.fatbookapp.core.authentication.LoginResponse
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
+import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
@@ -62,6 +63,9 @@ interface NetworkInfoService {
 
     @GET("data/method/get/all")
     fun getAllCookingMethods() : Call<List<CookingMethod>>
+
+    @GET("data/difficulty/get/all")
+    fun getAllCookingDifficulties() : Call<List<CookingDifficulty>>
 
 //    ==========================================================================================
 
