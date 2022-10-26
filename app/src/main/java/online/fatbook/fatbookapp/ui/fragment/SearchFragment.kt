@@ -29,7 +29,6 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItemClickListener {
 
     private var binding: FragmentSearchBinding? = null
-
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private val searchViewModel by lazy { obtainViewModel(SearchViewModel::class.java) }
     private var adapterCategories: SearchAdapter? = null
