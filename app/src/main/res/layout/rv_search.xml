@@ -38,9 +38,9 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="item"
                 android:maxLines="1"
                 android:textSize="13sp"
-                android:text="item"
                 android:textAlignment="center"
                 android:fontFamily="@font/roboto_medium"
                 android:textColor="@drawable/selector_search_item_text" />

@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,15 +54,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
     // use onItemClickChoose
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: StaticDataObject?) {
-//            if (bindingAdapterPosition == 0) {
-//                if (selectedItems!!.size != data.size + 1) {
-//                    var list: ArrayList<Int> = ArrayList()
-//                    list = 0..data.size
-//                    setSelected(list)
-//                } else {
-//                    setSelected(ArrayList())
-//                }
-//            }
+
             if (selectedItems!!.contains(bindingAdapterPosition)) {
                 selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
             } else {
@@ -72,14 +65,29 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
 
             itemView.cardview_rv_search.setOnClickListener {
 
-                if (!itemView.textview_item_title_rv_search.isSelected) {
-                    selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                if (bindingAdapterPosition == 0) {
+                    val list: ArrayList<Int> = ArrayList()
+                    if (selectedItems!!.size != data.size + 1) {
+                        for (i in 0..data.size) {
+                            list.add(i)
+                            setSelected(list)
+                        }
+                    } else {
+                        setSelected(list)
+                    }
                 } else {
-                    unselectItem(
-                        itemView.cardview_rv_search, itemView.textview_item_title_rv_search
-                    )
+                    if (!itemView.textview_item_title_rv_search.isSelected) {
+                        selectItem(
+                            itemView.cardview_rv_search,
+                            itemView.textview_item_title_rv_search
+                        )
+                    } else {
+                        unselectItem(
+                            itemView.cardview_rv_search, itemView.textview_item_title_rv_search
+                        )
+                    }
+                    listener?.onItemClick(data[bindingAdapterPosition])
                 }
-                listener?.onItemClick(data[bindingAdapterPosition])
             }
         }
     }

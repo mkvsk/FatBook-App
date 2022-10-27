@@ -119,7 +119,8 @@ class RecipeCreateFirstStageFragment : Fragment() {
 
     private fun fillRecipe() {
         recipeViewModel.newRecipe.value!!.title =
-            edittext_title_recipe_create_1_stage.text.toString().replace("\\s+".toRegex(), " ").trim()
+            edittext_title_recipe_create_1_stage.text.toString().replace("\\s+".toRegex(), " ")
+                .trim()
         edittext_title_recipe_create_1_stage.setText(recipeViewModel.newRecipe.value!!.title)
 
         if (rb_lvl_easy.isChecked) {

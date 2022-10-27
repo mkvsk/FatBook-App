@@ -124,9 +124,30 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textview_title_difficulty_search"
-                app:spanCount="3"
-                tools:itemCount="3"
+                app:spanCount="4"
+                tools:itemCount="4"
                 tools:listitem="@layout/rv_search" />
+
+
+<!--            <ToggleButton-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/rv_cooking_difficulty_search"-->
+<!--                android:id="@+id/radiobutton_select_all_difficulties"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:background="@drawable/selector_radio_btns"-->
+<!--                android:button="@drawable/null_radio_button"-->
+<!--                android:elevation="4dp"-->
+<!--                android:textOn="All"-->
+<!--                android:textOff="All"-->
+<!--                android:maxLines="1"-->
+<!--                android:clickable="true"-->
+<!--                android:textSize="13sp"-->
+<!--                android:textAlignment="center"-->
+<!--                android:fontFamily="@font/roboto_medium"-->
+<!--                android:textColor="@drawable/selector_search_item_text"-->
+<!--                android:translationZ="1dp" />-->
 
             <TextView
                 android:id="@+id/textview_title_kcals_search"
