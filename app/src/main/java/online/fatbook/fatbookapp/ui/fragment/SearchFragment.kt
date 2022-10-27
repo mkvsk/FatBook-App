@@ -15,6 +15,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_search.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
@@ -25,9 +26,10 @@ import online.fatbook.fatbookapp.ui.adapters.SearchAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
+import online.fatbook.fatbookapp.util.SearchUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 
-class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItemClickListener {
+class SearchFragment : Fragment(), OnSearchItemClickListener {
 
     private var binding: FragmentSearchBinding? = null
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
@@ -48,7 +50,7 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        progress_overlay.visibility = View.VISIBLE
+        progress_overlay.visibility = View.VISIBLE
 
         if (searchViewModel.categories.value.isNullOrEmpty()) {
             searchViewModel.categories.value = ArrayList()
@@ -61,7 +63,6 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
         }
 
         setupAdapters()
-        setupObservers()
 
         loadCategories()
         loadMethods()
@@ -81,25 +82,23 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
             }
         })
 
-        seekbar_kcals_limit.setOnSeekBarChangeListener(this)
+        seekbar_kcals_limit.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                textview_kcals_limit_setted_search.text = p0.toString()
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+            }
+        })
         handleBackPressed()
     }
 
-    private fun setupObservers() {
-        staticDataViewModel.cookingMethods.observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                println("=========================================================================== cookingMethods updated: ${it.size}")
-            }
-        }
-        staticDataViewModel.cookingCategories.observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                println("=========================================================================== cookingCategories updated: ${it.size}")
-            }
-        }
-        staticDataViewModel.cookingDifficulties.observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                println("=========================================================================== cookingDifficulties updated: ${it.size}")
-            }
+    private fun checkStaticDataLoaded() {
+        if (!staticDataViewModel.cookingMethods.value.isNullOrEmpty() && !staticDataViewModel.cookingCategories.value.isNullOrEmpty() && !staticDataViewModel.cookingDifficulties.value.isNullOrEmpty()) {
+            progress_overlay.visibility = View.GONE
         }
     }
 
@@ -133,13 +132,12 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
             override fun onResult(value: List<CookingCategory>?) {
 
                 value as ArrayList
-                val filter = value.single { it.title == "Other" || it.title == "Другое" }
-                value.remove(filter)
-                value.add(0, filter)
+                value.add(0, SearchUtils.getSelectAll(CookingCategory::class.java))
 
                 staticDataViewModel.cookingCategories.value = value
                 adapterCategories?.setData(value)
                 adapterCategories?.setSelected(getPreselectedCategories())
+                checkStaticDataLoaded()
             }
 
             override fun onFailure(value: List<CookingCategory>?) {
@@ -153,13 +151,12 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
             override fun onResult(value: List<CookingMethod>?) {
 
                 value as ArrayList
-                val filter = value.single { it.title == "Other" || it.title == "Другое" }
-                value.remove(filter)
-                value.add(0, filter)
+                value.add(0, SearchUtils.getSelectAll(CookingMethod::class.java))
 
                 staticDataViewModel.cookingMethods.value = value
                 adapterMethods?.setData(value)
                 adapterMethods?.setSelected(getPreselectedMethods())
+                checkStaticDataLoaded()
             }
 
             override fun onFailure(value: List<CookingMethod>?) {
@@ -175,6 +172,7 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
                 staticDataViewModel.cookingDifficulties.value = value
                 adapterDifficulty?.setData(value)
                 adapterDifficulty?.setSelected(getPreselectedDifficulties())
+                checkStaticDataLoaded()
             }
 
             override fun onFailure(value: List<CookingDifficulty>?) {
@@ -197,14 +195,6 @@ class SearchFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnSearchItem
     private fun getPreselectedDifficulties(): List<Int> {
         return ArrayList()
     }
-
-    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        textview_kcals_limit_setted_search.text = progress.toString()
-    }
-
-    override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
-    override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 
     override fun onItemClick(item: StaticDataObject) {
 

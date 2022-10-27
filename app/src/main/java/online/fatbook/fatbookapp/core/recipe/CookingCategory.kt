@@ -15,10 +15,18 @@ data class CookingCategory(
             if (locales[StaticDataLocale.RU] != null) {
                 locales[StaticDataLocale.RU]!!.title
             } else {
-                super.title
+                if (super.title.isNullOrEmpty()) {
+                    locales[StaticDataLocale.ENG]!!.title
+                } else {
+                    super.title
+                }
             }
         } else {
-            super.title
+            if (super.title.isNullOrEmpty()) {
+                locales[StaticDataLocale.ENG]!!.title
+            } else {
+                super.title
+            }
         }
 
     override fun toString(): String {

@@ -47,11 +47,21 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
 
     fun setSelected(arrayList: List<Int>) {
         selectedItems = arrayList
+        notifyDataSetChanged()
     }
 
     // use onItemClickChoose
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: StaticDataObject?) {
+//            if (bindingAdapterPosition == 0) {
+//                if (selectedItems!!.size != data.size + 1) {
+//                    var list: ArrayList<Int> = ArrayList()
+//                    list = 0..data.size
+//                    setSelected(list)
+//                } else {
+//                    setSelected(ArrayList())
+//                }
+//            }
             if (selectedItems!!.contains(bindingAdapterPosition)) {
                 selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
             } else {
