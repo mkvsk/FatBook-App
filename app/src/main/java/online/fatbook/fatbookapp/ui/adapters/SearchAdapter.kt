@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.rv_search.view.*
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 
@@ -65,7 +66,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
 
             itemView.cardview_rv_search.setOnClickListener {
 
-                if (bindingAdapterPosition == 0) {
+                if (value.title.equals("Select all")) {
                     val list: ArrayList<Int> = ArrayList()
                     if (selectedItems!!.size != data.size + 1) {
                         for (i in 0..data.size) {
