@@ -9,4 +9,5 @@ data class SearchObjects(
     var categories: List<CookingCategory?> = ArrayList(),
     var methods: List<CookingMethod?> = ArrayList(),
     var difficulty: List<CookingDifficulty?> = ArrayList()
+//TODO add int kcal per portion
 ) : Serializable

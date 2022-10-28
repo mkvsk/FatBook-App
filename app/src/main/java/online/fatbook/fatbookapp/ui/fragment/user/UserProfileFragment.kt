@@ -89,7 +89,6 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //
 //            } else {
-//                //TODO action go to full
 //            }
 //        }
 

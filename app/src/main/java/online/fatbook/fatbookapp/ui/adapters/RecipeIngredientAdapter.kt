@@ -43,7 +43,6 @@ class RecipeIngredientAdapter :
         return data.size
     }
 
-    //TODO заполнить данные
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: RecipeIngredient?) {
             itemView.textview_ingredient_title_rv_added_ingredient.text = value!!.ingredient!!.title

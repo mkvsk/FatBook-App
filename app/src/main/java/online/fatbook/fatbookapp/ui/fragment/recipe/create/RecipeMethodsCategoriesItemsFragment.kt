@@ -81,7 +81,6 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
         rv.adapter = adapter
     }
 
-    //TODO sort by title
     private fun loadCookingCategories() {
         staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
             override fun onResult(value: List<CookingCategory>?) {
@@ -114,7 +113,6 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
         })
     }
 
-    //TODO sort by title
     private fun loadCookingMethods() {
         staticDataViewModel.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {
             override fun onResult(value: List<CookingMethod>?) {

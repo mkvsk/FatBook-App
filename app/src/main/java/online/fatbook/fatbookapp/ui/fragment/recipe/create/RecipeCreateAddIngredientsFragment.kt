@@ -176,7 +176,6 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_add_ingredient_to_recipe -> {
-                //TODO fix
                 checkData()
                 addIngredient()
                 true
@@ -188,8 +187,7 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
     private fun addIngredient() {
         selectedUnit = units[picker_ingredient_unit.value]
 
-        selectedQtt = if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()
-        ) {
+        selectedQtt = if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()) {
             1.0
         } else {
             editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
