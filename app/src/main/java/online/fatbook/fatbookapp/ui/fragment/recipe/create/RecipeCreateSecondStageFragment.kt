@@ -1,7 +1,6 @@
 package online.fatbook.fatbookapp.ui.fragment.recipe.create
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +13,6 @@ import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_recipe_create_second_stage.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
-import online.fatbook.fatbookapp.core.recipe.Recipe
-import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
-import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateSecondStageBinding
 import online.fatbook.fatbookapp.ui.adapters.CookingStepAdapter
 import online.fatbook.fatbookapp.ui.adapters.RecipeIngredientAdapter
@@ -85,16 +81,6 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
                 }
             }
         })
-
-//        if (!recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()) {
-//            recipeViewModel.newRecipe.value!!.ingredients?.forEach {
-//                val recipeIngredient: RecipeIngredient = it as RecipeIngredient
-//                val qtt = recipeIngredient.kcal.toString().toDouble()
-//                recipeViewModel.newRecipe.value!!.kcalPerPortion = recipeViewModel.newRecipe.value!!.kcalPerPortion?.plus(qtt)
-//            }
-//        } else {
-//            recipeViewModel.newRecipe.value!!.kcalPerPortion = 0.0
-//        }
     }
 
     private fun checkSteps(currentStepsQtt: Int) {
@@ -120,11 +106,7 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         TransitionManager.go(Scene(cardview_right_recipe_create_2_stage), AutoTransition())
         recipeViewModel.newRecipe.value!!.ingredients!!.removeAt(selectedItem)
         ingredientsAdapter!!.notifyItemRemoved(selectedItem)
-
-//        var tmp = recipeViewModel.newRecipe.value!!.kcalPerPortion
-//        var ingredientKcals = recipeViewModel.newRecipe.value!!.ingredients?.get(selectedItem) as RecipeIngredient
-//        tmp = tmp?.minus(ingredientKcals.kcal.toString().toDouble())
-//        Log.d("KCALS AVG:::::::::::::::::::::::::::::", "$tmp")
+        drawNutritionFacts()
     }
 
     private fun setupCookingStepsAdapter() {
@@ -152,11 +134,27 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
     override fun onResume() {
         super.onResume()
+        drawNutritionFacts()
+    }
+
+    private fun drawNutritionFacts() {
+        if (recipeViewModel.newRecipe.value!!.isAllIngredientUnitsValid) {
+            showNutritionFacts(true)
+            textview_portion_kcals_qtt_recipe_create_2_stage.text = recipeViewModel.newRecipe.value?.kcalPerPortion.toString()
+            //TODO остальные крабы
+        } else {
+            showNutritionFacts(false)
+        }
+
+    }
+
+    private fun showNutritionFacts(value: Boolean) {
+        if (value) {
+            //View.VISIBLE
+        } else {
+            //View.GONE
+        }
     }
 }

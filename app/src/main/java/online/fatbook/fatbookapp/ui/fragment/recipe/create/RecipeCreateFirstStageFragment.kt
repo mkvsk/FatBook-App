@@ -55,6 +55,7 @@ class RecipeCreateFirstStageFragment : Fragment() {
 //        setupAdapter()
 //        loadDifficulty()
 
+        //TODO fix
         if (recipeViewModel.newRecipe.value == null) {
             recipeViewModel.newRecipe.value = Recipe()
         }
@@ -171,8 +172,11 @@ class RecipeCreateFirstStageFragment : Fragment() {
 //            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.HARD
 //        }
 
-        recipeViewModel.newRecipe.value!!.portions =
-            edittext_portions_qtt_recipe_create_1_stage.text.toString().toIntOrNull()
+        recipeViewModel.newRecipe.value!!.portions = if (edittext_portions_qtt_recipe_create_1_stage.text.toString().isEmpty()) {
+            1
+        } else {
+            edittext_portions_qtt_recipe_create_1_stage.text.toString().toInt()
+        }
 
         recipeViewModel.newRecipe.value!!.cookingTime =
             textview_set_time_recipe_create_1_stage.text.toString()
