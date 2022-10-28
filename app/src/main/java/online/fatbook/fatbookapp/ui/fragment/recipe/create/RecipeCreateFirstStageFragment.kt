@@ -13,19 +13,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_edit_profile.*
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import kotlinx.android.synthetic.main.fragment_recipe_methods_categories_items.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.Difficulty
+import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateFirstStageBinding
+import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
@@ -36,6 +39,7 @@ class RecipeCreateFirstStageFragment : Fragment() {
     private var binding: FragmentRecipeCreateFirstStageBinding? = null
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
+//    private var adapter: StaticDataAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +51,9 @@ class RecipeCreateFirstStageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        setupAdapter()
+//        loadDifficulty()
 
         if (recipeViewModel.newRecipe.value == null) {
             recipeViewModel.newRecipe.value = Recipe()
@@ -117,21 +124,52 @@ class RecipeCreateFirstStageFragment : Fragment() {
         })
     }
 
+//    private fun loadDifficulty() {
+//        staticDataViewModel.getAllCookingDifficulties(object :
+//            ResultCallback<List<CookingDifficulty>> {
+//            override fun onResult(value: List<CookingDifficulty>?) {
+//                value as ArrayList
+//                staticDataViewModel.cookingDifficulties.value = value
+//                adapter?.setData(value)
+//            }
+//
+//            override fun onFailure(value: List<CookingDifficulty>?) {
+//                loadDifficulty()
+//            }
+//        })
+//    }
+
+//    private fun setupAdapter() {
+//        val rv = rv_select_difficulty_recipe_create_1_stage
+//        rv.layoutManager = getLayoutManager()
+//        adapter = StaticDataAdapter()
+//        adapter!!.setClickListener(this)
+//        rv.adapter = adapter
+//    }
+
+    private fun getLayoutManager(): RecyclerView.LayoutManager {
+        return FlexboxLayoutManager(context).apply {
+            this.flexDirection = FlexDirection.ROW
+            this.flexWrap = FlexWrap.WRAP
+            this.justifyContent = JustifyContent.FLEX_START
+        }
+    }
+
     private fun fillRecipe() {
         recipeViewModel.newRecipe.value!!.title =
             edittext_title_recipe_create_1_stage.text.toString().replace("\\s+".toRegex(), " ")
                 .trim()
         edittext_title_recipe_create_1_stage.setText(recipeViewModel.newRecipe.value!!.title)
 
-        if (rb_lvl_easy.isChecked) {
-            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.EASY
-        }
-        if (rb_lvl_normal.isChecked) {
-            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.NORMAL
-        }
-        if (rb_lvl_hard.isChecked) {
-            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.HARD
-        }
+//        if (rb_lvl_easy.isChecked) {
+//            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.EASY
+//        }
+//        if (rb_lvl_normal.isChecked) {
+//            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.NORMAL
+//        }
+//        if (rb_lvl_hard.isChecked) {
+//            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.HARD
+//        }
 
         recipeViewModel.newRecipe.value!!.portions =
             edittext_portions_qtt_recipe_create_1_stage.text.toString().toIntOrNull()

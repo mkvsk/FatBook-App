@@ -3,6 +3,7 @@ package online.fatbook.fatbookapp.ui.fragment.recipe.create
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -82,7 +83,11 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
                 override fun afterTextChanged(s: Editable?) {
                     checkData()
                     if (s!!.isEmpty()) {
-                        recipeViewModel.newRecipeAddIngredient.value?.let { setDefaultNutritionFacts(it) }
+                        recipeViewModel.newRecipeAddIngredient.value?.let {
+                            setDefaultNutritionFacts(
+                                it
+                            )
+                        }
                     } else {
                         recipeViewModel.newRecipeAddIngredient.value?.let { calculateNutrition(it) }
                     }
@@ -133,7 +138,8 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
                 tv_ingredient_proteins_recipe_add_ingredients.text =
                     FormatUtils.prettyNutriFak(newProteins)
                 tv_ingredient_fats_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newFats)
-                tv_ingredient_carbs_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newCarbs)
+                tv_ingredient_carbs_recipe_add_ingredients.text =
+                    FormatUtils.prettyNutriFak(newCarbs)
             } else {
                 setDefaultNutritionFacts(ingredient)
             }
@@ -196,6 +202,13 @@ class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickList
             quantity = selectedQtt
         )
         recipeViewModel.newRecipe.value!!.ingredients!!.add(recipeIngredient)
+
+//        var tmp = recipeViewModel.newRecipe.value!!.kcalPerPortion
+//        tmp = tmp?.plus(
+//                recipeIngredient.kcal.toString().toDouble()
+//            )
+//        Log.d("KCALS AVG:::::::::::::::::::::::::::::", "$tmp")
+
         NavHostFragment.findNavController(this).popBackStack()
     }
 

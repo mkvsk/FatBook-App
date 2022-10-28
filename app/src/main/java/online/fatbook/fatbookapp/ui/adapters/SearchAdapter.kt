@@ -13,6 +13,8 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
+import online.fatbook.fatbookapp.util.SearchUtils
+import org.apache.commons.lang3.StringUtils
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
     BindableAdapter<StaticDataObject> {
@@ -66,7 +68,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
 
             itemView.cardview_rv_search.setOnClickListener {
 
-                if (value.title.equals("Select all")) {
+                if (StringUtils.equalsIgnoreCase(value.title, "select all")) {
                     val list: ArrayList<Int> = ArrayList()
                     if (selectedItems!!.size != data.size + 1) {
                         for (i in 0..data.size) {
