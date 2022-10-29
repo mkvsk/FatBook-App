@@ -63,7 +63,7 @@ class IngredientAdapter :
                 )
             }
 
-            itemView.textview_ingredient_title_rv_ingredient.text = value!!.title
+            itemView.textview_ingredient_title_rv_ingredient.text = value.title
 
             val tmp = value.units?.get(0)?.kcal.toString()
             itemView.textview_ingredient_kcals_title_rv_ingredient.text =

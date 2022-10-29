@@ -11,33 +11,29 @@
         style="@style/myMaterialCardMethodCategories"
         app:cardElevation="4dp"
         app:cardPreventCornerOverlap="false"
-        app:contentPaddingLeft="15dp"
-        app:contentPaddingRight="15dp"
+        app:contentPaddingLeft="20dp"
+        app:contentPaddingRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
         app:rippleColor="@color/colorPrimaryRipple"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginHorizontal="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+        <LinearLayout
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textview_item_title_rv_difficulty"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="item"
                 android:maxLines="1"
                 android:textSize="13sp"
@@ -45,7 +41,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:textColor="@drawable/selector_search_item_text" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
     </com.google.android.material.card.MaterialCardView>

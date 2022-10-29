@@ -28,6 +28,8 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateFirstStageBinding
+import online.fatbook.fatbookapp.ui.adapters.RecipeCookingDifficultyAdapter
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeDifficultyClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
@@ -35,11 +37,11 @@ import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
 
-class RecipeCreateFirstStageFragment : Fragment() {
+class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener {
     private var binding: FragmentRecipeCreateFirstStageBinding? = null
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
-//    private var adapter: StaticDataAdapter? = null
+    private var adapter: RecipeCookingDifficultyAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,8 +54,8 @@ class RecipeCreateFirstStageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        setupAdapter()
-//        loadDifficulty()
+        setupAdapter()
+        loadDifficulty()
 
         //TODO fix
         if (recipeViewModel.newRecipe.value == null) {
@@ -125,34 +127,34 @@ class RecipeCreateFirstStageFragment : Fragment() {
         })
     }
 
-//    private fun loadDifficulty() {
-//        staticDataViewModel.getAllCookingDifficulties(object :
-//            ResultCallback<List<CookingDifficulty>> {
-//            override fun onResult(value: List<CookingDifficulty>?) {
-//                value as ArrayList
-//                staticDataViewModel.cookingDifficulties.value = value
-//                adapter?.setData(value)
-//            }
-//
-//            override fun onFailure(value: List<CookingDifficulty>?) {
-//                loadDifficulty()
-//            }
-//        })
-//    }
+    private fun loadDifficulty() {
+        staticDataViewModel.getAllCookingDifficulties(object :
+            ResultCallback<List<CookingDifficulty>> {
+            override fun onResult(value: List<CookingDifficulty>?) {
+                value as ArrayList
+                staticDataViewModel.cookingDifficulties.value = value
+                adapter?.setData(value)
+            }
 
-//    private fun setupAdapter() {
-//        val rv = rv_select_difficulty_recipe_create_1_stage
-//        rv.layoutManager = getLayoutManager()
-//        adapter = StaticDataAdapter()
-//        adapter!!.setClickListener(this)
-//        rv.adapter = adapter
-//    }
+            override fun onFailure(value: List<CookingDifficulty>?) {
+                loadDifficulty()
+            }
+        })
+    }
+
+    private fun setupAdapter() {
+        val rv = rv_select_difficulty_recipe_create_1_stage
+        rv.layoutManager = getLayoutManager()
+        adapter = RecipeCookingDifficultyAdapter()
+        adapter!!.setClickListener(this)
+        rv.adapter = adapter
+    }
 
     private fun getLayoutManager(): RecyclerView.LayoutManager {
         return FlexboxLayoutManager(context).apply {
             this.flexDirection = FlexDirection.ROW
             this.flexWrap = FlexWrap.WRAP
-            this.justifyContent = JustifyContent.FLEX_START
+            this.justifyContent = JustifyContent.SPACE_BETWEEN
         }
     }
 
@@ -172,11 +174,12 @@ class RecipeCreateFirstStageFragment : Fragment() {
 //            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.HARD
 //        }
 
-        recipeViewModel.newRecipe.value!!.portions = if (edittext_portions_qtt_recipe_create_1_stage.text.toString().isEmpty()) {
-            1
-        } else {
-            edittext_portions_qtt_recipe_create_1_stage.text.toString().toInt()
-        }
+        recipeViewModel.newRecipe.value!!.portions =
+            if (edittext_portions_qtt_recipe_create_1_stage.text.toString().isEmpty()) {
+                1
+            } else {
+                edittext_portions_qtt_recipe_create_1_stage.text.toString().toInt()
+            }
 
         recipeViewModel.newRecipe.value!!.cookingTime =
             textview_set_time_recipe_create_1_stage.text.toString()
@@ -239,4 +242,15 @@ class RecipeCreateFirstStageFragment : Fragment() {
             }
         }
     }
+
+    override fun onRecipeDifficultyClick(
+        previousItem: Int,
+        selectedItem: Int,
+        difficulty: CookingDifficulty?
+    ) {
+//        Log.d("DIFFICULTY", "${difficulty!!.title}")
+
+    }
+
+
 }

@@ -54,7 +54,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
         notifyDataSetChanged()
     }
 
-    // use onItemClickChoose
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: StaticDataObject?) {
 
