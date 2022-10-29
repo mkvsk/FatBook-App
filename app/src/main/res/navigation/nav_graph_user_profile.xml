@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_user_profile"
+    app:startDestination="@id/user_profile_dest">
+
+    <fragment
+        android:id="@+id/user_profile_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.UserProfileFragment"
+        android:label="@string/nav_user_profile">
+
+        <action
+            android:id="@+id/action_go_to_edit_profile_from_user_profile"
+            app:destination="@id/edit_profile_dest" />
+
+        <action
+            android:id="@+id/action_go_to_followers_from_user_profile"
+            app:destination="@id/follow_dest" />
+
+        <action
+            android:id="@+id/action_go_to_view_image_from_user_profile"
+            app:destination="@id/view_image_dest" />
+
+        <action
+            android:id="@+id/action_go_to_app_settings_from_user_profile"
+            app:destination="@id/app_settings_dest" />
+
+        <action
+            android:id="@+id/action_go_to_badges_from_user_profile"
+            app:destination="@id/badges_dest" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/edit_profile_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.EditUserProfileFragment"
+        android:label="@null" />
+    <fragment
+        android:id="@+id/follow_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.FollowersFragment"
+        android:label="@null" />
+    <fragment
+        android:id="@+id/view_image_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.ViewImageFragment"
+        android:label="@null" />
+    <fragment
+        android:id="@+id/app_settings_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.AppSettingsFragment"
+        android:label="@null" />
+    <fragment
+        android:id="@+id/badges_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.BadgesFragment"
+        android:label="@null" />
+
+</navigation>

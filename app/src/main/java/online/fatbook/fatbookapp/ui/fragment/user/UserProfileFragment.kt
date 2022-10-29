@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
@@ -17,6 +18,7 @@ import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.content_user_profile_base.*
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
@@ -28,6 +30,7 @@ import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
+import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.FormatUtils
@@ -42,16 +45,22 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     private var expanded: Boolean = false
 
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
+    private val authenticationViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
+
+    private lateinit var toolbarBase: androidx.appcompat.widget.Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserProfileBinding.inflate(inflater, container, false)
+        toolbarBase = requireActivity().findViewById(R.id.toolbar_user_profile_base)
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        userViewModel.user.value = User()
+//        userViewModel.user.value!!.username = authenticationViewModel.username.value
 
         progress_overlay.visibility = View.VISIBLE
 //        val handler = Handler()
@@ -62,10 +71,10 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
         if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
             setupMenu()
-            toolbar_userprofile.title = userViewModel.user.value!!.username
+            toolbarBase.title = userViewModel.user.value!!.username
             setupViewForLoggedInUser()
         } else {
-            toolbar_userprofile.title = userViewModel.selectedUsername.value!!
+            toolbarBase.title = userViewModel.selectedUsername.value!!
             setupViewForSelectedUser()
         }
 
@@ -168,7 +177,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
     private fun setupMenu() {
         val activity = (activity as AppCompatActivity?)!!
-        activity.setSupportActionBar(toolbar_userprofile)
+        activity.setSupportActionBar(toolbarBase)
         setHasOptionsMenu(true)
     }
 
@@ -278,20 +287,20 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     private fun setupViewForLoggedInUser() {
         ll_btns_follow_message.visibility = View.GONE
         tabLayout_userprofile.visibility = View.VISIBLE
-        toolbar_userprofile.navigationIcon = null
+        toolbarBase.navigationIcon = null
         loadData(userViewModel.user.value!!.username!!, true)
     }
 
     private fun setupViewForSelectedUser() {
         ll_btns_follow_message.visibility = View.VISIBLE
         tabLayout_userprofile.visibility = View.GONE
-        toolbar_userprofile.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
+        toolbarBase.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
         loadData(userViewModel.selectedUsername.value!!, false)
     }
 
     private fun drawData(user: User) {
         if (user.username == userViewModel.user.value!!.username) {
-            toolbar_userprofile.title = user.username
+            toolbarBase.title = user.username
 
             if (user.recipes == null) {
                 textview_recipes_qtt_userprofile.text = "0"
@@ -342,14 +351,14 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
             if (user.online) {
                 imageview_is_online.visibility = View.VISIBLE
-                toolbar_userprofile.subtitle = getString(R.string.subtitle_online)
+                toolbarBase.subtitle = getString(R.string.subtitle_online)
 
             } else {
                 imageview_is_online.visibility = View.INVISIBLE
-                toolbar_userprofile.subtitle = getString(R.string.subtitle_offline)
+                toolbarBase.subtitle = getString(R.string.subtitle_offline)
             }
         } else {
-            toolbar_userprofile.title = user.username
+            toolbarBase.title = user.username
 
             if (user.recipes == null) {
                 textview_recipes_qtt_userprofile.text = "0"
@@ -400,11 +409,11 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
             if (user.online) {
                 imageview_is_online.visibility = View.VISIBLE
-                toolbar_userprofile.subtitle = getString(R.string.subtitle_online)
+                toolbarBase.subtitle = getString(R.string.subtitle_online)
 
             } else {
                 imageview_is_online.visibility = View.INVISIBLE
-                toolbar_userprofile.subtitle = getString(R.string.subtitle_offline)
+                toolbarBase.subtitle = getString(R.string.subtitle_offline)
             }
         }
         progress_overlay.visibility = View.GONE

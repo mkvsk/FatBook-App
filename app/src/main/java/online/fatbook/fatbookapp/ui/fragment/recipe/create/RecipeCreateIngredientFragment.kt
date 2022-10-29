@@ -3,7 +3,6 @@ package online.fatbook.fatbookapp.ui.fragment.recipe.create
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -20,7 +19,6 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
-import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnitRatio
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateAddIngredientsBinding
 import online.fatbook.fatbookapp.ui.adapters.IngredientAdapter
@@ -32,7 +30,7 @@ import online.fatbook.fatbookapp.util.RecipeUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 
-class RecipeCreateAddIngredientsFragment : Fragment(), OnIngredientItemClickListener {
+class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
     private var binding: FragmentRecipeCreateAddIngredientsBinding? = null
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }

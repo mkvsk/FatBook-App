@@ -24,7 +24,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             local:navigationIcon="@drawable/ic_arrow_back"
             app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="@string/app_name"
             local:titleTextColor="@color/main_text"
             local:titleTextAppearance="@style/txtToolbar" />
