@@ -19,8 +19,9 @@ data class Recipe(
     var cookingCategories: ArrayList<CookingCategory>? = ArrayList(),
     var isPrivate: Boolean? = false,
     var ingredients: ArrayList<RecipeIngredient>? = ArrayList(),
-    var fatsPerPortion: Double? = 0.0,
-    var carbsPerPortion: Double? = 0.0,
+//    var fatsPerPortion: Double? = 0.0,
+//    var carbsPerPortion: Double? = 0.0,
+//    var proteinsPerPortion: Double? = 0.0,
     var steps: ArrayList<CookingStep>? = ArrayList(),
     var comments: ArrayList<RecipeComment>? = ArrayList()
 ) : Serializable {
@@ -41,8 +42,49 @@ data class Recipe(
 
     val isAllIngredientUnitsValid: Boolean
         get() {
-            //TODO проверка списка ингредиентов на валидность
-            return false
+            val tmp = ingredients!!.find {
+                it.unit != IngredientUnit.GRAM && it.unit != IngredientUnit.ML
+            }
+            return tmp == null
         }
 
+    val fatsPerPortion: Double?
+        get() {
+            return if (isAllIngredientUnitsValid) {
+                var tmp = 0.0
+                for (i in ingredients!!) {
+                    tmp = tmp.plus(i.fats!!)
+                }
+                tmp / portions.toString().toDouble()
+            } else {
+                null
+            }
+        }
+
+    val carbsPerPortion: Double?
+        get() {
+            return if (isAllIngredientUnitsValid) {
+                var tmp = 0.0
+                for (i in ingredients!!) {
+                    tmp = tmp.plus(i.carbs!!)
+                }
+                tmp / portions.toString().toDouble()
+            } else {
+                null
+            }
+        }
+
+    val proteinsPerPortion: Double?
+        get() {
+            return if (isAllIngredientUnitsValid) {
+                var tmp = 0.0
+                for (i in ingredients!!) {
+                    tmp = tmp.plus(i.proteins!!)
+                }
+                tmp / portions.toString().toDouble()
+            } else {
+                null
+            }
+        }
 }
+

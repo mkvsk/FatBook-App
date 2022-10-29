@@ -140,21 +140,27 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     }
 
     private fun drawNutritionFacts() {
-        if (recipeViewModel.newRecipe.value!!.isAllIngredientUnitsValid) {
+        if (recipeViewModel.newRecipe.value!!.isAllIngredientUnitsValid && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()) {
             showNutritionFacts(true)
-            textview_portion_kcals_qtt_recipe_create_2_stage.text = recipeViewModel.newRecipe.value?.kcalPerPortion.toString()
-            //TODO остальные крабы
+            textview_portion_kcals_qtt_recipe_create_2_stage.text =
+                recipeViewModel.newRecipe.value?.kcalPerPortion.toString()
+            tv_qtt_proteins.text = recipeViewModel.newRecipe.value?.proteinsPerPortion.toString()
+            tv_qtt_fats.text = recipeViewModel.newRecipe.value?.fatsPerPortion.toString()
+            tv_qtt_carbs.text = recipeViewModel.newRecipe.value?.carbsPerPortion.toString()
         } else {
             showNutritionFacts(false)
         }
-
     }
 
     private fun showNutritionFacts(value: Boolean) {
+        //TODO cards resize animation
         if (value) {
-            //View.VISIBLE
+            textview_nutrition_facts_title_recipe_create_2_stage.visibility = View.VISIBLE
+            cardview_nutrition_facts_recipe_create_2_stage.visibility = View.VISIBLE
         } else {
-            //View.GONE
+            textview_nutrition_facts_title_recipe_create_2_stage.visibility = View.GONE
+            cardview_nutrition_facts_recipe_create_2_stage.visibility = View.GONE
+
         }
     }
 }
