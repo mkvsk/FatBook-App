@@ -54,6 +54,8 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     ): View {
         binding = FragmentUserProfileBinding.inflate(inflater, container, false)
         toolbarBase = requireActivity().findViewById(R.id.toolbar_user_profile_base)
+        toolbarBase.inflateMenu(R.menu.user_profile_menu)
+        toolbarBase.setOnMenuItemClickListener(this::onOptionsItemSelected)
         return binding!!.root
     }
 
@@ -70,7 +72,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 //        }, 1500)
 
         if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
-            setupMenu()
+//            setupMenu()
             toolbarBase.title = userViewModel.user.value!!.username
             setupViewForLoggedInUser()
         } else {
@@ -175,16 +177,16 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         })
     }
 
-    private fun setupMenu() {
-        val activity = (activity as AppCompatActivity?)!!
-        activity.setSupportActionBar(toolbarBase)
-        setHasOptionsMenu(true)
-    }
+//    private fun setupMenu() {
+//        val activity = (activity as AppCompatActivity?)!!
+//        activity.setSupportActionBar(toolbarBase)
+//        setHasOptionsMenu(true)
+//    }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.user_profile_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.user_profile_menu, menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
