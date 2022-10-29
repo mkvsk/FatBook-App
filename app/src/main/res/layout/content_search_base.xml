@@ -18,7 +18,6 @@
             android:background="@color/theme_toolbar_color"
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:menu="@menu/feed_overflow_menu"
             app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:titleTextColor="@color/main_text"
