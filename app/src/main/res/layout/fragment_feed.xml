@@ -24,7 +24,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:menu="@menu/feed_overflow_menu"
             app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:title="@string/app_name"
             app:titleTextColor="@color/main_text"
             app:titleTextAppearance="@style/txtToolbar" />

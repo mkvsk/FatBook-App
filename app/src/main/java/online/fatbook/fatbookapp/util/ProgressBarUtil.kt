@@ -15,10 +15,10 @@ object ProgressBarUtil {
     }
 
     fun showProgressBar() {
-        activity.progressbar_main.visibility = View.VISIBLE
+//        activity.progressbar_main.visibility = View.VISIBLE
     }
 
     fun hideProgressBar() {
-        activity.progressbar_main.visibility = View.GONE
+//        activity.progressbar_main.visibility = View.GONE
     }
 }
