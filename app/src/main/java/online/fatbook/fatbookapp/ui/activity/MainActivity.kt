@@ -1,6 +1,8 @@
 package online.fatbook.fatbookapp.ui.activity
 
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -22,6 +24,7 @@ import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
 import online.fatbook.fatbookapp.util.ProgressBarUtil
+import online.fatbook.fatbookapp.util.SearchUtils
 import org.apache.commons.lang3.StringUtils
 import java.util.*
 
@@ -107,6 +110,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
 //            navController!!.navigate(R.id.action_go_to_feed_from_welcome)
         }
+
+        // get device dimensions
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+        SearchUtils.DEVICE_WIDTH = displayMetrics.widthPixels / displayMetrics.density
+        SearchUtils.DEVICE_HEIGHT = displayMetrics.heightPixels / displayMetrics.density
     }
 
     private fun instantiateViewModels() {

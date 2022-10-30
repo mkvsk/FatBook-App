@@ -83,8 +83,8 @@ class SearchFragment : Fragment(), OnSearchItemClickListener {
         })
 
         seekbar_kcals_limit.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                textview_kcals_limit_setted_search.text = p0.toString()
+            override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
+                textview_kcals_limit_setted_search.text = progress.toString()
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
