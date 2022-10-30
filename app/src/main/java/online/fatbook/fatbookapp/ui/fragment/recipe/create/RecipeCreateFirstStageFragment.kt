@@ -248,8 +248,13 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         selectedItem: Int,
         difficulty: CookingDifficulty?
     ) {
-//        Log.d("DIFFICULTY", "${difficulty!!.title}")
+        adapter!!.selectedDifficulty =
+            staticDataViewModel.cookingDifficulties.value!!.find { it.title == difficulty!!.title }
+        adapter!!.notifyItemChanged(previousItem)
+        adapter!!.notifyItemChanged(selectedItem)
+        recipeViewModel.newRecipe.value!!.difficulty = difficulty
 
+        Log.d("DIFFICULTY", "${recipeViewModel.newRecipe.value!!.difficulty!!.title}")
     }
 
 

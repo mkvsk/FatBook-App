@@ -18,7 +18,7 @@ class RecipeCookingDifficultyAdapter :
 
     private var data: List<CookingDifficulty> = ArrayList()
     var listener: OnRecipeDifficultyClickListener? = null
-    var selectedDifficulty: CookingDifficulty? = CookingDifficulty()
+    var selectedDifficulty: CookingDifficulty? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -49,13 +49,11 @@ class RecipeCookingDifficultyAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: CookingDifficulty?) {
-            itemView.textview_item_title_rv_difficulty.text = value!!.title
-
             if (bindingAdapterPosition == 0) {
                 selectedDifficulty = value
             }
 
-            if (selectedDifficulty!!.title == value.title) {
+            if (selectedDifficulty!!.title == value!!.title) {
                 selectItem(
                     itemView.cardview_rv_difficulty,
                     itemView.textview_item_title_rv_difficulty
@@ -67,19 +65,17 @@ class RecipeCookingDifficultyAdapter :
                 )
             }
 
-                //TODO fix select
+            itemView.textview_item_title_rv_difficulty.text = value.title
+
             if (itemView.cardview_rv_difficulty.isClickable) {
                 itemView.cardview_rv_difficulty.setOnClickListener {
-                    selectItem(
-                        itemView.cardview_rv_difficulty,
-                        itemView.textview_item_title_rv_difficulty
+                    selectedDifficulty = value
+                    listener!!.onRecipeDifficultyClick(
+                        data.indexOf(selectedDifficulty),
+                        bindingAdapterPosition,
+                        value
                     )
                 }
-                listener?.onRecipeDifficultyClick(
-                    data.indexOf(selectedDifficulty),
-                    bindingAdapterPosition,
-                    value
-                )
             }
         }
     }
