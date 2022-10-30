@@ -22,7 +22,6 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
-import kotlinx.android.synthetic.main.fragment_recipe_methods_categories_items.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
@@ -30,7 +29,6 @@ import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateFirstStageBinding
 import online.fatbook.fatbookapp.ui.adapters.RecipeCookingDifficultyAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeDifficultyClickListener
-import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
@@ -134,6 +132,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 value as ArrayList
                 staticDataViewModel.cookingDifficulties.value = value
                 adapter?.setData(value)
+                adapter?.selectedDifficulty = value[0]
             }
 
             override fun onFailure(value: List<CookingDifficulty>?) {

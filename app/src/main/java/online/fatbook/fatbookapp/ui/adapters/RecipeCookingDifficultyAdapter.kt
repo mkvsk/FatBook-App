@@ -49,10 +49,6 @@ class RecipeCookingDifficultyAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: CookingDifficulty?) {
-            if (bindingAdapterPosition == 0) {
-                selectedDifficulty = value
-            }
-
             if (selectedDifficulty!!.title == value!!.title) {
                 selectItem(
                     itemView.cardview_rv_difficulty,
@@ -69,7 +65,6 @@ class RecipeCookingDifficultyAdapter :
 
             if (itemView.cardview_rv_difficulty.isClickable) {
                 itemView.cardview_rv_difficulty.setOnClickListener {
-                    selectedDifficulty = value
                     listener!!.onRecipeDifficultyClick(
                         data.indexOf(selectedDifficulty),
                         bindingAdapterPosition,
