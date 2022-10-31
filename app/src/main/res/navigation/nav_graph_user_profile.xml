@@ -18,7 +18,7 @@
             app:destination="@id/follow_dest" />
 
         <action
-            android:id="@+id/action_go_to_view_image_from_user_profile"
+            android:id="@+id/action_go_to_view_image_from_user_profile1"
             app:destination="@id/view_image_dest" />
 
         <action

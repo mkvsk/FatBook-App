@@ -13,10 +13,13 @@ class UserViewModel : ViewModel() {
     private val repository by lazy { UserRepository(ContextHolder.get()) }
 
     val user = MutableLiveData<User>()
+
     val recipeList = MutableLiveData<ArrayList<Recipe>>()
     val bookmarkedRecipeList = MutableLiveData<ArrayList<Recipe>>()
     val forkedRecipeList = MutableLiveData<ArrayList<Recipe>>()
+
     val feedRecipeList = MutableLiveData<ArrayList<Recipe>?>()
+
     val selectedUser = MutableLiveData<User>()
     val selectedUsername = MutableLiveData<String>()
 

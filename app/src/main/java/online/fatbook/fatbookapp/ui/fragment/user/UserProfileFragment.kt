@@ -47,39 +47,29 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val authenticationViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
-    private lateinit var toolbarBase: androidx.appcompat.widget.Toolbar
+    private var adapter: RecipeAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserProfileBinding.inflate(inflater, container, false)
-        toolbarBase = requireActivity().findViewById(R.id.toolbar_user_profile_base)
-        toolbarBase.inflateMenu(R.menu.user_profile_menu)
-        toolbarBase.setOnMenuItemClickListener(this::onOptionsItemSelected)
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        userViewModel.user.value = User()
-//        userViewModel.user.value!!.username = authenticationViewModel.username.value
+        Log.i("================ User profile ================", "onViewCreated")
 
         progress_overlay.visibility = View.VISIBLE
-//        val handler = Handler()
-//        handler.postDelayed({
-//            progress_overlay.visibility = View.GONE
-//            //                loadingDialog.isDismiss()
-//        }, 1500)
 
         if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
-//            setupMenu()
-            toolbarBase.title = userViewModel.user.value!!.username
+            setupMenu()
+            toolbar_userprofile.title = userViewModel.user.value!!.username
             setupViewForLoggedInUser()
         } else {
-            toolbarBase.title = userViewModel.selectedUsername.value!!
+            toolbar_userprofile.title = userViewModel.selectedUsername.value!!
             setupViewForSelectedUser()
         }
-
 
         imageview_recipes_qtt_userprofile.setOnClickListener {
             focusOnRecipes()
@@ -92,7 +82,7 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
         imageview_userphoto_userprofile.setOnClickListener {
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_view_image_from_user_profile)
+                .navigate(R.id.action_go_to_view_image_from_user_profile1)
         }
 
 
@@ -124,22 +114,22 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             swipe_refresh_user_profile.isRefreshing = false
         }
 
-        val list1 = listOf(
-            Recipe(title = "sobaka1", forks = 255),
-            Recipe(title = "sobaka2", forks = 1477, author = "Neshik"),
-            Recipe(
-                title = "Text text text text text text text text",
-                forks = 1234567,
-                author = "Timofey"
-            ),
-            Recipe(title = "sobaka4"),
-            Recipe(title = "sobaka5"),
-            Recipe(title = "sobaka6"),
-            Recipe(title = "sobaka7"),
-            Recipe(title = "sobaka8", forks = 1339),
-            Recipe(title = "sobaka9"),
-            Recipe(title = "sobaka10")
-        )
+//        val list1 = listOf(
+//            Recipe(title = "sobaka1", forks = 255),
+//            Recipe(title = "sobaka2", forks = 1477, author = "Neshik"),
+//            Recipe(
+//                title = "Text text text text text text text text",
+//                forks = 1234567,
+//                author = "Timofey"
+//            ),
+//            Recipe(title = "sobaka4"),
+//            Recipe(title = "sobaka5"),
+//            Recipe(title = "sobaka6"),
+//            Recipe(title = "sobaka7"),
+//            Recipe(title = "sobaka8", forks = 1339),
+//            Recipe(title = "sobaka9"),
+//            Recipe(title = "sobaka10")
+//        )
         val list2 = listOf(
             Recipe(title = "kot1"),
             Recipe(title = "kot2"),
@@ -152,17 +142,19 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             Recipe(title = "kot9")
         )
 
-        val adapter = RecipeAdapter()
-        adapter.setData(list1, User())
-        adapter.setClickListener(this)
+        val list1: ArrayList<Recipe> = ArrayList()
+//        val list2: ArrayList<Recipe> = ArrayList()
+        adapter = RecipeAdapter()
+        adapter!!.setData(list1, User())
+        adapter!!.setClickListener(this)
         rv_user_recipe.adapter = adapter
 
         tabLayout_userprofile.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab!!.position == 0) {
-                    adapter.setData(list1)
+                    adapter!!.setData(list1)
                 } else {
-                    adapter.setData(list2)
+                    adapter!!.setData(list2)
                 }
             }
 
@@ -177,29 +169,29 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         })
     }
 
-//    private fun setupMenu() {
-//        val activity = (activity as AppCompatActivity?)!!
-//        activity.setSupportActionBar(toolbarBase)
-//        setHasOptionsMenu(true)
-//    }
+    private fun setupAdapter() {
+        adapter = RecipeAdapter()
+        adapter!!.setClickListener(this)
+        rv_user_recipe.adapter = adapter
+    }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.user_profile_menu, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
+    private fun setupMenu() {
+        toolbar_userprofile.inflateMenu(R.menu.user_profile_menu)
+        toolbar_userprofile.setOnMenuItemClickListener(this::onOptionsItemSelected)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_user_profile_edit_profile -> {
-                openEditProfile()
+                NavHostFragment.findNavController(this).navigate(R.id.action_go_to_edit_profile_from_user_profile)
                 true
             }
             R.id.menu_user_profile_badges -> {
-                openBadges()
+                NavHostFragment.findNavController(this).navigate(R.id.action_go_to_badges_from_user_profile)
                 true
             }
             R.id.menu_user_profile_app_settings -> {
-                openAppSettings()
+                NavHostFragment.findNavController(this).navigate(R.id.action_go_to_app_settings_from_user_profile)
                 true
             }
             R.id.menu_user_profile_app_info -> {
@@ -221,15 +213,6 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         builder.show()
     }
 
-    private fun openBadges() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_badges_from_user_profile)
-    }
-
-    private fun openAppSettings() {
-        NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_app_settings_from_user_profile)
-    }
-
     private fun logout() {
         val sharedPreferences = requireActivity().getSharedPreferences(
             Constants.SP_TAG, Context.MODE_PRIVATE
@@ -240,11 +223,6 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
         editor.apply()
         startActivity(Intent(requireActivity(), SplashActivity::class.java))
         requireActivity().finish()
-    }
-
-    private fun openEditProfile() {
-        NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_edit_profile)
     }
 
     private fun animateTextExpand() {
@@ -289,20 +267,20 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     private fun setupViewForLoggedInUser() {
         ll_btns_follow_message.visibility = View.GONE
         tabLayout_userprofile.visibility = View.VISIBLE
-        toolbarBase.navigationIcon = null
+        toolbar_userprofile.navigationIcon = null
         loadData(userViewModel.user.value!!.username!!, true)
     }
 
     private fun setupViewForSelectedUser() {
         ll_btns_follow_message.visibility = View.VISIBLE
         tabLayout_userprofile.visibility = View.GONE
-        toolbarBase.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
+        toolbar_userprofile.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
         loadData(userViewModel.selectedUsername.value!!, false)
     }
 
     private fun drawData(user: User) {
         if (user.username == userViewModel.user.value!!.username) {
-            toolbarBase.title = user.username
+            toolbar_userprofile.title = user.username
 
             if (user.recipes == null) {
                 textview_recipes_qtt_userprofile.text = "0"
@@ -353,14 +331,14 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
             if (user.online) {
                 imageview_is_online.visibility = View.VISIBLE
-                toolbarBase.subtitle = getString(R.string.subtitle_online)
+                toolbar_userprofile.subtitle = getString(R.string.subtitle_online)
 
             } else {
                 imageview_is_online.visibility = View.INVISIBLE
-                toolbarBase.subtitle = getString(R.string.subtitle_offline)
+                toolbar_userprofile.subtitle = getString(R.string.subtitle_offline)
             }
         } else {
-            toolbarBase.title = user.username
+            toolbar_userprofile.title = user.username
 
             if (user.recipes == null) {
                 textview_recipes_qtt_userprofile.text = "0"
@@ -411,11 +389,11 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
 
             if (user.online) {
                 imageview_is_online.visibility = View.VISIBLE
-                toolbarBase.subtitle = getString(R.string.subtitle_online)
+                toolbar_userprofile.subtitle = getString(R.string.subtitle_online)
 
             } else {
                 imageview_is_online.visibility = View.INVISIBLE
-                toolbarBase.subtitle = getString(R.string.subtitle_offline)
+                toolbar_userprofile.subtitle = getString(R.string.subtitle_offline)
             }
         }
         progress_overlay.visibility = View.GONE
@@ -462,8 +440,24 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     }
 
     override fun onDestroy() {
-        userViewModel.selectedUsername.value = null
-//        userViewModel.selectedUser.value = null
         super.onDestroy()
+        Log.i("================ User profile ================", "onDestroy")
+        userViewModel.selectedUsername.value = null
+        userViewModel.selectedUser.value = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("================ User profile ================", "onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i("================ User profile ================", "onResume")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i("================ User profile ================", "onStart")
     }
 }
