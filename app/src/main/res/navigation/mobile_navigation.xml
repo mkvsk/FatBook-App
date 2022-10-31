@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_recipe_create_old"
-        android:name="online.fatbook.fatbookapp.ui.fragment.RecipeCreateFragmentOLD"
+        android:name="online.fatbook.fatbookapp.ui.fragment.old.RecipeCreateFragmentOLD"
         android:label="@string/mobile_nav_recipe_create"
         tools:layout="@layout/fragment_recipe_create_old">
 
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/navigation_bookmarks_old"
-        android:name="online.fatbook.fatbookapp.ui.fragment.BookmarksFragmentOLD"
+        android:name="online.fatbook.fatbookapp.ui.fragment.old.BookmarksFragmentOLD"
         android:label="@string/mobile_nav_bookmarks"
         tools:layout="@layout/fragment_bookmarks_old">
 
@@ -52,7 +52,7 @@
     <!--    Old fragment-->
     <fragment
         android:id="@+id/navigation_user_profile_old"
-        android:name="online.fatbook.fatbookapp.ui.fragment.UserProfileFragmentOLD"
+        android:name="online.fatbook.fatbookapp.ui.fragment.old.UserProfileFragmentOLD"
         android:label="@string/mobile_nav_user_profile"
         tools:layout="@layout/fragment_user_profile_old">
 
@@ -65,7 +65,7 @@
 
     <fragment
         android:id="@+id/navigation_recipe_view"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.RecipeViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.RecipeViewFragment"
         android:label="@string/mobile_nav_recipe_view"
         tools:layout="@layout/fragment_recipe_view">
 
@@ -82,7 +82,7 @@
 
     <fragment
         android:id="@+id/navigation_add_ingredient_old"
-        android:name="online.fatbook.fatbookapp.ui.fragment.RecipeAddIngredientFragmentOLD"
+        android:name="online.fatbook.fatbookapp.ui.fragment.old.RecipeAddIngredientFragmentOLD"
         android:label="@string/mobile_nav_recipe_add_ingredient"
         tools:layout="@layout/fragment_add_ingredient_old" />
 
@@ -358,7 +358,7 @@
 
     <fragment
         android:id="@+id/navigation_view_image"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.ImageViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.ImageViewFragment"
         android:label="@null"
         tools:layout="@layout/fragment_image_view" />
 

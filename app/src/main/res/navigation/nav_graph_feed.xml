@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/recipe_view_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.RecipeViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.RecipeViewFragment"
         android:label="@null" />
 
     <fragment

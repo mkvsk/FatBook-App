@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_blue_grey_50"
     android:orientation="vertical"
-    tools:context="online.fatbook.fatbookapp.ui.fragment.BookmarksFragmentOLD">
+    tools:context="online.fatbook.fatbookapp.ui.fragment.old.BookmarksFragmentOLD">
 
     <ImageView
         android:id="@+id/imageView_bookmarks_kuzya_bgr"
