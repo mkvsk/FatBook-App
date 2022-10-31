@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.recipe.create
+package online.fatbook.fatbookapp.ui.fragment.recipe_create
 
 import android.os.Bundle
 import android.util.Log
@@ -6,7 +6,6 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_recipe_methods_categories_items.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback

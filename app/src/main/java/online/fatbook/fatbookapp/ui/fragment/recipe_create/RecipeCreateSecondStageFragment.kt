@@ -1,13 +1,10 @@
-package online.fatbook.fatbookapp.ui.fragment.recipe.create
+package online.fatbook.fatbookapp.ui.fragment.recipe_create
 
-import android.opengl.ETC1.getHeight
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.cardview.widget.CardView
 import androidx.core.widget.NestedScrollView
 import androidx.navigation.fragment.NavHostFragment
 import androidx.transition.AutoTransition

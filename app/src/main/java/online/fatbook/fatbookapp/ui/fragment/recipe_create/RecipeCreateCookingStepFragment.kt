@@ -1,10 +1,9 @@
-package online.fatbook.fatbookapp.ui.fragment.recipe.create
+package online.fatbook.fatbookapp.ui.fragment.recipe_create
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View

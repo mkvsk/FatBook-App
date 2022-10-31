@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_feed"
-        android:name="online.fatbook.fatbookapp.ui.fragment.FeedFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.feed.FeedFragment"
         android:label="@string/mobile_nav_feed"
         tools:layout="@layout/fragment_feed">
 
@@ -65,7 +65,7 @@
 
     <fragment
         android:id="@+id/navigation_recipe_view"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.view.RecipeViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.RecipeViewFragment"
         android:label="@string/mobile_nav_recipe_view"
         tools:layout="@layout/fragment_recipe_view">
 
@@ -266,13 +266,13 @@
 
     <fragment
         android:id="@+id/navigation_badges"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.BadgesFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.BadgesFragment"
         android:label="@null"
         tools:layout="@layout/fragment_badges" />
 
     <fragment
         android:id="@+id/navigation_app_settings"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.AppSettingsFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.AppSettingsFragment"
         android:label="@null"
         tools:layout="@layout/fragment_app_settings">
 
@@ -290,13 +290,13 @@
 
     <fragment
         android:id="@+id/navigation_follow_fragment"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.FollowersFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.FollowersFragment"
         android:label="@null"
         tools:layout="@layout/fragment_followers" />
 
     <fragment
         android:id="@+id/navigation_recipe_create"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeCreateFirstStageFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateFirstStageFragment"
         android:label="@null"
         tools:layout="@layout/fragment_recipe_create_first_stage">
 
@@ -317,13 +317,13 @@
 
     <fragment
         android:id="@+id/navigation_recipe_choose_method_or_category"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeMethodsCategoriesItemsFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeMethodsCategoriesItemsFragment"
         android:label="@null"
         tools:layout="@layout/fragment_recipe_methods_categories_items" />
 
     <fragment
         android:id="@+id/navigation_recipe_create_second_stage"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeCreateSecondStageFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateSecondStageFragment"
         android:label="@null"
         tools:layout="@layout/fragment_recipe_create_second_stage">
 
@@ -340,13 +340,13 @@
 
     <fragment
         android:id="@+id/navigation_recipe_create_cooking_step"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeCreateCookingStepFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateCookingStepFragment"
         android:label="@null"
         tools:layout="@layout/fragment_recipe_create_cooking_step" />
 
     <fragment
         android:id="@+id/navigation_recipe_create_add_ingredients"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeCreateAddIngredientsFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.create.RecipeCreateAddIngredientsFragment"
         android:label="@null"
         tools:layout="@layout/fragment_recipe_create_add_ingredients" >
 
@@ -358,13 +358,13 @@
 
     <fragment
         android:id="@+id/navigation_view_image"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.ViewImageFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.ImageViewFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_view_image" />
+        tools:layout="@layout/fragment_image_view" />
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="online.fatbook.fatbookapp.ui.fragment.SearchFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.search.SearchFragment"
         android:label="@null"
         tools:layout="@layout/fragment_search">
 
@@ -377,7 +377,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="online.fatbook.fatbookapp.ui.fragment.NotificationsFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.notifications.NotificationsFragment"
         android:label="@null"
         tools:layout="@layout/fragment_notifications">
 
@@ -401,7 +401,7 @@
 
     <fragment
         android:id="@+id/navigation_direct_messages"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.DirectMessagesFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.feed.DirectMessagesFragment"
         android:label="@null"
         tools:layout="@layout/fragment_direct_messages" />
 

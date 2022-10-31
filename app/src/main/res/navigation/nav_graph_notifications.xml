@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/notification_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.NotificationsFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.notifications.NotificationsFragment"
         android:label="@string/nav_notifications">
 
         <action
@@ -20,11 +20,11 @@
 
     <fragment
         android:id="@+id/recipe_view_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.view.RecipeViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.RecipeViewFragment"
         android:label="@null" />
 
     <fragment
         android:id="@+id/followers_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.FollowersFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.FollowersFragment"
         android:label="@null" />
 </navigation>

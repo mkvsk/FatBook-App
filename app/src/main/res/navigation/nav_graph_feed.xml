@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/feed_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.FeedFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.feed.FeedFragment"
         android:label="@string/nav_feed">
 
         <action
@@ -27,12 +27,12 @@
 
     <fragment
         android:id="@+id/recipe_view_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.view.RecipeViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.RecipeViewFragment"
         android:label="@null" />
 
     <fragment
         android:id="@+id/direct_messages_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.DirectMessagesFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.feed.DirectMessagesFragment"
         android:label="@null" />
 
 </navigation>

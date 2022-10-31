@@ -37,19 +37,19 @@
         android:label="@null" />
     <fragment
         android:id="@+id/follow_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.FollowersFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.FollowersFragment"
         android:label="@null" />
     <fragment
         android:id="@+id/view_image_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.ViewImageFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.util.ImageViewFragment"
         android:label="@null" />
     <fragment
         android:id="@+id/app_settings_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.AppSettingsFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.AppSettingsFragment"
         android:label="@null" />
     <fragment
         android:id="@+id/badges_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.util.BadgesFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.BadgesFragment"
         android:label="@null" />
 
 </navigation>

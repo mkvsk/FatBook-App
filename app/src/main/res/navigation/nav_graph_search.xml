@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/search_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.SearchFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.search.SearchFragment"
         android:label="@string/nav_search" />
 </navigation>
