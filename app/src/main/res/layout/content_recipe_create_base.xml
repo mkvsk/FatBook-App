@@ -5,25 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout_recipe_create_base"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_recipe_create_base"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/theme_toolbar_color"
-            android:minHeight="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:titleTextColor="@color/main_text"
-            app:titleTextAppearance="@style/txtToolbar" />
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_recipe_create"
         android:name="androidx.navigation.fragment.NavHostFragment"

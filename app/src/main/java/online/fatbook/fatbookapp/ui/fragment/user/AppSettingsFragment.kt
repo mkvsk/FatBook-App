@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.util
+package online.fatbook.fatbookapp.ui.fragment.user
 
 import android.content.Context
 import android.os.Bundle
@@ -32,11 +32,6 @@ class AppSettingsFragment : Fragment() {
 
         switch_app_theme.setOnClickListener {
             progress_overlay.visibility = View.VISIBLE
-
-            val handler = Handler()
-            handler.postDelayed({
-                progress_overlay.visibility = View.GONE
-            }, 1500)
         }
 
         switch_app_theme.setOnCheckedChangeListener { _, isChecked ->

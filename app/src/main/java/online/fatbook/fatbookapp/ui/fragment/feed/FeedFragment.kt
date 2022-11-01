@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment
+package online.fatbook.fatbookapp.ui.fragment.feed
 
 import android.content.Context
 import android.content.Intent

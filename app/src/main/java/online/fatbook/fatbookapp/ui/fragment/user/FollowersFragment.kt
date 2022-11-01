@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.util
+package online.fatbook.fatbookapp.ui.fragment.user
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,7 +14,7 @@ class FollowersFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFollowersBinding.inflate(inflater, container, false)
         return binding!!.root
     }

@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment
+package online.fatbook.fatbookapp.ui.fragment.old
 
 import android.os.Bundle
 import android.text.Editable

@@ -9,32 +9,31 @@
 
     <include layout="@layout/include_progress_overlay"/>
 
-<!--    <com.google.android.material.appbar.AppBarLayout-->
-<!--        android:id="@+id/appBarLayout_userprofile"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        tools:ignore="MissingConstraints">-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout_userprofile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
 
-<!--        <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"-->
-<!--            android:id="@+id/toolbar_userprofile"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/theme_toolbar_color"-->
-<!--            android:minHeight="?attr/actionBarSize"-->
-<!--            app:layout_scrollFlags="scroll|enterAlways"-->
-<!--            local:navigationIcon="@drawable/ic_arrow_back"-->
-<!--            local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"-->
-<!--            local:menu="@menu/user_profile_menu"-->
-<!--            local:theme="@style/ThemeOverlay.AppCompat.Dark"-->
-<!--            local:title="my_profile"-->
-<!--            local:titleTextAppearance="@style/txtToolbar"-->
-<!--            local:titleTextColor="@color/main_text"-->
-<!--            local:subtitle="@string/subtitle_offline"-->
-<!--            local:subtitleTextAppearance="@style/txtSubtitleToolbar"-->
-<!--            local:subtitleTextColor="@color/theme_toolbar_subtitle_text_color"-->
-<!--            />-->
+        <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar_userprofile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme_toolbar_color"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            local:navigationIcon="@drawable/ic_arrow_back"
+            local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            local:theme="@style/ThemeOverlay.AppCompat.Dark"
+            local:title="my_profile"
+            local:titleTextAppearance="@style/txtToolbar"
+            local:titleTextColor="@color/main_text"
+            local:subtitle="@string/subtitle_offline"
+            local:subtitleTextAppearance="@style/txtSubtitleToolbar"
+            local:subtitleTextColor="@color/theme_toolbar_subtitle_text_color"
+            />
 
-<!--    </com.google.android.material.appbar.AppBarLayout>-->
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_user_profile"
@@ -320,7 +319,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_user_recipe"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:overScrollMode="never"
                     android:paddingTop="15dp"

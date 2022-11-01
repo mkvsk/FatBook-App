@@ -44,27 +44,22 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private val fragments = listOf(
         BaseFragment.newInstance(
             R.layout.content_feed_base,
-            R.id.toolbar_feed_base,
             R.id.nav_host_feed
         ),
         BaseFragment.newInstance(
             R.layout.content_search_base,
-            R.id.toolbar_search_base,
             R.id.nav_host_search
         ),
         BaseFragment.newInstance(
             R.layout.content_recipe_create_base,
-            R.id.toolbar_recipe_create_base,
             R.id.nav_host_recipe_create
         ),
         BaseFragment.newInstance(
             R.layout.content_notifications_base,
-            R.id.toolbar_notifications_base,
             R.id.nav_host_notifications
         ),
         BaseFragment.newInstance(
             R.layout.content_user_profile_base,
-            R.id.toolbar_user_profile_base,
             R.id.nav_host_user_profile
         ),
     )
@@ -97,7 +92,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         bottom_navigation.setOnNavigationItemSelectedListener(this)
         bottom_navigation.setOnNavigationItemReselectedListener(this)
 
-        if (backStack.empty()) backStack.push(0)
+        if (backStack.empty()) {
+            backStack.push(0)
+        }
 
         if (intent.getBooleanExtra(FEED_TAG, false)) {
             val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
@@ -170,7 +167,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val position = indexToPage.values.indexOf(item.itemId)
-        if (main_pager.currentItem != position) setItem(position)
+        if (main_pager.currentItem != position) {
+            setItem(position)
+        }
         return true
     }
 
@@ -204,7 +203,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onPageSelected(position: Int) {
         val itemId = indexToPage[position] ?: R.id.navigation_feed
-        if (bottom_navigation.selectedItemId != itemId) bottom_navigation.selectedItemId = itemId
+        if (bottom_navigation.selectedItemId != itemId) {
+            bottom_navigation.selectedItemId = itemId
+        }
     }
 
     override fun onPageScrollStateChanged(state: Int) {}

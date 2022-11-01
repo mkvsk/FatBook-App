@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment
+package online.fatbook.fatbookapp.ui.fragment.search
 
 import android.os.Bundle
 import android.view.LayoutInflater

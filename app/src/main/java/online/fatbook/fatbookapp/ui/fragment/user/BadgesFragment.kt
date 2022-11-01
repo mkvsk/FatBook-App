@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.util
+package online.fatbook.fatbookapp.ui.fragment.user
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
