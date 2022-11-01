@@ -12,6 +12,7 @@ object Constants {
     const val SP_TAG_PASSWORD = "password"
     const val SP_TAG_USERNAME = "username"
     const val SP_TAG_DARK_MODE = "dark_mode"
+
 //    const val ET_BIO_REGEX = "^(?=\\S+\$).{0,635}$"
 
     val rootDestinations = setOf(R.id.feed_dest, R.id.search_dest, R.id.recipe_create_first_stage_dest, R.id.notification_dest, R.id.user_profile_dest)

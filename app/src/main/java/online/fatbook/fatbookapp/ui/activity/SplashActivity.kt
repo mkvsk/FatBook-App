@@ -1,20 +1,25 @@
 package online.fatbook.fatbookapp.ui.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate.*
 import online.fatbook.fatbookapp.databinding.ActivitySplashBinding
+import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.Constants.FEED_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
-import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
 import org.apache.commons.lang3.StringUtils
 
 class SplashActivity : AppCompatActivity() {
     private var binding: ActivitySplashBinding? = null
     private var username: String? = null
     private var password: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -41,6 +46,15 @@ class SplashActivity : AppCompatActivity() {
 
     private fun loadSharedPreferences() {
         val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
+
+        when (sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)) {
+            true -> {
+                setDefaultNightMode(MODE_NIGHT_YES)
+            }
+            else -> {
+                setDefaultNightMode(MODE_NIGHT_NO)
+            }
+        }
 
         username = sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
         password = sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
