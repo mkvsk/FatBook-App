@@ -35,6 +35,7 @@ class SplashActivity : AppCompatActivity() {
         } else {
             mainScreenIntent.putExtra(FEED_TAG, false)
         }
+        //TODO setDarkMode
         startActivity(mainScreenIntent)
         finish()
     }
