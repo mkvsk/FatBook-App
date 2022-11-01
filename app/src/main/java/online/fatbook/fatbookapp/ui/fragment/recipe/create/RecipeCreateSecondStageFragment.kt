@@ -23,6 +23,7 @@ import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeIngredientItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
+import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 
 class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListener,
@@ -143,13 +144,20 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     }
 
     private fun drawNutritionFacts() {
-        if (recipeViewModel.newRecipe.value!!.isAllIngredientUnitsValid && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()) {
+        if (recipeViewModel.newRecipe.value!!.isAllIngredientUnitsValid
+            && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()) {
             showNutritionFacts(true)
             textview_portion_kcals_qtt_recipe_create_2_stage.text =
                 recipeViewModel.newRecipe.value?.kcalPerPortion.toString()
-            tv_qtt_proteins.text = recipeViewModel.newRecipe.value?.proteinsPerPortion.toString()
-            tv_qtt_fats.text = recipeViewModel.newRecipe.value?.fatsPerPortion.toString()
-            tv_qtt_carbs.text = recipeViewModel.newRecipe.value?.carbsPerPortion.toString()
+            tv_qtt_proteins.text = FormatUtils.prettyCount(
+                recipeViewModel.newRecipe.value?.proteinsPerPortion.toString().toInt()
+            )
+            tv_qtt_fats.text = FormatUtils.prettyCount(
+                recipeViewModel.newRecipe.value?.fatsPerPortion.toString().toInt()
+            )
+            tv_qtt_carbs.text = FormatUtils.prettyCount(
+                recipeViewModel.newRecipe.value?.carbsPerPortion.toString().toInt()
+            )
         } else {
             showNutritionFacts(false)
         }

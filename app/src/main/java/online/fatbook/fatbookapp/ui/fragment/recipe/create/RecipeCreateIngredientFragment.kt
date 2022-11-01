@@ -130,14 +130,15 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
                 textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
                     String.format(
                         "%s kcal",
-                        FormatUtils.prettyNutriFak(newKcal)
+                        FormatUtils.prettyCount(newKcal.toString().toInt())
                     )
 
                 tv_ingredient_proteins_recipe_add_ingredients.text =
-                    FormatUtils.prettyNutriFak(newProteins)
-                tv_ingredient_fats_recipe_add_ingredients.text = FormatUtils.prettyNutriFak(newFats)
+                    FormatUtils.prettyCount(newProteins.toString().toInt())
+                tv_ingredient_fats_recipe_add_ingredients.text =
+                    FormatUtils.prettyCount(newFats.toString().toInt())
                 tv_ingredient_carbs_recipe_add_ingredients.text =
-                    FormatUtils.prettyNutriFak(newCarbs)
+                    FormatUtils.prettyCount(newCarbs.toString().toInt())
             } else {
                 setDefaultNutritionFacts(ingredient)
             }
@@ -185,11 +186,12 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
     private fun addIngredient() {
         selectedUnit = units[picker_ingredient_unit.value]
 
-        selectedQtt = if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()) {
-            1.0
-        } else {
-            editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
-        }
+        selectedQtt =
+            if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()) {
+                1.0
+            } else {
+                editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
+            }
 
         val recipeIngredient = RecipeIngredient(
             pid = null,

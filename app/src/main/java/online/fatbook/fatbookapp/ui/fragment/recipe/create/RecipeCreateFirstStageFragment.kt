@@ -163,16 +163,6 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 .trim()
         edittext_title_recipe_create_1_stage.setText(recipeViewModel.newRecipe.value!!.title)
 
-//        if (rb_lvl_easy.isChecked) {
-//            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.EASY
-//        }
-//        if (rb_lvl_normal.isChecked) {
-//            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.NORMAL
-//        }
-//        if (rb_lvl_hard.isChecked) {
-//            recipeViewModel.newRecipe.value!!.difficulty = Difficulty.HARD
-//        }
-
         recipeViewModel.newRecipe.value!!.portions =
             if (edittext_portions_qtt_recipe_create_1_stage.text.toString().isEmpty()) {
                 1
