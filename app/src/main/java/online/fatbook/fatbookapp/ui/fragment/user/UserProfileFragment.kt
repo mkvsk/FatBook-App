@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.text.Layout
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
 import android.widget.Toolbar
@@ -12,12 +14,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.content_user_profile_base.*
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
@@ -29,16 +35,18 @@ import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
+import online.fatbook.fatbookapp.ui.fragment.navigation.NonSwipingViewPager
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.FormatUtils
+import online.fatbook.fatbookapp.util.MyPagerAdapter
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 
 
-class UserProfileFragment : Fragment(), OnRecipeClickListener {
+class UserProfileFragment : Fragment() {
 
     private var binding: FragmentUserProfileBinding? = null
 
@@ -47,7 +55,8 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val authenticationViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
-    private var adapter: RecipeAdapter? = null
+    private lateinit var viewPager: ViewPager2
+//    private var adapter: RecipeAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -71,6 +80,17 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             setupViewForSelectedUser()
         }
 
+        val fragmentAdapter = MyPagerAdapter(this)
+        viewPager = vp_userprofile
+        viewPager.isUserInputEnabled = false
+        viewPager.adapter = fragmentAdapter
+        viewPager.offscreenPageLimit = 2
+        val tabLayout = tabLayout_userprofile
+        TabLayoutMediator(tabLayout, viewPager) {tab, position ->
+            tab.text = "OBJECT ${(position + 1)}"
+        }.attach()
+
+
         imageview_recipes_qtt_userprofile.setOnClickListener {
             focusOnRecipes()
         }
@@ -84,19 +104,6 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_view_image_from_user_profile1)
         }
-
-
-//        imageview_userphoto_userprofile.setOnClickListener ({
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//
-//            } else {
-//            }
-//        }
-
-//
-////            val set = AnimatorInflater.loadAnimator(context, R.animator.open_animator) as AnimatorSet
-////            set.setTarget(imageview_userphoto_userprofile)
-////            set.start()
 
         nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
             showButtonUp(scrollY)
@@ -114,47 +121,12 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             swipe_refresh_user_profile.isRefreshing = false
         }
 
-//        val list1 = listOf(
-//            Recipe(title = "sobaka1", forks = 255),
-//            Recipe(title = "sobaka2", forks = 1477, author = "Neshik"),
-//            Recipe(
-//                title = "Text text text text text text text text",
-//                forks = 1234567,
-//                author = "Timofey"
-//            ),
-//            Recipe(title = "sobaka4"),
-//            Recipe(title = "sobaka5"),
-//            Recipe(title = "sobaka6"),
-//            Recipe(title = "sobaka7"),
-//            Recipe(title = "sobaka8", forks = 1339),
-//            Recipe(title = "sobaka9"),
-//            Recipe(title = "sobaka10")
-//        )
-        val list2 = listOf(
-            Recipe(title = "kot1"),
-            Recipe(title = "kot2"),
-            Recipe(title = "kot3"),
-            Recipe(title = "kot4"),
-            Recipe(title = "kot5"),
-            Recipe(title = "kot6"),
-            Recipe(title = "kot7"),
-            Recipe(title = "kot8"),
-            Recipe(title = "kot9")
-        )
-
-        val list1: ArrayList<Recipe> = ArrayList()
-//        val list2: ArrayList<Recipe> = ArrayList()
-        adapter = RecipeAdapter()
-        adapter!!.setData(list1, User())
-        adapter!!.setClickListener(this)
-        rv_user_recipe.adapter = adapter
-
         tabLayout_userprofile.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab!!.position == 0) {
-                    adapter!!.setData(list1)
+//                    adapter!!.setData(list1)
                 } else {
-                    adapter!!.setData(list2)
+//                    adapter!!.setData(list2)
                 }
             }
 
@@ -167,12 +139,6 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
             }
 
         })
-    }
-
-    private fun setupAdapter() {
-        adapter = RecipeAdapter()
-        adapter!!.setClickListener(this)
-        rv_user_recipe.adapter = adapter
     }
 
     private fun setupMenu() {
@@ -425,18 +391,6 @@ class UserProfileFragment : Fragment(), OnRecipeClickListener {
                 0, cardview_userprofile.bottom
             )
         }
-    }
-
-    override fun onRecipeClick(position: Int) {
-        Log.d("recipe click", position.toString())
-    }
-
-    override fun onBookmarksClick(recipe: Recipe?, bookmark: Boolean, position: Int) {
-        Log.d("bookmark click", position.toString())
-    }
-
-    override fun onForkClicked(recipe: Recipe?, fork: Boolean, position: Int) {
-        Log.d("fork click", position.toString())
     }
 
     override fun onDestroy() {

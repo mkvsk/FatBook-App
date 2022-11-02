@@ -7,7 +7,7 @@
     android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.user.UserProfileFragment">
 
-    <include layout="@layout/include_progress_overlay"/>
+    <include layout="@layout/include_progress_overlay" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_userprofile"
@@ -24,14 +24,13 @@
             app:layout_scrollFlags="scroll|enterAlways"
             local:navigationIcon="@drawable/ic_arrow_back"
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-            local:theme="@style/ThemeOverlay.AppCompat.Dark"
-            local:title="my_profile"
-            local:titleTextAppearance="@style/txtToolbar"
-            local:titleTextColor="@color/main_text"
             local:subtitle="@string/subtitle_offline"
             local:subtitleTextAppearance="@style/txtSubtitleToolbar"
             local:subtitleTextColor="@color/theme_toolbar_subtitle_text_color"
-            />
+            local:theme="@style/ThemeOverlay.AppCompat.Dark"
+            local:title="my_profile"
+            local:titleTextAppearance="@style/txtToolbar"
+            local:titleTextColor="@color/main_text" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -76,19 +75,19 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/textview_was_online"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            android:text="last seen 5 minutes ago"-->
-<!--                            android:textSize="9sp"-->
-<!--                            android:fontFamily="@font/roboto_regular"-->
-<!--                            android:textColor="@color/blue_grey_200"-->
-<!--                            android:background="@drawable/round_corner_rect_blue_grey_50"-->
-<!--                            android:paddingHorizontal="5dp"-->
-<!--                            />-->
+                        <!--                        <TextView-->
+                        <!--                            android:id="@+id/textview_was_online"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            app:layout_constraintLeft_toLeftOf="parent"-->
+                        <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                        <!--                            android:text="last seen 5 minutes ago"-->
+                        <!--                            android:textSize="9sp"-->
+                        <!--                            android:fontFamily="@font/roboto_regular"-->
+                        <!--                            android:textColor="@color/blue_grey_200"-->
+                        <!--                            android:background="@drawable/round_corner_rect_blue_grey_50"-->
+                        <!--                            android:paddingHorizontal="5dp"-->
+                        <!--                            />-->
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageview_recipes_qtt_userprofile"
@@ -205,10 +204,10 @@
                             android:layout_marginStart="30dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="30dp"
-                            android:textSize="11sp"
-                            android:text="www.potatocorp.online"
                             android:autoLink="all"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="www.potatocorp.online"
+                            android:textSize="11sp"
                             app:layout_constraintLeft_toRightOf="@id/imageview_ic_website"
                             app:layout_constraintTop_toBottomOf="@id/textview_title_userprofile" />
 
@@ -259,29 +258,29 @@
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:visibility="visible"
-                            app:layout_constraintTop_toBottomOf="@id/expandableLayout"
-                            app:layout_constraintBottom_toBottomOf="parent">
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/expandableLayout">
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/button_friends"
+                                style="@style/buttons_in_fragments_style"
                                 android:layout_width="@dimen/btn_main_w"
                                 android:layout_height="@dimen/btn_main_h"
                                 android:layout_marginEnd="35dp"
-                                style="@style/buttons_in_fragments_style"
                                 android:background="@drawable/selector_btn_in_fragments"
-                                android:enabled="false"
                                 android:elevation="4dp"
+                                android:enabled="false"
                                 android:text="@string/btn_follow"
                                 android:translationZ="2dp" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/button_messages"
+                                style="@style/buttons_in_fragments_style"
                                 android:layout_width="@dimen/btn_main_w"
                                 android:layout_height="@dimen/btn_main_h"
-                                style="@style/buttons_in_fragments_style"
                                 android:background="@drawable/selector_btn_in_fragments"
-                                android:enabled="false"
                                 android:elevation="4dp"
+                                android:enabled="false"
                                 android:text="@string/btn_messages"
                                 android:translationZ="2dp" />
 
@@ -289,43 +288,62 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayout_userprofile"
-                    style="@style/myTabLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/tabitem_h"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginTop="@dimen/userprofile_categories_spacing"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/tabview_bgr"
-                    android:stateListAnimator="@null"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardview_userprofile"
-                    app:tabRippleColor="@null">
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="My recipes" />
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Favourites" />
-
-                </com.google.android.material.tabs.TabLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_user_recipe"
+                <LinearLayout
+                    android:id="@+id/ll_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:overScrollMode="never"
-                    android:paddingTop="15dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/tabLayout_userprofile"
-                    tools:listitem="@layout/rv_feed_recipe_card_preview" />
+                    android:orientation="vertical"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardview_userprofile">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout_userprofile"
+                        style="@style/myTabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/tabitem_h"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginTop="@dimen/userprofile_categories_spacing"
+                        android:layout_marginEnd="60dp"
+                        android:background="@drawable/tabview_bgr"
+                        android:stateListAnimator="@null"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tabRippleColor="@null">
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="My recipes" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Favourites" />
+
+                    </com.google.android.material.tabs.TabLayout>
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/vp_userprofile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintTop_toBottomOf="@+id/tabLayout_userprofile" />
+                </LinearLayout>
+
+
+                <!--                <androidx.recyclerview.widget.RecyclerView-->
+                <!--                    android:id="@+id/rv_user_recipe"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:clipToPadding="false"-->
+                <!--                    android:overScrollMode="never"-->
+                <!--                    android:paddingTop="15dp"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/ll_viewpager"-->
+                <!--                    tools:listitem="@layout/rv_feed_recipe_card_preview" />-->
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -350,8 +368,8 @@
             android:layout_marginBottom="10dp"
             android:elevation="10dp"
             android:visibility="gone"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:maxImageSize="16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
