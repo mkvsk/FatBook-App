@@ -28,7 +28,7 @@ class AppSettingsFragment : Fragment() {
 
         val sharedPreferences =
             requireActivity().getSharedPreferences(SP_TAG, Context.MODE_PRIVATE)
-        switch_app_theme.isChecked = sharedPreferences.getBoolean(SP_TAG_DARK_MODE, true)
+        switch_app_theme.isChecked = sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)
 
         switch_app_theme.setOnCheckedChangeListener { _, isChecked ->
 

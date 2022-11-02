@@ -37,13 +37,13 @@ class AllRecipesPageFragment : Fragment(), OnRecipeClickListener {
                 forks = 1234567,
                 author = "Timofey"
             ),
-            Recipe(title = "Мой рецепт4"),
-            Recipe(title = "sobaka5"),
-            Recipe(title = "sobaka6"),
-            Recipe(title = "sobaka7"),
-            Recipe(title = "sobaka8", forks = 1339),
-            Recipe(title = "sobaka9"),
-            Recipe(title = "sobaka10")
+//            Recipe(title = "Мой рецепт4"),
+//            Recipe(title = "sobaka5"),
+//            Recipe(title = "sobaka6"),
+//            Recipe(title = "sobaka7"),
+//            Recipe(title = "sobaka8", forks = 1339),
+//            Recipe(title = "sobaka9"),
+//            Recipe(title = "sobaka10")
         )
 
         adapter = RecipeAdapter()

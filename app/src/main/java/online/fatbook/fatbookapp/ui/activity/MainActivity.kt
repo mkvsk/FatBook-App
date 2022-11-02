@@ -2,15 +2,12 @@ package online.fatbook.fatbookapp.ui.activity
 
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,25 +16,22 @@ import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.fragment.navigation.BaseFragment
 import online.fatbook.fatbookapp.ui.viewmodel.*
-import online.fatbook.fatbookapp.util.Constants.FEED_TAG
-import online.fatbook.fatbookapp.util.Constants.SP_TAG
-import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
-import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
-import online.fatbook.fatbookapp.util.ProgressBarUtil
 import online.fatbook.fatbookapp.util.SearchUtils
-import org.apache.commons.lang3.StringUtils
 import java.util.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     BottomNavigationView.OnNavigationItemReselectedListener, ViewPager.OnPageChangeListener {
 
     private var binding: ActivityMainBinding? = null
+
     private var recipeViewModel: RecipeViewModel? = null
     private var userViewModel: UserViewModel? = null
     private var staticDataViewModel: StaticDataViewModel? = null
     private var authViewModel: AuthenticationViewModel? = null
-    private var navController: NavController? = null
     private var searchViewModel: SearchViewModel? = null
+    private var imageViewModel: ImageViewModel? = null
+
+    private var navController: NavController? = null
 
     private val backStack = Stack<Int>()
 
@@ -78,7 +72,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 //        ProgressBarUtil.set(this)
-//        setupNavigation()
 //        BottomNavigationView navView = findViewById(R.id.nav_view);
 //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
 //                R.id.navigation_feed, R.id.navigation_ingredients, R.id.navigation_recipe_create, R.id.navigation_bookmarks, R.id.navigation_user_profile)
@@ -96,17 +89,21 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             backStack.push(0)
         }
 
-        if (intent.getBooleanExtra(FEED_TAG, false)) {
-            val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
+        //TODO remove
+//        if (intent.getBooleanExtra(FEED_TAG, false)) {
+//            val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
             authViewModel!!.username.value =
-                sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
+                    "hewix"
+//                sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
             authViewModel!!.password.value =
-                sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
+                    "root1339"
+//                sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
             userViewModel!!.user.value = User()
             userViewModel!!.user.value!!.username =
-                sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
+                "hewix"
+//                sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
 //            navController!!.navigate(R.id.action_go_to_feed_from_welcome)
-        }
+//        }
 
         // get device dimensions
         val displayMetrics = DisplayMetrics()
@@ -122,40 +119,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         staticDataViewModel = ViewModelProvider(this)[StaticDataViewModel::class.java]
         searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         authViewModel = ViewModelProvider(this)[AuthenticationViewModel::class.java]
+        imageViewModel = ViewModelProvider(this)[ImageViewModel::class.java]
     }
-
-    //    private fun setupNavigation() {
-//        navController = findNavController(this, R.id.nav_host_fragment_activity_main)
-//        setupWithNavController(bottom_navigation, navController!!)
-//        bottom_navigation.setOnItemSelectedListener { item: MenuItem ->
-//            when (item.itemId) {
-//                R.id.navigation_feed -> navController!!.navigate(R.id.action_go_to_feed)
-//                R.id.navigation_search -> navController!!.navigate(R.id.action_go_to_search)
-//                R.id.navigation_recipe_create -> navController!!.navigate(R.id.action_go_to_recipe_create)
-//                R.id.navigation_notifications -> navController!!.navigate(R.id.action_go_to_notifications)
-//                R.id.navigation_user_profile -> navController!!.navigate(R.id.action_go_to_profile)
-//            }
-//            true
-//        }
-//
-//        navController!!.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.navigation_welcome -> bottom_navigation.visibility = View.GONE
-//                R.id.navigation_register_email -> bottom_navigation.visibility = View.GONE
-//                R.id.navigation_verification_code -> bottom_navigation.visibility = View.GONE
-//                R.id.navigation_register_password -> bottom_navigation.visibility = View.GONE
-//                R.id.navigation_register_username -> bottom_navigation.visibility = View.GONE
-//                R.id.navigation_login -> bottom_navigation.visibility = View.GONE
-//                R.id.navigation_new_pass -> bottom_navigation.visibility = View.GONE
-//                R.id.navigation_account_created -> bottom_navigation.visibility = View.GONE
-//                R.id.view_image_dest -> bottom_navigation.visibility = View.GONE
-//                R.id.navigation_login_recover_pass -> bottom_navigation.visibility = View.GONE
-//                R.id.navigation_login_recover_pass_vcode -> bottom_navigation.visibility = View.GONE
-//
-//                else -> bottom_navigation.visibility = View.VISIBLE
-//            }
-//        }
-//    }
 
     inner class ViewPagerAdapter : FragmentPagerAdapter(supportFragmentManager) {
 

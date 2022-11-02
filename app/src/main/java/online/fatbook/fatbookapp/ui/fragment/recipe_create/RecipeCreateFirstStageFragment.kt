@@ -1,9 +1,12 @@
 package online.fatbook.fatbookapp.ui.fragment.recipe_create
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,9 +17,14 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TimePicker
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -31,15 +39,22 @@ import online.fatbook.fatbookapp.ui.adapters.RecipeCookingDifficultyAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeDifficultyClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
+import online.fatbook.fatbookapp.util.FileUtils
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
+import java.io.File
 
 
 class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener {
+
     private var binding: FragmentRecipeCreateFirstStageBinding? = null
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
+    private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
     private var adapter: RecipeCookingDifficultyAdapter? = null
+
+    private var chooseImageFromGallery: ActivityResultLauncher<String>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +68,14 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         super.onViewCreated(view, savedInstanceState)
 
         setupAdapter()
-        loadDifficulty()
+        if (staticDataViewModel.cookingDifficulties.value.isNullOrEmpty()) {
+            loadDifficulty()
+        } else {
+            adapter?.setData(staticDataViewModel.cookingDifficulties.value)
+            adapter?.selectedDifficulty = staticDataViewModel.cookingDifficulties.value!![0]
+        }
+        setupImageEditButtons()
+        setupObservers()
 
         //TODO fix
         if (recipeViewModel.newRecipe.value == null) {
@@ -123,6 +145,65 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 }
             }
         })
+    }
+
+    private fun setupObservers() {
+        imageview_photo_recipe_create_1_stage.isClickable = false
+        recipeViewModel.newRecipeImage.observe(viewLifecycleOwner) {
+            imageview_photo_recipe_create_1_stage.isClickable = it != null
+        }
+    }
+
+    private fun setupImageEditButtons() {
+        imageview_photo_recipe_create_1_stage.setOnClickListener {
+            imageViewModel.image.value = imageview_photo_recipe_create_1_stage.drawable
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_image_view_from_first_stage)
+        }
+        button_add_photo_recipe_create_1_stage.setOnClickListener {
+            if (verifyStoragePermissions(requireActivity())) {
+                chooseImageFromGallery!!.launch("image/*")
+            }
+        }
+        button_delete_photo_recipe_create_1_stage.setOnClickListener {
+            recipeViewModel.newRecipeImage.value = null
+            Glide.with(requireContext())
+                .load(R.drawable.ic_default_recipe_image)
+                .into(imageview_photo_recipe_create_1_stage)
+        }
+        try {
+            chooseImageFromGallery =
+                registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+                    if (verifyStoragePermissions(requireActivity())) {
+                        uri?.let {
+                            val path = FileUtils.getPath(requireContext(), it)
+                            recipeViewModel.newRecipeImage.value = path?.let { file -> File(file) }
+                            Glide.with(requireContext())
+                                .load(uri)
+                                .into(imageview_photo_recipe_create_1_stage)
+                        }
+                    }
+                }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun verifyStoragePermissions(requireActivity: FragmentActivity): Boolean {
+        val permission = ActivityCompat.checkSelfPermission(
+            requireActivity,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        return if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                requireActivity,
+                PERMISSIONS_STORAGE,
+                REQUEST_EXTERNAL_STORAGE
+            )
+            false
+        } else {
+            true
+        }
     }
 
     private fun loadDifficulty() {
@@ -246,5 +327,11 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         Log.d("DIFFICULTY", "${recipeViewModel.newRecipe.value!!.difficulty!!.title}")
     }
 
-
+    companion object {
+        private const val REQUEST_EXTERNAL_STORAGE = 1
+        private val PERMISSIONS_STORAGE = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+    }
 }

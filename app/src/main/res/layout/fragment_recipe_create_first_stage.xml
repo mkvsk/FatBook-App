@@ -70,6 +70,7 @@
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imageview_photo_recipe_create_1_stage"
+                        android:clickable="false"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="10dp"
@@ -97,7 +98,7 @@
                             style="@style/roundBtnEditPhoto"
                             android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
                             android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             app:maxImageSize="16dp" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -105,7 +106,7 @@
                             style="@style/roundBtnAddPhoto"
                             android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
                             android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:maxImageSize="16dp" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -113,7 +114,7 @@
                             style="@style/roundBtnDeletePhoto"
                             android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
                             android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginStart="15dp"
                             android:visibility="visible"
                             app:maxImageSize="16dp" />
                     </androidx.appcompat.widget.LinearLayoutCompat>

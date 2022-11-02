@@ -47,7 +47,7 @@ class EditUserProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handleBackPressed()
-        loadData(userViewModel.user.value!!.username!!)
+        drawData(userViewModel.user.value!!)
 
         toolbar_edit_userprofile.setNavigationOnClickListener {
             if (progress_overlay.visibility == View.VISIBLE) {
@@ -117,29 +117,6 @@ class EditUserProfileFragment : Fragment() {
             hideKeyboard(edittext_profile_bio)
             Toast.makeText(context, "Data updated", Toast.LENGTH_SHORT).show()
         }
-
-        progress_overlay.visibility = View.VISIBLE
-        val handler = Handler()
-        handler.postDelayed({
-            progress_overlay.visibility = View.GONE
-            //                loadingDialog.isDismiss()
-        }, 1500)
-
-    }
-
-    private fun loadData(username: String) {
-        userViewModel.getUserByUsername(username, object : ResultCallback<User> {
-            override fun onResult(value: User?) {
-                value?.let {
-                    userViewModel.user.value = value
-                    drawData(userViewModel.user.value!!)
-                }
-            }
-
-            override fun onFailure(value: User?) {
-
-            }
-        })
     }
 
     private fun drawData(user: User) {

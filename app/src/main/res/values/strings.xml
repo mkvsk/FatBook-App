@@ -138,7 +138,8 @@
     <string name="text_fullname_profile">Introduce yourself</string>
     <string name="text_birthday">Eating Birthday cake: </string>
     <string name="text_bio_profile">Write your bio</string>
-    <string name="title_my_recipes_profile">My recipes:</string>
+    <string name="title_recipes_profile">My recipes</string>
+    <string name="title_favourites_profile">Favourites</string>
 
     ///feed
     <string name="toolbar_recipes_feed">Recipes</string>

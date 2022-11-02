@@ -25,7 +25,7 @@
     <string name="text_fullname_profile">Представьтесь</string>
     <string name="text_birthday">Ем именинный тортик:</string>
     <string name="text_bio_profile">Обо мне:</string>
-    <string name="title_my_recipes_profile">Мои рецепты:</string>
+    <string name="title_recipes_profile">Мои рецепты:</string>
     <string name="toolbar_recipes_feed">Рецепты</string>
     <string name="hint_search_recipe_feed">поиск...</string>
     <string name="title_recipe_preview_rv">Название рецепта</string>

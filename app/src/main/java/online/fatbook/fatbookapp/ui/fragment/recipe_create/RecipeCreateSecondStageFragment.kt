@@ -53,12 +53,12 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
         button_add_ingredient_recipe_create_2_stage.setOnClickListener {
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_add_ingredient_from_second_stage)
+                .navigate(R.id.action_go_to_ingredient_from_second_stage)
         }
 
         cardview_add_cooking_step.setOnClickListener {
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_create_cooking_step_from_second_stage)
+                .navigate(R.id.action_go_to_step_from_second_stage)
         }
         setupIngredientsAdapter()
         setupCookingStepsAdapter()

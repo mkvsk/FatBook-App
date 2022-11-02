@@ -10,13 +10,13 @@
     <include layout="@layout/include_progress_overlay" />
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout_view_image"
+        android:id="@+id/appBarLayout_image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar_view_image"
+            android:id="@+id/toolbar_image_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/theme_toolbar_color"

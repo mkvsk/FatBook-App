@@ -8,6 +8,7 @@ import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
+import java.io.File
 
 class RecipeViewModel : ViewModel() {
     var recipe = MutableLiveData<Recipe?>()
@@ -24,6 +25,11 @@ class RecipeViewModel : ViewModel() {
 
     var newRecipeAddIngredient = MutableLiveData<Ingredient?>()
     var newRecipeAddRecipeIngredient = MutableLiveData<RecipeIngredient?>()
+
+    var newRecipeImage = MutableLiveData<File?>()
+    var newRecipeStepImages = MutableLiveData<Map<Int, File>?>()
+
+    var newRecipeSteps = MutableLiveData<ArrayList<CookingStep?>>()
 
     var selectedCookingStep = MutableLiveData<CookingStep?>()
     var selectedCookingStepPosition = MutableLiveData<Int?>()

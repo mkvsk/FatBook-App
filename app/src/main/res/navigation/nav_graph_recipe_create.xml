@@ -8,9 +8,13 @@
         android:id="@+id/recipe_create_first_stage_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateFirstStageFragment"
         android:label="@string/nav_recipe_create">
+
         <action
             android:id="@+id/action_go_to_recipe_create_second_stage_from_first_stage"
             app:destination="@id/recipe_create_second_stage_dest" />
+        <action
+            android:id="@+id/action_go_to_image_view_from_first_stage"
+            app:destination="@id/image_view_dest" />
     </fragment>
 
     <fragment
@@ -35,5 +39,10 @@
     <fragment
         android:id="@+id/recipe_create_step_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateCookingStepFragment"
+        android:label="@null" />
+
+    <fragment
+        android:id="@+id/image_view_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.ImageViewFragment"
         android:label="@null" />
 </navigation>

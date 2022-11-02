@@ -5,21 +5,15 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.text.Layout
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
-import android.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
@@ -30,19 +24,13 @@ import kotlinx.android.synthetic.main.fragment_user_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
-import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
-import online.fatbook.fatbookapp.ui.fragment.navigation.NonSwipingViewPager
-import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
-import online.fatbook.fatbookapp.util.Constants
-import online.fatbook.fatbookapp.util.FormatUtils
-import online.fatbook.fatbookapp.util.MyPagerAdapter
-import online.fatbook.fatbookapp.util.obtainViewModel
+import online.fatbook.fatbookapp.util.*
 import org.apache.commons.lang3.StringUtils
 
 
@@ -54,6 +42,7 @@ class UserProfileFragment : Fragment() {
 
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val authenticationViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
+    private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
 
     private lateinit var viewPager: ViewPager2
 //    private var adapter: RecipeAdapter? = null
@@ -86,10 +75,16 @@ class UserProfileFragment : Fragment() {
         viewPager.adapter = fragmentAdapter
         viewPager.offscreenPageLimit = 2
         val tabLayout = tabLayout_userprofile
-        TabLayoutMediator(tabLayout, viewPager) {tab, position ->
-            tab.text = "OBJECT ${(position + 1)}"
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text =
+                if (position == 0) {
+                    resources.getString(R.string.title_recipes_profile)
+                } else {
+                    resources.getString(R.string.title_favourites_profile)
+                }
         }.attach()
 
+        ViewPager2ViewHeightAnimator().viewPager2 = viewPager
 
         imageview_recipes_qtt_userprofile.setOnClickListener {
             focusOnRecipes()
@@ -101,6 +96,7 @@ class UserProfileFragment : Fragment() {
         }
 
         imageview_userphoto_userprofile.setOnClickListener {
+            imageViewModel.image.value = userViewModel.user.value!!.profileImage
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_view_image_from_user_profile1)
         }
@@ -149,15 +145,18 @@ class UserProfileFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_user_profile_edit_profile -> {
-                NavHostFragment.findNavController(this).navigate(R.id.action_go_to_edit_profile_from_user_profile)
+                NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_go_to_edit_profile_from_user_profile)
                 true
             }
             R.id.menu_user_profile_badges -> {
-                NavHostFragment.findNavController(this).navigate(R.id.action_go_to_badges_from_user_profile)
+                NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_go_to_badges_from_user_profile)
                 true
             }
             R.id.menu_user_profile_app_settings -> {
-                NavHostFragment.findNavController(this).navigate(R.id.action_go_to_app_settings_from_user_profile)
+                NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_go_to_app_settings_from_user_profile)
                 true
             }
             R.id.menu_user_profile_app_info -> {
