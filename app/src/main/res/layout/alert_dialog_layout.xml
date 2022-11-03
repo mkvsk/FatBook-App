@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_alert_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/theme_primary_bgr"
+        app:cardCornerRadius="15dp"
+        app:contentPadding="10dp">
+
+        <LinearLayout
+            android:id="@+id/ll_title_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dialog_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/pink_a200"
+                android:text="Clear form"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:id="@+id/dialog_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Are you sure you want to cancel creating new recipe?"
+                android:textColor="@color/main_text"
+                android:textSize="13sp" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_dialog_btns"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_title_msg">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_clear_new_recipe_alert_dialog"
+                    style="@style/buttons_in_fragments_style"
+                    android:layout_width="@dimen/btn_main_w"
+                    android:layout_height="@dimen/btn_main_h"
+                    android:layout_marginEnd="35dp"
+                    android:background="@drawable/selector_btn_in_fragments"
+                    android:elevation="4dp"
+                    android:text="Yes"
+                    android:translationZ="2dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_cancel_alert_dialog"
+                    style="@style/buttons_in_fragments_style"
+                    android:layout_width="@dimen/btn_main_w"
+                    android:layout_height="@dimen/btn_main_h"
+                    android:background="@drawable/selector_btn_in_fragments"
+                    android:elevation="4dp"
+                    android:text="Cancel"
+                    android:translationZ="2dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

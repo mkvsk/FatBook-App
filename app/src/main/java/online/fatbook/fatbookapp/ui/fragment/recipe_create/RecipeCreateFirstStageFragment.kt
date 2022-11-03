@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.ui.fragment.recipe_create
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -12,23 +13,26 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.TimePicker
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.Scene
+import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import kotlinx.android.synthetic.main.alert_dialog_layout.*
 import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -71,7 +75,8 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         setupMenu()
 
         toggleImageButtons(true)
-        Glide.with(requireContext()).load("https://fatbook.b-cdn.net/root/alarm.jpg").into(imageview_photo_recipe_create_1_stage)
+        Glide.with(requireContext()).load("https://fatbook.b-cdn.net/root/alarm.jpg")
+            .into(imageview_photo_recipe_create_1_stage)
 
         if (staticDataViewModel.cookingDifficulties.value.isNullOrEmpty()) {
             loadDifficulty()
@@ -193,33 +198,25 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
     }
 
     private fun showClearFormDialog() {
+        val dialogBinding = layoutInflater.inflate(R.layout.alert_dialog_layout, null)
+        val myDialog = Dialog(requireContext())
         val msg = "Are you sure you want to cancel creating new recipe?"
         val textViewMsg = TextView(requireContext())
         textViewMsg.text = msg
-        textViewMsg.setSingleLine()
-        textViewMsg.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_text))
-        val container = FrameLayout(requireContext())
-        val params = FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        params.leftMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
-        params.rightMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
-        params.topMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
-        textViewMsg.layoutParams = params
-        container.addView(textViewMsg)
-        val title =
-            LayoutInflater.from(requireContext())
-                .inflate(R.layout.alert_dialog_clear_recipe_create_form, null)
-        AlertDialog.Builder(requireContext())
-            .setView(container)
-            .setCustomTitle(title)
-            .setPositiveButton(getString(R.string.alert_dialog_btn_yes)) { dialogInterface: DialogInterface, _: Int ->
-                clearForm()
-                dialogInterface.dismiss()
-            }
-            .setNegativeButton(getString(R.string.alert_dialog_btn_cancel)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
-            .show()
+        myDialog.setContentView(dialogBinding)
+        myDialog.setCancelable(true)
+        myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        myDialog.show()
+        val positiveButton =
+            dialogBinding.findViewById<Button>(R.id.button_clear_new_recipe_alert_dialog)
+        val negativeButton = dialogBinding.findViewById<Button>(R.id.button_cancel_alert_dialog)
+        positiveButton.setOnClickListener {
+            clearForm()
+            myDialog.dismiss()
+        }
+        negativeButton.setOnClickListener {
+            myDialog.dismiss()
+        }
     }
 
     private fun clearForm() {
