@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.fragment
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.util.Log
 import android.view.*
 import android.view.GestureDetector.OnDoubleTapListener
@@ -30,7 +31,12 @@ class ImageViewFragment : Fragment() {
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
     private var toolbarIsVisible: Boolean = true
 
-    //TODO ANIM fragment creation
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_right)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,8 +47,8 @@ class ImageViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-            View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).animate()
+            .alpha(0.0f)
         toolbar_image_view.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -224,7 +230,7 @@ class ImageViewFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         imageViewModel.image.value = null
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-            View.VISIBLE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).animate()
+            .alpha(1.0f)
     }
 }
