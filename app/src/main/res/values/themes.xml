@@ -14,11 +14,15 @@
         <item name="android:navigationBarColor">@color/blue_grey_50</item>
         <item name="colorControlHighlight">@color/colorPrimaryRipple</item>
         <item name="android:textColorHint">@color/blue_grey_200</item>
+        <item name="actionOverflowButtonStyle">@style/IconMenuOverFlow</item>
         <!-- Customize your theme here. -->
         <!--        <item name="toolbarStyle">@style/ToolbarTheme</item>-->
         <!--        <item name="materialTimePickerTheme">@style/TimePicker</item>-->
     </style>
 
+    <style name="IconMenuOverFlow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="tint">@color/theme_toolbar_ic_color</item>
+    </style>
     ///v2.0.0
     <color name="blue_grey_50">#ECEFF1</color>
     <color name="blue_grey_200">#B0BEC5</color>
@@ -89,11 +93,12 @@
     <color name="rv_recipe_preview_ic_color">#B0BEC5</color>
     <color name="rv_forks_qqt">#B0BEC5</color>
 
-    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="titleTextColor">@color/theme_toolbar_text_color</item>
-        <item name="backgroundColor">@color/theme_toolbar_color</item>
-        <item name="titleTextAppearance">@style/txtToolbar</item>
-    </style>
+<!--    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">-->
+<!--        <item name="titleTextColor">@color/theme_toolbar_text_color</item>-->
+<!--        <item name="backgroundColor">@color/theme_toolbar_color</item>-->
+<!--        <item name="actionOverflowButtonStyle">@style/ToolbarTheme.OverFlow</item>-->
+<!--        <item name="titleTextAppearance">@style/txtToolbar</item>-->
+<!--    </style>-->
 
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="android:layout_width">match_parent</item>

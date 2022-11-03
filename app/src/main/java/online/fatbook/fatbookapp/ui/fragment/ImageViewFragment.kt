@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.GestureDetector.OnDoubleTapListener
-import android.widget.ImageView
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.customview.widget.ViewDragHelper
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
+import androidx.transition.AutoTransition
+import androidx.transition.Fade
+import androidx.transition.Scene
+import androidx.transition.TransitionManager
+import androidx.transition.Visibility
 import com.bumptech.glide.Glide
-import com.google.android.material.behavior.SwipeDismissBehavior
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_image_view.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
@@ -20,7 +22,7 @@ import online.fatbook.fatbookapp.databinding.FragmentImageViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
 import online.fatbook.fatbookapp.util.touchview.OnTouchImageViewListener
-import online.fatbook.fatbookapp.util.touchview.TouchImageView
+
 
 class ImageViewFragment : Fragment() {
 
@@ -47,8 +49,10 @@ class ImageViewFragment : Fragment() {
             override fun onSingleTapConfirmed(p0: MotionEvent?): Boolean {
                 //TODO ANIM toolbar collapse
                 if (toolbar_image_view.visibility == View.VISIBLE) {
+                    TransitionManager.go(Scene(toolbar_image_view), AutoTransition())
                     toolbar_image_view.visibility = View.GONE
                 } else {
+                    TransitionManager.go(Scene(toolbar_image_view), AutoTransition())
                     toolbar_image_view.visibility = View.VISIBLE
                 }
                 return true
