@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_create_first_stage_next"
-        android:icon="@drawable/icon_save_changes"
+        android:icon="@drawable/ic_next"
         android:visible="false"
         android:title="Next step"
         app:showAsAction="always" />

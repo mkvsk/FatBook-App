@@ -54,7 +54,7 @@
             android:layout_marginBottom="5dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:endIconDrawable="@drawable/ic_clear_24dp"
+            app:endIconDrawable="@drawable/ic_clear_text"
             app:endIconMode="clear_text"
             app:endIconTint="@color/hint_text"
             app:hintAnimationEnabled="false"

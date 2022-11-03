@@ -23,7 +23,7 @@
             android:background="@color/theme_toolbar_color"
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="enterAlways"
-            local:navigationIcon="@drawable/icon_cancel"
+            local:navigationIcon="@drawable/ic_close"
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="New recipe"
