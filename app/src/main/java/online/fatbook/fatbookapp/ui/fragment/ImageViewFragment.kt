@@ -28,6 +28,7 @@ class ImageViewFragment : Fragment() {
 
     private var binding: FragmentImageViewBinding? = null
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
+    private var toolbarIsVisible: Boolean = true
 
     //TODO ANIM fragment creation
     override fun onCreateView(
@@ -40,20 +41,21 @@ class ImageViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.GONE
         toolbar_image_view.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
         setupMenu()
-        imageview_full_image.setOnDoubleTapListener(object : OnDoubleTapListener{
+
+        imageview_full_image.setOnDoubleTapListener(object : OnDoubleTapListener {
             override fun onSingleTapConfirmed(p0: MotionEvent?): Boolean {
-                //TODO ANIM toolbar collapse
-                if (toolbar_image_view.visibility == View.VISIBLE) {
-                    TransitionManager.go(Scene(toolbar_image_view), AutoTransition())
-                    toolbar_image_view.visibility = View.GONE
+                if (toolbarIsVisible) {
+                    appBarLayout_image_view.animate().alpha(0.0f);
+                    toolbarIsVisible = false
                 } else {
-                    TransitionManager.go(Scene(toolbar_image_view), AutoTransition())
-                    toolbar_image_view.visibility = View.VISIBLE
+                    appBarLayout_image_view.animate().alpha(1.0f);
+                    toolbarIsVisible = true
                 }
                 return true
             }
@@ -73,7 +75,7 @@ class ImageViewFragment : Fragment() {
                 .into(imageview_full_image)
         }
 
-        imageview_full_image.setOnTouchImageViewListener(object : OnTouchImageViewListener{
+        imageview_full_image.setOnTouchImageViewListener(object : OnTouchImageViewListener {
             override fun onMove() {
             }
 
@@ -222,6 +224,7 @@ class ImageViewFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         imageViewModel.image.value = null
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
     }
 }
