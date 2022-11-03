@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/image_view_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_primary_bgr"
@@ -25,39 +26,25 @@
             local:navigationIcon="@drawable/ic_arrow_back"
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
-            local:titleTextColor="@color/main_text"
-            local:titleTextAppearance="@style/txtToolbar" />
+            local:titleTextAppearance="@style/txtToolbar"
+            local:titleTextColor="@color/main_text" />
 
-
-        <!--        <com.google.android.material.appbar.MaterialToolbar-->
-<!--            android:id="@+id/toolbar_view_image"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?attr/actionBarSize"-->
-<!--            android:background="@color/theme_toolbar_color"-->
-<!--            android:theme="@style/ToolbarTheme"-->
-<!--            app:buttonGravity="center_vertical"-->
-<!--            app:layout_scrollFlags="scroll|enterAlways"-->
-<!--            app:navigationIcon="@drawable/ic_arrow_back"-->
-<!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-<!--            app:titleTextColor="@color/theme_toolbar_text_color">-->
-
-<!--        </com.google.android.material.appbar.MaterialToolbar>-->
     </com.google.android.material.appbar.AppBarLayout>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/imageview_full_image"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/kit_waiting_eat"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent" />-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageview_full_image"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:src="@drawable/kit_waiting_eat"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent" />-->
 
     <online.fatbook.fatbookapp.util.touchview.TouchImageView
         android:id="@+id/imageview_full_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/kit_waiting_eat" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -917,7 +917,7 @@ open class TouchImageView @JvmOverloads constructor(
             userTouchListener?.onTouch(v, event)
 
             // OnTouchImageViewListener is set: TouchImageView dragged by user.
-            touchImageViewListener?.onMove()
+            touchImageViewListener?.onMove(v, event)
 
             // indicate event was handled
             return true

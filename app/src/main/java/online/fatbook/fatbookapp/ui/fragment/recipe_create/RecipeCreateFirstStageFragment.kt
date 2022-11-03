@@ -70,7 +70,8 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         setupAdapter()
         setupMenu()
 
-        toggleImageButtons(false)
+        toggleImageButtons(true)
+        Glide.with(requireContext()).load("https://fatbook.b-cdn.net/root/alarm.jpg").into(imageview_photo_recipe_create_1_stage)
 
         if (staticDataViewModel.cookingDifficulties.value.isNullOrEmpty()) {
             loadDifficulty()
@@ -160,10 +161,12 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
 
     private fun toggleImageButtons(isImageExists: Boolean) {
         if (isImageExists) {
+            imageview_photo_recipe_create_1_stage.isClickable = true
             button_edit_photo_recipe_create_1_stage.setImageResource(R.drawable.ic_btn_edit)
             button_edit_photo_recipe_create_1_stage.visibility = View.VISIBLE
             button_delete_photo_recipe_create_1_stage.visibility = View.VISIBLE
         } else {
+            imageview_photo_recipe_create_1_stage.isClickable = false
             button_edit_photo_recipe_create_1_stage.setImageResource(R.drawable.ic_btn_add)
             button_edit_photo_recipe_create_1_stage.visibility = View.VISIBLE
             button_delete_photo_recipe_create_1_stage.visibility = View.GONE
@@ -235,10 +238,10 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
     }
 
     private fun setupObservers() {
-        imageview_photo_recipe_create_1_stage.isClickable = false
-        recipeViewModel.newRecipeImage.observe(viewLifecycleOwner) {
-            imageview_photo_recipe_create_1_stage.isClickable = it != null
-        }
+//        imageview_photo_recipe_create_1_stage.isClickable = false
+//        recipeViewModel.newRecipeImage.observe(viewLifecycleOwner) {
+//            imageview_photo_recipe_create_1_stage.isClickable = it != null
+//        }
     }
 
     private fun setupImageEditButtons() {
