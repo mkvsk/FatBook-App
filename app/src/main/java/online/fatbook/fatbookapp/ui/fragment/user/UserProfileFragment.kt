@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.content_user_profile_base.*
+import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
@@ -412,5 +413,10 @@ class UserProfileFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         Log.i("================ User profile ================", "onStart")
+    }
+
+    fun scrollUp() {
+        nsv_userprofile.scrollTo(0, 0)
+        appBarLayout_userprofile.setExpanded(true, false)
     }
 }

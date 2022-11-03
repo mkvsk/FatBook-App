@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_feed.*
+import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -359,5 +360,10 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                 binding!!.root, requireActivity()
             ).listenerForAdjustResize
         )
+    }
+
+    fun scrollUp() {
+        swipe_refresh_feed.scrollTo(0, 0)
+        appBarLayout_feed.setExpanded(true, false)
     }
 }

@@ -11,15 +11,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -35,6 +35,7 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateFirstStageBinding
+import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeCookingDifficultyAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeDifficultyClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
@@ -57,8 +58,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
     private var chooseImageFromGallery: ActivityResultLauncher<String>? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentRecipeCreateFirstStageBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -68,6 +68,8 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         super.onViewCreated(view, savedInstanceState)
 
         setupAdapter()
+        setupMenu()
+
         if (staticDataViewModel.cookingDifficulties.value.isNullOrEmpty()) {
             loadDifficulty()
         } else {
@@ -84,7 +86,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
 
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.WRAP_CONTENT)
         textview_set_time_recipe_create_1_stage.setOnClickListener {
-            configureAlertDialog()
+            showTimePickerDialog()
         }
 
         textview_cooking_method_recipe_create_1_stage.setOnClickListener {
@@ -97,11 +99,6 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             navigation(false)
         }
 
-        button_next_recipe_create_1_stage.setOnClickListener {
-            fillRecipe()
-            navigation(true)
-        }
-
         if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
             textview_cooking_method_recipe_create_1_stage.text =
                 recipeViewModel.newRecipe.value!!.cookingMethod!!.title
@@ -112,8 +109,6 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 recipeViewModel.newRecipe.value!!.cookingCategories!!.joinToString { "${it.title}" }
         }
 
-        Log.d("NEW RECIPE", "${recipeViewModel.newRecipe.value}")
-
         edittext_title_recipe_create_1_stage.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -121,9 +116,10 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!s.isNullOrEmpty()) {
                     toolbar_recipe_create_1_stage.title = edittext_title_recipe_create_1_stage.text
-                    button_next_recipe_create_1_stage.isEnabled = true
+                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible = true
                 } else {
-                    button_next_recipe_create_1_stage.isEnabled = false
+                    toolbar_recipe_create_1_stage.title = resources.getString(R.string.nav_recipe_create)
+                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible = false
                 }
             }
 
@@ -145,6 +141,78 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 }
             }
         })
+
+        switch_private_recipe_recipe_create_1_stage.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                textview_description_private_recipe_create_1_stage.text = getString(R.string.title_recipe_private)
+            } else {
+                textview_description_private_recipe_create_1_stage.text = getString(R.string.title_recipe_public)
+            }
+        }
+    }
+
+    private fun setupMenu() {
+        toolbar_recipe_create_1_stage.inflateMenu(R.menu.recipe_create_first_stage_menu)
+        toolbar_recipe_create_1_stage.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        toolbar_recipe_create_1_stage.setNavigationOnClickListener {
+            showClearFormDialog()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_create_first_stage_next -> {
+                fillRecipe()
+                navigation(true)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showClearFormDialog() {
+        val msg = "Are you sure you want to cancel creating new recipe?"
+        val textViewMsg = TextView(requireContext())
+        textViewMsg.text = msg
+        textViewMsg.setSingleLine()
+        textViewMsg.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_text))
+        val container = FrameLayout(requireContext())
+        val params = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        params.leftMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        params.rightMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        params.topMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        textViewMsg.layoutParams = params
+        container.addView(textViewMsg)
+        val title =
+            LayoutInflater.from(requireContext())
+                .inflate(R.layout.alert_dialog_clear_recipe_create_form, null)
+        AlertDialog.Builder(requireContext())
+            .setView(container)
+            .setCustomTitle(title)
+            .setPositiveButton(getString(R.string.alert_dialog_btn_yes)) { dialogInterface: DialogInterface, _: Int ->
+                clearForm()
+                dialogInterface.dismiss()
+            }
+            .setNegativeButton(getString(R.string.alert_dialog_btn_cancel)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
+            .show()
+    }
+
+    private fun clearForm() {
+        recipeViewModel.newRecipe.value = Recipe()
+        recipeViewModel.newRecipeImage.value = null
+        recipeViewModel.newRecipeSteps.value = null
+        recipeViewModel.newRecipeIngredients.value = null
+        recipeViewModel.newRecipeCookingMethod.value = null
+        recipeViewModel.newRecipeCookingCategories.value = null
+        recipeViewModel.newRecipeAddIngredient.value = null
+        recipeViewModel.newRecipeAddRecipeIngredient.value = null
+        recipeViewModel.newRecipeStepImages.value = null
+        recipeViewModel.selectedCookingStep.value = null
+        recipeViewModel.selectedCookingStepPosition.value = null
+        (requireActivity() as MainActivity).redrawFragment(2)
     }
 
     private fun setupObservers() {
@@ -167,8 +235,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         }
         button_delete_photo_recipe_create_1_stage.setOnClickListener {
             recipeViewModel.newRecipeImage.value = null
-            Glide.with(requireContext())
-                .load(R.drawable.ic_default_recipe_image)
+            Glide.with(requireContext()).load(R.drawable.ic_default_recipe_image)
                 .into(imageview_photo_recipe_create_1_stage)
         }
         try {
@@ -178,8 +245,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                         uri?.let {
                             val path = FileUtils.getPath(requireContext(), it)
                             recipeViewModel.newRecipeImage.value = path?.let { file -> File(file) }
-                            Glide.with(requireContext())
-                                .load(uri)
+                            Glide.with(requireContext()).load(uri)
                                 .into(imageview_photo_recipe_create_1_stage)
                         }
                     }
@@ -191,14 +257,11 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
 
     private fun verifyStoragePermissions(requireActivity: FragmentActivity): Boolean {
         val permission = ActivityCompat.checkSelfPermission(
-            requireActivity,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            requireActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         return if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                requireActivity,
-                PERMISSIONS_STORAGE,
-                REQUEST_EXTERNAL_STORAGE
+                requireActivity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE
             )
             false
         } else {
@@ -273,16 +336,14 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         }
     }
 
-    private fun configureAlertDialog() {
+    private fun showTimePickerDialog() {
         val params = FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         params.leftMargin = resources.getDimensionPixelSize(R.dimen.cards_margin_start)
         params.rightMargin = resources.getDimensionPixelSize(R.dimen.cards_margin_end)
 
-        val dialog = AlertDialog.Builder(requireContext())
-            .setView(R.layout.dialog_timepicker)
+        val dialog = AlertDialog.Builder(requireContext()).setView(R.layout.dialog_timepicker)
             .setPositiveButton(resources.getString(R.string.alert_dialog_btn_ok), null)
             .setNegativeButton(resources.getString(R.string.alert_dialog_btn_cancel)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
             .create()
@@ -330,8 +391,12 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
     companion object {
         private const val REQUEST_EXTERNAL_STORAGE = 1
         private val PERMISSIONS_STORAGE = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
+    }
+
+    fun scrollUp() {
+        nsv_recipe_create_1_stage.scrollTo(0, 0)
+        appBarLayout_recipe_create_1_stage.setExpanded(true, false)
     }
 }

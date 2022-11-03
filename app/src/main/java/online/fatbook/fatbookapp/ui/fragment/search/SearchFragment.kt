@@ -15,6 +15,8 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_search.*
+import kotlinx.android.synthetic.main.fragment_feed.*
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
@@ -238,5 +240,10 @@ class SearchFragment : Fragment(), OnSearchItemClickListener {
 
     private fun popBackStack() {
         NavHostFragment.findNavController(this).popBackStack()
+    }
+
+    fun scrollUp() {
+        search_layout.scrollTo(0, 0)
+        appBarLayout_search.setExpanded(true, false)
     }
 }

@@ -185,4 +185,5 @@
     <string name="subtitle_online">В сети</string>
     <string name="subtitle_offline">Не в сети</string>
     <string name="string_format_kcal_qtt_per_100_gram">(%s ккал/100 грамм)</string>
+    <string name="menu_image_view_report">Пожаловаться</string>
 </resources>
