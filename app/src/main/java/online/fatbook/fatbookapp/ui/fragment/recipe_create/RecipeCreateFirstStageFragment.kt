@@ -70,6 +70,8 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         setupAdapter()
         setupMenu()
 
+        toggleImageButtons(false)
+
         if (staticDataViewModel.cookingDifficulties.value.isNullOrEmpty()) {
             loadDifficulty()
         } else {
@@ -116,10 +118,13 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!s.isNullOrEmpty()) {
                     toolbar_recipe_create_1_stage.title = edittext_title_recipe_create_1_stage.text
-                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible = true
+                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
+                        true
                 } else {
-                    toolbar_recipe_create_1_stage.title = resources.getString(R.string.nav_recipe_create)
-                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible = false
+                    toolbar_recipe_create_1_stage.title =
+                        resources.getString(R.string.nav_recipe_create)
+                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
+                        false
                 }
             }
 
@@ -144,10 +149,24 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
 
         switch_private_recipe_recipe_create_1_stage.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                textview_description_private_recipe_create_1_stage.text = getString(R.string.title_recipe_private)
+                textview_description_private_recipe_create_1_stage.text =
+                    getString(R.string.title_recipe_private)
             } else {
-                textview_description_private_recipe_create_1_stage.text = getString(R.string.title_recipe_public)
+                textview_description_private_recipe_create_1_stage.text =
+                    getString(R.string.title_recipe_public)
             }
+        }
+    }
+
+    private fun toggleImageButtons(isImageExists: Boolean) {
+        if (isImageExists) {
+            button_edit_photo_recipe_create_1_stage.setImageResource(R.drawable.ic_btn_edit)
+            button_edit_photo_recipe_create_1_stage.visibility = View.VISIBLE
+            button_delete_photo_recipe_create_1_stage.visibility = View.VISIBLE
+        } else {
+            button_edit_photo_recipe_create_1_stage.setImageResource(R.drawable.ic_btn_add)
+            button_edit_photo_recipe_create_1_stage.visibility = View.VISIBLE
+            button_delete_photo_recipe_create_1_stage.visibility = View.GONE
         }
     }
 
@@ -228,13 +247,14 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_image_view_from_first_stage)
         }
-        button_add_photo_recipe_create_1_stage.setOnClickListener {
+        button_edit_photo_recipe_create_1_stage.setOnClickListener {
             if (verifyStoragePermissions(requireActivity())) {
                 chooseImageFromGallery!!.launch("image/*")
             }
         }
         button_delete_photo_recipe_create_1_stage.setOnClickListener {
             recipeViewModel.newRecipeImage.value = null
+            toggleImageButtons(false)
             Glide.with(requireContext()).load(R.drawable.ic_default_recipe_image)
                 .into(imageview_photo_recipe_create_1_stage)
         }
@@ -243,6 +263,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
                     if (verifyStoragePermissions(requireActivity())) {
                         uri?.let {
+                            toggleImageButtons(true)
                             val path = FileUtils.getPath(requireContext(), it)
                             recipeViewModel.newRecipeImage.value = path?.let { file -> File(file) }
                             Glide.with(requireContext()).load(uri)
