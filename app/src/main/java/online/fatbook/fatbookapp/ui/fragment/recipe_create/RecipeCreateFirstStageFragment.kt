@@ -498,7 +498,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
 
-        private const val TAG = "RecipeCreateFirstStage"
+        private const val TAG = "RecipeCreateFirstStageFragment"
     }
 
     fun scrollUp() {
