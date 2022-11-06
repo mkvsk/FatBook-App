@@ -186,4 +186,8 @@
     <string name="subtitle_offline">Не в сети</string>
     <string name="string_format_kcal_qtt_per_100_gram">(%s ккал/100 грамм)</string>
     <string name="menu_image_view_report">Пожаловаться</string>
+    <string name="time_picker_format_h_min">%d ч %d мин</string>
+    <string name="time_picker_format_h">%d ч</string>
+    <string name="time_picker_format_min">%d мин</string>
+    <string name="title_favourites_profile">Избранное</string>
 </resources>

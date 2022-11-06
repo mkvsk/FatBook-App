@@ -17,6 +17,7 @@ import online.fatbook.fatbookapp.ui.fragment.navigation.BaseFragment
 import online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateFirstStageFragment
 import online.fatbook.fatbookapp.ui.viewmodel.*
 import online.fatbook.fatbookapp.util.FragmentLifecycle
+import online.fatbook.fatbookapp.util.RecipeUtils
 import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
@@ -72,6 +73,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 //        ProgressBarUtil.set(this)
+
+        RecipeUtils.setContext(this)
 
         main_pager.addOnPageChangeListener(this)
         adapter = ViewPagerAdapter()

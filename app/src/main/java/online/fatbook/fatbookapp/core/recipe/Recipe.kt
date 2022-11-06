@@ -13,7 +13,7 @@ data class Recipe(
     var createDate: String? = "",
     val identifier: Long? = null,
     var difficulty: CookingDifficulty? = null,
-    var portions: Int? = 0,
+    var portions: Int? = null,
     var cookingTime: String? = "",
     var cookingMethod: CookingMethod? = null,
     var cookingCategories: ArrayList<CookingCategory>? = ArrayList(),

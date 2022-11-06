@@ -5,6 +5,10 @@ import android.transition.TransitionInflater
 import android.util.Log
 import android.view.*
 import android.view.GestureDetector.OnDoubleTapListener
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import android.widget.Toolbar
@@ -23,7 +27,6 @@ import online.fatbook.fatbookapp.databinding.FragmentImageViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
 import online.fatbook.fatbookapp.util.touchview.OnTouchImageViewListener
-
 
 class ImageViewFragment : Fragment() {
 
@@ -47,8 +50,7 @@ class ImageViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).animate()
-            .alpha(0.0f)
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
         toolbar_image_view.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -57,10 +59,10 @@ class ImageViewFragment : Fragment() {
         imageview_full_image.setOnDoubleTapListener(object : OnDoubleTapListener {
             override fun onSingleTapConfirmed(p0: MotionEvent?): Boolean {
                 if (toolbarIsVisible) {
-                    appBarLayout_image_view.animate().alpha(0.0f);
+                    appBarLayout_image_view.animate().alpha(0.0f).duration = 100
                     toolbarIsVisible = false
                 } else {
-                    appBarLayout_image_view.animate().alpha(1.0f);
+                    appBarLayout_image_view.animate().alpha(1.0f).duration = 100
                     toolbarIsVisible = true
                 }
                 return true
@@ -230,7 +232,6 @@ class ImageViewFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         imageViewModel.image.value = null
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).animate()
-            .alpha(1.0f)
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
     }
 }

@@ -3,6 +3,7 @@ package online.fatbook.fatbookapp.ui.fragment.recipe_create
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -20,20 +21,19 @@ import android.widget.TimePicker
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.AutoTransition
-import androidx.transition.Scene
-import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import kotlinx.android.synthetic.main.alert_dialog_layout.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
@@ -42,14 +42,14 @@ import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateFirstStageBindi
 import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeCookingDifficultyAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeDifficultyClickListener
+import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
-import online.fatbook.fatbookapp.util.FileUtils
-import online.fatbook.fatbookapp.util.hideKeyboard
-import online.fatbook.fatbookapp.util.obtainViewModel
+import online.fatbook.fatbookapp.util.*
 import java.io.File
-
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.min
 
 class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener {
 
@@ -65,37 +65,101 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentRecipeCreateFirstStageBinding.inflate(inflater, container, false)
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.WRAP_CONTENT)
+
+        if (recipeViewModel.newRecipe.value == null) {
+            recipeViewModel.newRecipe.value = Recipe()
+        }
 
         setupAdapter()
         setupMenu()
+        setupImageEditButtons()
+        setupObservers()
 
+        //TODO remove picture, true -> false
         toggleImageButtons(true)
         Glide.with(requireContext()).load("https://fatbook.b-cdn.net/root/alarm.jpg")
             .into(imageview_photo_recipe_create_1_stage)
 
         if (staticDataViewModel.cookingDifficulties.value.isNullOrEmpty()) {
+            progress_overlay.visibility = View.VISIBLE
             loadDifficulty()
         } else {
             adapter?.setData(staticDataViewModel.cookingDifficulties.value)
             adapter?.selectedDifficulty = staticDataViewModel.cookingDifficulties.value!![0]
-        }
-        setupImageEditButtons()
-        setupObservers()
-
-        //TODO fix
-        if (recipeViewModel.newRecipe.value == null) {
-            recipeViewModel.newRecipe.value = Recipe()
+            if (recipeViewModel.newRecipe.value!!.difficulty == null) {
+                recipeViewModel.newRecipe.value!!.difficulty = staticDataViewModel.cookingDifficulties.value!![0]
+            }
         }
 
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.WRAP_CONTENT)
+        edittext_title_recipe_create_1_stage.setText(recipeViewModel.newRecipe.value!!.title)
+        edittext_title_recipe_create_1_stage.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!s.isNullOrEmpty()) {
+                    recipeViewModel.newRecipe.value!!.title =
+                        s.toString().replace("\\s+".toRegex(), " ")
+                            .trim()
+                    toolbar_recipe_create_1_stage.title = recipeViewModel.newRecipe.value!!.title
+                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
+                        true
+                } else {
+                    toolbar_recipe_create_1_stage.title =
+                        resources.getString(R.string.nav_recipe_create)
+                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
+                        false
+                }
+                Log.d("NEWRECIPE", "title = ${recipeViewModel.newRecipe.value!!.title}")
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+
+        recipeViewModel.newRecipe.value!!.difficulty?.let { difficulty ->
+            adapter!!.selectedDifficulty =
+                staticDataViewModel.cookingDifficulties.value!!.find { it.title == difficulty.title }
+        }
+
+        recipeViewModel.newRecipe.value!!.portions?.let {
+            edittext_portions_qtt_recipe_create_1_stage.setText(it.toString())
+        }
+        edittext_portions_qtt_recipe_create_1_stage.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!s.isNullOrEmpty()) {
+                    recipeViewModel.newRecipe.value!!.portions = s.toString().toInt()
+                    if (edittext_portions_qtt_recipe_create_1_stage.length() > 1) {
+                        hideKeyboard()
+                    }
+                } else {
+                    recipeViewModel.newRecipe.value!!.portions = null
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+
+        showCookingTime()
         textview_set_time_recipe_create_1_stage.setOnClickListener {
             showTimePickerDialog()
         }
+
+        Log.d("NEWRECIPE", "onViewCreated: ${recipeViewModel.newRecipe.value}")
+
+        //=========================================================================================
 
         textview_cooking_method_recipe_create_1_stage.setOnClickListener {
             staticDataViewModel.loadCookingMethod.value = true
@@ -116,42 +180,6 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             textview_category_recipe_create_1_stage.text =
                 recipeViewModel.newRecipe.value!!.cookingCategories!!.joinToString { "${it.title}" }
         }
-
-        edittext_title_recipe_create_1_stage.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!s.isNullOrEmpty()) {
-                    toolbar_recipe_create_1_stage.title = edittext_title_recipe_create_1_stage.text
-                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
-                        true
-                } else {
-                    toolbar_recipe_create_1_stage.title =
-                        resources.getString(R.string.nav_recipe_create)
-                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
-                        false
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
-
-        edittext_portions_qtt_recipe_create_1_stage.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (edittext_portions_qtt_recipe_create_1_stage.length() > 1) {
-                    hideKeyboard(edittext_portions_qtt_recipe_create_1_stage)
-                }
-            }
-        })
 
         switch_private_recipe_recipe_create_1_stage.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -221,6 +249,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
 
     private fun clearForm() {
         recipeViewModel.newRecipe.value = Recipe()
+        Log.d("NEWRECIPE", "created")
         recipeViewModel.newRecipeImage.value = null
         recipeViewModel.newRecipeSteps.value = null
         recipeViewModel.newRecipeIngredients.value = null
@@ -298,6 +327,10 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 staticDataViewModel.cookingDifficulties.value = value
                 adapter?.setData(value)
                 adapter?.selectedDifficulty = value[0]
+                if (recipeViewModel.newRecipe.value!!.difficulty == null) {
+                    recipeViewModel.newRecipe.value!!.difficulty = value[0]
+                }
+                progress_overlay.visibility = View.GONE
             }
 
             override fun onFailure(value: List<CookingDifficulty>?) {
@@ -365,7 +398,10 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         params.rightMargin = resources.getDimensionPixelSize(R.dimen.cards_margin_end)
 
         val dialog = AlertDialog.Builder(requireContext()).setView(R.layout.dialog_timepicker)
-            .setPositiveButton(resources.getString(R.string.alert_dialog_btn_ok), null)
+            .setPositiveButton(resources.getString(R.string.alert_dialog_btn_ok)) { dialogInterface: DialogInterface, _: Int ->
+                showCookingTime()
+                dialogInterface.dismiss()
+            }
             .setNegativeButton(resources.getString(R.string.alert_dialog_btn_cancel)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
             .create()
 
@@ -374,39 +410,47 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         dialog.show()
         val picker = dialog.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
         picker.setIs24HourView(true)
-
+        picker.hour = 0
+        picker.minute = 0
         picker.setOnTimeChangedListener { _, hourOfDay, minute ->
-            if (hourOfDay == 0 && minute == 0) {
-                textview_set_time_recipe_create_1_stage.text =
-                    getString(R.string.default_cooking_time)
+            val date: Date = if (hourOfDay == 0 && minute == 0) {
+                Date(RecipeUtils.defaultCookingTimeInMilliseconds)
+            } else {
+                Date((hourOfDay * 60L * 60L * 1000L) + (minute * 60L * 1000L))
             }
-            if (hourOfDay != 0 && minute != 0) {
-                textview_set_time_recipe_create_1_stage.text =
-                    String.format("%d h %d min", hourOfDay, minute)
-            }
-            if (hourOfDay != 0 && minute == 0) {
-                textview_set_time_recipe_create_1_stage.text =
-                    String.format("%d h", hourOfDay, minute)
-            }
-            if (hourOfDay == 0 && minute != 0) {
-                textview_set_time_recipe_create_1_stage.text =
-                    String.format("%d min", minute)
+            recipeViewModel.newRecipe.value!!.cookingTime = RecipeUtils.timeFormat.format(date)
+        }
+    }
+
+    private fun showCookingTime() {
+        if (recipeViewModel.newRecipe.value!!.cookingTime.isNullOrEmpty()) {
+            textview_set_time_recipe_create_1_stage.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.hint_text
+                )
+            )
+        } else {
+            RecipeUtils.prettyCookingTime(recipeViewModel.newRecipe.value!!.cookingTime)?.let {
+                textview_set_time_recipe_create_1_stage.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.main_text
+                    )
+                )
+                textview_set_time_recipe_create_1_stage.text = it
             }
         }
     }
 
     override fun onRecipeDifficultyClick(
-        previousItem: Int,
-        selectedItem: Int,
-        difficulty: CookingDifficulty?
+        previousItem: Int, selectedItem: Int, difficulty: CookingDifficulty?
     ) {
         adapter!!.selectedDifficulty =
             staticDataViewModel.cookingDifficulties.value!!.find { it.title == difficulty!!.title }
         adapter!!.notifyItemChanged(previousItem)
         adapter!!.notifyItemChanged(selectedItem)
         recipeViewModel.newRecipe.value!!.difficulty = difficulty
-
-        Log.d("DIFFICULTY", "${recipeViewModel.newRecipe.value!!.difficulty!!.title}")
     }
 
     companion object {
@@ -414,6 +458,8 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         private val PERMISSIONS_STORAGE = arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
+
+        private const val TAG = "RecipeCreateFirstStage"
     }
 
     fun scrollUp() {

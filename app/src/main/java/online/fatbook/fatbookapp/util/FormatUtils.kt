@@ -1,11 +1,18 @@
 package online.fatbook.fatbookapp.util
 
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.floor
 import kotlin.math.log10
 import kotlin.math.pow
 
+
 object FormatUtils {
+
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+    var timeFormat = SimpleDateFormat("HH:mm", Locale.US)
+
     fun prettyCount(number: Int): String {
         val suffix = charArrayOf(' ', 'k', 'M', 'B', 'T', 'P', 'E')
         val numValue = number.toLong()

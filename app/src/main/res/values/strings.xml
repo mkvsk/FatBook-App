@@ -305,11 +305,14 @@
     <string name="subtitle_online">Online</string>
     <string name="subtitle_offline">Offline</string>
     <string name="string_format_kcal_qtt_per_100_gram">(%s kcal/100 gram)</string>
-    <string name="no_data_dots">...</string>
+    <string name="no_data_dots" translatable="false">...</string>
     <string name="toolbar_title_cooking_method">Cooking method</string>
     <string name="toolbar_title_cooking_categories">Cooking categories</string>
     <string name="menu_image_view_report">Report</string>
     <string name="title_recipe_private">Only you can see this recipe.</string>
     <string name="title_recipe_public">Everyone can see this recipe.</string>
+    <string name="time_picker_format_h_min">%d h %d min</string>
+    <string name="time_picker_format_h">%d h</string>
+    <string name="time_picker_format_min">%d min</string>
 
 </resources>
