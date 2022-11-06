@@ -34,9 +34,9 @@ import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.FileUtils
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
-import online.fatbook.fatbookapp.util.UserUtils
 import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -272,11 +272,11 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
         AlertDialog.Builder(requireContext()).setView(container).setCustomTitle(title)
             .setPositiveButton(getString(R.string.alert_dialog_btn_yes)) { _: DialogInterface?, _: Int ->
                 val sharedPreferences = requireActivity().getSharedPreferences(
-                    UserUtils.APP_PREFS,
+                    Constants.APP_PREFS,
                     Context.MODE_PRIVATE
                 )
                 val editor = sharedPreferences.edit()
-                editor.putString(UserUtils.USER_LOGIN, StringUtils.EMPTY)
+                editor.putString(Constants.USER_LOGIN, StringUtils.EMPTY)
                 editor.apply()
                 startActivity(Intent(requireActivity(), SplashActivity::class.java))
                 requireActivity().finish()

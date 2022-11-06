@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.fragment_feed.*
-import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -31,7 +30,6 @@ import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
-import online.fatbook.fatbookapp.util.UserUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
@@ -288,9 +286,9 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //        if (userViewModel.user.value == null) {
         if (login == null) {
             val sharedPreferences =
-                requireActivity().getSharedPreferences(UserUtils.APP_PREFS, Context.MODE_PRIVATE)
+                requireActivity().getSharedPreferences(Constants.APP_PREFS, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
-            editor.putString(UserUtils.USER_LOGIN, StringUtils.EMPTY)
+            editor.putString(Constants.USER_LOGIN, StringUtils.EMPTY)
             editor.apply()
             startActivity(Intent(requireActivity(), SplashActivity::class.java))
             requireActivity().finish()

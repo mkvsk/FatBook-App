@@ -31,6 +31,7 @@ import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.FileUtils
+import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import online.fatbook.fatbookapp.util.RecipeUtils
 import org.apache.commons.lang3.StringUtils
@@ -102,7 +103,7 @@ class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
         recipe!!.title = binding!!.editTextRecipeAddTitleV1.text.toString()
         recipe!!.image = StringUtils.EMPTY
         recipe!!.author = userViewModel!!.user.value!!.username
-        recipe!!.createDate = RecipeUtils.dateFormat.format(Date())
+        recipe!!.createDate = FormatUtils.dateFormat.format(Date())
         save()
         NavHostFragment.findNavController(this).popBackStack()
     }

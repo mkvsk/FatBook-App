@@ -10,7 +10,7 @@ import kotlin.math.pow
 
 object FormatUtils {
 
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+    var dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
     var timeFormat = SimpleDateFormat("HH:mm", Locale.US)
 
     fun prettyCount(number: Int): String {

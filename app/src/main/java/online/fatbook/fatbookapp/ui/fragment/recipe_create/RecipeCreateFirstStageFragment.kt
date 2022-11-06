@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -82,11 +83,6 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         setupMenu()
         setupImageEditButtons()
 
-        //TODO remove picture, true -> false
-        toggleImageButtons(true)
-        Glide.with(requireContext()).load("https://fatbook.b-cdn.net/root/alarm.jpg")
-            .into(imageview_photo_recipe_create_1_stage)
-
         if (staticDataViewModel.cookingDifficulties.value.isNullOrEmpty()) {
             progress_overlay.visibility = View.VISIBLE
             loadDifficulty()
@@ -97,6 +93,16 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 recipeViewModel.newRecipe.value!!.difficulty =
                     staticDataViewModel.cookingDifficulties.value!![0]
             }
+        }
+
+        if (recipeViewModel.newRecipeImage.value != null) {
+            toggleImageButtons(true)
+            Glide.with(requireContext())
+                .load(recipeViewModel.newRecipeImage.value)
+                .placeholder(Utils.getCircularProgressDrawable())
+                .into(imageview_photo_recipe_create_1_stage)
+        } else {
+            toggleImageButtons(false)
         }
 
         edittext_title_recipe_create_1_stage.setText(recipeViewModel.newRecipe.value!!.title)
@@ -262,7 +268,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
     private fun showClearFormDialog() {
         val dialogBinding = layoutInflater.inflate(R.layout.alert_dialog_layout, null)
         val myDialog = Dialog(requireContext())
-        val msg = "Are you sure you want to cancel creating new recipe?"
+        val msg = getString(R.string.message_clear_form_dialog)
         val textViewMsg = TextView(requireContext())
         textViewMsg.text = msg
         myDialog.setContentView(dialogBinding)
@@ -457,7 +463,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 recipeViewModel.newRecipeCookingTimeHours.value = hourOfDay
                 recipeViewModel.newRecipeCookingTimeMinutes.value = minute
             }
-            recipeViewModel.newRecipe.value!!.cookingTime = RecipeUtils.timeFormat.format(date)
+            recipeViewModel.newRecipe.value!!.cookingTime = FormatUtils.timeFormat.format(date)
         }
     }
 

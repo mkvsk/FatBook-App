@@ -18,9 +18,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.content_user_profile_base.*
-import kotlinx.android.synthetic.main.fragment_feed.*
-import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
@@ -28,6 +25,7 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
+import online.fatbook.fatbookapp.ui.adapters.UserProfileRecipesAdapter
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
@@ -70,7 +68,7 @@ class UserProfileFragment : Fragment() {
             setupViewForSelectedUser()
         }
 
-        val fragmentAdapter = MyPagerAdapter(this)
+        val fragmentAdapter = UserProfileRecipesAdapter(this)
         viewPager = vp_userprofile
         viewPager.isUserInputEnabled = false
         viewPager.adapter = fragmentAdapter

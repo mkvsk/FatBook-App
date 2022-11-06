@@ -316,5 +316,6 @@
     <string name="time_picker_format_min">%d min</string>
     <string name="hint_choose_method">Choose method</string>
     <string name="hint_choose_category">Choose category</string>
+    <string name="message_clear_form_dialog">Are you sure you want to cancel creating new recipe?</string>
 
 </resources>
