@@ -314,5 +314,7 @@
     <string name="time_picker_format_h_min">%d h %d min</string>
     <string name="time_picker_format_h">%d h</string>
     <string name="time_picker_format_min">%d min</string>
+    <string name="hint_choose_method">Choose method</string>
+    <string name="hint_choose_category">Choose category</string>
 
 </resources>

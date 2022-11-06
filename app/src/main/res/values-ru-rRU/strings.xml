@@ -190,4 +190,6 @@
     <string name="time_picker_format_h">%d ч</string>
     <string name="time_picker_format_min">%d мин</string>
     <string name="title_favourites_profile">Избранное</string>
+    <string name="hint_choose_method">Выберите метод приготовления</string>
+    <string name="hint_choose_category">Выберите категорию блюда</string>
 </resources>

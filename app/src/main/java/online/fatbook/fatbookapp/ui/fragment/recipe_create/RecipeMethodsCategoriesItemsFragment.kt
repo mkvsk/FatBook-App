@@ -83,28 +83,19 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
     private fun loadCookingCategories() {
         staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
             override fun onResult(value: List<CookingCategory>?) {
-                Log.d("VALUE OLD", "$value")
-
-                value as ArrayList
-                val filter = value.single { it.title == "Other" || it.title == "Другое" }
-                value.remove(filter)
-                value.add(0, filter)
-
-                Log.d("VALUE NEW", "$value")
-
-                staticDataViewModel.cookingCategories.value = value
-
-                adapter?.setData(value)
-
-                val list: ArrayList<Int> = ArrayList()
-                if (!recipeViewModel.newRecipe.value!!.cookingCategories.isNullOrEmpty()) {
-                    for (i in recipeViewModel.newRecipe.value!!.cookingCategories!!) {
-                        if (value.contains(i)) {
-                            list.add(value.indexOf(i))
+                value?.let {
+                    staticDataViewModel.cookingCategories.value = value
+                    adapter?.setData(value)
+                    val list: ArrayList<Int> = ArrayList()
+                    if (!recipeViewModel.newRecipe.value!!.cookingCategories.isNullOrEmpty()) {
+                        for (i in recipeViewModel.newRecipe.value!!.cookingCategories!!) {
+                            if (value.contains(i)) {
+                                list.add(value.indexOf(i))
+                            }
                         }
                     }
+                    adapter?.setSelected(list)
                 }
-                adapter?.setSelected(list)
             }
 
             override fun onFailure(value: List<CookingCategory>?) {
@@ -115,23 +106,15 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
     private fun loadCookingMethods() {
         staticDataViewModel.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {
             override fun onResult(value: List<CookingMethod>?) {
-                Log.d("VALUE OLD", "$value")
-
-                value as ArrayList
-                val filter = value.single { it.title == "Other" || it.title == "Другое" }
-                value.remove(filter)
-                value.add(0, filter)
-
-                Log.d("VALUE NEW", "$value")
-
-                staticDataViewModel.cookingMethods.value = value
-                adapter?.setData(value)
-
-                val list: ArrayList<Int> = ArrayList()
-                if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
-                    list.add(value.indexOf(recipeViewModel.newRecipe.value!!.cookingMethod!!))
+                value?.let {
+                    staticDataViewModel.cookingMethods.value = value
+                    adapter?.setData(value)
+                    val list: ArrayList<Int> = ArrayList()
+                    if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
+                        list.add(value.indexOf(recipeViewModel.newRecipe.value!!.cookingMethod!!))
+                    }
+                    adapter?.setSelected(list)
                 }
-                adapter?.setSelected(list)
             }
 
             override fun onFailure(value: List<CookingMethod>?) {
@@ -140,10 +123,12 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
     }
 
     override fun onItemClick(item: StaticDataObject) {
-        Log.i("SELECTED METHOD", "${item.title}")
         recipeViewModel.newRecipeCookingMethod.value = item as CookingMethod
         recipeViewModel.newRecipe.value!!.cookingMethod =
             recipeViewModel.newRecipeCookingMethod.value
+        Log.i("============================================================", "")
+        Log.i("SELECTED METHOD", "${recipeViewModel.newRecipe.value!!.cookingMethod}")
+        Log.i("============================================================", "")
         NavHostFragment.findNavController(this).popBackStack()
     }
 
@@ -153,9 +138,11 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
         } else {
             recipeViewModel.newRecipeCookingCategories.value!!.add(item)
         }
+        recipeViewModel.newRecipe.value!!.cookingCategories =
+            recipeViewModel.newRecipeCookingCategories.value
 
         Log.i("============================================================", "")
-        Log.i("SELECTED CATEGORIES", "${recipeViewModel.newRecipeCookingCategories.value!!}")
+        Log.i("SELECTED CATEGORIES", "${recipeViewModel.newRecipe.value!!.cookingCategories}")
         Log.i("============================================================", "")
     }
 }

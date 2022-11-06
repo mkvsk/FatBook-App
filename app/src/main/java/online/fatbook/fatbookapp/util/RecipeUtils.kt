@@ -18,7 +18,11 @@ object RecipeUtils {
     var dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
     var timeFormat = SimpleDateFormat("HH:mm", Locale.US)
 
-    const val defaultCookingTimeInMilliseconds = 900000L
+    /**
+     * Default cooking time in minutes
+     */
+    private const val defaultCookingTime = 15L
+    const val defaultCookingTimeInMilliseconds = defaultCookingTime * 60 * 1000
 
     var dateFormat2 = SimpleDateFormat(
         "yyyy-MM-dd", Locale.US

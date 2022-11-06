@@ -81,7 +81,6 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         setupAdapter()
         setupMenu()
         setupImageEditButtons()
-        setupObservers()
 
         //TODO remove picture, true -> false
         toggleImageButtons(true)
@@ -95,7 +94,8 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             adapter?.setData(staticDataViewModel.cookingDifficulties.value)
             adapter?.selectedDifficulty = staticDataViewModel.cookingDifficulties.value!![0]
             if (recipeViewModel.newRecipe.value!!.difficulty == null) {
-                recipeViewModel.newRecipe.value!!.difficulty = staticDataViewModel.cookingDifficulties.value!![0]
+                recipeViewModel.newRecipe.value!!.difficulty =
+                    staticDataViewModel.cookingDifficulties.value!![0]
             }
         }
 
@@ -157,13 +157,29 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             showTimePickerDialog()
         }
 
-        Log.d("NEWRECIPE", "onViewCreated: ${recipeViewModel.newRecipe.value}")
-
-        //=========================================================================================
-
         textview_cooking_method_recipe_create_1_stage.setOnClickListener {
             staticDataViewModel.loadCookingMethod.value = true
             navigation(false)
+        }
+
+        if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
+            textview_cooking_method_recipe_create_1_stage.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.main_text
+                )
+            )
+            textview_cooking_method_recipe_create_1_stage.text =
+                recipeViewModel.newRecipe.value!!.cookingMethod!!.title
+        } else {
+            textview_cooking_method_recipe_create_1_stage.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.hint_text
+                )
+            )
+            textview_cooking_method_recipe_create_1_stage.text =
+                getString(R.string.hint_choose_method)
         }
 
         textview_category_recipe_create_1_stage.setOnClickListener {
@@ -171,17 +187,31 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             navigation(false)
         }
 
-        if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
-            textview_cooking_method_recipe_create_1_stage.text =
-                recipeViewModel.newRecipe.value!!.cookingMethod!!.title
-        }
-
-        if (recipeViewModel.newRecipe.value!!.cookingCategories!!.isNotEmpty()) {
+        if (!recipeViewModel.newRecipe.value!!.cookingCategories.isNullOrEmpty()) {
+            textview_category_recipe_create_1_stage.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.main_text
+                )
+            )
             textview_category_recipe_create_1_stage.text =
                 recipeViewModel.newRecipe.value!!.cookingCategories!!.joinToString { "${it.title}" }
+        } else {
+            textview_category_recipe_create_1_stage.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.hint_text
+                )
+            )
+            textview_category_recipe_create_1_stage.text =
+                getString(R.string.hint_choose_category)
         }
 
+        recipeViewModel.newRecipe.value!!.isPrivate?.let {
+            switch_private_recipe_recipe_create_1_stage.isChecked = it
+        }
         switch_private_recipe_recipe_create_1_stage.setOnCheckedChangeListener { _, isChecked ->
+            recipeViewModel.newRecipe.value!!.isPrivate = isChecked
             if (isChecked) {
                 textview_description_private_recipe_create_1_stage.text =
                     getString(R.string.title_recipe_private)
@@ -190,6 +220,10 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                     getString(R.string.title_recipe_public)
             }
         }
+
+        Log.d(TAG, "=======================================================================")
+        Log.d(TAG, "onViewCreated: ${recipeViewModel.newRecipe.value}")
+        Log.d(TAG, "=======================================================================")
     }
 
     private fun toggleImageButtons(isImageExists: Boolean) {
@@ -249,25 +283,18 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
 
     private fun clearForm() {
         recipeViewModel.newRecipe.value = Recipe()
-        Log.d("NEWRECIPE", "created")
         recipeViewModel.newRecipeImage.value = null
-        recipeViewModel.newRecipeSteps.value = null
-        recipeViewModel.newRecipeIngredients.value = null
         recipeViewModel.newRecipeCookingMethod.value = null
         recipeViewModel.newRecipeCookingCategories.value = null
+
+        recipeViewModel.newRecipeSteps.value = null
+        recipeViewModel.newRecipeIngredients.value = null
         recipeViewModel.newRecipeAddIngredient.value = null
         recipeViewModel.newRecipeAddRecipeIngredient.value = null
         recipeViewModel.newRecipeStepImages.value = null
         recipeViewModel.selectedCookingStep.value = null
         recipeViewModel.selectedCookingStepPosition.value = null
         (requireActivity() as MainActivity).redrawFragment(2)
-    }
-
-    private fun setupObservers() {
-//        imageview_photo_recipe_create_1_stage.isClickable = false
-//        recipeViewModel.newRecipeImage.observe(viewLifecycleOwner) {
-//            imageview_photo_recipe_create_1_stage.isClickable = it != null
-//        }
     }
 
     private fun setupImageEditButtons() {
@@ -368,9 +395,6 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 edittext_portions_qtt_recipe_create_1_stage.text.toString().toInt()
             }
 
-        recipeViewModel.newRecipe.value!!.cookingTime =
-            textview_set_time_recipe_create_1_stage.text.toString()
-
         if (switch_private_recipe_recipe_create_1_stage.isChecked) {
             recipeViewModel.newRecipe.value!!.isPrivate
         } else {
@@ -383,10 +407,10 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
     private fun navigation(nextStep: Boolean) {
         if (nextStep) {
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_recipe_create_second_stage_from_first_stage)
+                .navigate(R.id.action_go_to_second_stage_from_first_stage)
         } else {
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_recipe_choose_method_or_category_from_first_stage)
+                .navigate(R.id.action_go_to_method_category_from_first_stage)
         }
     }
 
@@ -410,13 +434,28 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         dialog.show()
         val picker = dialog.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
         picker.setIs24HourView(true)
-        picker.hour = 0
-        picker.minute = 0
-        picker.setOnTimeChangedListener { _, hourOfDay, minute ->
-            val date: Date = if (hourOfDay == 0 && minute == 0) {
-                Date(RecipeUtils.defaultCookingTimeInMilliseconds)
+        picker.hour =
+            if (recipeViewModel.newRecipeCookingTimeHours.value == null || recipeViewModel.newRecipeCookingTimeHours.value == 0) {
+                0
             } else {
-                Date((hourOfDay * 60L * 60L * 1000L) + (minute * 60L * 1000L))
+                recipeViewModel.newRecipeCookingTimeHours.value!!
+            }
+        picker.minute =
+            if (recipeViewModel.newRecipeCookingTimeMinutes.value == null || recipeViewModel.newRecipeCookingTimeMinutes.value == 0) {
+                0
+            } else {
+                recipeViewModel.newRecipeCookingTimeMinutes.value!!
+            }
+        picker.setOnTimeChangedListener { _, hourOfDay, minute ->
+            val date: Date
+            if (hourOfDay == 0 && minute == 0) {
+                date = Date(RecipeUtils.defaultCookingTimeInMilliseconds)
+                recipeViewModel.newRecipeCookingTimeHours.value = 0
+                recipeViewModel.newRecipeCookingTimeMinutes.value = 15
+            } else {
+                date = Date((hourOfDay * 60L * 60L * 1000L) + (minute * 60L * 1000L))
+                recipeViewModel.newRecipeCookingTimeHours.value = hourOfDay
+                recipeViewModel.newRecipeCookingTimeMinutes.value = minute
             }
             recipeViewModel.newRecipe.value!!.cookingTime = RecipeUtils.timeFormat.format(date)
         }
