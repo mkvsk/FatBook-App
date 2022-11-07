@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.NavHostFragment
@@ -14,7 +13,6 @@ import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
-import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -128,15 +126,15 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
                 textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
                     String.format(
                         getString(R.string.format_kcal),
-                        FormatUtils.prettyCountNutritionFacts(newKcal.toString().toDouble())
+                        FormatUtils.prettyCount(newKcal.toString().toDouble())
                     )
 
                 tv_ingredient_proteins_recipe_add_ingredients.text =
-                    FormatUtils.prettyCountNutritionFacts(newProteins.toString().toDouble())
+                    FormatUtils.prettyCount(newProteins.toString().toDouble())
                 tv_ingredient_fats_recipe_add_ingredients.text =
-                    FormatUtils.prettyCountNutritionFacts(newFats.toString().toDouble())
+                    FormatUtils.prettyCount(newFats.toString().toDouble())
                 tv_ingredient_carbs_recipe_add_ingredients.text =
-                    FormatUtils.prettyCountNutritionFacts(newCarbs.toString().toDouble())
+                    FormatUtils.prettyCount(newCarbs.toString().toDouble())
             } else {
                 setDefaultNutritionFacts(ingredient)
             }

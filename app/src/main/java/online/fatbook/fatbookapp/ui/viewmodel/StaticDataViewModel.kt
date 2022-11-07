@@ -9,6 +9,7 @@ import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.repository.StaticDataRepository
 import online.fatbook.fatbookapp.util.ContextHolder
+import org.apache.commons.lang3.StringUtils
 
 class StaticDataViewModel : ViewModel() {
 
@@ -77,6 +78,27 @@ class StaticDataViewModel : ViewModel() {
             }
 
         })
+    }
+
+    fun getOtherMethod(): CookingMethod? {
+        var method: CookingMethod? = null
+        cookingMethods.value?.let { list ->
+            method = list.first { StringUtils.equalsIgnoreCase(it.title, "other") }
+        }
+        return method
+    }
+
+    fun getOtherCategory(): ArrayList<CookingCategory> {
+        val categories: ArrayList<CookingCategory> = ArrayList()
+        cookingCategories.value?.let { list ->
+            val category = list.first {
+                StringUtils.equalsIgnoreCase(it.title, "other")
+            }
+            category.let {
+                categories.add(it)
+            }
+        }
+        return categories
     }
 
 }

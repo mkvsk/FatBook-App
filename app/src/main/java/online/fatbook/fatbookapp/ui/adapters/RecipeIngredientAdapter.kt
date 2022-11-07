@@ -57,7 +57,7 @@ class RecipeIngredientAdapter :
 
             value.kcal?.let {
                 itemView.textview_ingredient_kcals_title_rv_added_ingredient.text =
-                    String.format("%s kcal", FormatUtils.prettyCountNutritionFacts(it))
+                    String.format("%s kcal", FormatUtils.prettyCount(it))
             }
 
             itemView.textview_ingredient_qtt_title_rv_added_ingredient.text =

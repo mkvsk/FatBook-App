@@ -378,7 +378,7 @@ class UserProfileFragment : Fragment() {
             }
 
             override fun onFailure(value: User?) {
-
+                loadData(username, updateCurrentUser)
             }
         })
     }

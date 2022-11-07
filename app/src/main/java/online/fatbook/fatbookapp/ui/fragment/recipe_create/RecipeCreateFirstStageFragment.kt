@@ -3,7 +3,6 @@ package online.fatbook.fatbookapp.ui.fragment.recipe_create
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -26,7 +25,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -48,9 +46,7 @@ import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.*
 import java.io.File
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.min
+import java.time.LocalTime
 
 class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener {
 
@@ -73,12 +69,11 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.WRAP_CONTENT)
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         if (recipeViewModel.newRecipe.value == null) {
             recipeViewModel.newRecipe.value = Recipe()
         }
-
         setupAdapter()
         setupMenu()
         setupImageEditButtons()
@@ -116,14 +111,12 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                         s.toString().replace("\\s+".toRegex(), " ")
                             .trim()
                     toolbar_recipe_create_1_stage.title = recipeViewModel.newRecipe.value!!.title
-                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
-                        true
                 } else {
+                    recipeViewModel.newRecipe.value!!.title = null
                     toolbar_recipe_create_1_stage.title =
                         resources.getString(R.string.nav_recipe_create)
-                    toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
-                        false
                 }
+                checkEnableMenu()
                 Log.d("NEWRECIPE", "title = ${recipeViewModel.newRecipe.value!!.title}")
             }
 
@@ -136,9 +129,6 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 staticDataViewModel.cookingDifficulties.value!!.find { it.title == difficulty.title }
         }
 
-        recipeViewModel.newRecipe.value!!.portions?.let {
-            edittext_portions_qtt_recipe_create_1_stage.setText(it.toString())
-        }
         edittext_portions_qtt_recipe_create_1_stage.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -152,6 +142,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
                 } else {
                     recipeViewModel.newRecipe.value!!.portions = null
                 }
+                checkEnableMenu()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -215,6 +206,12 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
 
         recipeViewModel.newRecipe.value!!.isPrivate?.let {
             switch_private_recipe_recipe_create_1_stage.isChecked = it
+            if (it) {
+                textview_description_private_recipe_create_1_stage.text = getString(R.string.title_recipe_private)
+            } else {
+                textview_description_private_recipe_create_1_stage.text =
+                    getString(R.string.title_recipe_public)
+            }
         }
         switch_private_recipe_recipe_create_1_stage.setOnCheckedChangeListener { _, isChecked ->
             recipeViewModel.newRecipe.value!!.isPrivate = isChecked
@@ -229,9 +226,17 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
 
         //TODO remove stub
         edittext_title_recipe_create_1_stage.setText("Test recipe name, REMOVE ME LATER")
+        edittext_portions_qtt_recipe_create_1_stage.setText("6")
         Log.d(TAG, "=======================================================================")
         Log.d(TAG, "onViewCreated: ${recipeViewModel.newRecipe.value}")
         Log.d(TAG, "=======================================================================")
+    }
+
+    private fun checkEnableMenu() {
+        val isEmpty =
+            edittext_portions_qtt_recipe_create_1_stage.text.isNullOrEmpty() || edittext_title_recipe_create_1_stage.text.isNullOrEmpty()
+        toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
+            !isEmpty
     }
 
     private fun toggleImageButtons(isImageExists: Boolean) {
@@ -294,6 +299,8 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         recipeViewModel.newRecipeImage.value = null
         recipeViewModel.newRecipeCookingMethod.value = null
         recipeViewModel.newRecipeCookingCategories.value = null
+        recipeViewModel.newRecipeCookingTimeHours.value = null
+        recipeViewModel.newRecipeCookingTimeMinutes.value = null
 
         recipeViewModel.newRecipeSteps.value = null
         recipeViewModel.newRecipeIngredients.value = null
@@ -391,24 +398,18 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
     }
 
     private fun fillRecipe() {
-        recipeViewModel.newRecipe.value!!.title =
-            edittext_title_recipe_create_1_stage.text.toString().replace("\\s+".toRegex(), " ")
-                .trim()
-        edittext_title_recipe_create_1_stage.setText(recipeViewModel.newRecipe.value!!.title)
-
-        recipeViewModel.newRecipe.value!!.portions =
-            if (edittext_portions_qtt_recipe_create_1_stage.text.toString().isEmpty()) {
-                1
-            } else {
-                edittext_portions_qtt_recipe_create_1_stage.text.toString().toInt()
-            }
-
-        if (switch_private_recipe_recipe_create_1_stage.isChecked) {
-            recipeViewModel.newRecipe.value!!.isPrivate
-        } else {
-            recipeViewModel.newRecipe.value!!.isPrivate = false
+        if (recipeViewModel.newRecipe.value!!.cookingTime.isNullOrEmpty()) {
+            recipeViewModel.newRecipe.value!!.cookingTime = "00:15"
+            recipeViewModel.newRecipeCookingTimeHours.value = 0
+            recipeViewModel.newRecipeCookingTimeMinutes.value = 15
         }
-
+        if (recipeViewModel.newRecipe.value!!.cookingMethod == null) {
+            recipeViewModel.newRecipe.value!!.cookingMethod = staticDataViewModel.getOtherMethod()
+        }
+        if (recipeViewModel.newRecipe.value!!.cookingCategories.isNullOrEmpty()) {
+            recipeViewModel.newRecipe.value!!.cookingCategories =
+                staticDataViewModel.getOtherCategory()
+        }
         Log.d("NEW RECIPE:", "${recipeViewModel.newRecipe.value}")
     }
 
@@ -429,10 +430,22 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         params.leftMargin = resources.getDimensionPixelSize(R.dimen.cards_margin_start)
         params.rightMargin = resources.getDimensionPixelSize(R.dimen.cards_margin_end)
 
-        val dialog = AlertDialog.Builder(requireContext()).setView(R.layout.dialog_timepicker)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_timepicker, null)
+        val dialog = AlertDialog.Builder(requireContext()).setView(dialogView)
             .setPositiveButton(resources.getString(R.string.alert_dialog_btn_ok)) { dialogInterface: DialogInterface, _: Int ->
+                val dialog =
+                    dialogView.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
+                val cookingTime: LocalTime = if (dialog.hour == 0 && dialog.minute == 0) {
+                    LocalTime.of(0, 15)
+                } else {
+                    LocalTime.of(dialog.hour, dialog.minute)
+                }
+                recipeViewModel.newRecipeCookingTimeHours.value = cookingTime.hour
+                recipeViewModel.newRecipeCookingTimeMinutes.value = cookingTime.minute
+                recipeViewModel.newRecipe.value!!.cookingTime = cookingTime.toString()
                 showCookingTime()
                 dialogInterface.dismiss()
+                Log.d(TAG, "cooking time set to ${cookingTime.hour} h ${cookingTime.minute} min")
             }
             .setNegativeButton(resources.getString(R.string.alert_dialog_btn_cancel)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
             .create()
@@ -454,19 +467,6 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             } else {
                 recipeViewModel.newRecipeCookingTimeMinutes.value!!
             }
-        picker.setOnTimeChangedListener { _, hourOfDay, minute ->
-            val date: Date
-            if (hourOfDay == 0 && minute == 0) {
-                date = Date(RecipeUtils.defaultCookingTimeInMilliseconds)
-                recipeViewModel.newRecipeCookingTimeHours.value = 0
-                recipeViewModel.newRecipeCookingTimeMinutes.value = 15
-            } else {
-                date = Date((hourOfDay * 60L * 60L * 1000L) + (minute * 60L * 1000L))
-                recipeViewModel.newRecipeCookingTimeHours.value = hourOfDay
-                recipeViewModel.newRecipeCookingTimeMinutes.value = minute
-            }
-            recipeViewModel.newRecipe.value!!.cookingTime = FormatUtils.timeFormat.format(date)
-        }
     }
 
     private fun showCookingTime() {

@@ -11,7 +11,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
-import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import kotlinx.android.synthetic.main.fragment_recipe_create_second_stage.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
@@ -157,16 +156,16 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         ) {
             showNutritionFacts(true)
             textview_portion_kcals_qtt_recipe_create_2_stage.text =
-                FormatUtils.prettyCountNutritionFacts(
+                FormatUtils.prettyCount(
                     recipeViewModel.newRecipe.value?.kcalPerPortion.toString().toDouble()
                 )
-            tv_qtt_proteins.text = FormatUtils.prettyCountNutritionFacts(
+            tv_qtt_proteins.text = FormatUtils.prettyCount(
                 recipeViewModel.newRecipe.value?.proteinsPerPortion.toString().toDouble()
             )
-            tv_qtt_fats.text = FormatUtils.prettyCountNutritionFacts(
+            tv_qtt_fats.text = FormatUtils.prettyCount(
                 recipeViewModel.newRecipe.value?.fatsPerPortion.toString().toDouble()
             )
-            tv_qtt_carbs.text = FormatUtils.prettyCountNutritionFacts(
+            tv_qtt_carbs.text = FormatUtils.prettyCount(
                 recipeViewModel.newRecipe.value?.carbsPerPortion.toString().toDouble()
             )
         } else {

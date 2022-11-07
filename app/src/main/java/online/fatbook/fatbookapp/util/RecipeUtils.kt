@@ -4,6 +4,7 @@ import android.content.Context
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
 import java.text.SimpleDateFormat
+import java.time.LocalTime
 import java.util.*
 
 object RecipeUtils {
@@ -46,13 +47,11 @@ object RecipeUtils {
         return if (cookingTime == null) {
             null
         } else {
-            val date = FormatUtils.timeFormat.parse(cookingTime)
-            val cal = Calendar.getInstance()
+            val date = LocalTime.parse(cookingTime)
             var result = ""
             date?.let {
-                cal.time = it
-                val hours = cal.get(Calendar.HOUR_OF_DAY)
-                val minutes = cal.get(Calendar.MINUTE)
+                val hours = it.hour
+                val minutes = it.minute
                 if (hours == 0 && minutes == 0) {
                     result = context.resources.getString(R.string.default_cooking_time)
                 }
