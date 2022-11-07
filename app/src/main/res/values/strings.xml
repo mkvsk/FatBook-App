@@ -318,5 +318,6 @@
     <string name="hint_choose_category">Choose category</string>
     <string name="message_clear_form_dialog">Are you sure you want to cancel creating new recipe?</string>
     <string name="format_kcal">%s kcal</string>
+    <string name="format_count" translatable="false">(%s/%s)</string>
 
 </resources>

@@ -1,16 +1,16 @@
 package online.fatbook.fatbookapp.ui.fragment.recipe_create
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import androidx.transition.AutoTransition
-import androidx.transition.Scene
-import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_recipe_create_second_stage.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
@@ -35,8 +35,10 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     private var ingredientsAdapter: RecipeIngredientAdapter? = null
     private var cookingStepsAdapter: CookingStepAdapter? = null
 
-    private var currentStepsQtt: Int? = 0
-    private var maxStepsQtt = 10
+    private var maxStepsQtt = 30
+    private var maxIngredientsQtt = 10
+
+    private val TAG = "RecipeCreateSecondStageFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,9 +50,11 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        toolbar_recipe_create_2_stage.title = "TODO title"
         setupMenu()
-        currentStepsQtt = recipeViewModel.newRecipe.value!!.steps!!.size
-        checkSteps(currentStepsQtt!!)
+        checkEnableMenu()
+        checkIngredientsQtt(recipeViewModel.newRecipe.value!!.ingredients!!.size)
+        checkStepsQtt(recipeViewModel.newRecipe.value!!.steps!!.size)
 
         button_add_ingredient_recipe_create_2_stage.setOnClickListener {
             NavHostFragment.findNavController(this)
@@ -85,23 +89,63 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         })
     }
 
+    private fun checkEnableMenu() {
+        val isEmpty =
+            recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty() || recipeViewModel.newRecipe.value!!.steps.isNullOrEmpty()
+        toolbar_recipe_create_2_stage.menu.findItem(R.id.menu_create_second_stage_save_recipe).isVisible =
+            !isEmpty
+    }
+
     private fun setupMenu() {
-//        toolbar_recipe_create_2_stage
+        toolbar_recipe_create_2_stage.inflateMenu(R.menu.recipe_create_2_stage_menu)
+        toolbar_recipe_create_2_stage.setOnMenuItemClickListener(this::onOptionsItemSelected)
         toolbar_recipe_create_2_stage.setNavigationOnClickListener {
             popBackStack()
         }
     }
 
-    private fun checkSteps(currentStepsQtt: Int) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_create_second_stage_save_recipe -> {
+                checkRecipe()
+                true
+            } else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun checkRecipe() {
+        Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
+        Log.d(TAG, "${recipeViewModel.newRecipe.value}")
+    }
+
+    private fun checkIngredientsQtt(currentIngredientsQtt: Int) {
+        if (currentIngredientsQtt == maxIngredientsQtt) {
+            button_add_ingredient_recipe_create_2_stage.visibility = View.GONE
+        }
+        if (currentIngredientsQtt < maxIngredientsQtt) {
+            button_add_ingredient_recipe_create_2_stage.visibility = View.VISIBLE
+        }
+        textview_ingredient_count_recipe_create_2_stage.text =
+            String.format(
+                getString(R.string.format_count),
+                currentIngredientsQtt,
+                maxIngredientsQtt
+            )
+    }
+
+    private fun checkStepsQtt(currentStepsQtt: Int) {
         if (currentStepsQtt == maxStepsQtt) {
             cardview_add_cooking_step.visibility = View.GONE
         }
         if (currentStepsQtt < maxStepsQtt) {
-            TransitionManager.go(Scene(cardview_add_cooking_step), AutoTransition())
             cardview_add_cooking_step.visibility = View.VISIBLE
         }
-        textview_steps_title_recipe_create_2_stage.text =
-            String.format("Cooking steps: (%s/%s)", currentStepsQtt, maxStepsQtt)
+        textview_steps_count_recipe_create_2_stage.text =
+            String.format(
+                getString(R.string.format_count),
+                currentStepsQtt,
+                maxStepsQtt
+            )
     }
 
     private fun setupIngredientsAdapter() {
@@ -118,6 +162,8 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         recipeViewModel.newRecipe.value!!.ingredients!!.removeAt(selectedItem)
         ingredientsAdapter!!.notifyItemRemoved(selectedItem)
         drawNutritionFacts()
+        checkIngredientsQtt(recipeViewModel.newRecipe.value!!.ingredients!!.size)
+        checkEnableMenu()
     }
 
     private fun setupCookingStepsAdapter() {
@@ -134,15 +180,13 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
             .navigate(R.id.action_go_to_create_cooking_step_from_second_stage)
     }
 
+    //TODO ANIM
     override fun onRecipeCookingStepDelete(itemPosition: Int) {
-        TransitionManager.go(Scene(rv_steps_recipe_create_2_stage), AutoTransition())
+//        TransitionManager.go(Scene(rv_steps_recipe_create_2_stage), AutoTransition())
         recipeViewModel.newRecipe.value!!.steps!!.removeAt(itemPosition)
         cookingStepsAdapter!!.notifyItemRemoved(itemPosition)
-
-        if (currentStepsQtt != 0) {
-            currentStepsQtt = recipeViewModel.newRecipe.value!!.steps!!.size
-            checkSteps(currentStepsQtt!!)
-        }
+        checkStepsQtt(recipeViewModel.newRecipe.value!!.steps!!.size)
+        checkEnableMenu()
     }
 
     override fun onResume() {

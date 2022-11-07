@@ -50,7 +50,8 @@
         android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/container_recipe_create_2_stage"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -78,13 +79,22 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/textview_ingredients_recipe_create_2_stage"
+                        android:id="@+id/textview_ingredients_title_recipe_create_2_stage"
                         style="@style/recipeCreateTitlesTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/cards_margin_start"
-                        android:text="Ingredients:"
+                        android:text="Ingredients: "
                         app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview_ingredient_count_recipe_create_2_stage"
+                        style="@style/recipeCreateTitlesTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/format_count"
+                        app:layout_constraintLeft_toRightOf="@id/textview_ingredients_title_recipe_create_2_stage"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -94,8 +104,9 @@
                         android:layout_marginTop="@dimen/titles_spacing_recipe_create"
                         android:clipToPadding="false"
                         android:overScrollMode="never"
+                        tools:itemCount="0"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@id/textview_ingredients_recipe_create_2_stage"
+                        app:layout_constraintTop_toBottomOf="@id/textview_ingredients_title_recipe_create_2_stage"
                         tools:listitem="@layout/rv_recipe_ingredient" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -267,19 +278,14 @@
                 android:id="@+id/cardview_left_recipe_create_2_stage"
                 style="@style/myMaterialCardLeft"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/elements_spacing_recipe_create"
                 android:layout_marginEnd="@dimen/cards_margin_end"
-                android:minHeight="700dp"
                 app:cardElevation="6dp"
                 app:cardPreventCornerOverlap="false"
                 app:contentPaddingBottom="10dp"
                 app:contentPaddingLeft="@dimen/cards_margin_start"
-                app:contentPaddingTop="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardview_right_recipe_create_2_stage">
+                app:contentPaddingTop="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -291,8 +297,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/cards_margin_start"
-                        android:text="Cooking steps: (1/10)"
+                        android:text="Cooking steps: "
                         app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview_steps_count_recipe_create_2_stage"
+                        style="@style/recipeCreateTitlesTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/format_count"
+                        app:layout_constraintLeft_toRightOf="@id/textview_steps_title_recipe_create_2_stage"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -369,24 +384,8 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cardview_add_cooking_step" />
-
-                    <!--                    <androidx.appcompat.widget.AppCompatButton-->
-                    <!--                        android:id="@+id/qqqq"-->
-                    <!--                        style="@style/buttons_in_fragments_style"-->
-                    <!--                        android:layout_width="@dimen/btn_main_w"-->
-                    <!--                        android:layout_height="@dimen/btn_main_h"-->
-                    <!--                        android:layout_marginTop="10dp"-->
-                    <!--                        android:background="@drawable/selector_btn_in_fragments"-->
-                    <!--                        android:elevation="4dp"-->
-                    <!--                        android:enabled="true"-->
-                    <!--                        android:text="Add description"-->
-                    <!--                        android:translationZ="2dp"-->
-                    <!--                        app:layout_constraintLeft_toLeftOf="parent"-->
-                    <!--                        app:layout_constraintRight_toRightOf="parent"-->
-                    <!--                        app:layout_constraintTop_toBottomOf="@id/tv_empty2" />-->
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

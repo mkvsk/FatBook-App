@@ -70,7 +70,8 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
+//        toolbar_recipe_create_1_stage.title = resources.getString(R.string.nav_recipe_create)
+        toolbar_recipe_create_1_stage.title = "TODO title"
         if (recipeViewModel.newRecipe.value == null) {
             recipeViewModel.newRecipe.value = Recipe()
         }
@@ -106,15 +107,13 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                checkDataTitle()
                 if (!s.isNullOrEmpty()) {
                     recipeViewModel.newRecipe.value!!.title =
                         s.toString().replace("\\s+".toRegex(), " ")
                             .trim()
-                    toolbar_recipe_create_1_stage.title = recipeViewModel.newRecipe.value!!.title
                 } else {
                     recipeViewModel.newRecipe.value!!.title = null
-                    toolbar_recipe_create_1_stage.title =
-                        resources.getString(R.string.nav_recipe_create)
                 }
                 checkEnableMenu()
                 Log.d("NEWRECIPE", "title = ${recipeViewModel.newRecipe.value!!.title}")
@@ -134,6 +133,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                checkDataPortions()
                 if (!s.isNullOrEmpty()) {
                     recipeViewModel.newRecipe.value!!.portions = s.toString().toInt()
                     if (edittext_portions_qtt_recipe_create_1_stage.length() > 1) {
@@ -207,7 +207,8 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         recipeViewModel.newRecipe.value!!.isPrivate?.let {
             switch_private_recipe_recipe_create_1_stage.isChecked = it
             if (it) {
-                textview_description_private_recipe_create_1_stage.text = getString(R.string.title_recipe_private)
+                textview_description_private_recipe_create_1_stage.text =
+                    getString(R.string.title_recipe_private)
             } else {
                 textview_description_private_recipe_create_1_stage.text =
                     getString(R.string.title_recipe_public)
@@ -232,9 +233,48 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         Log.d(TAG, "=======================================================================")
     }
 
+    private fun checkDataTitle() {
+        if (edittext_title_recipe_create_1_stage.text.toString().isNotEmpty()) {
+            edittext_title_recipe_create_1_stage.background =
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.round_corner_edittext_recipe_create
+                )
+        } else {
+            edittext_title_recipe_create_1_stage.isFocusable
+            edittext_title_recipe_create_1_stage.background =
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.round_corner_edittext_recipe_create_stroke
+                )
+        }
+    }
+
+    private fun checkDataPortions() {
+        if (edittext_portions_qtt_recipe_create_1_stage.text.toString().isNotEmpty()
+            && edittext_portions_qtt_recipe_create_1_stage.text.toString()
+                .toInt() != 0
+        ) {
+            edittext_portions_qtt_recipe_create_1_stage.background =
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.round_corner_edittext_recipe_create
+                )
+        } else {
+            edittext_portions_qtt_recipe_create_1_stage.isFocusable
+            edittext_portions_qtt_recipe_create_1_stage.background =
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.round_corner_edittext_recipe_create_stroke
+                )
+        }
+    }
+
     private fun checkEnableMenu() {
         val isEmpty =
-            edittext_portions_qtt_recipe_create_1_stage.text.isNullOrEmpty() || edittext_title_recipe_create_1_stage.text.isNullOrEmpty()
+            edittext_portions_qtt_recipe_create_1_stage.text.isNullOrEmpty() ||
+                    edittext_title_recipe_create_1_stage.text.isNullOrEmpty() ||
+                    edittext_portions_qtt_recipe_create_1_stage.text.toString().toInt() == 0
         toolbar_recipe_create_1_stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
             !isEmpty
     }
@@ -254,7 +294,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
     }
 
     private fun setupMenu() {
-        toolbar_recipe_create_1_stage.inflateMenu(R.menu.recipe_create_first_stage_menu)
+        toolbar_recipe_create_1_stage.inflateMenu(R.menu.recipe_create_1_stage_menu)
         toolbar_recipe_create_1_stage.setOnMenuItemClickListener(this::onOptionsItemSelected)
         toolbar_recipe_create_1_stage.setNavigationOnClickListener {
             showClearFormDialog()
