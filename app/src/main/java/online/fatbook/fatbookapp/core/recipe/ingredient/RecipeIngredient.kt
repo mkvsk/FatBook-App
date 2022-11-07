@@ -12,11 +12,14 @@ data class RecipeIngredient(
     val kcal: Double?
         get() {
             val find = ingredient!!.units!!.find { it.unit == unit }
-            return if (find!!.unit == IngredientUnit.GRAM || find.unit == IngredientUnit.ML) {
-                find.kcal!! / 100 * quantity!!
-            } else {
-                null
+            find?.let {
+                if (it.unit == IngredientUnit.GRAM || it.unit == IngredientUnit.ML) {
+                    return it.kcal!! / 100 * quantity!!
+                } else {
+                    return null
+                }
             }
+            return null
         }
 
     val proteins: Double?

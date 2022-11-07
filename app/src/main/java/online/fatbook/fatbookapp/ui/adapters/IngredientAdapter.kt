@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.adapters
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ class IngredientAdapter :
     private var data: List<Ingredient> = ArrayList()
     var listener: OnIngredientItemClickListener? = null
     var selectedIngredient: Ingredient? = Ingredient()
+    private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -37,6 +39,10 @@ class IngredientAdapter :
             this.data = it as ArrayList<Ingredient>
             notifyDataSetChanged()
         }
+    }
+
+    fun setContext(context: Context) {
+        this.context = context
     }
 
     fun setClickListener(listener: OnIngredientItemClickListener) {
@@ -67,7 +73,7 @@ class IngredientAdapter :
 
             val tmp = value.units?.get(0)?.kcal.toString()
             itemView.textview_ingredient_kcals_title_rv_ingredient.text =
-                String.format("%s kcal/100 gram", tmp)
+                String.format(context.resources.getString(R.string.string_format_kcal_qtt_per_100_gram), tmp)
 
             if (itemView.cardview_rv_ingredient.isClickable) {
                 itemView.cardview_rv_ingredient.setOnClickListener {

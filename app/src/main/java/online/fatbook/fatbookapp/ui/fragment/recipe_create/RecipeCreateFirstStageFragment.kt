@@ -227,6 +227,8 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             }
         }
 
+        //TODO remove stub
+        edittext_title_recipe_create_1_stage.setText("Test recipe name, REMOVE ME LATER")
         Log.d(TAG, "=======================================================================")
         Log.d(TAG, "onViewCreated: ${recipeViewModel.newRecipe.value}")
         Log.d(TAG, "=======================================================================")

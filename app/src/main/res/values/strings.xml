@@ -304,7 +304,7 @@
     <string name="dialog_connection_error">Something went wrong,\ntry again later</string>
     <string name="subtitle_online">Online</string>
     <string name="subtitle_offline">Offline</string>
-    <string name="string_format_kcal_qtt_per_100_gram">(%s kcal/100 gram)</string>
+    <string name="string_format_kcal_qtt_per_100_gram">%s kcal/100 gram</string>
     <string name="no_data_dots" translatable="false">...</string>
     <string name="toolbar_title_cooking_method">Cooking method</string>
     <string name="toolbar_title_cooking_categories">Cooking categories</string>
@@ -317,5 +317,6 @@
     <string name="hint_choose_method">Choose method</string>
     <string name="hint_choose_category">Choose category</string>
     <string name="message_clear_form_dialog">Are you sure you want to cancel creating new recipe?</string>
+    <string name="format_kcal">%s kcal</string>
 
 </resources>

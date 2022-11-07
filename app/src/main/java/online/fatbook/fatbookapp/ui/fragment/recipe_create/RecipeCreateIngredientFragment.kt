@@ -14,6 +14,7 @@ import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
+import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -56,55 +57,52 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
         loadIngredients()
         setupIngredientsAdapter()
         setupUnitPicker(null)
-        progress_overlay.visibility = View.GONE
+        setupMenu()
 //        handleBackPressed()
 
         cardview_left_recipe_add_ingredients.visibility = View.GONE
         textView_selected_ingredient_recipe_add_ingredients.doOnTextChanged { _, _, _, _ ->
+            toolbar_recipe_add_ingredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
+                !editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()
             TransitionManager.go(Scene(cardview_left_recipe_add_ingredients), AutoTransition())
             TransitionManager.go(Scene(cardview_right_recipe_add_ingredients), AutoTransition())
             cardview_left_recipe_add_ingredients.visibility = View.VISIBLE
-            setupMenu()
             editText_ingredient_quantity_recipe_add_ingredients.addTextChangedListener(object :
                 TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
+                override fun beforeTextChanged(s: CharSequence, i1: Int, i2: Int, i3: Int) {
                 }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-
-                override fun afterTextChanged(s: Editable?) {
+                override fun onTextChanged(s: CharSequence, i1: Int, i2: Int, i3: Int) {
                     checkData()
-                    if (s!!.isEmpty()) {
+                    if (s.isEmpty()) {
+                        toolbar_recipe_add_ingredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
+                            false
                         recipeViewModel.newRecipeAddIngredient.value?.let {
                             setDefaultNutritionFacts(
                                 it
                             )
                         }
                     } else {
+                        toolbar_recipe_add_ingredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
+                            true
                         recipeViewModel.newRecipeAddIngredient.value?.let { calculateNutrition(it) }
                     }
-//                    if (selectedUnit == recipeViewModel.newRecipeAddIngredient.value?.units!![0].unit) {
-//                        recipeViewModel.newRecipeAddIngredient.value?.let { calculateNutrition(it) }
-//                    }
+                }
+
+                override fun afterTextChanged(s: Editable) {
                 }
             })
         }
 
         edittext_search_recipe_add_ingredients.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(s: CharSequence, i1: Int, i2: Int, i3: Int) {
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(s: CharSequence, i1: Int, i2: Int, i3: Int) {
                 filter(edittext_search_recipe_add_ingredients.text.toString())
             }
 
-            override fun afterTextChanged(s: Editable?) {
+            override fun afterTextChanged(s: Editable) {
             }
 
         })
@@ -129,16 +127,16 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
                 val newCarbs = (carbs / 100 * newQtt)
                 textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
                     String.format(
-                        "%s kcal",
-                        FormatUtils.prettyCount(newKcal.toString().toInt())
+                        getString(R.string.format_kcal),
+                        FormatUtils.prettyCountNutritionFacts(newKcal.toString().toDouble())
                     )
 
                 tv_ingredient_proteins_recipe_add_ingredients.text =
-                    FormatUtils.prettyCount(newProteins.toString().toInt())
+                    FormatUtils.prettyCountNutritionFacts(newProteins.toString().toDouble())
                 tv_ingredient_fats_recipe_add_ingredients.text =
-                    FormatUtils.prettyCount(newFats.toString().toInt())
+                    FormatUtils.prettyCountNutritionFacts(newFats.toString().toDouble())
                 tv_ingredient_carbs_recipe_add_ingredients.text =
-                    FormatUtils.prettyCount(newCarbs.toString().toInt())
+                    FormatUtils.prettyCountNutritionFacts(newCarbs.toString().toDouble())
             } else {
                 setDefaultNutritionFacts(ingredient)
             }
@@ -162,20 +160,18 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
     }
 
     private fun setupMenu() {
-        val activity = (activity as AppCompatActivity?)!!
-        activity.setSupportActionBar(toolbar_recipe_add_ingredients)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.add_recipe_ingredient_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+        toolbar_recipe_add_ingredients.inflateMenu(R.menu.add_recipe_ingredient_menu)
+        toolbar_recipe_add_ingredients.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        toolbar_recipe_add_ingredients.setNavigationOnClickListener {
+            popBackStack()
+        }
+        toolbar_recipe_add_ingredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
+            false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_add_ingredient_to_recipe -> {
-                checkData()
                 addIngredient()
                 true
             }
@@ -200,13 +196,6 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
             quantity = selectedQtt
         )
         recipeViewModel.newRecipe.value!!.ingredients!!.add(recipeIngredient)
-
-//        var tmp = recipeViewModel.newRecipe.value!!.kcalPerPortion
-//        tmp = tmp?.plus(
-//                recipeIngredient.kcal.toString().toDouble()
-//            )
-//        Log.d("KCALS AVG:::::::::::::::::::::::::::::", "$tmp")
-
         NavHostFragment.findNavController(this).popBackStack()
     }
 
@@ -233,6 +222,7 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
     private fun setupIngredientsAdapter() {
         val rv = rv_ingredients_recipe_add_ingredients
         adapter = IngredientAdapter()
+        adapter!!.setContext(requireContext())
         adapter!!.setClickListener(this)
         rv.adapter = adapter
     }
@@ -242,9 +232,11 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
             override fun onResult(value: List<Ingredient>?) {
                 staticDataViewModel.ingredients.value = value
                 adapter?.setData(value)
+                progress_overlay.visibility = View.GONE
             }
 
             override fun onFailure(value: List<Ingredient>?) {
+                loadIngredients()
             }
         })
     }
@@ -300,8 +292,7 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
 
             picker_ingredient_unit.setOnValueChangedListener { _, _, newVal ->
                 selectedUnit = units[newVal]
-
-                if (selectedUnit == ingredient.units[0].unit) {
+                if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()) {
                     setDefaultNutritionFacts(ingredient)
                 } else {
                     calculateNutrition(ingredient)

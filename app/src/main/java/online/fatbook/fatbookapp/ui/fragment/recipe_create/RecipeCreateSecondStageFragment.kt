@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.NestedScrollView
 import androidx.navigation.fragment.NavHostFragment
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
+import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
 import kotlinx.android.synthetic.main.fragment_recipe_create_second_stage.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
@@ -47,7 +49,7 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupMenu()
         currentStepsQtt = recipeViewModel.newRecipe.value!!.steps!!.size
         checkSteps(currentStepsQtt!!)
 
@@ -84,6 +86,13 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         })
     }
 
+    private fun setupMenu() {
+//        toolbar_recipe_create_2_stage
+        toolbar_recipe_create_2_stage.setNavigationOnClickListener {
+            popBackStack()
+        }
+    }
+
     private fun checkSteps(currentStepsQtt: Int) {
         if (currentStepsQtt == maxStepsQtt) {
             cardview_add_cooking_step.visibility = View.GONE
@@ -99,12 +108,14 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     private fun setupIngredientsAdapter() {
         val rv = rv_ingredients_recipe_create_2_stage
         ingredientsAdapter = RecipeIngredientAdapter()
+        ingredientsAdapter!!.setContext(requireContext())
         ingredientsAdapter!!.setClickListener(this)
         rv.adapter = ingredientsAdapter
     }
 
+    //TODO ANIM
     override fun onRecipeIngredientDelete(selectedItem: Int) {
-        TransitionManager.go(Scene(cardview_right_recipe_create_2_stage), AutoTransition())
+//        TransitionManager.go(Scene(cardview_right_recipe_create_2_stage), AutoTransition())
         recipeViewModel.newRecipe.value!!.ingredients!!.removeAt(selectedItem)
         ingredientsAdapter!!.notifyItemRemoved(selectedItem)
         drawNutritionFacts()
@@ -142,18 +153,21 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
     private fun drawNutritionFacts() {
         if (recipeViewModel.newRecipe.value!!.isAllIngredientUnitsValid
-            && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()) {
+            && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()
+        ) {
             showNutritionFacts(true)
             textview_portion_kcals_qtt_recipe_create_2_stage.text =
-                recipeViewModel.newRecipe.value?.kcalPerPortion.toString()
-            tv_qtt_proteins.text = FormatUtils.prettyCount(
-                recipeViewModel.newRecipe.value?.proteinsPerPortion.toString().toInt()
+                FormatUtils.prettyCountNutritionFacts(
+                    recipeViewModel.newRecipe.value?.kcalPerPortion.toString().toDouble()
+                )
+            tv_qtt_proteins.text = FormatUtils.prettyCountNutritionFacts(
+                recipeViewModel.newRecipe.value?.proteinsPerPortion.toString().toDouble()
             )
-            tv_qtt_fats.text = FormatUtils.prettyCount(
-                recipeViewModel.newRecipe.value?.fatsPerPortion.toString().toInt()
+            tv_qtt_fats.text = FormatUtils.prettyCountNutritionFacts(
+                recipeViewModel.newRecipe.value?.fatsPerPortion.toString().toDouble()
             )
-            tv_qtt_carbs.text = FormatUtils.prettyCount(
-                recipeViewModel.newRecipe.value?.carbsPerPortion.toString().toInt()
+            tv_qtt_carbs.text = FormatUtils.prettyCountNutritionFacts(
+                recipeViewModel.newRecipe.value?.carbsPerPortion.toString().toDouble()
             )
         } else {
             showNutritionFacts(false)
@@ -161,7 +175,7 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     }
 
     private fun showNutritionFacts(value: Boolean) {
-        //TODO cards resize animation
+        //TODO ANIM cards resize animation
         if (value) {
             textview_nutrition_facts_title_recipe_create_2_stage.visibility = View.VISIBLE
             cardview_nutrition_facts_recipe_create_2_stage.visibility = View.VISIBLE
@@ -169,5 +183,19 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
             textview_nutrition_facts_title_recipe_create_2_stage.visibility = View.GONE
             cardview_nutrition_facts_recipe_create_2_stage.visibility = View.GONE
         }
+    }
+
+    private fun handleBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    popBackStack()
+                }
+            })
+    }
+
+    private fun popBackStack() {
+        NavHostFragment.findNavController(this).popBackStack()
     }
 }
