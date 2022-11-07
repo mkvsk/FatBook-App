@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_save_recipe"
+        android:id="@+id/menu_create_step_confirm"
         android:icon="@drawable/icon_save_changes"
-        android:title="save recipe"
+        android:visible="false"
+        android:title="Next step"
         app:showAsAction="always" />
 
 </menu>

@@ -35,8 +35,8 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     private var ingredientsAdapter: RecipeIngredientAdapter? = null
     private var cookingStepsAdapter: CookingStepAdapter? = null
 
-    private var maxStepsQtt = 30
-    private var maxIngredientsQtt = 10
+    private var maxStepsQtt = 10
+    private var maxIngredientsQtt = 30
 
     private val TAG = "RecipeCreateSecondStageFragment"
 
@@ -55,12 +55,10 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         checkEnableMenu()
         checkIngredientsQtt(recipeViewModel.newRecipe.value!!.ingredients!!.size)
         checkStepsQtt(recipeViewModel.newRecipe.value!!.steps!!.size)
-
         button_add_ingredient_recipe_create_2_stage.setOnClickListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_ingredient_from_second_stage)
         }
-
         cardview_add_cooking_step.setOnClickListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_step_from_second_stage)
@@ -70,6 +68,7 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
         ingredientsAdapter!!.setData(recipeViewModel.newRecipe.value!!.ingredients)
         cookingStepsAdapter!!.setData(recipeViewModel.newRecipe.value!!.steps)
+        cookingStepsAdapter!!.setImages(recipeViewModel.newRecipeStepImages.value)
 
         recipeViewModel.selectedCookingStep.value = null
 
@@ -109,13 +108,15 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
             R.id.menu_create_second_stage_save_recipe -> {
                 checkRecipe()
                 true
-            } else -> super.onOptionsItemSelected(item)
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun checkRecipe() {
         Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "${recipeViewModel.newRecipe.value}")
+        Log.d(TAG, "${recipeViewModel.newRecipeStepImages.value}")
     }
 
     private fun checkIngredientsQtt(currentIngredientsQtt: Int) {
@@ -168,7 +169,7 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
     private fun setupCookingStepsAdapter() {
         val rv = rv_steps_recipe_create_2_stage
-        cookingStepsAdapter = CookingStepAdapter()
+        cookingStepsAdapter = CookingStepAdapter(requireContext())
         cookingStepsAdapter!!.setClickListener(this)
         rv.adapter = cookingStepsAdapter
     }
@@ -177,16 +178,19 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         recipeViewModel.selectedCookingStep.value = value
         recipeViewModel.selectedCookingStepPosition.value = itemPosition
         NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_create_cooking_step_from_second_stage)
+            .navigate(R.id.action_go_to_step_from_second_stage)
     }
 
     //TODO ANIM
     override fun onRecipeCookingStepDelete(itemPosition: Int) {
 //        TransitionManager.go(Scene(rv_steps_recipe_create_2_stage), AutoTransition())
         recipeViewModel.newRecipe.value!!.steps!!.removeAt(itemPosition)
+        recipeViewModel.newRecipeStepImages.value!!.remove(itemPosition + 1)
         cookingStepsAdapter!!.notifyItemRemoved(itemPosition)
         checkStepsQtt(recipeViewModel.newRecipe.value!!.steps!!.size)
         checkEnableMenu()
+        Log.d(TAG, "${recipeViewModel.newRecipe.value!!.steps}")
+        Log.d(TAG, "${recipeViewModel.newRecipeStepImages.value}")
     }
 
     override fun onResume() {

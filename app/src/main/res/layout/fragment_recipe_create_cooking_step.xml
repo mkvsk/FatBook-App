@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.recipe_create.RecipeCreateCookingStepFragment">
 
-    <include layout="@layout/include_progress_overlay"/>
+    <include layout="@layout/include_progress_overlay" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_recipe_create_cooking_step"
@@ -21,134 +21,121 @@
             android:layout_height="wrap_content"
             android:background="@color/theme_toolbar_color"
             android:minHeight="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
-            local:navigationIcon="@drawable/ic_arrow_back"
+            app:layout_scrollFlags="enterAlways"
+            local:navigationIcon="@drawable/ic_close"
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="Description"
-            local:titleTextColor="@color/main_text"
-            local:titleTextAppearance="@style/txtToolbar" />
+            local:titleTextAppearance="@style/txtToolbar"
+            local:titleTextColor="@color/main_text" />
     </com.google.android.material.appbar.AppBarLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardview_recipe_create_cooking_step"
-                    style="@style/myMaterialCardRight"
-                    android:layout_width="match_parent"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_recipe_create_cooking_step"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardview_recipe_create_cooking_step"
+            style="@style/myMaterialCardRight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/cards_margin_start"
+            android:layout_marginBottom="10dp"
+            app:cardElevation="4dp"
+            app:cardPreventCornerOverlap="false"
+            app:contentPaddingBottom="20dp"
+            app:contentPaddingLeft="10dp"
+            app:contentPaddingRight="20dp"
+            app:contentPaddingTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout_recipe_create_cooking_step">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageview_step"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/cards_margin_start"
-                    app:cardElevation="4dp"
-                    app:contentPaddingBottom="20dp"
-                    app:contentPaddingLeft="10dp"
-                    app:contentPaddingRight="20dp"
-                    app:contentPaddingTop="10dp"
-                    app:cardPreventCornerOverlap="false"
-                    android:layout_marginBottom="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_default_recipe_image"
+                    app:layout_constraintDimensionRatio="H,1:1"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/appBarLayout_recipe_create_cooking_step">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize4Percent" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/container_ll_recipe_create_cooking_step"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageview_step">
 
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/imageview_full_image"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_default_recipe_image"
-                            app:layout_constraintDimensionRatio="H,1:1"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize4Percent" />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/button_edit_photo_recipe_create_cooking_step"
+                        style="@style/roundBtnAddPhoto"
+                        android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
+                        android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
+                        android:visibility="visible"
+                        app:maxImageSize="16dp" />
 
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/container_ll_recipe_create_cooking_step"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:orientation="horizontal"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/imageview_full_image">
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/button_delete_photo_recipe_create_cooking_step"
+                        style="@style/roundBtnDeletePhoto"
+                        android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
+                        android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
+                        android:layout_marginLeft="15dp"
+                        android:visibility="gone"
+                        app:maxImageSize="16dp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-                            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                                android:id="@+id/button_edit_photo_recipe_create_cooking_step"
-                                style="@style/roundBtnEditPhoto"
-                                android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
-                                android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-                                android:visibility="gone"
-                                app:maxImageSize="16dp" />
+                <EditText
+                    android:id="@+id/edittext_recipe_create_cooking_step"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/elements_spacing_recipe_create"
+                    android:background="@drawable/round_corner_multiline_et"
+                    android:gravity="start"
+                    android:hint="Input description"
+                    android:inputType="textMultiLine"
+                    android:maxLength="500"
+                    android:maxLines="17"
+                    android:minLines="7"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp"
+                    android:textAppearance="@style/recipeCreateStepDescription"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/container_ll_recipe_create_cooking_step" />
 
-                            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                                android:id="@+id/button_add_photo_recipe_create_cooking_step"
-                                style="@style/roundBtnAddPhoto"
-                                android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
-                                android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-                                android:visibility="visible"
-                                app:maxImageSize="16dp" />
+                <TextView
+                    android:id="@+id/textview_length_recipe_create_cooking_step"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="500"
+                    android:textColor="@color/blue_grey_200"
+                    android:textSize="11sp"
+                    app:layout_constraintRight_toRightOf="@id/edittext_recipe_create_cooking_step"
+                    app:layout_constraintTop_toBottomOf="@id/edittext_recipe_create_cooking_step" />
 
-                            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                                android:id="@+id/button_delete_photo_recipe_create_cooking_step"
-                                style="@style/roundBtnDeletePhoto"
-                                android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
-                                android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-                                android:layout_marginLeft="15dp"
-                                android:visibility="visible"
-                                app:maxImageSize="16dp" />
-                        </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-                        <EditText
-                            android:id="@+id/edittext_recipe_create_cooking_step"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/round_corner_multiline_et"
-                            android:gravity="start"
-                            android:hint="Input description"
-                            android:inputType="textMultiLine"
-                            android:maxLength="500"
-                            android:maxLines="17"
-                            android:minLines="7"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="5dp"
-                            android:textAppearance="@style/recipeCreateStepDescription"
-                            android:layout_marginTop="@dimen/elements_spacing_recipe_create"
-                            app:layout_constraintTop_toBottomOf="@id/container_ll_recipe_create_cooking_step"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"/>
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/button_add_recipe_create_cooking_step"
-                            android:layout_width="@dimen/btn_main_w"
-                            android:layout_height="@dimen/btn_main_h"
-                            android:layout_marginTop="@dimen/btn_spacing"
-                            style="@style/buttons_in_fragments_style"
-                            android:background="@drawable/selector_btn_in_fragments"
-                            android:enabled="false"
-                            android:elevation="4dp"
-                            android:translationZ="2dp"
-                            android:text="Add"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/edittext_recipe_create_cooking_step" />
-
-                        <TextView
-                            android:id="@+id/textview_length_recipe_create_cooking_step"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:text="500"
-                            android:textColor="@color/blue_grey_200"
-                            android:textSize="11sp"
-                            app:layout_constraintRight_toRightOf="@id/edittext_recipe_create_cooking_step"
-                            app:layout_constraintTop_toBottomOf="@id/edittext_recipe_create_cooking_step" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

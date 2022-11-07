@@ -75,6 +75,9 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
         if (recipeViewModel.newRecipe.value == null) {
             recipeViewModel.newRecipe.value = Recipe()
         }
+        if (recipeViewModel.newRecipeStepImages.value == null) {
+            recipeViewModel.newRecipeStepImages.value = HashMap()
+        }
         setupAdapter()
         setupMenu()
         setupImageEditButtons()
@@ -369,22 +372,18 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
             Glide.with(requireContext()).load(R.drawable.ic_default_recipe_image)
                 .into(imageview_photo_recipe_create_1_stage)
         }
-        try {
-            chooseImageFromGallery =
-                registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-                    if (verifyStoragePermissions(requireActivity())) {
-                        uri?.let {
-                            toggleImageButtons(true)
-                            val path = FileUtils.getPath(requireContext(), it)
-                            recipeViewModel.newRecipeImage.value = path?.let { file -> File(file) }
-                            Glide.with(requireContext()).load(uri)
-                                .into(imageview_photo_recipe_create_1_stage)
-                        }
+        chooseImageFromGallery =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+                if (verifyStoragePermissions(requireActivity())) {
+                    uri?.let {
+                        toggleImageButtons(true)
+                        val path = FileUtils.getPath(requireContext(), it)
+                        recipeViewModel.newRecipeImage.value = path?.let { file -> File(file) }
+                        Glide.with(requireContext()).load(uri)
+                            .into(imageview_photo_recipe_create_1_stage)
                     }
                 }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+            }
     }
 
     private fun verifyStoragePermissions(requireActivity: FragmentActivity): Boolean {

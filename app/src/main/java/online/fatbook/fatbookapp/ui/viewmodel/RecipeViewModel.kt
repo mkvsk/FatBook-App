@@ -28,7 +28,7 @@ class RecipeViewModel : ViewModel() {
     var newRecipeAddRecipeIngredient = MutableLiveData<RecipeIngredient?>()
 
     var newRecipeImage = MutableLiveData<File?>()
-    var newRecipeStepImages = MutableLiveData<Map<Int, File>?>()
+    var newRecipeStepImages = MutableLiveData<HashMap<Int, File>?>()
 
     var newRecipeSteps = MutableLiveData<ArrayList<CookingStep?>>()
 

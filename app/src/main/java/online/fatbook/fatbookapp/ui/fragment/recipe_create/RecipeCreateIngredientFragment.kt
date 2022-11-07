@@ -158,7 +158,7 @@ class RecipeCreateIngredientFragment : Fragment(), OnIngredientItemClickListener
     }
 
     private fun setupMenu() {
-        toolbar_recipe_add_ingredients.inflateMenu(R.menu.add_recipe_ingredient_menu)
+        toolbar_recipe_add_ingredients.inflateMenu(R.menu.recipe_create_ingredient_menu)
         toolbar_recipe_add_ingredients.setOnMenuItemClickListener(this::onOptionsItemSelected)
         toolbar_recipe_add_ingredients.setNavigationOnClickListener {
             popBackStack()
