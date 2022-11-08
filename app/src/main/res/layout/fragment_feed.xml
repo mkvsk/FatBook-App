@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:paddingTop="10dp"
+            android:paddingTop="5dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
             tools:listitem="@layout/rv_feed_recipe_card_preview" />

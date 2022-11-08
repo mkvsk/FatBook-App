@@ -37,7 +37,10 @@
         <item name="cornerSizeTopRight">0dp</item>
     </style>
 
-
+    <style name="ShapeAppearanceOverlay.App.CornerSizeTop" parent="">
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
+    </style>
     <!--    <style name="TimePicker" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
     <!--        <item name="colorPrimary">@color/main_text</item>-->
     <!--        <item name="fontFamily">@font/roboto_regular</item>-->

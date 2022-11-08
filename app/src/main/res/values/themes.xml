@@ -167,6 +167,21 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
+    <style name="myMaterialCardRecipePreviewRounded" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay_card_custom_corners_recipe_preview_round
+        </item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners_recipe_preview_round" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+    </style>
+
     <style name="myMaterialCardRecipeViewImage" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/theme_cardview_bgr</item>
         <item name="shapeAppearanceOverlay">
@@ -257,7 +272,7 @@
 
     <style name="txtRecipePreviewAdds">
         <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:textSize">9sp</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:textColor">@color/rv_recipe_preview_ic_color</item>
     </style>
 
