@@ -169,7 +169,7 @@ class RecipeViewFragment : Fragment() {
         Glide
             .with(requireContext())
             .load(recipe!!.image)
-            .into(imageview_main_photo_recipe_view)
+            .into(imageView_recipe_photo)
 
 
         textView_forks_avg_view_recipe.text = convertNumeric(recipe.forks!!)
