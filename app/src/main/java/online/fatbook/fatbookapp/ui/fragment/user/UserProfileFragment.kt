@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
@@ -47,7 +49,7 @@ class UserProfileFragment : Fragment() {
 //    private var adapter: RecipeAdapter? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserProfileBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -56,84 +58,90 @@ class UserProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("===t=======UserProfileFragment==========", "onViewCreated")
-
-        progress_overlay.visibility = View.VISIBLE
-
-        if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
-            setupMenu()
-            toolbar_userprofile.title = userViewModel.user.value!!.username
-            setupViewForLoggedInUser()
+        val sharedPreferences = requireActivity().getSharedPreferences(Constants.SP_TAG, AppCompatActivity.MODE_PRIVATE)
+        if (sharedPreferences.getBoolean(Constants.SP_TAG_DARK_MODE_CHANGED, false)) {
+            sharedPreferences.edit().putBoolean(Constants.SP_TAG_DARK_MODE_CHANGED, false).apply()
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_go_to_app_settings_from_user_profile)
         } else {
-            toolbar_userprofile.title = userViewModel.selectedUsername.value!!
-            setupViewForSelectedUser()
-        }
+            progress_overlay.visibility = View.VISIBLE
 
-        val fragmentAdapter = UserProfileRecipesAdapter(this)
-        viewPager = vp_userprofile
-        viewPager.isUserInputEnabled = false
-        viewPager.adapter = fragmentAdapter
-        viewPager.offscreenPageLimit = 2
-        val tabLayout = tabLayout_userprofile
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text =
-                if (position == 0) {
-                    resources.getString(R.string.title_recipes_profile)
-                } else {
-                    resources.getString(R.string.title_favourites_profile)
-                }
-        }.attach()
+            if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
+                setupMenu()
+                toolbar_userprofile.title = userViewModel.user.value!!.username
+                setupViewForLoggedInUser()
+            } else {
+                toolbar_userprofile.title = userViewModel.selectedUsername.value!!
+                setupViewForSelectedUser()
+            }
 
-        ViewPager2ViewHeightAnimator().viewPager2 = viewPager
+            val fragmentAdapter = UserProfileRecipesAdapter(this)
+            viewPager = vp_userprofile
+            viewPager.isUserInputEnabled = false
+            viewPager.adapter = fragmentAdapter
+            viewPager.offscreenPageLimit = 2
+            val tabLayout = tabLayout_userprofile
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                tab.text =
+                        if (position == 0) {
+                            resources.getString(R.string.title_recipes_profile)
+                        } else {
+                            resources.getString(R.string.title_favourites_profile)
+                        }
+            }.attach()
 
-        imageview_recipes_qtt_userprofile.setOnClickListener {
-            focusOnRecipes()
-        }
+            ViewPager2ViewHeightAnimator().viewPager2 = viewPager
 
-        imageview_friends_qtt_userprofile.setOnClickListener {
-            NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_followers_from_user_profile)
-        }
+            imageview_recipes_qtt_userprofile.setOnClickListener {
+                focusOnRecipes()
+            }
 
-        imageview_userphoto_userprofile.setOnClickListener {
-            imageViewModel.image.value = userViewModel.user.value!!.profileImage
-            NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_view_image_from_user_profile1)
-        }
+            imageview_friends_qtt_userprofile.setOnClickListener {
+                NavHostFragment.findNavController(this)
+                        .navigate(R.id.action_go_to_followers_from_user_profile)
+            }
 
-        nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
-            showButtonUp(scrollY)
-        })
+            imageview_userphoto_userprofile.setOnClickListener {
+                imageViewModel.image.value = userViewModel.user.value!!.profileImage
+                NavHostFragment.findNavController(this)
+                        .navigate(R.id.action_go_to_view_image_from_user_profile1)
+            }
 
-        floating_button_up.setOnClickListener {
-            focusOnRecipes()
-        }
+            nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
+                showButtonUp(scrollY)
+            })
 
-        imageview_ic_expand.setOnClickListener {
-            animateTextExpand()
-        }
+            floating_button_up.setOnClickListener {
+                focusOnRecipes()
+            }
 
-        button_messages.setOnClickListener {
-            swipe_refresh_user_profile.isRefreshing = false
-        }
+            imageview_ic_expand.setOnClickListener {
+                animateTextExpand()
+            }
 
-        tabLayout_userprofile.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab!!.position == 0) {
+            button_messages.setOnClickListener {
+                swipe_refresh_user_profile.isRefreshing = false
+            }
+
+            tabLayout_userprofile.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    if (tab!!.position == 0) {
 //                    adapter!!.setData(list1)
-                } else {
+                    } else {
 //                    adapter!!.setData(list2)
+                    }
                 }
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
 
-            }
+                }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
+                override fun onTabReselected(tab: TabLayout.Tab?) {
 
-            }
+                }
 
-        })
+            })
+        }
     }
 
     private fun setupMenu() {
@@ -145,17 +153,17 @@ class UserProfileFragment : Fragment() {
         return when (item.itemId) {
             R.id.menu_user_profile_edit_profile -> {
                 NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_edit_profile_from_user_profile)
+                        .navigate(R.id.action_go_to_edit_profile_from_user_profile)
                 true
             }
             R.id.menu_user_profile_badges -> {
                 NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_badges_from_user_profile)
+                        .navigate(R.id.action_go_to_badges_from_user_profile)
                 true
             }
             R.id.menu_user_profile_app_settings -> {
                 NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_app_settings_from_user_profile)
+                        .navigate(R.id.action_go_to_app_settings_from_user_profile)
                 true
             }
             R.id.menu_user_profile_app_info -> {
@@ -179,7 +187,7 @@ class UserProfileFragment : Fragment() {
 
     private fun logout() {
         val sharedPreferences = requireActivity().getSharedPreferences(
-            Constants.SP_TAG, Context.MODE_PRIVATE
+                Constants.SP_TAG, Context.MODE_PRIVATE
         )
         val editor = sharedPreferences.edit()
         editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
@@ -194,17 +202,17 @@ class UserProfileFragment : Fragment() {
         if (!expanded) {
             textview_bio_userprofile.maxLines = Integer.MAX_VALUE
             imageview_ic_expand.setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(), R.drawable.ic_expand_less
-                )
+                    ContextCompat.getDrawable(
+                            requireContext(), R.drawable.ic_expand_less
+                    )
             )
             expanded = true
         } else {
             textview_bio_userprofile.maxLines = 3
             imageview_ic_expand.setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(), R.drawable.ic_expand_more
-                )
+                    ContextCompat.getDrawable(
+                            requireContext(), R.drawable.ic_expand_more
+                    )
             )
             expanded = false
         }
@@ -250,22 +258,22 @@ class UserProfileFragment : Fragment() {
                 textview_recipes_qtt_userprofile.text = "0"
             } else {
                 textview_recipes_qtt_userprofile.text =
-                    FormatUtils.prettyCount(user.recipes?.size!!)
+                        FormatUtils.prettyCount(user.recipes?.size!!)
             }
 
             if (user.followersAmount == null || user.followersAmount == 0) {
                 textview_friends_qtt_userprofile.text = "0"
             } else {
                 textview_friends_qtt_userprofile.text =
-                    FormatUtils.prettyCount(user.followersAmount!!)
+                        FormatUtils.prettyCount(user.followersAmount!!)
             }
 
             if (user.profileImage.isNullOrEmpty()) {
                 Glide.with(requireContext()).load(R.drawable.ic_default_userphoto)
-                    .into(imageview_userphoto_userprofile)
+                        .into(imageview_userphoto_userprofile)
             } else {
                 Glide.with(requireContext()).load(user.profileImage!!)
-                    .into(imageview_userphoto_userprofile)
+                        .into(imageview_userphoto_userprofile)
             }
 
             if (user.title.isNullOrEmpty()) {
@@ -308,22 +316,22 @@ class UserProfileFragment : Fragment() {
                 textview_recipes_qtt_userprofile.text = "0"
             } else {
                 textview_recipes_qtt_userprofile.text =
-                    FormatUtils.prettyCount(user.recipes?.size!!)
+                        FormatUtils.prettyCount(user.recipes?.size!!)
             }
 
             if (user.followersAmount == null || user.followersAmount == 0) {
                 textview_friends_qtt_userprofile.text = "0"
             } else {
                 textview_friends_qtt_userprofile.text =
-                    FormatUtils.prettyCount(user.followersAmount!!)
+                        FormatUtils.prettyCount(user.followersAmount!!)
             }
 
             if (user.profileImage.isNullOrEmpty()) {
                 Glide.with(requireContext()).load(R.drawable.ic_default_userphoto)
-                    .into(imageview_userphoto_userprofile)
+                        .into(imageview_userphoto_userprofile)
             } else {
                 Glide.with(requireContext()).load(user.profileImage!!)
-                    .into(imageview_userphoto_userprofile)
+                        .into(imageview_userphoto_userprofile)
             }
 
             if (user.title.isNullOrEmpty()) {
@@ -386,7 +394,7 @@ class UserProfileFragment : Fragment() {
     private fun focusOnRecipes() {
         nsv_userprofile.post {
             nsv_userprofile.smoothScrollTo(
-                0, cardview_userprofile.bottom
+                    0, cardview_userprofile.bottom
             )
         }
     }

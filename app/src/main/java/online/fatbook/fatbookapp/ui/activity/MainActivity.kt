@@ -90,7 +90,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         if (sharedPreferences.getBoolean(SP_TAG_DARK_MODE_CHANGED, false)) {
             backStack = getBackStack(sharedPreferences.getString(SP_TAG_BACK_STACK, ""))
             main_pager.currentItem = 4
-            sharedPreferences.edit().putBoolean(SP_TAG_DARK_MODE_CHANGED, false).apply()
         }
         main_pager.post(this::checkDeepLink)
         main_pager.offscreenPageLimit = fragments.size
