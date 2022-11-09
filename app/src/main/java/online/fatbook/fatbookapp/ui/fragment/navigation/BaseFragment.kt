@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.ui.fragment.navigation
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,14 +30,14 @@ class BaseFragment : Fragment(), FragmentLifecycle {
         arguments?.let {
             layoutRes = it.getInt(KEY_LAYOUT)
             navHostId = it.getInt(KEY_NAV_HOST)
-
+            Log.d("==========BaseFragment==========", "onCreate: $arguments")
         } ?: return
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return if (layoutRes == defaultInt) {
             null
@@ -53,9 +54,10 @@ class BaseFragment : Fragment(), FragmentLifecycle {
     }
 
     fun onBackPressed(): Boolean {
+        Log.d("BaseFragment", "onBackPressed: $navHostId, $layoutRes, $appBarConfig")
         return requireActivity()
-            .findNavController(navHostId)
-            .navigateUp(appBarConfig)
+                .findNavController(navHostId)
+                .navigateUp(appBarConfig)
     }
 
 
@@ -76,8 +78,11 @@ class BaseFragment : Fragment(), FragmentLifecycle {
         }
     }
 
-    fun handleDeepLink(intent: Intent) =
-        requireActivity().findNavController(navHostId).handleDeepLink(intent)
+    fun handleDeepLink(intent: Intent): Boolean {
+        Log.d("==========BaseFragment==========", "handleDeepLink: $navHostId")
+        return requireActivity().findNavController(navHostId).handleDeepLink(intent)
+    }
+
 
     override fun scrollFragmentToTop() {
         when (val fragment = childFragmentManager.fragments[0].childFragmentManager.fragments[0]) {
@@ -87,6 +92,11 @@ class BaseFragment : Fragment(), FragmentLifecycle {
             is NotificationsFragment -> fragment.scrollUp()
             is UserProfileFragment -> fragment.scrollUp()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("==========BaseFragment==========", "onDestroy: $arguments")
     }
 
     companion object {

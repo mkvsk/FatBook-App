@@ -1,9 +1,12 @@
 package online.fatbook.fatbookapp.ui.activity
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
@@ -16,14 +19,13 @@ import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.fragment.navigation.BaseFragment
 import online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateFirstStageFragment
 import online.fatbook.fatbookapp.ui.viewmodel.*
-import online.fatbook.fatbookapp.util.FragmentLifecycle
-import online.fatbook.fatbookapp.util.ProgressBarUtil
-import online.fatbook.fatbookapp.util.RecipeUtils
-import online.fatbook.fatbookapp.util.Utils
+import online.fatbook.fatbookapp.util.*
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_BACK_STACK
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE_CHANGED
 import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
-    NavigationBarView.OnItemReselectedListener, ViewPager.OnPageChangeListener {
+        NavigationBarView.OnItemReselectedListener, ViewPager.OnPageChangeListener {
 
     private var binding: ActivityMainBinding? = null
 
@@ -34,39 +36,41 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var searchViewModel: SearchViewModel? = null
     private var imageViewModel: ImageViewModel? = null
 
-    private val backStack = Stack<Int>()
+    private var backStack = Stack<Int>()
     private var adapter: ViewPagerAdapter? = null
     private var currentItemPosition = 0
 
+    private lateinit var sharedPreferences: SharedPreferences
+
     private val fragments = listOf(
-        BaseFragment.newInstance(
-            R.layout.content_feed_base,
-            R.id.nav_host_feed
-        ),
-        BaseFragment.newInstance(
-            R.layout.content_search_base,
-            R.id.nav_host_search
-        ),
-        BaseFragment.newInstance(
-            R.layout.content_recipe_create_base,
-            R.id.nav_host_recipe_create
-        ),
-        BaseFragment.newInstance(
-            R.layout.content_notifications_base,
-            R.id.nav_host_notifications
-        ),
-        BaseFragment.newInstance(
-            R.layout.content_user_profile_base,
-            R.id.nav_host_user_profile
-        ),
+            BaseFragment.newInstance(
+                    R.layout.content_feed_base,
+                    R.id.nav_host_feed
+            ),
+            BaseFragment.newInstance(
+                    R.layout.content_search_base,
+                    R.id.nav_host_search
+            ),
+            BaseFragment.newInstance(
+                    R.layout.content_recipe_create_base,
+                    R.id.nav_host_recipe_create
+            ),
+            BaseFragment.newInstance(
+                    R.layout.content_notifications_base,
+                    R.id.nav_host_notifications
+            ),
+            BaseFragment.newInstance(
+                    R.layout.content_user_profile_base,
+                    R.id.nav_host_user_profile
+            ),
     )
 
     private val indexToPage = mapOf(
-        0 to R.id.navigation_feed,
-        1 to R.id.navigation_search,
-        2 to R.id.navigation_recipe_create,
-        3 to R.id.navigation_notifications,
-        4 to R.id.navigation_user_profile
+            0 to R.id.navigation_feed,
+            1 to R.id.navigation_search,
+            2 to R.id.navigation_recipe_create,
+            3 to R.id.navigation_notifications,
+            4 to R.id.navigation_user_profile
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,9 +86,14 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         main_pager.addOnPageChangeListener(this)
         adapter = ViewPagerAdapter()
         main_pager.adapter = adapter
+        sharedPreferences = getSharedPreferences(Constants.SP_TAG, MODE_PRIVATE)
+        if (sharedPreferences.getBoolean(SP_TAG_DARK_MODE_CHANGED, false)) {
+            backStack = getBackStack(sharedPreferences.getString(SP_TAG_BACK_STACK, ""))
+            main_pager.currentItem = 4
+            sharedPreferences.edit().putBoolean(SP_TAG_DARK_MODE_CHANGED, false).apply()
+        }
         main_pager.post(this::checkDeepLink)
         main_pager.offscreenPageLimit = fragments.size
-
         bottom_navigation.visibility = View.VISIBLE
         bottom_navigation.setOnItemSelectedListener(this)
         bottom_navigation.setOnItemReselectedListener(this)
@@ -97,17 +106,32 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 //        if (intent.getBooleanExtra(FEED_TAG, false)) {
 //            val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
         authViewModel!!.username.value =
-            "hewix"
+                "hewix"
 //                sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
         authViewModel!!.password.value =
-            "root1339"
+                "root1339"
 //                sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
         userViewModel!!.user.value = User()
         userViewModel!!.user.value!!.username =
-            "hewix"
+                "hewix"
 //                sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
 //            navController!!.navigate(R.id.action_go_to_feed_from_welcome)
 //        }
+    }
+
+    private fun getBackStack(string: String?): Stack<Int> {
+        val stack: Stack<Int> = Stack()
+        string?.let {
+            val list: ArrayList<Int> = ArrayList()
+            string.filter { !it.isWhitespace() }.removeSurrounding("[", "]").split(',').forEach {
+                list.add(it.toInt())
+            }
+            list.toIntArray().forEach {
+                stack.push(it)
+            }
+            return stack
+        }
+        return stack
     }
 
     private fun instantiateViewModels() {
@@ -183,5 +207,10 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     fun redrawFragment(menuItemPosition: Int) {
         fragments[menuItemPosition].redrawFragment()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        sharedPreferences.edit().putString(SP_TAG_BACK_STACK, backStack.toString()).apply()
     }
 }

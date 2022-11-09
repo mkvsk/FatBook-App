@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.fragment.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,7 +52,7 @@ class SearchFragment : Fragment(), OnSearchItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d("===t=======SearchFragment==========", "onViewCreated")
         progress_overlay.visibility = View.VISIBLE
 
         if (searchViewModel.categories.value.isNullOrEmpty()) {
@@ -245,5 +246,10 @@ class SearchFragment : Fragment(), OnSearchItemClickListener {
     fun scrollUp() {
         search_layout.scrollTo(0, 0)
         appBarLayout_search.setExpanded(true, false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("===t=======SearchFragment==========", "onDestroy")
     }
 }

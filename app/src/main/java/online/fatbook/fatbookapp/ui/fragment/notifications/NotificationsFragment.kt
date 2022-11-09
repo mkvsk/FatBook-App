@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.fragment.notifications
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,9 +23,18 @@ class NotificationsFragment : Fragment() {
         return binding!!.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("===t=======NotificationsFragment==========", "onViewCreated")
+    }
+
     fun scrollUp() {
         nsv_notifications.scrollTo(0, 0)
         appBarLayout_notifications.setExpanded(true, false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("===t=======NotificationsFragment==========", "onDestroy")
+    }
 }

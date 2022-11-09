@@ -69,6 +69,7 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("===t=======RecipeCreateFirstStageFragment==========", "onViewCreated")
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 //        toolbar_recipe_create_1_stage.title = resources.getString(R.string.nav_recipe_create)
         toolbar_recipe_create_1_stage.title = "TODO title"
@@ -551,5 +552,10 @@ class RecipeCreateFirstStageFragment : Fragment(), OnRecipeDifficultyClickListen
     fun scrollUp() {
         nsv_recipe_create_1_stage.scrollTo(0, 0)
         appBarLayout_recipe_create_1_stage.setExpanded(true, false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("===t=======RecipeCreateFirstStageFragment==========", "onDestroy")
     }
 }

@@ -55,7 +55,7 @@ class UserProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("================ User profile ================", "onViewCreated")
+        Log.d("===t=======UserProfileFragment==========", "onViewCreated")
 
         progress_overlay.visibility = View.VISIBLE
 
@@ -393,7 +393,7 @@ class UserProfileFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i("================ User profile ================", "onDestroy")
+        Log.d("===t=======UserProfileFragment==========", "onDestroy")
         userViewModel.selectedUsername.value = null
         userViewModel.selectedUser.value = null
     }

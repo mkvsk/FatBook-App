@@ -56,6 +56,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("===t=======FeedFragment==========", "onViewCreated")
         setupSwipeRefresh()
         setupMenu()
         if (!authViewModel.isUserAuthenticated.value!!) {
@@ -340,6 +341,11 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("===t=======FeedFragment==========", "onDestroy")
     }
 
     override fun onResume() {

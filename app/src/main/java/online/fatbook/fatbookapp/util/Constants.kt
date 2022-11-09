@@ -12,6 +12,8 @@ object Constants {
     const val SP_TAG_PASSWORD = "password"
     const val SP_TAG_USERNAME = "username"
     const val SP_TAG_DARK_MODE = "dark_mode"
+    const val SP_TAG_DARK_MODE_CHANGED = "dark_mode_changed"
+    const val SP_TAG_BACK_STACK = "back_stack"
     const val SP_TAG_CLOSE_RECIPE_CREATE = "close_recipe_create"
 
     const val APP_PREFS = "app_prefs"
