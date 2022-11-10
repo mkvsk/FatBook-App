@@ -20,6 +20,8 @@ import online.fatbook.fatbookapp.ui.fragment.navigation.BaseFragment
 import online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateFirstStageFragment
 import online.fatbook.fatbookapp.ui.viewmodel.*
 import online.fatbook.fatbookapp.util.*
+import online.fatbook.fatbookapp.util.Constants.FEED_TAG
+import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_BACK_STACK
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE_CHANGED
 import java.util.*
@@ -86,7 +88,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         main_pager.addOnPageChangeListener(this)
         adapter = ViewPagerAdapter()
         main_pager.adapter = adapter
-        sharedPreferences = getSharedPreferences(Constants.SP_TAG, MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
         if (sharedPreferences.getBoolean(SP_TAG_DARK_MODE_CHANGED, false)) {
             backStack = getBackStack(sharedPreferences.getString(SP_TAG_BACK_STACK, ""))
             main_pager.currentItem = 4

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_feed"
+    app:startDestination="@id/welcome_dest">
+
+    <fragment
+        android:id="@+id/welcome_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.WelcomeFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_register_from_welcome"
+            app:destination="@id/register_dest" />
+
+        <action
+            android:id="@+id/action_go_to_login_from_welcome"
+            app:destination="@id/login_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/login_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_login_recover_pass_from_login"
+            app:destination="@id/login_recover_pass_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/login_recover_pass_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginRecoverPassword"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_login_recover_pass_vcode_from_recover_pass"
+            app:destination="@id/login_recover_pass_vcode_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/login_recover_pass_vcode_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginRecoverPasswordVCodeFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_new_pass_from_login_vcode"
+            app:destination="@id/new_pass_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/new_pass_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.NewPassFragment"
+        android:label="@null" />
+
+    <fragment
+        android:id="@+id/register_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.RegisterEmailFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_verification_code"
+            app:destination="@id/verification_code_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/verification_code_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.VerificationCodeFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_register_password"
+            app:destination="@id/register_password_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/register_password_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.RegisterPasswordFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_register_username"
+            app:destination="@id/register_username_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/register_username_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.RegisterUsernameFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_account_created"
+            app:destination="@id/account_created_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/account_created_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.AccountCreatedFragment"
+        android:label="@null" />
+</navigation>

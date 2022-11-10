@@ -16,7 +16,7 @@
         android:theme="@style/Theme.FatBook"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="online.fatbook.fatbookapp.ui.activity.SplashActivity"
+            android:name=".ui.activity.AuthenticationActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -24,6 +24,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="online.fatbook.fatbookapp.ui.activity.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
