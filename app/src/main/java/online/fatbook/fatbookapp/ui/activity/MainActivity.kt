@@ -2,11 +2,9 @@ package online.fatbook.fatbookapp.ui.activity
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
@@ -17,13 +15,17 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.fragment.navigation.BaseFragment
-import online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateFirstStageFragment
 import online.fatbook.fatbookapp.ui.viewmodel.*
-import online.fatbook.fatbookapp.util.*
-import online.fatbook.fatbookapp.util.Constants.FEED_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_BACK_STACK
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE_CHANGED
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
+import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
+import online.fatbook.fatbookapp.util.FragmentLifecycle
+import online.fatbook.fatbookapp.util.ProgressBarUtil
+import online.fatbook.fatbookapp.util.RecipeUtils
+import online.fatbook.fatbookapp.util.Utils
+import org.apache.commons.lang3.StringUtils
 import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
@@ -104,20 +106,14 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
 
         //TODO remove
-//        if (intent.getBooleanExtra(FEED_TAG, false)) {
-//            val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
         authViewModel!!.username.value =
-                "hewix"
-//                sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
+                sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
         authViewModel!!.password.value =
-                "root1339"
-//                sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
+                sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
         userViewModel!!.user.value = User()
         userViewModel!!.user.value!!.username =
-                "hewix"
-//                sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
-//            navController!!.navigate(R.id.action_go_to_feed_from_welcome)
-//        }
+                sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
     }
 
     private fun getBackStack(string: String?): Stack<Int> {

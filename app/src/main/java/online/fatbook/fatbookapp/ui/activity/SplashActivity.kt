@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import online.fatbook.fatbookapp.databinding.ActivitySplashBinding
+import online.fatbook.fatbookapp.ui.fragment.authentication.WelcomeFragment
 import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.Constants.FEED_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
@@ -28,34 +29,13 @@ class SplashActivity : AppCompatActivity() {
         loadSharedPreferences()
     }
 
-    private fun startMainScreen(username: String, password: String) {
-        val mainScreenIntent = Intent(this@SplashActivity, MainActivity::class.java)
-        if (intent.action != null && intent.action != "android.intent.action.MAIN") {
-            mainScreenIntent.action = intent.action
-        }
-        if (!StringUtils.isEmpty(username) || !StringUtils.isEmpty(password)) {
-            mainScreenIntent.putExtra(FEED_TAG, true)
-            mainScreenIntent.putExtra(SP_TAG_USERNAME, username)
-            mainScreenIntent.putExtra(SP_TAG_PASSWORD, password)
-        } else {
-            mainScreenIntent.putExtra(FEED_TAG, false)
-        }
-
-        startActivity(mainScreenIntent)
-        finish()
-    }
-
     private fun loadSharedPreferences() {
         val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
-
-        when (sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)) {
-            true -> {
-                setDefaultNightMode(MODE_NIGHT_YES)
-            }
-            else -> {
-                setDefaultNightMode(MODE_NIGHT_NO)
-            }
-        }
+        setDefaultNightMode(if (sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)) {
+            MODE_NIGHT_YES
+        } else {
+            MODE_NIGHT_NO
+        })
 
         username = sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
         password = sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
@@ -64,9 +44,25 @@ class SplashActivity : AppCompatActivity() {
         Log.d("password", password!!)
 
         startMainScreen(username!!, password!!)
-//        val handler = Handler()
-//        handler.postDelayed({
-//            startMainScreen(username!!, password!!)
-//        }, 1500)
+    }
+
+    private fun startMainScreen(username: String, password: String) {
+//        if (intent.action != null && intent.action != "android.intent.action.MAIN") {
+//            mainScreenIntent.action = intent.action
+//        }
+        val intent: Intent
+        if (!StringUtils.isEmpty(username) || !StringUtils.isEmpty(password)) {
+            intent = Intent(this@SplashActivity, MainActivity::class.java)
+            intent.putExtra(SP_TAG_USERNAME, username)
+            intent.putExtra(SP_TAG_PASSWORD, password)
+            if (this.intent.action != null && this.intent.action != "android.intent.action.MAIN") {
+                intent.action = this.intent.action
+            }
+
+        } else {
+            intent = Intent(this@SplashActivity, AuthenticationActivity::class.java)
+        }
+        startActivity(intent)
+        finish()
     }
 }

@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.fragment.authentication.login
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,6 +20,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentNewPassBinding
+import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.hideKeyboard
@@ -156,7 +158,8 @@ class NewPassFragment : Fragment() {
     }
 
     private fun navigateToFeed() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_feed_from_new_pass)
+        requireActivity().startActivity(Intent(requireContext(), MainActivity::class.java))
+        requireActivity().finish()
     }
 
     private fun handleBackPressed() {

@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.fragment.authentication.register
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_account_created.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentAccountCreatedBinding
+import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
@@ -50,8 +52,8 @@ class AccountCreatedFragment : Fragment() {
     }
 
     private fun navigateToFeed() {
-        NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_feed_from_account_created)
+        requireActivity().startActivity(Intent(requireContext(), MainActivity::class.java))
+        requireActivity().finish()
     }
 
     private fun saveUserDataToSharedPrefs() {

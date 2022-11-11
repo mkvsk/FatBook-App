@@ -30,10 +30,10 @@ class WelcomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fragment_welcome_button_register.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_register_email)
+            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_register_from_welcome)
         }
         fragment_welcome_button_login.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_login)
+            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_login_from_welcome)
         }
 
     }

@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.fragment.authentication.login
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,6 +23,7 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.authentication.LoginResponse
 import online.fatbook.fatbookapp.databinding.FragmentLoginBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.hideKeyboard
@@ -113,7 +115,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun login(username: String, password: String) {
-        Log.d("LOGIN attempt", reconnectCount.toString())
+        Log.d("LOGIN attempt", "for user $username/$password #$reconnectCount")
         progress_overlay_auth.visibility = View.VISIBLE
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("username", username)
@@ -153,7 +155,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateToFeed() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_feed_from_login)
+        requireActivity().startActivity(Intent(requireContext(), MainActivity::class.java))
+        requireActivity().finish()
     }
 
     private fun handleBackPressed() {
