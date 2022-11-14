@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_add_ingredient_to_recipe"
-        android:icon="@drawable/icon_save_changes"
+        android:icon="@drawable/ic_toolbar_save"
         android:title="add ingredient"
         app:showAsAction="always" />
 

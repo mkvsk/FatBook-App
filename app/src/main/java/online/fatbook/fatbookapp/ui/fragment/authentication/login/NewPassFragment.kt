@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -128,7 +129,6 @@ class NewPassFragment : Fragment() {
             password,
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
-                    progress_overlay_auth.visibility = View.GONE
                     when (value!!.code) {
                         0 -> {
                             if (!isReconnectCancelled) {
