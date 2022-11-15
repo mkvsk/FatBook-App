@@ -16,7 +16,6 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_search.*
-import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -26,13 +25,14 @@ import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
 import online.fatbook.fatbookapp.ui.adapters.SearchAdapter
+import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.SearchUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 
-class SearchFragment : Fragment(), OnSearchItemClickListener {
+class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentActions {
 
     private var binding: FragmentSearchBinding? = null
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
@@ -243,13 +243,23 @@ class SearchFragment : Fragment(), OnSearchItemClickListener {
         NavHostFragment.findNavController(this).popBackStack()
     }
 
-    fun scrollUp() {
-        search_layout.scrollTo(0, 0)
-        appBarLayout_search.setExpanded(true, false)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         Log.d("===t=======SearchFragment==========", "onDestroy")
+    }
+
+    override fun onBackPressedBase(): Boolean {
+        return if (bottomSheetSearchFilter.state == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
+            true
+        } else {
+            popBackStack()
+            false
+        }
+    }
+
+    override fun scrollUpBase() {
+        search_layout.scrollTo(0, 0)
+        appBarLayout_search.setExpanded(true, false)
     }
 }

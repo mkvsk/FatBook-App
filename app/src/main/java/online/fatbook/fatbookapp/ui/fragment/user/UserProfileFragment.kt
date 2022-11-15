@@ -19,7 +19,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
@@ -28,6 +27,7 @@ import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.UserProfileRecipesAdapter
+import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
@@ -35,7 +35,7 @@ import online.fatbook.fatbookapp.util.*
 import org.apache.commons.lang3.StringUtils
 
 
-class UserProfileFragment : Fragment() {
+class UserProfileFragment : Fragment(), BaseFragmentActions {
 
     private var binding: FragmentUserProfileBinding? = null
 
@@ -421,7 +421,11 @@ class UserProfileFragment : Fragment() {
         Log.i("================ User profile ================", "onStart")
     }
 
-    fun scrollUp() {
+    override fun onBackPressedBase(): Boolean {
+        return false
+    }
+
+    override fun scrollUpBase() {
         nsv_userprofile.scrollTo(0, 0)
         appBarLayout_userprofile.setExpanded(true, false)
     }

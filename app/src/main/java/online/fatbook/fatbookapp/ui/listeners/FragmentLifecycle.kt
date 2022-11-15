@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.util
+package online.fatbook.fatbookapp.ui.listeners
 
 interface FragmentLifecycle {
     fun scrollFragmentToTop()

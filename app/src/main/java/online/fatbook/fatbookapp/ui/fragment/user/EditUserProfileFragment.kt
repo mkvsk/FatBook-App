@@ -13,6 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.fragment_badges.*
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
@@ -27,8 +28,6 @@ class EditUserProfileFragment : Fragment() {
 
     private var binding: FragmentEditProfileBinding? = null
     private var bioTextLength: Int = 0
-    private var strBio: String? = null
-    private var strTmp: String? = null
 
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
@@ -43,6 +42,7 @@ class EditUserProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        toolbar_badges.title = "asd"
         setupMenu()
         drawData(userViewModel.user.value!!)
 

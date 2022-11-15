@@ -5,23 +5,12 @@ import android.transition.TransitionInflater
 import android.util.Log
 import android.view.*
 import android.view.GestureDetector.OnDoubleTapListener
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.transition.AutoTransition
-import androidx.transition.Fade
-import androidx.transition.Scene
-import androidx.transition.TransitionManager
-import androidx.transition.Visibility
+import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_image_view.*
-import kotlinx.android.synthetic.main.fragment_user_profile.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentImageViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
@@ -41,8 +30,8 @@ class ImageViewFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = FragmentImageViewBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -51,9 +40,6 @@ class ImageViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
-        toolbar_image_view.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
-        }
         setupMenu()
 
         imageview_full_image.setOnDoubleTapListener(object : OnDoubleTapListener {
@@ -78,9 +64,9 @@ class ImageViewFragment : Fragment() {
         })
         imageViewModel.image.value.let {
             Glide
-                .with(requireContext())
-                .load(it)
-                .into(imageview_full_image)
+                    .with(requireContext())
+                    .load(it)
+                    .into(imageview_full_image)
         }
 
         imageview_full_image.setOnTouchImageViewListener(object : OnTouchImageViewListener {
@@ -216,6 +202,9 @@ class ImageViewFragment : Fragment() {
     private fun setupMenu() {
         toolbar_image_view.inflateMenu(R.menu.image_view_menu)
         toolbar_image_view.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        toolbar_image_view.setNavigationOnClickListener {
+            popBackStack()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -233,5 +222,9 @@ class ImageViewFragment : Fragment() {
         super.onDestroy()
         imageViewModel.image.value = null
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+    }
+
+    private fun popBackStack() {
+        NavHostFragment.findNavController(this).popBackStack()
     }
 }

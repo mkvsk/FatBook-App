@@ -21,7 +21,7 @@ import online.fatbook.fatbookapp.util.Constants.SP_TAG_BACK_STACK
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE_CHANGED
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
-import online.fatbook.fatbookapp.util.FragmentLifecycle
+import online.fatbook.fatbookapp.ui.listeners.FragmentLifecycle
 import online.fatbook.fatbookapp.util.ProgressBarUtil
 import online.fatbook.fatbookapp.util.RecipeUtils
 import online.fatbook.fatbookapp.util.Utils

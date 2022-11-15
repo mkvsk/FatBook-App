@@ -23,6 +23,7 @@ import online.fatbook.fatbookapp.databinding.FragmentFeedBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
+import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
@@ -36,7 +37,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteListener {
+class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteListener, BaseFragmentActions {
 
     private var binding: FragmentFeedBinding? = null
     private var adapter: RecipeAdapter? = null
@@ -366,7 +367,11 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         )
     }
 
-    fun scrollUp() {
+    override fun onBackPressedBase(): Boolean {
+        return false
+    }
+
+    override fun scrollUpBase() {
         swipe_refresh_feed.scrollTo(0, 0)
         appBarLayout_feed.setExpanded(true, false)
     }

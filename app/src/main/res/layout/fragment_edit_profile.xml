@@ -147,6 +147,7 @@
                     android:hint="@string/edit_profile_website"
                     android:inputType="textUri"
                     android:lines="1"
+                    android:maxLength="1000"
                     android:paddingHorizontal="10dp"
                     android:textAppearance="@style/editProfileText"
                     app:layout_constraintLeft_toRightOf="@id/imageview_ic_website_edit_userprofile"
@@ -195,8 +196,8 @@
                     app:layout_constraintTop_toBottomOf="@id/edittext_profile_bio" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
 
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

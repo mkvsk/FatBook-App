@@ -16,7 +16,7 @@ import online.fatbook.fatbookapp.ui.fragment.recipe.RecipeFirstStageFragment
 import online.fatbook.fatbookapp.ui.fragment.search.SearchFragment
 import online.fatbook.fatbookapp.ui.fragment.user.UserProfileFragment
 import online.fatbook.fatbookapp.util.Constants.rootDestinations
-import online.fatbook.fatbookapp.util.FragmentLifecycle
+import online.fatbook.fatbookapp.ui.listeners.FragmentLifecycle
 
 class BaseFragment : Fragment(), FragmentLifecycle {
 
@@ -55,6 +55,13 @@ class BaseFragment : Fragment(), FragmentLifecycle {
 
     fun onBackPressed(): Boolean {
         Log.d("BaseFragment", "onBackPressed: $navHostId, $layoutRes, $appBarConfig")
+        when (val fragment = childFragmentManager.fragments[0].childFragmentManager.fragments[0]) {
+            is FeedFragment -> fragment.onBackPressedBase()
+            is SearchFragment -> if (fragment.onBackPressedBase()) return false
+            is RecipeFirstStageFragment -> fragment.onBackPressedBase()
+            is NotificationsFragment -> fragment.onBackPressedBase()
+            is UserProfileFragment -> fragment.onBackPressedBase()
+        }
         return requireActivity()
                 .findNavController(navHostId)
                 .navigateUp(appBarConfig)
@@ -86,11 +93,11 @@ class BaseFragment : Fragment(), FragmentLifecycle {
 
     override fun scrollFragmentToTop() {
         when (val fragment = childFragmentManager.fragments[0].childFragmentManager.fragments[0]) {
-            is FeedFragment -> fragment.scrollUp()
-            is SearchFragment -> fragment.scrollUp()
-            is RecipeFirstStageFragment -> fragment.scrollUp()
-            is NotificationsFragment -> fragment.scrollUp()
-            is UserProfileFragment -> fragment.scrollUp()
+            is FeedFragment -> fragment.scrollUpBase()
+            is SearchFragment -> fragment.scrollUpBase()
+            is RecipeFirstStageFragment -> fragment.scrollUpBase()
+            is NotificationsFragment -> fragment.scrollUpBase()
+            is UserProfileFragment -> fragment.scrollUpBase()
         }
     }
 

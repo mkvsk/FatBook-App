@@ -40,6 +40,7 @@ import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeFirstStageBinding
 import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeCookingDifficultyAdapter
+import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeDifficultyClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
@@ -48,7 +49,7 @@ import online.fatbook.fatbookapp.util.*
 import java.io.File
 import java.time.LocalTime
 
-class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener {
+class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener, BaseFragmentActions {
 
     private var binding: FragmentRecipeFirstStageBinding? = null
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
@@ -549,13 +550,17 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener {
         private const val TAG = "RecipeCreateFirstStageFragment"
     }
 
-    fun scrollUp() {
-        nsv_recipe_create_1_stage.scrollTo(0, 0)
-        appBarLayout_recipe_create_1_stage.setExpanded(true, false)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         Log.d("===t=======RecipeCreateFirstStageFragment==========", "onDestroy")
+    }
+
+    override fun onBackPressedBase(): Boolean {
+        return false
+    }
+
+    override fun scrollUpBase() {
+        nsv_recipe_create_1_stage.scrollTo(0, 0)
+        appBarLayout_recipe_create_1_stage.setExpanded(true, false)
     }
 }
