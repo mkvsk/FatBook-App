@@ -55,7 +55,7 @@ class AppSettingsFragment : Fragment() {
     }
 
     private fun setupMenu() {
-        toolbar_edit_userprofile.setNavigationOnClickListener {
+        toolbar_app_settings.setNavigationOnClickListener {
             popBackStack()
         }
     }
