@@ -42,7 +42,6 @@ class EditUserProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbar_badges.title = "asd"
         setupMenu()
         drawData(userViewModel.user.value!!)
 
