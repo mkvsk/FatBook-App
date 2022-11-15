@@ -21,5 +21,5 @@ object Constants {
 
 //    const val ET_BIO_REGEX = "^(?=\\S+\$).{0,635}$"
 
-    val rootDestinations = setOf(R.id.feed_dest, R.id.search_dest, R.id.recipe_create_first_stage_dest, R.id.notification_dest, R.id.user_profile_dest)
+    val rootDestinations = setOf(R.id.feed_dest, R.id.search_dest, R.id.recipe_first_stage_dest, R.id.notification_dest, R.id.user_profile_dest)
 }
