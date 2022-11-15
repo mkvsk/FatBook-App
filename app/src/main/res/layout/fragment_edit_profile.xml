@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:background="@color/theme_toolbar_color"
             android:minHeight="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags="enterAlways"
             local:navigationIcon="@drawable/ic_arrow_back"
             local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -91,20 +91,12 @@
                         app:maxImageSize="16dp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/button_add_photo"
-                        style="@style/roundBtnAddPhoto"
-                        android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
-                        android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-                        android:visibility="gone"
-                        app:maxImageSize="16dp" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/button_delete_photo"
                         style="@style/roundBtnDeletePhoto"
                         android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
                         android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-                        android:layout_marginLeft="90dp"
-                        android:visibility="visible"
+                        android:layout_marginStart="90dp"
+                        android:visibility="invisible"
                         app:maxImageSize="16dp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -126,7 +118,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/round_corner_edittext_title_website"
-                    android:hint="Profile title"
+                    android:hint="@string/edit_profile_hint"
                     android:inputType="textPersonName"
                     android:lines="1"
                     android:maxLength="40"
@@ -152,7 +144,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/round_corner_edittext_title_website"
-                    android:hint="Website"
+                    android:hint="@string/edit_profile_website"
                     android:inputType="textUri"
                     android:lines="1"
                     android:paddingHorizontal="10dp"
@@ -178,7 +170,7 @@
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/round_corner_edittext_bio"
                     android:gravity="start"
-                    android:hint="Bio"
+                    android:hint="@string/edit_profile_bio"
                     android:maxLength="635"
                     android:maxLines="15"
                     android:minLines="5"
@@ -195,26 +187,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:text="635"
+                    android:layout_marginBottom="10dp"
                     android:textColor="@color/blue_grey_200"
                     android:textSize="11sp"
-                    app:layout_constraintRight_toRightOf="@id/edittext_profile_bio"
-                    app:layout_constraintTop_toBottomOf="@id/edittext_profile_bio" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button_save_edit_userprofile"
-                    android:layout_width="@dimen/btn_main_w"
-                    android:layout_height="@dimen/btn_main_h"
-                    android:layout_marginVertical="@dimen/btn_spacing"
-                    style="@style/buttons_in_fragments_style"
-                    android:background="@drawable/selector_btn_in_fragments"
-                    android:enabled="false"
-                    android:clickable="true"
-                    android:elevation="4dp"
-                    android:text="Save"
-                    android:translationZ="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintRight_toRightOf="@id/edittext_profile_bio"
                     app:layout_constraintTop_toBottomOf="@id/edittext_profile_bio" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

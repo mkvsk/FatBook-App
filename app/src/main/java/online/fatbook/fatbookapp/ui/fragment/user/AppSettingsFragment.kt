@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_app_settings.*
+import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import online.fatbook.fatbookapp.databinding.FragmentAppSettingsBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
@@ -27,7 +29,7 @@ class AppSettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupMenu()
         val sharedPreferences =
                 requireActivity().getSharedPreferences(SP_TAG, Context.MODE_PRIVATE)
         switch_app_theme.isChecked = sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)
@@ -50,5 +52,15 @@ class AppSettingsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setupMenu() {
+        toolbar_edit_userprofile.setNavigationOnClickListener {
+            popBackStack()
+        }
+    }
+
+    private fun popBackStack() {
+        NavHostFragment.findNavController(this).popBackStack()
     }
 }

@@ -319,5 +319,9 @@
     <string name="message_clear_form_dialog">Are you sure you want to cancel creating new recipe?</string>
     <string name="format_kcal">%s kcal</string>
     <string name="format_count" translatable="false">(%s/%s)</string>
+    <string name="edit_profile_hint">Profile title</string>
+    <string name="edit_profile_website">Website</string>
+    <string name="edit_profile_bio">Bio</string>
+    <string name="title_save">Save</string>
 
 </resources>
