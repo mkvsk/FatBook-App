@@ -8,26 +8,22 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.fragment_recipe_create_add_ingredients.*
-import kotlinx.android.synthetic.main.fragment_recipe_create_cooking_step.*
-import kotlinx.android.synthetic.main.fragment_recipe_create_first_stage.*
-import kotlinx.android.synthetic.main.fragment_recipe_create_second_stage.*
+import kotlinx.android.synthetic.main.fragment_recipe_cooking_step.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
-import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateCookingStepBinding
-import online.fatbook.fatbookapp.ui.adapters.CookingStepAdapter
+import online.fatbook.fatbookapp.databinding.FragmentRecipeCookingStepBinding
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.util.FileUtils
@@ -35,9 +31,9 @@ import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import java.io.File
 
-class RecipeCreateCookingStepFragment : Fragment() {
+class RecipeCookingStepFragment : Fragment() {
 
-    private var binding: FragmentRecipeCreateCookingStepBinding? = null
+    private var binding: FragmentRecipeCookingStepBinding? = null
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
     private var cookingStep: CookingStep? = CookingStep()
@@ -52,9 +48,9 @@ class RecipeCreateCookingStepFragment : Fragment() {
     private var image: File? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRecipeCreateCookingStepBinding.inflate(inflater, container, false)
+        binding = FragmentRecipeCookingStepBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -79,8 +75,8 @@ class RecipeCreateCookingStepFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 checkData()
                 descriptionTextLength =
-                    edittext_recipe_create_cooking_step.filters.filterIsInstance<InputFilter.LengthFilter>()
-                        .firstOrNull()?.max!!
+                        edittext_recipe_create_cooking_step.filters.filterIsInstance<InputFilter.LengthFilter>()
+                                .firstOrNull()?.max!!
                 descriptionTextLength -= s.toString().length
                 textview_length_recipe_create_cooking_step.text = descriptionTextLength.toString()
 
@@ -99,21 +95,21 @@ class RecipeCreateCookingStepFragment : Fragment() {
     private fun checkData() {
         if (edittext_recipe_create_cooking_step.text.toString().isNotEmpty()) {
             edittext_recipe_create_cooking_step.background =
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.round_corner_multiline_et
-                )
+                    ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.round_corner_multiline_et
+                    )
             toolbar_recipe_create_cooking_step.menu.findItem(R.id.menu_create_step_confirm).isVisible =
-                true
+                    true
         } else {
             edittext_recipe_create_cooking_step.isFocusable
             edittext_recipe_create_cooking_step.background =
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.round_corner_multiline_et_stroke
-                )
+                    ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.round_corner_multiline_et_stroke
+                    )
             toolbar_recipe_create_cooking_step.menu.findItem(R.id.menu_create_step_confirm).isVisible =
-                false
+                    false
         }
     }
 
@@ -128,7 +124,7 @@ class RecipeCreateCookingStepFragment : Fragment() {
     private fun checkEnableMenu() {
         val isEmpty = edittext_recipe_create_cooking_step.text.isNullOrEmpty()
         toolbar_recipe_create_cooking_step.menu.findItem(R.id.menu_create_step_confirm).isVisible =
-            !isEmpty
+                !isEmpty
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -143,8 +139,8 @@ class RecipeCreateCookingStepFragment : Fragment() {
 
     private fun createStep() {
         val description =
-            edittext_recipe_create_cooking_step.text.toString()
-                .replace("\\s+".toRegex(), " ")
+                edittext_recipe_create_cooking_step.text.toString()
+                        .replace("\\s+".toRegex(), " ")
         if (selectedCookingStep != null) {
             selectedCookingStep!!.description = description
         } else {
@@ -155,7 +151,7 @@ class RecipeCreateCookingStepFragment : Fragment() {
         }
         image?.let {
             recipeViewModel.newRecipeStepImages.value!!.put(
-                cookingStep!!.stepNumber ?: selectedCookingStep!!.stepNumber!!, it
+                    cookingStep!!.stepNumber ?: selectedCookingStep!!.stepNumber!!, it
             )
         }
         recipeViewModel.selectedCookingStep.value = null
@@ -167,7 +163,7 @@ class RecipeCreateCookingStepFragment : Fragment() {
         imageview_step.setOnClickListener {
             imageViewModel.image.value = imageview_step.drawable
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_image_view_from_step)
+                    .navigate(R.id.action_go_to_image_view_from_step)
         }
         button_edit_photo_recipe_create_cooking_step.setOnClickListener {
             if (verifyStoragePermissions(requireActivity())) {
@@ -178,22 +174,22 @@ class RecipeCreateCookingStepFragment : Fragment() {
             image = null
             toggleImageButtons(false)
             Glide.with(requireContext())
-                .load(R.drawable.ic_default_recipe_image)
-                .into(imageview_step)
+                    .load(R.drawable.ic_default_recipe_image)
+                    .into(imageview_step)
         }
         chooseImageFromGallery =
-            registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-                if (verifyStoragePermissions(requireActivity())) {
-                    uri?.let {
-                        toggleImageButtons(true)
-                        val path = FileUtils.getPath(requireContext(), uri)
-                        image = path?.let { File(it) }
-                        Glide.with(requireContext())
-                            .load(uri)
-                            .into(imageview_step)
+                registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+                    if (verifyStoragePermissions(requireActivity())) {
+                        uri?.let {
+                            toggleImageButtons(true)
+                            val path = FileUtils.getPath(requireContext(), uri)
+                            image = path?.let { File(it) }
+                            Glide.with(requireContext())
+                                    .load(uri)
+                                    .into(imageview_step)
+                        }
                     }
                 }
-            }
     }
 
     private fun toggleImageButtons(isImageExists: Boolean) {
@@ -212,11 +208,11 @@ class RecipeCreateCookingStepFragment : Fragment() {
 
     private fun verifyStoragePermissions(requireActivity: FragmentActivity): Boolean {
         val permission = ActivityCompat.checkSelfPermission(
-            requireActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                requireActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         return if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                requireActivity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE
+                    requireActivity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE
             )
             false
         } else {
@@ -227,18 +223,18 @@ class RecipeCreateCookingStepFragment : Fragment() {
     companion object {
         private const val REQUEST_EXTERNAL_STORAGE = 1
         private val PERMISSIONS_STORAGE = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
     }
 
     private fun handleBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    popBackStack()
-                }
-            })
+                viewLifecycleOwner,
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        popBackStack()
+                    }
+                })
     }
 
     private fun popBackStack() {

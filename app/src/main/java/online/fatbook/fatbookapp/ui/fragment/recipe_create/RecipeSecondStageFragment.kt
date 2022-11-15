@@ -11,10 +11,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_recipe_create_second_stage.*
+import kotlinx.android.synthetic.main.fragment_recipe_second_stage.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
-import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateSecondStageBinding
+import online.fatbook.fatbookapp.databinding.FragmentRecipeSecondStageBinding
 import online.fatbook.fatbookapp.ui.adapters.CookingStepAdapter
 import online.fatbook.fatbookapp.ui.adapters.RecipeIngredientAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
@@ -24,10 +24,10 @@ import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 
-class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListener,
-    OnCookingStepClickListener {
+class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListener,
+        OnCookingStepClickListener {
 
-    private var binding: FragmentRecipeCreateSecondStageBinding? = null
+    private var binding: FragmentRecipeSecondStageBinding? = null
 
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
@@ -41,10 +41,10 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
     private val TAG = "RecipeCreateSecondStageFragment"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRecipeCreateSecondStageBinding.inflate(inflater, container, false)
+        binding = FragmentRecipeSecondStageBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -57,11 +57,11 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         checkStepsQtt(recipeViewModel.newRecipe.value!!.steps!!.size)
         button_add_ingredient_recipe_create_2_stage.setOnClickListener {
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_ingredient_from_second_stage)
+                    .navigate(R.id.action_go_to_ingredient_from_second_stage)
         }
         cardview_add_cooking_step.setOnClickListener {
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_step_from_second_stage)
+                    .navigate(R.id.action_go_to_step_from_second_stage)
         }
         setupIngredientsAdapter()
         setupCookingStepsAdapter()
@@ -90,9 +90,9 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
     private fun checkEnableMenu() {
         val isEmpty =
-            recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty() || recipeViewModel.newRecipe.value!!.steps.isNullOrEmpty()
+                recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty() || recipeViewModel.newRecipe.value!!.steps.isNullOrEmpty()
         toolbar_recipe_create_2_stage.menu.findItem(R.id.menu_create_second_stage_save_recipe).isVisible =
-            !isEmpty
+                !isEmpty
     }
 
     private fun setupMenu() {
@@ -127,11 +127,11 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
             button_add_ingredient_recipe_create_2_stage.visibility = View.VISIBLE
         }
         textview_ingredient_count_recipe_create_2_stage.text =
-            String.format(
-                getString(R.string.format_count),
-                currentIngredientsQtt,
-                maxIngredientsQtt
-            )
+                String.format(
+                        getString(R.string.format_count),
+                        currentIngredientsQtt,
+                        maxIngredientsQtt
+                )
     }
 
     private fun checkStepsQtt(currentStepsQtt: Int) {
@@ -142,11 +142,11 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
             cardview_add_cooking_step.visibility = View.VISIBLE
         }
         textview_steps_count_recipe_create_2_stage.text =
-            String.format(
-                getString(R.string.format_count),
-                currentStepsQtt,
-                maxStepsQtt
-            )
+                String.format(
+                        getString(R.string.format_count),
+                        currentStepsQtt,
+                        maxStepsQtt
+                )
     }
 
     private fun setupIngredientsAdapter() {
@@ -178,7 +178,7 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
         recipeViewModel.selectedCookingStep.value = value
         recipeViewModel.selectedCookingStepPosition.value = itemPosition
         NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_step_from_second_stage)
+                .navigate(R.id.action_go_to_step_from_second_stage)
     }
 
     //TODO ANIM
@@ -200,21 +200,21 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
     private fun drawNutritionFacts() {
         if (recipeViewModel.newRecipe.value!!.isAllIngredientUnitsValid
-            && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()
+                && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()
         ) {
             showNutritionFacts(true)
             textview_portion_kcals_qtt_recipe_create_2_stage.text =
-                FormatUtils.prettyCount(
-                    recipeViewModel.newRecipe.value?.kcalPerPortion.toString().toDouble()
-                )
+                    FormatUtils.prettyCount(
+                            recipeViewModel.newRecipe.value?.kcalPerPortion.toString().toDouble()
+                    )
             tv_qtt_proteins.text = FormatUtils.prettyCount(
-                recipeViewModel.newRecipe.value?.proteinsPerPortion.toString().toDouble()
+                    recipeViewModel.newRecipe.value?.proteinsPerPortion.toString().toDouble()
             )
             tv_qtt_fats.text = FormatUtils.prettyCount(
-                recipeViewModel.newRecipe.value?.fatsPerPortion.toString().toDouble()
+                    recipeViewModel.newRecipe.value?.fatsPerPortion.toString().toDouble()
             )
             tv_qtt_carbs.text = FormatUtils.prettyCount(
-                recipeViewModel.newRecipe.value?.carbsPerPortion.toString().toDouble()
+                    recipeViewModel.newRecipe.value?.carbsPerPortion.toString().toDouble()
             )
         } else {
             showNutritionFacts(false)
@@ -234,12 +234,12 @@ class RecipeCreateSecondStageFragment : Fragment(), OnRecipeIngredientItemClickL
 
     private fun handleBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    popBackStack()
-                }
-            })
+                viewLifecycleOwner,
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        popBackStack()
+                    }
+                })
     }
 
     private fun popBackStack() {

@@ -12,7 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import online.fatbook.fatbookapp.ui.fragment.feed.FeedFragment
 import online.fatbook.fatbookapp.ui.fragment.notifications.NotificationsFragment
-import online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateFirstStageFragment
+import online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeFirstStageFragment
 import online.fatbook.fatbookapp.ui.fragment.search.SearchFragment
 import online.fatbook.fatbookapp.ui.fragment.user.UserProfileFragment
 import online.fatbook.fatbookapp.util.Constants.rootDestinations
@@ -88,7 +88,7 @@ class BaseFragment : Fragment(), FragmentLifecycle {
         when (val fragment = childFragmentManager.fragments[0].childFragmentManager.fragments[0]) {
             is FeedFragment -> fragment.scrollUp()
             is SearchFragment -> fragment.scrollUp()
-            is RecipeCreateFirstStageFragment -> fragment.scrollUp()
+            is RecipeFirstStageFragment -> fragment.scrollUp()
             is NotificationsFragment -> fragment.scrollUp()
             is UserProfileFragment -> fragment.scrollUp()
         }

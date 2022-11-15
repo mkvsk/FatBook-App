@@ -6,29 +6,29 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_recipe_methods_categories_items.*
+import kotlinx.android.synthetic.main.fragment_recipe_methods_categories.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
-import online.fatbook.fatbookapp.databinding.FragmentRecipeMethodsCategoriesItemsBinding
+import online.fatbook.fatbookapp.databinding.FragmentRecipeMethodsCategoriesBinding
 import online.fatbook.fatbookapp.ui.adapters.StaticDataAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
 
-class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListener {
-    private var binding: FragmentRecipeMethodsCategoriesItemsBinding? = null
+class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
+    private var binding: FragmentRecipeMethodsCategoriesBinding? = null
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private var adapter: StaticDataAdapter? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRecipeMethodsCategoriesItemsBinding.inflate(inflater, container, false)
+        binding = FragmentRecipeMethodsCategoriesBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -65,7 +65,7 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
         return when (item.itemId) {
             R.id.menu_add_categories -> {
                 recipeViewModel.newRecipe.value!!.cookingCategories =
-                    recipeViewModel.newRecipeCookingCategories.value as ArrayList<CookingCategory>
+                        recipeViewModel.newRecipeCookingCategories.value as ArrayList<CookingCategory>
                 NavHostFragment.findNavController(this).popBackStack()
                 true
             }
@@ -125,7 +125,7 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
     override fun onItemClick(item: StaticDataObject) {
         recipeViewModel.newRecipeCookingMethod.value = item as CookingMethod
         recipeViewModel.newRecipe.value!!.cookingMethod =
-            recipeViewModel.newRecipeCookingMethod.value
+                recipeViewModel.newRecipeCookingMethod.value
         Log.i("============================================================", "")
         Log.i("SELECTED METHOD", "${recipeViewModel.newRecipe.value!!.cookingMethod}")
         Log.i("============================================================", "")
@@ -139,7 +139,7 @@ class RecipeMethodsCategoriesItemsFragment : Fragment(), OnStaticDataClickListen
             recipeViewModel.newRecipeCookingCategories.value!!.add(item)
         }
         recipeViewModel.newRecipe.value!!.cookingCategories =
-            recipeViewModel.newRecipeCookingCategories.value
+                recipeViewModel.newRecipeCookingCategories.value
 
         Log.i("============================================================", "")
         Log.i("SELECTED CATEGORIES", "${recipeViewModel.newRecipe.value!!.cookingCategories}")

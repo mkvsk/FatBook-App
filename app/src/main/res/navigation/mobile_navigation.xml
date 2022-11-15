@@ -296,9 +296,9 @@
 
     <fragment
         android:id="@+id/navigation_recipe_create"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateFirstStageFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeFirstStageFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_recipe_create_first_stage">
+        tools:layout="@layout/fragment_recipe_first_stage">
 
         <action
             android:id="@+id/action_go_to_recipe_create_second_stage_from_first_stage"
@@ -317,15 +317,15 @@
 
     <fragment
         android:id="@+id/navigation_recipe_choose_method_or_category"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeMethodsCategoriesItemsFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeMethodsCategoriesFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_recipe_methods_categories_items" />
+        tools:layout="@layout/fragment_recipe_methods_categories" />
 
     <fragment
         android:id="@+id/navigation_recipe_create_second_stage"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateSecondStageFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeSecondStageFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_recipe_create_second_stage">
+        tools:layout="@layout/fragment_recipe_second_stage">
 
         <action
             android:id="@+id/action_go_to_add_ingredient_from_second_stage"
@@ -340,15 +340,15 @@
 
     <fragment
         android:id="@+id/navigation_recipe_create_cooking_step"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCreateCookingStepFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCookingStepFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_recipe_create_cooking_step" />
+        tools:layout="@layout/fragment_recipe_cooking_step" />
 
     <fragment
         android:id="@+id/navigation_recipe_create_add_ingredients"
         android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.create.RecipeCreateAddIngredientsFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_recipe_create_add_ingredients" >
+        tools:layout="@layout/fragment_recipe_ingredient" >
 
         <action
             android:id="@+id/action_go_to_second_stage_from_ingredients"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_primary_bgr"
-    tools:context=".ui.fragment.recipe_create.RecipeMethodsCategoriesItemsFragment">
+    tools:context=".ui.fragment.recipe_create.RecipeMethodsCategoriesFragment">
 
     <include layout="@layout/include_progress_overlay" />
 
