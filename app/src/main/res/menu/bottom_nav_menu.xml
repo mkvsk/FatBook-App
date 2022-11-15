@@ -14,7 +14,7 @@
     <item
         android:id="@+id/navigation_recipe_create"
         android:icon="@drawable/ic_bottomnav_add_recipe"
-        android:title="@string/nav_recipe_create" />
+        android:title="@string/nav_recipe" />
 
     <item
         android:id="@+id/navigation_notifications"

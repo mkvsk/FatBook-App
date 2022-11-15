@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph_recipe_create"
-    app:startDestination="@id/recipe_create_first_stage_dest">
+    android:id="@+id/nav_graph_recipe"
+    app:startDestination="@id/recipe_first_stage_dest">
 
     <fragment
-        android:id="@+id/recipe_create_first_stage_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeFirstStageFragment"
-        android:label="@string/nav_recipe_create">
+        android:id="@+id/recipe_first_stage_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeFirstStageFragment"
+        android:label="@string/nav_recipe">
 
         <action
             android:id="@+id/action_go_to_second_stage_from_first_stage"
-            app:destination="@id/recipe_create_second_stage_dest" />
+            app:destination="@id/recipe_second_stage_dest" />
         <action
             android:id="@+id/action_go_to_image_view_from_first_stage"
             app:destination="@id/image_view_dest" />
@@ -21,8 +21,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/recipe_create_second_stage_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeSecondStageFragment"
+        android:id="@+id/recipe_second_stage_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeSecondStageFragment"
         android:label="@null">
 
         <action
@@ -36,17 +36,17 @@
 
     <fragment
         android:id="@+id/method_category_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeMethodsCategoriesFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeMethodsCategoriesFragment"
         android:label="@null" />
 
     <fragment
         android:id="@+id/ingredient_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeIngredientFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeIngredientFragment"
         android:label="@null" />
 
     <fragment
         android:id="@+id/cooking_step_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeCookingStepFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeCookingStepFragment"
         android:label="@null">
 
         <action

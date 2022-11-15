@@ -195,7 +195,7 @@
     ///bottom nav menu
     <string name="nav_feed" translatable="false">Feed</string>
     <string name="nav_search" translatable="false">Search</string>
-    <string name="nav_recipe_create" translatable="false">Create recipe</string>
+    <string name="nav_recipe" translatable="false">Create recipe</string>
     <string name="nav_notifications" translatable="false">Notifications</string>
     <string name="nav_user_profile" translatable="false">Profile</string>
 

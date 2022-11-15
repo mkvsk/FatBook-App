@@ -12,7 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import online.fatbook.fatbookapp.ui.fragment.feed.FeedFragment
 import online.fatbook.fatbookapp.ui.fragment.notifications.NotificationsFragment
-import online.fatbook.fatbookapp.ui.fragment.recipe_create.RecipeFirstStageFragment
+import online.fatbook.fatbookapp.ui.fragment.recipe.RecipeFirstStageFragment
 import online.fatbook.fatbookapp.ui.fragment.search.SearchFragment
 import online.fatbook.fatbookapp.ui.fragment.user.UserProfileFragment
 import online.fatbook.fatbookapp.util.Constants.rootDestinations

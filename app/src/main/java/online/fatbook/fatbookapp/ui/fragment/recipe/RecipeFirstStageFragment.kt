@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment.recipe_create
+package online.fatbook.fatbookapp.ui.fragment.recipe
 
 import android.Manifest
 import android.app.AlertDialog
