@@ -10,11 +10,10 @@ import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
 import online.fatbook.fatbookapp.core.authentication.LoginResponse
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
-import online.fatbook.fatbookapp.util.ContextHolder
 
 class AuthenticationViewModel : ViewModel() {
 
-    private val repository by lazy { AuthenticationRepository(ContextHolder.get()) }
+    private val repository by lazy { AuthenticationRepository() }
 
     var isUserAuthenticated = MutableLiveData(false)
 
@@ -39,11 +38,11 @@ class AuthenticationViewModel : ViewModel() {
 
     fun startTimer(seconds: Long) {
         Log.d(
-            "CODE SENT TO", if (userEmail.value.isNullOrEmpty()) {
-                recoverIdentifier.value.toString()
-            } else {
-                userEmail.value.toString()
-            }
+                "CODE SENT TO", if (userEmail.value.isNullOrEmpty()) {
+            recoverIdentifier.value.toString()
+        } else {
+            userEmail.value.toString()
+        }
         )
         timer = object : CountDownTimer(seconds * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -65,9 +64,7 @@ class AuthenticationViewModel : ViewModel() {
     fun emailCheck(email: String, callback: ResultCallback<AuthenticationResponse>) {
         repository.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                value?.let {
-                    callback.onResult(it)
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
@@ -91,9 +88,7 @@ class AuthenticationViewModel : ViewModel() {
     fun register(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
         repository.register(request, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                value?.let {
-                    callback.onResult(it)
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
@@ -103,13 +98,11 @@ class AuthenticationViewModel : ViewModel() {
     }
 
     fun confirmVCode(
-        vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>
+            vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>
     ) {
         repository.confirmVCode(vCode, email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                value?.let {
-                    callback.onResult(it)
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
@@ -121,9 +114,7 @@ class AuthenticationViewModel : ViewModel() {
     fun recoverPassword(identifier: String, callback: ResultCallback<AuthenticationResponse>) {
         repository.recoverPassword(identifier, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                value?.let {
-                    callback.onResult(it)
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
@@ -135,9 +126,7 @@ class AuthenticationViewModel : ViewModel() {
     fun changePassword(username: String, password: String, callback: ResultCallback<AuthenticationResponse>) {
         repository.changePassword(username, password, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                value?.let {
-                    callback.onResult(it)
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: AuthenticationResponse?) {

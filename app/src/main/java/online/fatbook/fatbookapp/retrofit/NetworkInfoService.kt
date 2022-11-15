@@ -10,6 +10,7 @@ import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
 import online.fatbook.fatbookapp.core.user.User
 import retrofit2.Call
 import retrofit2.http.*
@@ -66,6 +67,9 @@ interface NetworkInfoService {
 
     @GET("data/difficulty/get/all")
     fun getAllCookingDifficulties() : Call<List<CookingDifficulty>>
+
+    @GET("data/unit/get/all")
+    fun getAllIngredientUnits() : Call<List<IngredientUnit>>
 
 //    ==========================================================================================
 

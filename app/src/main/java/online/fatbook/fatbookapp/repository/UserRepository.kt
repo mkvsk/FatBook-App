@@ -1,6 +1,5 @@
 package online.fatbook.fatbookapp.repository
 
-import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.coroutines.CoroutineContext
 
-class UserRepository(private val context: Context) {
+class UserRepository {
 
     private var parentJob = Job()
     private val coroutineContext: CoroutineContext

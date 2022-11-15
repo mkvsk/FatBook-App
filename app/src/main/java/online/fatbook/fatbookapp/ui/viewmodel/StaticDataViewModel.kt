@@ -7,8 +7,8 @@ import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
 import online.fatbook.fatbookapp.repository.StaticDataRepository
-import online.fatbook.fatbookapp.util.ContextHolder
 import org.apache.commons.lang3.StringUtils
 
 class StaticDataViewModel : ViewModel() {
@@ -17,7 +17,6 @@ class StaticDataViewModel : ViewModel() {
     val cookingMethods = MutableLiveData<List<CookingMethod>>()
     val cookingCategories = MutableLiveData<List<CookingCategory>>()
     val cookingDifficulties = MutableLiveData<List<CookingDifficulty>>()
-
     val loadCookingMethod = MutableLiveData<Boolean>()
 
     private val repository by lazy { StaticDataRepository() }
@@ -25,9 +24,7 @@ class StaticDataViewModel : ViewModel() {
     fun getAllCookingMethods(callback: ResultCallback<List<CookingMethod>>) {
         repository.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {
             override fun onResult(value: List<CookingMethod>?) {
-                value?.let {
-                    callback.onResult(it)
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: List<CookingMethod>?) {
@@ -39,9 +36,7 @@ class StaticDataViewModel : ViewModel() {
     fun getAllCookingCategories(callback: ResultCallback<List<CookingCategory>>) {
         repository.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
             override fun onResult(value: List<CookingCategory>?) {
-                value?.let {
-                    callback.onResult(it)
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: List<CookingCategory>?) {
@@ -53,9 +48,7 @@ class StaticDataViewModel : ViewModel() {
     fun getAllCookingDifficulties(callback: ResultCallback<List<CookingDifficulty>>) {
         repository.getAllCookingDifficulties(object : ResultCallback<List<CookingDifficulty>> {
             override fun onResult(value: List<CookingDifficulty>?) {
-                value?.let {
-                    callback.onResult(it)
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: List<CookingDifficulty>?) {
@@ -68,15 +61,25 @@ class StaticDataViewModel : ViewModel() {
     fun getAllIngredients(callback: ResultCallback<List<Ingredient>>) {
         repository.getAllIngredients(object : ResultCallback<List<Ingredient>> {
             override fun onResult(value: List<Ingredient>?) {
-                value?.let {
-                    callback.onResult(it)
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: List<Ingredient>?) {
                 callback.onFailure(value)
             }
 
+        })
+    }
+
+    fun getAllIngredientUnits(callback: ResultCallback<List<IngredientUnit>>) {
+        repository.getAllIngredientUnits(object : ResultCallback<List<IngredientUnit>> {
+            override fun onResult(value: List<IngredientUnit>?) {
+                callback.onResult(value)
+            }
+
+            override fun onFailure(value: List<IngredientUnit>?) {
+                callback.onFailure(value)
+            }
         })
     }
 

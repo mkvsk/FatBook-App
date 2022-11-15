@@ -1,6 +1,5 @@
 package online.fatbook.fatbookapp.repository
 
-import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +10,7 @@ import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,11 +30,11 @@ class StaticDataRepository {
 
             call.enqueue(object : Callback<List<CookingMethod>> {
                 override fun onResponse(
-                    call: Call<List<CookingMethod>>,
-                    response: Response<List<CookingMethod>>
+                        call: Call<List<CookingMethod>>,
+                        response: Response<List<CookingMethod>>
                 ) {
                     Log.d("GET COOKING METHODS", response.body().toString())
-                    if (response.body().isNullOrEmpty()) {
+                    if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
                         callback.onResult(response.body())
@@ -56,11 +56,11 @@ class StaticDataRepository {
 
             call.enqueue(object : Callback<List<CookingCategory>> {
                 override fun onResponse(
-                    call: Call<List<CookingCategory>>,
-                    response: Response<List<CookingCategory>>
+                        call: Call<List<CookingCategory>>,
+                        response: Response<List<CookingCategory>>
                 ) {
                     Log.d("GET COOKING CATEGORIES", response.body().toString())
-                    if (response.body().isNullOrEmpty()) {
+                    if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
                         callback.onResult(response.body())
@@ -82,11 +82,11 @@ class StaticDataRepository {
 
             call.enqueue(object : Callback<List<CookingDifficulty>> {
                 override fun onResponse(
-                    call: Call<List<CookingDifficulty>>,
-                    response: Response<List<CookingDifficulty>>
+                        call: Call<List<CookingDifficulty>>,
+                        response: Response<List<CookingDifficulty>>
                 ) {
                     Log.d("GET COOKING DIFFICULTIES", response.body().toString())
-                    if (response.body().isNullOrEmpty()) {
+                    if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
                         callback.onResult(response.body())
@@ -112,7 +112,7 @@ class StaticDataRepository {
                         response: Response<List<Ingredient>>
                 ) {
                     Log.d("GET ALL INGREDIENTS", response.body().toString())
-                    if (response.body().isNullOrEmpty()) {
+                    if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
                         callback.onResult(response.body())
@@ -128,5 +128,27 @@ class StaticDataRepository {
         }
     }
 
+    fun getAllIngredientUnits(callback: ResultCallback<List<IngredientUnit>>) {
+        scope.launch {
+            val call = RetrofitFactory.apiServiceClient().getAllIngredientUnits()
+
+            call.enqueue(object : Callback<List<IngredientUnit>> {
+                override fun onResponse(call: Call<List<IngredientUnit>>, response: Response<List<IngredientUnit>>) {
+                    Log.d("GET ALL UNITS", response.body().toString())
+                    if (response.body() == null) {
+                        callback.onFailure(null)
+                    } else {
+                        callback.onResult(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<List<IngredientUnit>>, t: Throwable) {
+                    Log.d("GET ALL UNITS", "error")
+                    t.printStackTrace()
+                    callback.onFailure(null)
+                }
+            })
+        }
+    }
 
 }
