@@ -24,8 +24,8 @@ class AuthenticationRepository {
     private val scope = CoroutineScope(coroutineContext)
 
     fun emailCheck(email: String, callback: ResultCallback<AuthenticationResponse>) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().emailCheck(email)
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().emailCheck(email)
 
             call.enqueue(object : Callback<AuthenticationResponse> {
                 override fun onResponse(
@@ -49,8 +49,8 @@ class AuthenticationRepository {
     }
 
     fun login(request: RequestBody, callback: ResultCallback<LoginResponse>) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().login(request)
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().login(request)
 
             call.enqueue(object : Callback<LoginResponse> {
                 override fun onResponse(
@@ -74,8 +74,8 @@ class AuthenticationRepository {
     }
 
     fun register(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().register(request)
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().register(request)
 
             call.enqueue(object : Callback<AuthenticationResponse> {
                 override fun onResponse(
@@ -101,8 +101,8 @@ class AuthenticationRepository {
     fun confirmVCode(
         vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>
     ) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().confirmVCode(email, vCode)
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().confirmVCode(email, vCode)
 
             call.enqueue(object : Callback<AuthenticationResponse> {
                 override fun onResponse(
@@ -126,8 +126,8 @@ class AuthenticationRepository {
     }
 
     fun recoverPassword(identifier: String, callback: ResultCallback<AuthenticationResponse>) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().recoverPassword(identifier)
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().recoverPassword(identifier)
 
             call.enqueue(object : Callback<AuthenticationResponse> {
                 override fun onResponse(
@@ -153,8 +153,8 @@ class AuthenticationRepository {
     fun changePassword(
         username: String, password: String, callback: ResultCallback<AuthenticationResponse>
     ) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().changePassword(username, password)
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().changePassword(username, password)
 
             call.enqueue(object : Callback<AuthenticationResponse> {
                 override fun onResponse(
@@ -174,7 +174,6 @@ class AuthenticationRepository {
                     callback.onFailure(null)
                 }
             })
-
         }
     }
 }

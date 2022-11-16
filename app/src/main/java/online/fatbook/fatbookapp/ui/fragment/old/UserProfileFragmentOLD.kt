@@ -145,7 +145,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun loadUser() {
-        RetrofitFactory.apiServiceClient().getUserByUsername(user!!.username)
+        RetrofitFactory.apiService().getUserByUsername(user!!.username)
             .enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
 //                    UserProfileFragment.log.log(
@@ -327,7 +327,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun saveUser() {
-        RetrofitFactory.apiServiceClient().userUpdate(user).enqueue(object : Callback<User?> {
+        RetrofitFactory.apiService().updateUser(user).enqueue(object : Callback<User?> {
             override fun onResponse(call: Call<User?>, response: Response<User?>) {
                 if (response.code() == 200) {
 //                    UserProfileFragment.log.log(Level.INFO, "user update SUCCESS")
@@ -355,7 +355,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
             val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), userPhoto!!)
             val fileName = "image" + userPhoto!!.name.substring(userPhoto!!.name.indexOf('.'))
             val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
-            RetrofitFactory.apiServiceClient()
+            RetrofitFactory.apiService()
                 .uploadUserImage(file, FileUtils.TAG_USER, user!!.username)
                 .enqueue(object : Callback<User?> {
                     override fun onResponse(call: Call<User?>, response: Response<User?>) {
@@ -406,7 +406,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun recipeForked(recipe: Recipe?, fork: Boolean, position: Int) {
-        RetrofitFactory.apiServiceClient().recipeForked(user!!.pid, recipe!!.pid, fork)
+        RetrofitFactory.apiService().recipeForked(user!!.pid, recipe!!.pid, fork)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
 //                    UserProfileFragment.log.log(Level.INFO, "fork SUCCESS")

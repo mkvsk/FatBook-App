@@ -22,8 +22,8 @@ interface NetworkInfoService {
      */
     @POST("auth/vc/confirm")
     fun confirmVCode(
-        @Query(value = "email") email: String?,
-        @Query(value = "code") code: String?
+            @Query(value = "email") email: String?,
+            @Query(value = "code") code: String?
     ): Call<AuthenticationResponse>
 
     @GET("auth/username/check")
@@ -43,8 +43,8 @@ interface NetworkInfoService {
 
     @POST("auth/change")
     fun changePassword(
-        @Query(value = "username") username: String?,
-        @Query(value = "password") password: String?
+            @Query(value = "username") username: String?,
+            @Query(value = "password") password: String?
     ): Call<AuthenticationResponse>
 
     /**
@@ -57,19 +57,29 @@ interface NetworkInfoService {
      * Static data
      */
     @GET("data/ingredient/get/all")
-    fun getAllIngredients() : Call<List<Ingredient>>
+    fun getAllIngredients(): Call<List<Ingredient>>
 
     @GET("data/category/get/all")
-    fun getAllCookingCategories() : Call<List<CookingCategory>>
+    fun getAllCookingCategories(): Call<List<CookingCategory>>
 
     @GET("data/method/get/all")
-    fun getAllCookingMethods() : Call<List<CookingMethod>>
+    fun getAllCookingMethods(): Call<List<CookingMethod>>
 
     @GET("data/difficulty/get/all")
-    fun getAllCookingDifficulties() : Call<List<CookingDifficulty>>
+    fun getAllCookingDifficulties(): Call<List<CookingDifficulty>>
 
     @GET("data/unit/get/all")
-    fun getAllIngredientUnits() : Call<List<IngredientUnit>>
+    fun getAllIngredientUnits(): Call<List<IngredientUnit>>
+
+    /**
+     * Image service
+     */
+    @Multipart
+    @POST("upload")
+    fun imgUpload(@Part file: MultipartBody.Part?, @Query(value = "type") type: String, @Query(value = "id") id: String, @Query(value = "step") step: String): Call<Any>
+
+    @POST("delete")
+    fun imgDelete(): Call<Any>
 
 //    ==========================================================================================
 
@@ -77,7 +87,7 @@ interface NetworkInfoService {
     fun userCreate(@Body user: User?, @Query(value = "fat") fat: String?): Call<User>
 
     @POST("user/update")
-    fun userUpdate(@Body user: User?): Call<User>
+    fun updateUser(@Body user: User?): Call<User>
 
     @GET("user/login/check")
     fun loginCheck(@Query(value = "login") login: String?): Call<Boolean>
@@ -85,9 +95,9 @@ interface NetworkInfoService {
     @Multipart
     @POST("user/upload")
     fun uploadUserImage(
-        @Part image: MultipartBody.Part?,
-        @Query(value = "dir") dir: String?,
-        @Query(value = "login") login: String?
+            @Part image: MultipartBody.Part?,
+            @Query(value = "dir") dir: String?,
+            @Query(value = "login") login: String?
     ): Call<User?>
 
     @GET("user/bookmarks")
@@ -116,24 +126,24 @@ interface NetworkInfoService {
 
     @POST("recipe/forked")
     fun recipeForked(
-        @Query(value = "pidUser") pidUser: Long?,
-        @Query(value = "pidRecipe") pidRecipe: Long?,
-        @Query(value = "forked") forked: Boolean?
+            @Query(value = "pidUser") pidUser: Long?,
+            @Query(value = "pidRecipe") pidRecipe: Long?,
+            @Query(value = "forked") forked: Boolean?
     ): Call<Recipe>
 
     @POST("recipe/bookmarked")
     fun recipeBookmarked(
-        @Query(value = "pidUser") pidUser: Long?,
-        @Query(value = "pidRecipe") pidRecipe: Long?,
-        @Query(value = "bookmarked") bookmark: Boolean?
+            @Query(value = "pidUser") pidUser: Long?,
+            @Query(value = "pidRecipe") pidRecipe: Long?,
+            @Query(value = "bookmarked") bookmark: Boolean?
     ): Call<Recipe>
 
     @Multipart
     @POST("recipe/upload")
     fun uploadImage(
-        @Part image: MultipartBody.Part?,
-        @Query(value = "dir") dir: String?,
-        @Query(value = "id") id: Long?
+            @Part image: MultipartBody.Part?,
+            @Query(value = "dir") dir: String?,
+            @Query(value = "id") id: Long?
     ): Call<Recipe>
 
     /**

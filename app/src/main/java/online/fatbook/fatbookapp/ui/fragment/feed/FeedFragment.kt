@@ -219,7 +219,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     //TODO убрать костыль в запросе
     private fun loadFeed() {
-        RetrofitFactory.apiServiceClient().getFeed(0L)
+        RetrofitFactory.apiService().getFeed(0L)
             .enqueue(object : Callback<ArrayList<Recipe>?> {
                 override fun onResponse(
                     call: Call<ArrayList<Recipe>?>, response: Response<ArrayList<Recipe>?>
@@ -249,7 +249,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun recipeBookmarked(recipe: Recipe?, bookmark: Boolean, position: Int) {
-        RetrofitFactory.apiServiceClient()
+        RetrofitFactory.apiService()
             .recipeBookmarked(userViewModel.user.value!!.pid, recipe!!.pid, bookmark)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
@@ -269,7 +269,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun recipeForked(recipe: Recipe?, fork: Boolean, position: Int) {
-        RetrofitFactory.apiServiceClient()
+        RetrofitFactory.apiService()
             .recipeForked(userViewModel.user.value!!.pid, recipe!!.pid, fork)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
@@ -295,7 +295,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             startActivity(Intent(requireActivity(), SplashActivity::class.java))
             requireActivity().finish()
         } else {
-            RetrofitFactory.apiServiceClient().getUserByUsername(login)
+            RetrofitFactory.apiService().getUserByUsername(login)
                 .enqueue(object : Callback<User?> {
                     override fun onResponse(call: Call<User?>, response: Response<User?>) {
                         if (response.code() == 200) {

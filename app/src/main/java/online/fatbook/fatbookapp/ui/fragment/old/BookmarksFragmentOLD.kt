@@ -61,7 +61,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun loadRecipes() {
-        RetrofitFactory.apiServiceClient().getUserBookmarks(user!!.username)
+        RetrofitFactory.apiService().getUserBookmarks(user!!.username)
             .enqueue(object : Callback<ArrayList<Recipe>?> {
                 override fun onResponse(
                     call: Call<ArrayList<Recipe>?>,
@@ -116,7 +116,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun saveUser() {
-        RetrofitFactory.apiServiceClient().userUpdate(user).enqueue(object : Callback<User?> {
+        RetrofitFactory.apiService().updateUser(user).enqueue(object : Callback<User?> {
             override fun onResponse(call: Call<User?>, response: Response<User?>) {
                 if (response.code() == 200) {
 //                    BookmarksFragment.log.log(Level.INFO, "user update SUCCESS")
@@ -141,7 +141,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun recipeForked(recipe: Recipe?, fork: Boolean, position: Int) {
-        RetrofitFactory.apiServiceClient().recipeForked(user!!.pid, recipe!!.pid, fork)
+        RetrofitFactory.apiService().recipeForked(user!!.pid, recipe!!.pid, fork)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
                     if (response.code() == 200) {
@@ -160,7 +160,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun loadUser() {
-        RetrofitFactory.apiServiceClient().getUserByUsername(user!!.username)
+        RetrofitFactory.apiService().getUserByUsername(user!!.username)
             .enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if (response.code() == 200) {

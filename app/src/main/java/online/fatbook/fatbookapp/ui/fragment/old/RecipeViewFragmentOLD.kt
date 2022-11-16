@@ -134,7 +134,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
                     recipePhoto!!.name.indexOf('.')
                 )
                 val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
-                RetrofitFactory.apiServiceClient()
+                RetrofitFactory.apiService()
                     .uploadImage(file, FileUtils.TAG_RECIPE, recipe!!.identifier)
                     .enqueue(object : Callback<Recipe?> {
                         override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
@@ -165,7 +165,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun recipeForked(_recipe: Recipe?, fork: Boolean) {
-        RetrofitFactory.apiServiceClient().recipeForked(user!!.pid, _recipe!!.pid, fork)
+        RetrofitFactory.apiService().recipeForked(user!!.pid, _recipe!!.pid, fork)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
 //                    RecipeViewFragment.log.log(Level.INFO, "fork SUCCESS")
@@ -185,7 +185,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun recipeBookmarked(_recipe: Recipe?, bookmark: Boolean) {
-        RetrofitFactory.apiServiceClient()
+        RetrofitFactory.apiService()
             .recipeBookmarked(user!!.pid, _recipe!!.pid, bookmark)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
@@ -201,7 +201,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun loadUser() {
-        RetrofitFactory.apiServiceClient().getUserByUsername(user!!.username)
+        RetrofitFactory.apiService().getUserByUsername(user!!.username)
             .enqueue(object : Callback<User?> {
                 override fun onResponse(call: Call<User?>, response: Response<User?>) {
 //                    RecipeViewFragment.log.log(Level.INFO, "user load SUCCESS")
@@ -385,7 +385,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun deleteRecipe() {
-        RetrofitFactory.apiServiceClient().recipeDelete(recipe).enqueue(object : Callback<Void?> {
+        RetrofitFactory.apiService().recipeDelete(recipe).enqueue(object : Callback<Void?> {
             override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
                 if (response.code() == 200) {
 //                    RecipeViewFragment.log.log(Level.INFO, "delete recipe SUCCESS")
@@ -407,7 +407,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun saveRecipe() {
-        RetrofitFactory.apiServiceClient().recipeUpdate(recipe).enqueue(object : Callback<Recipe?> {
+        RetrofitFactory.apiService().recipeUpdate(recipe).enqueue(object : Callback<Recipe?> {
             override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
 //                RecipeViewFragment.log.log(Level.INFO, "edit recipe save SUCCESS")
             }

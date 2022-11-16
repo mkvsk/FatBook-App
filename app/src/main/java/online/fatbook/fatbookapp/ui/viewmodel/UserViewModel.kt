@@ -34,5 +34,18 @@ class UserViewModel : ViewModel() {
         })
     }
 
+    fun updateUser(user: User, callback: ResultCallback<User>) {
+        repository.updateUser(user, object : ResultCallback<User> {
+            override fun onResult(value: User?) {
+                callback.onResult(value)
+            }
+
+            override fun onFailure(value: User?) {
+                callback.onFailure(value)
+            }
+
+        })
+    }
+
 
 }

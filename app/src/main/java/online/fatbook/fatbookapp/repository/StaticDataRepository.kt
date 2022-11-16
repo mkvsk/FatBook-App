@@ -25,8 +25,8 @@ class StaticDataRepository {
     private val scope = CoroutineScope(coroutineContext)
 
     fun getAllCookingMethods(callback: ResultCallback<List<CookingMethod>>) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().getAllCookingMethods()
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().getAllCookingMethods()
 
             call.enqueue(object : Callback<List<CookingMethod>> {
                 override fun onResponse(
@@ -51,8 +51,8 @@ class StaticDataRepository {
     }
 
     fun getAllCookingCategories(callback: ResultCallback<List<CookingCategory>>) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().getAllCookingCategories()
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().getAllCookingCategories()
 
             call.enqueue(object : Callback<List<CookingCategory>> {
                 override fun onResponse(
@@ -77,8 +77,8 @@ class StaticDataRepository {
     }
 
     fun getAllCookingDifficulties(callback: ResultCallback<List<CookingDifficulty>>) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().getAllCookingDifficulties()
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().getAllCookingDifficulties()
 
             call.enqueue(object : Callback<List<CookingDifficulty>> {
                 override fun onResponse(
@@ -103,8 +103,8 @@ class StaticDataRepository {
     }
 
     fun getAllIngredients(callback: ResultCallback<List<Ingredient>>) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().getAllIngredients()
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().getAllIngredients()
 
             call.enqueue(object : Callback<List<Ingredient>> {
                 override fun onResponse(
@@ -129,8 +129,8 @@ class StaticDataRepository {
     }
 
     fun getAllIngredientUnits(callback: ResultCallback<List<IngredientUnit>>) {
-        scope.launch {
-            val call = RetrofitFactory.apiServiceClient().getAllIngredientUnits()
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().getAllIngredientUnits()
 
             call.enqueue(object : Callback<List<IngredientUnit>> {
                 override fun onResponse(call: Call<List<IngredientUnit>>, response: Response<List<IngredientUnit>>) {
@@ -150,5 +150,4 @@ class StaticDataRepository {
             })
         }
     }
-
 }

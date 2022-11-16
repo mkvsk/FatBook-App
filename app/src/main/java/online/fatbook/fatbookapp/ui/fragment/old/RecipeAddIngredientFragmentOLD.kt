@@ -96,7 +96,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnIngredientItemClickListener
     }
 
     private fun loadIngredients() {
-        RetrofitFactory.apiServiceClient().allIngredients().enqueue(object :
+        RetrofitFactory.apiService().allIngredients().enqueue(object :
             Callback<List<Ingredient>?> {
             override fun onResponse(
                     call: Call<List<Ingredient>?>,

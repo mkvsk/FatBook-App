@@ -34,7 +34,12 @@
     <fragment
         android:id="@+id/edit_profile_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.user.EditUserProfileFragment"
-        android:label="@null" />
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_image_view_from_edit_profile"
+            app:destination="@id/image_view_dest" />
+    </fragment>
     <fragment
         android:id="@+id/follow_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.user.FollowersFragment"

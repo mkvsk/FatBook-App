@@ -33,7 +33,6 @@ import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.FileUtils
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
-import online.fatbook.fatbookapp.util.RecipeUtils
 import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -109,7 +108,7 @@ class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun save() {
-        RetrofitFactory.apiServiceClient().recipeCreate(recipe).enqueue(object : Callback<Recipe?> {
+        RetrofitFactory.apiService().recipeCreate(recipe).enqueue(object : Callback<Recipe?> {
             override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
                 if (response.code() == 200) {
 //                    RecipeCreateFragment.log.log(Level.INFO, "recipe create SUCCESS")
@@ -137,7 +136,7 @@ class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
                     recipePhoto!!.name.indexOf('.')
                 )
                 val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
-                RetrofitFactory.apiServiceClient()
+                RetrofitFactory.apiService()
                     .uploadImage(file, FileUtils.TAG_RECIPE, recipe!!.identifier)
                     .enqueue(object : Callback<Recipe?> {
                         override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
