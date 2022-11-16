@@ -3,6 +3,7 @@ package online.fatbook.fatbookapp.ui.fragment.user
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_app_settings.*
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import online.fatbook.fatbookapp.databinding.FragmentAppSettingsBinding
+import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE
@@ -27,6 +29,7 @@ class AppSettingsFragment : Fragment() {
         return binding!!.root
     }
 
+    //TODO ANIM dark mode switch
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupMenu()
@@ -34,6 +37,8 @@ class AppSettingsFragment : Fragment() {
                 requireActivity().getSharedPreferences(SP_TAG, Context.MODE_PRIVATE)
         switch_app_theme.isChecked = sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)
         val intent = Intent(requireContext(), SplashActivity::class.java)
+//        requireActivity().overridePendingTransition(0, 0)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         val editor = sharedPreferences.edit()
         switch_app_theme.setOnCheckedChangeListener { _, isChecked ->
             editor.putBoolean(SP_TAG_DARK_MODE_CHANGED, true)
@@ -41,14 +46,19 @@ class AppSettingsFragment : Fragment() {
                 isChecked -> {
                     editor.putBoolean(SP_TAG_DARK_MODE, true)
                     editor.apply()
-                    requireActivity().startActivity(intent)
                     requireActivity().finish()
+                    requireActivity().startActivity(intent)
+//                    requireActivity().overridePendingTransition(0, 0)
+                    Log.d("MAINACTIVITY app settings", "finish() called, true")
                 }
                 else -> {
                     editor.putBoolean(SP_TAG_DARK_MODE, false)
                     editor.apply()
-                    requireActivity().startActivity(intent)
+
                     requireActivity().finish()
+                    requireActivity().startActivity(intent)
+//                    requireActivity().overridePendingTransition(0, 0)
+                    Log.d("MAINACTIVITY app settings", "finish() called, false")
                 }
             }
         }

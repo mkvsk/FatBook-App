@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.ui.activity
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -105,7 +106,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             backStack.push(0)
         }
 
-        //TODO remove
         val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
         authViewModel!!.username.value =
                 sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
@@ -158,6 +158,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private fun setItem(position: Int) {
         main_pager.currentItem = position
+        currentItemPosition = position
         backStack.push(position)
     }
 
@@ -206,8 +207,19 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         fragments[menuItemPosition].redrawFragment()
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("MAINACTIVITY", "onPause: state saved $backStack")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("MAINACTIVITY", "onStop: state saved $backStack")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("MAINACTIVITY", "onDestroy: state saved $backStack")
         sharedPreferences.edit().putString(SP_TAG_BACK_STACK, backStack.toString()).apply()
     }
 }
