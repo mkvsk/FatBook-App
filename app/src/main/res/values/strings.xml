@@ -323,5 +323,7 @@
     <string name="edit_profile_website">Website</string>
     <string name="edit_profile_bio">Bio</string>
     <string name="title_save">Save</string>
+    <string name="menu_user_profile_block">Block</string>
+    <string name="menu_user_profile_report">Report</string>
 
 </resources>

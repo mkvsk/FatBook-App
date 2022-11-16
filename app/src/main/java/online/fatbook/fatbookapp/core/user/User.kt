@@ -29,7 +29,11 @@ data class User(
 ) : Serializable {
 
     val online: Boolean
-        get() = Duration.between(LocalDateTime.parse(lastAction), LocalDateTime.now()).toMinutes() < 10
+        get() = if (lastAction.isNullOrEmpty()) {
+            false
+        } else {
+            Duration.between(LocalDateTime.parse(lastAction), LocalDateTime.now()).toMinutes() < 10
+        }
 
     fun convertToSimpleObject(): UserSimpleObject {
         return UserSimpleObject(pid, username, title, profileImage)
