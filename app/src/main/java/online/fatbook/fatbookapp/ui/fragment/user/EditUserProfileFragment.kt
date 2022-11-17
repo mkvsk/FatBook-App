@@ -130,26 +130,26 @@ class EditUserProfileFragment : Fragment() {
     }
 
     private fun saveUserProfile() {
-        val user = userViewModel.user.value
-        user?.let {
-            it.title = edittext_profile_title.text.toString().replace("\\s+".toRegex(), " ")
-            it.website = edittext_profile_website.text.toString().replace("\\s+".toRegex(), " ")
-            it.bio = edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " ")
-        }
+        userViewModel.user.value!!.title = edittext_profile_title.text.toString().replace("\\s+".toRegex(), " ")
+        userViewModel.user.value!!.website = edittext_profile_website.text.toString().replace("\\s+".toRegex(), " ")
+        userViewModel.user.value!!.bio = edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " ")
         hideKeyboard(edittext_profile_bio)
         Log.d(TAG, "saveUserProfile: ${imageViewModel.userImageToUpload.value}")
         Log.d(TAG, "saveUserProfile: ${imageViewModel.userImageToDelete.value}")
         Log.d(TAG, "saveUserProfile: ${userViewModel.user.value}")
+
         val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), imageViewModel.userImageToUpload.value!! as File)
-        val fileName = "testImage"
+        val fileName = "image" + (imageViewModel.userImageToUpload.value!! as File).name.substring(
+                (imageViewModel.userImageToUpload.value!! as File).name.indexOf('.')
+        )
         val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
-        imageViewModel.uploadImage(file, "u", userViewModel.user.value!!.username!!, "", object : ResultCallback<Any> {
-            override fun onResult(value: Any?) {
-                println()
+        imageViewModel.uploadImage(file, "u", userViewModel.user.value!!.username!!, "", object : ResultCallback<String> {
+            override fun onResult(value: String?) {
+                userViewModel.user.value!!.profileImage = value
             }
 
-            override fun onFailure(value: Any?) {
-                println()
+            override fun onFailure(value: String?) {
+                println(value)
             }
         })
 //        popBackStack()

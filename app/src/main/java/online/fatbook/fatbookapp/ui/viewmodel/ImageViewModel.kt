@@ -15,13 +15,13 @@ class ImageViewModel : ViewModel() {
     var userImageToUpload = MutableLiveData<Any?>()
     var userImageToDelete = MutableLiveData<String?>()
 
-    fun uploadImage(file: MultipartBody.Part?, type: String, id: String, step: String, callback: ResultCallback<Any>) {
-        repository.upload(file, type, id, step, object : ResultCallback<Any> {
-            override fun onResult(value: Any?) {
+    fun uploadImage(file: MultipartBody.Part?, type: String, id: String, step: String, callback: ResultCallback<String>) {
+        repository.upload(file, type, id, step, object : ResultCallback<String> {
+            override fun onResult(value: String?) {
                 callback.onResult(value)
             }
 
-            override fun onFailure(value: Any?) {
+            override fun onFailure(value: String?) {
                 callback.onFailure(value)
             }
         })

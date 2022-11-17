@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.retrofit
 
+import android.net.Uri
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
@@ -76,7 +77,7 @@ interface NetworkInfoService {
      */
     @Multipart
     @POST("upload")
-    fun imgUpload(@Part file: MultipartBody.Part?, @Query(value = "type") type: String, @Query(value = "id") id: String, @Query(value = "step") step: String): Call<Any>
+    fun imgUpload(@Part file: MultipartBody.Part?, @Query(value = "type") type: String, @Query(value = "id") id: String, @Query(value = "step") step: String): Call<String>
 
     @POST("delete")
     fun imgDelete(): Call<Any>
