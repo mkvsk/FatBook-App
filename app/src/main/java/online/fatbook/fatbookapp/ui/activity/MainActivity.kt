@@ -23,9 +23,8 @@ import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE_CHANGED
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
 import online.fatbook.fatbookapp.ui.listeners.FragmentLifecycle
-import online.fatbook.fatbookapp.util.ProgressBarUtil
-import online.fatbook.fatbookapp.util.RecipeUtils
-import online.fatbook.fatbookapp.util.Utils
+import online.fatbook.fatbookapp.util.*
+import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogBuilder
 import org.apache.commons.lang3.StringUtils
 import java.util.*
 
@@ -87,6 +86,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         ProgressBarUtil.set(this)
         RecipeUtils.setContext(this)
         Utils.setContext(this)
+        FBAlertDialogBuilder.set(this, layoutInflater)
 
         main_pager.addOnPageChangeListener(this)
         adapter = ViewPagerAdapter()

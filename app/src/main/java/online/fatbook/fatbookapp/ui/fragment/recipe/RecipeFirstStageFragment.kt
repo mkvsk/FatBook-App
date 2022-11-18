@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.ui.fragment.recipe
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -11,7 +12,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TimePicker
 import androidx.activity.result.ActivityResultLauncher
@@ -28,6 +28,7 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.fragment_add_ingredient_old.*
 import kotlinx.android.synthetic.main.fragment_recipe_first_stage.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
@@ -43,6 +44,8 @@ import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.*
+import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogBuilder
+import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogListener
 import java.io.File
 import java.time.LocalTime
 
@@ -315,28 +318,20 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener, Ba
     }
 
     private fun showClearFormDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.alert_dialog_layout, null)
-        val dialog = AlertDialog.Builder(requireContext()).setView(dialogView)
-                .create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.show()
-        val positiveButton =
-                dialogView.findViewById<Button>(R.id.button_yes_new_recipe_alert_dialog)
-        val negativeButton = dialogView.findViewById<Button>(R.id.button_cancel_alert_dialog)
-        positiveButton.setOnClickListener {
-            clearForm()
-            dialog.dismiss()
-        }
-        negativeButton.setOnClickListener {
-            dialog.dismiss()
-        }
-
-//        AlertDialog.Builder(requireContext())
-//                .setTitle("Clear form")
-//                .setMessage("Are you sure you want to cancel creating new recipe?")
-//                .setPositiveButton("yes") { dialogInterface: DialogInterface, _: Int -> }
-//                .setNegativeButton("no") { dialogInterface: DialogInterface, _: Int -> }
-//                .create().show()
+        FBAlertDialogBuilder.getDialogWithPositiveAndNegativeButtons(
+                getString(R.string.dialog_clear_form_title),
+                getString(R.string.dialog_clear_form_msg),
+                object : FBAlertDialogListener{
+                    override fun onClick(dialogInterface: DialogInterface) {
+                        clearForm()
+                        dialogInterface.dismiss()
+                    }
+                },
+                object : FBAlertDialogListener{
+                    override fun onClick(dialogInterface: DialogInterface) {
+                        dialogInterface.dismiss()
+                    }
+                }).show()
     }
 
     private fun clearForm() {
@@ -473,29 +468,27 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener, Ba
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_timepicker, null)
         val dialog = AlertDialog.Builder(requireContext()).setView(dialogView)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_btn_ok)) { dialogInterface: DialogInterface, _: Int ->
+                    val dialog =
+                            dialogView.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
+                    val cookingTime: LocalTime = if (dialog.hour == 0 && dialog.minute == 0) {
+                        LocalTime.of(0, 15)
+                    } else {
+                        LocalTime.of(dialog.hour, dialog.minute)
+                    }
+                    recipeViewModel.newRecipeCookingTimeHours.value = cookingTime.hour
+                    recipeViewModel.newRecipeCookingTimeMinutes.value = cookingTime.minute
+                    recipeViewModel.newRecipe.value!!.cookingTime = cookingTime.toString()
+                    showCookingTime()
+                    dialogInterface.dismiss()
+                    Log.d(TAG, "cooking time set to ${cookingTime.hour} h ${cookingTime.minute} min")
+                }
+                .setNegativeButton(resources.getString(R.string.alert_dialog_btn_cancel)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
                 .create()
+
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         dialog.show()
-        val positiveButton =
-                dialogView.findViewById<Button>(R.id.button_yes_new_recipe_alert_dialog)
-        val negativeButton = dialogView.findViewById<Button>(R.id.button_cancel_alert_dialog)
-        positiveButton.setOnClickListener {
-            val timePickerDialog = dialogView.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
-            val cookingTime: LocalTime = if (timePickerDialog.hour == 0 && timePickerDialog.minute == 0) {
-                LocalTime.of(0, 15)
-            } else {
-                LocalTime.of(timePickerDialog.hour, timePickerDialog.minute)
-            }
-            recipeViewModel.newRecipeCookingTimeHours.value = cookingTime.hour
-            recipeViewModel.newRecipeCookingTimeMinutes.value = cookingTime.minute
-            recipeViewModel.newRecipe.value!!.cookingTime = cookingTime.toString()
-            showCookingTime()
-            dialog.dismiss()
-            Log.d(TAG, "cooking time set to ${cookingTime.hour} h ${cookingTime.minute} min")
-        }
-        negativeButton.setOnClickListener {
-            dialog.dismiss()
-        }
         val picker = dialog.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
         picker.setIs24HourView(true)
         picker.hour =

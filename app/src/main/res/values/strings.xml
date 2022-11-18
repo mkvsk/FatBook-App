@@ -328,5 +328,7 @@
     <string name="title_error_image_upload">Failed to upload picture</string>
     <string name="title_error_user_update">Failed to update user info</string>
     <string name="title_error_image_delete">Failed to delete image</string>
+    <string name="dialog_clear_form_title">Clear form</string>
+    <string name="dialog_clear_form_msg">Are you sure you want to cancel creating new recipe?</string>
 
 </resources>
