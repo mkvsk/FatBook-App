@@ -260,9 +260,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
             user.followersAmount?.let { FormatUtils.prettyCount(it) }
         if (user.profileImage.isNullOrEmpty()) {
             imageview_userphoto_userprofile.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
+            imageview_userphoto_userprofile.isClickable = false
         } else {
             Glide.with(requireContext()).load(user.profileImage!!)
                 .into(imageview_userphoto_userprofile)
+            imageview_userphoto_userprofile.isClickable = true
         }
         if (user.title.isNullOrEmpty()) {
             textview_title_userprofile.visibility = View.GONE
