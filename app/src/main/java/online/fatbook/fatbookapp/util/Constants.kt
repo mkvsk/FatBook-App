@@ -6,7 +6,7 @@ object Constants {
     const val FEED_TAG = "feed_tag"
     const val SYMBOL_AT = '@'
     const val PASSWORD_REGEX = "^(?=\\S+\$).{6,20}$"
-    const val USERNAME_REGEX = "^[a-z0-9]([._-](?![._-])|[a-z0-9]){3,20}[a-z0-9]$"
+    const val USERNAME_REGEX = "^(?=.{3,20}\$)(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])\$"
     const val REFRESH_TOKEN = "refresh_token"
     const val SP_TAG = "shared_preferences"
     const val SP_TAG_PASSWORD = "password"
