@@ -8,10 +8,10 @@
         android:id="@+id/timepicker_dialog_cooking_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
         android:timePickerMode="clock"
         android:background="@drawable/tpd_bgr"
         android:headerBackground="@drawable/tpd_header"
-        android:headerTimeTextAppearance="@string/title_full_recipe_title"
         android:numbersBackgroundColor="@color/theme_cardview_bgr"
         android:numbersTextColor="@color/main_text"
         android:numbersSelectorColor="@color/pink_a200"
@@ -22,5 +22,32 @@
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_cancel_alert_dialog"
+        style="@style/buttons_in_fragments_style"
+        android:layout_width="@dimen/btn_dialog_w"
+        android:layout_height="@dimen/btn_dialog_h"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/selector_btn_in_fragments"
+        android:elevation="4dp"
+        android:text="Cancel"
+        android:translationZ="2dp"
+        app:layout_constraintRight_toLeftOf="@id/button_yes_new_recipe_alert_dialog"
+        app:layout_constraintTop_toTopOf="@id/button_yes_new_recipe_alert_dialog" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_yes_new_recipe_alert_dialog"
+        style="@style/buttons_in_fragments_style"
+        android:layout_width="@dimen/btn_dialog_w"
+        android:layout_height="@dimen/btn_dialog_h"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/selector_btn_in_fragments"
+        android:elevation="4dp"
+        android:text="Yes"
+        android:translationZ="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

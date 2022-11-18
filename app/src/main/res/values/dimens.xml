@@ -37,6 +37,9 @@
     <dimen name="btn_main_w">130dp</dimen>
     <dimen name="btn_main_h">30dp</dimen>
 
+    <dimen name="btn_dialog_w">100dp</dimen>
+    <dimen name="btn_dialog_h">30dp</dimen>
+
     <dimen name="ic_userprofile_w_h">15dp</dimen>
 
     <dimen name="userprofile_categories_spacing">15dp</dimen>
