@@ -135,7 +135,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
                 )
                 val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
                 RetrofitFactory.apiService()
-                    .uploadImage(file, FileUtils.TAG_RECIPE, recipe!!.identifier)
+                    .uploadImage(file, FileUtils.TYPE_RECIPE, recipe!!.identifier)
                     .enqueue(object : Callback<Recipe?> {
                         override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
                             if (response.code() == 200) {

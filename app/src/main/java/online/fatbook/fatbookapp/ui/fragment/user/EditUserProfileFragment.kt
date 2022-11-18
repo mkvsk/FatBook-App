@@ -21,17 +21,15 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
-import kotlinx.android.synthetic.main.fragment_user_profile.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.DeleteRequest
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentEditProfileBinding
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.FileUtils
+import online.fatbook.fatbookapp.util.FileUtils.TYPE_USER
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
@@ -47,10 +45,7 @@ class EditUserProfileFragment : Fragment() {
     private var bioTextLength: Int = 0
     private var chooseImageFromGallery: ActivityResultLauncher<String>? = null
 
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -66,9 +61,7 @@ class EditUserProfileFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString().length == edittext_profile_title.filters.filterIsInstance<InputFilter.LengthFilter>()
-                                .firstOrNull()?.max!!
-                ) {
+                if (s.toString().length == edittext_profile_title.filters.filterIsInstance<InputFilter.LengthFilter>().firstOrNull()?.max!!) {
                     hideKeyboard(edittext_profile_title)
                 }
             }
@@ -95,9 +88,7 @@ class EditUserProfileFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                bioTextLength =
-                        edittext_profile_bio.filters.filterIsInstance<InputFilter.LengthFilter>()
-                                .firstOrNull()?.max!!
+                bioTextLength = edittext_profile_bio.filters.filterIsInstance<InputFilter.LengthFilter>().firstOrNull()?.max!!
                 bioTextLength -= s.toString().length
                 textview_bio_length.text = bioTextLength.toString()
                 if (bioTextLength == 0) {
@@ -134,25 +125,55 @@ class EditUserProfileFragment : Fragment() {
         userViewModel.user.value!!.website = edittext_profile_website.text.toString().replace("\\s+".toRegex(), " ")
         userViewModel.user.value!!.bio = edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " ")
         hideKeyboard(edittext_profile_bio)
-        Log.d(TAG, "saveUserProfile: ${imageViewModel.userImageToUpload.value}")
-        Log.d(TAG, "saveUserProfile: ${imageViewModel.userImageToDelete.value}")
-        Log.d(TAG, "saveUserProfile: ${userViewModel.user.value}")
+        if (imageViewModel.userImageToUpload.value != null) {
+            imageViewModel.uploadImage(FileUtils.getFile(
+                    imageViewModel.userImageToUpload.value as File),
+                    TYPE_USER,
+                    userViewModel.user.value!!.username!!,
+                    StringUtils.EMPTY,
+                    object : ResultCallback<String> {
+                        override fun onResult(value: String?) {
+                            userViewModel.user.value!!.profileImage = value
+                            Log.d(TAG, "image uploaded")
+                            updateUser()
+                        }
 
-        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), imageViewModel.userImageToUpload.value!! as File)
-        val fileName = "image" + (imageViewModel.userImageToUpload.value!! as File).name.substring(
-                (imageViewModel.userImageToUpload.value!! as File).name.indexOf('.')
-        )
-        val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
-        imageViewModel.uploadImage(file, "u", userViewModel.user.value!!.username!!, "", object : ResultCallback<String> {
-            override fun onResult(value: String?) {
-                userViewModel.user.value!!.profileImage = value
-            }
+                        override fun onFailure(value: String?) {
+                            Toast.makeText(requireContext(), getString(R.string.title_error_image_upload), Toast.LENGTH_LONG).show()
+                            updateUser()
+                        }
+                    })
+        } else if (imageViewModel.userImageToDelete.value != null) {
+            imageViewModel.deleteImage(DeleteRequest(TYPE_USER, userViewModel.user.value!!.username), object : ResultCallback<Void> {
+                override fun onResult(value: Void?) {
+                    userViewModel.user.value!!.profileImage = StringUtils.EMPTY
+                    Log.d(TAG, "image deleted")
+                    updateUser()
+                }
 
-            override fun onFailure(value: String?) {
-                println(value)
-            }
-        })
-//        popBackStack()
+                override fun onFailure(value: Void?) {
+                    Toast.makeText(requireContext(), getString(R.string.title_error_image_delete), Toast.LENGTH_LONG).show()
+                    updateUser()
+                }
+            })
+        } else {
+            updateUser()
+        }
+    }
+
+    private fun updateUser() {
+        Log.d(TAG, "user updated")
+//        userViewModel.updateUser(userViewModel.user.value!!, object : ResultCallback<User> {
+//            override fun onResult(value: User?) {
+//                userViewModel.user.value = value
+//                popBackStack()
+//            }
+//
+//            override fun onFailure(value: User?) {
+//                Toast.makeText(requireContext(), getString(R.string.title_error_user_update), Toast.LENGTH_LONG).show()
+//                popBackStack()
+//            }
+//        })
     }
 
     private fun drawData(user: User) {
@@ -180,20 +201,17 @@ class EditUserProfileFragment : Fragment() {
                 imageview_userphoto_edit_userprofile.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
             } else {
                 toggleImageButtons(true)
-                Glide.with(requireContext()).load(user.profileImage)
-                        .into(imageview_userphoto_edit_userprofile)
+                Glide.with(requireContext()).load(user.profileImage).into(imageview_userphoto_edit_userprofile)
             }
         } else {
-            Glide.with(requireContext()).load(imageViewModel.userImageToUpload.value)
-                    .into(imageview_userphoto_edit_userprofile)
+            Glide.with(requireContext()).load(imageViewModel.userImageToUpload.value).into(imageview_userphoto_edit_userprofile)
         }
     }
 
     private fun setupImageEditButtons() {
         imageview_userphoto_edit_userprofile.setOnClickListener {
             imageViewModel.image.value = imageview_userphoto_edit_userprofile.drawable
-            NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_image_view_from_edit_profile)
+            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_image_view_from_edit_profile)
         }
         button_edit_photo.setOnClickListener {
             if (verifyStoragePermissions(requireActivity())) {
@@ -204,21 +222,18 @@ class EditUserProfileFragment : Fragment() {
             imageViewModel.userImageToDelete.value = userViewModel.user.value!!.profileImage
             imageViewModel.userImageToUpload.value = null
             toggleImageButtons(false)
-            Glide.with(requireContext()).load(R.drawable.ic_default_userphoto)
-                    .into(imageview_userphoto_edit_userprofile)
+            imageview_userphoto_edit_userprofile.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
         }
-        chooseImageFromGallery =
-                registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-                    if (verifyStoragePermissions(requireActivity())) {
-                        uri?.let {
-                            toggleImageButtons(true)
-                            val path = FileUtils.getPath(requireContext(), it)
-                            imageViewModel.userImageToUpload.value = path?.let { file -> File(file) }
-                            Glide.with(requireContext()).load(uri)
-                                    .into(imageview_userphoto_edit_userprofile)
-                        }
-                    }
+        chooseImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            if (verifyStoragePermissions(requireActivity())) {
+                uri?.let {
+                    toggleImageButtons(true)
+                    val path = FileUtils.getPath(requireContext(), it)
+                    imageViewModel.userImageToUpload.value = path?.let { file -> File(file) }
+                    Glide.with(requireContext()).load(uri).into(imageview_userphoto_edit_userprofile)
                 }
+            }
+        }
     }
 
     private fun toggleImageButtons(isImageExists: Boolean) {
@@ -236,13 +251,9 @@ class EditUserProfileFragment : Fragment() {
     }
 
     private fun verifyStoragePermissions(requireActivity: FragmentActivity): Boolean {
-        val permission = ActivityCompat.checkSelfPermission(
-                requireActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
+        val permission = ActivityCompat.checkSelfPermission(requireActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         return if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    requireActivity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE
-            )
+            ActivityCompat.requestPermissions(requireActivity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE)
             false
         } else {
             true
@@ -251,9 +262,7 @@ class EditUserProfileFragment : Fragment() {
 
     companion object {
         private const val REQUEST_EXTERNAL_STORAGE = 1
-        private val PERMISSIONS_STORAGE = arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
+        private val PERMISSIONS_STORAGE = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         private const val TAG = "EditUserProfileFragment"
     }
 

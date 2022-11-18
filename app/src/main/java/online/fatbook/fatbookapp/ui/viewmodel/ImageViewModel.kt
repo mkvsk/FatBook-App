@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import okhttp3.MultipartBody
 import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.DeleteRequest
 import online.fatbook.fatbookapp.repository.ImageServiceRepository
 
 class ImageViewModel : ViewModel() {
@@ -22,6 +23,18 @@ class ImageViewModel : ViewModel() {
             }
 
             override fun onFailure(value: String?) {
+                callback.onFailure(value)
+            }
+        })
+    }
+
+    fun deleteImage(request: DeleteRequest, callback: ResultCallback<Void>) {
+        repository.delete(request, object : ResultCallback<Void>{
+            override fun onResult(value: Void?) {
+                callback.onResult(value)
+            }
+
+            override fun onFailure(value: Void?) {
                 callback.onFailure(value)
             }
         })

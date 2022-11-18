@@ -356,7 +356,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
             val fileName = "image" + userPhoto!!.name.substring(userPhoto!!.name.indexOf('.'))
             val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
             RetrofitFactory.apiService()
-                .uploadUserImage(file, FileUtils.TAG_USER, user!!.username)
+                .uploadUserImage(file, FileUtils.TYPE_USER, user!!.username)
                 .enqueue(object : Callback<User?> {
                     override fun onResponse(call: Call<User?>, response: Response<User?>) {
                         if (response.code() == 200) {

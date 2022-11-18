@@ -12,13 +12,20 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.util.Log
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
+import kotlin.math.min
 
 object FileUtils {
-    const val TAG_RECIPE = "r"
-    const val TAG_USER = "u"
     private var contentUri: Uri? = null
+
+    private const val MEDIA_TYPE_IMAGE = "image/*"
+    private const val DEFAULT_USER_IMG_NAME = "image"
+    const val TYPE_RECIPE = "r"
+    const val TYPE_USER = "u"
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
@@ -56,16 +63,16 @@ object FileUtils {
                     var cursor: Cursor? = null
                     try {
                         cursor = context.contentResolver.query(
-                            uri,
-                            arrayOf(MediaStore.MediaColumns.DISPLAY_NAME),
-                            null,
-                            null,
-                            null
+                                uri,
+                                arrayOf(MediaStore.MediaColumns.DISPLAY_NAME),
+                                null,
+                                null,
+                                null
                         )
                         if (cursor != null && cursor.moveToFirst()) {
                             val fileName = cursor.getString(0)
                             val path = Environment.getExternalStorageDirectory()
-                                .toString() + "/Download/" + fileName
+                                    .toString() + "/Download/" + fileName
                             if (!TextUtils.isEmpty(path)) {
                                 return path
                             }
@@ -79,14 +86,14 @@ object FileUtils {
                             return id.replaceFirst("raw:".toRegex(), "")
                         }
                         val contentUriPrefixesToTry = arrayOf(
-                            "content://downloads/public_downloads",
-                            "content://downloads/my_downloads"
+                                "content://downloads/public_downloads",
+                                "content://downloads/my_downloads"
                         )
                         for (contentUriPrefix in contentUriPrefixesToTry) {
                             return try {
                                 val contentUri = ContentUris.withAppendedId(
-                                    Uri.parse(contentUriPrefix),
-                                    java.lang.Long.valueOf(id)
+                                        Uri.parse(contentUriPrefix),
+                                        java.lang.Long.valueOf(id)
                                 )
 
                                 /*   final Uri contentUri = ContentUris.withAppendedId(
@@ -95,7 +102,7 @@ object FileUtils {
                             } catch (e: NumberFormatException) {
                                 //In Android 8 and Android P the id is not a number
                                 uri.path!!.replaceFirst("^/document/raw:".toRegex(), "")
-                                    .replaceFirst("^raw:".toRegex(), "")
+                                        .replaceFirst("^raw:".toRegex(), "")
                             }
                         }
                     }
@@ -107,8 +114,8 @@ object FileUtils {
                     }
                     try {
                         contentUri = ContentUris.withAppendedId(
-                            Uri.parse("content://downloads/public_downloads"),
-                            java.lang.Long.valueOf(id)
+                                Uri.parse("content://downloads/public_downloads"),
+                                java.lang.Long.valueOf(id)
                         )
                     } catch (e: NumberFormatException) {
                         e.printStackTrace()
@@ -132,8 +139,8 @@ object FileUtils {
                 selection = "_id=?"
                 selectionArgs = arrayOf(split[1])
                 return getDataColumn(
-                    context, contentUri, selection,
-                    selectionArgs
+                        context, contentUri, selection,
+                        selectionArgs
                 )
             } else if (isGoogleDriveUri(uri)) {
                 return getDriveFilePath(uri, context)
@@ -253,7 +260,7 @@ object FileUtils {
         val sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE)
         returnCursor.moveToFirst()
         val name = returnCursor.getString(nameIndex)
-        val size = java.lang.Long.toString(returnCursor.getLong(sizeIndex))
+        val size = returnCursor.getLong(sizeIndex).toString()
         val file = File(context.filesDir, name)
         try {
             val inputStream = context.contentResolver.openInputStream(uri)
@@ -263,7 +270,7 @@ object FileUtils {
             val bytesAvailable = inputStream!!.available()
 
             //int bufferSize = 1024;
-            val bufferSize = Math.min(bytesAvailable, maxBufferSize)
+            val bufferSize = min(bytesAvailable, maxBufferSize)
             val buffers = ByteArray(bufferSize)
             while (inputStream.read(buffers).also { read = it } != -1) {
                 outputStream.write(buffers, 0, read)
@@ -280,16 +287,16 @@ object FileUtils {
     }
 
     private fun getDataColumn(
-        context: Context, uri: Uri?,
-        selection: String?, selectionArgs: Array<String>?
+            context: Context, uri: Uri?,
+            selection: String?, selectionArgs: Array<String>?
     ): String? {
         var cursor: Cursor? = null
         val column = "_data"
         val projection = arrayOf(column)
         try {
             cursor = context.contentResolver.query(
-                uri!!, projection,
-                selection, selectionArgs, null
+                    uri!!, projection,
+                    selection, selectionArgs, null
             )
             if (cursor != null && cursor.moveToFirst()) {
                 val index = cursor.getColumnIndexOrThrow(column)
@@ -339,5 +346,11 @@ object FileUtils {
      */
     private fun isGoogleDriveUri(uri: Uri): Boolean {
         return "com.google.android.apps.docs.storage" == uri.authority || "com.google.android.apps.docs.storage.legacy" == uri.authority
+    }
+
+    fun getFile(file: File): MultipartBody.Part {
+        val requestBody = file.asRequestBody(MEDIA_TYPE_IMAGE.toMediaTypeOrNull())
+        val fileName = DEFAULT_USER_IMG_NAME + file.name.substring(file.name.indexOf('.'))
+        return MultipartBody.Part.createFormData("file", fileName, requestBody)
     }
 }

@@ -62,15 +62,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
         } else {
             progress_overlay.visibility = View.VISIBLE
 
-            if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
-                setupMenu(R.menu.user_profile_current_menu)
-                toolbar_userprofile.title = userViewModel.user.value!!.username
-                setupViewForLoggedInUser()
-            } else {
-                toolbar_userprofile.title = userViewModel.selectedUsername.value!!
-                setupMenu(R.menu.user_profile_other_menu)
-                setupViewForSelectedUser()
-            }
+            loadUserData()
 
             val fragmentAdapter = UserProfileRecipesAdapter(this)
             viewPager = vp_userprofile
@@ -119,6 +111,21 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
             button_messages.setOnClickListener {
                 swipe_refresh_user_profile.isRefreshing = false
             }
+            swipe_refresh_user_profile.setOnRefreshListener {
+                loadUserData()
+            }
+        }
+    }
+
+    private fun loadUserData() {
+        if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
+            setupMenu(R.menu.user_profile_current_menu)
+            toolbar_userprofile.title = userViewModel.user.value!!.username
+            setupViewForLoggedInUser()
+        } else {
+            toolbar_userprofile.title = userViewModel.selectedUsername.value!!
+            setupMenu(R.menu.user_profile_other_menu)
+            setupViewForSelectedUser()
         }
     }
 
@@ -236,7 +243,8 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
         }
     }
 
-    private fun drawData(user: User) {
+    private fun
+            drawData(user: User) {
         Log.i("DRAW DATA", "--------------------------------------------------")
         toolbar_userprofile.title = user.username
         if (user.online) {
@@ -281,6 +289,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
             }
         }
         progress_overlay.visibility = View.GONE
+        swipe_refresh_user_profile.isRefreshing = false
     }
 
     private fun loadUser(username: String, updateCurrentUser: Boolean) {
