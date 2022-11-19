@@ -30,18 +30,18 @@ object RecipeUtils {
         this.context = context
     }
 
-    fun getAllAvailableUnits(): ArrayList<IngredientUnit> {
-        val list = ArrayList<IngredientUnit>()
-        list.add(IngredientUnit.KG)
-        list.add(IngredientUnit.GRAM)
-        list.add(IngredientUnit.PCS)
-        list.add(IngredientUnit.TEA_SPOON)
-        list.add(IngredientUnit.TABLE_SPOON)
-        list.add(IngredientUnit.ML)
-        list.add(IngredientUnit.L)
-        list.add(IngredientUnit.CUP)
-        return list
-    }
+//    fun getAllAvailableUnits(): ArrayList<IngredientUnit> {
+//        val list = ArrayList<IngredientUnit>()
+//        list.add(IngredientUnit.KG)
+//        list.add(IngredientUnit.GRAM)
+//        list.add(IngredientUnit.PCS)
+//        list.add(IngredientUnit.TEA_SPOON)
+//        list.add(IngredientUnit.TABLE_SPOON)
+//        list.add(IngredientUnit.ML)
+//        list.add(IngredientUnit.L)
+//        list.add(IngredientUnit.CUP)
+//        return list
+//    }
 
     fun prettyCookingTime(cookingTime: String?): String? {
         return if (cookingTime == null) {

@@ -17,6 +17,13 @@ class StaticDataViewModel : ViewModel() {
     val cookingMethods = MutableLiveData<List<CookingMethod>>()
     val cookingCategories = MutableLiveData<List<CookingCategory>>()
     val cookingDifficulties = MutableLiveData<List<CookingDifficulty>>()
+    val ingredientUnits = MutableLiveData<List<IngredientUnit>>()
+
+    val unitG = MutableLiveData<IngredientUnit>()
+    val unitML = MutableLiveData<IngredientUnit>()
+    val methodOther = MutableLiveData<CookingMethod>()
+    val categoryOther = MutableLiveData<CookingCategory>()
+
     val loadCookingMethod = MutableLiveData<Boolean>()
 
     private val repository by lazy { StaticDataRepository() }

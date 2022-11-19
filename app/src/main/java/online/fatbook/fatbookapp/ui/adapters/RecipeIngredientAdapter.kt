@@ -61,7 +61,7 @@ class RecipeIngredientAdapter :
             }
 
             itemView.textview_ingredient_qtt_title_rv_added_ingredient.text =
-                String.format("%s %s", FormatUtils.prettyCount(value.quantity!!), value.unit!!.getDisplayName(context))
+                String.format("%s %s", FormatUtils.prettyCount(value.quantity!!), value.unit!!.title)
 
             itemView.button_remove_rv_added_ingredient.setOnClickListener {
                 listener!!.onRecipeIngredientDelete(bindingAdapterPosition)

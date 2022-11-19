@@ -70,9 +70,8 @@ class IngredientAdapter :
 
             itemView.textview_ingredient_title_rv_ingredient.text = value.title
 
-            val tmp = value.unitRatio?.get(0)?.kcal.toString()
             itemView.textview_ingredient_kcals_title_rv_ingredient.text =
-                String.format(context.resources.getString(R.string.string_format_kcal_qtt_per_100_gram), tmp)
+                "${value.unitRatio!!.kcal} kcal/${value.unitRatio.amount} ${value.unitRatio.unit!!.title}"
 
             if (itemView.cardview_rv_ingredient.isClickable) {
                 itemView.cardview_rv_ingredient.setOnClickListener {

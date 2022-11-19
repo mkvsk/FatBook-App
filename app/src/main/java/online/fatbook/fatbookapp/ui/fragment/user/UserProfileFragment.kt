@@ -169,7 +169,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
 //        builder.setView(R.layout.dialog_app_info)
 //        builder.setPositiveButton(getString(R.string.alert_dialog_btn_close)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
 //        builder.show()
-        FBAlertDialogBuilder.getDialogWithPositiveButton()
+//        FBAlertDialogBuilder.getDialogWithPositiveButton()
     }
 
     private fun logout() {

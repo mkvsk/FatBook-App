@@ -19,8 +19,10 @@ class ViewRecipeIngredientAdapter :
     private var listener: OnRecipeViewDeleteIngredient? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.rv_add_new_recipe_ingredients_old, parent, false))
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.rv_add_new_recipe_ingredients_old, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -51,9 +53,7 @@ class ViewRecipeIngredientAdapter :
         fun bind(recipeIngredient: RecipeIngredient) {
             itemView.textView_ingredient_in_recipe.text = recipeIngredient.ingredient!!.title
             val quantityName =
-                recipeIngredient.quantity.toString() + " " + recipeIngredient.unit!!.getDisplayName(
-                    itemView.context
-                )
+                recipeIngredient.quantity.toString() + " " + recipeIngredient.unit!!.title
             itemView.textView_rv_add_recipe_ingredient_quantity.text = quantityName
             if (isEditAvailable) {
                 itemView.btn_rv_add_recipe_ingredient_remove.visibility = View.VISIBLE

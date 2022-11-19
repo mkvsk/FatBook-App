@@ -25,27 +25,30 @@ data class Recipe(
     var steps: ArrayList<CookingStep>? = ArrayList(),
     var comments: ArrayList<RecipeComment>? = ArrayList()
 ) : Serializable {
+    //TODO unit fix
     val kcalPerPortion: Double?
         get() {
-            return if (isAllIngredientUnitsValid) {
-                var tmp = 0.0
-                for (i in ingredients!!) {
-                    if (i.unit == IngredientUnit.GRAM || i.unit == IngredientUnit.ML) {
-                        tmp = tmp.plus(i.kcal!!)
-                    }
-                }
-                tmp / portions.toString().toDouble()
-            } else {
-                null
-            }
+//            return if (isAllIngredientUnitsValid) {
+//                var tmp = 0.0
+//                for (i in ingredients!!) {
+//                    if (i.unit == IngredientUnit.GRAM || i.unit == IngredientUnit.ML) {
+//                        tmp = tmp.plus(i.kcal!!)
+//                    }
+//                }
+//                tmp / portions.toString().toDouble()
+//            } else {
+//                null
+//            }
+            return 0.0
         }
 
     val isAllIngredientUnitsValid: Boolean
         get() {
-            val tmp = ingredients!!.find {
-                it.unit != IngredientUnit.GRAM && it.unit != IngredientUnit.ML
-            }
-            return tmp == null
+//            val tmp = ingredients!!.find {
+//                it.unit != IngredientUnit.GRAM && it.unit != IngredientUnit.ML
+//            }
+//            return tmp == null
+            return true
         }
 
     val fatsPerPortion: Double?

@@ -51,7 +51,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnIngredientItemClickListener
             recipeIngredient.ingredient = selectedIngredient
             recipeIngredient.quantity =
                 binding!!.editTextIngredientQuantity.text.toString().toDouble()
-            recipeIngredient.unit = IngredientUnit.values()[binding!!.pickerIngredientUnitOld.value]
+            recipeIngredient.unit = IngredientUnit()
             recipeViewModel!!.selectedRecipeIngredient.value = recipeIngredient
             NavHostFragment.findNavController(this).popBackStack()
         }
@@ -113,16 +113,16 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnIngredientItemClickListener
     }
 
     private fun setupUnitPicker() {
-        val unitData = arrayOf(
-            IngredientUnit.ML.getMultiplyNaming(requireContext()),
-            IngredientUnit.PCS.getMultiplyNaming(requireContext()),
-            IngredientUnit.GRAM.getMultiplyNaming(requireContext()),
-            IngredientUnit.TEA_SPOON.getMultiplyNaming(requireContext()),
-            IngredientUnit.TABLE_SPOON.getMultiplyNaming(requireContext())
-        )
-        binding!!.pickerIngredientUnitOld.minValue = 0
-        binding!!.pickerIngredientUnitOld.maxValue = unitData.size - 1
-        binding!!.pickerIngredientUnitOld.displayedValues = unitData
+//        val unitData = arrayOf(
+//            IngredientUnit.ML.getMultiplyNaming(requireContext()),
+//            IngredientUnit.PCS.getMultiplyNaming(requireContext()),
+//            IngredientUnit.GRAM.getMultiplyNaming(requireContext()),
+//            IngredientUnit.TEA_SPOON.getMultiplyNaming(requireContext()),
+//            IngredientUnit.TABLE_SPOON.getMultiplyNaming(requireContext())
+//        )
+//        binding!!.pickerIngredientUnitOld.minValue = 0
+//        binding!!.pickerIngredientUnitOld.maxValue = unitData.size - 1
+//        binding!!.pickerIngredientUnitOld.displayedValues = unitData
     }
 
     private fun setupAdapter() {
