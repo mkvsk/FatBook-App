@@ -1,7 +1,6 @@
 package online.fatbook.fatbookapp.ui.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.rv_search.view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
-import online.fatbook.fatbookapp.util.SearchUtils
 import org.apache.commons.lang3.StringUtils
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),

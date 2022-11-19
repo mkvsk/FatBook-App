@@ -11,42 +11,18 @@ data class RecipeIngredient(
 
     val kcal: Double?
         get() {
-            val find = ingredient!!.units!!.find { it.unit == unit }
-            find?.let {
-                if (it.unit == IngredientUnit.GRAM || it.unit == IngredientUnit.ML) {
-                    return it.kcal!! / 100 * quantity!!
-                } else {
-                    return null
-                }
-            }
-            return null
+            return ingredient!!.unitRatio!!.kcal
         }
-
     val proteins: Double?
         get() {
-            val find = ingredient!!.units!!.find { it.unit == unit }
-            return if (find!!.unit == IngredientUnit.GRAM || find.unit == IngredientUnit.ML) {
-                find.proteins!! / 100 * quantity!!
-            } else {
-                null
-            }
+            return ingredient!!.unitRatio!!.proteins
         }
     val fats: Double?
         get() {
-            val find = ingredient!!.units!!.find { it.unit == unit }
-            return if (find!!.unit == IngredientUnit.GRAM || find.unit == IngredientUnit.ML) {
-                find.fats!! / 100 * quantity!!
-            } else {
-                null
-            }
+            return ingredient!!.unitRatio!!.fats
         }
     val carbs: Double?
         get() {
-            val find = ingredient!!.units!!.find { it.unit == unit }
-            return if (find!!.unit == IngredientUnit.GRAM || find.unit == IngredientUnit.ML) {
-                find.carbs!! / 100 * quantity!!
-            } else {
-                null
-            }
+            return ingredient!!.unitRatio!!.carbs
         }
 }

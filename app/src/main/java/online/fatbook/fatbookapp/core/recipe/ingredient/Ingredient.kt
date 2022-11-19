@@ -7,12 +7,11 @@ import online.fatbook.fatbookapp.util.AppInfo
 import org.apache.commons.lang3.StringUtils
 import java.io.Serializable
 import java.util.*
-import kotlin.collections.ArrayList
 
 data class Ingredient(
-        val pid: Long? = null,
-        val units: ArrayList<IngredientUnitRatio>? = ArrayList(),
-        val locales: Map<StaticDataLocale, StaticDataLocalizedObject> = EnumMap(StaticDataLocale::class.java)
+    val pid: Long? = null,
+    val unitRatio: IngredientUnitRatio? = null,
+    val locales: Map<StaticDataLocale, StaticDataLocalizedObject> = EnumMap(StaticDataLocale::class.java)
 ) : Serializable, StaticDataObject() {
 
     override val title: String?
@@ -27,6 +26,6 @@ data class Ingredient(
         }
 
     override fun toString(): String {
-        return "Ingredient: (pid=$pid, title=$title, units=$units, locales=$locales)"
+        return "Ingredient: (pid=$pid, title=$title, units=$unitRatio, locales=$locales)"
     }
 }

@@ -2,7 +2,6 @@ package online.fatbook.fatbookapp.ui.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +70,7 @@ class IngredientAdapter :
 
             itemView.textview_ingredient_title_rv_ingredient.text = value.title
 
-            val tmp = value.units?.get(0)?.kcal.toString()
+            val tmp = value.unitRatio?.get(0)?.kcal.toString()
             itemView.textview_ingredient_kcals_title_rv_ingredient.text =
                 String.format(context.resources.getString(R.string.string_format_kcal_qtt_per_100_gram), tmp)
 

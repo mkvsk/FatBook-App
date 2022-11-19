@@ -10,8 +10,8 @@ object RetrofitFactory {
 //    private const val ADDRESS = "http://10.0.2.2:8080/"
     //    private const val ADDRESS = "http://192.168.0.121:8080/"
 
-//    private const val ADDRESS_IMG_SERVICE = "https://img.fatbook.online/"
-    private const val ADDRESS_IMG_SERVICE = "http://10.0.2.2:8080/"
+    private const val ADDRESS_IMG_SERVICE = "https://img.fatbook.online/"
+//    private const val ADDRESS_IMG_SERVICE = "http://10.0.2.2:8080/"
 
     // api.fatbook.online
     private var TOKEN_API_SERVICE =

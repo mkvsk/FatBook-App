@@ -1,6 +1,5 @@
 package online.fatbook.fatbookapp.retrofit
 
-import android.net.Uri
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.core.DeleteRequest

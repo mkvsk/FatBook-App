@@ -110,7 +110,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     }
 
     private fun calculateNutrition(ingredient: Ingredient) {
-        val nutritionFacts = ingredient.units!![0]
+        val nutritionFacts = ingredient.unitRatio!!
         if (selectedUnit == IngredientUnit.GRAM ||
                 selectedUnit == IngredientUnit.ML
         ) {
@@ -260,11 +260,11 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     }
 
     private fun setDefaultNutritionFacts(ingredient: Ingredient) {
-        val nutritionFacts = ingredient.units!![0]
+        val nutritionFacts = ingredient.unitRatio!!
         val kcal = nutritionFacts.kcal.toString()
         val qtt = nutritionFacts.amount.toString()
         textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
-                String.format("%s kcal/%s %s", kcal, qtt, ingredient.units[0].unit)
+                String.format("%s kcal/%s %s", kcal, qtt, ingredient.unitRatio.unit)
         tv_ingredient_proteins_recipe_add_ingredients.text = nutritionFacts.proteins.toString()
         tv_ingredient_fats_recipe_add_ingredients.text = nutritionFacts.fats.toString()
         tv_ingredient_carbs_recipe_add_ingredients.text = nutritionFacts.carbs.toString()
@@ -273,7 +273,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     private fun setupUnitPicker(ingredient: Ingredient?) {
         val unitData: Array<String>
         if (ingredient != null) {
-            val currentUnit = ingredient.units!![0].unit
+            val currentUnit = ingredient.unitRatio!!.unit
 
             units = RecipeUtils.getAllAvailableUnits()
 

@@ -3,7 +3,6 @@ package online.fatbook.fatbookapp.core.search
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.Recipe
 import java.io.Serializable
 
 data class SearchObjects(
