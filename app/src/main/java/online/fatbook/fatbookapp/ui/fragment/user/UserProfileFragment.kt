@@ -32,6 +32,7 @@ import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.*
 import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogBuilder
+import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogListener
 import org.apache.commons.lang3.StringUtils
 
 
@@ -45,7 +46,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
     private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserProfileBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -55,11 +56,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
         super.onViewCreated(view, savedInstanceState)
         Log.d("UserProfileFragment", "onViewCreated")
         val sharedPreferences =
-                requireActivity().getSharedPreferences(Constants.SP_TAG, AppCompatActivity.MODE_PRIVATE)
+            requireActivity().getSharedPreferences(Constants.SP_TAG, AppCompatActivity.MODE_PRIVATE)
         if (sharedPreferences.getBoolean(Constants.SP_TAG_DARK_MODE_CHANGED, false)) {
             sharedPreferences.edit().putBoolean(Constants.SP_TAG_DARK_MODE_CHANGED, false).apply()
             NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_app_settings_from_user_profile)
+                .navigate(R.id.action_go_to_app_settings_from_user_profile)
         } else {
             progress_overlay.visibility = View.VISIBLE
 
@@ -73,11 +74,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
             val tabLayout = tabLayout_userprofile
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text =
-                        if (position == 0) {
-                            resources.getString(R.string.title_recipes_profile)
-                        } else {
-                            resources.getString(R.string.title_favourites_profile)
-                        }
+                    if (position == 0) {
+                        resources.getString(R.string.title_recipes_profile)
+                    } else {
+                        resources.getString(R.string.title_favourites_profile)
+                    }
             }.attach()
 
             ViewPager2ViewHeightAnimator().viewPager2 = viewPager
@@ -88,13 +89,13 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
 
             imageview_friends_qtt_userprofile.setOnClickListener {
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_followers_from_user_profile)
+                    .navigate(R.id.action_go_to_followers_from_user_profile)
             }
 
             imageview_userphoto_userprofile.setOnClickListener {
                 imageViewModel.image.value = userViewModel.user.value!!.profileImage
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_view_image_from_user_profile1)
+                    .navigate(R.id.action_go_to_view_image_from_user_profile1)
             }
 
             nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
@@ -139,17 +140,17 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
         return when (item.itemId) {
             R.id.menu_user_profile_edit_profile -> {
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_edit_profile_from_user_profile)
+                    .navigate(R.id.action_go_to_edit_profile_from_user_profile)
                 true
             }
             R.id.menu_user_profile_badges -> {
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_badges_from_user_profile)
+                    .navigate(R.id.action_go_to_badges_from_user_profile)
                 true
             }
             R.id.menu_user_profile_app_settings -> {
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_app_settings_from_user_profile)
+                    .navigate(R.id.action_go_to_app_settings_from_user_profile)
                 true
             }
             R.id.menu_user_profile_app_info -> {
@@ -165,16 +166,16 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
     }
 
     private fun showAppInfoDialog() {
-//        val builder = AlertDialog.Builder(requireContext())
-//        builder.setView(R.layout.dialog_app_info)
-//        builder.setPositiveButton(getString(R.string.alert_dialog_btn_close)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
-//        builder.show()
-//        FBAlertDialogBuilder.getDialogWithPositiveButton()
+        FBAlertDialogBuilder.getAppInfoDialog(object : FBAlertDialogListener {
+            override fun onClick(dialogInterface: DialogInterface) {
+                dialogInterface.dismiss()
+            }
+        }).show()
     }
 
     private fun logout() {
         val sharedPreferences = requireActivity().getSharedPreferences(
-                Constants.SP_TAG, Context.MODE_PRIVATE
+            Constants.SP_TAG, Context.MODE_PRIVATE
         )
         val editor = sharedPreferences.edit()
         editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
@@ -189,17 +190,17 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
         if (!expanded) {
             textview_bio_userprofile.maxLines = Integer.MAX_VALUE
             imageview_ic_expand.setImageDrawable(
-                    ContextCompat.getDrawable(
-                            requireContext(), R.drawable.ic_expand_less
-                    )
+                ContextCompat.getDrawable(
+                    requireContext(), R.drawable.ic_expand_less
+                )
             )
             expanded = true
         } else {
             textview_bio_userprofile.maxLines = 3
             imageview_ic_expand.setImageDrawable(
-                    ContextCompat.getDrawable(
-                            requireContext(), R.drawable.ic_expand_more
-                    )
+                ContextCompat.getDrawable(
+                    requireContext(), R.drawable.ic_expand_more
+                )
             )
             expanded = false
         }
@@ -256,15 +257,15 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
             toolbar_userprofile.subtitle = getString(R.string.subtitle_offline)
         }
         textview_recipes_qtt_userprofile.text =
-                user.recipeAmount?.let { FormatUtils.prettyCount(it) }
+            user.recipeAmount?.let { FormatUtils.prettyCount(it) }
         textview_friends_qtt_userprofile.text =
-                user.followersAmount?.let { FormatUtils.prettyCount(it) }
+            user.followersAmount?.let { FormatUtils.prettyCount(it) }
         if (user.profileImage.isNullOrEmpty()) {
             imageview_userphoto_userprofile.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
             imageview_userphoto_userprofile.isClickable = false
         } else {
             Glide.with(requireContext()).load(user.profileImage!!)
-                    .into(imageview_userphoto_userprofile)
+                .into(imageview_userphoto_userprofile)
             imageview_userphoto_userprofile.isClickable = true
         }
         if (user.title.isNullOrEmpty()) {
@@ -318,7 +319,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
     private fun focusOnRecipes() {
         nsv_userprofile.post {
             nsv_userprofile.smoothScrollTo(
-                    0, cardview_userprofile.bottom
+                0, cardview_userprofile.bottom
             )
         }
     }
