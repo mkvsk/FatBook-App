@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.rv_search.view.*
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.StaticDataObject
+import online.fatbook.fatbookapp.core.recipe.StaticDataBase
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 import org.apache.commons.lang3.StringUtils
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
-    BindableAdapter<StaticDataObject> {
+    BindableAdapter<StaticDataBase> {
 
-    private var data: List<StaticDataObject> = ArrayList()
+    private var data: List<StaticDataBase> = ArrayList()
     var listener: OnSearchItemClickListener? = null
     var selectedItems: List<Int>? = ArrayList()
 
@@ -31,9 +31,9 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<StaticDataObject>?) {
+    override fun setData(data: List<StaticDataBase>?) {
         data?.let {
-            this.data = it as ArrayList<StaticDataObject>
+            this.data = it as ArrayList<StaticDataBase>
             notifyDataSetChanged()
         }
     }
@@ -52,7 +52,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(value: StaticDataObject?) {
+        fun bind(value: StaticDataBase?) {
 
             if (selectedItems!!.contains(bindingAdapterPosition)) {
                 selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)

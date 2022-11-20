@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.core.recipe.ingredient
 
+import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnit
 import java.io.Serializable
 
 data class RecipeIngredient(
@@ -9,20 +10,20 @@ data class RecipeIngredient(
     var quantity: Double? = 0.0
 ) : Serializable {
 
-    val kcal: Double?
+    val kcal: Double
         get() {
-            return ingredient!!.unitRatio!!.kcal
+            return ingredient!!.unitRatio!!.kcal!!.div(100) * quantity!!
         }
-    val proteins: Double?
+    val proteins: Double
         get() {
-            return ingredient!!.unitRatio!!.proteins
+            return ingredient!!.unitRatio!!.proteins!!.div(100) * quantity!!
         }
-    val fats: Double?
+    val fats: Double
         get() {
-            return ingredient!!.unitRatio!!.fats
+            return ingredient!!.unitRatio!!.fats!!.div(100) * quantity!!
         }
-    val carbs: Double?
+    val carbs: Double
         get() {
-            return ingredient!!.unitRatio!!.carbs
+            return ingredient!!.unitRatio!!.carbs!!.div(100) * quantity!!
         }
 }

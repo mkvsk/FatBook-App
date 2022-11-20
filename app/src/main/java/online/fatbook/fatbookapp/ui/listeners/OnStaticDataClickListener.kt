@@ -1,9 +1,9 @@
 package online.fatbook.fatbookapp.ui.listeners
 
-import online.fatbook.fatbookapp.core.recipe.StaticDataObject
+import online.fatbook.fatbookapp.core.recipe.StaticDataBase
 
 interface OnStaticDataClickListener {
 
-    fun onItemClick(item: StaticDataObject)
-    fun onItemClickChoose(item: StaticDataObject)
+    fun onItemClick(item: StaticDataBase)
+    fun onItemClickChoose(item: StaticDataBase)
 }

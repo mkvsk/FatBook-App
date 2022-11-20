@@ -1,5 +1,6 @@
-package online.fatbook.fatbookapp.core.recipe.ingredient
+package online.fatbook.fatbookapp.core.recipe.ingredient.unit
 
+import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnit
 import java.io.Serializable
 
 data class IngredientUnitRatio(

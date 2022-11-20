@@ -3,7 +3,6 @@ package online.fatbook.fatbookapp.ui.fragment.recipe
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_recipe_methods_categories.*
@@ -11,7 +10,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.StaticDataObject
+import online.fatbook.fatbookapp.core.recipe.StaticDataBase
 import online.fatbook.fatbookapp.databinding.FragmentRecipeMethodsCategoriesBinding
 import online.fatbook.fatbookapp.ui.adapters.StaticDataAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
@@ -38,27 +37,26 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
         if (recipeViewModel.newRecipeCookingCategories.value == null) {
             recipeViewModel.newRecipeCookingCategories.value = ArrayList()
         }
-
         setupItemsAdapter()
         if (staticDataViewModel.loadCookingMethod.value!!) {
             toolbar_recipe_methods_categories_items.setTitle(R.string.toolbar_title_cooking_method)
             loadCookingMethods()
+            setupMenu(false)
         } else {
-            setupMenu()
             toolbar_recipe_methods_categories_items.setTitle(R.string.toolbar_title_cooking_categories)
             loadCookingCategories()
+            setupMenu(true)
         }
     }
 
-    private fun setupMenu() {
-        val activity = (activity as AppCompatActivity?)!!
-        activity.setSupportActionBar(toolbar_recipe_methods_categories_items)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.add_categories_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+    private fun setupMenu(category: Boolean) {
+        if (category) {
+            toolbar_recipe_methods_categories_items.inflateMenu(R.menu.add_categories_menu)
+            toolbar_recipe_methods_categories_items.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        }
+        toolbar_recipe_methods_categories_items.setNavigationOnClickListener {
+            popBackStack()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -122,7 +120,7 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
         })
     }
 
-    override fun onItemClick(item: StaticDataObject) {
+    override fun onItemClick(item: StaticDataBase) {
         recipeViewModel.newRecipeCookingMethod.value = item as CookingMethod
         recipeViewModel.newRecipe.value!!.cookingMethod =
                 recipeViewModel.newRecipeCookingMethod.value
@@ -132,7 +130,7 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
         NavHostFragment.findNavController(this).popBackStack()
     }
 
-    override fun onItemClickChoose(item: StaticDataObject) {
+    override fun onItemClickChoose(item: StaticDataBase) {
         if (recipeViewModel.newRecipeCookingCategories.value!!.contains(item as CookingCategory)) {
             recipeViewModel.newRecipeCookingCategories.value!!.remove(item)
         } else {
@@ -144,5 +142,9 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
         Log.i("============================================================", "")
         Log.i("SELECTED CATEGORIES", "${recipeViewModel.newRecipe.value!!.cookingCategories}")
         Log.i("============================================================", "")
+    }
+
+    private fun popBackStack() {
+        NavHostFragment.findNavController(this).popBackStack()
     }
 }

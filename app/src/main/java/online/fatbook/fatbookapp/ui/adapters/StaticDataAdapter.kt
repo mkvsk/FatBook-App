@@ -6,17 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.rv_difficulty.view.*
 import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.StaticDataObject
+import online.fatbook.fatbookapp.core.recipe.StaticDataBase
 import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
 
 class StaticDataAdapter :
-    RecyclerView.Adapter<StaticDataAdapter.ViewHolder>(), BindableAdapter<StaticDataObject> {
+    RecyclerView.Adapter<StaticDataAdapter.ViewHolder>(), BindableAdapter<StaticDataBase> {
 
-    private var data: List<StaticDataObject> = ArrayList()
+    private var data: List<StaticDataBase> = ArrayList()
     var listener: OnStaticDataClickListener? = null
     var selectedItems: List<Int>? = ArrayList()
 
@@ -32,9 +31,9 @@ class StaticDataAdapter :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<StaticDataObject>?) {
+    override fun setData(data: List<StaticDataBase>?) {
         data?.let {
-            this.data = it as ArrayList<StaticDataObject>
+            this.data = it as ArrayList<StaticDataBase>
             notifyDataSetChanged()
         }
     }
@@ -52,7 +51,7 @@ class StaticDataAdapter :
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(value: StaticDataObject?) {
+        fun bind(value: StaticDataBase?) {
             if (selectedItems!!.contains(bindingAdapterPosition)) {
                 selectItem(itemView.cardview_rv_recipe_methods_categories_items)
             } else {

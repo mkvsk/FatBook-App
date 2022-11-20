@@ -1,6 +1,5 @@
 package online.fatbook.fatbookapp.core.recipe
 
-import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import java.io.Serializable
 
@@ -19,36 +18,31 @@ data class Recipe(
     var cookingCategories: ArrayList<CookingCategory>? = ArrayList(),
     var isPrivate: Boolean? = false,
     var ingredients: ArrayList<RecipeIngredient>? = ArrayList(),
-//    var fatsPerPortion: Double? = 0.0,
-//    var carbsPerPortion: Double? = 0.0,
-//    var proteinsPerPortion: Double? = 0.0,
     var steps: ArrayList<CookingStep>? = ArrayList(),
     var comments: ArrayList<RecipeComment>? = ArrayList()
 ) : Serializable {
-    //TODO unit fix
+
     val kcalPerPortion: Double?
         get() {
-//            return if (isAllIngredientUnitsValid) {
-//                var tmp = 0.0
-//                for (i in ingredients!!) {
-//                    if (i.unit == IngredientUnit.GRAM || i.unit == IngredientUnit.ML) {
-//                        tmp = tmp.plus(i.kcal!!)
-//                    }
-//                }
-//                tmp / portions.toString().toDouble()
-//            } else {
-//                null
-//            }
-            return 0.0
+            return if (isAllIngredientUnitsValid) {
+                var tmp = 0.0
+                for (i in ingredients!!) {
+                    if (i.unit!!.position == 1 || i.unit!!.position == 2) {
+                        tmp = tmp.plus(i.kcal!!)
+                    }
+                }
+                tmp / portions.toString().toDouble()
+            } else {
+                null
+            }
         }
 
     val isAllIngredientUnitsValid: Boolean
         get() {
-//            val tmp = ingredients!!.find {
-//                it.unit != IngredientUnit.GRAM && it.unit != IngredientUnit.ML
-//            }
-//            return tmp == null
-            return true
+            val tmp = ingredients!!.find {
+                it.unit!!.position != 1 && it.unit!!.position != 2
+            }
+            return tmp == null
         }
 
     val fatsPerPortion: Double?

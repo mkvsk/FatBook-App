@@ -7,8 +7,8 @@ import java.util.*
 
 data class CookingCategory(
         val pid: Long? = null,
-        val locales: Map<StaticDataLocale, StaticDataLocalizedObject> = EnumMap(StaticDataLocale::class.java)
-) : Serializable, StaticDataObject() {
+        val locales: Map<StaticDataLocale, StaticDataLocalized> = EnumMap(StaticDataLocale::class.java)
+) : Serializable, StaticDataBase() {
 
     override val title: String?
         get() = if (StringUtils.equalsIgnoreCase(AppInfo.locale.language, StaticDataLocale.RU.name)) {

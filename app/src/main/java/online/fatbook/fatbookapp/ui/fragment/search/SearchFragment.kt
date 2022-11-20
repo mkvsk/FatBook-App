@@ -22,7 +22,7 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.StaticDataObject
+import online.fatbook.fatbookapp.core.recipe.StaticDataBase
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
 import online.fatbook.fatbookapp.ui.adapters.SearchAdapter
 import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
@@ -199,7 +199,7 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
         return ArrayList()
     }
 
-    override fun onItemClick(item: StaticDataObject) {
+    override fun onItemClick(item: StaticDataBase) {
 
         when (item) {
             is CookingCategory -> {

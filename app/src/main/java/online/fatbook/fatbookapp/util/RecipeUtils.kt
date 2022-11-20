@@ -2,7 +2,6 @@ package online.fatbook.fatbookapp.util
 
 import android.content.Context
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
 import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.util.*

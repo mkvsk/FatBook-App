@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
-import online.fatbook.fatbookapp.core.recipe.ingredient.IngredientUnit
+import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnit
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeIngredientBinding
 import online.fatbook.fatbookapp.ui.adapters.IngredientAdapter
@@ -28,7 +28,6 @@ import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.FormatUtils
-import online.fatbook.fatbookapp.util.RecipeUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 
@@ -38,7 +37,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private var adapter: IngredientAdapter? = null
-    private var units: List<IngredientUnit> = ArrayList()
+    private var units: ArrayList<IngredientUnit> = ArrayList()
 
     private var selectedUnit: IngredientUnit? = null
     private var selectedQtt: Double = 0.0
@@ -115,18 +114,10 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
             override fun onResult(value: List<IngredientUnit>?) {
                 value?.let {
                     staticDataViewModel.ingredientUnits.value = value
-                    staticDataViewModel.unitG.value = value.find { ingredientUnit ->
-                        StringUtils.equalsIgnoreCase(
-                            ingredientUnit.title,
-                            "g"
-                        )
-                    }
-                    staticDataViewModel.unitML.value = value.find { ingredientUnit ->
-                        StringUtils.equalsIgnoreCase(
-                            ingredientUnit.title,
-                            "ml"
-                        )
-                    }
+                    staticDataViewModel.unitG.value =
+                        value.find { ingredientUnit -> ingredientUnit.position == 1 }
+                    staticDataViewModel.unitML.value =
+                        value.find { ingredientUnit -> ingredientUnit.position == 2 }
                 }
                 setupUnitPicker(null)
             }
@@ -210,7 +201,6 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
     private fun addIngredient() {
         selectedUnit = units[picker_ingredient_unit.value]
-
         selectedQtt =
             if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()) {
                 1.0
@@ -298,20 +288,18 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         tv_ingredient_carbs_recipe_add_ingredients.text = nutritionFacts.carbs.toString()
     }
 
-    //TODO unit fix
     private fun setupUnitPicker(ingredient: Ingredient?) {
         val unitData: Array<String>
         if (ingredient != null) {
-            units = staticDataViewModel.ingredientUnits.value!!
-            units as ArrayList<IngredientUnit>
+            units = (staticDataViewModel.ingredientUnits.value as ArrayList<IngredientUnit>?)!!
             when (val currentUnit = ingredient.unitRatio!!.unit) {
                 staticDataViewModel.unitG.value -> {
-                    (units as ArrayList<IngredientUnit>).remove(currentUnit)
-                    (units as ArrayList<IngredientUnit>)[0] = currentUnit!!
+                    units.remove(currentUnit)
+                    units[0] = currentUnit!!
                 }
                 staticDataViewModel.unitML.value -> {
-                    (units as ArrayList<IngredientUnit>).remove(currentUnit)
-                    (units as ArrayList<IngredientUnit>)[0] = currentUnit!!
+                    units.remove(currentUnit)
+                    units[0] = currentUnit!!
                 }
             }
             unitData = units.map { it.titleMultiply!! }.toTypedArray()

@@ -1,7 +1,7 @@
 package online.fatbook.fatbookapp.ui.listeners
 
-import online.fatbook.fatbookapp.core.recipe.StaticDataObject
+import online.fatbook.fatbookapp.core.recipe.StaticDataBase
 
 interface OnSearchItemClickListener {
-    fun onItemClick(item: StaticDataObject)
+    fun onItemClick(item: StaticDataBase)
 }
