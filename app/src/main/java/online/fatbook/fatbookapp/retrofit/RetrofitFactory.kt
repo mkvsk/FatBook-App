@@ -13,12 +13,11 @@ object RetrofitFactory {
     private const val ADDRESS_IMG_SERVICE = "https://img.fatbook.online/"
 //    private const val ADDRESS_IMG_SERVICE = "http://10.0.2.2:8080/"
 
-    // api.fatbook.online
-//    private var TOKEN_API_SERVICE =
-//            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2JpbGV1enZlcjEzMzkiLCJyb2xlcyI6WyJVU0VSIl0sImlzcyI6Imh0dHA6Ly9hcGkuZmF0Ym9vay5vbmxpbmUvYXBpL2xvZ2luIiwiZXhwIjoxNjcwNDMyMTM1fQ.Bd9S0RwtHfyBbKW2LjkjNNNNOkP0tD3HSDtTCa71HT8"
-
 //    expired token:
 //    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2JpbGV1enZlcjEzMzkiLCJyb2xlcyI6WyJVU0VSIl0sImlzcyI6Imh0dHA6Ly9hcGkuZmF0Ym9vay5vbmxpbmUvYXBpL2xvZ2luIiwiZXhwIjoxNjY3ODI4MDY0fQ.u77VB0QZ8n6daBDJDpAkURV5esN4ACLM86yKBR5yYNw"
+
+    // api.fatbook.online
+//    private var TOKEN_API_SERVICE = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2JpbGV1enZlcjEzMzkiLCJyb2xlcyI6WyJVU0VSIl0sImlzcyI6Imh0dHA6Ly9hcGkuZmF0Ym9vay5vbmxpbmUvYXBpL2xvZ2luIiwiZXhwIjoxNjcwNDMyMTM1fQ.Bd9S0RwtHfyBbKW2LjkjNNNNOkP0tD3HSDtTCa71HT8"
 
     // localhost
     private var TOKEN_API_SERVICE = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2JpbGV1enZlcjEzMzkiLCJyb2xlcyI6WyJVU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9sb2dpbiIsImV4cCI6MTY3MTYwNTU2OX0.Ff5Mu_vz9dXVPb60WpG2wCU9g68--HiYaX89P224lSo"
