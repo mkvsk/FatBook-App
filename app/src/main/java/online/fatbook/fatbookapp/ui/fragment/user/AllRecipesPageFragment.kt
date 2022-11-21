@@ -29,14 +29,14 @@ class AllRecipesPageFragment : Fragment(), OnRecipeClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val list1 = listOf(
-            Recipe(title = "Мой рецепт", forks = 255),
-            Recipe(title = "Мой рецепт2", forks = 1477, author = "Neshik"),
-            Recipe(
-                title = "Text text text text text text text text",
-                forks = 1234567,
-                author = "Timofey"
-            ),
+//        val list1 = listOf(
+//            Recipe(title = "Мой рецепт", forks = 255),
+//            Recipe(title = "Мой рецепт2", forks = 1477, author = "Neshik"),
+//            Recipe(
+//                title = "Text text text text text text text text",
+//                forks = 1234567,
+//                author = "Timofey"
+//            ),
 //            Recipe(title = "Мой рецепт4"),
 //            Recipe(title = "sobaka5"),
 //            Recipe(title = "sobaka6"),
@@ -44,12 +44,12 @@ class AllRecipesPageFragment : Fragment(), OnRecipeClickListener {
 //            Recipe(title = "sobaka8", forks = 1339),
 //            Recipe(title = "sobaka9"),
 //            Recipe(title = "sobaka10")
-        )
+//        )
 
-        adapter = RecipeAdapter()
-        adapter!!.setData(list1, User())
-        adapter!!.setClickListener(this)
-        rv_all_recipes_page.adapter = adapter
+//        adapter = RecipeAdapter()
+//        adapter!!.setData(list1, User())
+//        adapter!!.setClickListener(this)
+//        rv_all_recipes_page.adapter = adapter
     }
 
     override fun onRecipeClick(position: Int) {

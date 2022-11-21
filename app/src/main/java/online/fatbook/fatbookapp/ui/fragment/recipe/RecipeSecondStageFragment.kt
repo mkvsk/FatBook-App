@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_recipe_second_stage.*
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingStep
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeSecondStageBinding
 import online.fatbook.fatbookapp.ui.adapters.CookingStepAdapter
 import online.fatbook.fatbookapp.ui.adapters.RecipeIngredientAdapter
@@ -21,6 +23,7 @@ import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeIngredientItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 
@@ -31,6 +34,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
 
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
+    private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
     private var ingredientsAdapter: RecipeIngredientAdapter? = null
     private var cookingStepsAdapter: CookingStepAdapter? = null
@@ -103,17 +107,37 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
         }
     }
 
+    //TODO fill:
+    /**
+     * author
+     * create date
+     * carbs/portion
+     * fats/portion
+     * kcal/portion
+     * proteins/portion
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_create_second_stage_save_recipe -> {
-                checkRecipe()
+                recipeViewModel.newRecipe.value!!.author = userViewModel.user.value!!.username
+                recipeViewModel.newRecipe.value!!.kcalPerPortion
+                saveRecipe()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun checkRecipe() {
+    private fun saveRecipe() {
+        recipeViewModel.recipeCreate(recipeViewModel.newRecipe.value, object : ResultCallback<Recipe> {
+            override fun onResult(value: Recipe?) {
+                Log.d(TAG, "onResult: $value")
+            }
+
+            override fun onFailure(value: Recipe?) {
+                Log.d(TAG, "onFailure: $value")
+            }
+        })
         Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "${recipeViewModel.newRecipe.value}")
         Log.d(TAG, "${recipeViewModel.newRecipeStepImages.value}")

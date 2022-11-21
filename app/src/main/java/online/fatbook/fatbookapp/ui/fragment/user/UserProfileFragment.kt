@@ -121,12 +121,10 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
 
     private fun loadUserData() {
         if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
-            setupMenu(R.menu.user_profile_current_menu)
             toolbar_userprofile.title = userViewModel.user.value!!.username
             setupViewForLoggedInUser()
         } else {
             toolbar_userprofile.title = userViewModel.selectedUsername.value!!
-            setupMenu(R.menu.user_profile_other_menu)
             setupViewForSelectedUser()
         }
     }
@@ -292,6 +290,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
                 imageview_ic_expand.visibility = View.VISIBLE
             }
         }
+        if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
+            setupMenu(R.menu.user_profile_current_menu)
+        } else {
+            setupMenu(R.menu.user_profile_other_menu)
+        }
         progress_overlay.visibility = View.GONE
         swipe_refresh_user_profile.isRefreshing = false
     }
@@ -299,12 +302,14 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
     private fun loadUser(username: String, updateCurrentUser: Boolean) {
         userViewModel.getUserByUsername(username, object : ResultCallback<User> {
             override fun onResult(value: User?) {
-                value?.let {
+                if (value == null) {
+                    loadUser(username, updateCurrentUser)
+                } else {
                     if (updateCurrentUser) {
-                        userViewModel.user.value = it
+                        userViewModel.user.value = value
                         drawData(userViewModel.user.value!!)
                     } else {
-                        userViewModel.selectedUser.value = it
+                        userViewModel.selectedUser.value = value
                         drawData(userViewModel.selectedUser.value!!)
                     }
                 }

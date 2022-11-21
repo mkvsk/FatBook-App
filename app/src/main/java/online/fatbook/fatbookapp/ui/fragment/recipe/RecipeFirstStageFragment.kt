@@ -67,6 +67,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener, Ba
         return binding!!.root
     }
 
+    //TODO remove all drawing logic after static data loaded
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("===t=======RecipeCreateFirstStageFragment==========", "onViewCreated")

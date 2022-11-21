@@ -29,22 +29,22 @@ class FavouritesRecipesPageFragment : Fragment(), OnRecipeClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val list2 = listOf(
-            Recipe(title = "kot1"),
-            Recipe(title = "kot2"),
-            Recipe(title = "kot3"),
-            Recipe(title = "kot4"),
-            Recipe(title = "kot5"),
-            Recipe(title = "kot6"),
-            Recipe(title = "kot7"),
-            Recipe(title = "kot8"),
-            Recipe(title = "kot9")
-        )
-
-        adapter = RecipeAdapter()
-        adapter!!.setData(list2, User())
-        adapter!!.setClickListener(this)
-        rv_favourites_recipes_page.adapter = adapter
+//        val list2 = listOf(
+//            Recipe(title = "kot1"),
+//            Recipe(title = "kot2"),
+//            Recipe(title = "kot3"),
+//            Recipe(title = "kot4"),
+//            Recipe(title = "kot5"),
+//            Recipe(title = "kot6"),
+//            Recipe(title = "kot7"),
+//            Recipe(title = "kot8"),
+//            Recipe(title = "kot9")
+//        )
+//
+//        adapter = RecipeAdapter()
+//        adapter!!.setData(list2, User())
+//        adapter!!.setClickListener(this)
+//        rv_favourites_recipes_page.adapter = adapter
     }
 
     override fun onRecipeClick(position: Int) {

@@ -150,17 +150,17 @@ class RecipeViewFragment : Fragment() {
     }
 
     private fun loadData(id: Long) {
-        val recipe: Recipe = Recipe(
-            pid = 1235L,
-            title = "Kartoshechka",
-            author = "Neshik",
-            ingredients = ArrayList(),
-            image = "https://fatbook.b-cdn.net/root/upal.jpg",
-            forks = 123456789,
-            createDate = "10.09.2022", identifier = id
-        )
+//        val recipe: Recipe = Recipe(
+//            pid = 1235L,
+//            title = "Kartoshechka",
+//            author = "Neshik",
+//            ingredients = ArrayList(),
+//            image = "https://fatbook.b-cdn.net/root/upal.jpg",
+//            forks = 123456789,
+//            createDate = "10.09.2022", identifier = id
+//        )
 
-        recipeViewModel.selectedRecipe.value = recipe
+//        recipeViewModel.selectedRecipe.value = recipe
 
     }
 

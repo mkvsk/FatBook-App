@@ -210,6 +210,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onPause() {
         super.onPause()
         Log.d("MAINACTIVITY", "onPause: state saved $backStack")
+        sharedPreferences.edit().putString(SP_TAG_BACK_STACK, backStack.toString()).apply()
     }
 
     override fun onStop() {
@@ -220,6 +221,5 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onDestroy() {
         super.onDestroy()
         Log.d("MAINACTIVITY", "onDestroy: state saved $backStack")
-        sharedPreferences.edit().putString(SP_TAG_BACK_STACK, backStack.toString()).apply()
     }
 }

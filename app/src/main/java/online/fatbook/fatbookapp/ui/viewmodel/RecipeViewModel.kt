@@ -2,12 +2,18 @@ package online.fatbook.fatbookapp.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
+import online.fatbook.fatbookapp.repository.ImageServiceRepository
+import online.fatbook.fatbookapp.repository.RecipeRepository
 import java.io.File
 
 class RecipeViewModel : ViewModel() {
+
+    private val repository by lazy { RecipeRepository() }
+
     var recipe = MutableLiveData<Recipe?>()
     var selectedRecipeIngredients = MutableLiveData<MutableList<RecipeIngredient?>>()
     var selectedRecipeIngredient = MutableLiveData<RecipeIngredient>()
@@ -34,4 +40,16 @@ class RecipeViewModel : ViewModel() {
 
     var selectedCookingStep = MutableLiveData<CookingStep?>()
     var selectedCookingStepPosition = MutableLiveData<Int?>()
+
+    fun recipeCreate(recipe: Recipe?, callback: ResultCallback<Recipe>) {
+        repository.recipeCreate(recipe, object : ResultCallback<Recipe> {
+            override fun onResult(value: Recipe?) {
+                callback.onResult(value)
+            }
+
+            override fun onFailure(value: Recipe?) {
+                callback.onFailure(value)
+            }
+        })
+    }
 }
