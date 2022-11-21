@@ -63,9 +63,8 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
                 .navigate(R.id.action_go_to_app_settings_from_user_profile)
         } else {
             progress_overlay.visibility = View.VISIBLE
-
+            toolbar_userprofile.visibility = View.GONE
             loadUserData()
-
             val fragmentAdapter = UserProfileRecipesAdapter(this)
             viewPager = vp_userprofile
             viewPager.isUserInputEnabled = false
@@ -296,6 +295,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
             setupMenu(R.menu.user_profile_other_menu)
         }
         progress_overlay.visibility = View.GONE
+        toolbar_userprofile.visibility = View.VISIBLE
         swipe_refresh_user_profile.isRefreshing = false
     }
 

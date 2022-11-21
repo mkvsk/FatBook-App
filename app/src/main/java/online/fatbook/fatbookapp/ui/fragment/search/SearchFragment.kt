@@ -54,6 +54,7 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
         super.onViewCreated(view, savedInstanceState)
         Log.d("===t=======SearchFragment==========", "onViewCreated")
         progress_overlay.visibility = View.VISIBLE
+        toolbar_search.visibility = View.GONE
 
         if (searchViewModel.categories.value.isNullOrEmpty()) {
             searchViewModel.categories.value = ArrayList()
@@ -101,6 +102,7 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
 
     private fun checkStaticDataLoaded() {
         if (!staticDataViewModel.cookingMethods.value.isNullOrEmpty() && !staticDataViewModel.cookingCategories.value.isNullOrEmpty() && !staticDataViewModel.cookingDifficulties.value.isNullOrEmpty()) {
+            toolbar_search.visibility = View.VISIBLE
             progress_overlay.visibility = View.GONE
         }
     }

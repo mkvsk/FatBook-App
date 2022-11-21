@@ -60,6 +60,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         Log.d("===t=======FeedFragment==========", "onViewCreated")
         setupSwipeRefresh()
         setupMenu()
+        progress_overlay.visibility = View.VISIBLE
+        toolbar_feed.visibility = View.GONE
         if (!authViewModel.isUserAuthenticated.value!!) {
             login()
         } else if (userViewModel.user.value == null) {
@@ -84,7 +86,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun login() {
-        progress_overlay.visibility = View.VISIBLE
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("username", authViewModel.username.value!!)
             .addFormDataPart("password", authViewModel.password.value!!).build()
@@ -119,6 +120,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             object : ResultCallback<User> {
                 override fun onResult(value: User?) {
                     userViewModel.user.value = value
+                    toolbar_feed.visibility = View.VISIBLE
                     progress_overlay.visibility = View.GONE
                     swipe_refresh_feed.isEnabled = true
 //                    loadFeed()
