@@ -55,7 +55,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentFeedBinding.inflate(inflater, container, false)
-        super.onCreate(savedInstanceState)
         return binding!!.root
     }
 
@@ -81,7 +80,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         } else if (userViewModel.user.value == null) {
             loadUserInfo()
         } else {
-//            swipe_refresh_feed.isEnabled = true
+            swipe_refresh_feed.isEnabled = true
         }
     }
 
@@ -122,7 +121,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                         userViewModel.user.value = value
                         toolbar_feed.visibility = View.VISIBLE
                         progress_overlay.visibility = View.GONE
-//                        swipe_refresh_feed.isEnabled = true
+                        swipe_refresh_feed.isEnabled = true
                         loadFeed()
                     }
 
@@ -133,7 +132,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun setupSwipeRefresh() {
-//        swipe_refresh_feed.isEnabled = false
+        swipe_refresh_feed.isEnabled = false
         swipe_refresh_feed.isRefreshing = false
         swipe_refresh_feed.setColorSchemeColors(
                 ContextCompat.getColor(

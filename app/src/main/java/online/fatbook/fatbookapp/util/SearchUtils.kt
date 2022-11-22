@@ -6,6 +6,7 @@ import java.util.*
 
 object SearchUtils {
 
+    //TODO fix this hueta
     private fun getLocale(): Map<Locale, StaticDataLocalized> {
         val result: EnumMap<Locale, StaticDataLocalized> =
             EnumMap(Locale::class.java)
