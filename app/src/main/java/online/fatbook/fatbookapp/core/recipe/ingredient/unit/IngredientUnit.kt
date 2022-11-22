@@ -2,7 +2,6 @@ package online.fatbook.fatbookapp.core.recipe.ingredient.unit
 
 import online.fatbook.fatbookapp.core.recipe.Locale
 import online.fatbook.fatbookapp.util.AppInfo
-import org.apache.commons.lang3.StringUtils
 import java.io.Serializable
 import java.util.*
 
@@ -12,7 +11,7 @@ data class IngredientUnit(
     val locales: Map<Locale, IngredientUnitLocalized> = EnumMap(
         Locale::class.java
     )
-) : Serializable, IngredientUnitBase() {
+) : Serializable, IngredientUnitObject() {
 
     override val title: String?
         get() = when (AppInfo.locale.language) {

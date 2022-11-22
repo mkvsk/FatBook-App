@@ -1,14 +1,13 @@
 package online.fatbook.fatbookapp.core.recipe
 
 import online.fatbook.fatbookapp.util.AppInfo
-import org.apache.commons.lang3.StringUtils
 import java.io.Serializable
 import java.util.*
 
 data class CookingCategory(
         val pid: Long? = null,
         val locales: Map<Locale, StaticDataLocalized> = EnumMap(Locale::class.java)
-) : Serializable, StaticDataBase() {
+) : Serializable, StaticDataObject() {
 
     override val title: String?
         get() = when (AppInfo.locale.language) {

@@ -10,7 +10,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.StaticDataBase
+import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.databinding.FragmentRecipeMethodsCategoriesBinding
 import online.fatbook.fatbookapp.ui.adapters.StaticDataAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
@@ -120,7 +120,7 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
         })
     }
 
-    override fun onItemClick(item: StaticDataBase) {
+    override fun onItemClick(item: StaticDataObject) {
         recipeViewModel.newRecipeCookingMethod.value = item as CookingMethod
         recipeViewModel.newRecipe.value!!.cookingMethod =
                 recipeViewModel.newRecipeCookingMethod.value
@@ -130,7 +130,7 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
         NavHostFragment.findNavController(this).popBackStack()
     }
 
-    override fun onItemClickChoose(item: StaticDataBase) {
+    override fun onItemClickChoose(item: StaticDataObject) {
         if (recipeViewModel.newRecipeCookingCategories.value!!.contains(item as CookingCategory)) {
             recipeViewModel.newRecipeCookingCategories.value!!.remove(item)
         } else {

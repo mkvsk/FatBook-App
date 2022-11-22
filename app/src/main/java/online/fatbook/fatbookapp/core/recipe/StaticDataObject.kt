@@ -1,5 +1,5 @@
 package online.fatbook.fatbookapp.core.recipe
 
-open class StaticDataBase {
+open class StaticDataObject {
     open val title: String? = ""
 }

@@ -2,10 +2,9 @@ package online.fatbook.fatbookapp.core.recipe.ingredient
 
 import online.fatbook.fatbookapp.core.recipe.Locale
 import online.fatbook.fatbookapp.core.recipe.StaticDataLocalized
-import online.fatbook.fatbookapp.core.recipe.StaticDataBase
+import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnitRatio
 import online.fatbook.fatbookapp.util.AppInfo
-import org.apache.commons.lang3.StringUtils
 import java.io.Serializable
 import java.util.*
 
@@ -13,7 +12,7 @@ data class Ingredient(
     val pid: Long? = null,
     val unitRatio: IngredientUnitRatio? = null,
     val locales: Map<Locale, StaticDataLocalized> = EnumMap(Locale::class.java)
-) : Serializable, StaticDataBase() {
+) : Serializable, StaticDataObject() {
 
     override val title: String?
         get() = when (AppInfo.locale.language) {

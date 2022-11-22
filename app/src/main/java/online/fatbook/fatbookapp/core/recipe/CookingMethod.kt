@@ -7,7 +7,7 @@ import java.util.*
 data class CookingMethod(
         val pid: Long? = null,
         val locales: Map<Locale, StaticDataLocalized> = EnumMap(Locale::class.java)
-) : Serializable, StaticDataBase() {
+) : Serializable, StaticDataObject() {
 
     override val title: String?
         get() = when (AppInfo.locale.language) {
