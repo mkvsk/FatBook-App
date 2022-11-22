@@ -7,7 +7,7 @@
     android:background="@color/theme_primary_bgr"
     tools:context="online.fatbook.fatbookapp.ui.fragment.feed.FeedFragment">
 
-    <include layout="@layout/include_progress_overlay"/>
+    <include layout="@layout/include_progress_overlay" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_feed"
@@ -15,36 +15,36 @@
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
-        <androidx.appcompat.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar_feed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/theme_toolbar_color"
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:menu="@menu/feed_overflow_menu"
-            app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:title="@string/app_name"
-            app:titleTextColor="@color/main_text"
-            app:titleTextAppearance="@style/txtToolbar" />
+            local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            local:title="@string/app_name"
+            local:titleTextAppearance="@style/txtToolbar"
+            local:titleTextColor="@color/main_text" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_feed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipe_refresh_feed"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_feed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:paddingTop="5dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
+            android:paddingTop="5dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/rv_feed_recipe_card_preview" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -1,6 +1,6 @@
 package online.fatbook.fatbookapp.core.recipe
 
-enum class StaticDataLocale {
+enum class Locale {
     RU,
     ENG
 }

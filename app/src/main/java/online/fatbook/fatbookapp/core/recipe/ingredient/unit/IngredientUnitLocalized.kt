@@ -1,11 +1,11 @@
 package online.fatbook.fatbookapp.core.recipe.ingredient.unit
 
-import online.fatbook.fatbookapp.core.recipe.StaticDataLocale
+import online.fatbook.fatbookapp.core.recipe.Locale
 
 data class IngredientUnitLocalized(
-    var locale: StaticDataLocale = StaticDataLocale.ENG,
-    var title: String? = "",
-    val titleSingle: String? = "",
-    val titleMultiply: String? = ""
+        var locale: Locale = Locale.ENG,
+        var title: String? = "",
+        val titleSingle: String? = "",
+        val titleMultiply: String? = ""
 )
 

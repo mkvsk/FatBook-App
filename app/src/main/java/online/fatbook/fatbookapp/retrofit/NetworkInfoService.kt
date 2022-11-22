@@ -6,14 +6,12 @@ import online.fatbook.fatbookapp.core.DeleteRequest
 import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
 import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
 import online.fatbook.fatbookapp.core.authentication.LoginResponse
-import online.fatbook.fatbookapp.core.recipe.CookingCategory
-import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
-import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnit
 import online.fatbook.fatbookapp.core.user.User
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.*
 
 interface NetworkInfoService {
@@ -82,6 +80,12 @@ interface NetworkInfoService {
     @POST("delete")
     fun imgDelete(@Body request: DeleteRequest): Call<Void>
 
+    /**
+     * Feed
+     */
+    @GET("feed")
+    fun feed(@Query(value = "username") username: String?, @Query(value = "pid") pid: Long?): Call<List<RecipeSimpleObject>>
+
 //    ==========================================================================================
 
     @POST("user/create")
@@ -146,12 +150,6 @@ interface NetworkInfoService {
             @Query(value = "dir") dir: String?,
             @Query(value = "id") id: Long?
     ): Call<Recipe>
-
-    /**
-     * Feed
-     */
-    @GET("recipe/feed")
-    fun getFeed(@Query(value = "pid") pid: Long?): Call<ArrayList<Recipe>?>
 
     /**
      * File upload
