@@ -30,6 +30,7 @@ import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
+import kotlin.collections.ArrayList
 
 class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
@@ -295,11 +296,11 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
             when (val currentUnit = ingredient.unitRatio!!.unit) {
                 staticDataViewModel.unitG.value -> {
                     units.remove(currentUnit)
-                    units[0] = currentUnit!!
+                    units.add(0, currentUnit!!)
                 }
                 staticDataViewModel.unitML.value -> {
                     units.remove(currentUnit)
-                    units[0] = currentUnit!!
+                    units.add(0, currentUnit!!)
                 }
             }
             unitData = units.map { it.titleMultiply!! }.toTypedArray()

@@ -40,7 +40,7 @@ data class Recipe(
     val isAllIngredientUnitsValid: Boolean
         get() {
             val tmp = ingredients!!.find {
-                it.unit!!.position != 1 && it.unit!!.position != 2
+                it.ingredient!!.unitRatio!!.unit!!.position != it.unit!!.position
             }
             return tmp == null
         }
