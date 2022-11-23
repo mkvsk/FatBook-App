@@ -86,6 +86,12 @@ interface NetworkInfoService {
     @GET("feed")
     fun feed(@Query(value = "username") username: String?, @Query(value = "pid") pid: Long?): Call<List<RecipeSimpleObject>>
 
+    /**
+     * Recipe
+     */
+    @POST("recipe/create")
+    fun recipeCreate(@Body recipe: Recipe): Call<Void>
+
 //    ==========================================================================================
 
     @POST("user/create")
@@ -117,11 +123,7 @@ interface NetworkInfoService {
     @GET("ingredient/get/all")
     fun allIngredients(): Call<List<Ingredient>>
 
-    /**
-     * Recipe
-     */
-    @POST("recipe/create")
-    fun recipeCreate(@Body recipe: Recipe?): Call<Void>
+
 
     @POST("recipe/update")
     fun recipeUpdate(@Body recipe: Recipe?): Call<Recipe>

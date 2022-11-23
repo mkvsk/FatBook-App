@@ -108,24 +108,24 @@ class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
     }
 
     private fun save() {
-        RetrofitFactory.apiService().recipeCreate(recipe).enqueue(object : Callback<Recipe?> {
-            override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
-                if (response.code() == 200) {
-//                    RecipeCreateFragment.log.log(Level.INFO, "recipe create SUCCESS")
-                    recipe = response.body()
-                    uploadImage()
-                } else {
-//                    RecipeCreateFragment.log.log(
-//                        Level.INFO,
-//                        "recipe create FAILED " + response.code()
-//                    )
-                }
-            }
-
-            override fun onFailure(call: Call<Recipe?>, t: Throwable) {
-//                RecipeCreateFragment.log.log(Level.INFO, "recipe create FAILED")
-            }
-        })
+//        RetrofitFactory.apiService().recipeCreate(recipe).enqueue(object : Callback<Recipe?> {
+//            override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
+//                if (response.code() == 200) {
+////                    RecipeCreateFragment.log.log(Level.INFO, "recipe create SUCCESS")
+//                    recipe = response.body()
+//                    uploadImage()
+//                } else {
+////                    RecipeCreateFragment.log.log(
+////                        Level.INFO,
+////                        "recipe create FAILED " + response.code()
+////                    )
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<Recipe?>, t: Throwable) {
+////                RecipeCreateFragment.log.log(Level.INFO, "recipe create FAILED")
+//            }
+//        })
     }
 
     private fun uploadImage() {

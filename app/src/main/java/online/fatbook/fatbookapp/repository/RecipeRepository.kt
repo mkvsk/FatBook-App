@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.repository
 
 import android.util.Log
 import androidx.annotation.RestrictTo
+import com.google.firebase.installations.remote.TokenResult.ResponseCode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,14 +23,14 @@ class RecipeRepository {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
-    fun recipeCreate(recipe: Recipe?, callback: ResultCallback<Void>) {
+    fun recipeCreate(recipe: Recipe, callback: ResultCallback<Void>) {
         scope.launch(Dispatchers.IO) {
             val call = RetrofitFactory.apiService().recipeCreate(recipe)
 
             call.enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     Log.d("RECIPE CREATE", response.body().toString())
-                    if (response.body() == null) {
+                    if (response.code() != 200) {
                         callback.onFailure(null)
                     } else {
                         callback.onResult(response.body())
