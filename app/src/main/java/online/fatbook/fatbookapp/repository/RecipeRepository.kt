@@ -22,12 +22,12 @@ class RecipeRepository {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
-    fun recipeCreate(recipe: Recipe?, callback: ResultCallback<Recipe>) {
+    fun recipeCreate(recipe: Recipe?, callback: ResultCallback<Void>) {
         scope.launch(Dispatchers.IO) {
             val call = RetrofitFactory.apiService().recipeCreate(recipe)
 
-            call.enqueue(object : Callback<Recipe> {
-                override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
+            call.enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     Log.d("RECIPE CREATE", response.body().toString())
                     if (response.body() == null) {
                         callback.onFailure(null)
@@ -36,7 +36,7 @@ class RecipeRepository {
                     }
                 }
 
-                override fun onFailure(call: Call<Recipe>, t: Throwable) {
+                override fun onFailure(call: Call<Void>, t: Throwable) {
                     Log.d("RECIPE CREATE", "error")
                     t.printStackTrace()
                     callback.onFailure(null)

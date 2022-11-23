@@ -75,18 +75,18 @@ class RecipeAdapter :
             itemView.textView_rv_card_recipe_author.text = recipe.author
             val forksAmount = FormatUtils.prettyCount(recipe.forks!!)
             itemView.textView_rv_card_recipe_forks_avg.text = forksAmount
-            toggleForks(
-                itemView.imageView_rv_card_recipe_fork,
-                user.recipesForked!!.contains(recipe.identifier)
-            )
+//            toggleForks(
+//                itemView.imageView_rv_card_recipe_fork,
+//                user.recipesForked!!.contains(recipe.identifier)
+//            )
             if (recipe.author == user.username) {
                 itemView.imageView_rv_card_recipe_favourites.visibility = View.INVISIBLE
             } else {
                 itemView.imageView_rv_card_recipe_favourites.visibility = View.VISIBLE
-                toggleFavourites(
-                    itemView.imageView_rv_card_recipe_favourites,
-                    user.recipesFavourites!!.contains(recipe.identifier)
-                )
+//                toggleFavourites(
+//                    itemView.imageView_rv_card_recipe_favourites,
+//                    user.recipesFavourites!!.contains(recipe.identifier)
+//                )
             }
             if (StringUtils.isNotEmpty(recipe.image)) {
                 Glide

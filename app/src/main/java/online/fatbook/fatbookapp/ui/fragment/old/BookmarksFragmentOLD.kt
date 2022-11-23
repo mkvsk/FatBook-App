@@ -112,7 +112,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
     override fun onBookmarksClick(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {
         recipeList!!.removeAt(position)
         adapter!!.notifyItemRemoved(position)
-        user!!.recipesFavourites!!.remove(recipe!!.identifier)
+//        user!!.recipesFavourites!!.remove(recipe!!.identifier)
         saveUser()
     }
 

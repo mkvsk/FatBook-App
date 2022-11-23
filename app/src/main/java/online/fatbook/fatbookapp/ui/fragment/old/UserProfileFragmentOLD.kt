@@ -392,7 +392,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
 
     override fun onRecipeClick(position: Int) {
         val recipe = user!!.recipes!![position]
-        recipeViewModel!!.selectedRecipe.value = recipe
+//        recipeViewModel!!.selectedRecipe.value = recipe
         recipeViewModel!!.selectedRecipePosition.value = position
         NavHostFragment.findNavController(this)
             .navigate(R.id.action_go_to_recipe_view_from_user_profile_old)

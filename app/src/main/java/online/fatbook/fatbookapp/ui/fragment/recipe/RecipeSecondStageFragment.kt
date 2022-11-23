@@ -140,15 +140,15 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
 
     //TODO remove toast, uncomment popbackstack
     private fun saveRecipe() {
-        recipeViewModel.recipeCreate(recipeViewModel.newRecipe.value, object : ResultCallback<Recipe> {
-            override fun onResult(value: Recipe?) {
+        recipeViewModel.recipeCreate(recipeViewModel.newRecipe.value, object : ResultCallback<Void> {
+            override fun onResult(value: Void?) {
 //                progress_overlay.visibility = View.GONE
 //                toolbar_recipe_create_2_stage.visibility = View.VISIBLE
                 Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
 //                popBackStack()
             }
 
-            override fun onFailure(value: Recipe?) {
+            override fun onFailure(value: Void?) {
                 Toast.makeText(requireContext(), "Error!", Toast.LENGTH_SHORT).show()
             }
         })

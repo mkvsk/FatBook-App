@@ -121,7 +121,7 @@ interface NetworkInfoService {
      * Recipe
      */
     @POST("recipe/create")
-    fun recipeCreate(@Body recipe: Recipe?): Call<Recipe>
+    fun recipeCreate(@Body recipe: Recipe?): Call<Void>
 
     @POST("recipe/update")
     fun recipeUpdate(@Body recipe: Recipe?): Call<Recipe>

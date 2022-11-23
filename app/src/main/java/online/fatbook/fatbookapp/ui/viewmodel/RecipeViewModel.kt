@@ -41,13 +41,13 @@ class RecipeViewModel : ViewModel() {
     var selectedCookingStep = MutableLiveData<CookingStep?>()
     var selectedCookingStepPosition = MutableLiveData<Int?>()
 
-    fun recipeCreate(recipe: Recipe?, callback: ResultCallback<Recipe>) {
-        repository.recipeCreate(recipe, object : ResultCallback<Recipe> {
-            override fun onResult(value: Recipe?) {
+    fun recipeCreate(recipe: Recipe?, callback: ResultCallback<Void>) {
+        repository.recipeCreate(recipe, object : ResultCallback<Void> {
+            override fun onResult(value: Void?) {
                 callback.onResult(value)
             }
 
-            override fun onFailure(value: Recipe?) {
+            override fun onFailure(value: Void?) {
                 callback.onFailure(value)
             }
         })

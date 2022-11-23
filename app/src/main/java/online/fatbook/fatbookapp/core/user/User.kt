@@ -1,10 +1,9 @@
 package online.fatbook.fatbookapp.core.user
 
-import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import java.io.Serializable
 import java.time.Duration
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 data class User(
     var pid: Long? = null,
@@ -17,9 +16,9 @@ data class User(
     var regDate: String? = "",
     var lastAction: String? = "",
     var role: UserRole? = UserRole.USER,
-    var recipes: ArrayList<Recipe>? = ArrayList(),
-    var recipesForked: ArrayList<Long>? = ArrayList(),
-    var recipesFavourites: ArrayList<Long>? = ArrayList(),
+    var recipes: ArrayList<RecipeSimpleObject>? = ArrayList(),
+    var recipesForked: ArrayList<RecipeSimpleObject>? = ArrayList(),
+    var recipesFavourites: ArrayList<RecipeSimpleObject>? = ArrayList(),
     var listFollowing: ArrayList<UserSimpleObject>? = ArrayList(),
     var listFollowers: ArrayList<UserSimpleObject>? = ArrayList(),
     var recipeAmount: Int? = recipes?.size,

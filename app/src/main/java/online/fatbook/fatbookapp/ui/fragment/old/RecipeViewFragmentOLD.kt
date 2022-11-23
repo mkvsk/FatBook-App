@@ -471,9 +471,9 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
         if (recipe!!.author == user!!.username) {
             binding!!.imageViewRecipeViewIconBookmarks.visibility = View.INVISIBLE
         } else {
-            toggleBookmarks(user!!.recipesFavourites!!.contains(recipe!!.identifier))
+//            toggleBookmarks(user!!.recipesFavourites!!.contains(recipe!!.identifier))
         }
-        toggleForks(user!!.recipesForked!!.contains(recipe!!.identifier))
+//        toggleForks(user!!.recipesForked!!.contains(recipe!!.identifier))
     }
 
     private fun setupAdapter() {
