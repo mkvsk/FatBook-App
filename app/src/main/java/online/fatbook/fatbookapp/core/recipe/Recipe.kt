@@ -22,18 +22,18 @@ data class Recipe(
         var comments: ArrayList<RecipeComment>? = ArrayList()
 ) : Serializable {
 
-    val kcalPerPortion: Double?
+    var kcalPerPortion: Double? = 0.0
         get() {
             return if (isAllIngredientUnitsValid) {
                 var tmp = 0.0
                 for (i in ingredients!!) {
                     if (i.unit!!.position == 1 || i.unit!!.position == 2) {
-                        tmp = tmp.plus(i.kcal!!)
+                        tmp = tmp.plus(i.kcal)
                     }
                 }
                 tmp / portions.toString().toDouble()
             } else {
-                null
+                0.0
             }
         }
 
@@ -45,7 +45,7 @@ data class Recipe(
             return tmp == null
         }
 
-    val fatsPerPortion: Double?
+    var fatsPerPortion: Double? = 0.0
         get() {
             return if (isAllIngredientUnitsValid) {
                 var tmp = 0.0
@@ -54,11 +54,11 @@ data class Recipe(
                 }
                 tmp / portions.toString().toDouble()
             } else {
-                null
+                0.0
             }
         }
 
-    val carbsPerPortion: Double?
+    var carbsPerPortion: Double? = 0.0
         get() {
             return if (isAllIngredientUnitsValid) {
                 var tmp = 0.0
@@ -67,11 +67,11 @@ data class Recipe(
                 }
                 tmp / portions.toString().toDouble()
             } else {
-                null
+                0.0
             }
         }
 
-    val proteinsPerPortion: Double?
+    var proteinsPerPortion: Double? = 0.0
         get() {
             return if (isAllIngredientUnitsValid) {
                 var tmp = 0.0
@@ -80,7 +80,7 @@ data class Recipe(
                 }
                 tmp / portions.toString().toDouble()
             } else {
-                null
+                0.0
             }
         }
 }

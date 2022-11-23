@@ -26,6 +26,10 @@ import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.math.roundToInt
 
 class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListener,
         OnCookingStepClickListener {
@@ -107,24 +111,25 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
         }
     }
 
-    //TODO fill:
-    /**
-     * author
-     * create date
-     * carbs/portion
-     * fats/portion
-     * kcal/portion
-     * proteins/portion
-     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_create_second_stage_save_recipe -> {
-                recipeViewModel.newRecipe.value!!.author = userViewModel.user.value!!.username
-                recipeViewModel.newRecipe.value!!.kcalPerPortion
+                fillRecipe()
                 saveRecipe()
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun fillRecipe() {
+        recipeViewModel.newRecipe.value!!.author = userViewModel.user.value!!.username
+        recipeViewModel.newRecipe.value!!.createDate = FormatUtils.dateFormat.format(Date())
+        with(recipeViewModel.newRecipe.value!!) {
+            kcalPerPortion = (kcalPerPortion!! * 100.0).roundToInt() / 100.0
+            fatsPerPortion = (fatsPerPortion!! * 100.0).roundToInt() / 100.0
+            carbsPerPortion = (carbsPerPortion!! * 100.0).roundToInt() / 100.0
+            proteinsPerPortion = (proteinsPerPortion!! * 100.0).roundToInt() / 100.0
         }
     }
 
