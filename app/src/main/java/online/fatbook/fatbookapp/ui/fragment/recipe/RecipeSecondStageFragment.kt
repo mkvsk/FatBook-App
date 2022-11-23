@@ -116,8 +116,8 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_create_second_stage_save_recipe -> {
-                progress_overlay.visibility = View.VISIBLE
-                toolbar_recipe_create_2_stage.visibility = View.GONE
+//                progress_overlay.visibility = View.VISIBLE
+//                toolbar_recipe_create_2_stage.visibility = View.GONE
                 fillRecipe()
                 saveRecipe()
                 true
@@ -129,6 +129,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     private fun fillRecipe() {
         recipeViewModel.newRecipe.value!!.author = userViewModel.user.value!!.username
         recipeViewModel.newRecipe.value!!.createDate = FormatUtils.dateFormat.format(Date())
+        Log.d(TAG, "fillRecipe: ${FormatUtils.dateFormat.format(Date())}")
         with(recipeViewModel.newRecipe.value!!) {
             kcalPerPortion = (kcalPerPortion!! * 100.0).roundToInt() / 100.0
             fatsPerPortion = (fatsPerPortion!! * 100.0).roundToInt() / 100.0
@@ -141,14 +142,14 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     private fun saveRecipe() {
         recipeViewModel.recipeCreate(recipeViewModel.newRecipe.value, object : ResultCallback<Recipe> {
             override fun onResult(value: Recipe?) {
-                progress_overlay.visibility = View.GONE
-                toolbar_recipe_create_2_stage.visibility = View.VISIBLE
+//                progress_overlay.visibility = View.GONE
+//                toolbar_recipe_create_2_stage.visibility = View.VISIBLE
                 Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
-                popBackStack()
+//                popBackStack()
             }
 
             override fun onFailure(value: Recipe?) {
-                saveRecipe()
+                Toast.makeText(requireContext(), "Error!", Toast.LENGTH_SHORT).show()
             }
         })
     }

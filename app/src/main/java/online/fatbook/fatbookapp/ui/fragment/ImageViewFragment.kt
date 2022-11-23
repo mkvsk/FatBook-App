@@ -43,7 +43,7 @@ class ImageViewFragment : Fragment() {
         setupMenu()
 
         imageview_full_image.setOnDoubleTapListener(object : OnDoubleTapListener {
-            override fun onSingleTapConfirmed(p0: MotionEvent?): Boolean {
+            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
                 if (toolbarIsVisible) {
                     appBarLayout_image_view.animate().alpha(0.0f).duration = 100
                     toolbarIsVisible = false
@@ -54,11 +54,11 @@ class ImageViewFragment : Fragment() {
                 return true
             }
 
-            override fun onDoubleTap(p0: MotionEvent?): Boolean {
+            override fun onDoubleTap(e: MotionEvent): Boolean {
                 return true
             }
 
-            override fun onDoubleTapEvent(p0: MotionEvent?): Boolean {
+            override fun onDoubleTapEvent(e: MotionEvent): Boolean {
                 return true
             }
         })

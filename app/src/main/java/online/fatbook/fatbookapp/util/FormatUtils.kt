@@ -9,8 +9,8 @@ import kotlin.math.pow
 
 object FormatUtils {
 
-    var dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
-    var timeFormat = SimpleDateFormat("HH:mm", Locale.US)
+    var dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
+    var timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
 
     fun prettyCount(number: Int): String {
         val suffix = charArrayOf(' ', 'k', 'M', 'B', 'T', 'P', 'E')
