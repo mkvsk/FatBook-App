@@ -180,7 +180,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         feedViewModel.feed(userViewModel.user.value!!.username!!, 0L, object : ResultCallback<List<RecipeSimpleObject>> {
             override fun onResult(value: List<RecipeSimpleObject>?) {
                 swipe_refresh_feed.isRefreshing = false
-                adapter!!.setData(value, userViewModel.user.value)
+                feedViewModel.recipes.value = value
+                adapter!!.setData(feedViewModel.recipes.value, userViewModel.user.value)
             }
 
             override fun onFailure(value: List<RecipeSimpleObject>?) {
@@ -200,10 +201,11 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onRecipeClick(position: Int) {
-        val recipe = userViewModel.feedRecipeList.value!![position]
-        recipeViewModel.selectedRecipe.value = recipe
-        recipeViewModel.selectedRecipePosition.value = position
-        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_recipe_view_from_feed)
+        Toast.makeText(requireContext(), "clicked $position", Toast.LENGTH_SHORT).show()
+//        val recipe = userViewModel.feedRecipeList.value!![position]
+//        recipeViewModel.selectedRecipe.value = recipe
+//        recipeViewModel.selectedRecipePosition.value = position
+//        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_recipe_view_from_feed)
     }
 
     override fun onBookmarksClick(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {

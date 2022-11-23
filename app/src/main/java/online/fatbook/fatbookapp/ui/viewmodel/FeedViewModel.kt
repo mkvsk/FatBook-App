@@ -13,7 +13,7 @@ class FeedViewModel : ViewModel() {
 
     private val repository by lazy { FeedRepository() }
 
-    private val recipes = MutableLiveData<List<RecipeSimpleObject>>()
+    val recipes = MutableLiveData<List<RecipeSimpleObject>>()
 
     fun feed(username: String, pid: Long, callback: ResultCallback<List<RecipeSimpleObject>>) {
         repository.feed(username, pid, object : ResultCallback<List<RecipeSimpleObject>> {

@@ -96,6 +96,14 @@ class RecipeAdapter :
             } else {
                 itemView.imageView_rv_card_recipe_photo.setImageResource(R.drawable.default_recipe_image_rv_feed)
             }
+            if (StringUtils.isNotEmpty(user.profileImage)) {
+                Glide
+                        .with(itemView.context)
+                        .load(user.profileImage)
+                        .into(itemView.imageview_author_photo_rv_recipe_preview)
+            } else {
+                itemView.imageview_author_photo_rv_recipe_preview.setImageResource(R.drawable.ic_default_userphoto)
+            }
 
             itemView.rv_card_recipe_preview.setOnClickListener {
                 listener!!.onRecipeClick(adapterPosition)
