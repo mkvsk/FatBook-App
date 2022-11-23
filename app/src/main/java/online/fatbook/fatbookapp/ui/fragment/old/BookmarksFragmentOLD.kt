@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentBookmarksOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
@@ -57,7 +58,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
                 loadRecipes()
             }
         }
-        setupAdapter()
+//        setupAdapter()
     }
 
     private fun loadRecipes() {
@@ -74,7 +75,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
 //                            BookmarksFragment.log.log(Level.INFO, response.body().toString())
                         }
                         recipeList = response.body()
-                        adapter!!.setData(recipeList, user)
+                        adapter!!.setData(java.util.ArrayList(), user)
                         adapter!!.notifyDataSetChanged()
                     } else {
 //                        BookmarksFragment.log.log(Level.INFO, "bookmarks load FAILED")
@@ -88,12 +89,12 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
             })
     }
 
-    private fun setupAdapter() {
-        val recyclerView = binding!!.rvBookmarks
-        adapter = RecipeAdapter()
-        adapter!!.setData(recipeList, user)
-        recyclerView.adapter = adapter
-    }
+//    private fun setupAdapter() {
+//        val recyclerView = binding!!.rvBookmarks
+//        adapter = RecipeAdapter()
+//        adapter!!.setData(recipeList, user)
+//        recyclerView.adapter = adapter
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -108,7 +109,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
             .navigate(R.id.action_go_to_recipe_view_from_bookmarks_old)
     }
 
-    override fun onBookmarksClick(recipe: Recipe?, bookmark: Boolean, position: Int) {
+    override fun onBookmarksClick(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {
         recipeList!!.removeAt(position)
         adapter!!.notifyItemRemoved(position)
         user!!.recipesFavourites!!.remove(recipe!!.identifier)
@@ -136,11 +137,11 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
         })
     }
 
-    override fun onForkClicked(recipe: Recipe?, fork: Boolean, position: Int) {
+    override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
         recipeForked(recipe, fork, position)
     }
 
-    private fun recipeForked(recipe: Recipe?, fork: Boolean, position: Int) {
+    private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
         RetrofitFactory.apiService().recipeForked(user!!.pid, recipe!!.pid, fork)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {

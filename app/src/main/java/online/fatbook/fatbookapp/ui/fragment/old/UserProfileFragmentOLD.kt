@@ -26,6 +26,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
@@ -171,7 +172,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
     private fun setupAdapter() {
         val recyclerView = binding!!.rvUserRecipe
         adapter = RecipeAdapter()
-        adapter!!.setData(user!!.recipes, user)
+//        adapter!!.setData(user!!.recipes, user)
         recyclerView.adapter = adapter
     }
 
@@ -179,7 +180,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
         binding!!.toolbarUserProfile.title = user!!.username
         binding!!.editTextProfileName.setText(user!!.title)
         binding!!.editTextProfileBio.setText(user!!.bio)
-        adapter!!.setData(user!!.recipes, user)
+//        adapter!!.setData(user!!.recipes, user)
         adapter!!.notifyDataSetChanged()
     }
 
@@ -397,15 +398,15 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
             .navigate(R.id.action_go_to_recipe_view_from_user_profile_old)
     }
 
-    override fun onBookmarksClick(recipe: Recipe?, add: Boolean, adapterPosition: Int) {
+    override fun onBookmarksClick(recipe: RecipeSimpleObject?, add: Boolean, adapterPosition: Int) {
         println("Stub!")
     }
 
-    override fun onForkClicked(recipe: Recipe?, fork: Boolean, position: Int) {
+    override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
         recipeForked(recipe, fork, position)
     }
 
-    private fun recipeForked(recipe: Recipe?, fork: Boolean, position: Int) {
+    private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
         RetrofitFactory.apiService().recipeForked(user!!.pid, recipe!!.pid, fork)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {

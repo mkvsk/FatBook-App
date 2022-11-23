@@ -7,16 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_all_recipes_page.*
-import online.fatbook.fatbookapp.core.recipe.Recipe
-import online.fatbook.fatbookapp.core.user.User
+import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.databinding.FragmentAllRecipesPageBinding
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
+import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.obtainViewModel
 
-class AllRecipesPageFragment : Fragment(), OnRecipeClickListener {
+class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
 
     private var binding: FragmentAllRecipesPageBinding? = null
     private var adapter: RecipeAdapter? = null
+
+    private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
+
+    companion object {
+        private const val TAG = "UserRecipesPageFragment"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,25 +36,8 @@ class AllRecipesPageFragment : Fragment(), OnRecipeClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val list1 = listOf(
-//            Recipe(title = "Мой рецепт", forks = 255),
-//            Recipe(title = "Мой рецепт2", forks = 1477, author = "Neshik"),
-//            Recipe(
-//                title = "Text text text text text text text text",
-//                forks = 1234567,
-//                author = "Timofey"
-//            ),
-//            Recipe(title = "Мой рецепт4"),
-//            Recipe(title = "sobaka5"),
-//            Recipe(title = "sobaka6"),
-//            Recipe(title = "sobaka7"),
-//            Recipe(title = "sobaka8", forks = 1339),
-//            Recipe(title = "sobaka9"),
-//            Recipe(title = "sobaka10")
-//        )
-
 //        adapter = RecipeAdapter()
-//        adapter!!.setData(list1, User())
+//        adapter!!.setData(, userViewModel.user.value)
 //        adapter!!.setClickListener(this)
 //        rv_all_recipes_page.adapter = adapter
     }
@@ -56,11 +46,11 @@ class AllRecipesPageFragment : Fragment(), OnRecipeClickListener {
         Log.d("recipe click", position.toString())
     }
 
-    override fun onBookmarksClick(recipe: Recipe?, bookmark: Boolean, position: Int) {
+    override fun onBookmarksClick(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {
         Log.d("bookmark click", position.toString())
     }
 
-    override fun onForkClicked(recipe: Recipe?, fork: Boolean, position: Int) {
+    override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
         Log.d("fork click", position.toString())
     }
 

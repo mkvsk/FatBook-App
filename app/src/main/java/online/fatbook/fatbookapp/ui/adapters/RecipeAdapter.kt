@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.util.FormatUtils
@@ -19,9 +19,9 @@ import org.apache.commons.lang3.StringUtils
 
 @Log
 class RecipeAdapter :
-    RecyclerView.Adapter<RecipeAdapter.ViewHolder>(), BindableAdapter<Recipe> {
+    RecyclerView.Adapter<RecipeAdapter.ViewHolder>(), BindableAdapter<RecipeSimpleObject> {
 
-    private var data: List<Recipe> = ArrayList()
+    private var data: List<RecipeSimpleObject> = ArrayList()
     private var user: User = User()
     private var listener: OnRecipeClickListener? = null
 
@@ -50,7 +50,7 @@ class RecipeAdapter :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<Recipe>?) {
+    override fun setData(data: List<RecipeSimpleObject>?) {
         data?.let {
             this.data = it
             notifyDataSetChanged()
@@ -58,7 +58,7 @@ class RecipeAdapter :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<Recipe>?, user: User?) {
+    override fun setData(data: List<RecipeSimpleObject>?, user: User?) {
         data?.let {
             this.data = it
         }
@@ -69,7 +69,7 @@ class RecipeAdapter :
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(recipe: Recipe) {
+        fun bind(recipe: RecipeSimpleObject) {
 
             itemView.textView_rv_card_recipe_title.text = recipe.title
             itemView.textView_rv_card_recipe_author.text = recipe.author
