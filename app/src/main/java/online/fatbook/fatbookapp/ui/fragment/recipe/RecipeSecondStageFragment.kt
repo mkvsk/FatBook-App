@@ -12,6 +12,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_recipe_second_stage.*
+import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingStep
@@ -111,9 +112,12 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
         }
     }
 
+    //TODO recipe create images
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_create_second_stage_save_recipe -> {
+                progress_overlay.visibility = View.VISIBLE
+                toolbar_recipe_create_2_stage.visibility = View.GONE
                 fillRecipe()
                 saveRecipe()
                 true
@@ -133,19 +137,20 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
         }
     }
 
+    //TODO remove toast, uncomment popbackstack
     private fun saveRecipe() {
         recipeViewModel.recipeCreate(recipeViewModel.newRecipe.value, object : ResultCallback<Recipe> {
             override fun onResult(value: Recipe?) {
-                Log.d(TAG, "onResult: $value")
+                progress_overlay.visibility = View.GONE
+                toolbar_recipe_create_2_stage.visibility = View.VISIBLE
+                Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
+                popBackStack()
             }
 
             override fun onFailure(value: Recipe?) {
-                Log.d(TAG, "onFailure: $value")
+                saveRecipe()
             }
         })
-        Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
-        Log.d(TAG, "${recipeViewModel.newRecipe.value}")
-        Log.d(TAG, "${recipeViewModel.newRecipeStepImages.value}")
     }
 
     private fun checkIngredientsQtt(currentIngredientsQtt: Int) {
