@@ -174,7 +174,7 @@ class RecipeCookingStepFragment : Fragment() {
             image = null
             toggleImageButtons(false)
             Glide.with(requireContext())
-                    .load(R.drawable.ic_default_recipe_image)
+                    .load(R.drawable.default_recipe_image_recipe_create_second_stage)
                     .into(imageview_step)
         }
         chooseImageFromGallery =

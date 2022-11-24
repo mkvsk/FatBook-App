@@ -42,7 +42,7 @@
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/kartoshka"
-                android:background="@drawable/ic_default_recipe_image"
+                android:background="@drawable/default_recipe_image_recipe_create_second_stage"
                 android:backgroundTint="@color/theme_cardview_bgr"
                 app:layout_constraintDimensionRatio="H,3:1.5"
                 app:layout_constraintLeft_toLeftOf="parent"

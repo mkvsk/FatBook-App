@@ -347,7 +347,7 @@
                                 android:id="@+id/imageview_photo_add_descr"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/ic_default_recipe_image"
+                                android:background="@drawable/default_recipe_image_recipe_create_second_stage"
                                 android:backgroundTint="@color/theme_cardview_bgr"
                                 android:scaleType="centerCrop"
                                 app:layout_constraintDimensionRatio="H,1:1"

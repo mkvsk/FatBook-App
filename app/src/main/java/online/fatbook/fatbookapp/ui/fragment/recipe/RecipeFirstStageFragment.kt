@@ -367,7 +367,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener, Ba
         button_delete_photo_recipe_1_stage.setOnClickListener {
             recipeViewModel.newRecipeImage.value = null
             toggleImageButtons(false)
-            Glide.with(requireContext()).load(R.drawable.ic_default_recipe_image)
+            Glide.with(requireContext()).load(R.drawable.default_recipe_image_recipe_create_second_stage)
                     .into(imageview_photo_recipe_1_stage)
         }
         chooseImageFromGallery =

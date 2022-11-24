@@ -60,7 +60,7 @@
                 android:elevation="4dp"
                 android:translationZ="2dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_default_recipe_image"
+                android:src="@drawable/default_recipe_image_recipe_create_second_stage"
                 android:visibility="visible"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize4Percent"/>
 
