@@ -359,9 +359,9 @@
     <string name="date_format_1_min_ago">one minute ago</string>
     <string name="date_format_2_min_ago">two minutes ago</string>
     <string name="date_format_3_min_ago">three minutes ago</string>
-    <string name="date_format_25_min_ago">%s минут</string>
-    <string name="date_format_21_min_ago">%s минута</string>
-    <string name="date_format_23_min_ago">%s минуты</string>
+    <string name="date_format_25_min_ago">%s minutes ago</string>
+    <string name="date_format_21_min_ago">%s minutes ago</string>
+    <string name="date_format_23_min_ago">%s minutes ago</string>
     <string name="date_format_1_sec_ago">one second ago</string>
     <string name="date_format_2_sec_ago">two seconds ago</string>
     <string name="date_format_3_sec_ago">three seconds ago</string>

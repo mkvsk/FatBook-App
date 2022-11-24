@@ -116,9 +116,9 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
                 value?.let {
                     staticDataViewModel.ingredientUnits.value = value
                     staticDataViewModel.unitG.value =
-                        value.find { ingredientUnit -> ingredientUnit.position == 1 }
+                        value.find { ingredientUnit -> ingredientUnit.ordinal == 1 }
                     staticDataViewModel.unitML.value =
-                        value.find { ingredientUnit -> ingredientUnit.position == 2 }
+                        value.find { ingredientUnit -> ingredientUnit.ordinal == 2 }
                 }
                 setupUnitPicker(null)
             }
@@ -131,9 +131,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
     private fun calculateNutrition(ingredient: Ingredient) {
         val nutritionFacts = ingredient.unitRatio!!
-        if (selectedUnit == staticDataViewModel.unitG.value ||
-            selectedUnit == staticDataViewModel.unitML.value
-        ) {
+        if (selectedUnit!!.ordinal == 1 || selectedUnit!!.ordinal == 2 || selectedUnit!!.ordinal == 3 || selectedUnit!!.ordinal == 4) {
             if (nutritionFacts.unit == selectedUnit) {
                 val newQtt =
                     editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()

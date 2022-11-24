@@ -26,9 +26,5 @@ data class RecipeSimpleObject(
             Locale.EN.name -> ingredientsLocalizedMap[Locale.EN] ?: ""
             else -> ""
         }
-
-    fun convertToRecipe(): Recipe {
-        return Recipe(pid, title, author, image, forks, createDate, identifier, difficulty)
-    }
 }
 

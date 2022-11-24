@@ -7,7 +7,7 @@ import java.util.*
 
 data class IngredientUnit(
     val pid: Long? = null,
-    val position: Int? = 0,
+    val ordinal: Int? = 0,
     val locales: Map<Locale, IngredientUnitLocalized> = EnumMap(
         Locale::class.java
     )
