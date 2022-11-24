@@ -11,6 +11,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeIngredientItemClickListener
 import online.fatbook.fatbookapp.util.FormatUtils
+import org.apache.commons.lang3.StringUtils
 
 class RecipeIngredientAdapter :
     RecyclerView.Adapter<RecipeIngredientAdapter.ViewHolder>(), BindableAdapter<RecipeIngredient> {
@@ -56,12 +57,21 @@ class RecipeIngredientAdapter :
             itemView.textview_ingredient_title_rv_added_ingredient.text = value!!.ingredient!!.title
 
             value.kcal?.let {
-                itemView.textview_ingredient_kcals_title_rv_added_ingredient.text =
-                    String.format("%s kcal", FormatUtils.prettyCount(it))
+                if (value.kcal == 0.0 && value.fats == 0.0 && value.carbs == 0.0 && value.proteins == 0.0) {
+                    itemView.textview_ingredient_kcals_title_rv_added_ingredient.text =
+                        StringUtils.EMPTY
+                } else {
+                    itemView.textview_ingredient_kcals_title_rv_added_ingredient.text =
+                        String.format("%s kcal", FormatUtils.prettyCount(it))
+                }
             }
 
             itemView.textview_ingredient_qtt_title_rv_added_ingredient.text =
-                String.format("%s %s", FormatUtils.prettyCount(value.quantity!!), value.unit!!.title)
+                String.format(
+                    "%s %s",
+                    FormatUtils.prettyCount(value.quantity!!),
+                    value.unit!!.title
+                )
 
             itemView.button_remove_rv_added_ingredient.setOnClickListener {
                 listener!!.onRecipeIngredientDelete(bindingAdapterPosition)

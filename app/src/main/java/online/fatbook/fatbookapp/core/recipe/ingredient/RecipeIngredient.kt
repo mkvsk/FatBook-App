@@ -12,18 +12,34 @@ data class RecipeIngredient(
 
     val kcal: Double
         get() {
-            return ingredient!!.unitRatio!!.kcal!!.div(100) * quantity!!
+            if (unit!! == ingredient!!.unitRatio!!.unit) {
+                return ingredient!!.unitRatio!!.kcal!!.div(100) * quantity!!
+            } else {
+                return 0.0
+            }
         }
     val proteins: Double
         get() {
-            return ingredient!!.unitRatio!!.proteins!!.div(100) * quantity!!
+            if (unit!! == ingredient!!.unitRatio!!.unit) {
+                return ingredient!!.unitRatio!!.proteins!!.div(100) * quantity!!
+            } else {
+                return 0.0
+            }
         }
     val fats: Double
         get() {
-            return ingredient!!.unitRatio!!.fats!!.div(100) * quantity!!
+            if (unit!! == ingredient!!.unitRatio!!.unit) {
+                return ingredient!!.unitRatio!!.fats!!.div(100) * quantity!!
+            } else {
+                return 0.0
+            }
         }
     val carbs: Double
         get() {
-            return ingredient!!.unitRatio!!.carbs!!.div(100) * quantity!!
+            if (unit!! == ingredient!!.unitRatio!!.unit) {
+                return ingredient!!.unitRatio!!.carbs!!.div(100) * quantity!!
+            } else {
+                return 0.0
+            }
         }
 }
