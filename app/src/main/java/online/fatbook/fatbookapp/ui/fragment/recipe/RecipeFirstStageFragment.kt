@@ -233,7 +233,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener, Ba
 
         //TODO remove stub
         edittext_title_recipe_1_stage.setText("Test recipe name, REMOVE ME LATER")
-        edittext_portions_qtt_recipe_1_stage.setText("6")
+        edittext_portions_qtt_recipe_1_stage.setText("1")
         Log.d(TAG, "=======================================================================")
         Log.d(TAG, "onViewCreated: ${recipeViewModel.newRecipe.value}")
         Log.d(TAG, "=======================================================================")

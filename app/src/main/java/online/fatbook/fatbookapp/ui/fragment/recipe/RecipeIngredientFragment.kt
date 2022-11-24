@@ -23,6 +23,7 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnit
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
+import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnitRatio
 import online.fatbook.fatbookapp.databinding.FragmentRecipeIngredientBinding
 import online.fatbook.fatbookapp.ui.adapters.IngredientAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
@@ -43,6 +44,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
     private var selectedUnit: IngredientUnit? = null
     private var selectedQtt: Double = 0.0
+    private var newQtt: Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -133,40 +135,14 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     private fun calculateNutrition(ingredient: Ingredient) {
         val nutritionFacts = ingredient.unitRatio!!
         if (selectedUnit!!.ordinal in 1..4) {
-            if (nutritionFacts.unit == selectedUnit) {
-                val newQtt =
-                    editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
-                val kcal = nutritionFacts.kcal!!
-                val proteins = nutritionFacts.proteins!!
-                val fats = nutritionFacts.fats!!
-                val carbs = nutritionFacts.carbs!!
-
-                var newKcal = (kcal / 100 * newQtt)
-                var newProteins = (proteins / 100 * newQtt)
-                var newFats = (fats / 100 * newQtt)
-                var newCarbs = (carbs / 100 * newQtt)
-
-//                if (selectedUnit!!.ordinal == 3 || selectedUnit!!.ordinal == 4) {
-//                    newKcal *= 1000
-//                    newProteins *= 1000
-//                    newFats *= 1000
-//                    newCarbs *= 1000
-//                    Log.d("SELECTED UNIT ORDINAL 3 OR 4", "$newKcal")
-//
-//                }
-
-                textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
-                    String.format(
-                        getString(R.string.format_kcal),
-                        FormatUtils.prettyCount(newKcal.toString().toDouble())
-                    )
-
-                tv_ingredient_proteins_recipe_add_ingredients.text =
-                    FormatUtils.prettyCount(newProteins.toString().toDouble())
-                tv_ingredient_fats_recipe_add_ingredients.text =
-                    FormatUtils.prettyCount(newFats.toString().toDouble())
-                tv_ingredient_carbs_recipe_add_ingredients.text =
-                    FormatUtils.prettyCount(newCarbs.toString().toDouble())
+            if ((nutritionFacts.unit!!.ordinal == 1 && selectedUnit!!.ordinal == 1) ||
+                (nutritionFacts.unit!!.ordinal == 2 && selectedUnit!!.ordinal == 2)
+            ) {
+                setNutritionFactsForMlAndG(nutritionFacts)
+            } else if ((nutritionFacts.unit!!.ordinal == 1 && selectedUnit!!.ordinal == 3) ||
+                (nutritionFacts.unit!!.ordinal == 2 && selectedUnit!!.ordinal == 4)
+            ) {
+                setNutritionFactsForKgAndL(nutritionFacts)
             } else {
                 setDefaultNutritionFacts(ingredient)
             }
@@ -175,14 +151,52 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         }
     }
 
-    private fun handleBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    popBackStack()
-                }
-            })
+    private fun setNutritionFactsForKgAndL(nutritionFacts: IngredientUnitRatio) {
+        newQtt =
+            editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
+
+        textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
+            String.format(
+                getString(R.string.format_kcal),
+                FormatUtils.prettyCount(
+                    (nutritionFacts.kcal!! / 100 * newQtt) * 1000.toString().toDouble()
+                )
+            )
+
+        tv_ingredient_proteins_recipe_add_ingredients.text =
+            FormatUtils.prettyCount(
+                (nutritionFacts.proteins!! / 100 * newQtt) * 1000.toString().toDouble()
+            )
+        tv_ingredient_fats_recipe_add_ingredients.text =
+            FormatUtils.prettyCount(
+                (nutritionFacts.fats!! / 100 * newQtt) * 1000.toString().toDouble()
+            )
+        tv_ingredient_carbs_recipe_add_ingredients.text =
+            FormatUtils.prettyCount(
+                (nutritionFacts.carbs!! / 100 * newQtt) * 1000.toString().toDouble()
+            )
+    }
+
+    private fun setNutritionFactsForMlAndG(nutritionFacts: IngredientUnitRatio) {
+        newQtt =
+            editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
+
+        textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
+            String.format(
+                getString(R.string.format_kcal),
+                FormatUtils.prettyCount(
+                    (nutritionFacts.kcal!! / 100 * newQtt).toString().toDouble()
+                )
+            )
+
+        tv_ingredient_proteins_recipe_add_ingredients.text =
+            FormatUtils.prettyCount(
+                (nutritionFacts.proteins!! / 100 * newQtt).toString().toDouble()
+            )
+        tv_ingredient_fats_recipe_add_ingredients.text =
+            FormatUtils.prettyCount((nutritionFacts.fats!! / 100 * newQtt).toString().toDouble())
+        tv_ingredient_carbs_recipe_add_ingredients.text =
+            FormatUtils.prettyCount((nutritionFacts.carbs!! / 100 * newQtt).toString().toDouble())
     }
 
     private fun popBackStack() {
@@ -317,7 +331,10 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
             selectedUnit = units[0]
 
             picker_ingredient_unit.setOnValueChangedListener { _, _, newVal ->
-                Log.d("PICKER NEW VAL =======================================================", "$newVal")
+                Log.d(
+                    "PICKER NEW VAL =======================================================",
+                    "$newVal"
+                )
                 selectedUnit = units[newVal]
                 if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()) {
                     setDefaultNutritionFacts(ingredient)
