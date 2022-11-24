@@ -294,7 +294,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     override fun scrollUpBase() {
         Log.d(TAG, "scrollUpBase")
-        swipe_refresh_feed.scrollTo(0, 0)
+        nsv_userprofile.smoothScrollTo(0, 0)
         appBarLayout_feed.setExpanded(true, false)
     }
 
