@@ -3,6 +3,7 @@ package online.fatbook.fatbookapp.ui.fragment.recipe
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -131,7 +132,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
     private fun calculateNutrition(ingredient: Ingredient) {
         val nutritionFacts = ingredient.unitRatio!!
-        if (selectedUnit!!.ordinal == 1 || selectedUnit!!.ordinal == 2 || selectedUnit!!.ordinal == 3 || selectedUnit!!.ordinal == 4) {
+        if (selectedUnit!!.ordinal in 1..4) {
             if (nutritionFacts.unit == selectedUnit) {
                 val newQtt =
                     editText_ingredient_quantity_recipe_add_ingredients.text.toString().toDouble()
@@ -139,11 +140,21 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
                 val proteins = nutritionFacts.proteins!!
                 val fats = nutritionFacts.fats!!
                 val carbs = nutritionFacts.carbs!!
-                val newKcal = (kcal / 100 * newQtt)
 
-                val newProteins = (proteins / 100 * newQtt)
-                val newFats = (fats / 100 * newQtt)
-                val newCarbs = (carbs / 100 * newQtt)
+                var newKcal = (kcal / 100 * newQtt)
+                var newProteins = (proteins / 100 * newQtt)
+                var newFats = (fats / 100 * newQtt)
+                var newCarbs = (carbs / 100 * newQtt)
+
+//                if (selectedUnit!!.ordinal == 3 || selectedUnit!!.ordinal == 4) {
+//                    newKcal *= 1000
+//                    newProteins *= 1000
+//                    newFats *= 1000
+//                    newCarbs *= 1000
+//                    Log.d("SELECTED UNIT ORDINAL 3 OR 4", "$newKcal")
+//
+//                }
+
                 textview_ingredient_kcals_qtt_recipe_add_ingredients.text =
                     String.format(
                         getString(R.string.format_kcal),
@@ -306,6 +317,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
             selectedUnit = units[0]
 
             picker_ingredient_unit.setOnValueChangedListener { _, _, newVal ->
+                Log.d("PICKER NEW VAL =======================================================", "$newVal")
                 selectedUnit = units[newVal]
                 if (editText_ingredient_quantity_recipe_add_ingredients.text.isNullOrEmpty()) {
                     setDefaultNutritionFacts(ingredient)

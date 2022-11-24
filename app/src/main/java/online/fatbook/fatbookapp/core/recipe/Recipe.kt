@@ -27,7 +27,7 @@ data class Recipe(
             return if (isAllIngredientUnitsValid) {
                 var tmp = 0.0
                 for (i in ingredients!!) {
-                    if (i.unit!!.ordinal == 1 || i.unit!!.ordinal == 2) {
+                    if (i.unit!!.ordinal in 1..4) {
                         tmp = tmp.plus(i.kcal)
                     }
                 }
@@ -40,7 +40,7 @@ data class Recipe(
     val isAllIngredientUnitsValid: Boolean
         get() {
             val tmp = ingredients!!.find {
-                it.ingredient!!.unitRatio!!.unit!!.ordinal != it.unit!!.ordinal
+                it.ingredient!!.unitRatio!!.unit!!.ordinal in 5..8
             }
             return tmp == null
         }

@@ -12,8 +12,8 @@ data class RecipeIngredient(
 
     val kcal: Double
         get() {
-            return if (unit!!.title == "kg" && ingredient!!.unitRatio!!.unit!!.title == "g"
-                || unit!!.title == "l" && ingredient!!.unitRatio!!.unit!!.title == "ml"
+            return if (unit!!.ordinal == 3 && ingredient!!.unitRatio!!.unit!!.ordinal == 1
+                || unit!!.ordinal == 4 && ingredient!!.unitRatio!!.unit!!.ordinal == 2
             ) {
                 ingredient!!.unitRatio!!.kcal!!.div(100) * (quantity!! * 1000)
             } else if (unit!! == ingredient!!.unitRatio!!.unit) {
@@ -24,8 +24,8 @@ data class RecipeIngredient(
         }
     val proteins: Double
         get() {
-            return if (unit!!.title == "kg" && ingredient!!.unitRatio!!.unit!!.title == "g"
-                || unit!!.title == "l" && ingredient!!.unitRatio!!.unit!!.title == "ml"
+            return if (unit!!.ordinal == 3 && ingredient!!.unitRatio!!.unit!!.ordinal == 1
+                || unit!!.ordinal == 4 && ingredient!!.unitRatio!!.unit!!.ordinal == 2
             ) {
                 ingredient!!.unitRatio!!.proteins!!.div(100) * (quantity!! * 1000)
             } else if (unit!! == ingredient!!.unitRatio!!.unit) {
@@ -36,8 +36,8 @@ data class RecipeIngredient(
         }
     val fats: Double
         get() {
-            return if (unit!!.title == "kg" && ingredient!!.unitRatio!!.unit!!.title == "g"
-                || unit!!.title == "l" && ingredient!!.unitRatio!!.unit!!.title == "ml"
+            return if (unit!!.ordinal == 3 && ingredient!!.unitRatio!!.unit!!.ordinal == 1
+                || unit!!.ordinal == 4 && ingredient!!.unitRatio!!.unit!!.ordinal == 2
             ) {
                 ingredient!!.unitRatio!!.fats!!.div(100) * (quantity!! * 1000)
             } else if (unit!! == ingredient!!.unitRatio!!.unit) {
@@ -48,8 +48,8 @@ data class RecipeIngredient(
         }
     val carbs: Double
         get() {
-            return if (unit!!.title == "kg" && ingredient!!.unitRatio!!.unit!!.title == "g"
-                || unit!!.title == "l" && ingredient!!.unitRatio!!.unit!!.title == "ml"
+            return if (unit!!.ordinal == 3 && ingredient!!.unitRatio!!.unit!!.ordinal == 1
+                || unit!!.ordinal == 4 && ingredient!!.unitRatio!!.unit!!.ordinal == 2
             ) {
                 ingredient!!.unitRatio!!.carbs!!.div(100) * (quantity!! * 1000)
             } else if (unit!! == ingredient!!.unitRatio!!.unit) {
