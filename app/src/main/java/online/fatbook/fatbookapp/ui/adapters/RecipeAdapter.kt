@@ -11,12 +11,14 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.core.recipe.Locale
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.RecipeUtils
 import org.apache.commons.lang3.StringUtils
+import java.text.DateFormatSymbols
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -102,7 +104,7 @@ class RecipeAdapter :
 
             itemView.rv_recipe_difficulty.text = recipe.difficulty?.title
 
-            itemView.rv_recipe_create_date.text = getCreateDate(recipe.createDate!!)
+            itemView.rv_recipe_create_date.text = FormatUtils.getCreateDate(recipe.createDate!!)
 
             itemView.rv_recipe_author.text = recipe.author
             if (StringUtils.isNotEmpty(user.profileImage)) {
@@ -161,36 +163,6 @@ class RecipeAdapter :
 //                }
 //            }
         }
-    }
-
-    private fun getCreateDate(dateStr: String): String {
-        val date = OffsetDateTime.parse(dateStr)
-        val currentDate = OffsetDateTime.now()
-        if (currentDate.year != date.year) {
-            return String.format("%s %s %s at %s:%s", date.dayOfMonth, date.month.ordinal, date.year, date.hour, date.minute)
-        }
-        if (currentDate.dayOfYear - date.dayOfYear == 1) {
-            return String.format("yesterday at %s:%s", date.hour, date.minute)
-        }
-        if (currentDate.dayOfYear - date.dayOfYear > 1) {
-            return String.format("%s %s at %s:%s", date.dayOfMonth, date.month.ordinal, date.hour, date.minute)
-        }
-        if (currentDate.dayOfYear == date.dayOfYear) {
-            val between = Duration.between(date, currentDate).toMinutes()
-            if (between in 0 .. 59) {
-                return "$between min ago"
-            }
-            if (between in 60..119) {
-                return "1h"
-            }
-            if (between in 120..179) {
-                return "2h"
-            }
-            if (between in 180..239) {
-                return "3h"
-            }
-        }
-        return String.format("today at %s:%s", date.hour, date.minute)
     }
 
     private fun getCookingTime(time: LocalTime): String {
