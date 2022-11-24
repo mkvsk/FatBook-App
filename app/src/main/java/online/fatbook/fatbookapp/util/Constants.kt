@@ -19,6 +19,7 @@ object Constants {
     const val APP_PREFS = "app_prefs"
     const val USER_LOGIN = "user_pid"
 
+    const val TAG_SELECT_ALL_BUTTON = "select_all_button"
 //    const val ET_BIO_REGEX = "^(?=\\S+\$).{0,635}$"
 
     val rootDestinations = setOf(R.id.feed_dest, R.id.search_dest, R.id.recipe_first_stage_dest, R.id.notification_dest, R.id.user_profile_dest)

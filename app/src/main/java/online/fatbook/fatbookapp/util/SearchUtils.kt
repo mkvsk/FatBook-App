@@ -16,6 +16,7 @@ object SearchUtils {
     }
 
     fun <T : StaticDataObject> getSelectAll(clazz: Class<T>): T {
+//        (clazz.declaredConstructors[1].newInstance(null, getLocale()) as T).title =
         return clazz.declaredConstructors[1].newInstance(null, getLocale()) as T
     }
 

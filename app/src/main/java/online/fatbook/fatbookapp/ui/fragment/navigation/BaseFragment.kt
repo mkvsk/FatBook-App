@@ -57,7 +57,7 @@ class BaseFragment : Fragment(), FragmentLifecycle {
         Log.d("BaseFragment", "onBackPressed: $navHostId, $layoutRes, $appBarConfig")
         when (val fragment = childFragmentManager.fragments[0].childFragmentManager.fragments[0]) {
             is FeedFragment -> fragment.onBackPressedBase()
-            is SearchFragment -> if (fragment.onBackPressedBase()) return false
+            is SearchFragment -> if (fragment.onBackPressedBase()) return true
             is RecipeFirstStageFragment -> fragment.onBackPressedBase()
             is NotificationsFragment -> fragment.onBackPressedBase()
             is UserProfileFragment -> fragment.onBackPressedBase()

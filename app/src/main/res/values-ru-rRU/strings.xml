@@ -192,4 +192,5 @@
     <string name="title_favourites_profile">Избранное</string>
     <string name="hint_choose_method">Выберите метод приготовления</string>
     <string name="hint_choose_category">Выберите категорию блюда</string>
+    <string name="title_search_btn_select_all">Все</string>
 </resources>

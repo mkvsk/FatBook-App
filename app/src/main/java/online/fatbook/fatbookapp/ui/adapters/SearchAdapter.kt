@@ -1,6 +1,7 @@
 package online.fatbook.fatbookapp.ui.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +12,20 @@ import kotlinx.android.synthetic.main.rv_search.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
-import org.apache.commons.lang3.StringUtils
+import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
+import kotlin.math.log
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
     BindableAdapter<StaticDataObject> {
 
     private var data: List<StaticDataObject> = ArrayList()
     var listener: OnSearchItemClickListener? = null
-    var selectedItems: List<Int>? = ArrayList()
+    var selectedItems: ArrayList<Int>? = ArrayList()
+    var isAllSelected: Boolean = false
+
+    companion object{
+        private const val TAG = "SearchAdapter"
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -38,6 +45,11 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
         }
     }
 
+    fun setSelectAll(selectAll: StaticDataObject) {
+        (data as ArrayList).add(0, selectAll)
+        notifyDataSetChanged()
+    }
+
     fun setClickListener(listener: OnSearchItemClickListener) {
         this.listener = listener
     }
@@ -46,46 +58,62 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
         return data.size
     }
 
-    fun setSelected(arrayList: List<Int>) {
+    fun setSelected(arrayList: ArrayList<Int>) {
         selectedItems = arrayList
+        notifyDataSetChanged()
+    }
+
+    private fun addToSelected(position: Int) {
+        selectedItems!!.add(position)
+        notifyDataSetChanged()
+    }
+
+    private fun removeFromSelected(position: Int) {
+        selectedItems!!.remove(position)
         notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: StaticDataObject?) {
-
             if (selectedItems!!.contains(bindingAdapterPosition)) {
                 selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
             } else {
                 unselectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
             }
-
             itemView.textview_item_title_rv_search.text = value!!.title
-
             itemView.cardview_rv_search.setOnClickListener {
 
-                if (StringUtils.equalsIgnoreCase(value.title, "select all")) {
-                    val list: ArrayList<Int> = ArrayList()
-                    if (selectedItems!!.size != data.size + 1) {
-                        for (i in 0..data.size) {
+                if (value.tag == TAG_SELECT_ALL_BUTTON) {
+                    if (!itemView.textview_item_title_rv_search.isSelected) {
+                        isAllSelected = true
+                        selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                        val list: ArrayList<Int> = ArrayList()
+                        for (i in data.indices) {
                             list.add(i)
-                            setSelected(list)
                         }
-                    } else {
+                        selectedItems!!.clear()
                         setSelected(list)
+                    } else {
+                        isAllSelected = false
+                        unselectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                        setSelected(ArrayList())
                     }
+                    listener!!.onSelectAllClick()
                 } else {
                     if (!itemView.textview_item_title_rv_search.isSelected) {
-                        selectItem(
-                            itemView.cardview_rv_search,
-                            itemView.textview_item_title_rv_search
-                        )
+                        addToSelected(bindingAdapterPosition)
+                        if (selectedItems!!.size == data.size - 1) {
+                            addToSelected(0)
+                            isAllSelected = true
+                        }
                     } else {
-                        unselectItem(
-                            itemView.cardview_rv_search, itemView.textview_item_title_rv_search
-                        )
+                        removeFromSelected(bindingAdapterPosition)
+                        if (isAllSelected) {
+                            removeFromSelected(0)
+                            isAllSelected = false
+                        }
                     }
-                    listener?.onItemClick(data[bindingAdapterPosition])
+                    listener?.onItemClick(value)
                 }
             }
         }
@@ -99,5 +127,13 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
     private fun unselectItem(cardView: MaterialCardView, textView: TextView) {
         cardView.setBackgroundResource(R.drawable.unselect_search_item_round_corner)
         textView.isSelected = false
+    }
+
+    private fun toggleSelectAll(cardView: MaterialCardView, textView: TextView) {
+        if (isAllSelected) {
+            selectItem(cardView, textView)
+        } else {
+            unselectItem(cardView, textView)
+        }
     }
 }

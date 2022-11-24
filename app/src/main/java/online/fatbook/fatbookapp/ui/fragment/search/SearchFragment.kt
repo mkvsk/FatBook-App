@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_search.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.include_progress_overlay.*
+import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingCategory
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
@@ -29,10 +30,10 @@ import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
-import online.fatbook.fatbookapp.util.SearchUtils
+import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
 import online.fatbook.fatbookapp.util.obtainViewModel
 
-class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentActions {
+class SearchFragment : Fragment(), BaseFragmentActions {
 
     private var binding: FragmentSearchBinding? = null
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
@@ -43,8 +44,12 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
 
     private lateinit var bottomSheetSearchFilter: BottomSheetBehavior<*>
 
+    companion object{
+        private const val TAG = "SearchFragment"
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -52,7 +57,7 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("===t=======SearchFragment==========", "onViewCreated")
+        Log.d("==========SearchFragment==========", "onViewCreated")
         progress_overlay.visibility = View.VISIBLE
         toolbar_search.visibility = View.GONE
 
@@ -75,7 +80,7 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
         bottomSheetSearchFilter = BottomSheetBehavior.from(sheet_search)
         bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
         bottomSheetSearchFilter.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
+                BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     scroll_view_bottom_sheet_search.scrollTo(0, 0)
@@ -97,7 +102,15 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
             override fun onStopTrackingTouch(p0: SeekBar?) {
             }
         })
-        handleBackPressed()
+
+        //TODO save to shared prefs ??????????????
+        button_apply_search.setOnClickListener {
+            Log.d(TAG, "methods: ${searchViewModel.methods.value!!.size}; ${searchViewModel.methods.value}")
+            Log.d(TAG, "categories: ${searchViewModel.categories.value!!.size}; ${searchViewModel.categories.value}")
+            Log.d(TAG, "difficulties: ${searchViewModel.difficulties.value!!.size}; ${searchViewModel.difficulties.value}")
+            Log.d(TAG, "kcal: ${seekbar_kcals_limit.progress}")
+            bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
     }
 
     private fun checkStaticDataLoaded() {
@@ -108,20 +121,70 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
     }
 
     private fun setupAdapters() {
+        rv_cooking_categories_search.layoutManager = getLayoutManager()
         adapterCategories = SearchAdapter()
-        setupAdapter(rv_cooking_categories_search, adapterCategories!!)
+        adapterCategories!!.setClickListener(object : OnSearchItemClickListener{
+            override fun onItemClick(item: StaticDataObject) {
+                item as CookingCategory
+                if (searchViewModel.categories.value!!.contains(item)) {
+                    searchViewModel.categories.value!!.remove(item)
+                } else {
+                    searchViewModel.categories.value!!.add(item)
+                }
+            }
 
+            override fun onSelectAllClick() {
+                if (adapterCategories!!.selectedItems!!.isEmpty()) {
+                    searchViewModel.categories.value!!.clear()
+                } else {
+                    searchViewModel.categories.value!!.clear()
+                    searchViewModel.categories.value!!.addAll(staticDataViewModel.cookingCategories.value!!)
+                    searchViewModel.categories.value!!.removeAt(0)
+                }
+            }
+        })
+        rv_cooking_categories_search.adapter = adapterCategories
+
+        rv_cooking_methods_search.layoutManager = getLayoutManager()
         adapterMethods = SearchAdapter()
-        setupAdapter(rv_cooking_methods_search, adapterMethods!!)
+        adapterMethods!!.setClickListener(object : OnSearchItemClickListener{
+            override fun onItemClick(item: StaticDataObject) {
+                item as CookingMethod
+                if (searchViewModel.methods.value!!.contains(item)) {
+                    searchViewModel.methods.value!!.remove(item)
+                } else {
+                    searchViewModel.methods.value!!.add(item)
+                }
+            }
 
+            override fun onSelectAllClick() {
+                if (adapterMethods!!.selectedItems!!.isEmpty()) {
+                    searchViewModel.methods.value!!.clear()
+                } else {
+                    searchViewModel.methods.value!!.clear()
+                    searchViewModel.methods.value!!.addAll(staticDataViewModel.cookingMethods.value!!)
+                    searchViewModel.methods.value!!.removeAt(0)
+                }
+            }
+        })
+        rv_cooking_methods_search.adapter = adapterMethods
+
+        rv_cooking_difficulty_search.layoutManager = getLayoutManager()
         adapterDifficulty = SearchAdapter()
-        setupAdapter(rv_cooking_difficulty_search, adapterDifficulty!!)
-    }
+        adapterDifficulty!!.setClickListener(object : OnSearchItemClickListener{
+            override fun onItemClick(item: StaticDataObject) {
+                item as CookingDifficulty
+                if (searchViewModel.difficulties.value!!.contains(item)) {
+                    searchViewModel.difficulties.value!!.remove(item)
+                } else {
+                    searchViewModel.difficulties.value!!.add(item)
+                }
+            }
 
-    private fun setupAdapter(rv: RecyclerView, adapter: SearchAdapter) {
-        rv.layoutManager = getLayoutManager()
-        adapter.setClickListener(this)
-        rv.adapter = adapter
+            override fun onSelectAllClick() {
+            }
+        })
+        rv_cooking_difficulty_search.adapter = adapterDifficulty
     }
 
     private fun getLayoutManager(): RecyclerView.LayoutManager {
@@ -135,12 +198,9 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
     private fun loadCategories() {
         staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
             override fun onResult(value: List<CookingCategory>?) {
-
-                value as ArrayList
-                value.add(0, SearchUtils.getSelectAll(CookingCategory::class.java))
-
                 staticDataViewModel.cookingCategories.value = value
                 adapterCategories?.setData(value)
+                adapterCategories?.setSelectAll(StaticDataObject(getString(R.string.title_search_btn_select_all), TAG_SELECT_ALL_BUTTON))
                 adapterCategories?.setSelected(getPreselectedCategories())
                 checkStaticDataLoaded()
             }
@@ -154,12 +214,9 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
     private fun loadMethods() {
         staticDataViewModel.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {
             override fun onResult(value: List<CookingMethod>?) {
-
-                value as ArrayList
-                value.add(0, SearchUtils.getSelectAll(CookingMethod::class.java))
-
                 staticDataViewModel.cookingMethods.value = value
                 adapterMethods?.setData(value)
+                adapterMethods?.setSelectAll(StaticDataObject(getString(R.string.title_search_btn_select_all), TAG_SELECT_ALL_BUTTON))
                 adapterMethods?.setSelected(getPreselectedMethods())
                 checkStaticDataLoaded()
             }
@@ -172,7 +229,7 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
 
     private fun loadDifficulty() {
         staticDataViewModel.getAllCookingDifficulties(object :
-            ResultCallback<List<CookingDifficulty>> {
+                ResultCallback<List<CookingDifficulty>> {
             override fun onResult(value: List<CookingDifficulty>?) {
                 staticDataViewModel.cookingDifficulties.value = value
                 adapterDifficulty?.setData(value)
@@ -187,58 +244,33 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
     }
 
     //TODO shared prefs
-    private fun getPreselectedCategories(): List<Int> {
+    private fun getPreselectedCategories(): ArrayList<Int> {
         return ArrayList()
     }
 
     //TODO shared prefs
-    private fun getPreselectedMethods(): List<Int> {
+    private fun setPreselectedCategories(value: Int) {
+        getPreselectedCategories().add(value)
+    }
+
+    //TODO shared prefs
+    private fun getPreselectedMethods(): ArrayList<Int> {
         return ArrayList()
     }
 
     //TODO shared prefs
-    private fun getPreselectedDifficulties(): List<Int> {
+    private fun setPreselectedMethods(value: Int) {
+        getPreselectedMethods().add(value)
+    }
+
+    //TODO shared prefs
+    private fun getPreselectedDifficulties(): ArrayList<Int> {
         return ArrayList()
     }
 
-    override fun onItemClick(item: StaticDataObject) {
-
-        when (item) {
-            is CookingCategory -> {
-                if (searchViewModel.categories.value!!.contains(item)) {
-                    searchViewModel.categories.value!!.remove(item)
-                } else {
-                    searchViewModel.categories.value!!.add(item)
-                }
-            }
-            is CookingMethod -> {
-                if (searchViewModel.methods.value!!.contains(item)) {
-                    searchViewModel.methods.value!!.remove(item)
-                } else {
-                    searchViewModel.methods.value!!.add(item)
-                }
-            }
-            is CookingDifficulty -> {
-                if (searchViewModel.difficulties.value!!.contains(item)) {
-                    searchViewModel.difficulties.value!!.remove(item)
-                } else {
-                    searchViewModel.difficulties.value!!.add(item)
-                }
-            }
-        }
-    }
-
-    private fun handleBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (bottomSheetSearchFilter.state == BottomSheetBehavior.STATE_EXPANDED) {
-                        bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
-                    } else {
-                        popBackStack()
-                    }
-                }
-            })
+    //TODO shared prefs
+    private fun setPreselectedDifficulties(value: Int) {
+        getPreselectedDifficulties().add(value)
     }
 
     private fun popBackStack() {
@@ -247,7 +279,7 @@ class SearchFragment : Fragment(), OnSearchItemClickListener, BaseFragmentAction
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("===t=======SearchFragment==========", "onDestroy")
+        Log.d("==========SearchFragment==========", "onDestroy")
     }
 
     override fun onBackPressedBase(): Boolean {

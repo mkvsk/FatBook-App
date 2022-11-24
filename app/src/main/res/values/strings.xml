@@ -330,5 +330,6 @@
     <string name="title_error_image_delete">Failed to delete image</string>
     <string name="dialog_clear_form_title">Clear form</string>
     <string name="dialog_clear_form_msg">Are you sure you want to cancel creating new recipe?</string>
+    <string name="title_search_btn_select_all">All</string>
 
 </resources>

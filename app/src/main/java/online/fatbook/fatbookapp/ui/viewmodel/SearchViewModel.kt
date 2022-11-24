@@ -10,4 +10,8 @@ class SearchViewModel : ViewModel() {
     var categories = MutableLiveData<ArrayList<CookingCategory>>()
     var methods = MutableLiveData<ArrayList<CookingMethod>>()
     var difficulties = MutableLiveData<ArrayList<CookingDifficulty>>()
+
+    var selectedCategories = MutableLiveData<ArrayList<CookingCategory>>()
+    var selectedmethods = MutableLiveData<ArrayList<CookingMethod>>()
+    var selecteddifficulties = MutableLiveData<ArrayList<CookingDifficulty>>()
 }

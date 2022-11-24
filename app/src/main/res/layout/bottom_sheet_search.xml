@@ -184,7 +184,7 @@
                 android:layout_marginTop="15dp"
                 android:max="1500"
                 android:min="0"
-                android:progress="25"
+                android:progress="0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textview_title_kcals_search" />
