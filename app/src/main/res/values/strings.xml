@@ -276,6 +276,19 @@
     <string name="snackbar_saved">Saved</string>
     <string name="snackbar_end_edit">End edit</string>
 
+    //months
+    <string name="month_jan">January</string>
+    <string name="month_feb">February</string>
+    <string name="month_mar">March</string>
+    <string name="month_apr">April</string>
+    <string name="month_may">May</string>
+    <string name="month_jun">June</string>
+    <string name="month_jul">July</string>
+    <string name="month_aug">August</string>
+    <string name="month_sep">September</string>
+    <string name="month_oct">October</string>
+    <string name="month_nov">November</string>
+    <string name="month_dec">December</string>
 
     //
     <string name="hint_recipe_by_rv_bookmarks">Author</string>
@@ -334,5 +347,26 @@
     <string name="title_ingredients_rv_recipe">Ingredients(%s): %s</string>
     <string name="title_cooking_time_rv_recipe_h_m">%s h %s min</string>
     <string name="title_cooking_time_rv_recipe_m">%s min</string>
+    <string name="date_format_d_m_y_h_m">%s %s %s at %s:%s</string>
+    <string name="date_format_yesterday_h_m">yesterday at %s:%s</string>
+    <string name="date_format_d_m_h_m">%s %s at %s:%s</string>
+    <string name="date_format_now">now</string>
+    <string name="date_format_min_ago">%s min ago</string>
+    <string name="date_format_one_h_ago">one hour ago</string>
+    <string name="date_format_two_h_ago">two hours ago</string>
+    <string name="date_format_three_h_ago">three hours ago</string>
+    <string name="date_format_today_h_m">today at %s:%s</string>
+    <string name="date_format_1_min_ago">one minute ago</string>
+    <string name="date_format_2_min_ago">two minutes ago</string>
+    <string name="date_format_3_min_ago">three minutes ago</string>
+    <string name="date_format_25_min_ago">%s минут</string>
+    <string name="date_format_21_min_ago">%s минута</string>
+    <string name="date_format_23_min_ago">%s минуты</string>
+    <string name="date_format_1_sec_ago">one second ago</string>
+    <string name="date_format_2_sec_ago">two seconds ago</string>
+    <string name="date_format_3_sec_ago">three seconds ago</string>
+    <string name="date_format_25_sec_ago">%s seconds ago</string>
+    <string name="date_format_21_sec_ago">%s seconds ago</string>
+    <string name="date_format_23_sec_ago">%s seconds ago</string>
 
 </resources>
