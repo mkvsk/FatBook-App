@@ -17,8 +17,10 @@ import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.RecipeUtils
 import org.apache.commons.lang3.StringUtils
+import java.time.Duration
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.OffsetDateTime
 
 @Log
 class RecipeAdapter :
@@ -161,8 +163,34 @@ class RecipeAdapter :
         }
     }
 
-    private fun getCreateDate(date: String): String {
-        return FormatUtils.dateRecipeFormat.format(FormatUtils.dateFormat.parse(date)!!)
+    private fun getCreateDate(dateStr: String): String {
+        val date = OffsetDateTime.parse(dateStr)
+        val currentDate = OffsetDateTime.now()
+        if (currentDate.year != date.year) {
+            return String.format("%s %s %s at %s:%s", date.dayOfMonth, date.month.ordinal, date.year, date.hour, date.minute)
+        }
+        if (currentDate.dayOfYear - date.dayOfYear == 1) {
+            return String.format("yesterday at %s:%s", date.hour, date.minute)
+        }
+        if (currentDate.dayOfYear - date.dayOfYear > 1) {
+            return String.format("%s %s at %s:%s", date.dayOfMonth, date.month.ordinal, date.hour, date.minute)
+        }
+        if (currentDate.dayOfYear == date.dayOfYear) {
+            val between = Duration.between(date, currentDate).toMinutes()
+            if (between in 0 .. 59) {
+                return "$between min ago"
+            }
+            if (between in 60..119) {
+                return "1h"
+            }
+            if (between in 120..179) {
+                return "2h"
+            }
+            if (between in 180..239) {
+                return "3h"
+            }
+        }
+        return String.format("today at %s:%s", date.hour, date.minute)
     }
 
     private fun getCookingTime(time: LocalTime): String {
