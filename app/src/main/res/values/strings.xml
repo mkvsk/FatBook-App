@@ -331,5 +331,8 @@
     <string name="dialog_clear_form_title">Clear form</string>
     <string name="dialog_clear_form_msg">Are you sure you want to cancel creating new recipe?</string>
     <string name="title_search_btn_select_all">All</string>
+    <string name="title_ingredients_rv_recipe">Ingredients(%s): %s</string>
+    <string name="title_cooking_time_rv_recipe_h_m">%s h %s min</string>
+    <string name="title_cooking_time_rv_recipe_m">%s min</string>
 
 </resources>

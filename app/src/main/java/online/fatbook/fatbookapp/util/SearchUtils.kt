@@ -11,7 +11,7 @@ object SearchUtils {
         val result: EnumMap<Locale, StaticDataLocalized> =
             EnumMap(Locale::class.java)
         result[Locale.RU] = StaticDataLocalized(Locale.RU, "Выбрать все")
-        result[Locale.ENG] = StaticDataLocalized(Locale.ENG, "Select all")
+        result[Locale.EN] = StaticDataLocalized(Locale.EN, "Select all")
         return result
     }
 

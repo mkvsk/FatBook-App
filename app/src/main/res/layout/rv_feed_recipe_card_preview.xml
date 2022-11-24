@@ -37,7 +37,7 @@
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSizeTop" />
 
             <TextView
-                android:id="@+id/textview_date_rv_recipe_preview"
+                android:id="@+id/rv_recipe_create_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/content_padding_10"
@@ -96,12 +96,14 @@
                 app:layout_constraintTop_toBottomOf="@id/rv_ingredients_preview">
 
                 <ImageView
+                    android:id="@+id/rv_recipe_kcal_img"
                     android:layout_width="13dp"
                     android:layout_height="13dp"
                     android:layout_marginLeft="15dp"
                     android:src="@drawable/ic_kcals_preview" />
 
                 <TextView
+                    android:id="@+id/rv_recipe_kcal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -116,10 +118,11 @@
                     android:src="@drawable/ic_time_preview" />
 
                 <TextView
+                    android:id="@+id/rv_recipe_cooking_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="35 min"
+                    android:text="1 h 35 min"
                     android:textAppearance="@style/txtRecipePreviewAdds"
                     android:textColor="@color/rv_recipe_preview_ic_color" />
 
@@ -130,6 +133,7 @@
                     android:src="@drawable/ic_difficulty_preview" />
 
                 <TextView
+                    android:id="@+id/rv_recipe_difficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -193,7 +197,7 @@
                     app:strokeWidth="0.9dp" />
 
                 <TextView
-                    android:id="@+id/textView_rv_card_recipe_author"
+                    android:id="@+id/rv_recipe_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
@@ -260,7 +264,7 @@
         app:layout_constraintTop_toTopOf="@id/imageView_rv_card_recipe_fork" />
 
     <TextView
-        android:id="@+id/textView_rv_card_recipe_comments_avg"
+        android:id="@+id/rv_recipe_comments_qtt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"

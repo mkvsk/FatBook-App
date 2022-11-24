@@ -196,6 +196,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         val rv = rv_feed
         adapter = RecipeAdapter()
         adapter!!.setClickListener(this)
+        adapter!!.setContext(requireContext())
 //        (rv.itemAnimator as SimpleItemAnimator?)!!.supportsChangeAnimations = false
         rv.adapter = adapter
     }

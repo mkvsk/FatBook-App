@@ -10,6 +10,9 @@ import kotlin.math.pow
 object FormatUtils {
 
     var dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
+
+    var dateRecipeFormat = SimpleDateFormat("dd.MM.yyyy, HH:mm", Locale.ENGLISH)
+
     var timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
 
     fun prettyCount(number: Int): String {
@@ -38,5 +41,4 @@ object FormatUtils {
             DecimalFormat().format(number)
         }
     }
-
 }
