@@ -7,11 +7,11 @@ import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
 
 class SearchViewModel : ViewModel() {
+    var selectedCategories = MutableLiveData<ArrayList<CookingCategory>>()
+    var selectedMethods = MutableLiveData<ArrayList<CookingMethod>>()
+    var selectedDifficulties = MutableLiveData<ArrayList<CookingDifficulty>>()
+
     var categories = MutableLiveData<ArrayList<CookingCategory>>()
     var methods = MutableLiveData<ArrayList<CookingMethod>>()
     var difficulties = MutableLiveData<ArrayList<CookingDifficulty>>()
-
-    var selectedCategories = MutableLiveData<ArrayList<CookingCategory>>()
-    var selectedmethods = MutableLiveData<ArrayList<CookingMethod>>()
-    var selecteddifficulties = MutableLiveData<ArrayList<CookingDifficulty>>()
 }
