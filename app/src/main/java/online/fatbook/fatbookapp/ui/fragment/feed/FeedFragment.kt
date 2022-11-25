@@ -38,7 +38,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteListener, BaseFragmentActions {
+class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteListener,
+    BaseFragmentActions {
 
     private var binding: FragmentFeedBinding? = null
     private var adapter: RecipeAdapter? = null
@@ -53,7 +54,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentFeedBinding.inflate(inflater, container, false)
         return binding!!.root
@@ -62,15 +63,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("===t=======FeedFragment==========", "onViewCreated")
-        swipe_refresh_feed.setOnClickListener {
-            Toast.makeText(requireContext(), "swipe refresh", Toast.LENGTH_SHORT).show()
-        }
-        rv_feed.setOnClickListener {
-            Toast.makeText(requireContext(), "rv", Toast.LENGTH_SHORT).show()
-        }
-        progress_overlay.setOnClickListener {
-            Toast.makeText(requireContext(), "overlay", Toast.LENGTH_SHORT).show()
-        }
         setupSwipeRefresh()
         setupMenu()
         setupAdapter()
@@ -87,8 +79,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun login() {
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("username", authViewModel.username.value!!)
-                .addFormDataPart("password", authViewModel.password.value!!).build()
+            .addFormDataPart("username", authViewModel.username.value!!)
+            .addFormDataPart("password", authViewModel.password.value!!).build()
         authViewModel.login(request, object : ResultCallback<LoginResponse> {
             override fun onResult(value: LoginResponse?) {
                 if (value == null || value.access_token.isNullOrEmpty()) {
@@ -115,31 +107,35 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun loadUser() {
-        userViewModel.getUserByUsername(
-                authViewModel.username.value!!,
-                object : ResultCallback<User> {
-                    override fun onResult(value: User?) {
-                        userViewModel.user.value = value
-                        toolbar_feed.visibility = View.VISIBLE
-                        progress_overlay.visibility = View.GONE
-                        swipe_refresh_feed.isEnabled = true
-                        loadFeed()
-                    }
+        userViewModel.getUserByUsername(authViewModel.username.value!!,
+            object : ResultCallback<User> {
+                override fun onResult(value: User?) {
+                    userViewModel.user.value = value
+                    toolbar_feed.visibility = View.VISIBLE
+                    progress_overlay.visibility = View.GONE
+                    swipe_refresh_feed.isEnabled = true
+                    loadFeed()
+                }
 
-                    override fun onFailure(value: User?) {
-                        loadUser()
-                    }
-                })
+                override fun onFailure(value: User?) {
+                    loadUser()
+                }
+            })
     }
 
     private fun setupSwipeRefresh() {
         swipe_refresh_feed.isEnabled = false
         swipe_refresh_feed.isRefreshing = false
+        swipe_refresh_feed.setProgressBackgroundColorSchemeColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.theme_primary_bgr
+            )
+        )
         swipe_refresh_feed.setColorSchemeColors(
-                ContextCompat.getColor(
-                        requireContext(),
-                        R.color.color_pink_a200
-                )
+            ContextCompat.getColor(
+                requireContext(), R.color.color_pink_a200
+            )
         )
         swipe_refresh_feed.setOnRefreshListener {
             loadFeed()
@@ -155,7 +151,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         return when (item.itemId) {
             R.id.item_direct_messages -> {
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_direct_messages_from_feed)
+                    .navigate(R.id.action_go_to_direct_messages_from_feed)
+//                Toast.makeText(requireContext(), "direct", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -164,7 +161,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun logout() {
         val sharedPreferences = requireActivity().getSharedPreferences(
-                Constants.SP_TAG, Context.MODE_PRIVATE
+            Constants.SP_TAG, Context.MODE_PRIVATE
         )
         val editor = sharedPreferences.edit()
         editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
@@ -177,19 +174,21 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     //TODO убрать костыль в запросе
     private fun loadFeed() {
-        feedViewModel.feed(userViewModel.user.value!!.username!!, 0L, object : ResultCallback<List<RecipeSimpleObject>> {
-            override fun onResult(value: List<RecipeSimpleObject>?) {
-                swipe_refresh_feed.isRefreshing = false
-                feedViewModel.recipes.value = value
-                adapter!!.setData(feedViewModel.recipes.value, userViewModel.user.value)
-            }
+        feedViewModel.feed(userViewModel.user.value!!.username!!,
+            0L,
+            object : ResultCallback<List<RecipeSimpleObject>> {
+                override fun onResult(value: List<RecipeSimpleObject>?) {
+                    swipe_refresh_feed.isRefreshing = false
+                    feedViewModel.recipes.value = value
+                    adapter!!.setData(feedViewModel.recipes.value, userViewModel.user.value)
+                }
 
-            override fun onFailure(value: List<RecipeSimpleObject>?) {
+                override fun onFailure(value: List<RecipeSimpleObject>?) {
 //                loadFeed()
-                swipe_refresh_feed.isRefreshing = false
-                Toast.makeText(requireContext(), "error feed", Toast.LENGTH_SHORT).show()
-            }
-        })
+                    swipe_refresh_feed.isRefreshing = false
+                    Toast.makeText(requireContext(), "error feed", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     private fun setupAdapter() {
@@ -331,21 +330,20 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //        if (userViewModel.user.value == null) {
         if (login == null) {
             val sharedPreferences =
-                    requireActivity().getSharedPreferences(Constants.APP_PREFS, Context.MODE_PRIVATE)
+                requireActivity().getSharedPreferences(Constants.APP_PREFS, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putString(Constants.USER_LOGIN, StringUtils.EMPTY)
             editor.apply()
             startActivity(Intent(requireActivity(), SplashActivity::class.java))
             requireActivity().finish()
         } else {
-            RetrofitFactory.apiService().getUserByUsername(login)
-                    .enqueue(object : Callback<User?> {
-                        override fun onResponse(call: Call<User?>, response: Response<User?>) {
-                            if (response.code() == 200) {
+            RetrofitFactory.apiService().getUserByUsername(login).enqueue(object : Callback<User?> {
+                override fun onResponse(call: Call<User?>, response: Response<User?>) {
+                    if (response.code() == 200) {
 //                            FeedFragment.log.log(Level.INFO, "user load SUCCESS")
-                                userViewModel.user.value = response.body()
-                                println(userViewModel.user.value)
-                                adapter!!.setUser(userViewModel.user.value!!)
+                        userViewModel.user.value = response.body()
+                        println(userViewModel.user.value)
+                        adapter!!.setUser(userViewModel.user.value!!)
 //                            if (position != null) {
 //                                if (recipeViewModel.selectedRecipe.value != null) {
 //                                    userViewModel.feedRecipeList.value!![position].forks =
@@ -360,18 +358,18 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //                            } else {
 //                                adapter!!.notifyDataSetChanged()
 //                            }
-                            } else {
+                    } else {
 //                            FeedFragment.log.log(Level.INFO, "user load FAILED " + response.code())
-                            }
-                            if (binding != null) {
-                                swipe_refresh_feed.isRefreshing = false
-                            }
-                        }
+                    }
+                    if (binding != null) {
+                        swipe_refresh_feed.isRefreshing = false
+                    }
+                }
 
-                        override fun onFailure(call: Call<User?>, t: Throwable) {
+                override fun onFailure(call: Call<User?>, t: Throwable) {
 //                        FeedFragment.log.log(Level.INFO, "user load FAILED")
-                        }
-                    })
+                }
+            })
         }
     }
 
