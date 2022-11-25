@@ -1,15 +1,11 @@
 package online.fatbook.fatbookapp.ui.activity
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import online.fatbook.fatbookapp.databinding.ActivitySplashBinding
-import online.fatbook.fatbookapp.ui.fragment.authentication.WelcomeFragment
-import online.fatbook.fatbookapp.util.Constants
-import online.fatbook.fatbookapp.util.Constants.FEED_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
