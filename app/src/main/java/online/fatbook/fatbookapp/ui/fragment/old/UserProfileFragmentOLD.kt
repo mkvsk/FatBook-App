@@ -29,7 +29,7 @@ import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileOldBinding
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
@@ -328,27 +328,27 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun saveUser() {
-        RetrofitFactory.apiService().updateUser(user).enqueue(object : Callback<User?> {
-            override fun onResponse(call: Call<User?>, response: Response<User?>) {
-                if (response.code() == 200) {
-//                    UserProfileFragment.log.log(Level.INFO, "user update SUCCESS")
-                    if (response.body() != null) {
-//                        UserProfileFragment.log.log(Level.INFO, response.body().toString())
-                    }
-                    updateImage = false
-                    userViewModel!!.user.value = response.body()
-                    if (userPhoto != null) {
-                        uploadImage()
-                    }
-                } else {
-//                    UserProfileFragment.log.log(Level.INFO, "user update FAILED")
-                }
-            }
-
-            override fun onFailure(call: Call<User?>, t: Throwable) {
-//                UserProfileFragment.log.log(Level.INFO, "user update FAILED")
-            }
-        })
+//        RetrofitFactory.apiService().updateUser(user).enqueue(object : Callback<User?> {
+//            override fun onResponse(call: Call<User?>, response: Response<User?>) {
+//                if (response.code() == 200) {
+////                    UserProfileFragment.log.log(Level.INFO, "user update SUCCESS")
+//                    if (response.body() != null) {
+////                        UserProfileFragment.log.log(Level.INFO, response.body().toString())
+//                    }
+//                    updateImage = false
+//                    userViewModel!!.user.value = response.body()
+//                    if (userPhoto != null) {
+//                        uploadImage()
+//                    }
+//                } else {
+////                    UserProfileFragment.log.log(Level.INFO, "user update FAILED")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<User?>, t: Throwable) {
+////                UserProfileFragment.log.log(Level.INFO, "user update FAILED")
+//            }
+//        })
     }
 
     private fun uploadImage() {

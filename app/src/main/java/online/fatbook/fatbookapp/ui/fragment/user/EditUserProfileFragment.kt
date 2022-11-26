@@ -21,12 +21,12 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.DeleteRequest
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentEditProfileBinding
+import online.fatbook.fatbookapp.network.EditUserRequest
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.FileUtils
@@ -131,75 +131,94 @@ class EditUserProfileFragment : Fragment() {
     }
 
     private fun saveUserProfile() {
-        userViewModel.user.value!!.title =
-            binding.profileTitle.text.toString().replace("\\s+".toRegex(), " ")
-        userViewModel.user.value!!.website =
-            binding.profileWebsite.text.toString().replace("\\s+".toRegex(), " ")
-        userViewModel.user.value!!.bio =
-            binding.profileBio.text.toString().replace("\\s+".toRegex(), " ")
+
+//        userViewModel.user.value!!.title =
+//            binding.profileTitle.text.toString().replace("\\s+".toRegex(), " ")
+//        userViewModel.user.value!!.website =
+//            binding.profileWebsite.text.toString().replace("\\s+".toRegex(), " ")
+//        userViewModel.user.value!!.bio =
+//            binding.profileBio.text.toString().replace("\\s+".toRegex(), " ")
         hideKeyboard(binding.profileBio)
-        if (imageViewModel.userImageToUpload.value != null) {
-            imageViewModel.uploadImage(FileUtils.getFile(
-                imageViewModel.userImageToUpload.value as File
-            ),
+//        if (imageViewModel.userImageToUpload.value != null) {
+//            uploadImage()
+//        } else if (imageViewModel.userImageToDelete.value != null) {
+//            deleteImage()
+//        } else {
+//            updateUser()
+//        }
+        updateUser()
+    }
+
+    private fun deleteImage() {
+        imageViewModel.deleteImage(
+            DeleteRequest(
                 TYPE_USER,
-                userViewModel.user.value!!.username!!,
-                StringUtils.EMPTY,
-                object : ResultCallback<String> {
-                    override fun onResult(value: String?) {
-                        userViewModel.user.value!!.profileImage = value
-                        Log.d(TAG, "image uploaded")
-                        updateUser()
-                    }
+                userViewModel.user.value!!.username
+            ), object : ResultCallback<Void> {
+                override fun onResult(value: Void?) {
+                    userViewModel.user.value!!.profileImage = StringUtils.EMPTY
+                    Log.d(TAG, "image deleted")
+                    updateUser()
+                }
 
-                    override fun onFailure(value: String?) {
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.title_error_image_upload),
-                            Toast.LENGTH_LONG
-                        ).show()
-                        updateUser()
-                    }
-                })
-        } else if (imageViewModel.userImageToDelete.value != null) {
-            imageViewModel.deleteImage(
-                DeleteRequest(
-                    TYPE_USER,
-                    userViewModel.user.value!!.username
-                ), object : ResultCallback<Void> {
-                    override fun onResult(value: Void?) {
-                        userViewModel.user.value!!.profileImage = StringUtils.EMPTY
-                        Log.d(TAG, "image deleted")
-                        updateUser()
-                    }
+                override fun onFailure(value: Void?) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.title_error_image_delete),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    updateUser()
+                }
+            })
+    }
 
-                    override fun onFailure(value: Void?) {
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.title_error_image_delete),
-                            Toast.LENGTH_LONG
-                        ).show()
-                        updateUser()
-                    }
-                })
-        } else {
-            updateUser()
-        }
+    private fun uploadImage() {
+        imageViewModel.uploadImage(
+            FileUtils.getFile(imageViewModel.userImageToUpload.value as File),
+            TYPE_USER,
+            userViewModel.user.value!!.username!!,
+            StringUtils.EMPTY,
+            object : ResultCallback<String> {
+                override fun onResult(value: String?) {
+                    userViewModel.user.value!!.profileImage = value
+                    Log.d(TAG, "image uploaded")
+                    updateUser()
+                }
+
+                override fun onFailure(value: String?) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.title_error_image_upload),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    updateUser()
+                }
+            })
     }
 
     private fun updateUser() {
         Log.d(TAG, "user updated")
-//        userViewModel.updateUser(userViewModel.user.value!!, object : ResultCallback<User> {
-//            override fun onResult(value: User?) {
-//                userViewModel.user.value = value
-//                popBackStack()
-//            }
-//
-//            override fun onFailure(value: User?) {
-//                Toast.makeText(requireContext(), getString(R.string.title_error_user_update), Toast.LENGTH_LONG).show()
-//                popBackStack()
-//            }
-//        })
+        val request = EditUserRequest(
+            userViewModel.user.value!!.username,
+            binding.profileTitle.text.toString().replace("\\s+".toRegex(), " "),
+            binding.profileWebsite.text.toString().replace("\\s+".toRegex(), " "),
+            binding.profileBio.text.toString().replace("\\s+".toRegex(), " ")
+        )
+        userViewModel.updateUser(request, object : ResultCallback<User> {
+            override fun onResult(value: User?) {
+                userViewModel.user.value = value
+                popBackStack()
+            }
+
+            override fun onFailure(value: User?) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.title_error_user_update),
+                    Toast.LENGTH_LONG
+                ).show()
+                popBackStack()
+            }
+        })
     }
 
     private fun drawData(user: User) {

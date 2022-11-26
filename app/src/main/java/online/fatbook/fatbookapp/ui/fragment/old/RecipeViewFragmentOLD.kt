@@ -27,7 +27,7 @@ import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewOldBinding
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredientListener

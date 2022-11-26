@@ -7,10 +7,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
-import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
-import online.fatbook.fatbookapp.core.authentication.LoginResponse
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.network.AuthenticationRequest
+import online.fatbook.fatbookapp.network.AuthenticationResponse
+import online.fatbook.fatbookapp.network.LoginResponse
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

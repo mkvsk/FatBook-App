@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_login_recover_pass_verification_c
 import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
+import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentLoginRecoverPassVerificationCodeBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard

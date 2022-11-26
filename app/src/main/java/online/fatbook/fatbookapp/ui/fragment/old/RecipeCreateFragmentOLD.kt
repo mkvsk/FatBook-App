@@ -25,7 +25,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateOldBinding
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredientListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel

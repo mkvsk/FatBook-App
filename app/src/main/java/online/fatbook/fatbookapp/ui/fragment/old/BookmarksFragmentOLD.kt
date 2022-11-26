@@ -13,7 +13,7 @@ import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentBookmarksOldBinding
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
@@ -117,24 +117,24 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
     }
 
     private fun saveUser() {
-        RetrofitFactory.apiService().updateUser(user).enqueue(object : Callback<User?> {
-            override fun onResponse(call: Call<User?>, response: Response<User?>) {
-                if (response.code() == 200) {
-//                    BookmarksFragment.log.log(Level.INFO, "user update SUCCESS")
-                    if (response.body() != null) {
-//                        BookmarksFragment.log.log(Level.INFO, response.body().toString())
-                    }
-                    userViewModel!!.user.value = response.body()
-                    userUpdated = true
-                } else {
-//                    BookmarksFragment.log.log(Level.INFO, "user update FAILED")
-                }
-            }
-
-            override fun onFailure(call: Call<User?>, t: Throwable) {
-//                BookmarksFragment.log.log(Level.INFO, "user update FAILED")
-            }
-        })
+//        RetrofitFactory.apiService().updateUser(user).enqueue(object : Callback<User?> {
+//            override fun onResponse(call: Call<User?>, response: Response<User?>) {
+//                if (response.code() == 200) {
+////                    BookmarksFragment.log.log(Level.INFO, "user update SUCCESS")
+//                    if (response.body() != null) {
+////                        BookmarksFragment.log.log(Level.INFO, response.body().toString())
+//                    }
+//                    userViewModel!!.user.value = response.body()
+//                    userUpdated = true
+//                } else {
+////                    BookmarksFragment.log.log(Level.INFO, "user update FAILED")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<User?>, t: Throwable) {
+////                BookmarksFragment.log.log(Level.INFO, "user update FAILED")
+//            }
+//        })
     }
 
     override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {

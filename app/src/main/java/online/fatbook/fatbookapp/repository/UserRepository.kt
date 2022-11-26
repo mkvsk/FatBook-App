@@ -7,7 +7,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.user.User
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.network.EditUserRequest
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,9 +43,9 @@ class UserRepository {
             })
         }
 
-    fun updateUser(user: User, callback: ResultCallback<User>) {
+    fun updateUser(request: EditUserRequest, callback: ResultCallback<User>) {
         scope.launch(Dispatchers.IO) {
-            val call = RetrofitFactory.apiService().updateUser(user)
+            val call = RetrofitFactory.apiService().updateUser(request)
 
             call.enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
