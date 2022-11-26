@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import online.fatbook.fatbookapp.R
@@ -13,9 +14,12 @@ object FBAlertDialogBuilder {
     private lateinit var inflater: LayoutInflater
     private lateinit var context: Context
 
+    private lateinit var dialogView: View
+    private lateinit var dialog: AlertDialog
+
     fun set(context: Context, inflater: LayoutInflater) {
-        FBAlertDialogBuilder.context = context
-        FBAlertDialogBuilder.inflater = inflater
+        this.context = context
+        this.inflater = inflater
     }
 
     fun getDialogWithPositiveAndNegativeButtons(
@@ -26,10 +30,10 @@ object FBAlertDialogBuilder {
         positiveBtnText: String = context.resources.getString(R.string.alert_dialog_btn_yes),
         negativeBtnText: String = context.resources.getString(R.string.alert_dialog_btn_cancel)
     ): AlertDialog {
-        val dialogView = inflater.inflate(R.layout.alert_dialog_layout, null)
+        dialogView = inflater.inflate(R.layout.alert_dialog_layout, null)
         dialogView.findViewById<TextView>(R.id.dialog_title).text = title
         dialogView.findViewById<TextView>(R.id.dialog_msg).text = msg
-        val dialog = AlertDialog.Builder(context).setView(dialogView)
+        dialog = AlertDialog.Builder(context).setView(dialogView)
             .setPositiveButton(positiveBtnText) { dialogInterface: DialogInterface, _: Int ->
                 positiveBtnListener.onClick(dialogInterface)
             }
@@ -47,10 +51,10 @@ object FBAlertDialogBuilder {
         listener: FBAlertDialogListener,
         positiveBtnText: String = context.resources.getString(R.string.alert_dialog_btn_yes),
     ): AlertDialog {
-        val dialogView = inflater.inflate(R.layout.alert_dialog_layout, null)
+        dialogView = inflater.inflate(R.layout.alert_dialog_layout, null)
         dialogView.findViewById<TextView>(R.id.dialog_title).text = title
         dialogView.findViewById<TextView>(R.id.dialog_msg).text = msg
-        val dialog = AlertDialog.Builder(context).setView(dialogView)
+        dialog = AlertDialog.Builder(context).setView(dialogView)
             .setPositiveButton(positiveBtnText) { dialogInterface: DialogInterface, _: Int ->
                 listener.onClick(dialogInterface)
             }
@@ -60,8 +64,8 @@ object FBAlertDialogBuilder {
     }
 
     fun getAppInfoDialog(listener: FBAlertDialogListener): AlertDialog {
-        val dialogView = inflater.inflate(R.layout.dialog_app_info, null)
-        val dialog = AlertDialog.Builder(context).setView(dialogView)
+        dialogView = inflater.inflate(R.layout.dialog_app_info, null)
+        dialog = AlertDialog.Builder(context).setView(dialogView)
             .setPositiveButton("nice") { dialogInterface: DialogInterface, _: Int ->
                 listener.onClick(dialogInterface)
             }
