@@ -27,7 +27,7 @@ import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCreateOldBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeIngredientAdapter
-import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredientListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.FileUtils
@@ -40,7 +40,7 @@ import retrofit2.Response
 import java.io.File
 import java.util.*
 
-class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredient {
+class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener {
     private var binding: FragmentRecipeCreateOldBinding? = null
     private var userViewModel: UserViewModel? = null
     private var recipeViewModel: RecipeViewModel? = null

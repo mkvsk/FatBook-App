@@ -23,7 +23,7 @@ import online.fatbook.fatbookapp.databinding.FragmentFeedBinding
 import online.fatbook.fatbookapp.retrofit.RetrofitFactory
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
-import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
+import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActionsListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
@@ -31,7 +31,6 @@ import online.fatbook.fatbookapp.ui.viewmodel.FeedViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants
-import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
@@ -39,7 +38,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteListener,
-    BaseFragmentActions {
+    BaseFragmentActionsListener {
 
     private var binding: FragmentFeedBinding? = null
     private var adapter: RecipeAdapter? = null

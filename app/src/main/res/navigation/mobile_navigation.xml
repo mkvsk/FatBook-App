@@ -65,7 +65,7 @@
 
     <fragment
         android:id="@+id/navigation_recipe_view"
-        android:name="online.fatbook.fatbookapp.ui.fragment.RecipeViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeViewFragment"
         android:label="@string/mobile_nav_recipe_view"
         tools:layout="@layout/fragment_recipe_view">
 
@@ -358,7 +358,7 @@
 
     <fragment
         android:id="@+id/navigation_view_image"
-        android:name="online.fatbook.fatbookapp.ui.fragment.ImageViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.image.ImageViewFragment"
         android:label="@null"
         tools:layout="@layout/fragment_image_view" />
 

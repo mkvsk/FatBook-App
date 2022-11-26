@@ -1,10 +1,8 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -27,7 +25,7 @@ import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.UserProfileRecipesAdapter
-import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
+import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActionsListener
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.*
@@ -36,7 +34,7 @@ import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogListener
 import org.apache.commons.lang3.StringUtils
 
 
-class UserProfileFragment : Fragment(), BaseFragmentActions {
+class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     private var binding: FragmentUserProfileBinding? = null
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }

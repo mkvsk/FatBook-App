@@ -25,14 +25,14 @@ import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
 import online.fatbook.fatbookapp.ui.adapters.SearchAdapter
-import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
+import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActionsListener
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
 import online.fatbook.fatbookapp.util.obtainViewModel
 
-class SearchFragment : Fragment(), BaseFragmentActions {
+class SearchFragment : Fragment(), BaseFragmentActionsListener {
 
     private var binding: FragmentSearchBinding? = null
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }

@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment
+package online.fatbook.fatbookapp.ui.fragment.image
 
 import android.graphics.Canvas
 import android.graphics.Color
