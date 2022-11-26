@@ -8,25 +8,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_app_settings.*
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import online.fatbook.fatbookapp.databinding.FragmentAppSettingsBinding
-import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE_CHANGED
 
 class AppSettingsFragment : Fragment() {
-    private var binding: FragmentAppSettingsBinding? = null
+    private var _binding: FragmentAppSettingsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAppSettingsBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentAppSettingsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     //TODO ANIM dark mode switch
@@ -34,13 +34,13 @@ class AppSettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupMenu()
         val sharedPreferences =
-                requireActivity().getSharedPreferences(SP_TAG, Context.MODE_PRIVATE)
-        switch_app_theme.isChecked = sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)
+            requireActivity().getSharedPreferences(SP_TAG, Context.MODE_PRIVATE)
+        binding.switchAppTheme.isChecked = sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)
         val intent = Intent(requireContext(), SplashActivity::class.java)
 //        requireActivity().overridePendingTransition(0, 0)
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         val editor = sharedPreferences.edit()
-        switch_app_theme.setOnCheckedChangeListener { _, isChecked ->
+        binding.switchAppTheme.setOnCheckedChangeListener { _, isChecked ->
             editor.putBoolean(SP_TAG_DARK_MODE_CHANGED, true)
             when {
                 isChecked -> {
@@ -65,12 +65,17 @@ class AppSettingsFragment : Fragment() {
     }
 
     private fun setupMenu() {
-        toolbar_app_settings.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             popBackStack()
         }
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

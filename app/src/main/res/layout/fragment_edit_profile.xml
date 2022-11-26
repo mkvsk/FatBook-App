@@ -10,13 +10,13 @@
     <include layout="@layout/include_progress_overlay" />
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout_edit_userprofile"
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar_edit_userprofile"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/theme_toolbar_color"
@@ -32,13 +32,13 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container_edit_userprofile"
+        android:id="@+id/containerEditUserprofile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardview_edit_userprofile"
+            android:id="@+id/cardviewEditUserprofile"
             style="@style/myMaterialCardRight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imageview_userphoto_edit_userprofile"
+                    android:id="@+id/userPhoto"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_marginTop="5dp"
@@ -78,12 +78,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="-15dp"
                     android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_edit_userprofile"
+                    app:layout_constraintBottom_toBottomOf="@id/userPhoto"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent">
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/button_edit_photo"
+                        android:id="@+id/editPhoto"
                         style="@style/roundBtnEditPhoto"
                         android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
                         android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
@@ -91,7 +91,7 @@
                         app:maxImageSize="16dp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/button_delete_photo"
+                        android:id="@+id/deletePhoto"
                         style="@style/roundBtnDeletePhoto"
                         android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
                         android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
@@ -102,16 +102,16 @@
 
 
                 <ImageView
-                    android:id="@+id/imageview_ic_title_edit_userprofile"
+                    android:id="@+id/icTitle"
                     android:layout_width="@dimen/ic_userprofile_w_h"
                     android:layout_height="@dimen/ic_userprofile_w_h"
                     android:src="@drawable/ic_edit_profile"
-                    app:layout_constraintBottom_toBottomOf="@id/edittext_profile_title"
+                    app:layout_constraintBottom_toBottomOf="@id/profileTitle"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/edittext_profile_title" />
+                    app:layout_constraintTop_toTopOf="@id/profileTitle" />
 
                 <EditText
-                    android:id="@+id/edittext_profile_title"
+                    android:id="@+id/profileTitle"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginStart="20dp"
@@ -124,20 +124,20 @@
                     android:maxLength="40"
                     android:paddingHorizontal="10dp"
                     android:textAppearance="@style/editProfileText"
-                    app:layout_constraintLeft_toRightOf="@id/imageview_ic_title_edit_userprofile"
-                    app:layout_constraintTop_toBottomOf="@id/imageview_userphoto_edit_userprofile" />
+                    app:layout_constraintLeft_toRightOf="@id/icTitle"
+                    app:layout_constraintTop_toBottomOf="@id/userPhoto" />
 
                 <ImageView
-                    android:id="@+id/imageview_ic_website_edit_userprofile"
+                    android:id="@+id/icWebsite"
                     android:layout_width="@dimen/ic_userprofile_w_h"
                     android:layout_height="@dimen/ic_userprofile_w_h"
                     android:src="@drawable/ic_user_website"
-                    app:layout_constraintBottom_toBottomOf="@id/edittext_profile_website"
+                    app:layout_constraintBottom_toBottomOf="@id/profileWebsite"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/edittext_profile_website" />
+                    app:layout_constraintTop_toTopOf="@id/profileWebsite" />
 
                 <EditText
-                    android:id="@+id/edittext_profile_website"
+                    android:id="@+id/profileWebsite"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginStart="20dp"
@@ -150,20 +150,20 @@
                     android:maxLength="1000"
                     android:paddingHorizontal="10dp"
                     android:textAppearance="@style/editProfileText"
-                    app:layout_constraintLeft_toRightOf="@id/imageview_ic_website_edit_userprofile"
-                    app:layout_constraintTop_toBottomOf="@id/edittext_profile_title" />
+                    app:layout_constraintLeft_toRightOf="@id/icWebsite"
+                    app:layout_constraintTop_toBottomOf="@id/profileTitle" />
 
                 <ImageView
-                    android:id="@+id/imageview_ic_bio_edit_userprofile"
+                    android:id="@+id/icBio"
                     android:layout_width="@dimen/ic_userprofile_w_h"
                     android:layout_height="@dimen/ic_userprofile_w_h"
                     android:layout_marginTop="6dp"
                     android:src="@drawable/ic_user_bio"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/edittext_profile_bio" />
+                    app:layout_constraintTop_toTopOf="@id/profileBio" />
 
                 <EditText
-                    android:id="@+id/edittext_profile_bio"
+                    android:id="@+id/profileBio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -179,11 +179,11 @@
                     android:paddingVertical="5dp"
                     android:scrollbars="vertical"
                     android:textAppearance="@style/editProfileText"
-                    app:layout_constraintLeft_toRightOf="@id/imageview_ic_website_edit_userprofile"
-                    app:layout_constraintTop_toBottomOf="@id/edittext_profile_website" />
+                    app:layout_constraintLeft_toRightOf="@id/icWebsite"
+                    app:layout_constraintTop_toBottomOf="@id/profileWebsite" />
 
                 <TextView
-                    android:id="@+id/textview_bio_length"
+                    android:id="@+id/bioLength"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
@@ -192,8 +192,8 @@
                     android:textColor="@color/blue_grey_200"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="@id/edittext_profile_bio"
-                    app:layout_constraintTop_toBottomOf="@id/edittext_profile_bio" />
+                    app:layout_constraintRight_toRightOf="@id/profileBio"
+                    app:layout_constraintTop_toBottomOf="@id/profileBio" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

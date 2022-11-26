@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_badges.*
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import online.fatbook.fatbookapp.R
@@ -13,14 +14,15 @@ import online.fatbook.fatbookapp.databinding.FragmentBadgesBinding
 
 class BadgesFragment : Fragment() {
 
-    private var binding: FragmentBadgesBinding? = null
+    private var _binding: FragmentBadgesBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBadgesBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentBadgesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,12 +31,17 @@ class BadgesFragment : Fragment() {
     }
 
     private fun setupMenu() {
-        toolbar_badges.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             popBackStack()
         }
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

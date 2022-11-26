@@ -16,15 +16,17 @@ import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 
 class FavouritesRecipesPageFragment : Fragment(), OnRecipeClickListener {
 
-    private var binding: FragmentFavouritesRecipesPageBinding? = null
+    private var _binding: FragmentFavouritesRecipesPageBinding? = null
+    private val binding get() = _binding!!
+
     private var adapter: RecipeAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFavouritesRecipesPageBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentFavouritesRecipesPageBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,7 +52,12 @@ class FavouritesRecipesPageFragment : Fragment(), OnRecipeClickListener {
 
     override fun onResume() {
         super.onResume()
-        binding!!.root.requestLayout()
+        binding.root.requestLayout()
         Log.d("STATE", "RESUME TAB 2")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
