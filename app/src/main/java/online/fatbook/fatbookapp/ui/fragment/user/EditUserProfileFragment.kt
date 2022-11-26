@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import online.fatbook.fatbookapp.R
@@ -37,7 +38,8 @@ import java.io.File
 
 class EditUserProfileFragment : Fragment() {
 
-    private var binding: FragmentEditProfileBinding? = null
+    private var _binding: FragmentEditProfileBinding? = null
+    private val binding get() = _binding!!
 
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
@@ -47,8 +49,8 @@ class EditUserProfileFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentEditProfileBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,7 +73,7 @@ class EditUserProfileFragment : Fragment() {
 
         })
 
-        edittext_profile_website.addTextChangedListener(object : TextWatcher {
+        binding.profileWebsite.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -122,7 +124,7 @@ class EditUserProfileFragment : Fragment() {
 
     private fun saveUserProfile() {
         userViewModel.user.value!!.title = edittext_profile_title.text.toString().replace("\\s+".toRegex(), " ")
-        userViewModel.user.value!!.website = edittext_profile_website.text.toString().replace("\\s+".toRegex(), " ")
+        userViewModel.user.value!!.website = profile_website.text.toString().replace("\\s+".toRegex(), " ")
         userViewModel.user.value!!.bio = edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " ")
         hideKeyboard(edittext_profile_bio)
         if (imageViewModel.userImageToUpload.value != null) {
@@ -184,9 +186,9 @@ class EditUserProfileFragment : Fragment() {
         }
 
         if (user.website.isNullOrEmpty()) {
-            edittext_profile_website.setText(StringUtils.EMPTY)
+            profile_website.setText(StringUtils.EMPTY)
         } else {
-            edittext_profile_website.setText(user.website)
+            profile_website.setText(user.website)
         }
 
         if (user.bio.isNullOrEmpty()) {
@@ -282,7 +284,8 @@ class EditUserProfileFragment : Fragment() {
 //    }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+//        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
     }
 
     override fun onDestroy() {
