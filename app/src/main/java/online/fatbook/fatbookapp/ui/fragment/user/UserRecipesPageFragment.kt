@@ -16,7 +16,9 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 
 class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
 
-    private var binding: FragmentAllRecipesPageBinding? = null
+    private var _binding: FragmentAllRecipesPageBinding? = null
+    private val binding get() = _binding!!
+
     private var adapter: RecipeAdapter? = null
 
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
@@ -29,8 +31,8 @@ class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAllRecipesPageBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentAllRecipesPageBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,8 +65,13 @@ class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
 
     override fun onResume() {
         super.onResume()
-        binding!!.root.requestLayout()
+        binding.root.requestLayout()
         Log.d("STATE", "RESUME TAB 1")
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
