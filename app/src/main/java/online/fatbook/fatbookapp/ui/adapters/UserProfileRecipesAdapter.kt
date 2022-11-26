@@ -7,6 +7,9 @@ import online.fatbook.fatbookapp.ui.fragment.user.FavouritesRecipesPageFragment
 
 class UserProfileRecipesAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
+    private lateinit var userRecipesPageFragment: UserRecipesPageFragment
+    private lateinit var favouritesRecipesPageFragment: FavouritesRecipesPageFragment
+
     override fun getItemCount(): Int {
         return 2
     }
@@ -15,12 +18,22 @@ class UserProfileRecipesAdapter(fragment: Fragment) : FragmentStateAdapter(fragm
         println("UserProfileRecipesAdapter")
         return when (position) {
             0 -> {
-                UserRecipesPageFragment()
+                userRecipesPageFragment = UserRecipesPageFragment()
+                userRecipesPageFragment
             }
             else -> {
-                FavouritesRecipesPageFragment()
+                favouritesRecipesPageFragment = FavouritesRecipesPageFragment()
+                favouritesRecipesPageFragment
             }
         }
+    }
+
+    fun setRecipes() {
+//        userRecipesPageFragment.setData()
+    }
+
+    fun setFavs() {
+//        favouritesRecipesPageFragment.setData()
     }
 
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -31,6 +32,7 @@ import online.fatbook.fatbookapp.ui.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
 import online.fatbook.fatbookapp.util.obtainViewModel
+import java.util.Collections
 
 class SearchFragment : Fragment(), BaseFragmentActionsListener {
 
@@ -197,7 +199,8 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
     private fun loadCategories() {
         staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
             override fun onResult(value: List<CookingCategory>?) {
-                searchViewModel.categories.value = value as ArrayList<CookingCategory>
+                searchViewModel.categories.value = ArrayList(value!!)
+                staticDataViewModel.cookingCategories.value = ArrayList(value)
                 adapterCategories?.setData(value)
                 adapterCategories?.setSelectAll(StaticDataObject(getString(R.string.title_search_btn_select_all), TAG_SELECT_ALL_BUTTON))
                 adapterCategories?.setSelected(getPreselectedCategories())
@@ -213,7 +216,8 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
     private fun loadMethods() {
         staticDataViewModel.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {
             override fun onResult(value: List<CookingMethod>?) {
-                searchViewModel.methods.value = value as ArrayList<CookingMethod>
+                searchViewModel.methods.value = ArrayList(value!!)
+                staticDataViewModel.cookingMethods.value = ArrayList(value)
                 adapterMethods?.setData(value)
                 adapterMethods?.setSelectAll(StaticDataObject(getString(R.string.title_search_btn_select_all), TAG_SELECT_ALL_BUTTON))
                 adapterMethods?.setSelected(getPreselectedMethods())
@@ -230,7 +234,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         staticDataViewModel.getAllCookingDifficulties(object :
                 ResultCallback<List<CookingDifficulty>> {
             override fun onResult(value: List<CookingDifficulty>?) {
-                searchViewModel.difficulties.value = value as ArrayList<CookingDifficulty>
+                searchViewModel.difficulties.value = ArrayList(value!!)
                 adapterDifficulty?.setData(value)
                 adapterDifficulty?.setSelected(getPreselectedDifficulties())
                 checkStaticDataLoaded()
@@ -273,7 +277,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+       findNavController().popBackStack()
     }
 
     override fun onDestroy() {
