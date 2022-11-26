@@ -9,14 +9,20 @@ import online.fatbook.fatbookapp.databinding.FragmentFollowersBinding
 
 class FollowersFragment : Fragment() {
 
-    private var binding: FragmentFollowersBinding? = null
+    private var _binding: FragmentFollowersBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFollowersBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentFollowersBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }
