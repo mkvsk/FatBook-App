@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import online.fatbook.fatbookapp.R
@@ -37,7 +38,8 @@ import java.io.File
 
 class EditUserProfileFragment : Fragment() {
 
-    private var binding: FragmentEditProfileBinding? = null
+    private var _binding: FragmentEditProfileBinding? = null
+    private val binding get() = _binding!!
 
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
@@ -45,10 +47,14 @@ class EditUserProfileFragment : Fragment() {
     private var bioTextLength: Int = 0
     private var chooseImageFromGallery: ActivityResultLauncher<String>? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentEditProfileBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,13 +62,15 @@ class EditUserProfileFragment : Fragment() {
         setupMenu()
         setupImageEditButtons()
         drawData(userViewModel.user.value!!)
-        edittext_profile_title.addTextChangedListener(object : TextWatcher {
+        binding.profileTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString().length == edittext_profile_title.filters.filterIsInstance<InputFilter.LengthFilter>().firstOrNull()?.max!!) {
-                    hideKeyboard(edittext_profile_title)
+                if (s.toString().length == binding.profileTitle.filters.filterIsInstance<InputFilter.LengthFilter>()
+                        .firstOrNull()?.max!!
+                ) {
+                    hideKeyboard(binding.profileTitle)
                 }
             }
 
@@ -71,7 +79,7 @@ class EditUserProfileFragment : Fragment() {
 
         })
 
-        edittext_profile_website.addTextChangedListener(object : TextWatcher {
+        binding.profileWebsite.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -83,16 +91,18 @@ class EditUserProfileFragment : Fragment() {
 
         })
 
-        edittext_profile_bio.addTextChangedListener(object : TextWatcher {
+        binding.profileBio.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                bioTextLength = edittext_profile_bio.filters.filterIsInstance<InputFilter.LengthFilter>().firstOrNull()?.max!!
+                bioTextLength =
+                    binding.profileBio.filters.filterIsInstance<InputFilter.LengthFilter>()
+                        .firstOrNull()?.max!!
                 bioTextLength -= s.toString().length
-                textview_bio_length.text = bioTextLength.toString()
+                binding.bioLength.text = bioTextLength.toString()
                 if (bioTextLength == 0) {
-                    hideKeyboard(edittext_profile_bio)
+                    hideKeyboard(binding.profileBio)
                 }
             }
 
@@ -103,9 +113,9 @@ class EditUserProfileFragment : Fragment() {
     }
 
     private fun setupMenu() {
-        toolbar_edit_userprofile.inflateMenu(R.menu.edit_user_profile_menu)
-        toolbar_edit_userprofile.setOnMenuItemClickListener(this::onOptionsItemSelected)
-        toolbar_edit_userprofile.setNavigationOnClickListener {
+        binding.toolbar.inflateMenu(R.menu.edit_user_profile_menu)
+        binding.toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        binding.toolbar.setNavigationOnClickListener {
             popBackStack()
         }
     }
@@ -121,41 +131,57 @@ class EditUserProfileFragment : Fragment() {
     }
 
     private fun saveUserProfile() {
-        userViewModel.user.value!!.title = edittext_profile_title.text.toString().replace("\\s+".toRegex(), " ")
-        userViewModel.user.value!!.website = edittext_profile_website.text.toString().replace("\\s+".toRegex(), " ")
-        userViewModel.user.value!!.bio = edittext_profile_bio.text.toString().replace("\\s+".toRegex(), " ")
-        hideKeyboard(edittext_profile_bio)
+        userViewModel.user.value!!.title =
+            binding.profileTitle.text.toString().replace("\\s+".toRegex(), " ")
+        userViewModel.user.value!!.website =
+            binding.profileWebsite.text.toString().replace("\\s+".toRegex(), " ")
+        userViewModel.user.value!!.bio =
+            binding.profileBio.text.toString().replace("\\s+".toRegex(), " ")
+        hideKeyboard(binding.profileBio)
         if (imageViewModel.userImageToUpload.value != null) {
             imageViewModel.uploadImage(FileUtils.getFile(
-                    imageViewModel.userImageToUpload.value as File),
-                    TYPE_USER,
-                    userViewModel.user.value!!.username!!,
-                    StringUtils.EMPTY,
-                    object : ResultCallback<String> {
-                        override fun onResult(value: String?) {
-                            userViewModel.user.value!!.profileImage = value
-                            Log.d(TAG, "image uploaded")
-                            updateUser()
-                        }
+                imageViewModel.userImageToUpload.value as File
+            ),
+                TYPE_USER,
+                userViewModel.user.value!!.username!!,
+                StringUtils.EMPTY,
+                object : ResultCallback<String> {
+                    override fun onResult(value: String?) {
+                        userViewModel.user.value!!.profileImage = value
+                        Log.d(TAG, "image uploaded")
+                        updateUser()
+                    }
 
-                        override fun onFailure(value: String?) {
-                            Toast.makeText(requireContext(), getString(R.string.title_error_image_upload), Toast.LENGTH_LONG).show()
-                            updateUser()
-                        }
-                    })
+                    override fun onFailure(value: String?) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.title_error_image_upload),
+                            Toast.LENGTH_LONG
+                        ).show()
+                        updateUser()
+                    }
+                })
         } else if (imageViewModel.userImageToDelete.value != null) {
-            imageViewModel.deleteImage(DeleteRequest(TYPE_USER, userViewModel.user.value!!.username), object : ResultCallback<Void> {
-                override fun onResult(value: Void?) {
-                    userViewModel.user.value!!.profileImage = StringUtils.EMPTY
-                    Log.d(TAG, "image deleted")
-                    updateUser()
-                }
+            imageViewModel.deleteImage(
+                DeleteRequest(
+                    TYPE_USER,
+                    userViewModel.user.value!!.username
+                ), object : ResultCallback<Void> {
+                    override fun onResult(value: Void?) {
+                        userViewModel.user.value!!.profileImage = StringUtils.EMPTY
+                        Log.d(TAG, "image deleted")
+                        updateUser()
+                    }
 
-                override fun onFailure(value: Void?) {
-                    Toast.makeText(requireContext(), getString(R.string.title_error_image_delete), Toast.LENGTH_LONG).show()
-                    updateUser()
-                }
-            })
+                    override fun onFailure(value: Void?) {
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.title_error_image_delete),
+                            Toast.LENGTH_LONG
+                        ).show()
+                        updateUser()
+                    }
+                })
         } else {
             updateUser()
         }
@@ -178,82 +204,92 @@ class EditUserProfileFragment : Fragment() {
 
     private fun drawData(user: User) {
         if (user.title.isNullOrEmpty()) {
-            edittext_profile_title.setText(StringUtils.EMPTY)
+            binding.profileTitle.setText(StringUtils.EMPTY)
         } else {
-            edittext_profile_title.setText(user.title)
+            binding.profileTitle.setText(user.title)
         }
 
         if (user.website.isNullOrEmpty()) {
-            edittext_profile_website.setText(StringUtils.EMPTY)
+            binding.profileWebsite.setText(StringUtils.EMPTY)
         } else {
-            edittext_profile_website.setText(user.website)
+            binding.profileWebsite.setText(user.website)
         }
 
         if (user.bio.isNullOrEmpty()) {
-            edittext_profile_bio.setText(StringUtils.EMPTY)
+            binding.profileBio.setText(StringUtils.EMPTY)
         } else {
-            edittext_profile_bio.setText(user.bio)
+            binding.profileBio.setText(user.bio)
         }
 
         if (imageViewModel.userImageToUpload.value == null) {
             if (user.profileImage.isNullOrEmpty()) {
                 toggleImageButtons(false)
-                imageview_userphoto_edit_userprofile.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
+                binding.userPhoto.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
             } else {
                 toggleImageButtons(true)
-                Glide.with(requireContext()).load(user.profileImage).into(imageview_userphoto_edit_userprofile)
+                Glide.with(requireContext()).load(user.profileImage).into(binding.userPhoto)
             }
         } else {
-            Glide.with(requireContext()).load(imageViewModel.userImageToUpload.value).into(imageview_userphoto_edit_userprofile)
+            Glide.with(requireContext()).load(imageViewModel.userImageToUpload.value)
+                .into(binding.userPhoto)
         }
     }
 
     private fun setupImageEditButtons() {
-        imageview_userphoto_edit_userprofile.setOnClickListener {
-            imageViewModel.image.value = imageview_userphoto_edit_userprofile.drawable
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_image_view_from_edit_profile)
+        binding.userPhoto.setOnClickListener {
+            imageViewModel.image.value = binding.userPhoto.drawable
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_image_view_from_edit_profile)
         }
-        button_edit_photo.setOnClickListener {
+        binding.editPhoto.setOnClickListener {
             if (verifyStoragePermissions(requireActivity())) {
                 chooseImageFromGallery!!.launch("image/*")
             }
         }
-        button_delete_photo.setOnClickListener {
+        binding.deletePhoto.setOnClickListener {
             imageViewModel.userImageToDelete.value = userViewModel.user.value!!.profileImage
             imageViewModel.userImageToUpload.value = null
             toggleImageButtons(false)
-            imageview_userphoto_edit_userprofile.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
+            binding.userPhoto.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
         }
-        chooseImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            if (verifyStoragePermissions(requireActivity())) {
-                uri?.let {
-                    toggleImageButtons(true)
-                    val path = FileUtils.getPath(requireContext(), it)
-                    imageViewModel.userImageToUpload.value = path?.let { file -> File(file) }
-                    Glide.with(requireContext()).load(uri).into(imageview_userphoto_edit_userprofile)
+        chooseImageFromGallery =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+                if (verifyStoragePermissions(requireActivity())) {
+                    uri?.let {
+                        toggleImageButtons(true)
+                        val path = FileUtils.getPath(requireContext(), it)
+                        imageViewModel.userImageToUpload.value = path?.let { file -> File(file) }
+                        Glide.with(requireContext()).load(uri).into(binding.userPhoto)
+                    }
                 }
             }
-        }
     }
 
     private fun toggleImageButtons(isImageExists: Boolean) {
         if (isImageExists) {
-            imageview_userphoto_edit_userprofile.isClickable = true
-            button_edit_photo.setImageResource(R.drawable.ic_btn_edit)
-            button_edit_photo.visibility = View.VISIBLE
-            button_delete_photo.visibility = View.VISIBLE
+            binding.userPhoto.isClickable = true
+            binding.editPhoto.setImageResource(R.drawable.ic_btn_edit)
+            binding.editPhoto.visibility = View.VISIBLE
+            binding.deletePhoto.visibility = View.VISIBLE
         } else {
-            imageview_userphoto_edit_userprofile.isClickable = false
-            button_edit_photo.setImageResource(R.drawable.ic_btn_add)
-            button_edit_photo.visibility = View.VISIBLE
-            button_delete_photo.visibility = View.INVISIBLE
+            binding.userPhoto.isClickable = false
+            binding.editPhoto.setImageResource(R.drawable.ic_btn_add)
+            binding.editPhoto.visibility = View.VISIBLE
+            binding.deletePhoto.visibility = View.INVISIBLE
         }
     }
 
     private fun verifyStoragePermissions(requireActivity: FragmentActivity): Boolean {
-        val permission = ActivityCompat.checkSelfPermission(requireActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val permission = ActivityCompat.checkSelfPermission(
+            requireActivity,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
         return if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE)
+            ActivityCompat.requestPermissions(
+                requireActivity,
+                PERMISSIONS_STORAGE,
+                REQUEST_EXTERNAL_STORAGE
+            )
             false
         } else {
             true
@@ -262,7 +298,10 @@ class EditUserProfileFragment : Fragment() {
 
     companion object {
         private const val REQUEST_EXTERNAL_STORAGE = 1
-        private val PERMISSIONS_STORAGE = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        private val PERMISSIONS_STORAGE = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
         private const val TAG = "EditUserProfileFragment"
     }
 
@@ -282,7 +321,7 @@ class EditUserProfileFragment : Fragment() {
 //    }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
     }
 
     override fun onDestroy() {
@@ -290,5 +329,6 @@ class EditUserProfileFragment : Fragment() {
         imageViewModel.userImageToDelete.value = null
         imageViewModel.userImageToUpload.value = null
         Log.d(TAG, "onDestroy: cleared images")
+        _binding = null
     }
 }
