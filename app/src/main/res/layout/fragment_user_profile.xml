@@ -272,7 +272,7 @@
                                 android:translationZ="2dp" />
 
                             <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/button_messages"
+                                android:id="@+id/button_message_user"
                                 style="@style/buttons_in_fragments_style"
                                 android:layout_width="@dimen/btn_main_w"
                                 android:layout_height="@dimen/btn_main_h"
