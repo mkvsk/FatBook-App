@@ -46,7 +46,7 @@
         android:label="@null" />
     <fragment
         android:id="@+id/image_view_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.ImageViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.image.ImageViewFragment"
         android:label="@null" />
     <fragment
         android:id="@+id/app_settings_dest"

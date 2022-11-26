@@ -16,9 +16,9 @@ import online.fatbook.fatbookapp.ui.fragment.recipe.RecipeFirstStageFragment
 import online.fatbook.fatbookapp.ui.fragment.search.SearchFragment
 import online.fatbook.fatbookapp.ui.fragment.user.UserProfileFragment
 import online.fatbook.fatbookapp.util.Constants.rootDestinations
-import online.fatbook.fatbookapp.ui.listeners.FragmentLifecycle
+import online.fatbook.fatbookapp.ui.listeners.FragmentLifecycleListener
 
-class BaseFragment : Fragment(), FragmentLifecycle {
+class BaseFragment : Fragment(), FragmentLifecycleListener {
 
     private val defaultInt = -1
     private var layoutRes: Int = -1

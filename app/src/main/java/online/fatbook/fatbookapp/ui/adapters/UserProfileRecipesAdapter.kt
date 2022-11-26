@@ -12,6 +12,7 @@ class UserProfileRecipesAdapter(fragment: Fragment) : FragmentStateAdapter(fragm
     }
 
     override fun createFragment(position: Int): Fragment {
+        println("UserProfileRecipesAdapter")
         return when (position) {
             0 -> {
                 UserRecipesPageFragment()

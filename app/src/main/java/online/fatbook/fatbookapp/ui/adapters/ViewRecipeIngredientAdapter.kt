@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.rv_add_new_recipe_ingredients_old.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
-import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredient
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredientListener
 
 class ViewRecipeIngredientAdapter :
     RecyclerView.Adapter<ViewRecipeIngredientAdapter.ViewHolder>(),
@@ -16,7 +16,7 @@ class ViewRecipeIngredientAdapter :
 
     private var data: List<RecipeIngredient> = ArrayList()
     private var isEditAvailable = false
-    private var listener: OnRecipeViewDeleteIngredient? = null
+    private var listener: OnRecipeViewDeleteIngredientListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -45,7 +45,7 @@ class ViewRecipeIngredientAdapter :
         }
     }
 
-    fun setClickListener(listener: OnRecipeViewDeleteIngredient) {
+    fun setClickListener(listener: OnRecipeViewDeleteIngredientListener) {
         this.listener = listener
     }
 

@@ -37,7 +37,7 @@ import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeFirstStageBinding
 import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeCookingDifficultyAdapter
-import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
+import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActionsListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeDifficultyClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
@@ -48,7 +48,7 @@ import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogListener
 import java.io.File
 import java.time.LocalTime
 
-class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener, BaseFragmentActions {
+class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener, BaseFragmentActionsListener {
 
     private var binding: FragmentRecipeFirstStageBinding? = null
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }

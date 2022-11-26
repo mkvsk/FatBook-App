@@ -1,6 +1,6 @@
 package online.fatbook.fatbookapp.ui.listeners
 
-interface BaseFragmentActions {
+interface BaseFragmentActionsListener {
     fun onBackPressedBase(): Boolean
     fun scrollUpBase()
 }

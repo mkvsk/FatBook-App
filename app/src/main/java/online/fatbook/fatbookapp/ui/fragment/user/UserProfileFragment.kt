@@ -1,10 +1,8 @@
 package online.fatbook.fatbookapp.ui.fragment.user
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -20,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_user_profile.*
+import kotlinx.android.synthetic.main.fragment_user_profile.nsv_userprofile
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -27,7 +26,7 @@ import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentUserProfileBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.UserProfileRecipesAdapter
-import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
+import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActionsListener
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.*
@@ -36,7 +35,7 @@ import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogListener
 import org.apache.commons.lang3.StringUtils
 
 
-class UserProfileFragment : Fragment(), BaseFragmentActions {
+class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     private var binding: FragmentUserProfileBinding? = null
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
@@ -66,23 +65,8 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
             toolbar_userprofile.visibility = View.GONE
             loadUserData()
             setupMenu(R.menu.user_profile_current_menu)
-            val fragmentAdapter = UserProfileRecipesAdapter(this)
-            viewPager = vp_userprofile
-            viewPager.isUserInputEnabled = false
-            viewPager.adapter = fragmentAdapter
-            viewPager.offscreenPageLimit = 2
-            val tabLayout = tabLayout_userprofile
-            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                tab.text =
-                    if (position == 0) {
-                        resources.getString(R.string.title_recipes_profile)
-                    } else {
-                        resources.getString(R.string.title_favourites_profile)
-                    }
-            }.attach()
-
-            ViewPager2ViewHeightAnimator().viewPager2 = viewPager
-
+            setupSwipeRefresh()
+            setupViewPager()
             imageview_recipes_qtt_userprofile.setOnClickListener {
                 focusOnRecipes()
             }
@@ -109,13 +93,44 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
             imageview_ic_expand.setOnClickListener {
                 animateTextExpand()
             }
+        }
+    }
 
-            button_messages.setOnClickListener {
-                swipe_refresh_user_profile.isRefreshing = false
-            }
-            swipe_refresh_user_profile.setOnRefreshListener {
-                loadUserData()
-            }
+    private fun setupViewPager() {
+        val fragmentAdapter = UserProfileRecipesAdapter(this)
+        println("UserProfileRecipesAdapter init")
+        viewPager = vp_userprofile
+        viewPager.isUserInputEnabled = false
+        viewPager.adapter = fragmentAdapter
+        viewPager.offscreenPageLimit = 2
+        val tabLayout = tabLayout_userprofile
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text =
+                if (position == 0) {
+                    resources.getString(R.string.title_recipes_profile)
+                } else {
+                    resources.getString(R.string.title_favourites_profile)
+                }
+        }.attach()
+        ViewPager2ViewHeightAnimator().viewPager2 = viewPager
+    }
+
+    private fun setupSwipeRefresh() {
+        swipe_refresh_user_profile.isEnabled = false
+        swipe_refresh_user_profile.isRefreshing = false
+        swipe_refresh_user_profile.setProgressBackgroundColorSchemeColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.theme_primary_bgr
+            )
+        )
+        swipe_refresh_user_profile.setColorSchemeColors(
+            ContextCompat.getColor(
+                requireContext(), R.color.color_pink_a200
+            )
+        )
+        swipe_refresh_user_profile.setOnRefreshListener {
+            loadUserData()
         }
     }
 
@@ -226,11 +241,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
         ll_btns_follow_message.visibility = View.GONE
         tabLayout_userprofile.visibility = View.VISIBLE
         toolbar_userprofile.navigationIcon = null
-        if (userViewModel.user.value?.pid == null) {
+//        if (userViewModel.user.value?.pid == null) {
             loadUser(userViewModel.user.value!!.username!!, true)
-        } else {
-            drawData(userViewModel.user.value!!)
-        }
+//        } else {
+//            drawData(userViewModel.user.value!!)
+//        }
     }
 
     private fun setupViewForSelectedUser() {
@@ -293,6 +308,9 @@ class UserProfileFragment : Fragment(), BaseFragmentActions {
         progress_overlay.visibility = View.GONE
         toolbar_userprofile.visibility = View.VISIBLE
         swipe_refresh_user_profile.isRefreshing = false
+        swipe_refresh_user_profile.isEnabled = true
+        UserRecipesPageFragment().setData()
+        FavouritesRecipesPageFragment().setData()
     }
 
     private fun loadUser(username: String, updateCurrentUser: Boolean) {

@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.ui.fragment
+package online.fatbook.fatbookapp.ui.fragment.image
 
 import android.os.Bundle
 import android.transition.TransitionInflater

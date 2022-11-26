@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import online.fatbook.fatbookapp.databinding.FragmentNotificationsBinding
-import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActions
+import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActionsListener
 
-class NotificationsFragment : Fragment(), BaseFragmentActions {
+class NotificationsFragment : Fragment(), BaseFragmentActionsListener {
 
     private var binding: FragmentNotificationsBinding? = null
 

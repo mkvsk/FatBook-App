@@ -36,12 +36,16 @@ class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d(TAG, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
+        adapter = RecipeAdapter()
+        adapter!!.setClickListener(this)
+        adapter!!.setContext(requireContext())
+        rv_all_recipes_page.adapter = adapter
+    }
 
-//        adapter = RecipeAdapter()
-//        adapter!!.setData(, userViewModel.user.value)
-//        adapter!!.setClickListener(this)
-//        rv_all_recipes_page.adapter = adapter
+    fun setData() {
+        adapter!!.setData(userViewModel.user.value!!.recipes, userViewModel.user.value)
     }
 
     override fun onRecipeClick(position: Int) {
