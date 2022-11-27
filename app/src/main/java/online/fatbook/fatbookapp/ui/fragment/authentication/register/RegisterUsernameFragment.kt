@@ -11,8 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_register_username.*
-import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
+import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationRequest
@@ -29,46 +28,49 @@ class RegisterUsernameFragment : Fragment() {
     private var reconnectCount = 1
     private var isReconnectCancelled = false
 
-    private var binding: FragmentRegisterUsernameBinding? = null
+    private var _binding: FragmentRegisterUsernameBinding? = null
+    private val binding get() = _binding!!
+
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRegisterUsernameBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentRegisterUsernameBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragment_register_username_button_next.setOnClickListener {
+        binding.fragmentRegisterUsernameButtonNext.setOnClickListener {
             if (usernameValidate()) {
                 authViewModel.username.value =
-                    fragment_register_username_edittext_username.text.toString()
+                    binding.fragmentRegisterUsernameEdittextUsername.text.toString()
                 isReconnectCancelled = false
                 createNewUser()
             } else {
-                hideKeyboard(fragment_register_username_edittext_username)
+                hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
                 showErrorMessage(getString(R.string.dialog_register_username_invalid), true)
             }
         }
 
-        fragment_register_username_edittext_username.addTextChangedListener(object : TextWatcher {
+        binding.fragmentRegisterUsernameEdittextUsername.addTextChangedListener(object :
+            TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                fragment_register_username_edittext_username.background =
+                binding.fragmentRegisterUsernameEdittextUsername.background =
                     ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext)
-                fragment_register_username_button_next.isEnabled = s.toString().length in 3..20
+                binding.fragmentRegisterUsernameButtonNext.isEnabled = s.toString().length in 3..20
             }
 
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isEmpty()) {
-                    fragment_register_username_dialog_text.text =
+                    binding.fragmentRegisterUsernameDialogText.text =
                         getString(R.string.dialog_register_username)
-                    fragment_register_username_dialog_text.setTextColor(
+                    binding.fragmentRegisterUsernameDialogText.setTextColor(
                         ContextCompat.getColor(
                             requireContext(), R.color.main_text
                         )
@@ -82,81 +84,81 @@ class RegisterUsernameFragment : Fragment() {
 
     private fun createNewUser() {
         Log.d("REGISTER attempt", reconnectCount.toString())
-        progress_overlay_auth.visibility = View.VISIBLE
-        hideKeyboard(fragment_register_username_edittext_username)
+        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+        hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
         authViewModel.register(
             AuthenticationRequest(
-            authViewModel.username.value,
-            authViewModel.password.value,
-            authViewModel.userEmail.value
-        ), object : ResultCallback<AuthenticationResponse> {
-            override fun onResult(value: AuthenticationResponse?) {
-                progress_overlay_auth.visibility = View.GONE
-                value?.let {
-                    when (it.code) {
-                        0 -> {
-                            if (!isReconnectCancelled) {
-                                navigateToAccountCreated()
+                authViewModel.username.value,
+                authViewModel.password.value,
+                authViewModel.userEmail.value
+            ), object : ResultCallback<AuthenticationResponse> {
+                override fun onResult(value: AuthenticationResponse?) {
+                    binding.loader.progressOverlayAuth.visibility = View.GONE
+                    value?.let {
+                        when (it.code) {
+                            0 -> {
+                                if (!isReconnectCancelled) {
+                                    navigateToAccountCreated()
+                                }
+                            }
+                            4 -> {
+                                hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                                showErrorMessage(
+                                    getString(R.string.dialog_register_email_error), true
+                                )
+                            }
+                            5 -> {
+                                hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                                showErrorMessage(
+                                    getString(R.string.dialog_register_username_unavailable), true
+                                )
+                            }
+                            else -> {
+                                hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                                showErrorMessage(getString(R.string.dialog_register_error), true)
                             }
                         }
-                        4 -> {
-                            hideKeyboard(fragment_register_username_edittext_username)
-                            showErrorMessage(
-                                getString(R.string.dialog_register_email_error), true
-                            )
-                        }
-                        5 -> {
-                            hideKeyboard(fragment_register_username_edittext_username)
-                            showErrorMessage(
-                                getString(R.string.dialog_register_username_unavailable), true
-                            )
-                        }
-                        else -> {
-                            hideKeyboard(fragment_register_username_edittext_username)
-                            showErrorMessage(getString(R.string.dialog_register_error), true)
-                        }
                     }
                 }
-            }
 
-            override fun onFailure(value: AuthenticationResponse?) {
-                if (!isReconnectCancelled) {
-                    if (reconnectCount < 6) {
-                        reconnectCount++
-                        createNewUser()
-                    } else {
-                        hideKeyboard(fragment_register_username_edittext_username)
-                        showErrorMessage(getString(R.string.dialog_register_error), false)
-                        progress_overlay_auth.visibility = View.GONE
+                override fun onFailure(value: AuthenticationResponse?) {
+                    if (!isReconnectCancelled) {
+                        if (reconnectCount < 6) {
+                            reconnectCount++
+                            createNewUser()
+                        } else {
+                            hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                            showErrorMessage(getString(R.string.dialog_register_error), false)
+                            binding.loader.progressOverlayAuth.visibility = View.GONE
+                        }
                     }
                 }
-            }
-        })
+            })
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
-        fragment_register_username_button_next.isEnabled = false
-        fragment_register_username_dialog_text.setTextColor(
+        binding.fragmentRegisterUsernameButtonNext.isEnabled = false
+        binding.fragmentRegisterUsernameDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(), R.color.dialogErrorMess_text
             )
         )
-        fragment_register_username_dialog_text.text = message
+        binding.fragmentRegisterUsernameDialogText.text = message
         if (dyeEditText) {
-            fragment_register_username_edittext_username.background =
+            binding.fragmentRegisterUsernameEdittextUsername.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
         }
     }
 
     private fun showDefaultMessage(message: String) {
-        fragment_register_username_button_next.isEnabled = false
-        fragment_register_username_dialog_text.setTextColor(
+        binding.fragmentRegisterUsernameButtonNext.isEnabled = false
+        binding.fragmentRegisterUsernameDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(), R.color.dialogErrorMess_text
             )
         )
-        fragment_register_username_dialog_text.text = message;
-        fragment_register_username_edittext_username.background =
+        binding.fragmentRegisterUsernameDialogText.text = message;
+        binding.fragmentRegisterUsernameEdittextUsername.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext)
     }
 
@@ -169,8 +171,8 @@ class RegisterUsernameFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progress_overlay_auth.visibility == View.VISIBLE) {
-                        progress_overlay_auth.visibility = View.GONE
+                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
+                        binding.loader.progressOverlayAuth.visibility = View.GONE
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
                         isReconnectCancelled = true
                     } else {
@@ -181,11 +183,16 @@ class RegisterUsernameFragment : Fragment() {
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
     }
 
     private fun usernameValidate(): Boolean {
         return Pattern.compile(USERNAME_REGEX)
-            .matcher(fragment_register_username_edittext_username.text).matches()
+            .matcher(binding.fragmentRegisterUsernameEdittextUsername.text).matches()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

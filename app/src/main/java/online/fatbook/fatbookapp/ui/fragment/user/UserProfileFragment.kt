@@ -18,7 +18,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.user.User
@@ -38,6 +37,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     private var _binding: FragmentUserProfileBinding? = null
     private val binding get() = _binding!!
+
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
 
@@ -66,7 +66,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_app_settings_from_user_profile)
         } else {
-            progress_overlay.visibility = View.VISIBLE
+            binding.loader.progressOverlay.visibility = View.VISIBLE
             binding.toolbar.visibility = View.GONE
             loadUserData()
             setupMenu(R.menu.user_profile_current_menu)
@@ -291,7 +291,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
                 binding.icExpand.visibility = View.VISIBLE
             }
         }
-        progress_overlay.visibility = View.GONE
+        binding.loader.progressOverlay.visibility = View.GONE
         binding.toolbar.visibility = View.VISIBLE
         binding.swipeRefresh.isRefreshing = false
         binding.swipeRefresh.isEnabled = true

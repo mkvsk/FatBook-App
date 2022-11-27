@@ -12,9 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_new_pass.*
-import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
+import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationResponse
@@ -32,15 +30,17 @@ class NewPassFragment : Fragment() {
     private var reconnectCount = 1
     private var isReconnectCancelled = false
 
-    private var binding: FragmentNewPassBinding? = null
+    private var _binding: FragmentNewPassBinding? = null
+    private val binding get() = _binding!!
+
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNewPassBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentNewPassBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,14 +48,14 @@ class NewPassFragment : Fragment() {
 
         handleBackPressed()
 
-        fragment_new_pass_button_next.setOnClickListener {
-            hideKeyboard(fragment_new_pass_edittext_repeat_new_password)
-            if (fragment_new_pass_edittext_new_password.text.toString().contentEquals(
-                    fragment_new_pass_edittext_repeat_new_password.text.toString()
+        binding.fragmentNewPassButtonNext.setOnClickListener {
+            hideKeyboard(binding.fragmentNewPassEdittextRepeatNewPassword)
+            if (binding.fragmentNewPassEdittextNewPassword.text.toString().contentEquals(
+                    binding.fragmentNewPassEdittextRepeatNewPassword.text.toString()
                 )
             ) {
                 if (passwordValidate()) {
-                    changePassword(fragment_new_pass_edittext_new_password.text.toString())
+                    changePassword(binding.fragmentNewPassEdittextNewPassword.text.toString())
                 } else {
                     showErrorMessage(getString(R.string.dialog_new_pass))
                 }
@@ -64,19 +64,19 @@ class NewPassFragment : Fragment() {
             }
         }
 
-        fragment_new_pass_edittext_new_password.addTextChangedListener(object : TextWatcher {
+        binding.fragmentNewPassEdittextNewPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString().length in 6..20) {
-                    checkEditTextIsFilled(fragment_new_pass_edittext_new_password, true)
+                    checkEditTextIsFilled(binding.fragmentNewPassEdittextNewPassword, true)
                 } else {
-                    checkEditTextIsFilled(fragment_new_pass_edittext_new_password, false)
+                    checkEditTextIsFilled(binding.fragmentNewPassEdittextNewPassword, false)
                 }
                 enableButtonNext(
-                    fragment_new_pass_edittext_new_password.text.toString(),
-                    fragment_new_pass_edittext_repeat_new_password.text.toString()
+                    binding.fragmentNewPassEdittextNewPassword.text.toString(),
+                    binding.fragmentNewPassEdittextRepeatNewPassword.text.toString()
                 )
             }
 
@@ -85,7 +85,7 @@ class NewPassFragment : Fragment() {
 
         })
 
-        fragment_new_pass_edittext_repeat_new_password.addTextChangedListener(object :
+        binding.fragmentNewPassEdittextRepeatNewPassword.addTextChangedListener(object :
             TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -93,18 +93,18 @@ class NewPassFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString().length in 6..20) {
                     checkEditTextIsFilled(
-                        fragment_new_pass_edittext_repeat_new_password,
+                        binding.fragmentNewPassEdittextRepeatNewPassword,
                         true
                     )
                 } else {
                     checkEditTextIsFilled(
-                        fragment_new_pass_edittext_repeat_new_password,
+                        binding.fragmentNewPassEdittextRepeatNewPassword,
                         false
                     )
                 }
                 enableButtonNext(
-                    fragment_new_pass_edittext_new_password.text.toString(),
-                    fragment_new_pass_edittext_repeat_new_password.text.toString()
+                    binding.fragmentNewPassEdittextNewPassword.text.toString(),
+                    binding.fragmentNewPassEdittextRepeatNewPassword.text.toString()
                 )
             }
 
@@ -115,7 +115,7 @@ class NewPassFragment : Fragment() {
     }
 
     private fun changePassword(password: String) {
-        progress_overlay_auth.visibility = View.VISIBLE
+        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
 //        authViewModel.username.value = authViewModel.recoverUsername.value
 //        authViewModel.password.value = value
 
@@ -146,9 +146,9 @@ class NewPassFragment : Fragment() {
                             reconnectCount++
                             changePassword(password)
                         } else {
-                            hideKeyboard(fragment_login_edittext_password)
+//                            hideKeyboard(fragment_login_edittext_password)
                             showErrorMessage(getString(R.string.dialog_connection_error))
-                            progress_overlay_auth.visibility = View.GONE
+                            binding.loader.progressOverlayAuth.visibility = View.GONE
                         }
                     }
                 }
@@ -165,8 +165,8 @@ class NewPassFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progress_overlay_auth.visibility == View.VISIBLE) {
-                        progress_overlay_auth.visibility = View.GONE
+                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
+                        binding.loader.progressOverlayAuth.visibility = View.GONE
                         showDefaultMessage(getString(R.string.dialog_new_pass))
                         isReconnectCancelled = true
                     } else {
@@ -177,7 +177,7 @@ class NewPassFragment : Fragment() {
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
     }
 
     private fun saveUserAndProceed(username: String?, password: String) {
@@ -195,14 +195,14 @@ class NewPassFragment : Fragment() {
     }
 
     private fun showErrorMessage(message: String) {
-        fragment_new_pass_kuzya_dialog.setImageDrawable(
+        binding.fragmentNewPassKuzyaDialog.setImageDrawable(
             ContextCompat.getDrawable(
                 requireContext(),
                 R.drawable.cat_dialog_invalid_data
             )
         )
-        fragment_new_pass_dialog_text.text = message
-        fragment_new_pass_dialog_text.setTextColor(
+        binding.fragmentNewPassDialogText.text = message
+        binding.fragmentNewPassDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.dialogErrorMess_text
@@ -211,14 +211,14 @@ class NewPassFragment : Fragment() {
     }
 
     private fun showDefaultMessage(message: String) {
-        fragment_new_pass_kuzya_dialog.setImageDrawable(
+        binding.fragmentNewPassKuzyaDialog.setImageDrawable(
             ContextCompat.getDrawable(
                 requireContext(),
                 R.drawable.cat_dialog_invalid_data
             )
         )
-        fragment_new_pass_dialog_text.text = message
-        fragment_new_pass_dialog_text.setTextColor(
+        binding.fragmentNewPassDialogText.text = message
+        binding.fragmentNewPassDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.main_text
@@ -237,12 +237,18 @@ class NewPassFragment : Fragment() {
     }
 
     private fun enableButtonNext(password: String, repeatPassword: String) {
-        fragment_new_pass_button_next.isEnabled =
+        binding.fragmentNewPassButtonNext.isEnabled =
             password.length in 6..20 && repeatPassword.length in 6..20
     }
 
     private fun passwordValidate(): Boolean {
         return Pattern.compile(Constants.PASSWORD_REGEX)
-            .matcher(fragment_new_pass_edittext_new_password.text.toString()).matches()
+            .matcher(binding.fragmentNewPassEdittextNewPassword.text.toString()).matches()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 }

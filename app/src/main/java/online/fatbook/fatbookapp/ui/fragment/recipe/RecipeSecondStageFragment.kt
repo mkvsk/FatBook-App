@@ -11,8 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_recipe_second_stage.*
-import kotlinx.android.synthetic.main.include_progress_overlay.*
+import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingStep
@@ -33,9 +32,10 @@ import java.util.*
 import kotlin.math.roundToInt
 
 class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListener,
-        OnCookingStepClickListener {
+    OnCookingStepClickListener {
 
-    private var binding: FragmentRecipeSecondStageBinding? = null
+    private var _binding: FragmentRecipeSecondStageBinding? = null
+    private val binding get() = _binding!!
 
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
@@ -50,27 +50,27 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     private val TAG = "RecipeCreateSecondStageFragment"
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRecipeSecondStageBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentRecipeSecondStageBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbar_recipe_create_2_stage.title = "TODO title"
+        binding.toolbarRecipeCreate2Stage.title = "TODO title"
         setupMenu()
         checkEnableMenu()
         checkIngredientsQtt(recipeViewModel.newRecipe.value!!.ingredients!!.size)
         checkStepsQtt(recipeViewModel.newRecipe.value!!.steps!!.size)
-        button_add_ingredient_recipe_create_2_stage.setOnClickListener {
+        binding.buttonAddIngredientRecipeCreate2Stage.setOnClickListener {
             NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_ingredient_from_second_stage)
+                .navigate(R.id.action_go_to_ingredient_from_second_stage)
         }
-        cardview_add_cooking_step.setOnClickListener {
+        binding.cardviewAddCookingStep.setOnClickListener {
             NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_step_from_second_stage)
+                .navigate(R.id.action_go_to_step_from_second_stage)
         }
         setupIngredientsAdapter()
         setupCookingStepsAdapter()
@@ -81,17 +81,17 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
 
         recipeViewModel.selectedCookingStep.value = null
 
-        nsv_recipe_create_2_stage.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
+        binding.nsvRecipeCreate2Stage.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
 
             if (scrollY > 250) {
-                floating_button_up_recipe_create.visibility = View.VISIBLE
+                binding.floatingButtonUpRecipeCreate.visibility = View.VISIBLE
             } else {
-                floating_button_up_recipe_create.visibility = View.GONE
+                binding.floatingButtonUpRecipeCreate.visibility = View.GONE
             }
 
-            floating_button_up_recipe_create.setOnClickListener {
-                nsv_recipe_create_2_stage.post {
-                    nsv_recipe_create_2_stage.smoothScrollTo(0, 0)
+            binding.floatingButtonUpRecipeCreate.setOnClickListener {
+                binding.nsvRecipeCreate2Stage.post {
+                    binding.nsvRecipeCreate2Stage.smoothScrollTo(0, 0)
                 }
             }
         })
@@ -99,15 +99,15 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
 
     private fun checkEnableMenu() {
         val isEmpty =
-                recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty() || recipeViewModel.newRecipe.value!!.steps.isNullOrEmpty()
-        toolbar_recipe_create_2_stage.menu.findItem(R.id.menu_create_second_stage_save_recipe).isVisible =
-                !isEmpty
+            recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty() || recipeViewModel.newRecipe.value!!.steps.isNullOrEmpty()
+        binding.toolbarRecipeCreate2Stage.menu.findItem(R.id.menu_create_second_stage_save_recipe).isVisible =
+            !isEmpty
     }
 
     private fun setupMenu() {
-        toolbar_recipe_create_2_stage.inflateMenu(R.menu.recipe_create_2_stage_menu)
-        toolbar_recipe_create_2_stage.setOnMenuItemClickListener(this::onOptionsItemSelected)
-        toolbar_recipe_create_2_stage.setNavigationOnClickListener {
+        binding.toolbarRecipeCreate2Stage.inflateMenu(R.menu.recipe_create_2_stage_menu)
+        binding.toolbarRecipeCreate2Stage.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        binding.toolbarRecipeCreate2Stage.setNavigationOnClickListener {
             popBackStack()
         }
     }
@@ -140,52 +140,54 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
 
     //TODO remove toast, uncomment popbackstack
     private fun saveRecipe() {
-        recipeViewModel.recipeCreate(recipeViewModel.newRecipe.value!!, object : ResultCallback<Void> {
-            override fun onResult(value: Void?) {
+        recipeViewModel.recipeCreate(
+            recipeViewModel.newRecipe.value!!,
+            object : ResultCallback<Void> {
+                override fun onResult(value: Void?) {
 //                progress_overlay.visibility = View.GONE
 //                toolbar_recipe_create_2_stage.visibility = View.VISIBLE
-                Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
 //                popBackStack()
-            }
+                }
 
-            override fun onFailure(value: Void?) {
-                Toast.makeText(requireContext(), "Error!", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(value: Void?) {
+                    Toast.makeText(requireContext(), "Error!", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     private fun checkIngredientsQtt(currentIngredientsQtt: Int) {
         if (currentIngredientsQtt == maxIngredientsQtt) {
-            button_add_ingredient_recipe_create_2_stage.visibility = View.GONE
+            binding.buttonAddIngredientRecipeCreate2Stage.visibility = View.GONE
         }
         if (currentIngredientsQtt < maxIngredientsQtt) {
-            button_add_ingredient_recipe_create_2_stage.visibility = View.VISIBLE
+            binding.buttonAddIngredientRecipeCreate2Stage.visibility = View.VISIBLE
         }
-        textview_ingredient_count_recipe_create_2_stage.text =
-                String.format(
-                        getString(R.string.format_count),
-                        currentIngredientsQtt,
-                        maxIngredientsQtt
-                )
+        binding.textviewIngredientCountRecipeCreate2Stage.text =
+            String.format(
+                getString(R.string.format_count),
+                currentIngredientsQtt,
+                maxIngredientsQtt
+            )
     }
 
     private fun checkStepsQtt(currentStepsQtt: Int) {
         if (currentStepsQtt == maxStepsQtt) {
-            cardview_add_cooking_step.visibility = View.GONE
+            binding.cardviewAddCookingStep.visibility = View.GONE
         }
         if (currentStepsQtt < maxStepsQtt) {
-            cardview_add_cooking_step.visibility = View.VISIBLE
+            binding.cardviewAddCookingStep.visibility = View.VISIBLE
         }
-        textview_steps_count_recipe_create_2_stage.text =
-                String.format(
-                        getString(R.string.format_count),
-                        currentStepsQtt,
-                        maxStepsQtt
-                )
+        binding.textviewStepsCountRecipeCreate2Stage.text =
+            String.format(
+                getString(R.string.format_count),
+                currentStepsQtt,
+                maxStepsQtt
+            )
     }
 
     private fun setupIngredientsAdapter() {
-        val rv = rv_ingredients_recipe_create_2_stage
+        val rv = binding.rvIngredientsRecipeCreate2Stage
         ingredientsAdapter = RecipeIngredientAdapter()
         ingredientsAdapter!!.setContext(requireContext())
         ingredientsAdapter!!.setClickListener(this)
@@ -203,7 +205,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     }
 
     private fun setupCookingStepsAdapter() {
-        val rv = rv_steps_recipe_create_2_stage
+        val rv = binding.rvStepsRecipeCreate2Stage
         cookingStepsAdapter = CookingStepAdapter(requireContext())
         cookingStepsAdapter!!.setClickListener(this)
         rv.adapter = cookingStepsAdapter
@@ -213,7 +215,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
         recipeViewModel.selectedCookingStep.value = value
         recipeViewModel.selectedCookingStepPosition.value = itemPosition
         NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_step_from_second_stage)
+            .navigate(R.id.action_go_to_step_from_second_stage)
     }
 
     //TODO ANIM
@@ -235,21 +237,21 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
 
     private fun drawNutritionFacts() {
         if (recipeViewModel.newRecipe.value!!.isAllIngredientUnitsValid
-                && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()
+            && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()
         ) {
             showNutritionFacts(true)
-            textview_portion_kcals_qtt_recipe_create_2_stage.text =
-                    FormatUtils.prettyCount(
-                            recipeViewModel.newRecipe.value?.kcalPerPortion.toString().toDouble()
-                    )
-            tv_qtt_proteins.text = FormatUtils.prettyCount(
-                    recipeViewModel.newRecipe.value?.proteinsPerPortion.toString().toDouble()
+            binding.textviewPortionKcalsQttRecipeCreate2Stage.text =
+                FormatUtils.prettyCount(
+                    recipeViewModel.newRecipe.value?.kcalPerPortion.toString().toDouble()
+                )
+            binding.tvQttProteins.text = FormatUtils.prettyCount(
+                recipeViewModel.newRecipe.value?.proteinsPerPortion.toString().toDouble()
             )
-            tv_qtt_fats.text = FormatUtils.prettyCount(
-                    recipeViewModel.newRecipe.value?.fatsPerPortion.toString().toDouble()
+            binding.tvQttFats.text = FormatUtils.prettyCount(
+                recipeViewModel.newRecipe.value?.fatsPerPortion.toString().toDouble()
             )
-            tv_qtt_carbs.text = FormatUtils.prettyCount(
-                    recipeViewModel.newRecipe.value?.carbsPerPortion.toString().toDouble()
+            binding.tvQttCarbs.text = FormatUtils.prettyCount(
+                recipeViewModel.newRecipe.value?.carbsPerPortion.toString().toDouble()
             )
         } else {
             showNutritionFacts(false)
@@ -259,25 +261,30 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     private fun showNutritionFacts(value: Boolean) {
         //TODO ANIM cards resize animation
         if (value) {
-            textview_nutrition_facts_title_recipe_create_2_stage.visibility = View.VISIBLE
-            cardview_nutrition_facts_recipe_create_2_stage.visibility = View.VISIBLE
+            binding.textviewNutritionFactsTitleRecipeCreate2Stage.visibility = View.VISIBLE
+            binding.cardviewNutritionFactsRecipeCreate2Stage.visibility = View.VISIBLE
         } else {
-            textview_nutrition_facts_title_recipe_create_2_stage.visibility = View.GONE
-            cardview_nutrition_facts_recipe_create_2_stage.visibility = View.GONE
+            binding.textviewNutritionFactsTitleRecipeCreate2Stage.visibility = View.GONE
+            binding.cardviewNutritionFactsRecipeCreate2Stage.visibility = View.GONE
         }
     }
 
     private fun handleBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(
-                viewLifecycleOwner,
-                object : OnBackPressedCallback(true) {
-                    override fun handleOnBackPressed() {
-                        popBackStack()
-                    }
-                })
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    popBackStack()
+                }
+            })
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

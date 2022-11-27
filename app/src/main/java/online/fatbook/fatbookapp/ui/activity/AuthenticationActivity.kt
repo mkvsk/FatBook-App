@@ -7,11 +7,17 @@ import online.fatbook.fatbookapp.databinding.ActivityAuthenticationBinding
 
 class AuthenticationActivity : AppCompatActivity() {
 
-    var binding: ActivityAuthenticationBinding? = null
+    var _binding: ActivityAuthenticationBinding? = null
+    val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAuthenticationBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        _binding = ActivityAuthenticationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

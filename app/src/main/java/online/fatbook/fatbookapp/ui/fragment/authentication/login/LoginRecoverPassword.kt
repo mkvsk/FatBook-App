@@ -12,8 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_login_recover_pass.*
-import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
+import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationResponse
@@ -27,51 +26,53 @@ class LoginRecoverPassword : Fragment() {
     private var reconnectCount = 1
     private var isReconnectCancelled = false
 
-    private var binding: FragmentLoginRecoverPassBinding? = null
+    private var _binding: FragmentLoginRecoverPassBinding? = null
+    private val binding get() = _binding!!
+
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginRecoverPassBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentLoginRecoverPassBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleBackPressed()
         if (!authViewModel.recoverIdentifier.value.isNullOrEmpty()) {
-            fragment_login_recover_pass_edittext_username.setText(authViewModel.recoverIdentifier.value)
-            enableButtonNext(fragment_login_recover_pass_edittext_username.text.toString())
+            binding.fragmentLoginRecoverPassEdittextUsername.setText(authViewModel.recoverIdentifier.value)
+            enableButtonNext(binding.fragmentLoginRecoverPassEdittextUsername.text.toString())
         }
-        fragment_login_recover_pass_edittext_username.addTextChangedListener(object :
+        binding.fragmentLoginRecoverPassEdittextUsername.addTextChangedListener(object :
             TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString().length in 3..20) {
-                    checkEditTextIsFilled(fragment_login_recover_pass_edittext_username, true)
+                    checkEditTextIsFilled(binding.fragmentLoginRecoverPassEdittextUsername, true)
                 } else {
-                    checkEditTextIsFilled(fragment_login_recover_pass_edittext_username, false)
+                    checkEditTextIsFilled(binding.fragmentLoginRecoverPassEdittextUsername, false)
                 }
-                enableButtonNext(fragment_login_recover_pass_edittext_username.text.toString())
+                enableButtonNext(binding.fragmentLoginRecoverPassEdittextUsername.text.toString())
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
 
         })
-        fragment_login_recover_pass_button_next.setOnClickListener {
-            if (authViewModel.recoverIdentifier.value!! != fragment_login_recover_pass_edittext_username.text.toString()) {
+        binding.fragmentLoginRecoverPassButtonNext.setOnClickListener {
+            if (authViewModel.recoverIdentifier.value!! != binding.fragmentLoginRecoverPassEdittextUsername.text.toString()) {
                 authViewModel.isTimerRunning.value = false
                 authViewModel.currentCountdown.value = 0
                 authViewModel.cancelTimer()
                 isReconnectCancelled = false
-                recoverPassword(fragment_login_recover_pass_edittext_username.text.toString())
+                recoverPassword(binding.fragmentLoginRecoverPassEdittextUsername.text.toString())
             } else {
                 if (authViewModel.isTimerRunning.value == false) {
-                    recoverPassword(fragment_login_recover_pass_edittext_username.text.toString())
+                    recoverPassword(binding.fragmentLoginRecoverPassEdittextUsername.text.toString())
                 } else {
                     navigateToVerificationCode()
                 }
@@ -81,11 +82,11 @@ class LoginRecoverPassword : Fragment() {
 
     private fun recoverPassword(identifier: String) {
         Log.d("RECOVER PASSWORD attempt", reconnectCount.toString())
-        progress_overlay_auth.visibility = View.VISIBLE
-        hideKeyboard(fragment_login_recover_pass_edittext_username)
+        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+        hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
         authViewModel.recoverPassword(identifier, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                progress_overlay_auth.visibility = View.GONE
+                binding.loader.progressOverlayAuth.visibility = View.GONE
                 if (!isReconnectCancelled) {
                     when (value!!.code) {
                         0 -> {
@@ -117,8 +118,8 @@ class LoginRecoverPassword : Fragment() {
                         recoverPassword(identifier)
                     } else {
                         showErrorMessage(getString(R.string.dialog_register_error))
-                        hideKeyboard(fragment_login_recover_pass_edittext_username)
-                        progress_overlay_auth.visibility = View.GONE
+                        hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
+                        binding.loader.progressOverlayAuth.visibility = View.GONE
                     }
                 }
             }
@@ -141,23 +142,23 @@ class LoginRecoverPassword : Fragment() {
     }
 
     private fun enableButtonNext(username: String) {
-        fragment_login_recover_pass_button_next.isEnabled = username.length in 3..20
+        binding.fragmentLoginRecoverPassButtonNext.isEnabled = username.length in 3..20
     }
 
     private fun showErrorMessage(message: String) {
-        fragment_login_recover_pass_dialog_text.text = message
-        fragment_login_recover_pass_dialog_text.setTextColor(
+        binding.fragmentLoginRecoverPassDialogText.text = message
+        binding.fragmentLoginRecoverPassDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(), R.color.dialogErrorMess_text
             )
         )
-//        fragment_login_recover_pass_edittext_username.background =
+//        binding.fragmentLoginRecoverPassEdittextUsername.background =
 //            ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
     }
 
     private fun showDefaultMessage(message: String) {
-        fragment_login_recover_pass_dialog_text.text = message
-        fragment_login_recover_pass_dialog_text.setTextColor(
+        binding.fragmentLoginRecoverPassDialogText.text = message
+        binding.fragmentLoginRecoverPassDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(), R.color.main_text
             )
@@ -169,8 +170,8 @@ class LoginRecoverPassword : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progress_overlay_auth.visibility == View.VISIBLE) {
-                        progress_overlay_auth.visibility = View.GONE
+                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
+                        binding.loader.progressOverlayAuth.visibility = View.GONE
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
                         isReconnectCancelled = true
                     } else {
@@ -181,6 +182,11 @@ class LoginRecoverPassword : Fragment() {
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

@@ -8,9 +8,9 @@ import android.view.GestureDetector.OnDoubleTapListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.fragment_image_view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentImageViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
@@ -19,7 +19,9 @@ import online.fatbook.fatbookapp.util.touchview.OnTouchImageViewListener
 
 class ImageViewFragment : Fragment() {
 
-    private var binding: FragmentImageViewBinding? = null
+    private var _binding: FragmentImageViewBinding? = null
+    private val binding get() = _binding!!
+
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
     private var toolbarIsVisible: Boolean = true
 
@@ -30,25 +32,26 @@ class ImageViewFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        binding = FragmentImageViewBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentImageViewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.GONE
         setupMenu()
 
-        imageview_full_image.setOnDoubleTapListener(object : OnDoubleTapListener {
+        binding.imageviewFullImage.setOnDoubleTapListener(object : OnDoubleTapListener {
             override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
                 if (toolbarIsVisible) {
-                    appBarLayout_image_view.animate().alpha(0.0f).duration = 100
+                    binding.appBarLayoutImageView.animate().alpha(0.0f).duration = 100
                     toolbarIsVisible = false
                 } else {
-                    appBarLayout_image_view.animate().alpha(1.0f).duration = 100
+                    binding.appBarLayoutImageView.animate().alpha(1.0f).duration = 100
                     toolbarIsVisible = true
                 }
                 return true
@@ -64,12 +67,12 @@ class ImageViewFragment : Fragment() {
         })
         imageViewModel.image.value.let {
             Glide
-                    .with(requireContext())
-                    .load(it)
-                    .into(imageview_full_image)
+                .with(requireContext())
+                .load(it)
+                .into(binding.imageviewFullImage)
         }
 
-        imageview_full_image.setOnTouchImageViewListener(object : OnTouchImageViewListener {
+        binding.imageviewFullImage.setOnTouchImageViewListener(object : OnTouchImageViewListener {
             override fun onMove() {
             }
 
@@ -78,7 +81,7 @@ class ImageViewFragment : Fragment() {
             }
         })
 
-//        imageview_full_image.setOnLongClickListener {
+//        binding.imageviewFullImage.setOnLongClickListener {
 //            // Create a new ClipData.
 //            // This is done in two steps to provide clarity. The convenience method
 //            // ClipData.newPlainText() can create a plain text ClipData in one step.
@@ -108,7 +111,7 @@ class ImageViewFragment : Fragment() {
 //            true
 //        }
 
-//        imageview_full_image.setOnDragListener { v, e ->
+//        binding.imageviewFullImage.setOnDragListener { v, e ->
 //            when (e.action) {
 //                DragEvent.ACTION_DRAG_STARTED -> {
 //                    // Determines if this View can accept the dragged data.
@@ -200,9 +203,9 @@ class ImageViewFragment : Fragment() {
     }
 
     private fun setupMenu() {
-        toolbar_image_view.inflateMenu(R.menu.image_view_menu)
-        toolbar_image_view.setOnMenuItemClickListener(this::onOptionsItemSelected)
-        toolbar_image_view.setNavigationOnClickListener {
+        binding.toolbarImageView.inflateMenu(R.menu.image_view_menu)
+        binding.toolbarImageView.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        binding.toolbarImageView.setNavigationOnClickListener {
             popBackStack()
         }
     }
@@ -221,10 +224,13 @@ class ImageViewFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         imageViewModel.image.value = null
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
+
+        _binding = null
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
     }
 }

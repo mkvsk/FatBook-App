@@ -8,6 +8,7 @@
     tools:context=".ui.fragment.recipe.RecipeIngredientFragment">
 
     <include
+        android:id="@+id/loader"
         layout="@layout/include_progress_overlay"
         android:elevation="10dp" />
 
