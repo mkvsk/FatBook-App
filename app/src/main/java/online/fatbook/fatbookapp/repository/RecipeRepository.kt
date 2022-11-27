@@ -1,17 +1,13 @@
 package online.fatbook.fatbookapp.repository
 
 import android.util.Log
-import androidx.annotation.RestrictTo
-import com.google.firebase.installations.remote.TokenResult.ResponseCode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.DeleteRequest
 import online.fatbook.fatbookapp.core.recipe.Recipe
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

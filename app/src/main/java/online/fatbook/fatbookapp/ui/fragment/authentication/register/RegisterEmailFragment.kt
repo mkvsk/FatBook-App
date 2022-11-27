@@ -14,11 +14,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_register_email.*
-import kotlinx.android.synthetic.main.include_progress_overlay.*
 import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
+import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentRegisterEmailBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.SYMBOL_AT

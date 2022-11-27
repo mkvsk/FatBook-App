@@ -15,12 +15,12 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.authentication.LoginResponse
+import online.fatbook.fatbookapp.network.LoginResponse
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentFeedBinding
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActionsListener

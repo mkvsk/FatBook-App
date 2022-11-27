@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_new_pass.*
-import kotlinx.android.synthetic.main.include_progress_overlay.*
 import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
+import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentNewPassBinding
 import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
@@ -42,6 +43,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     private var expanded: Boolean = false
     private lateinit var viewPager: ViewPager2
+    private lateinit var fragmentAdapter: UserProfileRecipesAdapter
+
+    companion object {
+        private const val TAG = "UserProfileFragment"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -93,25 +99,6 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
                 animateTextExpand()
             }
         }
-    }
-
-    private fun setupViewPager() {
-        val fragmentAdapter = UserProfileRecipesAdapter(this)
-        println("UserProfileRecipesAdapter init")
-        viewPager = binding.vpUserprofile
-        viewPager.isUserInputEnabled = false
-        viewPager.adapter = fragmentAdapter
-        viewPager.offscreenPageLimit = 2
-        val tabLayout = binding.tabLayout
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text =
-                if (position == 0) {
-                    resources.getString(R.string.title_recipes_profile)
-                } else {
-                    resources.getString(R.string.title_favourites_profile)
-                }
-        }.attach()
-        ViewPager2ViewHeightAnimator().viewPager2 = viewPager
     }
 
     private fun setupSwipeRefresh() {
@@ -310,6 +297,44 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         binding.swipeRefresh.isEnabled = true
 //        UserRecipesPageFragment().setData()
 //        FavouritesRecipesPageFragment().setData()
+
+
+//        userViewModel.user.value!!.recipesFavourites?.let {
+//            if (it.isNotEmpty()) {
+//                Log.d(TAG, "favs: ${userViewModel.user.value!!.recipesFavourites}")
+////                fragmentAdapter.setFavs()
+//            }
+//        }
+//        userViewModel.user.value!!.recipes?.let {
+//            if (it.isNotEmpty()) {
+//                Log.d(TAG, "recipies: ${userViewModel.user.value!!.recipes}")
+////                fragmentAdapter.setRecipes()
+//            }
+//        }
+
+        userViewModel.user.value.let {
+            setupViewPager()
+        }
+    }
+
+    private fun setupViewPager() {
+        fragmentAdapter = UserProfileRecipesAdapter(this)
+        println("UserProfileRecipesAdapter init")
+        viewPager = binding.vpUserprofile
+        viewPager.isUserInputEnabled = false
+        viewPager.adapter = fragmentAdapter
+        viewPager.offscreenPageLimit = 2
+        val tabLayout = binding.tabLayout
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text =
+                if (position == 0) {
+                    resources.getString(R.string.title_recipes_profile)
+                } else {
+                    resources.getString(R.string.title_favourites_profile)
+                }
+        }.attach()
+        //TODO fix
+//        ViewPager2ViewHeightAnimator().viewPager2 = viewPager
     }
 
     private fun loadUser(username: String, updateCurrentUser: Boolean) {
@@ -371,7 +396,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     override fun scrollUpBase() {
-        binding.nsv.scrollTo(0, 0)
+        binding.nsv.smoothScrollTo(0, 0)
         binding.appBarLayout.setExpanded(true, false)
     }
 }

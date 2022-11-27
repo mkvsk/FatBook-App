@@ -7,8 +7,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
-import online.fatbook.fatbookapp.core.user.User
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

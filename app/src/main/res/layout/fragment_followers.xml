@@ -29,21 +29,6 @@
             local:titleTextAppearance="@style/txtToolbar"
             local:titleTextColor="@color/main_text" />
 
-
-        <!--        <com.google.android.material.appbar.MaterialToolbar-->
-        <!--            android:id="@+id/toolbar_follow"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="?attr/actionBarSize"-->
-        <!--            android:background="@color/theme_toolbar_color"-->
-        <!--            android:theme="@style/ToolbarTheme"-->
-        <!--            app:buttonGravity="center_vertical"-->
-        <!--            app:layout_scrollFlags="scroll|enterAlways"-->
-        <!--            android:paddingStart="@dimen/toolbar_title_paddingStart"-->
-        <!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-        <!--            app:title="Follow"-->
-        <!--            app:titleTextColor="@color/theme_toolbar_text_color">-->
-
-        <!--        </com.google.android.material.appbar.MaterialToolbar>-->
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -83,13 +68,11 @@
                     app:tabRippleColor="@null">
 
                     <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tabItemFollowers"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Followers" />
 
                     <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tabItemFollowing"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Following" />

@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.retrofit
+package online.fatbook.fatbookapp.network.service
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

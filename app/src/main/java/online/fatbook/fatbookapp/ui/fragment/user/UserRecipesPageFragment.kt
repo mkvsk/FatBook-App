@@ -2,11 +2,10 @@ package online.fatbook.fatbookapp.ui.fragment.user
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_all_recipes_page.*
+import androidx.fragment.app.Fragment
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.databinding.FragmentAllRecipesPageBinding
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
@@ -36,14 +35,15 @@ class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d(TAG, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         adapter = RecipeAdapter()
         adapter!!.setClickListener(this)
         adapter!!.setContext(requireContext())
         binding.rvUserRecipesPage.adapter = adapter
+        setData()
     }
 
+    //TODO если рецептов нет - вывести какое-нибудь TextView "Вы еще не создали ни одного рецепта"
     fun setData() {
         adapter!!.setData(userViewModel.user.value!!.recipes, userViewModel.user.value)
     }
@@ -71,8 +71,9 @@ class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
         super.onResume()
         binding.root.requestLayout()
         Log.d("STATE", "RESUME TAB 1")
-
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()

@@ -14,15 +14,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.include_progress_overlay.*
 import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.authentication.LoginResponse
+import online.fatbook.fatbookapp.network.LoginResponse
 import online.fatbook.fatbookapp.databinding.FragmentLoginBinding
-import online.fatbook.fatbookapp.retrofit.RetrofitFactory
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants

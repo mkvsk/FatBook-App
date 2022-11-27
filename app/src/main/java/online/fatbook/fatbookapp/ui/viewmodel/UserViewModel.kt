@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.user.User
+import online.fatbook.fatbookapp.network.EditUserRequest
 import online.fatbook.fatbookapp.repository.UserRepository
 
 class UserViewModel : ViewModel() {
@@ -34,8 +35,8 @@ class UserViewModel : ViewModel() {
         })
     }
 
-    fun updateUser(user: User, callback: ResultCallback<User>) {
-        repository.updateUser(user, object : ResultCallback<User> {
+    fun updateUser(request: EditUserRequest, callback: ResultCallback<User>) {
+        repository.updateUser(request, object : ResultCallback<User> {
             override fun onResult(value: User?) {
                 callback.onResult(value)
             }

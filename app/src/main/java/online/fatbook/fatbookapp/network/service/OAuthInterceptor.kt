@@ -1,8 +1,7 @@
-package online.fatbook.fatbookapp.retrofit
+package online.fatbook.fatbookapp.network.service
 
 import okhttp3.Interceptor
 import okhttp3.Response
-import online.fatbook.fatbookapp.util.AppInfo
 
 class OAuthInterceptor(private val tokenType: String, private val accessToken: String) :
     Interceptor {

@@ -1,17 +1,17 @@
-package online.fatbook.fatbookapp.retrofit
+package online.fatbook.fatbookapp.network.service
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.core.DeleteRequest
-import online.fatbook.fatbookapp.core.authentication.AuthenticationRequest
-import online.fatbook.fatbookapp.core.authentication.AuthenticationResponse
-import online.fatbook.fatbookapp.core.authentication.LoginResponse
+import online.fatbook.fatbookapp.network.AuthenticationRequest
+import online.fatbook.fatbookapp.network.AuthenticationResponse
+import online.fatbook.fatbookapp.network.LoginResponse
 import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnit
 import online.fatbook.fatbookapp.core.user.User
+import online.fatbook.fatbookapp.network.EditUserRequest
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 
 interface NetworkInfoService {
@@ -51,6 +51,9 @@ interface NetworkInfoService {
      */
     @GET("user/get/username")
     fun getUserByUsername(@Query(value = "username") username: String?): Call<User>
+
+    @POST("user/update")
+    fun updateUser(@Body request: EditUserRequest?): Call<User>
 
     /**
      * Static data
@@ -96,9 +99,6 @@ interface NetworkInfoService {
 
     @POST("user/create")
     fun userCreate(@Body user: User?, @Query(value = "fat") fat: String?): Call<User>
-
-    @POST("user/update")
-    fun updateUser(@Body user: User?): Call<User>
 
     @GET("user/login/check")
     fun loginCheck(@Query(value = "login") login: String?): Call<Boolean>

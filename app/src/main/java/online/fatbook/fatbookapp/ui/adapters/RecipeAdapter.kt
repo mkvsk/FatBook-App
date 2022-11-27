@@ -91,7 +91,9 @@ class RecipeAdapter :
             }
 
             itemView.textView_rv_card_recipe_title.text = recipe.title
-            itemView.rv_ingredients_preview.text = String.format(context!!.getString(R.string.title_ingredients_rv_recipe), recipe.ingredientQtt, recipe.ingredientsStr)
+            if (!recipe.ingredientsLocalizedMap.isNullOrEmpty()) {
+                itemView.rv_ingredients_preview.text = String.format(context!!.getString(R.string.title_ingredients_rv_recipe), recipe.ingredientQtt, recipe.ingredientsStr)
+            }
             if (recipe.kcalPerPortion == 0.0) {
                 itemView.rv_recipe_kcal_img.visibility = View.GONE
                 itemView.rv_recipe_kcal.visibility = View.GONE
