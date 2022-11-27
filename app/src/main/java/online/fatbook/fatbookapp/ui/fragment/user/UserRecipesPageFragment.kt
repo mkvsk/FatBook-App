@@ -39,7 +39,7 @@ class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
         adapter = RecipeAdapter()
         adapter!!.setClickListener(this)
         adapter!!.setContext(requireContext())
-        binding.rvAllRecipesPage.adapter = adapter
+        binding.rvUserRecipesPage.adapter = adapter
         setData()
     }
 
@@ -62,6 +62,7 @@ class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
 
     override fun onPause() {
         super.onPause()
+
         Log.d("STATE", "PAUSE TAB 1")
 
     }
@@ -71,6 +72,8 @@ class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
         binding.root.requestLayout()
         Log.d("STATE", "RESUME TAB 1")
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
