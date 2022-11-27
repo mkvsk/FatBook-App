@@ -101,6 +101,11 @@
 <!--        <item name="titleTextAppearance">@style/txtToolbar</item>-->
 <!--    </style>-->
 
+    <style name="ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary." parent="Theme.AppCompat.Light">
+        <item name="android:colorBackground">@color/theme_primary_bgr</item>
+        <item name="android:textColor">@color/main_text</item>
+    </style>
+    
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/bottom_navigation_height</item>
