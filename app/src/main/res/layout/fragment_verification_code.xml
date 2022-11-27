@@ -7,7 +7,9 @@
     android:background="@color/start_fragments_bgr"
     tools:context=".ui.fragment.authentication.register.VerificationCodeFragment">
 
-    <include layout="@layout/include_progress_overlay_auth"/>
+    <include
+        android:id="@+id/loader"
+        layout="@layout/include_progress_overlay_auth"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/fragment_verification_code_header"

@@ -7,7 +7,9 @@
     android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.recipe.RecipeViewFragment">
 
-    <include layout="@layout/include_progress_overlay" />
+    <include
+        android:id="@+id/loader"
+        layout="@layout/include_progress_overlay" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_recipe_view"

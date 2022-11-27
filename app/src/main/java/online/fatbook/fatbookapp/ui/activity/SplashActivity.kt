@@ -13,14 +13,16 @@ import online.fatbook.fatbookapp.util.Constants.SP_TAG_USERNAME
 import org.apache.commons.lang3.StringUtils
 
 class SplashActivity : AppCompatActivity() {
-    private var binding: ActivitySplashBinding? = null
+    private var _binding: ActivitySplashBinding? = null
+    private val binding get() = _binding!!
+
     private var username: String? = null
     private var password: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        _binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         loadSharedPreferences()
     }
@@ -60,5 +62,10 @@ class SplashActivity : AppCompatActivity() {
         }
         startActivity(intent)
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

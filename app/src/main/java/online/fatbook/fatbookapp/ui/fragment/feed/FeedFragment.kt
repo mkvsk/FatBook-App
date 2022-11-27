@@ -9,8 +9,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_feed.*
-import kotlinx.android.synthetic.main.include_progress_overlay.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
@@ -40,7 +38,9 @@ import retrofit2.Response
 class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteListener,
     BaseFragmentActionsListener {
 
-    private var binding: FragmentFeedBinding? = null
+    private var _binding: FragmentFeedBinding? = null
+    private val binding get() = _binding!!
+
     private var adapter: RecipeAdapter? = null
 
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
@@ -55,8 +55,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFeedBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentFeedBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,14 +65,14 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         setupSwipeRefresh()
         setupMenu()
         setupAdapter()
-        progress_overlay.visibility = View.VISIBLE
-        toolbar_feed.visibility = View.GONE
+        binding.loader.progressOverlay.visibility = View.VISIBLE
+        binding.toolbarFeed.visibility = View.GONE
         if (!authViewModel.isUserAuthenticated.value!!) {
             login()
         } else if (userViewModel.user.value == null) {
             loadUser()
         } else {
-            swipe_refresh_feed.isEnabled = true
+            binding.swipeRefreshFeed.isEnabled = true
         }
     }
 
@@ -110,9 +110,9 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             object : ResultCallback<User> {
                 override fun onResult(value: User?) {
                     userViewModel.user.value = value
-                    toolbar_feed.visibility = View.VISIBLE
-                    progress_overlay.visibility = View.GONE
-                    swipe_refresh_feed.isEnabled = true
+                    binding.toolbarFeed.visibility = View.VISIBLE
+                    binding.loader.progressOverlay.visibility = View.GONE
+                    binding.swipeRefreshFeed.isEnabled = true
                     loadFeed()
                 }
 
@@ -123,27 +123,27 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun setupSwipeRefresh() {
-        swipe_refresh_feed.isEnabled = false
-        swipe_refresh_feed.isRefreshing = false
-        swipe_refresh_feed.setProgressBackgroundColorSchemeColor(
+        binding.swipeRefreshFeed.isEnabled = false
+        binding.swipeRefreshFeed.isRefreshing = false
+        binding.swipeRefreshFeed.setProgressBackgroundColorSchemeColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.theme_primary_bgr
             )
         )
-        swipe_refresh_feed.setColorSchemeColors(
+        binding.swipeRefreshFeed.setColorSchemeColors(
             ContextCompat.getColor(
                 requireContext(), R.color.color_pink_a200
             )
         )
-        swipe_refresh_feed.setOnRefreshListener {
+        binding.swipeRefreshFeed.setOnRefreshListener {
             loadFeed()
         }
     }
 
     private fun setupMenu() {
-        toolbar_feed.inflateMenu(R.menu.feed_overflow_menu)
-        toolbar_feed.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        binding.toolbarFeed.inflateMenu(R.menu.feed_overflow_menu)
+        binding.toolbarFeed.setOnMenuItemClickListener(this::onOptionsItemSelected)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -177,21 +177,21 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             0L,
             object : ResultCallback<List<RecipeSimpleObject>> {
                 override fun onResult(value: List<RecipeSimpleObject>?) {
-                    swipe_refresh_feed.isRefreshing = false
+                    binding.swipeRefreshFeed.isRefreshing = false
                     feedViewModel.recipes.value = value
                     adapter!!.setData(feedViewModel.recipes.value, userViewModel.user.value)
                 }
 
                 override fun onFailure(value: List<RecipeSimpleObject>?) {
 //                loadFeed()
-                    swipe_refresh_feed.isRefreshing = false
+                    binding.swipeRefreshFeed.isRefreshing = false
                     Toast.makeText(requireContext(), "error feed", Toast.LENGTH_SHORT).show()
                 }
             })
     }
 
     private fun setupAdapter() {
-        val rv = rv_feed
+        val rv = binding.rvFeed
         adapter = RecipeAdapter()
         adapter!!.setClickListener(this)
         adapter!!.setContext(requireContext())
@@ -258,7 +258,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 
     override fun onDestroy() {
@@ -292,8 +292,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     override fun scrollUpBase() {
         Log.d(TAG, "scrollUpBase")
-        nsv_userprofile.smoothScrollTo(0, 0)
-        appBarLayout_feed.setExpanded(true, false)
+        binding.nsvUserprofile.smoothScrollTo(0, 0)
+        binding.appBarLayoutFeed.setExpanded(true, false)
     }
 
     //===========================================================================================
@@ -361,7 +361,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //                            FeedFragment.log.log(Level.INFO, "user load FAILED " + response.code())
                     }
                     if (binding != null) {
-                        swipe_refresh_feed.isRefreshing = false
+                        binding.swipeRefreshFeed.isRefreshing = false
                     }
                 }
 

@@ -7,7 +7,9 @@
     android:background="@color/start_fragments_bgr"
     tools:context=".ui.fragment.authentication.register.RegisterUsernameFragment">
 
-   <include layout="@layout/include_progress_overlay_auth"/>
+   <include
+       android:id="@+id/loader"
+       layout="@layout/include_progress_overlay_auth"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/fragment_login_recover_pass_header"

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_welcome.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentWelcomeBinding
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
@@ -14,7 +13,8 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 
 class WelcomeFragment : Fragment() {
 
-    private var binding: FragmentWelcomeBinding? = null
+    private var _binding: FragmentWelcomeBinding? = null
+    private val binding get() = _binding!!
 
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
@@ -22,20 +22,25 @@ class WelcomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentWelcomeBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragment_welcome_button_register.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_register_from_welcome)
+        binding.fragmentWelcomeButtonRegister.setOnClickListener {
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_register_from_welcome)
         }
-        fragment_welcome_button_login.setOnClickListener {
+        binding.fragmentWelcomeButtonLogin.setOnClickListener {
             NavHostFragment.findNavController(this).navigate(R.id.action_go_to_login_from_welcome)
         }
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

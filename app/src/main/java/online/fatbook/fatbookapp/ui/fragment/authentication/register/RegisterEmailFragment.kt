@@ -13,8 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_register_email.*
-import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
+import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationResponse
@@ -29,48 +28,50 @@ class RegisterEmailFragment : Fragment() {
     private var reconnectCount = 1
     private var isReconnectCancelled = false
 
-    private var binding: FragmentRegisterEmailBinding? = null
+    private var _binding: FragmentRegisterEmailBinding? = null
+    private val binding get() = _binding!!
+
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRegisterEmailBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentRegisterEmailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragment_register_email_button_next.setOnClickListener {
-            if (emailValidate(fragment_register_email_edittext_email.text.toString())) {
-                if (authViewModel.userEmail.value!! != fragment_register_email_edittext_email.text.toString()) {
+        binding.fragmentRegisterEmailButtonNext.setOnClickListener {
+            if (emailValidate(binding.fragmentRegisterEmailEdittextEmail.text.toString())) {
+                if (authViewModel.userEmail.value!! != binding.fragmentRegisterEmailEdittextEmail.text.toString()) {
                     authViewModel.isTimerRunning.value = false
                     authViewModel.currentCountdown.value = 0
                     authViewModel.cancelTimer()
                     isReconnectCancelled = false
-                    emailCheck(fragment_register_email_edittext_email.text.toString())
+                    emailCheck(binding.fragmentRegisterEmailEdittextEmail.text.toString())
                 } else {
                     if (authViewModel.isTimerRunning.value == false) {
-                        emailCheck(fragment_register_email_edittext_email.text.toString())
+                        emailCheck(binding.fragmentRegisterEmailEdittextEmail.text.toString())
                     } else {
                         navigateToVerificationCode()
                     }
                 }
             } else {
-                hideKeyboard(fragment_register_email_edittext_email)
+                hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
                 showErrorMessage(getString(R.string.dialog_wrong_data_register_email), true)
             }
         }
 
-        fragment_register_email_edittext_email.addTextChangedListener(object : TextWatcher {
+        binding.fragmentRegisterEmailEdittextEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                fragment_register_email_edittext_email.background =
+                binding.fragmentRegisterEmailEdittextEmail.background =
                     ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext)
                 if (s != null) {
-                    fragment_register_email_button_next.isEnabled = s.contains(SYMBOL_AT)
+                    binding.fragmentRegisterEmailButtonNext.isEnabled = s.contains(SYMBOL_AT)
                 }
             }
 
@@ -86,9 +87,9 @@ class RegisterEmailFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progress_overlay_auth.visibility == View.VISIBLE) {
+                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
-                        progress_overlay_auth.visibility = View.GONE
+                        binding.loader.progressOverlayAuth.visibility = View.GONE
                         isReconnectCancelled = true
                     } else {
                         popBackStack()
@@ -98,12 +99,12 @@ class RegisterEmailFragment : Fragment() {
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
-        fragment_register_email_dialog_text.text = message;
-        fragment_register_email_dialog_text.setTextColor(
+        binding.fragmentRegisterEmailDialogText.text = message;
+        binding.fragmentRegisterEmailDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.dialogErrorMess_text
@@ -111,20 +112,20 @@ class RegisterEmailFragment : Fragment() {
         )
 
         if (dyeEditText) {
-            fragment_register_email_edittext_email.background =
+            binding.fragmentRegisterEmailEdittextEmail.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
         }
     }
 
     private fun showDefaultMessage(message: String) {
-        fragment_register_email_dialog_text.text = message;
-        fragment_register_email_dialog_text.setTextColor(
+        binding.fragmentRegisterEmailDialogText.text = message;
+        binding.fragmentRegisterEmailDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.main_text
             )
         )
-        fragment_register_email_edittext_email.background =
+        binding.fragmentRegisterEmailEdittextEmail.background =
             ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext)
     }
 
@@ -135,11 +136,11 @@ class RegisterEmailFragment : Fragment() {
 
     private fun emailCheck(email: String) {
         Log.d("EMAIL CHECK attempt", reconnectCount.toString())
-        progress_overlay_auth.visibility = View.VISIBLE
-        hideKeyboard(fragment_register_email_edittext_email)
+        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+        hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
         authViewModel.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                progress_overlay_auth.visibility = View.GONE
+                binding.loader.progressOverlayAuth.visibility = View.GONE
                 when (value!!.code) {
                     0 -> {
                         if (!isReconnectCancelled) {
@@ -174,8 +175,8 @@ class RegisterEmailFragment : Fragment() {
                         emailCheck(email)
                     } else {
                         showErrorMessage(getString(R.string.dialog_register_error), false)
-                        hideKeyboard(fragment_register_email_edittext_email)
-                        progress_overlay_auth.visibility = View.GONE
+                        hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
+                        binding.loader.progressOverlayAuth.visibility = View.GONE
                     }
                 }
             }
@@ -184,5 +185,10 @@ class RegisterEmailFragment : Fragment() {
 
     private fun navigateToVerificationCode() {
         NavHostFragment.findNavController(this).navigate(R.id.action_go_to_verification_code)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

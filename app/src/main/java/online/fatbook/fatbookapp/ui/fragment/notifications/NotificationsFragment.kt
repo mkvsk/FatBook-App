@@ -6,20 +6,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_notifications.*
 import online.fatbook.fatbookapp.databinding.FragmentNotificationsBinding
 import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActionsListener
 
 class NotificationsFragment : Fragment(), BaseFragmentActionsListener {
 
-    private var binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentNotificationsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,6 +30,7 @@ class NotificationsFragment : Fragment(), BaseFragmentActionsListener {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("===t=======NotificationsFragment==========", "onDestroy")
+        _binding = null
     }
 
     override fun onBackPressedBase(): Boolean {
@@ -37,7 +38,7 @@ class NotificationsFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     override fun scrollUpBase() {
-        nsv_notifications.scrollTo(0, 0)
-        appBarLayout_notifications.setExpanded(true, false)
+        binding.nsvNotifications.scrollTo(0, 0)
+        binding.appBarLayoutNotifications.setExpanded(true, false)
     }
 }

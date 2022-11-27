@@ -13,8 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
+import androidx.navigation.fragment.findNavController
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
@@ -33,15 +32,17 @@ class LoginFragment : Fragment() {
     private var reconnectCount = 1
     private var isReconnectCancelled = false
 
-    private var binding: FragmentLoginBinding? = null
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
+
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,36 +50,38 @@ class LoginFragment : Fragment() {
 
         handleBackPressed()
 
-        fragment_login_button_login.setOnClickListener {
-            hideKeyboard(fragment_login_edittext_password)
+        binding.fragmentLoginButtonLogin.setOnClickListener {
+            hideKeyboard(binding.fragmentLoginEdittextPassword)
             login(
-                fragment_login_edittext_username.text.toString(),
-                fragment_login_edittext_password.text.toString()
+                binding.fragmentLoginEdittextUsername.text.toString(),
+                binding.fragmentLoginEdittextPassword.text.toString()
             )
         }
 
-        fragment_login_forgot_password_link.setOnClickListener {
-            authViewModel.recoverIdentifier.value = fragment_login_edittext_username.text.toString()
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_login_recover_pass_from_login)
+        binding.fragmentLoginForgotPasswordLink.setOnClickListener {
+            authViewModel.recoverIdentifier.value =
+                binding.fragmentLoginEdittextUsername.text.toString()
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_login_recover_pass_from_login)
         }
 
-        fragment_login_edittext_username.addTextChangedListener(object : TextWatcher {
+        binding.fragmentLoginEdittextUsername.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString().length in 3..20) {
-                    checkEditTextIsFilled(fragment_login_edittext_username, true)
+                    checkEditTextIsFilled(binding.fragmentLoginEdittextUsername, true)
                 } else {
                     if (s.toString().isEmpty()) {
-                        checkEditTextIsFilled(fragment_login_edittext_username, true)
+                        checkEditTextIsFilled(binding.fragmentLoginEdittextUsername, true)
                     } else {
-                        checkEditTextIsFilled(fragment_login_edittext_username, false)
+                        checkEditTextIsFilled(binding.fragmentLoginEdittextUsername, false)
                     }
                 }
                 enableButtonNext(
-                    username = fragment_login_edittext_username.text.toString(),
-                    password = fragment_login_edittext_password.text.toString()
+                    username = binding.fragmentLoginEdittextUsername.text.toString(),
+                    password = binding.fragmentLoginEdittextPassword.text.toString()
                 )
             }
 
@@ -87,23 +90,23 @@ class LoginFragment : Fragment() {
 
         })
 
-        fragment_login_edittext_password.addTextChangedListener(object : TextWatcher {
+        binding.fragmentLoginEdittextPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.toString().length in 6..20) {
-                    checkEditTextIsFilled(fragment_login_edittext_password, true)
+                    checkEditTextIsFilled(binding.fragmentLoginEdittextPassword, true)
                 } else {
                     if (s.toString().isEmpty()) {
-                        checkEditTextIsFilled(fragment_login_edittext_password, true)
+                        checkEditTextIsFilled(binding.fragmentLoginEdittextPassword, true)
                     } else {
-                        checkEditTextIsFilled(fragment_login_edittext_password, false)
+                        checkEditTextIsFilled(binding.fragmentLoginEdittextPassword, false)
                     }
                 }
                 enableButtonNext(
-                    username = fragment_login_edittext_username.text.toString(),
-                    password = fragment_login_edittext_password.text.toString()
+                    username = binding.fragmentLoginEdittextUsername.text.toString(),
+                    password = binding.fragmentLoginEdittextPassword.text.toString()
                 )
             }
 
@@ -115,7 +118,7 @@ class LoginFragment : Fragment() {
 
     private fun login(username: String, password: String) {
         Log.d("LOGIN attempt", "for user $username/$password #$reconnectCount")
-        progress_overlay_auth.visibility = View.VISIBLE
+        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("username", username)
             .addFormDataPart("password", password).build()
@@ -133,7 +136,7 @@ class LoginFragment : Fragment() {
                         navigateToFeed()
                     } else {
                         showErrorMessage("Sequence not found")
-                        progress_overlay_auth.visibility = View.GONE
+                        binding.loader.progressOverlayAuth.visibility = View.GONE
                     }
                 }
             }
@@ -144,9 +147,9 @@ class LoginFragment : Fragment() {
                         reconnectCount++
                         login(username, password)
                     } else {
-                        hideKeyboard(fragment_login_edittext_password)
+                        hideKeyboard(binding.fragmentLoginEdittextPassword)
                         showErrorMessage(getString(R.string.dialog_register_error))
-                        progress_overlay_auth.visibility = View.GONE
+                        binding.loader.progressOverlayAuth.visibility = View.GONE
                     }
                 }
             }
@@ -163,8 +166,8 @@ class LoginFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progress_overlay_auth.visibility == View.VISIBLE) {
-                        progress_overlay_auth.visibility = View.GONE
+                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
+                        binding.loader.progressOverlayAuth.visibility = View.GONE
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
                         isReconnectCancelled = true
                     } else {
@@ -175,7 +178,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
     }
 
     private fun saveUserDataToSharedPrefs() {
@@ -200,13 +203,13 @@ class LoginFragment : Fragment() {
     }
 
     private fun enableButtonNext(username: String, password: String) {
-        fragment_login_button_login.isEnabled =
+        binding.fragmentLoginButtonLogin.isEnabled =
             username.length in 3..20 && password.length in 6..20
     }
 
     private fun showErrorMessage(message: String) {
-        fragment_login_dialog_text.text = message
-        fragment_login_dialog_text.setTextColor(
+        binding.fragmentLoginDialogText.text = message
+        binding.fragmentLoginDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.dialogErrorMess_text
@@ -215,12 +218,17 @@ class LoginFragment : Fragment() {
     }
 
     private fun showDefaultMessage(message: String) {
-        fragment_login_dialog_text.text = message
-        fragment_login_dialog_text.setTextColor(
+        binding.fragmentLoginDialogText.text = message
+        binding.fragmentLoginDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.main_text
             )
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

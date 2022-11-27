@@ -9,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_app_settings.*
-import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import online.fatbook.fatbookapp.databinding.FragmentAppSettingsBinding
 import online.fatbook.fatbookapp.ui.activity.SplashActivity
 import online.fatbook.fatbookapp.util.Constants.SP_TAG

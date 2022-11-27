@@ -11,8 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.fragment_verification_code.*
-import kotlinx.android.synthetic.main.include_progress_overlay_auth.*
+import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationResponse
@@ -27,7 +26,8 @@ class VerificationCodeFragment : Fragment() {
     private var reconnectCount = 1
     private var isReconnectCancelled = false
 
-    private var binding: FragmentVerificationCodeBinding? = null
+    private var _binding: FragmentVerificationCodeBinding? = null
+    private val binding get() = _binding!!
 
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
 
@@ -35,8 +35,8 @@ class VerificationCodeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentVerificationCodeBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentVerificationCodeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,10 +46,10 @@ class VerificationCodeFragment : Fragment() {
         addObservers()
 
         //TODO убрать
-        fragment_verification_code_edittext_vc.setText(authViewModel.vCode.value)
-        fragment_verification_code_button_next.isEnabled = true
+        binding.fragmentVerificationCodeEdittextVc.setText(authViewModel.vCode.value)
+        binding.fragmentVerificationCodeButtonNext.isEnabled = true
 
-        fragment_verification_code_resend_link.setOnClickListener {
+        binding.fragmentVerificationCodeResendLink.setOnClickListener {
             if (!authViewModel.isTimerRunning.value!!) {
                 authViewModel.isTimerRunning.value = true
                 authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
@@ -57,14 +57,14 @@ class VerificationCodeFragment : Fragment() {
             }
         }
 
-        fragment_verification_code_edittext_vc.addTextChangedListener(object : TextWatcher {
+        binding.fragmentVerificationCodeEdittextVc.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                fragment_verification_code_edittext_vc.background =
+                binding.fragmentVerificationCodeEdittextVc.background =
                     ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext)
-                fragment_verification_code_button_next.isEnabled = s.toString().length == 6
+                binding.fragmentVerificationCodeButtonNext.isEnabled = s.toString().length == 6
                 if (s.toString().length == 6) {
                     hideKeyboard()
                 }
@@ -75,16 +75,16 @@ class VerificationCodeFragment : Fragment() {
 
         })
 
-        fragment_verification_code_button_next.setOnClickListener {
+        binding.fragmentVerificationCodeButtonNext.setOnClickListener {
             if (StringUtils.equals(
-                    fragment_verification_code_edittext_vc.text.toString(),
+                    binding.fragmentVerificationCodeEdittextVc.text.toString(),
                     authViewModel.vCode.value
                 )
             ) {
                 isReconnectCancelled = false
-                confirmVCode(fragment_verification_code_edittext_vc.text.toString())
+                confirmVCode(binding.fragmentVerificationCodeEdittextVc.text.toString())
             } else {
-                hideKeyboard(fragment_verification_code_edittext_vc)
+                hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
                 showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500), true)
             }
         }
@@ -96,9 +96,9 @@ class VerificationCodeFragment : Fragment() {
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
                     authViewModel.vCode.value = value!!.vcode
-                    fragment_verification_code_edittext_vc.setText(StringUtils.EMPTY)
-                    fragment_verification_code_dialog_text.setText(R.string.dialog_verification_code)
-                    fragment_verification_code_dialog_text.setTextColor(
+                    binding.fragmentVerificationCodeEdittextVc.setText(StringUtils.EMPTY)
+                    binding.fragmentVerificationCodeDialogText.setText(R.string.dialog_verification_code)
+                    binding.fragmentVerificationCodeDialogText.setTextColor(
                         ContextCompat.getColor(
                             requireContext(),
                             R.color.main_text
@@ -113,8 +113,8 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
-        fragment_verification_code_dialog_text.text = message
-        fragment_verification_code_dialog_text.setTextColor(
+        binding.fragmentVerificationCodeDialogText.text = message
+        binding.fragmentVerificationCodeDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.dialogErrorMess_text
@@ -122,7 +122,7 @@ class VerificationCodeFragment : Fragment() {
         )
 
         if (dyeEditText) {
-            fragment_verification_code_edittext_vc.background =
+            binding.fragmentVerificationCodeEdittextVc.background =
                 ContextCompat.getDrawable(
                     requireContext(),
                     R.drawable.round_corner_edittext_error
@@ -131,15 +131,15 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun showDefaultMessage(message: String) {
-        fragment_verification_code_dialog_text.text = message
-        fragment_verification_code_dialog_text.setTextColor(
+        binding.fragmentVerificationCodeDialogText.text = message
+        binding.fragmentVerificationCodeDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.dialogErrorMess_text
             )
         )
 
-        fragment_verification_code_edittext_vc.background =
+        binding.fragmentVerificationCodeEdittextVc.background =
             ContextCompat.getDrawable(
                 requireContext(),
                 R.drawable.round_corner_edittext
@@ -148,14 +148,14 @@ class VerificationCodeFragment : Fragment() {
 
     private fun confirmVCode(vCode: String) {
         Log.d("VCODE CONFIRM attempt", reconnectCount.toString())
-        hideKeyboard(fragment_verification_code_edittext_vc)
-        progress_overlay_auth.visibility = View.VISIBLE
+        hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
+        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
         authViewModel.confirmVCode(
             vCode,
             authViewModel.userEmail.value!!,
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
-                    progress_overlay_auth.visibility = View.GONE
+                    binding.loader.progressOverlayAuth.visibility = View.GONE
                     when (value?.code) {
                         0 -> {
                             if (!isReconnectCancelled) {
@@ -195,9 +195,9 @@ class VerificationCodeFragment : Fragment() {
                             reconnectCount++
                             confirmVCode(vCode)
                         } else {
-                            hideKeyboard(fragment_verification_code_edittext_vc)
+                            hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
                             showErrorMessage(getString(R.string.dialog_register_error), false)
-                            progress_overlay_auth.visibility = View.GONE
+                            binding.loader.progressOverlayAuth.visibility = View.GONE
                         }
                     }
                 }
@@ -214,9 +214,9 @@ class VerificationCodeFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (progress_overlay_auth.visibility == View.VISIBLE) {
+                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
-                        progress_overlay_auth.visibility = View.GONE
+                        binding.loader.progressOverlayAuth.visibility = View.GONE
                         isReconnectCancelled = true
                     } else {
                         popBackStack()
@@ -226,17 +226,17 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun popBackStack() {
-        NavHostFragment.findNavController(this).popBackStack()
+        findNavController().popBackStack()
     }
 
     private fun addObservers() {
         authViewModel.currentCountdown.observe(viewLifecycleOwner) {
             if (it == 0L) {
                 //enable button
-                fragment_verification_code_resend_link.isEnabled = true
-                fragment_verification_code_resend_link.text =
+                binding.fragmentVerificationCodeResendLink.isEnabled = true
+                binding.fragmentVerificationCodeResendLink.text =
                     resources.getString(R.string.resend_verification_code)
-                fragment_verification_code_resend_link.setTextColor(
+                binding.fragmentVerificationCodeResendLink.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
                         R.color.vcEnabledColor_text,
@@ -244,11 +244,11 @@ class VerificationCodeFragment : Fragment() {
                 )
             } else {
                 //disable button
-                fragment_verification_code_resend_link.isEnabled = false
-                fragment_verification_code_resend_link.text = String.format(
+                binding.fragmentVerificationCodeResendLink.isEnabled = false
+                binding.fragmentVerificationCodeResendLink.text = String.format(
                     resources.getString(R.string.resend_verification_code_timer), it
                 )
-                fragment_verification_code_resend_link.setTextColor(
+                binding.fragmentVerificationCodeResendLink.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
                         R.color.vcDisabledColor_text,
@@ -258,4 +258,8 @@ class VerificationCodeFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
