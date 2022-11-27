@@ -10,13 +10,13 @@
     <include layout="@layout/include_progress_overlay" />
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout_userprofile"
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar_userprofile"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/theme_toolbar_color"
@@ -33,7 +33,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_user_profile"
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -41,7 +41,7 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/nsv_userprofile"
+            android:id="@+id/nsv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
@@ -53,7 +53,7 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardview_userprofile"
+                    android:id="@+id/cardviewUserprofile"
                     style="@style/myMaterialCardRight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,62 +73,48 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <!--                        <TextView-->
-                        <!--                            android:id="@+id/textview_was_online"-->
-                        <!--                            android:layout_width="wrap_content"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            app:layout_constraintLeft_toLeftOf="parent"-->
-                        <!--                            app:layout_constraintTop_toTopOf="parent"-->
-                        <!--                            android:text="last seen 5 minutes ago"-->
-                        <!--                            android:textSize="9sp"-->
-                        <!--                            android:fontFamily="@font/roboto_regular"-->
-                        <!--                            android:textColor="@color/blue_grey_200"-->
-                        <!--                            android:background="@drawable/round_corner_rect_blue_grey_50"-->
-                        <!--                            android:paddingHorizontal="5dp"-->
-                        <!--                            />-->
-
                         <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/imageview_recipes_qtt_userprofile"
+                            android:id="@+id/ovalRecipesQtt"
                             android:layout_width="50dp"
                             android:layout_height="0dp"
                             android:background="@drawable/selector_user_recipes_qtt"
                             android:clickable="true"
                             android:elevation="4dp"
                             android:translationZ="2dp"
-                            app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintBottom_toBottomOf="@id/userPhoto"
                             app:layout_constraintDimensionRatio="H,1:1"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@id/imageview_userphoto_userprofile"
-                            app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintRight_toLeftOf="@id/userPhoto"
+                            app:layout_constraintTop_toTopOf="@id/userPhoto"
                             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
                         <TextView
-                            android:id="@+id/textview_recipes_qtt_userprofile"
+                            android:id="@+id/tvRecipesQtt"
                             style="@style/txtUserProfileStats"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:elevation="6dp"
                             android:text="12345"
-                            app:layout_constraintBottom_toBottomOf="@id/imageview_recipes_qtt_userprofile"
-                            app:layout_constraintLeft_toLeftOf="@id/imageview_recipes_qtt_userprofile"
-                            app:layout_constraintRight_toRightOf="@id/imageview_recipes_qtt_userprofile"
-                            app:layout_constraintTop_toTopOf="@id/imageview_recipes_qtt_userprofile" />
+                            app:layout_constraintBottom_toBottomOf="@id/ovalRecipesQtt"
+                            app:layout_constraintLeft_toLeftOf="@id/ovalRecipesQtt"
+                            app:layout_constraintRight_toRightOf="@id/ovalRecipesQtt"
+                            app:layout_constraintTop_toTopOf="@id/ovalRecipesQtt" />
 
                         <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/imageview_is_online"
+                            android:id="@+id/isOnlineIndicator"
                             android:layout_width="124dp"
                             android:layout_height="124dp"
                             android:background="@color/user_is_online_color"
                             android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_userprofile"
-                            app:layout_constraintLeft_toLeftOf="@id/imageview_userphoto_userprofile"
-                            app:layout_constraintRight_toRightOf="@id/imageview_userphoto_userprofile"
-                            app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintBottom_toBottomOf="@id/userPhoto"
+                            app:layout_constraintLeft_toLeftOf="@id/userPhoto"
+                            app:layout_constraintRight_toRightOf="@id/userPhoto"
+                            app:layout_constraintTop_toTopOf="@id/userPhoto"
                             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
                         <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/imageview_userphoto_userprofile"
+                            android:id="@+id/userPhoto"
                             android:layout_width="125dp"
                             android:layout_height="125dp"
                             android:layout_marginTop="5dp"
@@ -145,35 +131,35 @@
                             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
                         <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/imageview_friends_qtt_userprofile"
+                            android:id="@+id/ovalFollowersQtt"
                             android:layout_width="50dp"
                             android:layout_height="0dp"
                             android:background="@drawable/selector_user_followers_qtt"
                             android:clickable="true"
                             android:elevation="4dp"
                             android:translationZ="2dp"
-                            app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintBottom_toBottomOf="@id/userPhoto"
                             app:layout_constraintDimensionRatio="H,1:1"
-                            app:layout_constraintLeft_toRightOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintLeft_toRightOf="@id/userPhoto"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/imageview_userphoto_userprofile"
+                            app:layout_constraintTop_toTopOf="@id/userPhoto"
                             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
                         <TextView
-                            android:id="@+id/textview_friends_qtt_userprofile"
+                            android:id="@+id/tvFollowersQtt"
                             style="@style/txtUserProfileStats"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:elevation="6dp"
                             android:text="45"
-                            app:layout_constraintBottom_toBottomOf="@id/imageview_friends_qtt_userprofile"
-                            app:layout_constraintLeft_toLeftOf="@id/imageview_friends_qtt_userprofile"
-                            app:layout_constraintRight_toRightOf="@id/imageview_friends_qtt_userprofile"
-                            app:layout_constraintTop_toTopOf="@id/imageview_friends_qtt_userprofile" />
+                            app:layout_constraintBottom_toBottomOf="@id/ovalFollowersQtt"
+                            app:layout_constraintLeft_toLeftOf="@id/ovalFollowersQtt"
+                            app:layout_constraintRight_toRightOf="@id/ovalFollowersQtt"
+                            app:layout_constraintTop_toTopOf="@id/ovalFollowersQtt" />
 
                         <TextView
-                            android:id="@+id/textview_title_userprofile"
+                            android:id="@+id/profileTitle"
                             style="@style/txtUserProfileTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -185,18 +171,18 @@
                             android:textAlignment="center"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/imageview_userphoto_userprofile" />
+                            app:layout_constraintTop_toBottomOf="@id/userPhoto" />
 
                         <ImageView
-                            android:id="@+id/imageview_ic_website"
+                            android:id="@+id/icProfileWebsite"
                             android:layout_width="@dimen/ic_userprofile_w_h"
                             android:layout_height="@dimen/ic_userprofile_w_h"
                             android:src="@drawable/ic_user_website"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/textview_website_userprofile" />
+                            app:layout_constraintTop_toTopOf="@id/profileWebsite" />
 
                         <TextView
-                            android:id="@+id/textview_website_userprofile"
+                            android:id="@+id/profileWebsite"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="30dp"
@@ -206,12 +192,12 @@
                             android:fontFamily="@font/roboto_medium"
                             android:text="www.potatocorp.online"
                             android:textSize="11sp"
-                            app:layout_constraintLeft_toRightOf="@id/imageview_ic_website"
-                            app:layout_constraintTop_toBottomOf="@id/textview_title_userprofile" />
+                            app:layout_constraintLeft_toRightOf="@id/icProfileWebsite"
+                            app:layout_constraintTop_toBottomOf="@id/profileTitle" />
 
 
                         <ImageView
-                            android:id="@+id/imageview_ic_expand"
+                            android:id="@+id/icExpand"
                             android:layout_width="@dimen/ic_userprofile_w_h"
                             android:layout_height="@dimen/ic_userprofile_w_h"
                             android:src="@drawable/ic_expand_more"
@@ -226,10 +212,10 @@
                             android:visibility="visible"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/textview_website_userprofile">
+                            app:layout_constraintTop_toBottomOf="@id/profileWebsite">
 
                             <ImageView
-                                android:id="@+id/imageview_ic_bio"
+                                android:id="@+id/icProfileBio"
                                 android:layout_width="@dimen/ic_userprofile_w_h"
                                 android:layout_height="@dimen/ic_userprofile_w_h"
                                 android:src="@drawable/ic_user_bio"
@@ -237,7 +223,7 @@
                                 app:layout_constraintTop_toTopOf="@id/expandableLayout" />
 
                             <TextView
-                                android:id="@+id/textview_bio_userprofile"
+                                android:id="@+id/profileBio"
                                 style="@style/txtUserProfile"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -249,7 +235,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_btns_follow_message"
+                            android:id="@+id/llBtnsFollowMessage"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="10dp"
@@ -260,7 +246,7 @@
                             app:layout_constraintTop_toBottomOf="@id/expandableLayout">
 
                             <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/button_friends"
+                                android:id="@+id/buttonFriends"
                                 style="@style/buttons_in_fragments_style"
                                 android:layout_width="@dimen/btn_main_w"
                                 android:layout_height="@dimen/btn_main_h"
@@ -272,7 +258,7 @@
                                 android:translationZ="2dp" />
 
                             <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/button_message_user"
+                                android:id="@+id/buttonMessage"
                                 style="@style/buttons_in_fragments_style"
                                 android:layout_width="@dimen/btn_main_w"
                                 android:layout_height="@dimen/btn_main_h"
@@ -287,16 +273,16 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout
-                    android:id="@+id/ll_viewpager"
+                    android:id="@+id/llViewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardview_userprofile">
+                    app:layout_constraintTop_toBottomOf="@id/cardviewUserprofile">
 
                     <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tabLayout_userprofile"
+                        android:id="@+id/tabLayout"
                         style="@style/myTabLayout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/tabitem_h"
@@ -323,7 +309,7 @@
                     </com.google.android.material.tabs.TabLayout>
 
                     <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/vp_userprofile"
+                        android:id="@+id/vpUserprofile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
@@ -358,7 +344,7 @@
         app:layout_constraintLeft_toLeftOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_button_up"
+            android:id="@+id/buttonUp"
             style="@style/floatingBtnFocusOnTab"
             android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
             android:layout_height="@dimen/round_btn_edit_userprofile_w_h"

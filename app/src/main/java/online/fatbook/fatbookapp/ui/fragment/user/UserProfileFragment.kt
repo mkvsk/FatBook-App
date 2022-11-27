@@ -17,8 +17,6 @@ import androidx.transition.TransitionManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_user_profile.*
-import kotlinx.android.synthetic.main.fragment_user_profile.nsv_userprofile
 import kotlinx.android.synthetic.main.include_progress_overlay.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -37,7 +35,8 @@ import org.apache.commons.lang3.StringUtils
 
 class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
-    private var binding: FragmentUserProfileBinding? = null
+    private var _binding: FragmentUserProfileBinding? = null
+    private val binding get() = _binding!!
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
 
@@ -47,8 +46,8 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentUserProfileBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,35 +61,35 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
                 .navigate(R.id.action_go_to_app_settings_from_user_profile)
         } else {
             progress_overlay.visibility = View.VISIBLE
-            toolbar_userprofile.visibility = View.GONE
+            binding.toolbar.visibility = View.GONE
             loadUserData()
             setupMenu(R.menu.user_profile_current_menu)
             setupSwipeRefresh()
             setupViewPager()
-            imageview_recipes_qtt_userprofile.setOnClickListener {
+            binding.ovalRecipesQtt.setOnClickListener {
                 focusOnRecipes()
             }
 
-            imageview_friends_qtt_userprofile.setOnClickListener {
+            binding.ovalFollowersQtt.setOnClickListener {
                 NavHostFragment.findNavController(this)
                     .navigate(R.id.action_go_to_followers_from_user_profile)
             }
 
-            imageview_userphoto_userprofile.setOnClickListener {
+            binding.userPhoto.setOnClickListener {
                 imageViewModel.image.value = userViewModel.user.value!!.profileImage
                 NavHostFragment.findNavController(this)
                     .navigate(R.id.action_go_to_view_image_from_user_profile1)
             }
 
-            nsv_userprofile.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
+            binding.nsv.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                 showButtonUp(scrollY)
             })
 
-            floating_button_up.setOnClickListener {
+            binding.buttonUp.setOnClickListener {
                 focusOnRecipes()
             }
 
-            imageview_ic_expand.setOnClickListener {
+            binding.icExpand.setOnClickListener {
                 animateTextExpand()
             }
         }
@@ -99,11 +98,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     private fun setupViewPager() {
         val fragmentAdapter = UserProfileRecipesAdapter(this)
         println("UserProfileRecipesAdapter init")
-        viewPager = vp_userprofile
+        viewPager = binding.vpUserprofile
         viewPager.isUserInputEnabled = false
         viewPager.adapter = fragmentAdapter
         viewPager.offscreenPageLimit = 2
-        val tabLayout = tabLayout_userprofile
+        val tabLayout = binding.tabLayout
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text =
                 if (position == 0) {
@@ -116,37 +115,37 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     private fun setupSwipeRefresh() {
-        swipe_refresh_user_profile.isEnabled = false
-        swipe_refresh_user_profile.isRefreshing = false
-        swipe_refresh_user_profile.setProgressBackgroundColorSchemeColor(
+        binding.swipeRefresh.isEnabled = false
+        binding.swipeRefresh.isRefreshing = false
+        binding.swipeRefresh.setProgressBackgroundColorSchemeColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.theme_primary_bgr
             )
         )
-        swipe_refresh_user_profile.setColorSchemeColors(
+        binding.swipeRefresh.setColorSchemeColors(
             ContextCompat.getColor(
                 requireContext(), R.color.color_pink_a200
             )
         )
-        swipe_refresh_user_profile.setOnRefreshListener {
+        binding.swipeRefresh.setOnRefreshListener {
             loadUserData()
         }
     }
 
     private fun loadUserData() {
         if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
-            toolbar_userprofile.title = userViewModel.user.value!!.username
+            binding.toolbar.title = userViewModel.user.value!!.username
             setupViewForLoggedInUser()
         } else {
-            toolbar_userprofile.title = userViewModel.selectedUsername.value!!
+            binding.toolbar.title = userViewModel.selectedUsername.value!!
             setupViewForSelectedUser()
         }
     }
 
     private fun setupMenu(menu: Int) {
-        toolbar_userprofile.inflateMenu(menu)
-        toolbar_userprofile.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        binding.toolbar.inflateMenu(menu)
+        binding.toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -199,18 +198,18 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     private fun animateTextExpand() {
-        TransitionManager.go(Scene(cardview_userprofile), AutoTransition())
+        TransitionManager.go(Scene(binding.cardviewUserprofile), AutoTransition())
         if (!expanded) {
-            textview_bio_userprofile.maxLines = Integer.MAX_VALUE
-            imageview_ic_expand.setImageDrawable(
+            binding.profileBio.maxLines = Integer.MAX_VALUE
+            binding.icExpand.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(), R.drawable.ic_expand_less
                 )
             )
             expanded = true
         } else {
-            textview_bio_userprofile.maxLines = 3
-            imageview_ic_expand.setImageDrawable(
+            binding.profileBio.maxLines = 3
+            binding.icExpand.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(), R.drawable.ic_expand_more
                 )
@@ -222,36 +221,36 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     private fun showButtonUp(scrollY: Int) {
         if (!expanded) {
             if (scrollY >= 1044) {
-                floating_button_up.visibility = View.VISIBLE
+                binding.buttonUp.visibility = View.VISIBLE
             }
             if (scrollY < 1044) {
-                floating_button_up.visibility = View.GONE
+                binding.buttonUp.visibility = View.GONE
             }
         } else {
             if (scrollY >= 1200) {
-                floating_button_up.visibility = View.VISIBLE
+                binding.buttonUp.visibility = View.VISIBLE
             }
             if (scrollY < 1200) {
-                floating_button_up.visibility = View.GONE
+                binding.buttonUp.visibility = View.GONE
             }
         }
     }
 
     private fun setupViewForLoggedInUser() {
-        ll_btns_follow_message.visibility = View.GONE
-        tabLayout_userprofile.visibility = View.VISIBLE
-        toolbar_userprofile.navigationIcon = null
+        binding.llBtnsFollowMessage.visibility = View.GONE
+        binding.tabLayout.visibility = View.VISIBLE
+        binding.toolbar.navigationIcon = null
 //        if (userViewModel.user.value?.pid == null) {
-            loadUser(userViewModel.user.value!!.username!!, true)
+        loadUser(userViewModel.user.value!!.username!!, true)
 //        } else {
 //            drawData(userViewModel.user.value!!)
 //        }
     }
 
     private fun setupViewForSelectedUser() {
-        ll_btns_follow_message.visibility = View.VISIBLE
-        tabLayout_userprofile.visibility = View.GONE
-        toolbar_userprofile.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
+        binding.llBtnsFollowMessage.visibility = View.VISIBLE
+        binding.tabLayout.visibility = View.GONE
+        binding.toolbar.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
         if (userViewModel.selectedUser.value?.pid == null) {
             loadUser(userViewModel.selectedUsername.value!!, false)
         } else {
@@ -261,56 +260,56 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     private fun drawData(user: User) {
         Log.i("DRAW DATA", "--------------------------------------------------")
-        toolbar_userprofile.title = user.username
+        binding.toolbar.title = user.username
         if (user.online) {
-            imageview_is_online.visibility = View.VISIBLE
-            toolbar_userprofile.subtitle = getString(R.string.subtitle_online)
+            binding.isOnlineIndicator.visibility = View.VISIBLE
+            binding.toolbar.subtitle = getString(R.string.subtitle_online)
         } else {
-            imageview_is_online.visibility = View.INVISIBLE
-            toolbar_userprofile.subtitle = getString(R.string.subtitle_offline)
+            binding.isOnlineIndicator.visibility = View.INVISIBLE
+            binding.toolbar.subtitle = getString(R.string.subtitle_offline)
         }
-        textview_recipes_qtt_userprofile.text =
+        binding.tvRecipesQtt.text =
             user.recipeAmount?.let { FormatUtils.prettyCount(it) }
-        textview_friends_qtt_userprofile.text =
+        binding.tvFollowersQtt.text =
             user.followersAmount?.let { FormatUtils.prettyCount(it) }
         if (user.profileImage.isNullOrEmpty()) {
-            imageview_userphoto_userprofile.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
-            imageview_userphoto_userprofile.isClickable = false
+            binding.userPhoto.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
+            binding.userPhoto.isClickable = false
         } else {
             Glide.with(requireContext()).load(user.profileImage!!)
-                .into(imageview_userphoto_userprofile)
-            imageview_userphoto_userprofile.isClickable = true
+                .into(binding.userPhoto)
+            binding.userPhoto.isClickable = true
         }
         if (user.title.isNullOrEmpty()) {
-            textview_title_userprofile.visibility = View.GONE
+            binding.profileTitle.visibility = View.GONE
         } else {
-            textview_title_userprofile.text = user.title
+            binding.profileTitle.text = user.title
         }
 
         if (user.website.isNullOrEmpty()) {
-            textview_website_userprofile.visibility = View.GONE
-            imageview_ic_website.visibility = View.GONE
+            binding.profileWebsite.visibility = View.GONE
+            binding.icProfileWebsite.visibility = View.GONE
         } else {
-            textview_website_userprofile.text = user.website
+            binding.profileWebsite.text = user.website
         }
 
         if (user.bio.isNullOrEmpty()) {
-            expandableLayout.visibility = View.GONE
-            imageview_ic_expand.visibility = View.GONE
+            binding.expandableLayout.visibility = View.GONE
+            binding.icExpand.visibility = View.GONE
         } else {
-            textview_bio_userprofile.text = user.bio
-            if (textview_bio_userprofile.lineCount <= textview_bio_userprofile.maxLines) {
-                imageview_ic_expand.visibility = View.GONE
+            binding.profileBio.text = user.bio
+            if (binding.profileBio.lineCount <= binding.profileBio.maxLines) {
+                binding.icExpand.visibility = View.GONE
             } else {
-                imageview_ic_expand.visibility = View.VISIBLE
+                binding.icExpand.visibility = View.VISIBLE
             }
         }
         progress_overlay.visibility = View.GONE
-        toolbar_userprofile.visibility = View.VISIBLE
-        swipe_refresh_user_profile.isRefreshing = false
-        swipe_refresh_user_profile.isEnabled = true
-        UserRecipesPageFragment().setData()
-        FavouritesRecipesPageFragment().setData()
+        binding.toolbar.visibility = View.VISIBLE
+        binding.swipeRefresh.isRefreshing = false
+        binding.swipeRefresh.isEnabled = true
+//        UserRecipesPageFragment().setData()
+//        FavouritesRecipesPageFragment().setData()
     }
 
     private fun loadUser(username: String, updateCurrentUser: Boolean) {
@@ -336,9 +335,9 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     private fun focusOnRecipes() {
-        nsv_userprofile.post {
-            nsv_userprofile.smoothScrollTo(
-                0, cardview_userprofile.bottom
+        binding.nsv.post {
+            binding.nsv.smoothScrollTo(
+                0, binding.cardviewUserprofile.bottom
             )
         }
     }
@@ -348,6 +347,8 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         Log.d("UserProfileFragment", "onDestroy")
         userViewModel.selectedUsername.value = null
         userViewModel.selectedUser.value = null
+
+        _binding = null
     }
 
     override fun onPause() {
@@ -370,7 +371,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     override fun scrollUpBase() {
-        nsv_userprofile.scrollTo(0, 0)
-        appBarLayout_userprofile.setExpanded(true, false)
+        binding.nsv.scrollTo(0, 0)
+        binding.appBarLayout.setExpanded(true, false)
     }
 }

@@ -41,7 +41,7 @@ class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
         adapter = RecipeAdapter()
         adapter!!.setClickListener(this)
         adapter!!.setContext(requireContext())
-        rv_all_recipes_page.adapter = adapter
+        binding.rvUserRecipesPage.adapter = adapter
     }
 
     fun setData() {
