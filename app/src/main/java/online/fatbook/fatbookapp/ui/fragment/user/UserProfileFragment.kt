@@ -330,6 +330,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
                     resources.getString(R.string.title_favourites_profile)
                 }
         }.attach()
+        //TODO fix
 //        ViewPager2ViewHeightAnimator().viewPager2 = viewPager
     }
 
