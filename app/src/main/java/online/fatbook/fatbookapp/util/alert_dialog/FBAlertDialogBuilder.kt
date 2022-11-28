@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import online.fatbook.fatbookapp.R
 
-object FBAlertDialogBuilder {
+object FBAlertDialogBuilder : FBAlertDialogListener {
 
     private lateinit var inflater: LayoutInflater
     private lateinit var context: Context
@@ -26,7 +26,7 @@ object FBAlertDialogBuilder {
         title: String,
         msg: String,
         positiveBtnListener: FBAlertDialogListener,
-        negativeBtnListener: FBAlertDialogListener,
+        negativeBtnListener: FBAlertDialogListener = this,
         positiveBtnText: String = context.resources.getString(R.string.alert_dialog_btn_yes),
         negativeBtnText: String = context.resources.getString(R.string.alert_dialog_btn_cancel)
     ): AlertDialog {
@@ -72,5 +72,9 @@ object FBAlertDialogBuilder {
             .create()
         dialog.window?.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.tpd_bgr))
         return dialog
+    }
+
+    override fun onClick(dialogInterface: DialogInterface) {
+        dialogInterface.dismiss()
     }
 }

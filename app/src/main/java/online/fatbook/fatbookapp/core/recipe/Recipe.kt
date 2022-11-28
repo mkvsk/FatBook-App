@@ -41,7 +41,6 @@ data class Recipe(
             val tmp = ingredients!!.find {
                 it.unit!!.ordinal !in 1..4
             }
-            Log.d("isAllIngredientUnitsValid", "${tmp == null}")
             return tmp == null
         }
 

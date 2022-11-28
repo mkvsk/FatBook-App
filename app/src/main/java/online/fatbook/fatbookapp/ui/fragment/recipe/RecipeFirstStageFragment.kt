@@ -73,6 +73,12 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
         super.onViewCreated(view, savedInstanceState)
         Log.d("===t=======RecipeCreateFirstStageFragment==========", "onViewCreated")
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        recipeViewModel.isRecipeCreated.value?.let {
+            if (it) {
+                recipeViewModel.isRecipeCreated.value = false
+                clearForm()
+            }
+        }
 //        binding.loader.progressOverlay.visibility = View.VISIBLE
 //        toolbar_recipe_1_stage.visibility = View.GONE
 //        toolbar_recipe_create_1_stage.title = resources.getString(R.string.nav_recipe_create)
