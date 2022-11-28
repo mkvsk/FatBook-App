@@ -101,12 +101,12 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
         binding = null
     }
 
-    override fun onRecipeClick(position: Int) {
-        val recipe = recipeList!![position]
-        recipeViewModel!!.selectedRecipe.value = recipe
-        recipeViewModel!!.selectedRecipePosition.value = position
-        NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_recipe_view_from_bookmarks_old)
+    override fun onRecipeClick(id: Long) {
+//        val recipe = recipeList!![position]
+//        recipeViewModel!!.selectedRecipe.value = recipe
+//        recipeViewModel!!.selectedRecipePosition.value = position
+//        NavHostFragment.findNavController(this)
+//                .navigate(R.id.action_go_to_recipe_view_from_bookmarks_old)
     }
 
     override fun onBookmarksClick(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {
@@ -139,6 +139,9 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
 
     override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
         recipeForked(recipe, fork, position)
+    }
+
+    override fun onUsernameClick(username: String) {
     }
 
     private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {

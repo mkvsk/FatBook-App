@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
@@ -149,8 +150,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_direct_messages -> {
-                NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_direct_messages_from_feed)
+                findNavController().navigate(R.id.action_go_to_direct_messages_from_feed)
 //                Toast.makeText(requireContext(), "direct", Toast.LENGTH_SHORT).show()
                 true
             }
@@ -199,8 +199,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         rv.adapter = adapter
     }
 
-    override fun onRecipeClick(position: Int) {
-        Toast.makeText(requireContext(), "clicked $position", Toast.LENGTH_SHORT).show()
+    override fun onRecipeClick(id: Long) {
+        Toast.makeText(requireContext(), "clicked $id", Toast.LENGTH_SHORT).show()
 //        val recipe = userViewModel.feedRecipeList.value!![position]
 //        recipeViewModel.selectedRecipe.value = recipe
 //        recipeViewModel.selectedRecipePosition.value = position
@@ -230,6 +230,11 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
         recipeForked(recipe, fork, position)
+    }
+
+    override fun onUsernameClick(username: String) {
+        userViewModel.selectedUsername.value = username
+        findNavController().navigate(R.id.action_go_to_user_profile_from_feed)
     }
 
     private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
@@ -371,6 +376,4 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             })
         }
     }
-
-
 }

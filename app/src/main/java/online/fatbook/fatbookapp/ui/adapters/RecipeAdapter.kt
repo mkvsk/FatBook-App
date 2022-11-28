@@ -30,7 +30,7 @@ class RecipeAdapter :
 
     private var data: List<RecipeSimpleObject> = ArrayList()
     private var user: User = User()
-    private var listener: OnRecipeClickListener? = null
+    private lateinit var listener: OnRecipeClickListener
     private var context: Context? = null
 
     fun setUser(user: User) {
@@ -116,7 +116,9 @@ class RecipeAdapter :
                     .into(itemView.imageview_author_photo_rv_recipe_preview)
             itemView.rv_recipe_comments_qtt.text = recipe.commentQtt.toString()
             itemView.textView_rv_card_recipe_forks_avg.text = FormatUtils.prettyCount(recipe.forks!!)
-
+            itemView.ll_author_link_rv_recipe_preview.setOnClickListener {
+                listener.onUsernameClick(data[bindingAdapterPosition].author!!)
+            }
 //            toggleForks(
 //                itemView.imageView_rv_card_recipe_fork,
 //                user.recipesForked!!.contains(recipe.identifier)
@@ -133,7 +135,7 @@ class RecipeAdapter :
 
 
 //            itemView.rv_card_recipe_preview.setOnClickListener {
-//                listener!!.onRecipeClick(adapterPosition)
+//                listener!!.onRecipeClick(data[adapterPosition])
 //            }
 //            itemView.imageView_rv_card_recipe_favourites.setOnClickListener {
 //                val tag = itemView.imageView_rv_card_recipe_favourites.tag as String

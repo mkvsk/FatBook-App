@@ -23,6 +23,13 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
+        <action
+            android:id="@+id/action_go_to_user_profile_from_feed"
+            app:destination="@id/user_profile_dest"
+            app:exitAnim="@anim/nav_default_enter_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
     </fragment>
 
     <fragment
@@ -35,4 +42,8 @@
         android:name="online.fatbook.fatbookapp.ui.fragment.feed.DirectMessagesFragment"
         android:label="@null" />
 
+    <fragment
+        android:id="@+id/user_profile_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.user.UserProfileFragment"
+        android:label="@null" />
 </navigation>

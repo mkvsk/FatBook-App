@@ -23,6 +23,8 @@ class UserViewModel : ViewModel() {
     val selectedUser = MutableLiveData<User>()
     val selectedUsername = MutableLiveData<String>()
 
+    val onPauseCalled = MutableLiveData<Boolean>()
+
     fun getUserByUsername(username: String, callback: ResultCallback<User>) {
         repository.getUserByUsername(username, object : ResultCallback<User> {
             override fun onResult(value: User?) {

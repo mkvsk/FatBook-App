@@ -390,12 +390,15 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
         }
     }
 
-    override fun onRecipeClick(position: Int) {
-        val recipe = user!!.recipes!![position]
-//        recipeViewModel!!.selectedRecipe.value = recipe
-        recipeViewModel!!.selectedRecipePosition.value = position
-        NavHostFragment.findNavController(this)
-            .navigate(R.id.action_go_to_recipe_view_from_user_profile_old)
+//    override fun onRecipeClick(position: Int) {
+//        val recipe = user!!.recipes!![position]
+////        recipeViewModel!!.selectedRecipe.value = recipe
+//        recipeViewModel!!.selectedRecipePosition.value = position
+//        NavHostFragment.findNavController(this)
+//            .navigate(R.id.action_go_to_recipe_view_from_user_profile_old)
+//    }
+
+    override fun onRecipeClick(id: Long) {
     }
 
     override fun onBookmarksClick(recipe: RecipeSimpleObject?, add: Boolean, adapterPosition: Int) {
@@ -404,6 +407,9 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
 
     override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
         recipeForked(recipe, fork, position)
+    }
+
+    override fun onUsernameClick(username: String) {
     }
 
     private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {

@@ -42,7 +42,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     private var expanded: Boolean = false
     private lateinit var viewPager: ViewPager2
-    private lateinit var fragmentAdapter: UserProfileRecipesAdapter
+    private var fragmentAdapter: UserProfileRecipesAdapter? = null
 
     companion object {
         private const val TAG = "UserProfileFragment"
@@ -67,10 +67,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         } else {
             binding.loader.progressOverlay.visibility = View.VISIBLE
             binding.toolbar.visibility = View.GONE
+//            setupViewPager()
             loadUserData()
             setupMenu(R.menu.user_profile_current_menu)
             setupSwipeRefresh()
-            setupViewPager()
+//            setupViewPager()
             binding.ovalRecipesQtt.setOnClickListener {
                 focusOnRecipes()
             }
@@ -101,7 +102,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     private fun setupSwipeRefresh() {
-        binding.swipeRefresh.isEnabled = false
+        binding.swipeRefresh.isEnabled = true
         binding.swipeRefresh.isRefreshing = false
         binding.swipeRefresh.setProgressBackgroundColorSchemeColor(
                 ContextCompat.getColor(
@@ -115,12 +116,17 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
                 )
         )
         binding.swipeRefresh.setOnRefreshListener {
-            loadUserData()
+            if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
+                loadUser(userViewModel.user.value!!.username!!, true)
+            } else {
+                loadUser(userViewModel.selectedUsername.value!!, false)
+            }
         }
     }
 
     private fun loadUserData() {
-        if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
+        if (userViewModel.selectedUsername.value.isNullOrEmpty() ||
+                userViewModel.selectedUsername.value == userViewModel.user.value!!.username) {
             binding.toolbar.title = userViewModel.user.value!!.username
             setupViewForLoggedInUser()
         } else {
@@ -226,11 +232,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         binding.llBtnsFollowMessage.visibility = View.GONE
         binding.tabLayout.visibility = View.VISIBLE
         binding.toolbar.navigationIcon = null
-//        if (userViewModel.user.value?.pid == null) {
-        loadUser(userViewModel.user.value!!.username!!, true)
-//        } else {
-//            drawData(userViewModel.user.value!!)
-//        }
+        if (userViewModel.user.value?.pid == null) {
+            loadUser(userViewModel.user.value!!.username!!, true)
+        } else {
+            drawData(userViewModel.user.value!!)
+        }
     }
 
     private fun setupViewForSelectedUser() {
@@ -288,7 +294,6 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         binding.loader.progressOverlay.visibility = View.GONE
         binding.toolbar.visibility = View.VISIBLE
         binding.swipeRefresh.isRefreshing = false
-        binding.swipeRefresh.isEnabled = true
 //        UserRecipesPageFragment().setData()
 //        FavouritesRecipesPageFragment().setData()
 
@@ -306,20 +311,31 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 //            }
 //        }
 
-        userViewModel.user.value.let {
-            setupViewPager()
-        }
+//        userViewModel.user.value.let {
+//            setupViewPager()
+//            if (fragmentAdapter == null) {
+//                fragmentAdapter = UserProfileRecipesAdapter(this)
+//                viewPager = binding.vpUserprofile
+//                viewPager.isUserInputEnabled = false
+//                viewPager.adapter = fragmentAdapter
+//                viewPager.offscreenPageLimit = 2
+//            }
+//            fragmentAdapter!!.setData()
+//        }
+        setupViewPager()
+//        fragmentAdapter!!.setData()
     }
 
     private fun setupViewPager() {
-        fragmentAdapter = UserProfileRecipesAdapter(this)
-        println("UserProfileRecipesAdapter init")
+        println("UserProfileRecipesAdapter init called")
+//        if (fragmentAdapter == null) {
+            fragmentAdapter = UserProfileRecipesAdapter(this)
+//        }
         viewPager = binding.vpUserprofile
         viewPager.isUserInputEnabled = false
         viewPager.adapter = fragmentAdapter
         viewPager.offscreenPageLimit = 2
-        val tabLayout = binding.tabLayout
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+        TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
             tab.text =
                     if (position == 0) {
                         resources.getString(R.string.title_recipes_profile)
@@ -373,6 +389,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     override fun onPause() {
         super.onPause()
         Log.i("UserProfileFragment", "onPause")
+        userViewModel.onPauseCalled.value = true
     }
 
     override fun onResume() {

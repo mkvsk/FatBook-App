@@ -45,11 +45,11 @@ class FavouritesRecipesPageFragment : Fragment(), OnRecipeClickListener {
 
     //TODO если рецептов нет - вывести какое-нибудь TextView "Вы еще не добавили ни один рецепт в избранное"
     fun setData() {
-        adapter!!.setData(userViewModel.user.value!!.recipesFavourites, userViewModel.user.value)
+        adapter?.setData(userViewModel.user.value!!.recipesFavourites, userViewModel.user.value)
     }
 
-    override fun onRecipeClick(position: Int) {
-        Log.d("recipe click", position.toString())
+    override fun onRecipeClick(id: Long) {
+        Log.d("recipe click", id.toString())
     }
 
     override fun onBookmarksClick(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {
@@ -60,15 +60,17 @@ class FavouritesRecipesPageFragment : Fragment(), OnRecipeClickListener {
         Log.d("fork click", position.toString())
     }
 
+    override fun onUsernameClick(username: String) {
+        Log.d("username click", username)
+    }
+
     override fun onPause() {
         super.onPause()
-        Log.d("STATE", "PAUSE TAB 2")
     }
 
     override fun onResume() {
         super.onResume()
         binding.root.requestLayout()
-        Log.d("STATE", "RESUME TAB 2")
     }
 
     override fun onDestroy() {
