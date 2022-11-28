@@ -23,7 +23,7 @@
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="enterAlways"
             local:navigationIcon="@drawable/ic_close"
-            local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            local:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary."
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="Description"
             local:titleTextAppearance="@style/txtToolbar"

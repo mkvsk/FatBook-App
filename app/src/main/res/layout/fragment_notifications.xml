@@ -23,7 +23,7 @@
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
             local:navigationIcon="@null"
-            local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            local:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary."
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="notifications"
             local:titleTextColor="@color/main_text"

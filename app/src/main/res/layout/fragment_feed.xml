@@ -24,7 +24,7 @@
             android:background="@color/theme_toolbar_color"
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            local:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            local:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary."
             local:title="@string/app_name"
             local:titleTextAppearance="@style/txtToolbar"
             local:titleTextColor="@color/main_text" />
