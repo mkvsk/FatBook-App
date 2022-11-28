@@ -109,15 +109,11 @@ class RecipeAdapter :
             itemView.rv_recipe_create_date.text = FormatUtils.getCreateDate(recipe.createDate!!)
 
             itemView.rv_recipe_author.text = recipe.author
-            if (StringUtils.isNotEmpty(user.profileImage)) {
-                Glide
-                        .with(itemView.context)
-                        .load(user.profileImage)
-                        .into(itemView.imageview_author_photo_rv_recipe_preview)
-            } else {
-                itemView.imageview_author_photo_rv_recipe_preview.setImageResource(R.drawable.ic_default_userphoto)
-            }
-
+            Glide
+                    .with(itemView.context)
+                    .load(user.profileImage)
+                    .placeholder(itemView.context.getDrawable(R.drawable.ic_default_userphoto))
+                    .into(itemView.imageview_author_photo_rv_recipe_preview)
             itemView.rv_recipe_comments_qtt.text = recipe.commentQtt.toString()
             itemView.textView_rv_card_recipe_forks_avg.text = FormatUtils.prettyCount(recipe.forks!!)
 

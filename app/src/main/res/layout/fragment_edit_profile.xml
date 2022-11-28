@@ -31,175 +31,186 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/containerEditUserprofile"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardviewEditUserprofile"
-            style="@style/myMaterialCardRight"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerEditUserprofile"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/cards_margin_start"
-            app:cardElevation="6dp"
-            app:cardPreventCornerOverlap="false"
-            app:contentPaddingBottom="10dp"
-            app:contentPaddingLeft="10dp"
-            app:contentPaddingRight="20dp"
-            app:contentPaddingTop="10dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardviewEditUserprofile"
+                style="@style/myMaterialCardRight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginStart="@dimen/cards_margin_start"
+                android:layout_marginBottom="10dp"
+                app:cardElevation="6dp"
+                app:cardPreventCornerOverlap="false"
+                app:contentPaddingBottom="10dp"
+                app:contentPaddingLeft="10dp"
+                app:contentPaddingRight="20dp"
+                app:contentPaddingTop="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/userPhoto"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/theme_cardview_bgr"
-                    android:elevation="4dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_default_userphoto"
-                    android:translationZ="2dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="-15dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="@id/userPhoto"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent">
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/editPhoto"
-                        style="@style/roundBtnEditPhoto"
-                        android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
-                        android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-                        android:visibility="visible"
-                        app:maxImageSize="16dp" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/deletePhoto"
-                        style="@style/roundBtnDeletePhoto"
-                        android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
-                        android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
-                        android:layout_marginStart="90dp"
-                        android:visibility="invisible"
-                        app:maxImageSize="16dp" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-                <ImageView
-                    android:id="@+id/icTitle"
-                    android:layout_width="@dimen/ic_userprofile_w_h"
-                    android:layout_height="@dimen/ic_userprofile_w_h"
-                    android:src="@drawable/ic_edit_profile"
-                    app:layout_constraintBottom_toBottomOf="@id/profileTitle"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/profileTitle" />
-
-                <EditText
-                    android:id="@+id/profileTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/round_corner_edittext_title_website"
-                    android:hint="@string/edit_profile_hint"
-                    android:inputType="textCapSentences"
-                    android:lines="1"
-                    android:maxLength="40"
-                    android:paddingHorizontal="10dp"
-                    android:textAppearance="@style/editProfileText"
-                    app:layout_constraintLeft_toRightOf="@id/icTitle"
-                    app:layout_constraintTop_toBottomOf="@id/userPhoto" />
-
-                <ImageView
-                    android:id="@+id/icWebsite"
-                    android:layout_width="@dimen/ic_userprofile_w_h"
-                    android:layout_height="@dimen/ic_userprofile_w_h"
-                    android:src="@drawable/ic_user_website"
-                    app:layout_constraintBottom_toBottomOf="@id/profileWebsite"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/profileWebsite" />
-
-                <EditText
-                    android:id="@+id/profileWebsite"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/round_corner_edittext_title_website"
-                    android:hint="@string/edit_profile_website"
-                    android:inputType="textUri"
-                    android:lines="1"
-                    android:maxLength="1000"
-                    android:paddingHorizontal="10dp"
-                    android:textAppearance="@style/editProfileText"
-                    app:layout_constraintLeft_toRightOf="@id/icWebsite"
-                    app:layout_constraintTop_toBottomOf="@id/profileTitle" />
-
-                <ImageView
-                    android:id="@+id/icBio"
-                    android:layout_width="@dimen/ic_userprofile_w_h"
-                    android:layout_height="@dimen/ic_userprofile_w_h"
-                    android:layout_marginTop="6dp"
-                    android:src="@drawable/ic_user_bio"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/profileBio" />
-
-                <EditText
-                    android:id="@+id/profileBio"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/round_corner_edittext_bio"
-                    android:gravity="start"
-                    android:inputType="textMultiLine|textCapSentences"
-                    android:hint="@string/edit_profile_bio"
-                    android:maxLength="635"
-                    android:maxLines="15"
-                    android:minLines="5"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="5dp"
-                    android:scrollbars="vertical"
-                    android:textAppearance="@style/editProfileText"
-                    app:layout_constraintLeft_toRightOf="@id/icWebsite"
-                    app:layout_constraintTop_toBottomOf="@id/profileWebsite" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/bioLength"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:text="635"
-                    android:layout_marginBottom="10dp"
-                    android:textColor="@color/blue_grey_200"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="@id/profileBio"
-                    app:layout_constraintTop_toBottomOf="@id/profileBio" />
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/userPhoto"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/theme_cardview_bgr"
+                        android:elevation="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_default_userphoto"
+                        android:translationZ="2dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="-15dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@id/userPhoto"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent">
 
-        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/editPhoto"
+                            style="@style/roundBtnEditPhoto"
+                            android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
+                            android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
+                            android:visibility="visible"
+                            app:maxImageSize="16dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/deletePhoto"
+                            style="@style/roundBtnDeletePhoto"
+                            android:layout_width="@dimen/round_btn_edit_userprofile_w_h"
+                            android:layout_height="@dimen/round_btn_edit_userprofile_w_h"
+                            android:layout_marginStart="90dp"
+                            android:visibility="invisible"
+                            app:maxImageSize="16dp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    <ImageView
+                        android:id="@+id/icTitle"
+                        android:layout_width="@dimen/ic_userprofile_w_h"
+                        android:layout_height="@dimen/ic_userprofile_w_h"
+                        android:src="@drawable/ic_edit_profile"
+                        app:layout_constraintBottom_toBottomOf="@id/profileTitle"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/profileTitle" />
+
+                    <EditText
+                        android:id="@+id/profileTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/round_corner_edittext_title_website"
+                        android:hint="@string/edit_profile_hint"
+                        android:inputType="textCapSentences"
+                        android:lines="1"
+                        android:maxLength="40"
+                        android:paddingHorizontal="10dp"
+                        android:textAppearance="@style/editProfileText"
+                        app:layout_constraintLeft_toRightOf="@id/icTitle"
+                        app:layout_constraintTop_toBottomOf="@id/userPhoto" />
+
+                    <ImageView
+                        android:id="@+id/icWebsite"
+                        android:layout_width="@dimen/ic_userprofile_w_h"
+                        android:layout_height="@dimen/ic_userprofile_w_h"
+                        android:src="@drawable/ic_user_website"
+                        app:layout_constraintBottom_toBottomOf="@id/profileWebsite"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/profileWebsite" />
+
+                    <EditText
+                        android:id="@+id/profileWebsite"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/round_corner_edittext_title_website"
+                        android:hint="@string/edit_profile_website"
+                        android:inputType="textUri"
+                        android:lines="1"
+                        android:maxLength="1000"
+                        android:paddingHorizontal="10dp"
+                        android:textAppearance="@style/editProfileText"
+                        app:layout_constraintLeft_toRightOf="@id/icWebsite"
+                        app:layout_constraintTop_toBottomOf="@id/profileTitle" />
+
+                    <ImageView
+                        android:id="@+id/icBio"
+                        android:layout_width="@dimen/ic_userprofile_w_h"
+                        android:layout_height="@dimen/ic_userprofile_w_h"
+                        android:layout_marginTop="6dp"
+                        android:src="@drawable/ic_user_bio"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/profileBio" />
+
+                    <EditText
+                        android:id="@+id/profileBio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/round_corner_edittext_bio"
+                        android:gravity="start"
+                        android:hint="@string/edit_profile_bio"
+                        android:maxLength="635"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:maxLines="15"
+                        android:minLines="5"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:scrollbars="vertical"
+                        android:textAppearance="@style/editProfileText"
+                        app:layout_constraintLeft_toRightOf="@id/icWebsite"
+                        app:layout_constraintTop_toBottomOf="@id/profileWebsite" />
+
+                    <TextView
+                        android:id="@+id/bioLength"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="635"
+                        android:textColor="@color/blue_grey_200"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="@id/profileBio"
+                        app:layout_constraintTop_toBottomOf="@id/profileBio" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
