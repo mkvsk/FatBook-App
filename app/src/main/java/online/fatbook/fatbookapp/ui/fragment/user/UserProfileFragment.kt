@@ -44,6 +44,8 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     private lateinit var viewPager: ViewPager2
     private var fragmentAdapter: UserProfileRecipesAdapter? = null
 
+    private var isDataRefreshed = false
+
     companion object {
         private const val TAG = "UserProfileFragment"
     }
@@ -67,11 +69,9 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         } else {
             binding.loader.progressOverlay.visibility = View.VISIBLE
             binding.toolbar.visibility = View.GONE
-//            setupViewPager()
             loadUserData()
             setupMenu(R.menu.user_profile_current_menu)
             setupSwipeRefresh()
-//            setupViewPager()
             binding.ovalRecipesQtt.setOnClickListener {
                 focusOnRecipes()
             }
@@ -116,11 +116,12 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
                 )
         )
         binding.swipeRefresh.setOnRefreshListener {
-            if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
-                loadUser(userViewModel.user.value!!.username!!, true)
-            } else {
-                loadUser(userViewModel.selectedUsername.value!!, false)
-            }
+//            if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
+            isDataRefreshed = true
+            loadUser(userViewModel.user.value!!.username!!, true)
+//            } else {
+//                loadUser(userViewModel.selectedUsername.value!!, false)
+//            }
         }
     }
 
@@ -294,43 +295,17 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         binding.loader.progressOverlay.visibility = View.GONE
         binding.toolbar.visibility = View.VISIBLE
         binding.swipeRefresh.isRefreshing = false
-//        UserRecipesPageFragment().setData()
-//        FavouritesRecipesPageFragment().setData()
-
-
-//        userViewModel.user.value!!.recipesFavourites?.let {
-//            if (it.isNotEmpty()) {
-//                Log.d(TAG, "favs: ${userViewModel.user.value!!.recipesFavourites}")
-////                fragmentAdapter.setFavs()
-//            }
-//        }
-//        userViewModel.user.value!!.recipes?.let {
-//            if (it.isNotEmpty()) {
-//                Log.d(TAG, "recipies: ${userViewModel.user.value!!.recipes}")
-////                fragmentAdapter.setRecipes()
-//            }
-//        }
-
-//        userViewModel.user.value.let {
-//            setupViewPager()
-//            if (fragmentAdapter == null) {
-//                fragmentAdapter = UserProfileRecipesAdapter(this)
-//                viewPager = binding.vpUserprofile
-//                viewPager.isUserInputEnabled = false
-//                viewPager.adapter = fragmentAdapter
-//                viewPager.offscreenPageLimit = 2
-//            }
-//            fragmentAdapter!!.setData()
-//        }
-        setupViewPager()
-//        fragmentAdapter!!.setData()
+        if (isDataRefreshed) {
+            isDataRefreshed = false
+            fragmentAdapter!!.setData()
+        } else {
+            setupViewPager()
+        }
     }
 
     private fun setupViewPager() {
         println("UserProfileRecipesAdapter init called")
-//        if (fragmentAdapter == null) {
-            fragmentAdapter = UserProfileRecipesAdapter(this)
-//        }
+        fragmentAdapter = UserProfileRecipesAdapter(this)
         viewPager = binding.vpUserprofile
         viewPager.isUserInputEnabled = false
         viewPager.adapter = fragmentAdapter
