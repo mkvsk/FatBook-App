@@ -1,6 +1,6 @@
 package online.fatbook.fatbookapp.network
 
-class EditUserRequest(
+class UserUpdateRequest(
     var username: String? = "",
     var title: String? = "",
     var website: String? = "",

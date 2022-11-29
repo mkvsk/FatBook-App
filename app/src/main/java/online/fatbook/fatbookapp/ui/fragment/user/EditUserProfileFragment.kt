@@ -2,7 +2,6 @@ package online.fatbook.fatbookapp.ui.fragment.user
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -19,22 +18,17 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.DeleteRequest
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentEditProfileBinding
-import online.fatbook.fatbookapp.network.EditUserRequest
+import online.fatbook.fatbookapp.network.UserUpdateRequest
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.FileUtils
 import online.fatbook.fatbookapp.util.FileUtils.TYPE_USER
-import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
@@ -196,7 +190,7 @@ class EditUserProfileFragment : Fragment() {
 
     private fun updateUser() {
         Log.d(TAG, "user updated")
-        val request = EditUserRequest(
+        val request = UserUpdateRequest(
             userViewModel.user.value!!.username,
             binding.profileTitle.text.toString().replace("\\s+".toRegex(), " "),
             binding.profileWebsite.text.toString().replace("\\s+".toRegex(), " "),

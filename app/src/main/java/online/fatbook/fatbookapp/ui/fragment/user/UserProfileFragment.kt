@@ -6,11 +6,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
@@ -50,6 +52,8 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         private const val TAG = "UserProfileFragment"
     }
 
+    private var user: User = User()
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -70,7 +74,6 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
             binding.loader.progressOverlay.visibility = View.VISIBLE
             binding.toolbar.visibility = View.GONE
             loadUserData()
-            setupMenu(R.menu.user_profile_current_menu)
             setupSwipeRefresh()
             binding.ovalRecipesQtt.setOnClickListener {
                 focusOnRecipes()
@@ -82,7 +85,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
             }
 
             binding.userPhoto.setOnClickListener {
-                imageViewModel.image.value = userViewModel.user.value!!.profileImage
+                imageViewModel.image.value = user.profileImage
                 NavHostFragment.findNavController(this)
                         .navigate(R.id.action_go_to_view_image_from_user_profile1)
             }
@@ -116,22 +119,23 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
                 )
         )
         binding.swipeRefresh.setOnRefreshListener {
-//            if (userViewModel.selectedUsername.value.isNullOrEmpty()) {
             isDataRefreshed = true
-            loadUser(userViewModel.user.value!!.username!!, true)
-//            } else {
-//                loadUser(userViewModel.selectedUsername.value!!, false)
-//            }
+            loadUser()
         }
     }
 
     private fun loadUserData() {
-        if (userViewModel.selectedUsername.value.isNullOrEmpty() ||
-                userViewModel.selectedUsername.value == userViewModel.user.value!!.username) {
-            binding.toolbar.title = userViewModel.user.value!!.username
-            setupViewForLoggedInUser()
+        if (userViewModel.selectedUsername.value.isNullOrEmpty()
+                || userViewModel.selectedUsername.value == userViewModel.user.value!!.username!!) {
+            user.username = userViewModel.user.value!!.username
+            loadUser()
+            setupViewForCurrentUser()
+            if (userViewModel.selectedUsername.value == userViewModel.user.value!!.username!!) {
+                binding.toolbar.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
+            }
         } else {
-            binding.toolbar.title = userViewModel.selectedUsername.value!!
+            user.username = userViewModel.selectedUsername.value
+            loadUser()
             setupViewForSelectedUser()
         }
     }
@@ -139,6 +143,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     private fun setupMenu(menu: Int) {
         binding.toolbar.inflateMenu(menu)
         binding.toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -229,30 +234,22 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         }
     }
 
-    private fun setupViewForLoggedInUser() {
+    private fun setupViewForCurrentUser() {
+        setupMenu(R.menu.user_profile_current_menu)
         binding.llBtnsFollowMessage.visibility = View.GONE
         binding.tabLayout.visibility = View.VISIBLE
         binding.toolbar.navigationIcon = null
-        if (userViewModel.user.value?.pid == null) {
-            loadUser(userViewModel.user.value!!.username!!, true)
-        } else {
-            drawData(userViewModel.user.value!!)
-        }
     }
 
     private fun setupViewForSelectedUser() {
+        setupMenu(R.menu.user_profile_selected_menu)
         binding.llBtnsFollowMessage.visibility = View.VISIBLE
         binding.tabLayout.visibility = View.GONE
         binding.toolbar.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
-        if (userViewModel.selectedUser.value?.pid == null) {
-            loadUser(userViewModel.selectedUsername.value!!, false)
-        } else {
-            drawData(userViewModel.selectedUser.value!!)
-        }
     }
 
-    private fun drawData(user: User) {
-        Log.i("DRAW DATA", "--------------------------------------------------")
+    private fun drawData() {
+        Log.i("DRAW DATA", "----------for ${user.username}--------------------------------")
         binding.toolbar.title = user.username
         if (user.online) {
             binding.isOnlineIndicator.visibility = View.VISIBLE
@@ -292,8 +289,6 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
                 binding.icExpand.visibility = View.VISIBLE
             }
         }
-        binding.loader.progressOverlay.visibility = View.GONE
-        binding.toolbar.visibility = View.VISIBLE
         binding.swipeRefresh.isRefreshing = false
         if (isDataRefreshed) {
             isDataRefreshed = false
@@ -301,11 +296,12 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         } else {
             setupViewPager()
         }
+        binding.loader.progressOverlay.visibility = View.GONE
+        binding.toolbar.visibility = View.VISIBLE
     }
 
     private fun setupViewPager() {
-        println("UserProfileRecipesAdapter init called")
-        fragmentAdapter = UserProfileRecipesAdapter(this)
+        fragmentAdapter = UserProfileRecipesAdapter(this, user)
         viewPager = binding.vpUserprofile
         viewPager.isUserInputEnabled = false
         viewPager.adapter = fragmentAdapter
@@ -322,24 +318,15 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 //        ViewPager2ViewHeightAnimator().viewPager2 = viewPager
     }
 
-    private fun loadUser(username: String, updateCurrentUser: Boolean) {
-        userViewModel.getUserByUsername(username, object : ResultCallback<User> {
+    private fun loadUser() {
+        userViewModel.getUserByUsername(user.username!!, object : ResultCallback<User> {
             override fun onResult(value: User?) {
-                if (value == null) {
-                    loadUser(username, updateCurrentUser)
-                } else {
-                    if (updateCurrentUser) {
-                        userViewModel.user.value = value
-                        drawData(userViewModel.user.value!!)
-                    } else {
-                        userViewModel.selectedUser.value = value
-                        drawData(userViewModel.selectedUser.value!!)
-                    }
-                }
+                user = value!!
+                drawData()
             }
 
             override fun onFailure(value: User?) {
-                loadUser(username, updateCurrentUser)
+                Toast.makeText(requireContext(), "user load failed", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -354,27 +341,8 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("UserProfileFragment", "onDestroy")
-        userViewModel.selectedUsername.value = null
-        userViewModel.selectedUser.value = null
-
+        userViewModel.setSelectedUsername("")
         _binding = null
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.i("UserProfileFragment", "onPause")
-        userViewModel.onPauseCalled.value = true
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.i("UserProfileFragment", "onResume")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.i("UserProfileFragment", "onStart")
     }
 
     override fun onBackPressedBase(): Boolean {

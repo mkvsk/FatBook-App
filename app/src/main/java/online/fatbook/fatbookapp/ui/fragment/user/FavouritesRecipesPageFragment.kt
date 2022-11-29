@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentFavouritesRecipesPageBinding
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
 
-class FavouritesRecipesPageFragment : Fragment(), OnRecipeClickListener {
+class FavouritesRecipesPageFragment(val user: User) : Fragment(), OnRecipeClickListener {
 
     private var _binding: FragmentFavouritesRecipesPageBinding? = null
     private val binding get() = _binding!!
@@ -45,7 +46,7 @@ class FavouritesRecipesPageFragment : Fragment(), OnRecipeClickListener {
 
     //TODO если рецептов нет - вывести какое-нибудь TextView "Вы еще не добавили ни один рецепт в избранное"
     fun setData() {
-        adapter?.setData(userViewModel.user.value!!.recipesFavourites, userViewModel.user.value)
+        adapter?.setData(user.recipesFavourites, userViewModel.user.value)
     }
 
     override fun onRecipeClick(id: Long) {
