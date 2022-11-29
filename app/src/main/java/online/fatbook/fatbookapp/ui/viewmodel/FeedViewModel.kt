@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,5 +30,20 @@ class FeedViewModel : ViewModel() {
                 callback.onFailure(value)
             }
         })
+    }
+
+    init {
+        Log.i(
+            "MAINACTIVITY",
+            "vm---Created"
+        )
+    }
+
+    override fun onCleared() {
+        Log.i(
+            "MAINACTIVITY",
+            "vm---CLEARED"
+        )
+        super.onCleared()
     }
 }

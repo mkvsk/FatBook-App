@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.ui.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -12,7 +13,8 @@ class UserViewModel : ViewModel() {
 
     private val repository by lazy { UserRepository() }
 
-    val user = MutableLiveData<User>()
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> get() = _user
 
     val recipeList = MutableLiveData<ArrayList<Recipe>>()
     val bookmarkedRecipeList = MutableLiveData<ArrayList<Recipe>>()
@@ -50,5 +52,7 @@ class UserViewModel : ViewModel() {
         })
     }
 
-
+    fun getUsername(): String {
+        return _user.value!!.username.toString()
+    }
 }

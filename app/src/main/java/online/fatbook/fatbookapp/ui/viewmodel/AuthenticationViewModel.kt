@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.ui.viewmodel
 
 import android.os.CountDownTimer
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import okhttp3.RequestBody
@@ -18,8 +19,18 @@ class AuthenticationViewModel : ViewModel() {
     var isUserAuthenticated = MutableLiveData(false)
 
     var userEmail = MutableLiveData("")
-    var password = MutableLiveData("")
-    var username = MutableLiveData("")
+
+
+
+
+    private val _password = MutableLiveData("")
+    val password: LiveData<String> get() = _password
+
+    private val _username = MutableLiveData("")
+    val username: LiveData<String> get() = _username
+
+
+
 
     var jwtAccess = MutableLiveData("")
     var jwtRefresh = MutableLiveData("")
@@ -134,4 +145,8 @@ class AuthenticationViewModel : ViewModel() {
             }
         })
     }
+
+    fun getUsername(): String { return username.value.toString() }
+
+    fun getPassword(): String { return password.value.toString() }
 }

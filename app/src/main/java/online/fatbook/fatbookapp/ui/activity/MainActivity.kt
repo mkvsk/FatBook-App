@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationBarView
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.fragment.navigation.BaseFragment
 import online.fatbook.fatbookapp.ui.viewmodel.*
@@ -33,10 +32,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
-    private var recipeViewModel: RecipeViewModel? = null
-    private var userViewModel: UserViewModel? = null
     private var staticDataViewModel: StaticDataViewModel? = null
-    private var authViewModel: AuthenticationViewModel? = null
     private var searchViewModel: SearchViewModel? = null
     private var imageViewModel: ImageViewModel? = null
 
@@ -45,6 +41,14 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var currentItemPosition = 0
 
     private lateinit var sharedPreferences: SharedPreferences
+
+    private lateinit var recipeViewModel: RecipeViewModel
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var authViewModel: AuthenticationViewModel
+    var username: String? = null
+    var authName: String? = null
+
+    var password: String? = null
 
     private val fragments = listOf(
         BaseFragment.newInstance(
@@ -79,6 +83,12 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.i(
+            "MAINACTIVITY",
+            "---Created"
+        )
+
         instantiateViewModels()
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -108,12 +118,17 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
 
         val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
-        authViewModel!!.username.value =
+
+        authName = authViewModel.getUsername()
+        authName =
             sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
-        authViewModel!!.password.value =
+
+        password = authViewModel.getPassword()
+        password =
             sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
-        userViewModel!!.user.value = User()
-        userViewModel!!.user.value!!.username =
+
+        username = userViewModel.getUsername()
+        username =
             sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
     }
 

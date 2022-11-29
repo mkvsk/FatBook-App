@@ -67,6 +67,9 @@ android {
 }
 
 dependencies {
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1"
+
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     implementation 'com.akexorcist:snap-time-picker:1.0.3'
