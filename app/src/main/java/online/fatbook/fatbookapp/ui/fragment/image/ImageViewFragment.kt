@@ -226,7 +226,6 @@ class ImageViewFragment : Fragment() {
         imageViewModel.image.value = null
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
             View.VISIBLE
-
         _binding = null
     }
 

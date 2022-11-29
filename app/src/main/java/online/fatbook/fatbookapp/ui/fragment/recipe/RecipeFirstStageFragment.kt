@@ -569,4 +569,22 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
         binding.nsvRecipe1Stage.scrollTo(0, 0)
         binding.appBarLayoutRecipe1Stage.setExpanded(true, false)
     }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(
+                KeyboardActionUtil(
+                        binding.root, requireActivity()
+                ).listenerForAdjustResize
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(
+                KeyboardActionUtil(
+                        binding.root, requireActivity()
+                ).listenerForAdjustResize
+        )
+    }
 }

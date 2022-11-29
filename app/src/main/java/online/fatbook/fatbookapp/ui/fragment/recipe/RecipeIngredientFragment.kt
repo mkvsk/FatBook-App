@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
@@ -57,7 +58,8 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+                View.GONE
         binding.loader.progressOverlay.visibility = View.VISIBLE
         loadIngredients()
         loadIngredientUnits()
@@ -370,5 +372,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+                View.VISIBLE
     }
 }

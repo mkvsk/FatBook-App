@@ -18,10 +18,7 @@
 
         <action
             android:id="@+id/action_go_to_direct_messages_from_feed"
-            app:destination="@id/direct_messages_dest"
-            app:exitAnim="@anim/nav_default_enter_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/direct_messages_dest" />
 
         <action
             android:id="@+id/action_go_to_user_profile_from_feed"

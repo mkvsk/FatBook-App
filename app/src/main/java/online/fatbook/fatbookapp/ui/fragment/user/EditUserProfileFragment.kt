@@ -23,6 +23,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.DeleteRequest
@@ -62,6 +63,8 @@ class EditUserProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+                View.GONE
         setupMenu()
         setupImageEditButtons()
         drawData(userViewModel.user.value!!)
@@ -370,7 +373,8 @@ class EditUserProfileFragment : Fragment() {
         super.onDestroy()
         imageViewModel.userImageToDelete.value = null
         imageViewModel.userImageToUpload.value = null
-        Log.d(TAG, "onDestroy: cleared images")
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+                View.VISIBLE
         _binding = null
     }
 //
