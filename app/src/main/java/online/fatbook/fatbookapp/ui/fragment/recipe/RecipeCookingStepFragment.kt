@@ -21,6 +21,7 @@ import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCookingStepBinding
@@ -58,7 +59,8 @@ class RecipeCookingStepFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+                View.GONE
         binding.toolbarRecipeCreateCookingStep.title = "TODO title"
         setupMenu()
         checkEnableMenu()
@@ -233,16 +235,6 @@ class RecipeCookingStepFragment : Fragment() {
         )
     }
 
-    private fun handleBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    popBackStack()
-                }
-            })
-    }
-
     private fun popBackStack() {
         findNavController().popBackStack()
     }
@@ -250,5 +242,7 @@ class RecipeCookingStepFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+                View.VISIBLE
     }
 }

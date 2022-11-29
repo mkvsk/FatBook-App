@@ -70,10 +70,16 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         binding.toolbarFeed.visibility = View.GONE
         if (!authViewModel.isUserAuthenticated.value!!) {
             login()
-        } else if (userViewModel.user.value == null) {
-            loadUser()
         } else {
-            binding.swipeRefreshFeed.isEnabled = true
+            if (userViewModel.user.value == null) {
+                loadUser()
+            } else {
+                if (feedViewModel.recipes.value == null) {
+                    loadFeed()
+                } else {
+                    drawFeed()
+                }
+            }
         }
     }
 
@@ -113,7 +119,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                     userViewModel.user.value = value
                     binding.toolbarFeed.visibility = View.VISIBLE
                     binding.loader.progressOverlay.visibility = View.GONE
-                    binding.swipeRefreshFeed.isEnabled = true
                     loadFeed()
                 }
 
@@ -151,7 +156,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         return when (item.itemId) {
             R.id.item_direct_messages -> {
                 findNavController().navigate(R.id.action_go_to_direct_messages_from_feed)
-//                Toast.makeText(requireContext(), "direct", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -179,15 +183,21 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                 override fun onResult(value: List<RecipeSimpleObject>?) {
                     binding.swipeRefreshFeed.isRefreshing = false
                     feedViewModel.recipes.value = value
-                    adapter!!.setData(feedViewModel.recipes.value, userViewModel.user.value)
+                    drawFeed()
                 }
 
                 override fun onFailure(value: List<RecipeSimpleObject>?) {
-//                loadFeed()
                     binding.swipeRefreshFeed.isRefreshing = false
                     Toast.makeText(requireContext(), "error feed", Toast.LENGTH_SHORT).show()
                 }
             })
+    }
+
+    private fun drawFeed() {
+        adapter!!.setData(feedViewModel.recipes.value, userViewModel.user.value)
+        binding.swipeRefreshFeed.isEnabled = true
+        binding.loader.progressOverlay.visibility = View.GONE
+        binding.toolbarFeed.visibility = View.VISIBLE
     }
 
     private fun setupAdapter() {
