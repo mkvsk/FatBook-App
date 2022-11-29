@@ -243,7 +243,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onUsernameClick(username: String) {
-        userViewModel.selectedUsername.value = username
+        userViewModel.setSelectedUsername(username)
         findNavController().navigate(R.id.action_go_to_user_profile_from_feed)
     }
 

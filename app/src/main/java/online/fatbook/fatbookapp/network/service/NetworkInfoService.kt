@@ -10,7 +10,7 @@ import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnit
 import online.fatbook.fatbookapp.core.user.User
-import online.fatbook.fatbookapp.network.EditUserRequest
+import online.fatbook.fatbookapp.network.UserUpdateRequest
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -53,7 +53,7 @@ interface NetworkInfoService {
     fun getUserByUsername(@Query(value = "username") username: String?): Call<User>
 
     @POST("user/update")
-    fun updateUser(@Body request: EditUserRequest?): Call<User>
+    fun updateUser(@Body request: UserUpdateRequest?): Call<User>
 
     /**
      * Static data

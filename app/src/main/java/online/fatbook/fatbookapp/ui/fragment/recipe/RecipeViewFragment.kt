@@ -45,7 +45,7 @@ class RecipeViewFragment : Fragment() {
 
         binding.textviewAuthorUsernameRecipeView.setOnClickListener {
             //val v = textview_author_username_recipe_view.text.toString()
-            userViewModel.selectedUsername.value = "hewix"
+//            userViewModel.selectedUsername.value = "hewix"
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_userprofile_from_recipe_view)
         }

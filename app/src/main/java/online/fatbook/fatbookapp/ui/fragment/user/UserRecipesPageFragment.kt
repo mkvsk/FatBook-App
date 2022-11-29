@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentAllRecipesPageBinding
 import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
 
-class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
+class UserRecipesPageFragment(val user: User) : Fragment(), OnRecipeClickListener {
 
     private var _binding: FragmentAllRecipesPageBinding? = null
     private val binding get() = _binding!!
@@ -45,7 +46,7 @@ class UserRecipesPageFragment : Fragment(), OnRecipeClickListener {
 
     //TODO если рецептов нет - вывести какое-нибудь TextView "Вы еще не создали ни одного рецепта"
     fun setData() {
-        adapter?.setData(userViewModel.user.value!!.recipes, userViewModel.user.value)
+        adapter?.setData(user.recipes, userViewModel.user.value)
     }
 
     override fun onRecipeClick(id: Long) {
