@@ -108,16 +108,16 @@ class RecipeAdapter :
 
             itemView.rv_recipe_create_date.text = FormatUtils.getCreateDate(recipe.createDate!!)
 
-            itemView.rv_recipe_author.text = recipe.author
-//            Glide
-//                    .with(itemView.context)
-//                    .load("")
-//                    .placeholder(itemView.context.getDrawable(R.drawable.ic_default_userphoto))
-//                    .into(itemView.imageview_author_photo_rv_recipe_preview)
+            itemView.rv_recipe_author.text = recipe.user!!.username
+            Glide
+                    .with(itemView.context)
+                    .load(recipe.user!!.profileImage)
+                    .placeholder(itemView.context.getDrawable(R.drawable.ic_default_userphoto))
+                    .into(itemView.imageview_author_photo_rv_recipe_preview)
             itemView.rv_recipe_comments_qtt.text = recipe.commentQtt.toString()
             itemView.textView_rv_card_recipe_forks_avg.text = FormatUtils.prettyCount(recipe.forks!!)
             itemView.ll_author_link_rv_recipe_preview.setOnClickListener {
-                listener.onUsernameClick(data[bindingAdapterPosition].author!!)
+                listener.onUsernameClick(data[bindingAdapterPosition].user!!.username!!)
             }
 //            toggleForks(
 //                itemView.imageView_rv_card_recipe_fork,

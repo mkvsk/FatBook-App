@@ -26,8 +26,8 @@ class UserProfileRecipesAdapter(fragment: Fragment, val user: User) : FragmentSt
         }
     }
 
-    fun setData() {
-        userRecipesPageFragment.setData()
-        favouritesRecipesPageFragment.setData()
+    fun setData(user: User) {
+        userRecipesPageFragment.setData(user)
+        favouritesRecipesPageFragment.setData(user)
     }
 }

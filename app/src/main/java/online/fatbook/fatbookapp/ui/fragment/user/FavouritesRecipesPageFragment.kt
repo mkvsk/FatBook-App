@@ -41,11 +41,11 @@ class FavouritesRecipesPageFragment(val user: User) : Fragment(), OnRecipeClickL
         adapter!!.setClickListener(this)
         adapter!!.setContext(requireContext())
         binding.rvFavouritesRecipesPage.adapter = adapter
-        setData()
+        setData(user)
     }
 
     //TODO если рецептов нет - вывести какое-нибудь TextView "Вы еще не добавили ни один рецепт в избранное"
-    fun setData() {
+    fun setData(user: User) {
         adapter?.setData(user.recipesFavourites, userViewModel.user.value)
     }
 

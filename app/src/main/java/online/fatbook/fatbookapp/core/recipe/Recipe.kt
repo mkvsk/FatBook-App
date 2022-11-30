@@ -1,13 +1,13 @@
 package online.fatbook.fatbookapp.core.recipe
 
-import android.util.Log
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
+import online.fatbook.fatbookapp.core.user.UserSimpleObject
 import java.io.Serializable
 
 data class Recipe(
     val pid: Long? = null,
     var title: String? = "",
-    var author: String? = null,
+    var user: UserSimpleObject? = null,
     var image: String? = "",
     var forks: Int? = 0,
     var createDate: String? = "",

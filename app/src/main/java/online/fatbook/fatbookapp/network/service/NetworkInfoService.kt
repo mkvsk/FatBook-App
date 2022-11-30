@@ -93,7 +93,7 @@ interface NetworkInfoService {
      * Recipe
      */
     @POST("recipe/create")
-    fun recipeCreate(@Body recipe: Recipe): Call<Void>
+    fun recipeCreate(@Body recipe: Recipe, @Query(value = "username") username: String?): Call<Void>
 
 //    ==========================================================================================
 
