@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationBarView
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.fragment.navigation.BaseFragment
 import online.fatbook.fatbookapp.ui.viewmodel.*
@@ -111,19 +112,15 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         if (backStack.empty()) {
             backStack.push(0)
         }
-
         val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
-//        authVM креды входа
-        var username: String = authViewModel.username.value!!
-        username =
+        authViewModel.setUsername(
             sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY).toString()
-        var password: String = authViewModel.password.value!!
-        password =
+        )
+        authViewModel.setPassword(
             sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY).toString()
-
-//        нужный юзер
-//        username = userViewModel.username.value!!
-        username =
+        )
+        userViewModel.user.value = User()
+        userViewModel.user.value!!.username =
             sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY).toString()
     }
 
