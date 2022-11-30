@@ -6,7 +6,6 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
-import online.fatbook.fatbookapp.repository.ImageServiceRepository
 import online.fatbook.fatbookapp.repository.RecipeRepository
 import java.io.File
 
@@ -43,8 +42,8 @@ class RecipeViewModel : ViewModel() {
 
     var isRecipeCreated = MutableLiveData<Boolean?>()
 
-    fun recipeCreate(recipe: Recipe, callback: ResultCallback<Void>) {
-        repository.recipeCreate(recipe, object : ResultCallback<Void> {
+    fun recipeCreate(recipe: Recipe, username: String?, callback: ResultCallback<Void>) {
+        repository.recipeCreate(recipe, username, object : ResultCallback<Void> {
             override fun onResult(value: Void?) {
                 callback.onResult(value)
             }

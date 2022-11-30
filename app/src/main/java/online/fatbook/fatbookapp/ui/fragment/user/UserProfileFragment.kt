@@ -261,6 +261,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         }
         binding.tvRecipesQtt.text = user.recipeAmount?.let { FormatUtils.prettyCount(it) }
         binding.tvFollowersQtt.text = user.followersAmount?.let { FormatUtils.prettyCount(it) }
+        binding.userPhoto.isEnabled = !user.profileImage.isNullOrEmpty()
         Glide
             .with(requireContext())
             .load(user.profileImage)
@@ -293,7 +294,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         binding.swipeRefresh.isRefreshing = false
         if (isDataRefreshed) {
             isDataRefreshed = false
-            fragmentAdapter!!.setData()
+            fragmentAdapter!!.setData(user)
         } else {
             setupViewPager()
         }

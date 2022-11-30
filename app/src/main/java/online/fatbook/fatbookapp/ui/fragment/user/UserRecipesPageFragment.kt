@@ -41,11 +41,11 @@ class UserRecipesPageFragment(val user: User) : Fragment(), OnRecipeClickListene
         adapter!!.setClickListener(this)
         adapter!!.setContext(requireContext())
         binding.rvUserRecipesPage.adapter = adapter
-        setData()
+        setData(user)
     }
 
     //TODO если рецептов нет - вывести какое-нибудь TextView "Вы еще не создали ни одного рецепта"
-    fun setData() {
+    fun setData(user: User) {
         adapter?.setData(user.recipes, userViewModel.user.value)
     }
 

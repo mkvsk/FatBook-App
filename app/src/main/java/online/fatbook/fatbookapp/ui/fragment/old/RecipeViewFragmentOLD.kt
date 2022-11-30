@@ -262,13 +262,13 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener {
         val activity = (activity as AppCompatActivity?)!!
         activity.setSupportActionBar(binding!!.toolbarRecipeViewOld)
         binding!!.toolbarRecipeViewOld.setNavigationOnClickListener { view: View? -> navigateBack() }
-        if (recipe!!.author == userViewModel!!.user.value!!.username) {
-            setHasOptionsMenu(true)
-            binding!!.kuzyaRecipeView.visibility = View.GONE
-        } else {
-            setHasOptionsMenu(false)
-            binding!!.kuzyaRecipeView.visibility = View.VISIBLE
-        }
+//        if (recipe!!.author == userViewModel!!.user.value!!.username) {
+//            setHasOptionsMenu(true)
+//            binding!!.kuzyaRecipeView.visibility = View.GONE
+//        } else {
+//            setHasOptionsMenu(false)
+//            binding!!.kuzyaRecipeView.visibility = View.VISIBLE
+//        }
         binding!!.editTextRecipeViewName.isEnabled = false
         binding!!.editTextRecipeViewDescription.isEnabled = false
     }
@@ -466,13 +466,13 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener {
         } else {
             binding!!.imageViewRecipeViewImage.setImageDrawable(resources.getDrawable(R.drawable.default_recipe_image_recipe_create_second_stage))
         }
-        binding!!.textViewRecipeViewUsername.text = recipe!!.author
-        binding!!.textViewRecipeViewForksQuantity.text = recipe!!.forks.toString()
-        if (recipe!!.author == user!!.username) {
-            binding!!.imageViewRecipeViewIconBookmarks.visibility = View.INVISIBLE
-        } else {
+//        binding!!.textViewRecipeViewUsername.text = recipe!!.author
+//        binding!!.textViewRecipeViewForksQuantity.text = recipe!!.forks.toString()
+//        if (recipe!!.author == user!!.username) {
+//            binding!!.imageViewRecipeViewIconBookmarks.visibility = View.INVISIBLE
+//        } else {
 //            toggleBookmarks(user!!.recipesFavourites!!.contains(recipe!!.identifier))
-        }
+//        }
 //        toggleForks(user!!.recipesForked!!.contains(recipe!!.identifier))
     }
 
