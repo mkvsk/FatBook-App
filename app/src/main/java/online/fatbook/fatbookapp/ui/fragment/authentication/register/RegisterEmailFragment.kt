@@ -19,6 +19,7 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentRegisterEmailBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.TimerViewModel
 import online.fatbook.fatbookapp.util.Constants.SYMBOL_AT
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
@@ -32,6 +33,7 @@ class RegisterEmailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
+    private val timerViewModel by lazy { obtainViewModel(TimerViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -45,13 +47,13 @@ class RegisterEmailFragment : Fragment() {
         binding.fragmentRegisterEmailButtonNext.setOnClickListener {
             if (emailValidate(binding.fragmentRegisterEmailEdittextEmail.text.toString())) {
                 if (authViewModel.userEmail.value!! != binding.fragmentRegisterEmailEdittextEmail.text.toString()) {
-                    authViewModel.isTimerRunning.value = false
-                    authViewModel.currentCountdown.value = 0
-                    authViewModel.cancelTimer()
+                    timerViewModel.setIsTimerRunning(false)
+                    timerViewModel.setCurrentCountdown(0)
+                    timerViewModel.cancelTimer()
                     isReconnectCancelled = false
                     emailCheck(binding.fragmentRegisterEmailEdittextEmail.text.toString())
                 } else {
-                    if (authViewModel.isTimerRunning.value == false) {
+                    if (timerViewModel.isTimerRunning.value == false) {
                         emailCheck(binding.fragmentRegisterEmailEdittextEmail.text.toString())
                     } else {
                         navigateToVerificationCode()
@@ -145,9 +147,9 @@ class RegisterEmailFragment : Fragment() {
                     0 -> {
                         if (!isReconnectCancelled) {
                             authViewModel.setUsername(value.email!!)
-                            if (!authViewModel.isTimerRunning.value!!) {
-                                authViewModel.isTimerRunning.value = true
-                                authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
+                            if (!timerViewModel.isTimerRunning.value!!) {
+                                timerViewModel.setIsTimerRunning(true)
+                                timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
                             }
                             authViewModel.setVCode(value.vcode!!)
                             Log.d("CODE ======================= ", value.vcode!!)

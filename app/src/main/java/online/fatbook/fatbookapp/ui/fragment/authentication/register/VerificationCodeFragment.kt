@@ -17,6 +17,7 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentVerificationCodeBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.TimerViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
@@ -30,6 +31,7 @@ class VerificationCodeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
+    private val timerViewModel by lazy { obtainViewModel(TimerViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,9 +52,9 @@ class VerificationCodeFragment : Fragment() {
         binding.fragmentVerificationCodeButtonNext.isEnabled = true
 
         binding.fragmentVerificationCodeResendLink.setOnClickListener {
-            if (!authViewModel.isTimerRunning.value!!) {
-                authViewModel.isTimerRunning.value = true
-                authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
+            if (!timerViewModel.isTimerRunning.value!!) {
+                timerViewModel.setIsTimerRunning(true)
+                timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
                 resendCode()
             }
         }
@@ -230,7 +232,7 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun addObservers() {
-        authViewModel.currentCountdown.observe(viewLifecycleOwner) {
+        timerViewModel.currentCountdown.observe(viewLifecycleOwner) {
             if (it == 0L) {
                 //enable button
                 binding.fragmentVerificationCodeResendLink.isEnabled = true

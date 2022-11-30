@@ -90,41 +90,6 @@ class AuthenticationViewModel : ViewModel() {
         _recoverUsername.value = value
     }
 
-
-
-//    TODO timerVM
-    var currentCountdown = MutableLiveData<Long?>()
-    var isTimerRunning = MutableLiveData(false)
-    val resendVCTimer = MutableLiveData(10L)
-
-    private var timer: CountDownTimer? = null
-
-
-    fun startTimer(seconds: Long) {
-        Log.d(
-            "CODE SENT TO", if (userEmail.value.isNullOrEmpty()) {
-                recoverIdentifier.value.toString()
-            } else {
-                userEmail.value.toString()
-            }
-        )
-        timer = object : CountDownTimer(seconds * 1000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                currentCountdown.value = millisUntilFinished / 1000
-            }
-
-            override fun onFinish() {
-                isTimerRunning.value = false
-            }
-        }.start()
-    }
-
-    fun cancelTimer() {
-        if (timer != null) {
-            timer!!.cancel()
-        }
-    }
-
     fun emailCheck(email: String, callback: ResultCallback<AuthenticationResponse>) {
         repository.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {

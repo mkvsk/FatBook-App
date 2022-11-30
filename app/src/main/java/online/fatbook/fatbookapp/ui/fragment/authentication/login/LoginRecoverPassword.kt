@@ -18,6 +18,7 @@ import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentLoginRecoverPassBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.TimerViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
@@ -30,6 +31,7 @@ class LoginRecoverPassword : Fragment() {
     private val binding get() = _binding!!
 
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
+    private val timerViewModel by lazy { obtainViewModel(TimerViewModel::class.java) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -65,13 +67,13 @@ class LoginRecoverPassword : Fragment() {
         })
         binding.fragmentLoginRecoverPassButtonNext.setOnClickListener {
             if (authViewModel.recoverIdentifier.value!! != binding.fragmentLoginRecoverPassEdittextUsername.text.toString()) {
-                authViewModel.isTimerRunning.value = false
-                authViewModel.currentCountdown.value = 0
-                authViewModel.cancelTimer()
+                timerViewModel.setIsTimerRunning(false)
+                timerViewModel.setCurrentCountdown(0)
+                timerViewModel.cancelTimer()
                 isReconnectCancelled = false
                 recoverPassword(binding.fragmentLoginRecoverPassEdittextUsername.text.toString())
             } else {
-                if (authViewModel.isTimerRunning.value == false) {
+                if (timerViewModel.isTimerRunning.value == false) {
                     recoverPassword(binding.fragmentLoginRecoverPassEdittextUsername.text.toString())
                 } else {
                     navigateToVerificationCode()
@@ -90,9 +92,9 @@ class LoginRecoverPassword : Fragment() {
                 if (!isReconnectCancelled) {
                     when (value!!.code) {
                         0 -> {
-                            if (!authViewModel.isTimerRunning.value!!) {
-                                authViewModel.isTimerRunning.value = true
-                                authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
+                            if (!timerViewModel.isTimerRunning.value!!) {
+                                timerViewModel.setIsTimerRunning(true)
+                                timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
                             }
                             authViewModel.setRecoverIdentifier(identifier)
                             authViewModel.setRecoverEmail(value.email.toString())

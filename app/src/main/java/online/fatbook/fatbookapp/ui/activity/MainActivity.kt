@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private lateinit var staticDataViewModel: StaticDataViewModel
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var imageViewModel: ImageViewModel
+    private lateinit var timerViewModel: TimerViewModel
 
     private var backStack = Stack<Int>()
     private var adapter: ViewPagerAdapter? = null
@@ -149,6 +150,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         authViewModel = ViewModelProvider(this)[AuthenticationViewModel::class.java]
         imageViewModel = ViewModelProvider(this)[ImageViewModel::class.java]
+        timerViewModel = ViewModelProvider(this)[TimerViewModel::class.java]
     }
 
     inner class ViewPagerAdapter : FragmentPagerAdapter(supportFragmentManager) {
