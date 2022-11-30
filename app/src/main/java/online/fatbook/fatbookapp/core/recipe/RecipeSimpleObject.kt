@@ -18,6 +18,7 @@ data class RecipeSimpleObject(
     var kcalPerPortion: Double? = 0.0,
     var commentQtt: Int? = 0,
     var ingredientQtt: Int? = 0,
+    var isPrivate: Boolean? = false,
     var ingredientsLocalizedMap: Map<Locale, String> = EnumMap(Locale::class.java)
 ) : Serializable {
 
