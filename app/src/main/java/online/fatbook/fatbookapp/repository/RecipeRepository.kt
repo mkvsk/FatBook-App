@@ -19,9 +19,9 @@ class RecipeRepository {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
-    fun recipeCreate(recipe: Recipe, username: String?, callback: ResultCallback<Void>) {
+    fun recipeCreate(recipe: Recipe, callback: ResultCallback<Void>) {
         scope.launch(Dispatchers.IO) {
-            val call = RetrofitFactory.apiService().recipeCreate(recipe, username)
+            val call = RetrofitFactory.apiService().recipeCreate(recipe)
 
             call.enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {

@@ -37,7 +37,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteListener,
-    BaseFragmentActionsListener {
+        BaseFragmentActionsListener {
 
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
@@ -54,7 +54,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFeedBinding.inflate(inflater, container, false)
         return binding.root
@@ -85,8 +85,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun login() {
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-            .addFormDataPart("username", authViewModel.username.value!!)
-            .addFormDataPart("password", authViewModel.password.value!!).build()
+                .addFormDataPart("username", authViewModel.username.value!!)
+                .addFormDataPart("password", authViewModel.password.value!!).build()
         authViewModel.login(request, object : ResultCallback<LoginResponse> {
             override fun onResult(value: LoginResponse?) {
                 if (value == null || value.access_token.isNullOrEmpty()) {
@@ -108,39 +108,39 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     private fun saveTokens(value: LoginResponse) {
         authViewModel.setJwtAccess(value.access_token.toString())
         authViewModel.setJwtRefresh(value.refresh_token.toString())
-        RetrofitFactory.updateJWT(value.access_token!!)
+        RetrofitFactory.updateJWT(value.access_token!!, value.username!!)
         loadUser()
     }
 
     private fun loadUser() {
         userViewModel.getUserByUsername(authViewModel.username.value!!,
-            object : ResultCallback<User> {
-                override fun onResult(value: User?) {
-                    userViewModel.user.value = value
-                    binding.toolbarFeed.visibility = View.VISIBLE
-                    binding.loader.progressOverlay.visibility = View.GONE
-                    loadFeed()
-                }
+                object : ResultCallback<User> {
+                    override fun onResult(value: User?) {
+                        userViewModel.user.value = value
+                        binding.toolbarFeed.visibility = View.VISIBLE
+                        binding.loader.progressOverlay.visibility = View.GONE
+                        loadFeed()
+                    }
 
-                override fun onFailure(value: User?) {
-                    loadUser()
-                }
-            })
+                    override fun onFailure(value: User?) {
+                        loadUser()
+                    }
+                })
     }
 
     private fun setupSwipeRefresh() {
         binding.swipeRefreshFeed.isEnabled = false
         binding.swipeRefreshFeed.isRefreshing = false
         binding.swipeRefreshFeed.setProgressBackgroundColorSchemeColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.theme_primary_bgr
-            )
+                ContextCompat.getColor(
+                        requireContext(),
+                        R.color.theme_primary_bgr
+                )
         )
         binding.swipeRefreshFeed.setColorSchemeColors(
-            ContextCompat.getColor(
-                requireContext(), R.color.color_pink_a200
-            )
+                ContextCompat.getColor(
+                        requireContext(), R.color.color_pink_a200
+                )
         )
         binding.swipeRefreshFeed.setOnRefreshListener {
             loadFeed()
@@ -164,7 +164,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun logout() {
         val sharedPreferences = requireActivity().getSharedPreferences(
-            Constants.SP_TAG, Context.MODE_PRIVATE
+                Constants.SP_TAG, Context.MODE_PRIVATE
         )
         val editor = sharedPreferences.edit()
         editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
@@ -177,20 +177,18 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     //TODO убрать костыль в запросе
     private fun loadFeed() {
-        feedViewModel.feed(userViewModel.user.value!!.username!!,
-            0L,
-            object : ResultCallback<List<RecipeSimpleObject>> {
-                override fun onResult(value: List<RecipeSimpleObject>?) {
-                    binding.swipeRefreshFeed.isRefreshing = false
-                    feedViewModel.setRecipes(value as List<RecipeSimpleObject>)
-                    drawFeed()
-                }
+        feedViewModel.feed(0L, object : ResultCallback<List<RecipeSimpleObject>> {
+            override fun onResult(value: List<RecipeSimpleObject>?) {
+                binding.swipeRefreshFeed.isRefreshing = false
+                feedViewModel.setRecipes(value as List<RecipeSimpleObject>)
+                drawFeed()
+            }
 
-                override fun onFailure(value: List<RecipeSimpleObject>?) {
-                    binding.swipeRefreshFeed.isRefreshing = false
-                    Toast.makeText(requireContext(), "error feed", Toast.LENGTH_SHORT).show()
-                }
-            })
+            override fun onFailure(value: List<RecipeSimpleObject>?) {
+                binding.swipeRefreshFeed.isRefreshing = false
+                Toast.makeText(requireContext(), "error feed", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun drawFeed() {
@@ -344,7 +342,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //        if (userViewModel.user.value == null) {
         if (login == null) {
             val sharedPreferences =
-                requireActivity().getSharedPreferences(Constants.APP_PREFS, Context.MODE_PRIVATE)
+                    requireActivity().getSharedPreferences(Constants.APP_PREFS, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putString(Constants.USER_LOGIN, StringUtils.EMPTY)
             editor.apply()

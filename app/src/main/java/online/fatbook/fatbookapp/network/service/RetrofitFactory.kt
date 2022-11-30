@@ -21,11 +21,11 @@ object RetrofitFactory {
             .create()
 
     private var clientApi = OkHttpClient.Builder()
-            .addInterceptor(OAuthInterceptor("Bearer", TOKEN_API_SERVICE))
+            .addInterceptor(OAuthInterceptor("Bearer", TOKEN_API_SERVICE, ""))
             .build()
 
     private var clientImg = OkHttpClient.Builder()
-            .addInterceptor(OAuthInterceptor("Bearer", TOKEN_IMG_SERVICE))
+            .addInterceptor(OAuthInterceptor("Bearer", TOKEN_IMG_SERVICE, ""))
             .build()
 
     fun apiService(): NetworkInfoService {
@@ -46,10 +46,10 @@ object RetrofitFactory {
                 .create(NetworkInfoService::class.java)
     }
 
-    fun updateJWT(token: String) {
+    fun updateJWT(token: String, username: String) {
         TOKEN_API_SERVICE = token
         clientApi = OkHttpClient.Builder()
-            .addInterceptor(OAuthInterceptor("Bearer", TOKEN_API_SERVICE))
+            .addInterceptor(OAuthInterceptor("Bearer", TOKEN_API_SERVICE, username))
             .build()
     }
 

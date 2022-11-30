@@ -20,9 +20,9 @@ class FeedRepository {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
-    fun feed(username: String, pid: Long, callback: ResultCallback<List<RecipeSimpleObject>>) {
+    fun feed(pid: Long, callback: ResultCallback<List<RecipeSimpleObject>>) {
         scope.launch(Dispatchers.IO) {
-            val call = RetrofitFactory.apiService().feed(username, pid)
+            val call = RetrofitFactory.apiService().feed(pid)
 
             call.enqueue(object : Callback<List<RecipeSimpleObject>> {
                 override fun onResponse(call: Call<List<RecipeSimpleObject>>, response: Response<List<RecipeSimpleObject>>) {

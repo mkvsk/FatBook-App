@@ -42,8 +42,8 @@ class RecipeViewModel : ViewModel() {
 
     var isRecipeCreated = MutableLiveData<Boolean?>()
 
-    fun recipeCreate(recipe: Recipe, username: String?, callback: ResultCallback<Void>) {
-        repository.recipeCreate(recipe, username, object : ResultCallback<Void> {
+    fun recipeCreate(recipe: Recipe, callback: ResultCallback<Void>) {
+        repository.recipeCreate(recipe, object : ResultCallback<Void> {
             override fun onResult(value: Void?) {
                 callback.onResult(value)
             }
