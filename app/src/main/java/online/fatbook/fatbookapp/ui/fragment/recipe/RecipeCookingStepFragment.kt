@@ -169,7 +169,7 @@ class RecipeCookingStepFragment : Fragment() {
 
     private fun setupImageEditButtons() {
         binding.imageviewStep.setOnClickListener {
-            imageViewModel.image.value = binding.imageviewStep.drawable
+            imageViewModel.setImage(binding.imageviewStep.drawable)
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_image_view_from_step)
         }

@@ -95,7 +95,7 @@ class VerificationCodeFragment : Fragment() {
             authViewModel.userEmail.value!!,
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
-                    authViewModel.vCode.value = value!!.vcode
+                    authViewModel.setVCode(value?.vcode!!)
                     binding.fragmentVerificationCodeEdittextVc.setText(StringUtils.EMPTY)
                     binding.fragmentVerificationCodeDialogText.setText(R.string.dialog_verification_code)
                     binding.fragmentVerificationCodeDialogText.setTextColor(

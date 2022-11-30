@@ -362,7 +362,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
 
     private fun setupImageEditButtons() {
         binding.imageviewPhotoRecipe1Stage.setOnClickListener {
-            imageViewModel.image.value = binding.imageviewPhotoRecipe1Stage.drawable
+            imageViewModel.setImage(binding.imageviewPhotoRecipe1Stage.drawable)
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_image_view_from_first_stage)
         }

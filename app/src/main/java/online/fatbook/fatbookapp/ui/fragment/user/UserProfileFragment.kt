@@ -55,7 +55,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     private var user: User = User()
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -65,11 +65,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         super.onViewCreated(view, savedInstanceState)
         Log.d("UserProfileFragment", "onViewCreated")
         val sharedPreferences =
-                requireActivity().getSharedPreferences(Constants.SP_TAG, AppCompatActivity.MODE_PRIVATE)
+            requireActivity().getSharedPreferences(Constants.SP_TAG, AppCompatActivity.MODE_PRIVATE)
         if (sharedPreferences.getBoolean(Constants.SP_TAG_DARK_MODE_CHANGED, false)) {
             sharedPreferences.edit().putBoolean(Constants.SP_TAG_DARK_MODE_CHANGED, false).apply()
             NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_app_settings_from_user_profile)
+                .navigate(R.id.action_go_to_app_settings_from_user_profile)
         } else {
             binding.loader.progressOverlay.visibility = View.VISIBLE
             binding.toolbar.visibility = View.GONE
@@ -81,13 +81,13 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
             binding.ovalFollowersQtt.setOnClickListener {
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_followers_from_user_profile)
+                    .navigate(R.id.action_go_to_followers_from_user_profile)
             }
 
             binding.userPhoto.setOnClickListener {
-                imageViewModel.image.value = user.profileImage
+                imageViewModel.setImage(user.profileImage)
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_view_image_from_user_profile1)
+                    .navigate(R.id.action_go_to_view_image_from_user_profile1)
             }
 
             binding.nsv.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
@@ -108,15 +108,15 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         binding.swipeRefresh.isEnabled = true
         binding.swipeRefresh.isRefreshing = false
         binding.swipeRefresh.setProgressBackgroundColorSchemeColor(
-                ContextCompat.getColor(
-                        requireContext(),
-                        R.color.theme_primary_bgr
-                )
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.theme_primary_bgr
+            )
         )
         binding.swipeRefresh.setColorSchemeColors(
-                ContextCompat.getColor(
-                        requireContext(), R.color.color_pink_a200
-                )
+            ContextCompat.getColor(
+                requireContext(), R.color.color_pink_a200
+            )
         )
         binding.swipeRefresh.setOnRefreshListener {
             isDataRefreshed = true
@@ -126,7 +126,8 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     private fun loadUserData() {
         if (userViewModel.selectedUsername.value.isNullOrEmpty()
-                || userViewModel.selectedUsername.value == userViewModel.user.value!!.username!!) {
+            || userViewModel.selectedUsername.value == userViewModel.user.value!!.username!!
+        ) {
             user.username = userViewModel.user.value!!.username
             loadUser()
             setupViewForCurrentUser()
@@ -150,17 +151,17 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         return when (item.itemId) {
             R.id.menu_user_profile_edit_profile -> {
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_edit_profile_from_user_profile)
+                    .navigate(R.id.action_go_to_edit_profile_from_user_profile)
                 true
             }
             R.id.menu_user_profile_badges -> {
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_badges_from_user_profile)
+                    .navigate(R.id.action_go_to_badges_from_user_profile)
                 true
             }
             R.id.menu_user_profile_app_settings -> {
                 NavHostFragment.findNavController(this)
-                        .navigate(R.id.action_go_to_app_settings_from_user_profile)
+                    .navigate(R.id.action_go_to_app_settings_from_user_profile)
                 true
             }
             R.id.menu_user_profile_app_info -> {
@@ -185,7 +186,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     private fun logout() {
         val sharedPreferences = requireActivity().getSharedPreferences(
-                Constants.SP_TAG, Context.MODE_PRIVATE
+            Constants.SP_TAG, Context.MODE_PRIVATE
         )
         val editor = sharedPreferences.edit()
         editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
@@ -200,17 +201,17 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         if (!expanded) {
             binding.profileBio.maxLines = Integer.MAX_VALUE
             binding.icExpand.setImageDrawable(
-                    ContextCompat.getDrawable(
-                            requireContext(), R.drawable.ic_expand_less
-                    )
+                ContextCompat.getDrawable(
+                    requireContext(), R.drawable.ic_expand_less
+                )
             )
             expanded = true
         } else {
             binding.profileBio.maxLines = 3
             binding.icExpand.setImageDrawable(
-                    ContextCompat.getDrawable(
-                            requireContext(), R.drawable.ic_expand_more
-                    )
+                ContextCompat.getDrawable(
+                    requireContext(), R.drawable.ic_expand_more
+                )
             )
             expanded = false
         }
@@ -261,10 +262,10 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         binding.tvRecipesQtt.text = user.recipeAmount?.let { FormatUtils.prettyCount(it) }
         binding.tvFollowersQtt.text = user.followersAmount?.let { FormatUtils.prettyCount(it) }
         Glide
-                .with(requireContext())
-                .load(user.profileImage)
-                .placeholder(requireContext().getDrawable(R.drawable.ic_default_userphoto))
-                .into(binding.userPhoto)
+            .with(requireContext())
+            .load(user.profileImage)
+            .placeholder(requireContext().getDrawable(R.drawable.ic_default_userphoto))
+            .into(binding.userPhoto)
         if (user.title.isNullOrEmpty()) {
             binding.profileTitle.visibility = View.GONE
         } else {
@@ -308,11 +309,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         viewPager.offscreenPageLimit = 2
         TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
             tab.text =
-                    if (position == 0) {
-                        resources.getString(R.string.title_recipes_profile)
-                    } else {
-                        resources.getString(R.string.title_favourites_profile)
-                    }
+                if (position == 0) {
+                    resources.getString(R.string.title_recipes_profile)
+                } else {
+                    resources.getString(R.string.title_favourites_profile)
+                }
         }.attach()
         //TODO fix
 //        ViewPager2ViewHeightAnimator().viewPager2 = viewPager
@@ -334,7 +335,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     private fun focusOnRecipes() {
         binding.nsv.post {
             binding.nsv.smoothScrollTo(
-                    0, binding.cardviewUserprofile.bottom
+                0, binding.cardviewUserprofile.bottom
             )
         }
     }

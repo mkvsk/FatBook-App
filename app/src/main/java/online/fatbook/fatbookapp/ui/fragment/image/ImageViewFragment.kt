@@ -223,7 +223,7 @@ class ImageViewFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        imageViewModel.image.value = null
+        imageViewModel.setImage(null)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
             View.VISIBLE
         _binding = null

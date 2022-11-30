@@ -13,12 +13,18 @@ import online.fatbook.fatbookapp.repository.UserRepository
 
 class FeedViewModel : ViewModel() {
 
+    companion object {
+        private const val TAG = "FeedViewModel"
+    }
+
     private val repository by lazy { FeedRepository() }
 
-    val recipes = MutableLiveData<List<RecipeSimpleObject>>()
+    private val _recipes = MutableLiveData<List<RecipeSimpleObject>>()
+    val recipes: LiveData<List<RecipeSimpleObject>> get() = _recipes
 
-//    private val _recipes = MutableLiveData<List<RecipeSimpleObject>>()
-//    val recipes: LiveData<List<RecipeSimpleObject>> get() = _recipes
+    fun setRecipes(list: List<RecipeSimpleObject>) {
+        _recipes.value = list
+    }
 
     fun feed(username: String, pid: Long, callback: ResultCallback<List<RecipeSimpleObject>>) {
         repository.feed(username, pid, object : ResultCallback<List<RecipeSimpleObject>> {
@@ -32,18 +38,4 @@ class FeedViewModel : ViewModel() {
         })
     }
 
-    init {
-        Log.i(
-            "MAINACTIVITY",
-            "vm---Created"
-        )
-    }
-
-    override fun onCleared() {
-        Log.i(
-            "MAINACTIVITY",
-            "vm---CLEARED"
-        )
-        super.onCleared()
-    }
 }

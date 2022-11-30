@@ -32,23 +32,18 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
-    private var staticDataViewModel: StaticDataViewModel? = null
-    private var searchViewModel: SearchViewModel? = null
-    private var imageViewModel: ImageViewModel? = null
+    private lateinit var recipeViewModel: RecipeViewModel
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var authViewModel: AuthenticationViewModel
+    private lateinit var staticDataViewModel: StaticDataViewModel
+    private lateinit var searchViewModel: SearchViewModel
+    private lateinit var imageViewModel: ImageViewModel
 
     private var backStack = Stack<Int>()
     private var adapter: ViewPagerAdapter? = null
     private var currentItemPosition = 0
 
     private lateinit var sharedPreferences: SharedPreferences
-
-    private lateinit var recipeViewModel: RecipeViewModel
-    private lateinit var userViewModel: UserViewModel
-    private lateinit var authViewModel: AuthenticationViewModel
-    var username: String? = null
-    var authName: String? = null
-
-    var password: String? = null
 
     private val fragments = listOf(
         BaseFragment.newInstance(
@@ -118,18 +113,18 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
 
         val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
-
-        authName = authViewModel.getUsername()
-        authName =
-            sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
-
-        password = authViewModel.getPassword()
-        password =
-            sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
-
-        username = userViewModel.getUsername()
+//        authVM креды входа
+        var username: String = authViewModel.username.value!!
         username =
-            sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
+            sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY).toString()
+        var password: String = authViewModel.password.value!!
+        password =
+            sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY).toString()
+
+//        нужный юзер
+//        username = userViewModel.username.value!!
+        username =
+            sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY).toString()
     }
 
     private fun getBackStack(string: String?): Stack<Int> {

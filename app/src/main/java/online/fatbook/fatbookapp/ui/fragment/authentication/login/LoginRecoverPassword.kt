@@ -94,10 +94,10 @@ class LoginRecoverPassword : Fragment() {
                                 authViewModel.isTimerRunning.value = true
                                 authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
                             }
-                            authViewModel.recoverIdentifier.value = identifier
-                            authViewModel.recoverEmail.value = value.email
-                            authViewModel.recoverUsername.value = value.username
-                            authViewModel.vCode.value = value.vcode
+                            authViewModel.setRecoverIdentifier(identifier)
+                            authViewModel.setRecoverEmail(value.email.toString())
+                            authViewModel.setRecoverUsername(value.username.toString())
+                            authViewModel.setVCode(value.vcode.toString())
                             Log.d("CODE ======================= ", value.vcode!!)
                             Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG)
                                 .show()

@@ -58,7 +58,7 @@ class EditUserProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-                View.GONE
+            View.GONE
         setupMenu()
         setupImageEditButtons()
         drawData(userViewModel.user.value!!)
@@ -260,7 +260,7 @@ class EditUserProfileFragment : Fragment() {
 
     private fun setupImageEditButtons() {
         binding.userPhoto.setOnClickListener {
-            imageViewModel.image.value = binding.userPhoto.drawable
+            imageViewModel.setImage(binding.userPhoto.drawable)
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_image_view_from_edit_profile)
         }
@@ -270,8 +270,8 @@ class EditUserProfileFragment : Fragment() {
             }
         }
         binding.deletePhoto.setOnClickListener {
-            imageViewModel.userImageToDelete.value = userViewModel.user.value!!.profileImage
-            imageViewModel.userImageToUpload.value = null
+            imageViewModel.setUserImageToDelete(userViewModel.user.value!!.profileImage)
+            imageViewModel.setUserImageToUpload(null)
             toggleImageButtons(false)
             binding.userPhoto.setImageDrawable(requireContext().getDrawable(R.drawable.ic_default_userphoto))
         }
@@ -281,7 +281,7 @@ class EditUserProfileFragment : Fragment() {
                     uri?.let {
                         toggleImageButtons(true)
                         val path = FileUtils.getPath(requireContext(), it)
-                        imageViewModel.userImageToUpload.value = path?.let { file -> File(file) }
+                        imageViewModel.setUserImageToUpload(path?.let { file -> File(file) })
                         Glide.with(requireContext()).load(uri).into(binding.userPhoto)
                     }
                 }
@@ -365,10 +365,10 @@ class EditUserProfileFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        imageViewModel.userImageToDelete.value = null
-        imageViewModel.userImageToUpload.value = null
+        imageViewModel.setUserImageToDelete(null)
+        imageViewModel.setUserImageToUpload(null)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-                View.VISIBLE
+            View.VISIBLE
         _binding = null
     }
 //

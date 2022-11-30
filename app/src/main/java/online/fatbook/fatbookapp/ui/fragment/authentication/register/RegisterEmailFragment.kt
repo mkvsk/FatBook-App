@@ -144,12 +144,12 @@ class RegisterEmailFragment : Fragment() {
                 when (value!!.code) {
                     0 -> {
                         if (!isReconnectCancelled) {
-                            authViewModel.userEmail.value = value.email
+                            authViewModel.setUsername(value.email!!)
                             if (!authViewModel.isTimerRunning.value!!) {
                                 authViewModel.isTimerRunning.value = true
                                 authViewModel.startTimer(authViewModel.resendVCTimer.value!!)
                             }
-                            authViewModel.vCode.value = value.vcode
+                            authViewModel.setVCode(value.vcode!!)
                             Log.d("CODE ======================= ", value.vcode!!)
                             Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG)
                                 .show()

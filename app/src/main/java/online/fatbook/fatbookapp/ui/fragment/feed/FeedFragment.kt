@@ -94,7 +94,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                     logout()
                 } else {
                     saveTokens(value)
-                    authViewModel.isUserAuthenticated.value = true
+                    authViewModel.setIsUserAuthenticated(true)
                     Log.d("LOGIN", "${authViewModel.username.value}")
                 }
             }
@@ -106,8 +106,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun saveTokens(value: LoginResponse) {
-        authViewModel.jwtAccess.value = value.access_token
-        authViewModel.jwtRefresh.value = value.refresh_token
+        authViewModel.setJwtAccess(value.access_token.toString())
+        authViewModel.setJwtRefresh(value.refresh_token.toString())
         RetrofitFactory.updateJWT(value.access_token!!)
         loadUser()
     }
@@ -182,7 +182,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             object : ResultCallback<List<RecipeSimpleObject>> {
                 override fun onResult(value: List<RecipeSimpleObject>?) {
                     binding.swipeRefreshFeed.isRefreshing = false
-                    feedViewModel.recipes.value = value
+                    feedViewModel.setRecipes(value as List<RecipeSimpleObject>)
                     drawFeed()
                 }
 

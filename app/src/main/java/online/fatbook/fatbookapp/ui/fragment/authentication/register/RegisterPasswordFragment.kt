@@ -35,8 +35,7 @@ class RegisterPasswordFragment : Fragment() {
         hideProgressBar()
         binding.fragmentRegisterPasswordButtonNext.setOnClickListener {
             if (passwordValidate()) {
-                authViewModel.password.value =
-                    binding.fragmentRegisterPasswordEdittextPassword.text.toString()
+                authViewModel.setPassword(binding.fragmentRegisterPasswordEdittextPassword.text.toString())
                 NavHostFragment.findNavController(this)
                     .navigate(R.id.action_go_to_register_username)
             } else {

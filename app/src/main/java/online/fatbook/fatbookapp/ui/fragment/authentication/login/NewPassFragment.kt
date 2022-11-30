@@ -123,7 +123,7 @@ class NewPassFragment : Fragment() {
 //        println("password : ${authViewModel.password.value}")
 
         authViewModel.changePassword(
-            authViewModel.recoverUsername.value.toString(),
+            authViewModel.recoverUsername.value!!,
             password,
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
@@ -181,8 +181,8 @@ class NewPassFragment : Fragment() {
     }
 
     private fun saveUserAndProceed(username: String?, password: String) {
-        authViewModel.username.value = username
-        authViewModel.password.value = password
+        authViewModel.setUsername(username!!)
+        authViewModel.setPassword(password)
         val sharedPreferences = requireActivity().getSharedPreferences(
             Constants.SP_TAG,
             Context.MODE_PRIVATE

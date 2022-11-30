@@ -63,13 +63,13 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         binding.toolbar.visibility = View.GONE
 
         if (searchViewModel.selectedCategories.value.isNullOrEmpty()) {
-            searchViewModel.selectedCategories.value = ArrayList()
+            searchViewModel.setCategories(ArrayList())
         }
         if (searchViewModel.selectedMethods.value.isNullOrEmpty()) {
-            searchViewModel.selectedMethods.value = ArrayList()
+            searchViewModel.setSelectedMethods(ArrayList())
         }
         if (searchViewModel.selectedDifficulties.value.isNullOrEmpty()) {
-            searchViewModel.selectedDifficulties.value = ArrayList()
+            searchViewModel.setSelectedDifficulties(ArrayList())
         }
 
         setupAdapters()
@@ -209,7 +209,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
     private fun loadCategories() {
         staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
             override fun onResult(value: List<CookingCategory>?) {
-                searchViewModel.categories.value = ArrayList(value!!)
+                searchViewModel.setCategories(ArrayList(value!!))
                 staticDataViewModel.cookingCategories.value = ArrayList(value)
                 adapterCategories?.setData(value)
                 adapterCategories?.setSelectAll(
@@ -231,7 +231,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
     private fun loadMethods() {
         staticDataViewModel.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {
             override fun onResult(value: List<CookingMethod>?) {
-                searchViewModel.methods.value = ArrayList(value!!)
+                searchViewModel.setMethods(ArrayList(value!!))
                 staticDataViewModel.cookingMethods.value = ArrayList(value)
                 adapterMethods?.setData(value)
                 adapterMethods?.setSelectAll(
@@ -254,7 +254,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         staticDataViewModel.getAllCookingDifficulties(object :
             ResultCallback<List<CookingDifficulty>> {
             override fun onResult(value: List<CookingDifficulty>?) {
-                searchViewModel.difficulties.value = ArrayList(value!!)
+                searchViewModel.setDifficulties(ArrayList(value!!))
                 adapterDifficulty?.setData(value)
                 adapterDifficulty?.setSelected(getPreselectedDifficulties())
                 checkStaticDataLoaded()

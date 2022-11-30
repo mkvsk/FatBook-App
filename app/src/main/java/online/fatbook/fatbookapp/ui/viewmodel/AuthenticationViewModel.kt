@@ -14,46 +14,99 @@ import online.fatbook.fatbookapp.repository.AuthenticationRepository
 
 class AuthenticationViewModel : ViewModel() {
 
+    companion object {
+        private const val TAG = "AuthenticationViewModel"
+    }
+
     private val repository by lazy { AuthenticationRepository() }
 
-    var isUserAuthenticated = MutableLiveData(false)
+    private val _isUserAuthenticated = MutableLiveData(false)
+    val isUserAuthenticated: LiveData<Boolean> get() = _isUserAuthenticated
 
-    var userEmail = MutableLiveData("")
+    fun setIsUserAuthenticated(value: Boolean) {
+        _isUserAuthenticated.value = value
+    }
 
+    private val _userEmail = MutableLiveData("")
+    val userEmail: LiveData<String> get() = _userEmail
 
-
+    fun setUserEmail(value: String) {
+        _userEmail.value = value
+    }
 
     private val _password = MutableLiveData("")
     val password: LiveData<String> get() = _password
 
+    fun setPassword(value: String) {
+        _password.value = value
+    }
+
     private val _username = MutableLiveData("")
     val username: LiveData<String> get() = _username
 
+    fun setUsername(value: String) {
+        _username.value = value
+    }
+
+    private val _jwtAccess = MutableLiveData("")
+    val jwtAccess: LiveData<String> get() = _jwtAccess
+
+    fun setJwtAccess(value: String) {
+        _jwtAccess.value = value
+    }
+
+    private val _jwtRefresh = MutableLiveData("")
+    val jwtRefresh: LiveData<String> get() = _jwtRefresh
+
+    fun setJwtRefresh(value: String) {
+        _jwtRefresh.value = value
+    }
+
+    private val _vCode = MutableLiveData<String?>()
+    val vCode: LiveData<String?> get() = _vCode
+
+    fun setVCode(value: String) {
+        _vCode.value = value
+    }
+
+    private val _recoverIdentifier = MutableLiveData("")
+    val recoverIdentifier: LiveData<String> get() = _recoverIdentifier
+
+    fun setRecoverIdentifier(value: String) {
+        _recoverIdentifier.value = value
+    }
+
+    private val _recoverEmail = MutableLiveData("")
+    val recoverEmail: LiveData<String> get() = _recoverEmail
+
+    fun setRecoverEmail(value: String) {
+        _recoverEmail.value = value
+    }
+
+    private val _recoverUsername = MutableLiveData("")
+    val recoverUsername: LiveData<String> get() = _recoverUsername
+
+    fun setRecoverUsername(value: String) {
+        _recoverUsername.value = value
+    }
 
 
 
-    var jwtAccess = MutableLiveData("")
-    var jwtRefresh = MutableLiveData("")
-
-    var vCode = MutableLiveData<String?>()
-
+//    TODO timerVM
     var currentCountdown = MutableLiveData<Long?>()
     var isTimerRunning = MutableLiveData(false)
     val resendVCTimer = MutableLiveData(10L)
 
     private var timer: CountDownTimer? = null
 
-    var recoverIdentifier = MutableLiveData("")
-    var recoverEmail = MutableLiveData("")
-    var recoverUsername = MutableLiveData("")
 
     fun startTimer(seconds: Long) {
         Log.d(
-                "CODE SENT TO", if (userEmail.value.isNullOrEmpty()) {
-            recoverIdentifier.value.toString()
-        } else {
-            userEmail.value.toString()
-        }
+            "CODE SENT TO", if (userEmail.value.isNullOrEmpty()) {
+                recoverIdentifier.value.toString()
+            } else {
+                userEmail.value.toString()
+            }
         )
         timer = object : CountDownTimer(seconds * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -109,7 +162,7 @@ class AuthenticationViewModel : ViewModel() {
     }
 
     fun confirmVCode(
-            vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>
+        vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>
     ) {
         repository.confirmVCode(vCode, email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
@@ -134,19 +187,24 @@ class AuthenticationViewModel : ViewModel() {
         })
     }
 
-    fun changePassword(username: String, password: String, callback: ResultCallback<AuthenticationResponse>) {
-        repository.changePassword(username, password, object : ResultCallback<AuthenticationResponse> {
-            override fun onResult(value: AuthenticationResponse?) {
-                callback.onResult(value)
-            }
+    fun changePassword(
+        username: String,
+        password: String,
+        callback: ResultCallback<AuthenticationResponse>
+    ) {
+        repository.changePassword(
+            username,
+            password,
+            object : ResultCallback<AuthenticationResponse> {
+                override fun onResult(value: AuthenticationResponse?) {
+                    callback.onResult(value)
+                }
 
-            override fun onFailure(value: AuthenticationResponse?) {
-                callback.onFailure(value)
-            }
-        })
+                override fun onFailure(value: AuthenticationResponse?) {
+                    callback.onFailure(value)
+                }
+            })
     }
 
-    fun getUsername(): String { return username.value.toString() }
 
-    fun getPassword(): String { return password.value.toString() }
 }

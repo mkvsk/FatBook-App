@@ -59,7 +59,8 @@ class LoginFragment : Fragment() {
         }
 
         binding.fragmentLoginForgotPasswordLink.setOnClickListener {
-            authViewModel.recoverIdentifier.value =
+            var recoverIdentifier: String = authViewModel.recoverIdentifier.value!!
+            recoverIdentifier =
                 binding.fragmentLoginEdittextUsername.text.toString()
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_login_recover_pass_from_login)
@@ -126,11 +127,11 @@ class LoginFragment : Fragment() {
             override fun onResult(value: LoginResponse?) {
                 if (!isReconnectCancelled) {
                     if (value != null) {
-                        authViewModel.username.value = username
-                        authViewModel.password.value = password
-                        authViewModel.jwtAccess.value = value.access_token
-                        authViewModel.jwtRefresh.value = value.refresh_token
-                        authViewModel.isUserAuthenticated.value = true
+                        authViewModel.setUsername(username)
+                        authViewModel.setPassword(password)
+                        authViewModel.setJwtAccess(value.access_token.toString())
+                        authViewModel.setJwtRefresh(value.refresh_token.toString())
+                        authViewModel.setIsUserAuthenticated(true)
                         RetrofitFactory.updateJWT(value.access_token!!)
                         saveUserDataToSharedPrefs()
                         navigateToFeed()

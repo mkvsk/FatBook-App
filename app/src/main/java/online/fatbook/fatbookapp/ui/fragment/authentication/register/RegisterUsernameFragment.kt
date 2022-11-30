@@ -45,8 +45,7 @@ class RegisterUsernameFragment : Fragment() {
 
         binding.fragmentRegisterUsernameButtonNext.setOnClickListener {
             if (usernameValidate()) {
-                authViewModel.username.value =
-                    binding.fragmentRegisterUsernameEdittextUsername.text.toString()
+                authViewModel.setUsername(binding.fragmentRegisterUsernameEdittextUsername.text.toString())
                 isReconnectCancelled = false
                 createNewUser()
             } else {
