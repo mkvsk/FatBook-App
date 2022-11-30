@@ -49,8 +49,8 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     private var newQtt: Double = 0.0
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeIngredientBinding.inflate(inflater, container, false)
         return binding.root
@@ -70,12 +70,12 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         binding.cardviewLeftRecipeAddIngredients.visibility = View.GONE
         binding.textViewSelectedIngredientRecipeAddIngredients.doOnTextChanged { _, _, _, _ ->
             binding.toolbarRecipeAddIngredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
-                !binding.editTextIngredientQuantityRecipeAddIngredients.text.isNullOrEmpty()
+                    !binding.editTextIngredientQuantityRecipeAddIngredients.text.isNullOrEmpty()
             TransitionManager.go(Scene(binding.cardviewLeftRecipeAddIngredients), AutoTransition())
             TransitionManager.go(Scene(binding.cardviewRightRecipeAddIngredients), AutoTransition())
             binding.cardviewLeftRecipeAddIngredients.visibility = View.VISIBLE
             binding.editTextIngredientQuantityRecipeAddIngredients.addTextChangedListener(object :
-                TextWatcher {
+                    TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, i1: Int, i2: Int, i3: Int) {
                 }
 
@@ -83,15 +83,15 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
                     checkData()
                     if (s.isEmpty()) {
                         binding.toolbarRecipeAddIngredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
-                            false
+                                false
                         recipeViewModel.newRecipeAddIngredient.value?.let {
                             setDefaultNutritionFacts(
-                                it
+                                    it
                             )
                         }
                     } else {
                         binding.toolbarRecipeAddIngredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
-                            true
+                                true
                         recipeViewModel.newRecipeAddIngredient.value?.let { calculateNutrition(it) }
                     }
                 }
@@ -120,11 +120,10 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         staticDataViewModel.getAllIngredientUnits(object : ResultCallback<List<IngredientUnit>> {
             override fun onResult(value: List<IngredientUnit>?) {
                 value?.let {
-                    staticDataViewModel.ingredientUnits.value = value
-                    staticDataViewModel.unitG.value =
-                        value.find { ingredientUnit -> ingredientUnit.ordinal == 1 }
-                    staticDataViewModel.unitML.value =
-                        value.find { ingredientUnit -> ingredientUnit.ordinal == 2 }
+                    staticDataViewModel.setIngredientUnits(value)
+                    staticDataViewModel.setUnitG(value.find { ingredientUnit -> ingredientUnit.ordinal == 1 })
+
+                    staticDataViewModel.setUnitML(value.find { ingredientUnit -> ingredientUnit.ordinal == 2 })
                 }
                 setupUnitPicker(null)
             }
@@ -139,11 +138,11 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         val nutritionFacts = ingredient.unitRatio!!
         if (selectedUnit!!.ordinal in 1..4) {
             if ((nutritionFacts.unit!!.ordinal == 1 && selectedUnit!!.ordinal == 1) ||
-                (nutritionFacts.unit!!.ordinal == 2 && selectedUnit!!.ordinal == 2)
+                    (nutritionFacts.unit!!.ordinal == 2 && selectedUnit!!.ordinal == 2)
             ) {
                 setNutritionFactsForMlAndG(nutritionFacts)
             } else if ((nutritionFacts.unit!!.ordinal == 1 && selectedUnit!!.ordinal == 3) ||
-                (nutritionFacts.unit!!.ordinal == 2 && selectedUnit!!.ordinal == 4)
+                    (nutritionFacts.unit!!.ordinal == 2 && selectedUnit!!.ordinal == 4)
             ) {
                 setNutritionFactsForKgAndL(nutritionFacts)
             } else {
@@ -156,50 +155,50 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
     private fun setNutritionFactsForKgAndL(nutritionFacts: IngredientUnitRatio) {
         newQtt =
-            binding.editTextIngredientQuantityRecipeAddIngredients.text.toString().toDouble()
+                binding.editTextIngredientQuantityRecipeAddIngredients.text.toString().toDouble()
 
         binding.textviewIngredientKcalsQttRecipeAddIngredients.text =
-            String.format(
-                getString(R.string.format_kcal),
-                FormatUtils.prettyCount(
-                    (nutritionFacts.kcal!! / 100 * newQtt) * 1000.toString().toDouble()
+                String.format(
+                        getString(R.string.format_kcal),
+                        FormatUtils.prettyCount(
+                                (nutritionFacts.kcal!! / 100 * newQtt) * 1000.toString().toDouble()
+                        )
                 )
-            )
 
         binding.tvIngredientProteinsRecipeAddIngredients.text =
-            FormatUtils.prettyCount(
-                (nutritionFacts.proteins!! / 100 * newQtt) * 1000.toString().toDouble()
-            )
+                FormatUtils.prettyCount(
+                        (nutritionFacts.proteins!! / 100 * newQtt) * 1000.toString().toDouble()
+                )
         binding.tvIngredientFatsRecipeAddIngredients.text =
-            FormatUtils.prettyCount(
-                (nutritionFacts.fats!! / 100 * newQtt) * 1000.toString().toDouble()
-            )
+                FormatUtils.prettyCount(
+                        (nutritionFacts.fats!! / 100 * newQtt) * 1000.toString().toDouble()
+                )
         binding.tvIngredientCarbsRecipeAddIngredients.text =
-            FormatUtils.prettyCount(
-                (nutritionFacts.carbs!! / 100 * newQtt) * 1000.toString().toDouble()
-            )
+                FormatUtils.prettyCount(
+                        (nutritionFacts.carbs!! / 100 * newQtt) * 1000.toString().toDouble()
+                )
     }
 
     private fun setNutritionFactsForMlAndG(nutritionFacts: IngredientUnitRatio) {
         newQtt =
-            binding.editTextIngredientQuantityRecipeAddIngredients.text.toString().toDouble()
+                binding.editTextIngredientQuantityRecipeAddIngredients.text.toString().toDouble()
 
         binding.textviewIngredientKcalsQttRecipeAddIngredients.text =
-            String.format(
-                getString(R.string.format_kcal),
-                FormatUtils.prettyCount(
-                    (nutritionFacts.kcal!! / 100 * newQtt).toString().toDouble()
+                String.format(
+                        getString(R.string.format_kcal),
+                        FormatUtils.prettyCount(
+                                (nutritionFacts.kcal!! / 100 * newQtt).toString().toDouble()
+                        )
                 )
-            )
 
         binding.tvIngredientProteinsRecipeAddIngredients.text =
-            FormatUtils.prettyCount(
-                (nutritionFacts.proteins!! / 100 * newQtt).toString().toDouble()
-            )
+                FormatUtils.prettyCount(
+                        (nutritionFacts.proteins!! / 100 * newQtt).toString().toDouble()
+                )
         binding.tvIngredientFatsRecipeAddIngredients.text =
-            FormatUtils.prettyCount((nutritionFacts.fats!! / 100 * newQtt).toString().toDouble())
+                FormatUtils.prettyCount((nutritionFacts.fats!! / 100 * newQtt).toString().toDouble())
         binding.tvIngredientCarbsRecipeAddIngredients.text =
-            FormatUtils.prettyCount((nutritionFacts.carbs!! / 100 * newQtt).toString().toDouble())
+                FormatUtils.prettyCount((nutritionFacts.carbs!! / 100 * newQtt).toString().toDouble())
     }
 
     private fun popBackStack() {
@@ -213,7 +212,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
             popBackStack()
         }
         binding.toolbarRecipeAddIngredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
-            false
+                false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -229,17 +228,17 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     private fun addIngredient() {
         selectedUnit = units[binding.pickerIngredientUnit.value]
         selectedQtt =
-            if (binding.editTextIngredientQuantityRecipeAddIngredients.text.isNullOrEmpty()) {
-                1.0
-            } else {
-                binding.editTextIngredientQuantityRecipeAddIngredients.text.toString().toDouble()
-            }
+                if (binding.editTextIngredientQuantityRecipeAddIngredients.text.isNullOrEmpty()) {
+                    1.0
+                } else {
+                    binding.editTextIngredientQuantityRecipeAddIngredients.text.toString().toDouble()
+                }
 
         val recipeIngredient = RecipeIngredient(
-            pid = null,
-            ingredient = recipeViewModel.newRecipeAddIngredient.value,
-            unit = selectedUnit,
-            quantity = selectedQtt
+                pid = null,
+                ingredient = recipeViewModel.newRecipeAddIngredient.value,
+                unit = selectedUnit,
+                quantity = selectedQtt
         )
         recipeViewModel.newRecipe.value!!.ingredients!!.add(recipeIngredient)
         findNavController().popBackStack()
@@ -247,21 +246,21 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
     private fun checkData() {
         if (binding.editTextIngredientQuantityRecipeAddIngredients.text.toString().isNotEmpty()
-            && binding.editTextIngredientQuantityRecipeAddIngredients.text.toString()
-                .toDouble() != 0.0
+                && binding.editTextIngredientQuantityRecipeAddIngredients.text.toString()
+                        .toDouble() != 0.0
         ) {
             binding.editTextIngredientQuantityRecipeAddIngredients.background =
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.round_corner_ingredient_qtt_units
-                )
+                    ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.round_corner_ingredient_qtt_units
+                    )
         } else {
             binding.editTextIngredientQuantityRecipeAddIngredients.isFocusable
             binding.editTextIngredientQuantityRecipeAddIngredients.background =
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.round_corner_ingredient_qtt_units_stroke
-                )
+                    ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.round_corner_ingredient_qtt_units_stroke
+                    )
         }
     }
 
@@ -276,7 +275,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     private fun loadIngredients() {
         staticDataViewModel.getAllIngredients(object : ResultCallback<List<Ingredient>> {
             override fun onResult(value: List<Ingredient>?) {
-                staticDataViewModel.ingredients.value = value
+                staticDataViewModel.setIngredients(value!!)
                 adapter?.setData(value)
                 binding.loader.progressOverlay.visibility = View.GONE
             }
@@ -289,10 +288,10 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
     override fun onIngredientClick(previousItem: Int, selectedItem: Int, ingredient: Ingredient?) {
         adapter!!.selectedIngredient =
-            staticDataViewModel.ingredients.value!!.find { it.title == ingredient!!.title }
+                staticDataViewModel.ingredients.value!!.find { it.title == ingredient!!.title }
         adapter!!.notifyItemChanged(previousItem)
         adapter!!.notifyItemChanged(selectedItem)
-        recipeViewModel.newRecipeAddIngredient.value = ingredient
+        recipeViewModel.setNewRecipeAddIngredient(ingredient)
 
         binding.textViewSelectedIngredientRecipeAddIngredients.text = ingredient!!.title
         setupUnitPicker(ingredient)
@@ -309,7 +308,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         val kcal = nutritionFacts.kcal.toString()
         val qtt = nutritionFacts.amount.toString()
         binding.textviewIngredientKcalsQttRecipeAddIngredients.text =
-            String.format("%s kcal/%s %s", kcal, qtt, ingredient.unitRatio.unit!!.title)
+                String.format("%s kcal/%s %s", kcal, qtt, ingredient.unitRatio.unit!!.title)
         binding.tvIngredientProteinsRecipeAddIngredients.text = nutritionFacts.proteins.toString()
         binding.tvIngredientFatsRecipeAddIngredients.text = nutritionFacts.fats.toString()
         binding.tvIngredientCarbsRecipeAddIngredients.text = nutritionFacts.carbs.toString()
@@ -335,8 +334,8 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
             binding.pickerIngredientUnit.setOnValueChangedListener { _, _, newVal ->
                 Log.d(
-                    "PICKER NEW VAL =======================================================",
-                    "$newVal"
+                        "PICKER NEW VAL =======================================================",
+                        "$newVal"
                 )
                 selectedUnit = units[newVal]
                 if (binding.editTextIngredientQuantityRecipeAddIngredients.text.isNullOrEmpty()) {
@@ -359,8 +358,8 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         try {
             val temp = staticDataViewModel.ingredients.value!!.filter {
                 StringUtils.startsWithIgnoreCase(
-                    it.title,
-                    text
+                        it.title,
+                        text
                 )
             }
             adapter!!.setData(temp)

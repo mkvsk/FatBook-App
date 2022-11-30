@@ -150,7 +150,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
                     if (response.code() == 200) {
 //                        BookmarksFragment.log.log(Level.INFO, "fork SUCCESS")
-                        recipeViewModel!!.selectedRecipe.value = response.body()
+                        recipeViewModel?.setSelectedRecipe(response.body())
                         loadUser()
                     } else {
 //                        BookmarksFragment.log.log(Level.INFO, "fork FAILED")
@@ -173,7 +173,7 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
 //                            Level.INFO,
 //                            "" + response.code() + " found user: " + response.body()
 //                        )
-                        userViewModel!!.user.value = response.body()
+                        response.body()?.let { userViewModel!!.setUser(it) }
                     } else {
 //                        BookmarksFragment.log.log(Level.INFO, "load user ERROR")
                     }

@@ -210,7 +210,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
             override fun onResult(value: List<CookingCategory>?) {
                 searchViewModel.setCategories(ArrayList(value!!))
-                staticDataViewModel.cookingCategories.value = ArrayList(value)
+                staticDataViewModel.setCookingCategories(value)
                 adapterCategories?.setData(value)
                 adapterCategories?.setSelectAll(
                     StaticDataObject(
@@ -232,7 +232,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         staticDataViewModel.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {
             override fun onResult(value: List<CookingMethod>?) {
                 searchViewModel.setMethods(ArrayList(value!!))
-                staticDataViewModel.cookingMethods.value = ArrayList(value)
+                staticDataViewModel.setCookingMethods(value)
                 adapterMethods?.setData(value)
                 adapterMethods?.setSelectAll(
                     StaticDataObject(

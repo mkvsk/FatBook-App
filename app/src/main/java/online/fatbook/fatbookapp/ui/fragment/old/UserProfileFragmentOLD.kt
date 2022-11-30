@@ -153,7 +153,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
 //                        Level.INFO,
 //                        "" + response.code() + " found user: " + response.body()
 //                    )
-                    userViewModel!!.user.value = response.body()
+                    response.body()?.let { userViewModel!!.setUser(it) }
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
@@ -362,7 +362,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
                     override fun onResponse(call: Call<User?>, response: Response<User?>) {
                         if (response.code() == 200) {
 //                            UserProfileFragment.log.log(Level.INFO, "image add SUCCESS")
-                            userViewModel!!.user.value = response.body()
+                            response.body()?.let { userViewModel!!.setUser(it) }
                         } else {
 //                            UserProfileFragment.log.log(
 //                                Level.INFO,
@@ -417,7 +417,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
 //                    UserProfileFragment.log.log(Level.INFO, "fork SUCCESS")
-                    recipeViewModel!!.selectedRecipe.value = response.body()
+                    recipeViewModel!!.setSelectedRecipe(response.body())
                     loadUser()
                 }
 

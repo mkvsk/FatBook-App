@@ -52,7 +52,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnIngredientItemClickListener
             recipeIngredient.quantity =
                 binding!!.editTextIngredientQuantity.text.toString().toDouble()
             recipeIngredient.unit = IngredientUnit()
-            recipeViewModel!!.selectedRecipeIngredient.value = recipeIngredient
+            recipeViewModel!!.setSelectedRecipeIngredient(recipeIngredient)
             NavHostFragment.findNavController(this).popBackStack()
         }
         binding!!.editTextIngredientQuantity.addTextChangedListener(object : TextWatcher {
@@ -102,7 +102,7 @@ class RecipeAddIngredientFragmentOLD : Fragment(), OnIngredientItemClickListener
                     call: Call<List<Ingredient>?>,
                     response: Response<List<Ingredient>?>
             ) {
-                staticDataViewModel!!.ingredients.value = response.body()
+                response.body()?.let { staticDataViewModel!!.setIngredients(it) }
 //                RecipeAddIngredientFragment.log.log(Level.INFO, "ingredient list load: SUCCESS")
             }
 

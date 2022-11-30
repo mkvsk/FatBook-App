@@ -169,7 +169,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener {
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
 //                    RecipeViewFragment.log.log(Level.INFO, "fork SUCCESS")
-                    recipeViewModel!!.selectedRecipe.value = response.body()
+                    recipeViewModel!!.setSelectedRecipe(response.body())
                     loadUser()
                 }
 
@@ -190,7 +190,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener {
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
 //                    RecipeViewFragment.log.log(Level.INFO, "bookmark SUCCESS")
-                    recipeViewModel!!.selectedRecipe.value = response.body()
+                    recipeViewModel!!.setSelectedRecipe(response.body())
                     loadUser()
                 }
 
@@ -207,7 +207,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener {
 //                    RecipeViewFragment.log.log(Level.INFO, "user load SUCCESS")
                     assert(response.body() != null)
 //                    RecipeViewFragment.log.log(Level.INFO, response.body().toString())
-                    userViewModel!!.user.value = response.body()
+                    response.body()?.let { userViewModel!!.setUser(it) }
                     showData()
                 }
 
@@ -389,7 +389,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener {
             override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
                 if (response.code() == 200) {
 //                    RecipeViewFragment.log.log(Level.INFO, "delete recipe SUCCESS")
-                    recipeViewModel!!.selectedRecipe.value = null
+                    recipeViewModel!!.setSelectedRecipe(null)
                     navigateBack()
                 } else {
 //                    RecipeViewFragment.log.log(Level.INFO, "delete recipe FAILED" + response.code())

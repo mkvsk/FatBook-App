@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.ui.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -13,20 +14,81 @@ import org.apache.commons.lang3.StringUtils
 
 class StaticDataViewModel : ViewModel() {
 
-    val ingredients = MutableLiveData<List<Ingredient>>()
-    val cookingMethods = MutableLiveData<List<CookingMethod>>()
-    val cookingCategories = MutableLiveData<List<CookingCategory>>()
-    val cookingDifficulties = MutableLiveData<List<CookingDifficulty>>()
-    val ingredientUnits = MutableLiveData<List<IngredientUnit>>()
-
-    val unitG = MutableLiveData<IngredientUnit>()
-    val unitML = MutableLiveData<IngredientUnit>()
-    val methodOther = MutableLiveData<CookingMethod>()
-    val categoryOther = MutableLiveData<CookingCategory>()
-
-    val loadCookingMethod = MutableLiveData<Boolean>()
+    companion object {
+        private const val TAG = "StaticDataViewModel"
+    }
 
     private val repository by lazy { StaticDataRepository() }
+
+    private val _ingredients = MutableLiveData<List<Ingredient>>()
+    val ingredients: LiveData<List<Ingredient>> get() = _ingredients
+
+    fun setIngredients(value: List<Ingredient>) {
+        _ingredients.value = value
+    }
+
+    private val _cookingMethods = MutableLiveData<List<CookingMethod>>()
+    val cookingMethods: LiveData<List<CookingMethod>> get() = _cookingMethods
+
+    fun setCookingMethods(value: List<CookingMethod>) {
+        _cookingMethods.value = value
+    }
+
+    private val _cookingCategories = MutableLiveData<List<CookingCategory>>()
+    val cookingCategories: LiveData<List<CookingCategory>> get() = _cookingCategories
+
+    fun setCookingCategories(value: List<CookingCategory>) {
+        _cookingCategories.value = value
+    }
+
+    private val _cookingDifficulties = MutableLiveData<List<CookingDifficulty>>()
+    val cookingDifficulties: LiveData<List<CookingDifficulty>> get() = _cookingDifficulties
+
+    fun setCookingDifficulties(value: List<CookingDifficulty>) {
+        _cookingDifficulties.value = value
+    }
+
+    private val _ingredientUnits = MutableLiveData<List<IngredientUnit>>()
+    val ingredientUnits: LiveData<List<IngredientUnit>> get() = _ingredientUnits
+
+    fun setIngredientUnits(value: List<IngredientUnit>) {
+        _ingredientUnits.value = value
+    }
+
+    private val _unitG = MutableLiveData<IngredientUnit>()
+    val unitG: LiveData<IngredientUnit> get() = _unitG
+
+    fun setUnitG(value: IngredientUnit?) {
+        _unitG.value = value
+    }
+
+    private val _unitML = MutableLiveData<IngredientUnit>()
+    val unitML: LiveData<IngredientUnit> get() = _unitML
+
+    fun setUnitML(value: IngredientUnit?) {
+        _unitML.value = value
+    }
+
+    private val _methodOther = MutableLiveData<CookingMethod>()
+    val methodOther: LiveData<CookingMethod> get() = _methodOther
+
+    fun setMethodOther(value: CookingMethod) {
+        _methodOther.value = value
+    }
+
+    private val _categoryOther = MutableLiveData<CookingCategory>()
+    val categoryOther: LiveData<CookingCategory> get() = _categoryOther
+
+    fun setCategoryOther(value: CookingCategory) {
+        _categoryOther.value = value
+    }
+
+    private val _loadCookingMethod = MutableLiveData<Boolean>()
+    val loadCookingMethod: LiveData<Boolean> get() = _loadCookingMethod
+
+    fun setLoadCookingMethod(value: Boolean) {
+        _loadCookingMethod.value = value
+    }
 
     fun getAllCookingMethods(callback: ResultCallback<List<CookingMethod>>) {
         repository.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {

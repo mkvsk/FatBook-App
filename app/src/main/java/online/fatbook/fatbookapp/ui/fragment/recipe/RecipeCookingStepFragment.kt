@@ -162,8 +162,8 @@ class RecipeCookingStepFragment : Fragment() {
                 cookingStep!!.stepNumber ?: selectedCookingStep!!.stepNumber!!, it
             )
         }
-        recipeViewModel.selectedCookingStep.value = null
-        recipeViewModel.selectedCookingStepPosition.value = null
+        recipeViewModel.setSelectedCookingStep(null)
+        recipeViewModel.setSelectedCookingStepPosition(null)
         findNavController().popBackStack()
     }
 

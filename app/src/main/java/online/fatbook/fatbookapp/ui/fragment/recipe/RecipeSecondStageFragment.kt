@@ -79,7 +79,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
         cookingStepsAdapter!!.setData(recipeViewModel.newRecipe.value!!.steps)
         cookingStepsAdapter!!.setImages(recipeViewModel.newRecipeStepImages.value)
 
-        recipeViewModel.selectedCookingStep.value = null
+        recipeViewModel.setSelectedCookingStep(null)
 
         binding.nsvRecipeCreate2Stage.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
 
@@ -167,7 +167,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
 //                progress_overlay.visibility = View.GONE
 //                toolbar_recipe_create_2_stage.visibility = View.VISIBLE
                     Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
-                    recipeViewModel.isRecipeCreated.value = true
+                    recipeViewModel.setIsRecipeCreated(true)
                     popBackStack()
                 }
 
@@ -233,8 +233,8 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     }
 
     override fun onCookingStepClick(value: CookingStep, itemPosition: Int) {
-        recipeViewModel.selectedCookingStep.value = value
-        recipeViewModel.selectedCookingStepPosition.value = itemPosition
+        recipeViewModel.setSelectedCookingStep(value)
+        recipeViewModel.setSelectedCookingStepPosition(itemPosition)
         NavHostFragment.findNavController(this)
             .navigate(R.id.action_go_to_step_from_second_stage)
     }

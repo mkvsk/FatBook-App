@@ -38,7 +38,7 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         if (recipeViewModel.newRecipeCookingCategories.value == null) {
-            recipeViewModel.newRecipeCookingCategories.value = ArrayList()
+            recipeViewModel.setNewRecipeCookingCategories(ArrayList())
         }
         setupItemsAdapter()
         if (staticDataViewModel.loadCookingMethod.value!!) {
@@ -85,7 +85,7 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
         staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
             override fun onResult(value: List<CookingCategory>?) {
                 value?.let {
-                    staticDataViewModel.cookingCategories.value = value
+                    staticDataViewModel.setCookingCategories(value)
                     adapter?.setData(value)
                     val list: ArrayList<Int> = ArrayList()
                     if (!recipeViewModel.newRecipe.value!!.cookingCategories.isNullOrEmpty()) {
@@ -108,7 +108,7 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
         staticDataViewModel.getAllCookingMethods(object : ResultCallback<List<CookingMethod>> {
             override fun onResult(value: List<CookingMethod>?) {
                 value?.let {
-                    staticDataViewModel.cookingMethods.value = value
+                    staticDataViewModel.setCookingMethods(value)
                     adapter?.setData(value)
                     val list: ArrayList<Int> = ArrayList()
                     if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
@@ -124,7 +124,7 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
     }
 
     override fun onItemClick(item: StaticDataObject) {
-        recipeViewModel.newRecipeCookingMethod.value = item as CookingMethod
+        recipeViewModel.setNewRecipeCookingMethod(item as CookingMethod)
         recipeViewModel.newRecipe.value!!.cookingMethod =
             recipeViewModel.newRecipeCookingMethod.value
         Log.i("============================================================", "")

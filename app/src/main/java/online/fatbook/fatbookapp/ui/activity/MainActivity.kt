@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         authViewModel.setPassword(
             sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY).toString()
         )
-        userViewModel.user.value = User()
+        userViewModel.setUser(User())
         userViewModel.user.value!!.username =
             sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY).toString()
     }

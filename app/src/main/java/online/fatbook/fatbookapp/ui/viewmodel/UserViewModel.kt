@@ -23,7 +23,12 @@ class UserViewModel : ViewModel() {
         _selectedUsername.value = value
     }
 
-    val user = MutableLiveData<User>()
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> get() = _user
+
+    fun setUser(value: User) {
+        _user.value = value
+    }
 
     fun getUserByUsername(username: String, callback: ResultCallback<User>) {
         repository.getUserByUsername(username, object : ResultCallback<User> {
