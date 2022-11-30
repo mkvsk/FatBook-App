@@ -65,12 +65,12 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
 
     private fun addToSelected(position: Int) {
         selectedItems!!.add(position)
-        notifyDataSetChanged()
+        notifyItemChanged(position)
     }
 
     private fun removeFromSelected(position: Int) {
         selectedItems!!.remove(position)
-        notifyDataSetChanged()
+        notifyItemChanged(position)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

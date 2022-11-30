@@ -63,7 +63,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         binding.toolbar.visibility = View.GONE
 
         if (searchViewModel.selectedCategories.value.isNullOrEmpty()) {
-            searchViewModel.setCategories(ArrayList())
+            searchViewModel.setSelectedCategories(ArrayList())
         }
         if (searchViewModel.selectedMethods.value.isNullOrEmpty()) {
             searchViewModel.setSelectedMethods(ArrayList())
