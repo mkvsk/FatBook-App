@@ -95,6 +95,9 @@ interface NetworkInfoService {
     @POST("recipe/create")
     fun recipeCreate(@Body recipe: Recipe): Call<Void>
 
+    @GET("recipe/get")
+    fun getRecipeById(@Query(value = "id") id: Long): Call<Recipe>
+
 //    ==========================================================================================
 
     @POST("user/create")
