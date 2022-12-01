@@ -199,7 +199,7 @@ class EditUserProfileFragment : Fragment() {
         )
         userViewModel.updateUser(request, object : ResultCallback<User> {
             override fun onResult(value: User?) {
-                userViewModel.user.value = value
+                userViewModel.setUser(value!!)
                 popBackStack()
             }
 

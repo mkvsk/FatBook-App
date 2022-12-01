@@ -31,6 +31,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
+import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeFirstStageBinding
 import online.fatbook.fatbookapp.ui.activity.MainActivity
@@ -47,7 +48,7 @@ import java.io.File
 import java.time.LocalTime
 
 class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
-    BaseFragmentActionsListener {
+        BaseFragmentActionsListener {
 
     private var _binding: FragmentRecipeFirstStageBinding? = null
     private val binding get() = _binding!!
@@ -60,11 +61,11 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     private var chooseImageFromGallery: ActivityResultLauncher<String>? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeFirstStageBinding.inflate(inflater, container, false)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-            View.VISIBLE
+                View.VISIBLE
         return binding.root
     }
 
@@ -75,7 +76,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         recipeViewModel.isRecipeCreated.value?.let {
             if (it) {
-                recipeViewModel.isRecipeCreated.value = false
+                recipeViewModel.setIsRecipeCreated(false)
                 clearForm()
             }
         }
@@ -84,10 +85,10 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
 //        toolbar_recipe_create_1_stage.title = resources.getString(R.string.nav_recipe_create)
         binding.toolbarRecipe1Stage.title = "TODO title"
         if (recipeViewModel.newRecipe.value == null) {
-            recipeViewModel.newRecipe.value = Recipe()
+            recipeViewModel.setNewRecipe(Recipe())
         }
         if (recipeViewModel.newRecipeStepImages.value == null) {
-            recipeViewModel.newRecipeStepImages.value = HashMap()
+            recipeViewModel.setNewRecipeStepImages(HashMap())
         }
         setupAdapter()
         setupMenu()
@@ -100,16 +101,16 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
             adapter?.selectedDifficulty = staticDataViewModel.cookingDifficulties.value!![0]
             if (recipeViewModel.newRecipe.value!!.difficulty == null) {
                 recipeViewModel.newRecipe.value!!.difficulty =
-                    staticDataViewModel.cookingDifficulties.value!![0]
+                        staticDataViewModel.cookingDifficulties.value!![0]
             }
         }
 
         if (recipeViewModel.newRecipeImage.value != null) {
             toggleImageButtons(true)
             Glide.with(requireContext())
-                .load(recipeViewModel.newRecipeImage.value)
-                .placeholder(Utils.getCircularProgressDrawable())
-                .into(binding.imageviewPhotoRecipe1Stage)
+                    .load(recipeViewModel.newRecipeImage.value)
+                    .placeholder(Utils.getCircularProgressDrawable())
+                    .into(binding.imageviewPhotoRecipe1Stage)
         } else {
             toggleImageButtons(false)
         }
@@ -123,8 +124,8 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
                 checkDataTitle()
                 if (!s.isNullOrEmpty()) {
                     recipeViewModel.newRecipe.value!!.title =
-                        s.toString().replace("\\s+".toRegex(), " ")
-                            .trim()
+                            s.toString().replace("\\s+".toRegex(), " ")
+                                    .trim()
                 } else {
                     recipeViewModel.newRecipe.value!!.title = null
                 }
@@ -138,7 +139,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
 
         recipeViewModel.newRecipe.value!!.difficulty?.let { difficulty ->
             adapter!!.selectedDifficulty =
-                staticDataViewModel.cookingDifficulties.value!!.find { it.title == difficulty.title }
+                    staticDataViewModel.cookingDifficulties.value!!.find { it.title == difficulty.title }
         }
 
         binding.edittextPortionsQttRecipe1Stage.addTextChangedListener(object : TextWatcher {
@@ -168,73 +169,73 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
         }
 
         binding.textviewCookingMethodRecipe1Stage.setOnClickListener {
-            staticDataViewModel.loadCookingMethod.value = true
+            staticDataViewModel.setLoadCookingMethod(true)
             navigation(false)
         }
 
         if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
             binding.textviewCookingMethodRecipe1Stage.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.main_text
-                )
+                    ContextCompat.getColor(
+                            requireContext(),
+                            R.color.main_text
+                    )
             )
             binding.textviewCookingMethodRecipe1Stage.text =
-                recipeViewModel.newRecipe.value!!.cookingMethod!!.title
+                    recipeViewModel.newRecipe.value!!.cookingMethod!!.title
         } else {
             binding.textviewCookingMethodRecipe1Stage.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.hint_text
-                )
+                    ContextCompat.getColor(
+                            requireContext(),
+                            R.color.hint_text
+                    )
             )
             binding.textviewCookingMethodRecipe1Stage.text =
-                getString(R.string.hint_choose_method)
+                    getString(R.string.hint_choose_method)
         }
 
         binding.textviewCategoryRecipe1Stage.setOnClickListener {
-            staticDataViewModel.loadCookingMethod.value = false
+            staticDataViewModel.setLoadCookingMethod(false)
             navigation(false)
         }
 
         if (!recipeViewModel.newRecipe.value!!.cookingCategories.isNullOrEmpty()) {
             binding.textviewCategoryRecipe1Stage.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.main_text
-                )
+                    ContextCompat.getColor(
+                            requireContext(),
+                            R.color.main_text
+                    )
             )
             binding.textviewCategoryRecipe1Stage.text =
-                recipeViewModel.newRecipe.value!!.cookingCategories!!.joinToString { "${it.title}" }
+                    recipeViewModel.newRecipe.value!!.cookingCategories!!.joinToString { "${it.title}" }
         } else {
             binding.textviewCategoryRecipe1Stage.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.hint_text
-                )
+                    ContextCompat.getColor(
+                            requireContext(),
+                            R.color.hint_text
+                    )
             )
             binding.textviewCategoryRecipe1Stage.text =
-                getString(R.string.hint_choose_category)
+                    getString(R.string.hint_choose_category)
         }
 
         recipeViewModel.newRecipe.value!!.isPrivate?.let {
             binding.switchPrivateRecipeRecipe1Stage.isChecked = it
             if (it) {
                 binding.textviewDescriptionPrivateRecipe1Stage.text =
-                    getString(R.string.title_recipe_private)
+                        getString(R.string.title_recipe_private)
             } else {
                 binding.textviewDescriptionPrivateRecipe1Stage.text =
-                    getString(R.string.title_recipe_public)
+                        getString(R.string.title_recipe_public)
             }
         }
         binding.switchPrivateRecipeRecipe1Stage.setOnCheckedChangeListener { _, isChecked ->
             recipeViewModel.newRecipe.value!!.isPrivate = isChecked
             if (isChecked) {
                 binding.textviewDescriptionPrivateRecipe1Stage.text =
-                    getString(R.string.title_recipe_private)
+                        getString(R.string.title_recipe_private)
             } else {
                 binding.textviewDescriptionPrivateRecipe1Stage.text =
-                    getString(R.string.title_recipe_public)
+                        getString(R.string.title_recipe_public)
             }
         }
 
@@ -249,47 +250,47 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     private fun checkDataTitle() {
         if (binding.edittextTitleRecipe1Stage.text.toString().isNotEmpty()) {
             binding.edittextTitleRecipe1Stage.background =
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.round_corner_edittext_recipe_create
-                )
+                    ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.round_corner_edittext_recipe_create
+                    )
         } else {
             binding.edittextTitleRecipe1Stage.isFocusable
             binding.edittextTitleRecipe1Stage.background =
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.round_corner_edittext_recipe_create_stroke
-                )
+                    ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.round_corner_edittext_recipe_create_stroke
+                    )
         }
     }
 
     private fun checkDataPortions() {
         if (binding.edittextPortionsQttRecipe1Stage.text.toString().isNotEmpty()
-            && binding.edittextPortionsQttRecipe1Stage.text.toString()
-                .toInt() != 0
+                && binding.edittextPortionsQttRecipe1Stage.text.toString()
+                        .toInt() != 0
         ) {
             binding.edittextPortionsQttRecipe1Stage.background =
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.round_corner_edittext_recipe_create
-                )
+                    ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.round_corner_edittext_recipe_create
+                    )
         } else {
             binding.edittextPortionsQttRecipe1Stage.isFocusable
             binding.edittextPortionsQttRecipe1Stage.background =
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.round_corner_edittext_recipe_create_stroke
-                )
+                    ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.round_corner_edittext_recipe_create_stroke
+                    )
         }
     }
 
     private fun checkEnableMenu() {
         val isEmpty =
-            binding.edittextPortionsQttRecipe1Stage.text.isNullOrEmpty() ||
-                    binding.edittextTitleRecipe1Stage.text.isNullOrEmpty() ||
-                    binding.edittextPortionsQttRecipe1Stage.text.toString().toInt() == 0
+                binding.edittextPortionsQttRecipe1Stage.text.isNullOrEmpty() ||
+                        binding.edittextTitleRecipe1Stage.text.isNullOrEmpty() ||
+                        binding.edittextPortionsQttRecipe1Stage.text.toString().toInt() == 0
         binding.toolbarRecipe1Stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
-            !isEmpty
+                !isEmpty
     }
 
     private fun toggleImageButtons(isImageExists: Boolean) {
@@ -327,36 +328,36 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
 
     private fun showClearFormDialog() {
         FBAlertDialogBuilder.getDialogWithPositiveAndNegativeButtons(
-            getString(R.string.dialog_clear_form_title),
-            getString(R.string.dialog_clear_form_msg),
-            object : FBAlertDialogListener {
-                override fun onClick(dialogInterface: DialogInterface) {
-                    clearForm()
-                    dialogInterface.dismiss()
-                }
-            },
-            object : FBAlertDialogListener {
-                override fun onClick(dialogInterface: DialogInterface) {
-                    dialogInterface.dismiss()
-                }
-            }).show()
+                getString(R.string.dialog_clear_form_title),
+                getString(R.string.dialog_clear_form_msg),
+                object : FBAlertDialogListener {
+                    override fun onClick(dialogInterface: DialogInterface) {
+                        clearForm()
+                        dialogInterface.dismiss()
+                    }
+                },
+                object : FBAlertDialogListener {
+                    override fun onClick(dialogInterface: DialogInterface) {
+                        dialogInterface.dismiss()
+                    }
+                }).show()
     }
 
     private fun clearForm() {
-        recipeViewModel.newRecipe.value = Recipe()
-        recipeViewModel.newRecipeImage.value = null
-        recipeViewModel.newRecipeCookingMethod.value = null
-        recipeViewModel.newRecipeCookingCategories.value = null
-        recipeViewModel.newRecipeCookingTimeHours.value = null
-        recipeViewModel.newRecipeCookingTimeMinutes.value = null
+        recipeViewModel.setNewRecipe(Recipe())
+        recipeViewModel.setNewRecipeImage(null)
+        recipeViewModel.setNewRecipeCookingMethod(null)
+        recipeViewModel.setNewRecipeCookingCategories(null)
+        recipeViewModel.setNewRecipeCookingTimeHours(null)
+        recipeViewModel.setNewRecipeCookingTimeMinutes(null)
 
-        recipeViewModel.newRecipeSteps.value = null
-        recipeViewModel.newRecipeIngredients.value = null
-        recipeViewModel.newRecipeAddIngredient.value = null
-        recipeViewModel.newRecipeAddRecipeIngredient.value = null
-        recipeViewModel.newRecipeStepImages.value = null
-        recipeViewModel.selectedCookingStep.value = null
-        recipeViewModel.selectedCookingStepPosition.value = null
+        recipeViewModel.setNewRecipeSteps(ArrayList())
+        recipeViewModel.setNewRecipeIngredients(ArrayList())
+        recipeViewModel.setNewRecipeAddIngredient(null)
+        recipeViewModel.setNewRecipeAddRecipeIngredient(null)
+        recipeViewModel.setNewRecipeStepImages(null)
+        recipeViewModel.setSelectedCookingStep(null)
+        recipeViewModel.setSelectedCookingStepPosition(null)
         (requireActivity() as MainActivity).redrawFragment(2)
     }
 
@@ -364,7 +365,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
         binding.imageviewPhotoRecipe1Stage.setOnClickListener {
             imageViewModel.setImage(binding.imageviewPhotoRecipe1Stage.drawable)
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_image_view_from_first_stage)
+                    .navigate(R.id.action_go_to_image_view_from_first_stage)
         }
         binding.buttonEditPhotoRecipe1Stage.setOnClickListener {
             if (verifyStoragePermissions(requireActivity())) {
@@ -372,33 +373,33 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
             }
         }
         binding.buttonDeletePhotoRecipe1Stage.setOnClickListener {
-            recipeViewModel.newRecipeImage.value = null
+            recipeViewModel.setNewRecipeImage(null)
             toggleImageButtons(false)
             Glide.with(requireContext())
-                .load(R.drawable.default_recipe_image_recipe_create_second_stage)
-                .into(binding.imageviewPhotoRecipe1Stage)
+                    .load(R.drawable.default_recipe_image_recipe_create_second_stage)
+                    .into(binding.imageviewPhotoRecipe1Stage)
         }
         chooseImageFromGallery =
-            registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-                if (verifyStoragePermissions(requireActivity())) {
-                    uri?.let {
-                        toggleImageButtons(true)
-                        val path = FileUtils.getPath(requireContext(), it)
-                        recipeViewModel.newRecipeImage.value = path?.let { file -> File(file) }
-                        Glide.with(requireContext()).load(uri)
-                            .into(binding.imageviewPhotoRecipe1Stage)
+                registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+                    if (verifyStoragePermissions(requireActivity())) {
+                        uri?.let {
+                            toggleImageButtons(true)
+                            val path = FileUtils.getPath(requireContext(), it)
+                            recipeViewModel.setNewRecipeImage(path?.let { file -> File(file) })
+                            Glide.with(requireContext()).load(uri)
+                                    .into(binding.imageviewPhotoRecipe1Stage)
+                        }
                     }
                 }
-            }
     }
 
     private fun verifyStoragePermissions(requireActivity: FragmentActivity): Boolean {
         val permission = ActivityCompat.checkSelfPermission(
-            requireActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                requireActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         return if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                requireActivity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE
+                    requireActivity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE
             )
             false
         } else {
@@ -408,10 +409,10 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
 
     private fun loadDifficulty() {
         staticDataViewModel.getAllCookingDifficulties(object :
-            ResultCallback<List<CookingDifficulty>> {
+                ResultCallback<List<CookingDifficulty>> {
             override fun onResult(value: List<CookingDifficulty>?) {
                 value as ArrayList
-                staticDataViewModel.cookingDifficulties.value = value
+                staticDataViewModel.setCookingDifficulties(value)
                 adapter?.setData(value)
                 adapter?.selectedDifficulty = value[0]
                 if (recipeViewModel.newRecipe.value!!.difficulty == null) {
@@ -446,15 +447,15 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     private fun fillRecipe() {
         if (recipeViewModel.newRecipe.value!!.cookingTime.isNullOrEmpty()) {
             recipeViewModel.newRecipe.value!!.cookingTime = "00:15"
-            recipeViewModel.newRecipeCookingTimeHours.value = 0
-            recipeViewModel.newRecipeCookingTimeMinutes.value = 15
+            recipeViewModel.setNewRecipeCookingTimeHours(0)
+            recipeViewModel.setNewRecipeCookingTimeMinutes(15)
         }
         if (recipeViewModel.newRecipe.value!!.cookingMethod == null) {
             recipeViewModel.newRecipe.value!!.cookingMethod = staticDataViewModel.getOtherMethod()
         }
         if (recipeViewModel.newRecipe.value!!.cookingCategories.isNullOrEmpty()) {
             recipeViewModel.newRecipe.value!!.cookingCategories =
-                staticDataViewModel.getOtherCategory()
+                    staticDataViewModel.getOtherCategory()
         }
         Log.d("NEW RECIPE:", "${recipeViewModel.newRecipe.value}")
     }
@@ -462,39 +463,39 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     private fun navigation(nextStep: Boolean) {
         if (nextStep) {
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_second_stage_from_first_stage)
+                    .navigate(R.id.action_go_to_second_stage_from_first_stage)
         } else {
             NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_method_category_from_first_stage)
+                    .navigate(R.id.action_go_to_method_category_from_first_stage)
         }
     }
 
     private fun showTimePickerDialog() {
         val params = FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         params.leftMargin = resources.getDimensionPixelSize(R.dimen.cards_margin_start)
         params.rightMargin = resources.getDimensionPixelSize(R.dimen.cards_margin_end)
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_timepicker, null)
         val dialog = AlertDialog.Builder(requireContext()).setView(dialogView)
-            .setPositiveButton(resources.getString(R.string.alert_dialog_btn_ok)) { dialogInterface: DialogInterface, _: Int ->
-                val dialog =
-                    dialogView.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
-                val cookingTime: LocalTime = if (dialog.hour == 0 && dialog.minute == 0) {
-                    LocalTime.of(0, 15)
-                } else {
-                    LocalTime.of(dialog.hour, dialog.minute)
+                .setPositiveButton(resources.getString(R.string.alert_dialog_btn_ok)) { dialogInterface: DialogInterface, _: Int ->
+                    val dialog =
+                            dialogView.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
+                    val cookingTime: LocalTime = if (dialog.hour == 0 && dialog.minute == 0) {
+                        LocalTime.of(0, 15)
+                    } else {
+                        LocalTime.of(dialog.hour, dialog.minute)
+                    }
+                    recipeViewModel.setNewRecipeCookingTimeHours(cookingTime.hour)
+                    recipeViewModel.setNewRecipeCookingTimeMinutes(cookingTime.minute)
+                    recipeViewModel.newRecipe.value!!.cookingTime = cookingTime.toString()
+                    showCookingTime()
+                    dialogInterface.dismiss()
+                    Log.d(TAG, "cooking time set to ${cookingTime.hour} h ${cookingTime.minute} min")
                 }
-                recipeViewModel.newRecipeCookingTimeHours.value = cookingTime.hour
-                recipeViewModel.newRecipeCookingTimeMinutes.value = cookingTime.minute
-                recipeViewModel.newRecipe.value!!.cookingTime = cookingTime.toString()
-                showCookingTime()
-                dialogInterface.dismiss()
-                Log.d(TAG, "cooking time set to ${cookingTime.hour} h ${cookingTime.minute} min")
-            }
-            .setNegativeButton(resources.getString(R.string.alert_dialog_btn_cancel)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
-            .create()
+                .setNegativeButton(resources.getString(R.string.alert_dialog_btn_cancel)) { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }
+                .create()
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -502,34 +503,34 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
         val picker = dialog.findViewById<TimePicker>(R.id.timepicker_dialog_cooking_time)
         picker.setIs24HourView(true)
         picker.hour =
-            if (recipeViewModel.newRecipeCookingTimeHours.value == null || recipeViewModel.newRecipeCookingTimeHours.value == 0) {
-                0
-            } else {
-                recipeViewModel.newRecipeCookingTimeHours.value!!
-            }
+                if (recipeViewModel.newRecipeCookingTimeHours.value == null || recipeViewModel.newRecipeCookingTimeHours.value == 0) {
+                    0
+                } else {
+                    recipeViewModel.newRecipeCookingTimeHours.value!!
+                }
         picker.minute =
-            if (recipeViewModel.newRecipeCookingTimeMinutes.value == null || recipeViewModel.newRecipeCookingTimeMinutes.value == 0) {
-                0
-            } else {
-                recipeViewModel.newRecipeCookingTimeMinutes.value!!
-            }
+                if (recipeViewModel.newRecipeCookingTimeMinutes.value == null || recipeViewModel.newRecipeCookingTimeMinutes.value == 0) {
+                    0
+                } else {
+                    recipeViewModel.newRecipeCookingTimeMinutes.value!!
+                }
     }
 
     private fun showCookingTime() {
         if (recipeViewModel.newRecipe.value!!.cookingTime.isNullOrEmpty()) {
             binding.textviewSetTimeRecipe1Stage.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.hint_text
-                )
+                    ContextCompat.getColor(
+                            requireContext(),
+                            R.color.hint_text
+                    )
             )
         } else {
             RecipeUtils.prettyCookingTime(recipeViewModel.newRecipe.value!!.cookingTime)?.let {
                 binding.textviewSetTimeRecipe1Stage.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.main_text
-                    )
+                        ContextCompat.getColor(
+                                requireContext(),
+                                R.color.main_text
+                        )
                 )
                 binding.textviewSetTimeRecipe1Stage.text = it
             }
@@ -537,10 +538,10 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     }
 
     override fun onRecipeDifficultyClick(
-        previousItem: Int, selectedItem: Int, difficulty: CookingDifficulty?
+            previousItem: Int, selectedItem: Int, difficulty: CookingDifficulty?
     ) {
         adapter!!.selectedDifficulty =
-            staticDataViewModel.cookingDifficulties.value!!.find { it.title == difficulty!!.title }
+                staticDataViewModel.cookingDifficulties.value!!.find { it.title == difficulty!!.title }
         adapter!!.notifyItemChanged(previousItem)
         adapter!!.notifyItemChanged(selectedItem)
         recipeViewModel.newRecipe.value!!.difficulty = difficulty
@@ -549,7 +550,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     companion object {
         private const val REQUEST_EXTERNAL_STORAGE = 1
         private val PERMISSIONS_STORAGE = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
 
         private const val TAG = "RecipeCreateFirstStageFragment"

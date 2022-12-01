@@ -114,18 +114,18 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun loadUser() {
         userViewModel.getUserByUsername(authViewModel.username.value!!,
-                object : ResultCallback<User> {
-                    override fun onResult(value: User?) {
-                        userViewModel.user.value = value
-                        binding.toolbarFeed.visibility = View.VISIBLE
-                        binding.loader.progressOverlay.visibility = View.GONE
-                        loadFeed()
-                    }
+            object : ResultCallback<User> {
+                override fun onResult(value: User?) {
+                    userViewModel.setUser(value!!)
+                    binding.toolbarFeed.visibility = View.VISIBLE
+                    binding.loader.progressOverlay.visibility = View.GONE
+                    loadFeed()
+                }
 
-                    override fun onFailure(value: User?) {
-                        loadUser()
-                    }
-                })
+                override fun onFailure(value: User?) {
+                    loadUser()
+                }
+            })
     }
 
     private fun setupSwipeRefresh() {
@@ -269,14 +269,10 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
          */
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         Log.d("===t=======FeedFragment==========", "onDestroy")
+        _binding = null
     }
 
     //TODO check if needed
@@ -353,7 +349,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                 override fun onResponse(call: Call<User?>, response: Response<User?>) {
                     if (response.code() == 200) {
 //                            FeedFragment.log.log(Level.INFO, "user load SUCCESS")
-                        userViewModel.user.value = response.body()
+                        response.body()?.let { userViewModel.setUser(it) }
                         println(userViewModel.user.value)
                         adapter!!.setUser(userViewModel.user.value!!)
 //                            if (position != null) {

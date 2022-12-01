@@ -55,7 +55,7 @@ class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         recipeViewModel = ViewModelProvider(requireActivity())[RecipeViewModel::class.java]
-        recipeViewModel!!.selectedRecipeIngredients.value = ArrayList()
+        recipeViewModel!!.setSelectedRecipeIngredients(ArrayList())
         try {
             choosePhotoFromGallery = registerForActivityResult(GetContent()) { uri: Uri? ->
                 verifyStoragePermissions(requireActivity())
@@ -193,7 +193,7 @@ class RecipeCreateFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener
             recipe!!.ingredients!!.add(recipeViewModel!!.selectedRecipeIngredient.value!!)
             adapter!!.setData(recipe!!.ingredients)
             adapter!!.notifyDataSetChanged()
-            recipeViewModel!!.selectedRecipeIngredient.value = null
+//            recipeViewModel!!.setSelectedRecipeIngredient(null)
         }
         if (selectedImageUri != null) {
             binding!!.imageViewRecipeCreateImageV1.setImageURI(selectedImageUri)
