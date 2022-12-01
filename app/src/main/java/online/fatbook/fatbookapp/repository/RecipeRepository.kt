@@ -42,4 +42,27 @@ class RecipeRepository {
         }
     }
 
+    fun getRecipeById(id: Long, callback: ResultCallback<Recipe>) {
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().getRecipeById(id)
+
+            call.enqueue(object : Callback<Recipe> {
+                override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
+                    Log.d("SELECTED RECIPE LOAD", response.body().toString())
+                    if (response.body() == null) {
+                        callback.onFailure(null)
+                    } else {
+                        callback.onResult(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<Recipe>, t: Throwable) {
+                    Log.d("SELECTED RECIPE LOAD", "error")
+                    t.printStackTrace()
+                    callback.onFailure(null)
+                }
+            })
+        }
+    }
+
 }

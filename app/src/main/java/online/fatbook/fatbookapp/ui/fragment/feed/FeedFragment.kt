@@ -208,11 +208,9 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onRecipeClick(id: Long) {
-        Toast.makeText(requireContext(), "clicked $id", Toast.LENGTH_SHORT).show()
-//        val recipe = userViewModel.feedRecipeList.value!![position]
-//        recipeViewModel.selectedRecipe.value = recipe
-//        recipeViewModel.selectedRecipePosition.value = position
-//        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_recipe_view_from_feed)
+        Toast.makeText(requireContext(), "selectedRecipeId $id", Toast.LENGTH_SHORT).show()
+        recipeViewModel.setSelectedRecipeId(id)
+        NavHostFragment.findNavController(this).navigate(R.id.action_go_to_recipe_view_from_feed)
     }
 
     override fun onBookmarksClick(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {

@@ -10,11 +10,14 @@ import androidx.core.view.size
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
+import org.apache.commons.lang3.StringUtils
 
 class RecipeViewFragment : Fragment() {
 
@@ -26,6 +29,12 @@ class RecipeViewFragment : Fragment() {
 
     private var recipeForked = false
     private var recipeInFav = false
+
+    companion object {
+        private const val TAG = "RecipeViewFragment"
+    }
+
+    private var recipe: Recipe = Recipe()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +48,8 @@ class RecipeViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loader.progressOverlay.visibility = View.VISIBLE
-        loadData(123123L)
+        checkAuthor()
+        loadData(recipeViewModel.selectedRecipeId.value!!)
         drawData()
         binding.loader.progressOverlay.visibility = View.GONE
 
@@ -112,6 +122,10 @@ class RecipeViewFragment : Fragment() {
 
     }
 
+    private fun checkAuthor() {
+        //setup menu for author/viewer
+    }
+
     private fun toggleFavourites(inFavourite: Boolean) {
         recipeInFav = if (inFavourite) {
             Glide
@@ -149,28 +163,46 @@ class RecipeViewFragment : Fragment() {
     }
 
     private fun loadData(id: Long) {
-//        val recipe: Recipe = Recipe(
-//            pid = 1235L,
-//            title = "Kartoshechka",
-//            author = "Neshik",
-//            ingredients = ArrayList(),
-//            image = "https://fatbook.b-cdn.net/root/upal.jpg",
-//            forks = 123456789,
-//            createDate = "10.09.2022", identifier = id
-//        )
+        recipeViewModel.getRecipeById(id, object : ResultCallback<Recipe> {
+            override fun onResult(value: Recipe?) {
+                recipe = value!!
+                drawData()
+            }
 
-//        recipeViewModel.selectedRecipe.value = recipe
-
+            override fun onFailure(value: Recipe?) {
+                Toast.makeText(requireContext(), "recipe load failed", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun drawData() {
-        val recipe = recipeViewModel.selectedRecipe.value
-        Glide
-            .with(requireContext())
-            .load(recipe!!.image)
-            .into(binding.imageViewRecipePhoto)
+        binding.textviewAuthorUsernameRecipeView.text =
+            userViewModel.user.value!!.username.toString()
+        binding.textViewRecipeViewRecipeTitle.text = recipe.title
+//        binding.textviewDifficultyRecipeView.text = recipe.difficulty!!.title.toString()
+        binding.textviewCookingTimeRecipeView.text = recipe.cookingTime.toString()
+//        binding.textviewMethodRecipeView.text = recipe.cookingMethod!!.title.toString()
+        binding.textviewCategoriesRecipeView.text =
+            recipe.cookingCategories!!.joinToString { it.title.toString() }
+        if (recipe.isAllIngredientUnitsValid) {
+            binding.cardviewNutritionFactsRecipeView.visibility = View.VISIBLE
+//            binding.textviewPortionKcalsQttRecipeView.text = recipe.kcalPerPortion.toString()
+            //           binding.tvQttProteins.text = recipe.proteinsPerPortion.toString()
+//            binding.tvQttFats.text = recipe.fatsPerPortion.toString()
+//            binding.tvQttCarbs.text = recipe.carbsPerPortion.toString()
+        } else {
+            binding.cardviewNutritionFactsRecipeView.visibility = View.GONE
+        }
+        binding.textviewPortionsQttRecipeView.text = recipe.portions.toString()
+
+//        val recipe = recipeViewModel.selectedRecipe.value
+//        Glide
+//            .with(requireContext())
+//            .load(recipe!!.image)
+//            .into(binding.imageViewRecipePhoto)
 
         binding.textViewForksAvgViewRecipe.text = convertNumeric(recipe.forks!!)
+        binding.textViewCommentsAvgViewRecipe.text = convertNumeric(recipe.comments?.size ?: 0)
     }
 
     private fun convertNumeric(value: Int): String {
