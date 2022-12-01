@@ -49,7 +49,7 @@ interface NetworkInfoService {
     /**
      * User
      */
-    @GET("user/get/username")
+    @GET("user/get")
     fun getUserByUsername(@Query(value = "username") username: String?): Call<User>
 
     @POST("user/update")
@@ -87,13 +87,16 @@ interface NetworkInfoService {
      * Feed
      */
     @GET("feed")
-    fun feed(@Query(value = "username") username: String?, @Query(value = "pid") pid: Long?): Call<List<RecipeSimpleObject>>
+    fun feed(@Query(value = "pid") pid: Long?): Call<List<RecipeSimpleObject>>
 
     /**
      * Recipe
      */
     @POST("recipe/create")
-    fun recipeCreate(@Body recipe: Recipe, @Query(value = "username") username: String?): Call<Void>
+    fun recipeCreate(@Body recipe: Recipe): Call<Void>
+
+    @GET("recipe/get")
+    fun getRecipeById(@Query(value = "id") id: Long): Call<Recipe>
 
 //    ==========================================================================================
 

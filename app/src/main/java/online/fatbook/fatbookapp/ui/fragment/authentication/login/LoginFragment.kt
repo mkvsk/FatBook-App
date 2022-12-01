@@ -132,7 +132,7 @@ class LoginFragment : Fragment() {
                         authViewModel.setJwtAccess(value.access_token.toString())
                         authViewModel.setJwtRefresh(value.refresh_token.toString())
                         authViewModel.setIsUserAuthenticated(true)
-                        RetrofitFactory.updateJWT(value.access_token!!)
+                        RetrofitFactory.updateJWT(value.access_token!!, value.username!!)
                         saveUserDataToSharedPrefs()
                         navigateToFeed()
                     } else {

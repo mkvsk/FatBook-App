@@ -26,8 +26,8 @@ class FeedViewModel : ViewModel() {
         _recipes.value = list
     }
 
-    fun feed(username: String, pid: Long, callback: ResultCallback<List<RecipeSimpleObject>>) {
-        repository.feed(username, pid, object : ResultCallback<List<RecipeSimpleObject>> {
+    fun feed(pid: Long, callback: ResultCallback<List<RecipeSimpleObject>>) {
+        repository.feed(pid, object : ResultCallback<List<RecipeSimpleObject>> {
             override fun onResult(value: List<RecipeSimpleObject>?) {
                 callback.onResult(value)
             }

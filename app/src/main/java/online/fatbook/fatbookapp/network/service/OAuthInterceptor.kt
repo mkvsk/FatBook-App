@@ -3,14 +3,18 @@ package online.fatbook.fatbookapp.network.service
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class OAuthInterceptor(private val tokenType: String, private val accessToken: String) :
-    Interceptor {
+class OAuthInterceptor(private val tokenType: String, private val accessToken: String, private val username: String) :
+        Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        var request = chain.request()
-        request = request.newBuilder().header("Authorization", "$tokenType $accessToken").build()
+        val request = chain.request()
 
-        return chain.proceed(request)
+        val builder = request.newBuilder()
+        try {
+            builder.addHeader("username", username)
+        } catch (_: Exception) {}
+        builder.addHeader("Authorization", "$tokenType $accessToken").build()
+        return chain.proceed(builder.build())
     }
 
 //    override fun intercept(chain: Interceptor.Chain): Response {
