@@ -97,7 +97,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:elevation="6dp"
-                            android:text="12345"
+                            android:text="@string/no_data_dots"
                             app:layout_constraintBottom_toBottomOf="@id/ovalRecipesQtt"
                             app:layout_constraintLeft_toLeftOf="@id/ovalRecipesQtt"
                             app:layout_constraintRight_toRightOf="@id/ovalRecipesQtt"
@@ -154,7 +154,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:elevation="6dp"
-                            android:text="45"
+                            android:text="@string/no_data_dots"
                             app:layout_constraintBottom_toBottomOf="@id/ovalFollowersQtt"
                             app:layout_constraintLeft_toLeftOf="@id/ovalFollowersQtt"
                             app:layout_constraintRight_toRightOf="@id/ovalFollowersQtt"
@@ -169,7 +169,7 @@
                             android:layout_marginTop="15dp"
                             android:layout_marginEnd="30dp"
                             android:maxLines="1"
-                            android:text="Title"
+                            android:text="@string/no_data_dots"
                             android:textAlignment="center"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -191,12 +191,14 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="30dp"
                             android:autoLink="all"
+                            android:linksClickable="true"
+                            android:maxLines="1"
+                            android:lines="1"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="www.potatocorp.online"
+                            android:text="@string/no_data_dots"
                             android:textSize="11sp"
                             app:layout_constraintLeft_toRightOf="@id/icProfileWebsite"
                             app:layout_constraintTop_toBottomOf="@id/profileTitle" />
-
 
                         <ImageView
                             android:id="@+id/icExpand"
@@ -233,7 +235,7 @@
                                 android:layout_marginEnd="30dp"
                                 android:ellipsize="end"
                                 android:maxLines="3"
-                                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+                                android:text="@string/no_data_dots"/>
                         </LinearLayout>
 
                         <LinearLayout
