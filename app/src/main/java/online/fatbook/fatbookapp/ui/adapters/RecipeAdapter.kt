@@ -135,7 +135,7 @@ class RecipeAdapter :
 
 
             itemView.rv_card_recipe_preview.setOnClickListener {
-                listener.onRecipeClick(16699101382444)
+                listener.onRecipeClick(recipe.identifier!!)
             }
 //            itemView.imageView_rv_card_recipe_favourites.setOnClickListener {
 //                val tag = itemView.imageView_rv_card_recipe_favourites.tag as String

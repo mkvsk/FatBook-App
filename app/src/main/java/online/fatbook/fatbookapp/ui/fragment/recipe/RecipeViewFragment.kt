@@ -3,6 +3,7 @@ package online.fatbook.fatbookapp.ui.fragment.recipe
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
@@ -15,6 +16,7 @@ import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
@@ -29,6 +31,11 @@ class RecipeViewFragment : Fragment() {
 
     private var recipeForked = false
     private var recipeInFav = false
+
+    private var portionQtt: Int? = null
+
+    val maxPortions: Int = 5
+    val minPortions: Int = 1
 
     companion object {
         private const val TAG = "RecipeViewFragment"
@@ -50,8 +57,6 @@ class RecipeViewFragment : Fragment() {
         binding.loader.progressOverlay.visibility = View.VISIBLE
         checkAuthor()
         loadData(recipeViewModel.selectedRecipeId.value!!)
-        drawData()
-        binding.loader.progressOverlay.visibility = View.GONE
 
         binding.textviewAuthorUsernameRecipeView.setOnClickListener {
             //val v = textview_author_username_recipe_view.text.toString()
@@ -100,22 +105,20 @@ class RecipeViewFragment : Fragment() {
         }
 
 
-        var qtt = 5
         binding.buttonRemovePortionRecipeView.setOnClickListener {
-            if (qtt > 1) {
-                binding.buttonRemovePortionRecipeView.isEnabled = true
-                qtt--
-                binding.textviewPortionsQttRecipeView.text = qtt.toString()
-            }
-            if (qtt == 1) {
-                binding.buttonRemovePortionRecipeView.isEnabled = false
+            if (portionQtt!! > minPortions) {
+                portionQtt!!.minus(1)
+                binding.textviewPortionsQttRecipeView.text = portionQtt.toString()
+                binding.buttonRemovePortionRecipeView.isClickable = true
             }
         }
 
         binding.buttonAddPortionRecipeView.setOnClickListener {
-            qtt++
-            binding.buttonRemovePortionRecipeView.isEnabled = true
-            binding.textviewPortionsQttRecipeView.text = qtt.toString()
+            if (portionQtt!! < maxPortions) {
+                portionQtt!!.plus(1)
+                binding.textviewPortionsQttRecipeView.text = portionQtt.toString()
+                binding.buttonRemovePortionRecipeView.isClickable = true
+            }
         }
 
         binding.textViewCommentsAvgViewRecipe.text = binding.rvCommentsRecipeView.size.toString()
@@ -176,33 +179,46 @@ class RecipeViewFragment : Fragment() {
     }
 
     private fun drawData() {
-        binding.textviewAuthorUsernameRecipeView.text =
-            userViewModel.user.value!!.username.toString()
+        binding.textviewAuthorUsernameRecipeView.text = recipe.user?.username
+        binding.textviewDateRecipe.text = FormatUtils.getCreateDate(recipe.createDate.toString())
         binding.textViewRecipeViewRecipeTitle.text = recipe.title
-//        binding.textviewDifficultyRecipeView.text = recipe.difficulty!!.title.toString()
+        binding.textviewDifficultyRecipeView.text = recipe.difficulty!!.title.toString()
         binding.textviewCookingTimeRecipeView.text = recipe.cookingTime.toString()
-//        binding.textviewMethodRecipeView.text = recipe.cookingMethod!!.title.toString()
+        binding.textviewMethodRecipeView.text = recipe.cookingMethod!!.title.toString()
         binding.textviewCategoriesRecipeView.text =
             recipe.cookingCategories!!.joinToString { it.title.toString() }
         if (recipe.isAllIngredientUnitsValid) {
             binding.cardviewNutritionFactsRecipeView.visibility = View.VISIBLE
-//            binding.textviewPortionKcalsQttRecipeView.text = recipe.kcalPerPortion.toString()
-            //           binding.tvQttProteins.text = recipe.proteinsPerPortion.toString()
-//            binding.tvQttFats.text = recipe.fatsPerPortion.toString()
-//            binding.tvQttCarbs.text = recipe.carbsPerPortion.toString()
+            binding.textviewPortionKcalsQttRecipeView.text = String.format(
+                "%s kcal/\nper portion",
+                FormatUtils.prettyCount(recipe.kcalPerPortion!!)
+            )
+            binding.tvQttProteins.text = FormatUtils.prettyCount(recipe.proteinsPerPortion!!)
+            binding.tvQttFats.text = FormatUtils.prettyCount(recipe.fatsPerPortion!!)
+            binding.tvQttCarbs.text = FormatUtils.prettyCount(recipe.carbsPerPortion!!)
         } else {
             binding.cardviewNutritionFactsRecipeView.visibility = View.GONE
         }
         binding.textviewPortionsQttRecipeView.text = recipe.portions.toString()
 
-//        val recipe = recipeViewModel.selectedRecipe.value
-//        Glide
-//            .with(requireContext())
-//            .load(recipe!!.image)
-//            .into(binding.imageViewRecipePhoto)
+
+        Glide
+            .with(requireContext())
+            .load(recipe.image)
+            .placeholder(requireContext().getDrawable(R.drawable.default_recipe_image_rv_feed))
+            .into(binding.imageViewRecipePhoto)
 
         binding.textViewForksAvgViewRecipe.text = convertNumeric(recipe.forks!!)
         binding.textViewCommentsAvgViewRecipe.text = convertNumeric(recipe.comments?.size ?: 0)
+
+        portionQtt = binding.textviewPortionsQttRecipeView.text.toString().toInt()
+        binding.loader.progressOverlay.visibility = View.GONE
+
+        initListeners()
+    }
+
+    private fun initListeners() {
+
     }
 
     private fun convertNumeric(value: Int): String {
