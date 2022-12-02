@@ -65,7 +65,6 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         loadIngredientUnits()
         setupIngredientsAdapter()
         setupMenu()
-//        handleBackPressed()
 
         binding.cardviewLeftRecipeAddIngredients.visibility = View.GONE
         binding.textViewSelectedIngredientRecipeAddIngredients.doOnTextChanged { _, _, _, _ ->
