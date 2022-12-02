@@ -60,6 +60,13 @@ class RecipeViewModel : ViewModel() {
         _selectedRecipe.value = value
     }
 
+    private val _selectedRecipeId = MutableLiveData<Long>()
+    val selectedRecipeId: LiveData<Long> get() = _selectedRecipeId
+
+    fun setSelectedRecipeId(value: Long) {
+        _selectedRecipeId.value = value
+    }
+
     private val _newRecipe = MutableLiveData<Recipe?>()
     val newRecipe: LiveData<Recipe?> get() = _newRecipe
 
@@ -172,6 +179,18 @@ class RecipeViewModel : ViewModel() {
             }
 
             override fun onFailure(value: Void?) {
+                callback.onFailure(value)
+            }
+        })
+    }
+
+    fun getRecipeById(id: Long, callback: ResultCallback<Recipe>) {
+        repository.getRecipeById(id, object : ResultCallback<Recipe> {
+            override fun onResult(value: Recipe?) {
+                callback.onResult(value)
+            }
+
+            override fun onFailure(value: Recipe?) {
                 callback.onFailure(value)
             }
         })

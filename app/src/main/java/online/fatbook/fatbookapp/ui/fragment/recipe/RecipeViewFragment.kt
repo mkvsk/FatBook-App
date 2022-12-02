@@ -3,6 +3,7 @@ package online.fatbook.fatbookapp.ui.fragment.recipe
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
@@ -10,11 +11,15 @@ import androidx.core.view.size
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
+import org.apache.commons.lang3.StringUtils
 
 class RecipeViewFragment : Fragment() {
 
@@ -26,6 +31,17 @@ class RecipeViewFragment : Fragment() {
 
     private var recipeForked = false
     private var recipeInFav = false
+
+    private var portionQtt: Int? = null
+
+    val maxPortions: Int = 5
+    val minPortions: Int = 1
+
+    companion object {
+        private const val TAG = "RecipeViewFragment"
+    }
+
+    private var recipe: Recipe = Recipe()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +55,8 @@ class RecipeViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loader.progressOverlay.visibility = View.VISIBLE
-        loadData(123123L)
-        drawData()
-        binding.loader.progressOverlay.visibility = View.GONE
+        checkAuthor()
+        loadData(recipeViewModel.selectedRecipeId.value!!)
 
         binding.textviewAuthorUsernameRecipeView.setOnClickListener {
             //val v = textview_author_username_recipe_view.text.toString()
@@ -90,26 +105,28 @@ class RecipeViewFragment : Fragment() {
         }
 
 
-        var qtt = 5
         binding.buttonRemovePortionRecipeView.setOnClickListener {
-            if (qtt > 1) {
-                binding.buttonRemovePortionRecipeView.isEnabled = true
-                qtt--
-                binding.textviewPortionsQttRecipeView.text = qtt.toString()
-            }
-            if (qtt == 1) {
-                binding.buttonRemovePortionRecipeView.isEnabled = false
+            if (portionQtt!! > minPortions) {
+                portionQtt!!.minus(1)
+                binding.textviewPortionsQttRecipeView.text = portionQtt.toString()
+                binding.buttonRemovePortionRecipeView.isClickable = true
             }
         }
 
         binding.buttonAddPortionRecipeView.setOnClickListener {
-            qtt++
-            binding.buttonRemovePortionRecipeView.isEnabled = true
-            binding.textviewPortionsQttRecipeView.text = qtt.toString()
+            if (portionQtt!! < maxPortions) {
+                portionQtt!!.plus(1)
+                binding.textviewPortionsQttRecipeView.text = portionQtt.toString()
+                binding.buttonRemovePortionRecipeView.isClickable = true
+            }
         }
 
         binding.textViewCommentsAvgViewRecipe.text = binding.rvCommentsRecipeView.size.toString()
 
+    }
+
+    private fun checkAuthor() {
+        //setup menu for author/viewer
     }
 
     private fun toggleFavourites(inFavourite: Boolean) {
@@ -149,28 +166,59 @@ class RecipeViewFragment : Fragment() {
     }
 
     private fun loadData(id: Long) {
-//        val recipe: Recipe = Recipe(
-//            pid = 1235L,
-//            title = "Kartoshechka",
-//            author = "Neshik",
-//            ingredients = ArrayList(),
-//            image = "https://fatbook.b-cdn.net/root/upal.jpg",
-//            forks = 123456789,
-//            createDate = "10.09.2022", identifier = id
-//        )
+        recipeViewModel.getRecipeById(id, object : ResultCallback<Recipe> {
+            override fun onResult(value: Recipe?) {
+                recipe = value!!
+                drawData()
+            }
 
-//        recipeViewModel.selectedRecipe.value = recipe
-
+            override fun onFailure(value: Recipe?) {
+                Toast.makeText(requireContext(), "recipe load failed", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun drawData() {
-        val recipe = recipeViewModel.selectedRecipe.value
+        binding.textviewAuthorUsernameRecipeView.text = recipe.user?.username
+        binding.textviewDateRecipe.text = FormatUtils.getCreateDate(recipe.createDate.toString())
+        binding.textViewRecipeViewRecipeTitle.text = recipe.title
+        binding.textviewDifficultyRecipeView.text = recipe.difficulty!!.title.toString()
+        binding.textviewCookingTimeRecipeView.text = recipe.cookingTime.toString()
+        binding.textviewMethodRecipeView.text = recipe.cookingMethod!!.title.toString()
+        binding.textviewCategoriesRecipeView.text =
+            recipe.cookingCategories!!.joinToString { it.title.toString() }
+        if (recipe.isAllIngredientUnitsValid) {
+            binding.cardviewNutritionFactsRecipeView.visibility = View.VISIBLE
+            binding.textviewPortionKcalsQttRecipeView.text = String.format(
+                "%s kcal/\nper portion",
+                FormatUtils.prettyCount(recipe.kcalPerPortion!!)
+            )
+            binding.tvQttProteins.text = FormatUtils.prettyCount(recipe.proteinsPerPortion!!)
+            binding.tvQttFats.text = FormatUtils.prettyCount(recipe.fatsPerPortion!!)
+            binding.tvQttCarbs.text = FormatUtils.prettyCount(recipe.carbsPerPortion!!)
+        } else {
+            binding.cardviewNutritionFactsRecipeView.visibility = View.GONE
+        }
+        binding.textviewPortionsQttRecipeView.text = recipe.portions.toString()
+
+
         Glide
             .with(requireContext())
-            .load(recipe!!.image)
+            .load(recipe.image)
+            .placeholder(requireContext().getDrawable(R.drawable.default_recipe_image_rv_feed))
             .into(binding.imageViewRecipePhoto)
 
         binding.textViewForksAvgViewRecipe.text = convertNumeric(recipe.forks!!)
+        binding.textViewCommentsAvgViewRecipe.text = convertNumeric(recipe.comments?.size ?: 0)
+
+        portionQtt = binding.textviewPortionsQttRecipeView.text.toString().toInt()
+        binding.loader.progressOverlay.visibility = View.GONE
+
+        initListeners()
+    }
+
+    private fun initListeners() {
+
     }
 
     private fun convertNumeric(value: Int): String {
