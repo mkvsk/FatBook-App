@@ -74,6 +74,8 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("===t=======RecipeCreateFirstStageFragment==========", "onViewCreated")
+        //TODO fix SOFT_INPUT_ADJUST_RESIZE
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         recipeViewModel.isRecipeCreated.value?.let {
             if (it) {
                 recipeViewModel.setIsRecipeCreated(false)
