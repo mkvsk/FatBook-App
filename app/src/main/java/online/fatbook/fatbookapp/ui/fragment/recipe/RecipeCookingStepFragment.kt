@@ -8,7 +8,6 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.*
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -60,11 +59,22 @@ class RecipeCookingStepFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-                View.GONE
-        binding.toolbarRecipeCreateCookingStep.title = "TODO title"
+            View.GONE
         setupMenu()
+//        getValuesFromBundle(this)
+        initViews()
+        initListeners()
         checkEnableMenu()
         setupImageEditButtons()
+    }
+
+    private fun initListeners() {
+
+    }
+
+    private fun initViews() {
+        binding.toolbarRecipeCreateCookingStep.title =
+            getString(R.string.create_cooking_step_toolbar_title)
 
         if (recipeViewModel.selectedCookingStep.value != null) {
             selectedCookingStep = recipeViewModel.selectedCookingStep.value
@@ -98,7 +108,19 @@ class RecipeCookingStepFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
             }
         })
+
     }
+
+//    private fun getValuesFromBundle(fragment: RecipeCookingStepFragment) {
+//        if (fragment.arguments != null) {
+//            recipeViewModel.setInitialData(
+//                fragment.arguments?.getLong(
+//                    "BUNDLE_KEY_RECIPE_ID",
+//                    0L
+//                ) ?: 0L
+//            )
+//        }
+//    }
 
     private fun checkData() {
         if (binding.edittextRecipeCreateCookingStep.text.toString().isNotEmpty()) {
@@ -138,33 +160,15 @@ class RecipeCookingStepFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_create_step_confirm -> {
-                createStep()
+                recipeViewModel.createStep(
+                    binding.edittextRecipeCreateCookingStep.text.toString()
+                        .replace("\\s+".toRegex(), " "), cookingStep!!, image
+                )
+                findNavController().popBackStack()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun createStep() {
-        val description =
-            binding.edittextRecipeCreateCookingStep.text.toString()
-                .replace("\\s+".toRegex(), " ")
-        if (selectedCookingStep != null) {
-            selectedCookingStep!!.description = description
-        } else {
-            var cookingStepsAmount = recipeViewModel.newRecipe.value!!.steps!!.size
-            cookingStep!!.description = description
-            cookingStep!!.stepNumber = ++cookingStepsAmount
-            recipeViewModel.newRecipe.value!!.steps!!.add(cookingStep!!)
-        }
-        image?.let {
-            recipeViewModel.newRecipeStepImages.value!!.put(
-                cookingStep!!.stepNumber ?: selectedCookingStep!!.stepNumber!!, it
-            )
-        }
-        recipeViewModel.setSelectedCookingStep(null)
-        recipeViewModel.setSelectedCookingStepPosition(null)
-        findNavController().popBackStack()
     }
 
     private fun setupImageEditButtons() {
@@ -243,6 +247,6 @@ class RecipeCookingStepFragment : Fragment() {
         super.onDestroy()
         _binding = null
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-                View.VISIBLE
+            View.VISIBLE
     }
 }

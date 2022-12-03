@@ -195,4 +195,28 @@ class RecipeViewModel : ViewModel() {
             }
         })
     }
+
+    fun createStep(description: String, cookingStepValue: CookingStep, image: File?) {
+        val cookingStep: CookingStep = cookingStepValue
+        if (selectedCookingStep.value != null) {
+            selectedCookingStep.value?.description = description
+        } else {
+            var cookingStepsAmount = newRecipe.value?.steps!!.size
+            cookingStep.description = description
+            cookingStep.stepNumber = ++cookingStepsAmount
+            newRecipe.value?.steps!!.add(cookingStep)
+        }
+
+        image.let {
+            (cookingStep.stepNumber ?: selectedCookingStep.value?.stepNumber)?.let {
+                image?.let { it1 ->
+                    newRecipeStepImages.value?.put(
+                        it, it1
+                    )
+                }
+            }
+        }
+        setSelectedCookingStep(null)
+        setSelectedCookingStepPosition(null)
+    }
 }
