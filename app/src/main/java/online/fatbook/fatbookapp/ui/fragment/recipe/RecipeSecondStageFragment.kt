@@ -8,11 +8,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import okhttp3.RequestBody.Companion.asRequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingStep
@@ -21,9 +21,13 @@ import online.fatbook.fatbookapp.ui.adapters.CookingStepAdapter
 import online.fatbook.fatbookapp.ui.adapters.RecipeIngredientAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeIngredientItemClickListener
+import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.Constants
+import online.fatbook.fatbookapp.util.Constants.CDN_FB_BASE_URL
+import online.fatbook.fatbookapp.util.Constants.getRecipeImageName
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogBuilder
 import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogListener
@@ -40,6 +44,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
+    private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
 
     private var ingredientsAdapter: RecipeIngredientAdapter? = null
     private var cookingStepsAdapter: CookingStepAdapter? = null
@@ -47,7 +52,9 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     private var maxStepsQtt = 10
     private var maxIngredientsQtt = 30
 
-    private val TAG = "RecipeCreateSecondStageFragment"
+    companion object {
+        private const val TAG = "RecipeCreateSecondStageFragment"
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -60,26 +67,30 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbarRecipeCreate2Stage.title = "TODO title"
+        recipeViewModel.setIsLoading(false)
         setupMenu()
         checkEnableMenu()
+        initObservers()
+        initListeners()
         checkIngredientsQtt(recipeViewModel.newRecipe.value!!.ingredients!!.size)
         checkStepsQtt(recipeViewModel.newRecipe.value!!.steps!!.size)
+        setupIngredientsAdapter()
+        setupCookingStepsAdapter()
+        ingredientsAdapter!!.setData(recipeViewModel.newRecipe.value!!.ingredients)
+        cookingStepsAdapter!!.setData(recipeViewModel.newRecipe.value!!.steps)
+        recipeViewModel.setSelectedCookingStep(null)
+    }
+
+    private fun initListeners() {
         binding.buttonAddIngredientRecipeCreate2Stage.setOnClickListener {
             NavHostFragment.findNavController(this)
                     .navigate(R.id.action_go_to_ingredient_from_second_stage)
         }
+
         binding.cardviewAddCookingStep.setOnClickListener {
             NavHostFragment.findNavController(this)
                     .navigate(R.id.action_go_to_step_from_second_stage)
         }
-        setupIngredientsAdapter()
-        setupCookingStepsAdapter()
-
-        ingredientsAdapter!!.setData(recipeViewModel.newRecipe.value!!.ingredients)
-        cookingStepsAdapter!!.setData(recipeViewModel.newRecipe.value!!.steps)
-        cookingStepsAdapter!!.setImages(recipeViewModel.newRecipeStepImages.value)
-
-        recipeViewModel.setSelectedCookingStep(null)
 
         binding.nsvRecipeCreate2Stage.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
 
@@ -95,6 +106,25 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
                 }
             }
         })
+    }
+
+    private fun initObservers() {
+        imageViewModel.imagesToUploadAmount.observe(viewLifecycleOwner) {
+            if (it == 0) {
+                if (recipeViewModel.newRecipe.value!!.identifier != null) {
+                    saveRecipe()
+                }
+            }
+        }
+        recipeViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.toolbarRecipeCreate2Stage.visibility = View.GONE
+                binding.loader.progressOverlay.visibility = View.VISIBLE
+            } else {
+                binding.toolbarRecipeCreate2Stage.visibility = View.VISIBLE
+                binding.loader.progressOverlay.visibility = View.GONE
+            }
+        }
     }
 
     private fun checkEnableMenu() {
@@ -116,8 +146,6 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_create_second_stage_save_recipe -> {
-//                progress_overlay.visibility = View.VISIBLE
-//                toolbar_recipe_create_2_stage.visibility = View.GONE
                 checkRecipe()
                 true
             }
@@ -135,7 +163,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
                             recipeViewModel.newRecipe.value!!.isPrivate = true
                             dialogInterface.dismiss()
                             fillRecipe()
-                            saveRecipe()
+                            uploadImages()
                         }
                     },
                     positiveBtnText = "Yes",
@@ -143,11 +171,42 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
             ).show()
         } else {
             fillRecipe()
-            saveRecipe()
+            uploadImages()
         }
     }
 
+    private fun uploadImages() {
+        imageViewModel.setImagesToUploadAmount(recipeViewModel.newRecipeStepImages.value!!.size)
+        imageViewModel.uploadRecipeImages(
+                recipeViewModel.newRecipeStepImages.value!!,
+                recipeViewModel.newRecipe.value!!.identifier!!.toString(),
+                object : ResultCallback<Pair<Int, String>> {
+                    override fun onResult(value: Pair<Int, String>?) {
+                        value?.let {
+                            if (it.first == 0) {
+                                recipeViewModel.newRecipe.value!!.image = "${CDN_FB_BASE_URL}r/${recipeViewModel.newRecipe.value!!.identifier}/${it.second}"
+                            } else {
+                                val find = recipeViewModel.newRecipe.value!!.steps!!.find { cookingStep -> cookingStep.stepNumber == it.first }
+                                find!!.image = "${CDN_FB_BASE_URL}r/${recipeViewModel.newRecipe.value!!.identifier}/${it.second}"
+                            }
+                            imageViewModel.setImagesToUploadAmount(imageViewModel.imagesToUploadAmount.value!! - 1)
+                        }
+                    }
+
+                    override fun onFailure(value: Pair<Int, String>?) {
+                        Toast.makeText(
+                                requireContext(),
+                                getString(R.string.title_error_images_upload),
+                                Toast.LENGTH_LONG
+                        ).show()
+                        imageViewModel.setImagesToUploadAmount(imageViewModel.imagesToUploadAmount.value!! - 1)
+                    }
+                })
+    }
+
     private fun fillRecipe() {
+        recipeViewModel.setIsLoading(true)
+        recipeViewModel.newRecipe.value!!.identifier = FormatUtils.generateRecipeId()
         recipeViewModel.newRecipe.value!!.createDate = FormatUtils.dateFormat.format(Date())
         with(recipeViewModel.newRecipe.value!!) {
             kcalPerPortion = (kcalPerPortion!! * 100.0).roundToInt() / 100.0
@@ -155,21 +214,28 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
             carbsPerPortion = (carbsPerPortion!! * 100.0).roundToInt() / 100.0
             proteinsPerPortion = (proteinsPerPortion!! * 100.0).roundToInt() / 100.0
         }
+        recipeViewModel.setNewRecipeStepImages(HashMap())
+        recipeViewModel.newRecipeImage.value?.let {
+            recipeViewModel.newRecipeStepImages.value!![0] = Pair(getRecipeImageName(0) + it.name.substring(it.name.indexOf('.')), it.asRequestBody(Constants.MEDIA_TYPE_OCTET_STREAM))
+        }
+        recipeViewModel.newRecipe.value!!.steps!!.forEach { step ->
+            step.imageFile?.let {
+                recipeViewModel.newRecipeStepImages.value!![step.stepNumber!!] = Pair(step.imageName!!, it.asRequestBody(Constants.MEDIA_TYPE_OCTET_STREAM))
+            }
+        }
+        Log.d(TAG, "loadImages: ${recipeViewModel.newRecipeStepImages.value!!.size} | ${recipeViewModel.newRecipeStepImages.value}")
     }
 
-    //TODO remove toast, uncomment popbackstack
     private fun saveRecipe() {
         recipeViewModel.recipeCreate(
-                recipeViewModel.newRecipe.value!!, object : ResultCallback<Void> {
-            override fun onResult(value: Void?) {
-//                progress_overlay.visibility = View.GONE
-//                toolbar_recipe_create_2_stage.visibility = View.VISIBLE
-                    Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
-                    recipeViewModel.setIsRecipeCreated(true)
-                    popBackStack()
-                }
+                recipeViewModel.newRecipe.value!!, object : ResultCallback<Boolean> {
+            override fun onResult(value: Boolean?) {
+                Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
+                recipeViewModel.setIsRecipeCreated(true)
+                popBackStack()
+            }
 
-            override fun onFailure(value: Void?) {
+            override fun onFailure(value: Boolean?) {
                 Toast.makeText(requireContext(), "Error!", Toast.LENGTH_SHORT).show()
             }
         })
@@ -240,8 +306,16 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     //TODO ANIM
     override fun onRecipeCookingStepDelete(itemPosition: Int) {
 //        TransitionManager.go(Scene(rv_steps_recipe_create_2_stage), AutoTransition())
+        var step = itemPosition + 1
         recipeViewModel.newRecipe.value!!.steps!!.removeAt(itemPosition)
-        recipeViewModel.newRecipeStepImages.value!!.remove(itemPosition + 1)
+        recipeViewModel.newRecipeStepImages.value!!.remove(itemPosition)
+        recipeViewModel.newRecipe.value!!.steps!!.forEach { cookingStep ->
+            if (cookingStep.stepNumber!! >= step) {
+                cookingStep.stepNumber = step
+                step++
+            }
+        }
+        Log.d(TAG, "onRecipeCookingStepDelete: ${recipeViewModel.newRecipe.value!!.steps}")
         cookingStepsAdapter!!.notifyItemRemoved(itemPosition)
         checkStepsQtt(recipeViewModel.newRecipe.value!!.steps!!.size)
         checkEnableMenu()
@@ -286,16 +360,6 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
             binding.textviewNutritionFactsTitleRecipeCreate2Stage.visibility = View.GONE
             binding.cardviewNutritionFactsRecipeCreate2Stage.visibility = View.GONE
         }
-    }
-
-    private fun handleBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-                viewLifecycleOwner,
-                object : OnBackPressedCallback(true) {
-                    override fun handleOnBackPressed() {
-                        popBackStack()
-                    }
-                })
     }
 
     private fun popBackStack() {

@@ -19,13 +19,17 @@ class RecipeRepository {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
-    fun recipeCreate(recipe: Recipe, callback: ResultCallback<Void>) {
+    companion object {
+        const val TAG = "RecipeRepository"
+    }
+
+    fun recipeCreate(recipe: Recipe, callback: ResultCallback<Boolean>) {
         scope.launch(Dispatchers.IO) {
             val call = RetrofitFactory.apiService().recipeCreate(recipe)
 
-            call.enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    Log.d("RECIPE CREATE", response.body().toString())
+            call.enqueue(object : Callback<Boolean> {
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                    Log.d(TAG, "RECIPE CREATE ${response.body().toString()}")
                     if (response.code() != 200) {
                         callback.onFailure(null)
                     } else {
@@ -33,8 +37,8 @@ class RecipeRepository {
                     }
                 }
 
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Log.d("RECIPE CREATE", "error")
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                    Log.d(TAG, "RECIPE CREATE error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }
@@ -48,7 +52,7 @@ class RecipeRepository {
 
             call.enqueue(object : Callback<Recipe> {
                 override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
-                    Log.d("SELECTED RECIPE LOAD", response.body().toString())
+                    Log.d(TAG, "SELECTED RECIPE LOAD ${response.body().toString()}")
                     if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
@@ -57,7 +61,7 @@ class RecipeRepository {
                 }
 
                 override fun onFailure(call: Call<Recipe>, t: Throwable) {
-                    Log.d("SELECTED RECIPE LOAD", "error")
+                    Log.d(TAG, "SELECTED RECIPE LOAD error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }

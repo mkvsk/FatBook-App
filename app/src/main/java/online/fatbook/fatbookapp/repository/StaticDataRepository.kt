@@ -24,6 +24,10 @@ class StaticDataRepository {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
+    companion object {
+        const val TAG = "StaticDataRepository"
+    }
+
     fun getAllCookingMethods(callback: ResultCallback<List<CookingMethod>>) {
         scope.launch(Dispatchers.IO) {
             val call = RetrofitFactory.apiService().getAllCookingMethods()
@@ -33,7 +37,7 @@ class StaticDataRepository {
                         call: Call<List<CookingMethod>>,
                         response: Response<List<CookingMethod>>
                 ) {
-                    Log.d("GET COOKING METHODS", response.body().toString())
+                    Log.d(TAG, "GET COOKING METHODS ${response.body().toString()}")
                     if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
@@ -42,7 +46,7 @@ class StaticDataRepository {
                 }
 
                 override fun onFailure(call: Call<List<CookingMethod>>, t: Throwable) {
-                    Log.d("GET COOKING METHODS", "error")
+                    Log.d(TAG, "GET COOKING METHODS error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }
@@ -59,7 +63,7 @@ class StaticDataRepository {
                         call: Call<List<CookingCategory>>,
                         response: Response<List<CookingCategory>>
                 ) {
-                    Log.d("GET COOKING CATEGORIES", response.body().toString())
+                    Log.d(TAG, "GET COOKING CATEGORIES ${response.body().toString()}")
                     if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
@@ -68,7 +72,7 @@ class StaticDataRepository {
                 }
 
                 override fun onFailure(call: Call<List<CookingCategory>>, t: Throwable) {
-                    Log.d("GET COOKING CATEGORIES", "error")
+                    Log.d(TAG, "GET COOKING CATEGORIES error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }
@@ -85,7 +89,7 @@ class StaticDataRepository {
                         call: Call<List<CookingDifficulty>>,
                         response: Response<List<CookingDifficulty>>
                 ) {
-                    Log.d("GET COOKING DIFFICULTIES", response.body().toString())
+                    Log.d(TAG, "GET COOKING DIFFICULTIES ${response.body().toString()}")
                     if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
@@ -94,7 +98,7 @@ class StaticDataRepository {
                 }
 
                 override fun onFailure(call: Call<List<CookingDifficulty>>, t: Throwable) {
-                    Log.d("GET COOKING DIFFICULTIES", "error")
+                    Log.d(TAG, "GET COOKING DIFFICULTIES error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }
@@ -111,7 +115,7 @@ class StaticDataRepository {
                         call: Call<List<Ingredient>>,
                         response: Response<List<Ingredient>>
                 ) {
-                    Log.d("GET ALL INGREDIENTS", response.body().toString())
+                    Log.d(TAG, "GET ALL INGREDIENTS ${response.body().toString()}")
                     if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
@@ -120,7 +124,7 @@ class StaticDataRepository {
                 }
 
                 override fun onFailure(call: Call<List<Ingredient>>, t: Throwable) {
-                    Log.d("GET ALL INGREDIENTS", "error")
+                    Log.d(TAG, "GET ALL INGREDIENTS error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }
@@ -134,7 +138,7 @@ class StaticDataRepository {
 
             call.enqueue(object : Callback<List<IngredientUnit>> {
                 override fun onResponse(call: Call<List<IngredientUnit>>, response: Response<List<IngredientUnit>>) {
-                    Log.d("GET ALL UNITS", response.body().toString())
+                    Log.d(TAG, "GET ALL UNITS ${response.body().toString()}")
                     if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
@@ -143,7 +147,7 @@ class StaticDataRepository {
                 }
 
                 override fun onFailure(call: Call<List<IngredientUnit>>, t: Throwable) {
-                    Log.d("GET ALL UNITS", "error")
+                    Log.d(TAG, "GET ALL UNITS error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }

@@ -20,13 +20,17 @@ class FeedRepository {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
+    companion object {
+        const val TAG = "FeedRepository"
+    }
+
     fun feed(pid: Long, callback: ResultCallback<List<RecipeSimpleObject>>) {
         scope.launch(Dispatchers.IO) {
             val call = RetrofitFactory.apiService().feed(pid)
 
             call.enqueue(object : Callback<List<RecipeSimpleObject>> {
                 override fun onResponse(call: Call<List<RecipeSimpleObject>>, response: Response<List<RecipeSimpleObject>>) {
-                    Log.d("FEED LOAD", response.body().toString())
+                    Log.d(TAG, "FEED LOAD ${response.body().toString()}")
                     if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
@@ -35,7 +39,7 @@ class FeedRepository {
                 }
 
                 override fun onFailure(call: Call<List<RecipeSimpleObject>>, t: Throwable) {
-                    Log.d("FEED LOAD", "error")
+                    Log.d(TAG, "FEED LOAD error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }

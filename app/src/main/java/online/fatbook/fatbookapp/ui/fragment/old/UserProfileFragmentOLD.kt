@@ -36,6 +36,7 @@ import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants
+import online.fatbook.fatbookapp.util.Constants.TYPE_USER
 import online.fatbook.fatbookapp.util.FileUtils
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import org.apache.commons.lang3.StringUtils
@@ -357,7 +358,7 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
             val fileName = "image" + userPhoto!!.name.substring(userPhoto!!.name.indexOf('.'))
             val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
             RetrofitFactory.apiService()
-                .uploadUserImage(file, FileUtils.TYPE_USER, user!!.username)
+                .uploadUserImage(file, TYPE_USER, user!!.username)
                 .enqueue(object : Callback<User?> {
                     override fun onResponse(call: Call<User?>, response: Response<User?>) {
                         if (response.code() == 200) {

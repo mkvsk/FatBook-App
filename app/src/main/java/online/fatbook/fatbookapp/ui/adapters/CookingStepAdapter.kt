@@ -15,16 +15,16 @@ import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
 import java.io.File
 
 class CookingStepAdapter(private val context: Context) :
-    RecyclerView.Adapter<CookingStepAdapter.ViewHolder>(), BindableAdapter<CookingStep> {
+        RecyclerView.Adapter<CookingStepAdapter.ViewHolder>(), BindableAdapter<CookingStep> {
 
     private var data: ArrayList<CookingStep> = ArrayList()
-    private var images: HashMap<Int, File> = HashMap()
+    private var images: HashMap<Int, File?> = HashMap()
     var listener: OnCookingStepClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_cooking_step_preview, parent, false)
+                LayoutInflater.from(parent.context)
+                        .inflate(R.layout.rv_cooking_step_preview, parent, false)
         )
     }
 
@@ -40,7 +40,7 @@ class CookingStepAdapter(private val context: Context) :
         }
     }
 
-    fun setImages(map: HashMap<Int, File>?) {
+    fun setImages(map: HashMap<Int, File?>?) {
         map?.let {
             images = map
             notifyDataSetChanged()
@@ -59,14 +59,14 @@ class CookingStepAdapter(private val context: Context) :
         fun bind(value: CookingStep?) {
 
             itemView.textview_description_rv_cooking_step.text = value!!.description
-            images[value.stepNumber]?.let {
-                Glide.with(context).load(it).into(itemView.imageview_photo_rv_cooking_step)
-            }
+            Glide
+                    .with(context)
+                    .load(value.imageFile ?: value.image)
+                    .placeholder(context.getDrawable(R.drawable.default_recipe_image_recipe_create_second_stage))
+                    .into(itemView.imageview_photo_rv_cooking_step)
 
             itemView.button_remove_rv_cooking_step.setOnClickListener {
                 listener!!.onRecipeCookingStepDelete(bindingAdapterPosition)
-
-                Log.d("REMOVE STEP:", "remover step number= ${value.stepNumber}")
             }
 
             //TODO add edit step

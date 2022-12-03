@@ -3,12 +3,14 @@ package online.fatbook.fatbookapp.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.repository.RecipeRepository
 import java.io.File
+import java.util.LinkedList
 
 class RecipeViewModel : ViewModel() {
 
@@ -137,10 +139,10 @@ class RecipeViewModel : ViewModel() {
         _newRecipeImage.value = value
     }
 
-    private val _newRecipeStepImages = MutableLiveData<HashMap<Int, File>?>()
-    val newRecipeStepImages: LiveData<HashMap<Int, File>?> get() = _newRecipeStepImages
+    private val _newRecipeStepImages = MutableLiveData<HashMap<Int, Pair<String, RequestBody?>>>()
+    val newRecipeStepImages: LiveData<HashMap<Int, Pair<String, RequestBody?>>> get() = _newRecipeStepImages
 
-    fun setNewRecipeStepImages(value: HashMap<Int, File>?) {
+    fun setNewRecipeStepImages(value: HashMap<Int, Pair<String, RequestBody?>>) {
         _newRecipeStepImages.value = value
     }
 
@@ -172,13 +174,20 @@ class RecipeViewModel : ViewModel() {
         _isRecipeCreated.value = value
     }
 
-    fun recipeCreate(recipe: Recipe, callback: ResultCallback<Void>) {
-        repository.recipeCreate(recipe, object : ResultCallback<Void> {
-            override fun onResult(value: Void?) {
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    fun setIsLoading(value: Boolean) {
+        _isLoading.value = value
+    }
+
+    fun recipeCreate(recipe: Recipe, callback: ResultCallback<Boolean>) {
+        repository.recipeCreate(recipe, object : ResultCallback<Boolean> {
+            override fun onResult(value: Boolean?) {
                 callback.onResult(value)
             }
 
-            override fun onFailure(value: Void?) {
+            override fun onFailure(value: Boolean?) {
                 callback.onFailure(value)
             }
         })
@@ -196,27 +205,27 @@ class RecipeViewModel : ViewModel() {
         })
     }
 
-    fun createStep(description: String, cookingStepValue: CookingStep, image: File?) {
-        val cookingStep: CookingStep = cookingStepValue
-        if (selectedCookingStep.value != null) {
-            selectedCookingStep.value?.description = description
-        } else {
-            var cookingStepsAmount = newRecipe.value?.steps!!.size
-            cookingStep.description = description
-            cookingStep.stepNumber = ++cookingStepsAmount
-            newRecipe.value?.steps!!.add(cookingStep)
-        }
-
-        image.let {
-            (cookingStep.stepNumber ?: selectedCookingStep.value?.stepNumber)?.let {
-                image?.let { it1 ->
-                    newRecipeStepImages.value?.put(
-                        it, it1
-                    )
-                }
-            }
-        }
-        setSelectedCookingStep(null)
-        setSelectedCookingStepPosition(null)
-    }
+//    fun createStep(description: String, cookingStepValue: CookingStep, image: File?) {
+//        val cookingStep: CookingStep = cookingStepValue
+//        if (selectedCookingStep.value != null) {
+//            selectedCookingStep.value?.description = description
+//        } else {
+//            var cookingStepsAmount = newRecipe.value?.steps!!.size
+//            cookingStep.description = description
+//            cookingStep.stepNumber = ++cookingStepsAmount
+//            newRecipe.value?.steps!!.add(cookingStep)
+//        }
+//
+//        image.let {
+//            (cookingStep.stepNumber ?: selectedCookingStep.value?.stepNumber)?.let {
+//                image?.let { it1 ->
+//                    newRecipeStepImages.value?.put(
+//                        it, it1
+//                    )
+//                }
+//            }
+//        }
+//        setSelectedCookingStep(null)
+//        setSelectedCookingStepPosition(null)
+//    }
 }

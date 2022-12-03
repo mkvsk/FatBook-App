@@ -33,6 +33,7 @@ import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredientListener
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.Constants.TYPE_RECIPE
 import online.fatbook.fatbookapp.util.FileUtils
 import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import online.fatbook.fatbookapp.util.RecipeUtils
@@ -135,7 +136,7 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener {
                 )
                 val file = MultipartBody.Part.createFormData("file", fileName, requestFile)
                 RetrofitFactory.apiService()
-                    .uploadImage(file, FileUtils.TYPE_RECIPE, recipe!!.identifier)
+                    .uploadImage(file, TYPE_RECIPE, recipe!!.identifier)
                     .enqueue(object : Callback<Recipe?> {
                         override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
                             if (response.code() == 200) {

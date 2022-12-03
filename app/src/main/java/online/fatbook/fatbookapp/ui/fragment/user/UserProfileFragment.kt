@@ -292,12 +292,13 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
             }
         }
         binding.swipeRefresh.isRefreshing = false
-        if (isDataRefreshed) {
-            isDataRefreshed = false
-            fragmentAdapter!!.setData(user)
-        } else {
+        //TODO fix data refresh
+//        if (isDataRefreshed) {
+//            isDataRefreshed = false
+//            fragmentAdapter!!.setData(user)
+//        } else {
             setupViewPager()
-        }
+//        }
         binding.loader.progressOverlay.visibility = View.GONE
         binding.toolbar.visibility = View.VISIBLE
     }
