@@ -16,6 +16,8 @@ import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.util.Constants.MAX_PORTIONS
+import online.fatbook.fatbookapp.util.Constants.MIN_PORTIONS
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
@@ -32,10 +34,7 @@ class RecipeViewFragment : Fragment() {
     private var recipeForked = false
     private var recipeInFav = false
 
-    private var portionQtt: Int? = null
-
-    val maxPortions: Int = 5
-    val minPortions: Int = 1
+    private var portionQtt: Int = 0
 
     companion object {
         private const val TAG = "RecipeViewFragment"
@@ -104,20 +103,25 @@ class RecipeViewFragment : Fragment() {
             }
         }
 
-
         binding.buttonRemovePortionRecipeView.setOnClickListener {
-            if (portionQtt!! > minPortions) {
-                portionQtt!!.minus(1)
+            if (portionQtt > MIN_PORTIONS) {
+                binding.buttonAddPortionRecipeView.isClickable = true
+                portionQtt = portionQtt.dec()
+                if (portionQtt == MIN_PORTIONS) {
+                    binding.buttonRemovePortionRecipeView.isClickable = false
+                }
                 binding.textviewPortionsQttRecipeView.text = portionQtt.toString()
-                binding.buttonRemovePortionRecipeView.isClickable = true
             }
         }
 
         binding.buttonAddPortionRecipeView.setOnClickListener {
-            if (portionQtt!! < maxPortions) {
-                portionQtt!!.plus(1)
-                binding.textviewPortionsQttRecipeView.text = portionQtt.toString()
+            if (portionQtt < MAX_PORTIONS) {
                 binding.buttonRemovePortionRecipeView.isClickable = true
+                portionQtt = portionQtt.inc()
+                if (portionQtt == MAX_PORTIONS) {
+                    binding.buttonAddPortionRecipeView.isClickable = false
+                }
+                binding.textviewPortionsQttRecipeView.text = portionQtt.toString()
             }
         }
 
@@ -201,7 +205,6 @@ class RecipeViewFragment : Fragment() {
         }
         binding.textviewPortionsQttRecipeView.text = recipe.portions.toString()
 
-
         Glide
             .with(requireContext())
             .load(recipe.image)
@@ -212,6 +215,13 @@ class RecipeViewFragment : Fragment() {
         binding.textViewCommentsAvgViewRecipe.text = convertNumeric(recipe.comments?.size ?: 0)
 
         portionQtt = binding.textviewPortionsQttRecipeView.text.toString().toInt()
+        if (portionQtt == MIN_PORTIONS) {
+            binding.buttonRemovePortionRecipeView.isClickable = false
+        }
+        if (portionQtt == MAX_PORTIONS) {
+            binding.buttonAddPortionRecipeView.isClickable = false
+        }
+
         binding.loader.progressOverlay.visibility = View.GONE
 
         initListeners()

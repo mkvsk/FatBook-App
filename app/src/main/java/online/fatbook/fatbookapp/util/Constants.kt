@@ -24,6 +24,9 @@ object Constants {
     const val TAG_SELECT_ALL_BUTTON = "select_all_button"
 //    const val ET_BIO_REGEX = "^(?=\\S+\$).{0,635}$"
 
+    const val MAX_PORTIONS: Int = 20
+    const val MIN_PORTIONS: Int = 1
+
     val rootDestinations = setOf(
         R.id.feed_dest,
         R.id.search_dest,

@@ -368,5 +368,6 @@
     <string name="date_format_25_sec_ago">%s seconds ago</string>
     <string name="date_format_21_sec_ago">%s seconds ago</string>
     <string name="date_format_23_sec_ago">%s seconds ago</string>
+    <string name="create_cooking_step_toolbar_title">Description</string>
 
 </resources>

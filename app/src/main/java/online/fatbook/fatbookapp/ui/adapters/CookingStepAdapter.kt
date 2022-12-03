@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.rv_cooking_step_preview.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
-import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import java.io.File
 
 class CookingStepAdapter(private val context: Context) :
