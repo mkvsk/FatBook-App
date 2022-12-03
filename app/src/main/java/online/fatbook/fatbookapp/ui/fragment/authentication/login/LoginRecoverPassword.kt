@@ -43,10 +43,20 @@ class LoginRecoverPassword : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleBackPressed()
-        if (!authViewModel.recoverIdentifier.value.isNullOrEmpty()) {
-            binding.fragmentLoginRecoverPassEdittextUsername.setText(authViewModel.recoverIdentifier.value)
-            enableButtonNext(binding.fragmentLoginRecoverPassEdittextUsername.text.toString())
+        initListeners()
+        initObservers()
+    }
+
+    private fun initObservers() {
+        authViewModel.recoverIdentifier.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                binding.fragmentLoginRecoverPassEdittextUsername.setText(authViewModel.recoverIdentifier.value)
+                enableButtonNext(binding.fragmentLoginRecoverPassEdittextUsername.text.toString())
+            }
         }
+    }
+
+    private fun initListeners() {
         binding.fragmentLoginRecoverPassEdittextUsername.addTextChangedListener(object :
             TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -65,6 +75,7 @@ class LoginRecoverPassword : Fragment() {
             }
 
         })
+
         binding.fragmentLoginRecoverPassButtonNext.setOnClickListener {
             if (authViewModel.recoverIdentifier.value!! != binding.fragmentLoginRecoverPassEdittextUsername.text.toString()) {
                 timerViewModel.setIsTimerRunning(false)
@@ -80,6 +91,7 @@ class LoginRecoverPassword : Fragment() {
                 }
             }
         }
+
     }
 
     private fun recoverPassword(identifier: String) {

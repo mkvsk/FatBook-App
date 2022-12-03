@@ -46,14 +46,19 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handleBackPressed()
-        addObservers()
+        initListeners()
+        initObservers()
+        initViews()
+    }
 
+    private fun initViews() {
         binding.fragmentLoginRecoverPassVcodeDialogText.text = String.format(
             getString(R.string.dialog_recover_pass_vcode),
             getEmailHidden()
         )
+    }
 
-
+    private fun initListeners() {
         //TODO убрать
         binding.fragmentLoginRecoverPassVcodeEdittextVc.setText(authViewModel.vCode.value)
         binding.fragmentLoginRecoverPassVcodeButtonNext.isEnabled = true
@@ -96,6 +101,35 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
             } else {
                 hideKeyboard(binding.fragmentLoginRecoverPassVcodeEdittextVc)
                 showErrorMessage(getString(R.string.dialog_wrong_verification_code_2_500), true)
+            }
+        }
+    }
+
+    private fun initObservers() {
+        timerViewModel.currentCountdown.observe(viewLifecycleOwner) {
+            if (it == 0L) {
+                //enable button
+                binding.fragmentLoginRecoverPassVcodeResendLink.isEnabled = true
+                binding.fragmentLoginRecoverPassVcodeResendLink.text =
+                    resources.getString(R.string.resend_verification_code)
+                binding.fragmentLoginRecoverPassVcodeResendLink.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.vcEnabledColor_text,
+                    )
+                )
+            } else {
+                //disable button
+                binding.fragmentLoginRecoverPassVcodeResendLink.isEnabled = false
+                binding.fragmentLoginRecoverPassVcodeResendLink.text = String.format(
+                    resources.getString(R.string.resend_verification_code_timer), it
+                )
+                binding.fragmentLoginRecoverPassVcodeResendLink.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.vcDisabledColor_text,
+                    )
+                )
             }
         }
     }
@@ -243,34 +277,7 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
         findNavController().popBackStack()
     }
 
-    private fun addObservers() {
-        timerViewModel.currentCountdown.observe(viewLifecycleOwner) {
-            if (it == 0L) {
-                //enable button
-                binding.fragmentLoginRecoverPassVcodeResendLink.isEnabled = true
-                binding.fragmentLoginRecoverPassVcodeResendLink.text =
-                    resources.getString(R.string.resend_verification_code)
-                binding.fragmentLoginRecoverPassVcodeResendLink.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.vcEnabledColor_text,
-                    )
-                )
-            } else {
-                //disable button
-                binding.fragmentLoginRecoverPassVcodeResendLink.isEnabled = false
-                binding.fragmentLoginRecoverPassVcodeResendLink.text = String.format(
-                    resources.getString(R.string.resend_verification_code_timer), it
-                )
-                binding.fragmentLoginRecoverPassVcodeResendLink.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.vcDisabledColor_text,
-                    )
-                )
-            }
-        }
-    }
+
 
     override fun onDestroy() {
         super.onDestroy()

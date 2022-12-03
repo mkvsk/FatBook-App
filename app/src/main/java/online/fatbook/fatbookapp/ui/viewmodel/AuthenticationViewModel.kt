@@ -1,16 +1,17 @@
 package online.fatbook.fatbookapp.ui.viewmodel
 
-import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import okhttp3.RequestBody
+import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationRequest
 import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.network.LoginResponse
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
+import online.fatbook.fatbookapp.util.ContextHolder
 
 class AuthenticationViewModel : ViewModel() {
 
@@ -90,6 +91,20 @@ class AuthenticationViewModel : ViewModel() {
         _recoverUsername.value = value
     }
 
+    private val _error = MutableLiveData<String?>(null)
+    val error: LiveData<String?> get() = _error
+
+    fun setError(message: String?) {
+        _error.value = message
+    }
+
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    fun setIsLoading(value: Boolean) {
+        _isLoading.value = value
+    }
+
     fun emailCheck(email: String, callback: ResultCallback<AuthenticationResponse>) {
         repository.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
@@ -102,14 +117,24 @@ class AuthenticationViewModel : ViewModel() {
         })
     }
 
-    fun login(request: RequestBody, callback: ResultCallback<LoginResponse>) {
+    fun login(request: RequestBody, password: String) {
+        setIsLoading(true)
         repository.login(request, object : ResultCallback<LoginResponse> {
             override fun onResult(value: LoginResponse?) {
-                callback.onResult(value)
+                value?.let {
+                    setUsername(it.username!!)
+                    setPassword(password)
+                    setJwtAccess(it.access_token.toString())
+                    setJwtRefresh(it.refresh_token.toString())
+                    setIsUserAuthenticated(true)
+                    RetrofitFactory.updateJWT(it.access_token!!, it.username)
+                }
+                setIsLoading(false)
             }
 
             override fun onFailure(value: LoginResponse?) {
-                callback.onFailure(value)
+                setError(ContextHolder.get().getString(R.string.dialog_register_error))
+                setIsLoading(false)
             }
         })
     }
@@ -170,6 +195,5 @@ class AuthenticationViewModel : ViewModel() {
                 }
             })
     }
-
 
 }
