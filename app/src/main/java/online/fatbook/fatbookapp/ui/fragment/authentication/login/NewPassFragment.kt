@@ -27,9 +27,6 @@ import java.util.regex.Pattern
 
 class NewPassFragment : Fragment() {
 
-    private var reconnectCount = 1
-    private var isReconnectCancelled = false
-
     private var _binding: FragmentNewPassBinding? = null
     private val binding get() = _binding!!
 
@@ -47,7 +44,37 @@ class NewPassFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handleBackPressed()
+        authViewModel.setResultCode(null)
+        initListeners()
+        initObservers()
+    }
 
+    private fun initObservers() {
+        authViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+            } else {
+                binding.loader.progressOverlayAuth.visibility = View.GONE
+            }
+        }
+
+        authViewModel.resultCode.observe(viewLifecycleOwner) {
+            when (it) {
+                0 -> {
+                    saveUserAndProceed()
+                }
+                null -> {
+                    showDefaultMessage(getString(R.string.dialog_new_pass))
+                }
+                else -> {
+                    showErrorMessage(authViewModel.error.toString())
+                }
+            }
+        }
+
+    }
+
+    private fun initListeners() {
         binding.fragmentNewPassButtonNext.setOnClickListener {
             hideKeyboard(binding.fragmentNewPassEdittextRepeatNewPassword)
             if (binding.fragmentNewPassEdittextNewPassword.text.toString().contentEquals(
@@ -55,7 +82,7 @@ class NewPassFragment : Fragment() {
                 )
             ) {
                 if (passwordValidate()) {
-                    changePassword(binding.fragmentNewPassEdittextNewPassword.text.toString())
+                    authViewModel.changePassword(binding.fragmentNewPassEdittextNewPassword.text.toString())
                 } else {
                     showErrorMessage(getString(R.string.dialog_new_pass))
                 }
@@ -82,7 +109,6 @@ class NewPassFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
             }
-
         })
 
         binding.fragmentNewPassEdittextRepeatNewPassword.addTextChangedListener(object :
@@ -110,50 +136,51 @@ class NewPassFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
             }
-
         })
     }
 
-    private fun changePassword(password: String) {
-        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
-//        authViewModel.username.value = authViewModel.recoverUsername.value
-//        authViewModel.password.value = value
-
-//        println("username : ${authViewModel.username.value}")
-//        println("password : ${authViewModel.password.value}")
-
-        authViewModel.changePassword(
-            authViewModel.recoverUsername.value!!,
-            password,
-            object : ResultCallback<AuthenticationResponse> {
-                override fun onResult(value: AuthenticationResponse?) {
-                    when (value!!.code) {
-                        0 -> {
-                            if (!isReconnectCancelled) {
-                                saveUserAndProceed(value.username, password)
-                            }
-                        }
-                        6 -> {
-                            showErrorMessage(getString(R.string.dialog_recover_pass_user_not_found))
-                        }
-                        else -> showErrorMessage(getString(R.string.dialog_connection_error))
-                    }
-                }
-
-                override fun onFailure(value: AuthenticationResponse?) {
-                    if (!isReconnectCancelled) {
-                        if (reconnectCount < 6) {
-                            reconnectCount++
-                            changePassword(password)
-                        } else {
-//                            hideKeyboard(fragment_login_edittext_password)
-                            showErrorMessage(getString(R.string.dialog_connection_error))
-                            binding.loader.progressOverlayAuth.visibility = View.GONE
-                        }
-                    }
-                }
-            })
-    }
+//    private fun changePassword(password: String) {
+//        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+////        authViewModel.username.value = authViewModel.recoverUsername.value
+////        authViewModel.password.value = value
+//
+////        println("username : ${authViewModel.username.value}")
+////        println("password : ${authViewModel.password.value}")
+//
+//        authViewModel.changePassword(password)
+//
+////        authViewModel.changePassword(
+////            authViewModel.recoverUsername.value!!,
+////            password,
+////            object : ResultCallback<AuthenticationResponse> {
+////                override fun onResult(value: AuthenticationResponse?) {
+////                    when (value!!.code) {
+////                        0 -> {
+////                            if (!isReconnectCancelled) {
+////                                saveUserAndProceed(value.username, password)
+////                            }
+////                        }
+////                        6 -> {
+////                            showErrorMessage(getString(R.string.dialog_recover_pass_user_not_found))
+////                        }
+////                        else -> showErrorMessage(getString(R.string.dialog_connection_error))
+////                    }
+////                }
+////
+////                override fun onFailure(value: AuthenticationResponse?) {
+////                    if (!isReconnectCancelled) {
+////                        if (reconnectCount < 6) {
+////                            reconnectCount++
+////                            changePassword(password)
+////                        } else {
+//////                            hideKeyboard(fragment_login_edittext_password)
+////                            showErrorMessage(getString(R.string.dialog_connection_error))
+////                            binding.loader.progressOverlayAuth.visibility = View.GONE
+////                        }
+////                    }
+////                }
+////            })
+//    }
 
     private fun navigateToFeed() {
         requireActivity().startActivity(Intent(requireContext(), MainActivity::class.java))
@@ -165,10 +192,9 @@ class NewPassFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
+                    if (authViewModel.isLoading.value == true) {
+                        authViewModel.setIsLoading(false)
                         showDefaultMessage(getString(R.string.dialog_new_pass))
-                        isReconnectCancelled = true
                     } else {
                         popBackStack()
                     }
@@ -180,9 +206,7 @@ class NewPassFragment : Fragment() {
         findNavController().popBackStack()
     }
 
-    private fun saveUserAndProceed(username: String?, password: String) {
-        authViewModel.setUsername(username!!)
-        authViewModel.setPassword(password)
+    private fun saveUserAndProceed() {
         val sharedPreferences = requireActivity().getSharedPreferences(
             Constants.SP_TAG,
             Context.MODE_PRIVATE
@@ -250,5 +274,4 @@ class NewPassFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 }

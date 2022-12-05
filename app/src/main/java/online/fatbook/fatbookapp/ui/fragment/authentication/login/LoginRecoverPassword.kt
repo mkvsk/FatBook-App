@@ -24,9 +24,6 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 
 class LoginRecoverPassword : Fragment() {
 
-    private var reconnectCount = 1
-    private var isReconnectCancelled = false
-
     private var _binding: FragmentLoginRecoverPassBinding? = null
     private val binding get() = _binding!!
 
@@ -43,6 +40,7 @@ class LoginRecoverPassword : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleBackPressed()
+        authViewModel.setResultCode(null)
         initListeners()
         initObservers()
     }
@@ -52,6 +50,36 @@ class LoginRecoverPassword : Fragment() {
             if (!it.isNullOrEmpty()) {
                 binding.fragmentLoginRecoverPassEdittextUsername.setText(authViewModel.recoverIdentifier.value)
                 enableButtonNext(binding.fragmentLoginRecoverPassEdittextUsername.text.toString())
+            }
+        }
+
+        authViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+            } else {
+                binding.loader.progressOverlayAuth.visibility = View.GONE
+            }
+        }
+
+        authViewModel.resultCode.observe(viewLifecycleOwner) {
+            when (it) {
+                0 -> {
+                    if (!timerViewModel.isTimerRunning.value!!) {
+                        timerViewModel.setIsTimerRunning(true)
+                        timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
+                    }
+                    navigateToVerificationCode()
+                }
+                -1 -> {
+                    showErrorMessage(authViewModel.error.value.toString())
+                    hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
+                }
+                null -> {
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
+                }
+                else -> {
+                    showErrorMessage(authViewModel.error.value.toString())
+                }
             }
         }
     }
@@ -81,7 +109,6 @@ class LoginRecoverPassword : Fragment() {
                 timerViewModel.setIsTimerRunning(false)
                 timerViewModel.setCurrentCountdown(0)
                 timerViewModel.cancelTimer()
-                isReconnectCancelled = false
                 recoverPassword(binding.fragmentLoginRecoverPassEdittextUsername.text.toString())
             } else {
                 if (timerViewModel.isTimerRunning.value == false) {
@@ -91,53 +118,49 @@ class LoginRecoverPassword : Fragment() {
                 }
             }
         }
-
     }
 
     private fun recoverPassword(identifier: String) {
-        Log.d("RECOVER PASSWORD attempt", reconnectCount.toString())
-        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+        Log.d("RECOVER PASSWORD attempt", "")
+        authViewModel.setIsLoading(true)
         hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
-        authViewModel.recoverPassword(identifier, object : ResultCallback<AuthenticationResponse> {
-            override fun onResult(value: AuthenticationResponse?) {
-                binding.loader.progressOverlayAuth.visibility = View.GONE
-                if (!isReconnectCancelled) {
-                    when (value!!.code) {
-                        0 -> {
-                            if (!timerViewModel.isTimerRunning.value!!) {
-                                timerViewModel.setIsTimerRunning(true)
-                                timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
-                            }
-                            authViewModel.setRecoverIdentifier(identifier)
-                            authViewModel.setRecoverEmail(value.email.toString())
-                            authViewModel.setRecoverUsername(value.username.toString())
-                            authViewModel.setVCode(value.vcode.toString())
-                            Log.d("CODE ======================= ", value.vcode!!)
-                            Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG)
-                                .show()
-                            navigateToVerificationCode()
-                        }
-                        6 -> {
-                            showErrorMessage(getString(R.string.dialog_recover_pass_user_not_found))
-                        }
-                        else -> showErrorMessage(getString(R.string.dialog_register_error))
-                    }
-                }
-            }
-
-            override fun onFailure(value: AuthenticationResponse?) {
-                if (!isReconnectCancelled) {
-                    if (reconnectCount < 6) {
-                        reconnectCount++
-                        recoverPassword(identifier)
-                    } else {
-                        showErrorMessage(getString(R.string.dialog_register_error))
-                        hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
-                    }
-                }
-            }
-        })
+        authViewModel.recoverPassword(identifier)
+//        authViewModel.recoverPassword(identifier, object : ResultCallback<AuthenticationResponse> {
+//            override fun onResult(value: AuthenticationResponse?) {
+//                binding.loader.progressOverlayAuth.visibility = View.GONE
+//                if (!isReconnectCancelled) {
+//                    when (value!!.code) {
+//                        0 -> {
+//                            if (!timerViewModel.isTimerRunning.value!!) {
+//                                timerViewModel.setIsTimerRunning(true)
+//                                timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
+//                            }
+//                            authViewModel.setRecoverIdentifier(identifier)
+//                            authViewModel.setRecoverEmail(value.email.toString())
+//                            authViewModel.setRecoverUsername(value.username.toString())
+//                            authViewModel.setVCode(value.vcode.toString())
+//                            Log.d("CODE ======================= ", value.vcode!!)
+//                            Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG)
+//                                .show()
+//                            navigateToVerificationCode()
+//                        }
+//                        6 -> {
+//                            showErrorMessage(getString(R.string.dialog_recover_pass_user_not_found))
+//                        }
+//                        else -> showErrorMessage(getString(R.string.dialog_register_error))
+//                    }
+//                }
+//            }
+//
+//            override fun onFailure(value: AuthenticationResponse?) {
+//                if (!isReconnectCancelled) {
+//                        showErrorMessage(getString(R.string.dialog_register_error))
+//                        hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
+//                        binding.loader.progressOverlayAuth.visibility = View.GONE
+//
+//                }
+//            }
+//        })
     }
 
     private fun navigateToVerificationCode() {
@@ -166,8 +189,6 @@ class LoginRecoverPassword : Fragment() {
                 requireContext(), R.color.dialogErrorMess_text
             )
         )
-//        binding.fragmentLoginRecoverPassEdittextUsername.background =
-//            ContextCompat.getDrawable(requireContext(), R.drawable.round_corner_edittext_error)
     }
 
     private fun showDefaultMessage(message: String) {
@@ -184,10 +205,9 @@ class LoginRecoverPassword : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
+                    if (authViewModel.isLoading.value == true) {
+                        authViewModel.setIsLoading(false)
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
-                        isReconnectCancelled = true
                     } else {
                         popBackStack()
                     }

@@ -24,9 +24,6 @@ import org.apache.commons.lang3.StringUtils
 
 class LoginRecoverPasswordVCodeFragment : Fragment() {
 
-    private var reconnectCount = 1
-    private var isReconnectCancelled = false
-
     private var _binding: FragmentLoginRecoverPassVerificationCodeBinding? = null
     private val binding get() = _binding!!
 
@@ -46,6 +43,7 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handleBackPressed()
+        authViewModel.setResultCode(null)
         initListeners()
         initObservers()
         initViews()
@@ -96,7 +94,6 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
                     authViewModel.vCode.value
                 )
             ) {
-                isReconnectCancelled = false
                 confirmVCode(binding.fragmentLoginRecoverPassVcodeEdittextVc.text.toString())
             } else {
                 hideKeyboard(binding.fragmentLoginRecoverPassVcodeEdittextVc)
@@ -106,9 +103,16 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
     }
 
     private fun initObservers() {
+        authViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+            } else {
+                binding.loader.progressOverlayAuth.visibility = View.GONE
+            }
+        }
+
         timerViewModel.currentCountdown.observe(viewLifecycleOwner) {
             if (it == 0L) {
-                //enable button
                 binding.fragmentLoginRecoverPassVcodeResendLink.isEnabled = true
                 binding.fragmentLoginRecoverPassVcodeResendLink.text =
                     resources.getString(R.string.resend_verification_code)
@@ -119,7 +123,6 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
                     )
                 )
             } else {
-                //disable button
                 binding.fragmentLoginRecoverPassVcodeResendLink.isEnabled = false
                 binding.fragmentLoginRecoverPassVcodeResendLink.text = String.format(
                     resources.getString(R.string.resend_verification_code_timer), it
@@ -132,6 +135,44 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
                 )
             }
         }
+
+        authViewModel.vCode.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                binding.fragmentLoginRecoverPassVcodeEdittextVc.setText(StringUtils.EMPTY)
+                binding.fragmentLoginRecoverPassVcodeDialogText.setText(R.string.dialog_verification_code)
+                binding.fragmentLoginRecoverPassVcodeDialogText.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.main_text
+                    )
+                )
+                Log.d("CODE ================= ", authViewModel.vCode.value.toString())
+            }
+        }
+
+//        authViewModel.allowSetNewPass.observe(viewLifecycleOwner) {
+//            if (it) {
+//                navigateToNewPassFragment()
+//            }
+//        }
+
+        authViewModel.resultCode.observe(viewLifecycleOwner) {
+            when (it) {
+                0 -> {
+                    navigateToNewPassFragment()
+                }
+                -1 -> {
+                    hideKeyboard(binding.fragmentLoginRecoverPassVcodeEdittextVc)
+                    showErrorMessage(authViewModel.error.value.toString(), false)
+                }
+                null -> {
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
+                }
+                else -> {
+                    showErrorMessage(authViewModel.error.value.toString(), true)
+                }
+            }
+        }
     }
 
     private fun getEmailHidden(): String {
@@ -139,25 +180,7 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
     }
 
     private fun resendCode() {
-        authViewModel.recoverPassword(
-            authViewModel.recoverIdentifier.value!!,
-            object : ResultCallback<AuthenticationResponse> {
-                override fun onResult(value: AuthenticationResponse?) {
-                    authViewModel.setVCode(value!!.vcode.toString())
-                    binding.fragmentLoginRecoverPassVcodeEdittextVc.setText(StringUtils.EMPTY)
-                    binding.fragmentLoginRecoverPassVcodeDialogText.setText(R.string.dialog_verification_code)
-                    binding.fragmentLoginRecoverPassVcodeDialogText.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.main_text
-                        )
-                    )
-                    Log.d("CODE ================= ", value.vcode.toString())
-                }
-
-                override fun onFailure(value: AuthenticationResponse?) {
-                }
-            })
+        authViewModel.recoverPassword(authViewModel.recoverIdentifier.value!!)
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
@@ -195,61 +218,10 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
     }
 
     private fun confirmVCode(vCode: String) {
-        Log.d("VCODE CONFIRM attempt", reconnectCount.toString())
+        Log.d("VCODE CONFIRM attempt", "")
         hideKeyboard(binding.fragmentLoginRecoverPassVcodeEdittextVc)
-        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
-        authViewModel.confirmVCode(
-            vCode,
-            authViewModel.recoverEmail.value!!,
-            object : ResultCallback<AuthenticationResponse> {
-                override fun onResult(value: AuthenticationResponse?) {
-                    binding.loader.progressOverlayAuth.visibility = View.GONE
-                    when (value!!.code) {
-                        0 -> {
-                            if (!isReconnectCancelled) {
-                                navigateToNewPassFragment()
-                            }
-                        }
-                        1 -> {
-                            showErrorMessage(
-                                getString(R.string.dialog_wrong_verification_code_1),
-                                true
-                            )
-                        }
-                        2 -> {
-                            showErrorMessage(
-                                getString(R.string.dialog_wrong_verification_code_2_500),
-                                true
-                            )
-                        }
-                        3 -> {
-                            showErrorMessage(
-                                getString(R.string.dialog_wrong_verification_code_3),
-                                true
-                            )
-                        }
-                        else -> {
-                            showErrorMessage(
-                                getString(R.string.dialog_wrong_verification_code_2_500),
-                                true
-                            )
-                        }
-                    }
-                }
-
-                override fun onFailure(value: AuthenticationResponse?) {
-                    if (!isReconnectCancelled) {
-                        if (reconnectCount < 6) {
-                            reconnectCount++
-                            confirmVCode(vCode)
-                        } else {
-                            hideKeyboard(binding.fragmentLoginRecoverPassVcodeEdittextVc)
-                            showErrorMessage(getString(R.string.dialog_register_error), false)
-                            binding.loader.progressOverlayAuth.visibility = View.GONE
-                        }
-                    }
-                }
-            })
+        authViewModel.setIsLoading(true)
+        authViewModel.confirmVCode(vCode)
     }
 
     private fun navigateToNewPassFragment() {
@@ -262,10 +234,9 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
+                    if (authViewModel.isLoading.value == true) {
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
-                        isReconnectCancelled = true
+                        authViewModel.setIsLoading(false)
                     } else {
                         popBackStack()
                     }
@@ -277,11 +248,8 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
         findNavController().popBackStack()
     }
 
-
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
 }

@@ -32,7 +32,12 @@ class RegisterPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        hideProgressBar()
+
+        authViewModel.setResultCode(null)
+        initListeners()
+    }
+
+    private fun initListeners() {
         binding.fragmentRegisterPasswordButtonNext.setOnClickListener {
             if (passwordValidate()) {
                 authViewModel.setPassword(binding.fragmentRegisterPasswordEdittextPassword.text.toString())
@@ -57,7 +62,6 @@ class RegisterPasswordFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
             }
-
         })
     }
 
