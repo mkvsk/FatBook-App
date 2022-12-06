@@ -138,49 +138,6 @@ class NewPassFragment : Fragment() {
         })
     }
 
-//    private fun changePassword(password: String) {
-//        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
-////        authViewModel.username.value = authViewModel.recoverUsername.value
-////        authViewModel.password.value = value
-//
-////        println("username : ${authViewModel.username.value}")
-////        println("password : ${authViewModel.password.value}")
-//
-//        authViewModel.changePassword(password)
-//
-////        authViewModel.changePassword(
-////            authViewModel.recoverUsername.value!!,
-////            password,
-////            object : ResultCallback<AuthenticationResponse> {
-////                override fun onResult(value: AuthenticationResponse?) {
-////                    when (value!!.code) {
-////                        0 -> {
-////                            if (!isReconnectCancelled) {
-////                                saveUserAndProceed(value.username, password)
-////                            }
-////                        }
-////                        6 -> {
-////                            showErrorMessage(getString(R.string.dialog_recover_pass_user_not_found))
-////                        }
-////                        else -> showErrorMessage(getString(R.string.dialog_connection_error))
-////                    }
-////                }
-////
-////                override fun onFailure(value: AuthenticationResponse?) {
-////                    if (!isReconnectCancelled) {
-////                        if (reconnectCount < 6) {
-////                            reconnectCount++
-////                            changePassword(password)
-////                        } else {
-//////                            hideKeyboard(fragment_login_edittext_password)
-////                            showErrorMessage(getString(R.string.dialog_connection_error))
-////                            binding.loader.progressOverlayAuth.visibility = View.GONE
-////                        }
-////                    }
-////                }
-////            })
-//    }
-
     private fun navigateToFeed() {
         requireActivity().startActivity(Intent(requireContext(), MainActivity::class.java))
         requireActivity().finish()

@@ -149,7 +149,6 @@ class LoginFragment : Fragment() {
 
     private fun login(username: String, password: String) {
         Log.d("LOGIN attempt", "for user $username/$password #$reconnectCount")
-        authViewModel.setIsLoading(true)
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("username", username)
             .addFormDataPart("password", password).build()

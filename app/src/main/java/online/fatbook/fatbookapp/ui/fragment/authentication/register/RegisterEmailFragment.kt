@@ -101,7 +101,6 @@ class RegisterEmailFragment : Fragment() {
                         timerViewModel.setIsTimerRunning(true)
                         timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
                     }
-                    hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
                     showDefaultMessage(getString(R.string.dialog_register_email_error))
                     navigateToVerificationCode()
                 }
@@ -176,50 +175,6 @@ class RegisterEmailFragment : Fragment() {
         authViewModel.setIsLoading(true)
         hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
         authViewModel.emailCheck(email)
-
-//        authViewModel.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
-//            override fun onResult(value: AuthenticationResponse?) {
-//                binding.loader.progressOverlayAuth.visibility = View.GONE
-//                when (value!!.code) {
-//                    0 -> {
-//                        if (!isReconnectCancelled) {
-//                            authViewModel.setUsername(value.email!!)
-//                            if (!timerViewModel.isTimerRunning.value!!) {
-//                                timerViewModel.setIsTimerRunning(true)
-//                                timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
-//                            }
-//                            authViewModel.setVCode(value.vcode!!)
-//                            Log.d("CODE ======================= ", value.vcode!!)
-//                            Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG)
-//                                .show()
-//                            navigateToVerificationCode()
-//                        }
-//                    }
-//                    4 -> {
-//                        showErrorMessage(
-//                            getString(R.string.dialog_email_used_register_email),
-//                            true
-//                        )
-//                    }
-//                    else -> {
-//                        showErrorMessage(getString(R.string.dialog_register_error), true)
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(value: AuthenticationResponse?) {
-//                if (!isReconnectCancelled) {
-//                    if (reconnectCount < 6) {
-//                        reconnectCount++
-//                        emailCheck(email)
-//                    } else {
-//                        showErrorMessage(getString(R.string.dialog_register_error), false)
-//                        hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
-//                        binding.loader.progressOverlayAuth.visibility = View.GONE
-//                    }
-//                }
-//            }
-//        })
     }
 
     private fun navigateToVerificationCode() {

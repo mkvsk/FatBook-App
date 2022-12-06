@@ -44,7 +44,7 @@ class VerificationCodeFragment : Fragment() {
         handleBackPressed()
         initListeners()
         initObservers()
-
+        authViewModel.setIsLoading(false)
         //TODO убрать
         binding.fragmentVerificationCodeEdittextVc.setText(authViewModel.vCode.value)
         binding.fragmentVerificationCodeButtonNext.isEnabled = true
@@ -163,25 +163,6 @@ class VerificationCodeFragment : Fragment() {
         hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
         authViewModel.setCodeResent(true)
         authViewModel.emailCheck(authViewModel.userEmail.value.toString())
-//        authViewModel.emailCheck(
-//            authViewModel.userEmail.value!!,
-//            object : ResultCallback<AuthenticationResponse> {
-//                override fun onResult(value: AuthenticationResponse?) {
-//                    authViewModel.setVCode(value?.vcode!!)
-//                    binding.fragmentVerificationCodeEdittextVc.setText(StringUtils.EMPTY)
-//                    binding.fragmentVerificationCodeDialogText.setText(R.string.dialog_verification_code)
-//                    binding.fragmentVerificationCodeDialogText.setTextColor(
-//                        ContextCompat.getColor(
-//                            requireContext(),
-//                            R.color.main_text
-//                        )
-//                    )
-//                    Log.d("CODE ================= ", value.vcode.toString())
-//                }
-//
-//                override fun onFailure(value: AuthenticationResponse?) {
-//                }
-//            })
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
@@ -223,58 +204,6 @@ class VerificationCodeFragment : Fragment() {
         hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
         authViewModel.setIsLoading(true)
         authViewModel.confirmVCode(vCode)
-//        authViewModel.confirmVCode(
-//            vCode,
-//            authViewModel.userEmail.value!!,
-//            object : ResultCallback<AuthenticationResponse> {
-//                override fun onResult(value: AuthenticationResponse?) {
-//                    binding.loader.progressOverlayAuth.visibility = View.GONE
-//                    when (value?.code) {
-//                        0 -> {
-//                            if (!isReconnectCancelled) {
-//                                navigateToRegisterPassword()
-//                            }
-//                        }
-//                        1 -> {
-//                            showErrorMessage(
-//                                getString(R.string.dialog_wrong_verification_code_1),
-//                                true
-//                            )
-//                        }
-//                        2 -> {
-//                            showErrorMessage(
-//                                getString(R.string.dialog_wrong_verification_code_2_500),
-//                                true
-//                            )
-//                        }
-//                        3 -> {
-//                            showErrorMessage(
-//                                getString(R.string.dialog_wrong_verification_code_3),
-//                                true
-//                            )
-//                        }
-//                        else -> {
-//                            showErrorMessage(
-//                                getString(R.string.dialog_wrong_verification_code_2_500),
-//                                true
-//                            )
-//                        }
-//                    }
-//                }
-//
-//                override fun onFailure(value: AuthenticationResponse?) {
-//                    if (!isReconnectCancelled) {
-//                        if (reconnectCount < 6) {
-//                            reconnectCount++
-//                            confirmVCode(vCode)
-//                        } else {
-//                            hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
-//                            showErrorMessage(getString(R.string.dialog_register_error), false)
-//                            binding.loader.progressOverlayAuth.visibility = View.GONE
-//                        }
-//                    }
-//                }
-//            })
     }
 
     private fun navigateToRegisterPassword() {
