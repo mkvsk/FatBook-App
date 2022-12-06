@@ -125,42 +125,6 @@ class LoginRecoverPassword : Fragment() {
         authViewModel.setIsLoading(true)
         hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
         authViewModel.recoverPassword(identifier)
-//        authViewModel.recoverPassword(identifier, object : ResultCallback<AuthenticationResponse> {
-//            override fun onResult(value: AuthenticationResponse?) {
-//                binding.loader.progressOverlayAuth.visibility = View.GONE
-//                if (!isReconnectCancelled) {
-//                    when (value!!.code) {
-//                        0 -> {
-//                            if (!timerViewModel.isTimerRunning.value!!) {
-//                                timerViewModel.setIsTimerRunning(true)
-//                                timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
-//                            }
-//                            authViewModel.setRecoverIdentifier(identifier)
-//                            authViewModel.setRecoverEmail(value.email.toString())
-//                            authViewModel.setRecoverUsername(value.username.toString())
-//                            authViewModel.setVCode(value.vcode.toString())
-//                            Log.d("CODE ======================= ", value.vcode!!)
-//                            Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG)
-//                                .show()
-//                            navigateToVerificationCode()
-//                        }
-//                        6 -> {
-//                            showErrorMessage(getString(R.string.dialog_recover_pass_user_not_found))
-//                        }
-//                        else -> showErrorMessage(getString(R.string.dialog_register_error))
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(value: AuthenticationResponse?) {
-//                if (!isReconnectCancelled) {
-//                        showErrorMessage(getString(R.string.dialog_register_error))
-//                        hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
-//                        binding.loader.progressOverlayAuth.visibility = View.GONE
-//
-//                }
-//            }
-//        })
     }
 
     private fun navigateToVerificationCode() {

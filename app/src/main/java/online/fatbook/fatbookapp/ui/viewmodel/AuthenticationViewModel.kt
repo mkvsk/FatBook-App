@@ -182,7 +182,7 @@ class AuthenticationViewModel : ViewModel() {
                     } else {
                         when (it.code) {
                             0 -> {
-                                setUsername(it.username.toString())
+                                setUserEmail(it.email.toString())
                                 setVCode(it.vcode.toString())
                                 setResultCodeEmail(0)
                             }
@@ -192,15 +192,17 @@ class AuthenticationViewModel : ViewModel() {
                                         .getString(R.string.dialog_email_used_register_email)
                                 )
                                 setResultCodeEmail(4)
+                                setIsLoading(false)
                             }
                             else -> {
                                 setError(
                                     ContextHolder.get().getString(R.string.dialog_register_error)
                                 )
                                 setResultCodeEmail(4)
+                                setIsLoading(false)
                             }
                         }
-                        setIsLoading(false)
+
                     }
                 }
             }
@@ -232,15 +234,14 @@ class AuthenticationViewModel : ViewModel() {
         repository.login(request, object : ResultCallback<LoginResponse> {
             override fun onResult(value: LoginResponse?) {
                 value?.let {
-                    setUsername(it.username!!)
+                    setUsername(it.username.toString())
                     setPassword(password)
                     setJwtAccess(it.access_token.toString())
                     setJwtRefresh(it.refresh_token.toString())
                     setIsUserAuthenticated(true)
-                    RetrofitFactory.updateJWT(it.access_token!!, it.username)
+                    RetrofitFactory.updateJWT(it.access_token.toString(), it.username.toString())
                 }
                 setResultCodeAuth(1)
-                setIsLoading(false)
             }
 
             override fun onFailure(value: LoginResponse?) {
@@ -285,6 +286,7 @@ class AuthenticationViewModel : ViewModel() {
                             setError(
                                 ContextHolder.get().getString(R.string.dialog_register_email_error)
                             )
+                            setIsLoading(false)
                         }
                         5 -> {
                             setResultCodeRegister(5)
@@ -292,13 +294,14 @@ class AuthenticationViewModel : ViewModel() {
                                 ContextHolder.get()
                                     .getString(R.string.dialog_register_username_unavailable)
                             )
+                            setIsLoading(false)
                         }
                         else -> {
                             setResultCodeRegister(6)
                             setError(ContextHolder.get().getString(R.string.dialog_register_error))
+                            setIsLoading(false)
                         }
                     }
-                    setIsLoading(false)
                 }
             }
 
@@ -332,7 +335,7 @@ class AuthenticationViewModel : ViewModel() {
     fun confirmVCode(vCode: String) {
         repository.confirmVCode(
             vCode,
-            recoverEmail.value.toString(),
+            userEmail.value.toString(),
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
                     setIsLoading(false)

@@ -124,48 +124,6 @@ class RegisterUsernameFragment : Fragment() {
                 authViewModel.userEmail.value
             )
         )
-
-//        object : ResultCallback<AuthenticationResponse> {
-//            override fun onResult(value: AuthenticationResponse?) {
-//                binding.loader.progressOverlayAuth.visibility = View.GONE
-//                value?.let {
-//                    when (it.code) {
-//                        0 -> {
-//                            navigateToAccountCreated()
-//                        }
-//                        4 -> {
-//                            hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-//                            showErrorMessage(
-//                                getString(R.string.dialog_register_email_error), true
-//                            )
-//                        }
-//                        5 -> {
-//                            hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-//                            showErrorMessage(
-//                                getString(R.string.dialog_register_username_unavailable), true
-//                            )
-//                        }
-//                        else -> {
-//                            hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-//                            showErrorMessage(getString(R.string.dialog_register_error), true)
-//                        }
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(value: AuthenticationResponse?) {
-//                if (!isReconnectCancelled) {
-//                    if (reconnectCount < 6) {
-//                        reconnectCount++
-//                        createNewUser()
-//                    } else {
-//                        hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-//                        showErrorMessage(getString(R.string.dialog_register_error), false)
-//                        binding.loader.progressOverlayAuth.visibility = View.GONE
-//                    }
-//                }
-//            }
-//        })
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
