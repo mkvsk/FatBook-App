@@ -64,9 +64,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         super.onViewCreated(view, savedInstanceState)
         Log.d("===t=======FeedFragment==========", "onViewCreated")
 
-
-
-        authViewModel.setResultCode(null)
         initViews()
         initListeners()
         initObservers()
@@ -125,7 +122,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun login() {
-        authViewModel.setResultCode(null)
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart("username", authViewModel.username.value!!)
                 .addFormDataPart("password", authViewModel.password.value!!).build()
@@ -167,7 +163,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                 }
 
                 override fun onFailure(value: User?) {
-                    loadUser()
+
                 }
             })
     }

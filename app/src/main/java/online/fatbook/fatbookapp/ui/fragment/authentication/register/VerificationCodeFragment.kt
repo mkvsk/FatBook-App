@@ -42,7 +42,6 @@ class VerificationCodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handleBackPressed()
-        authViewModel.setResultCode(null)
         initListeners()
         initObservers()
 
@@ -85,13 +84,14 @@ class VerificationCodeFragment : Fragment() {
             }
         }
 
-        authViewModel.resultCode.observe(viewLifecycleOwner) {
+        authViewModel.resultCodeVCode.observe(viewLifecycleOwner) {
             when (it) {
                 0 -> {
+                    hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
                     navigateToRegisterPassword()
                 }
                 -1 -> {
-                    hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
                     showErrorMessage(authViewModel.error.value.toString(), false)
                 }
                 null -> {
@@ -160,6 +160,7 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun resendCode() {
+        hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
         authViewModel.setCodeResent(true)
         authViewModel.emailCheck(authViewModel.userEmail.value.toString())
 //        authViewModel.emailCheck(
@@ -206,7 +207,7 @@ class VerificationCodeFragment : Fragment() {
         binding.fragmentVerificationCodeDialogText.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                R.color.dialogErrorMess_text
+                R.color.main_text
             )
         )
 

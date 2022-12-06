@@ -40,7 +40,6 @@ class LoginRecoverPassword : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleBackPressed()
-        authViewModel.setResultCode(null)
         initListeners()
         initObservers()
     }
@@ -61,13 +60,14 @@ class LoginRecoverPassword : Fragment() {
             }
         }
 
-        authViewModel.resultCode.observe(viewLifecycleOwner) {
+        authViewModel.resultCodeRecoverPass.observe(viewLifecycleOwner) {
             when (it) {
                 0 -> {
                     if (!timerViewModel.isTimerRunning.value!!) {
                         timerViewModel.setIsTimerRunning(true)
                         timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
                     }
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
                     navigateToVerificationCode()
                 }
                 -1 -> {

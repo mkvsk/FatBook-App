@@ -131,6 +131,48 @@ class AuthenticationViewModel : ViewModel() {
         _allowSetNewPass.value = value
     }
 
+    private val _resultCodeEmail = MutableLiveData<Int?>(null)
+    val resultCodeEmail: LiveData<Int?> get() = _resultCodeEmail
+
+    fun setResultCodeEmail(value: Int) {
+        _resultCodeEmail.value = value
+    }
+
+    private val _resultCodeVCode = MutableLiveData<Int?>(null)
+    val resultCodeVCode: LiveData<Int?> get() = _resultCodeVCode
+
+    fun setResultCodeVCode(value: Int?) {
+        _resultCodeVCode.value = value
+    }
+
+    private val _resultCodeRegister = MutableLiveData<Int?>(null)
+    val resultCodeRegister: LiveData<Int?> get() = _resultCodeRegister
+
+    fun setResultCodeRegister(value: Int?) {
+        _resultCodeRegister.value = value
+    }
+
+    private val _resultCodeAuth = MutableLiveData<Int?>(null)
+    val resultCodeAuth: LiveData<Int?> get() = _resultCodeAuth
+
+    fun setResultCodeAuth(value: Int?) {
+        _resultCodeAuth.value = value
+    }
+
+    private val _resultCodeRecoverPass = MutableLiveData<Int?>(null)
+    val resultCodeRecoverPass: LiveData<Int?> get() = _resultCodeRecoverPass
+
+    fun setResultCodeRecoverPass(value: Int?) {
+        _resultCodeRecoverPass.value = value
+    }
+
+    private val _resultCodeChangePass = MutableLiveData<Int?>(null)
+    val resultCodeChangePass: LiveData<Int?> get() = _resultCodeChangePass
+
+    fun setResultCodeChangePass(value: Int?) {
+        _resultCodeChangePass.value = value
+    }
+
     fun emailCheck(email: String) {
         repository.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
@@ -142,20 +184,20 @@ class AuthenticationViewModel : ViewModel() {
                             0 -> {
                                 setUsername(it.username.toString())
                                 setVCode(it.vcode.toString())
-                                setResultCode(0)
+                                setResultCodeEmail(0)
                             }
                             4 -> {
                                 setError(
                                     ContextHolder.get()
                                         .getString(R.string.dialog_email_used_register_email)
                                 )
-                                setResultCode(4)
+                                setResultCodeEmail(4)
                             }
                             else -> {
                                 setError(
                                     ContextHolder.get().getString(R.string.dialog_register_error)
                                 )
-                                setResultCode(4)
+                                setResultCodeEmail(4)
                             }
                         }
                         setIsLoading(false)
@@ -166,7 +208,7 @@ class AuthenticationViewModel : ViewModel() {
             override fun onFailure(value: AuthenticationResponse?) {
                 if (codeResent.value == false) {
                     setError(ContextHolder.get().getString(R.string.dialog_register_error))
-                    setResultCode(-1)
+                    setResultCodeEmail(-1)
                     setIsLoading(false)
                 }
             }
@@ -197,10 +239,13 @@ class AuthenticationViewModel : ViewModel() {
                     setIsUserAuthenticated(true)
                     RetrofitFactory.updateJWT(it.access_token!!, it.username)
                 }
+                setResultCodeAuth(1)
                 setIsLoading(false)
             }
 
             override fun onFailure(value: LoginResponse?) {
+                setResultCodeAuth(-1)
+                setIsUserAuthenticated(false)
                 setError(ContextHolder.get().getString(R.string.dialog_register_error))
                 setIsLoading(false)
             }
@@ -233,23 +278,23 @@ class AuthenticationViewModel : ViewModel() {
                 value?.let {
                     when (it.code) {
                         0 -> {
-                            setResultCode(0)
+                            setResultCodeRegister(0)
                         }
                         4 -> {
-                            setResultCode(4)
+                            setResultCodeRegister(4)
                             setError(
                                 ContextHolder.get().getString(R.string.dialog_register_email_error)
                             )
                         }
                         5 -> {
-                            setResultCode(5)
+                            setResultCodeRegister(5)
                             setError(
                                 ContextHolder.get()
                                     .getString(R.string.dialog_register_username_unavailable)
                             )
                         }
                         else -> {
-                            setResultCode(6)
+                            setResultCodeRegister(6)
                             setError(ContextHolder.get().getString(R.string.dialog_register_error))
                         }
                     }
@@ -258,7 +303,7 @@ class AuthenticationViewModel : ViewModel() {
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                setResultCode(-1)
+                setResultCodeRegister(-1)
                 setError(ContextHolder.get().getString(R.string.dialog_register_error))
                 setIsLoading(false)
             }
@@ -295,43 +340,44 @@ class AuthenticationViewModel : ViewModel() {
                         when (it.code) {
                             0 -> {
                                 setAllowSetNewPass(true)
-                                setResultCode(0)
+                                setResultCodeVCode(0)
                             }
                             1 -> {
                                 setError(
                                     ContextHolder.get()
                                         .getString(R.string.dialog_wrong_verification_code_1)
                                 )
-                                setResultCode(1)
+                                setResultCodeVCode(1)
                             }
                             2 -> {
                                 setError(
                                     ContextHolder.get()
                                         .getString(R.string.dialog_wrong_verification_code_2_500)
                                 )
-                                setResultCode(2)
+                                setResultCodeVCode(2)
                             }
                             3 -> {
                                 setError(
                                     ContextHolder.get()
                                         .getString(R.string.dialog_wrong_verification_code_3)
                                 )
-                                setResultCode(3)
+                                setResultCodeVCode(3)
                             }
                             else -> {
                                 setError(
                                     ContextHolder.get()
                                         .getString(R.string.dialog_wrong_verification_code_2_500)
                                 )
-                                setResultCode(500)
+                                setResultCodeVCode(500)
                             }
                         }
+                        Log.d(TAG, "onResult: ${it.code}")
                     }
                 }
 
                 override fun onFailure(value: AuthenticationResponse?) {
                     setError(ContextHolder.get().getString(R.string.dialog_register_error))
-                    setResultCode(-1)
+                    setResultCodeVCode(-1)
                     setIsLoading(false)
                 }
             })
@@ -343,27 +389,27 @@ class AuthenticationViewModel : ViewModel() {
                 setIsLoading(false)
                 when (value?.code) {
                     0 -> {
-                        setResultCode(0)
+                        setResultCodeRecoverPass(0)
                         setRecoverIdentifier(identifier)
                         setRecoverEmail(value.email.toString())
                         setRecoverUsername(value.username.toString())
                         setVCode(value.vcode.toString())
                     }
                     6 -> {
-                        setResultCode(6)
+                        setResultCodeRecoverPass(6)
                         setError(
                             ContextHolder.get()
                                 .getString(R.string.dialog_recover_pass_user_not_found)
                         )
                     }
                     else -> {
-                        setResultCode(7)
+                        setResultCodeRecoverPass(7)
                     }
                 }
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                setResultCode(-1)
+                setResultCodeRecoverPass(-1)
                 setError(ContextHolder.get().getString(R.string.dialog_register_error))
                 setIsLoading(false)
             }
@@ -391,19 +437,19 @@ class AuthenticationViewModel : ViewModel() {
                 override fun onResult(value: AuthenticationResponse?) {
                     when (value?.code) {
                         0 -> {
-                            setResultCode(0)
+                            setResultCodeChangePass(0)
                             setUsername(recoverUsername.value.toString())
                             setPassword(password)
                         }
                         6 -> {
-                            setResultCode(6)
+                            setResultCodeChangePass(6)
                             setError(
                                 ContextHolder.get()
                                     .getString(R.string.dialog_recover_pass_user_not_found)
                             )
                         }
                         else -> {
-                            setResultCode(-1)
+                            setResultCodeChangePass(-1)
                             setError(
                                 ContextHolder.get().getString(R.string.dialog_connection_error)
                             )
@@ -413,7 +459,7 @@ class AuthenticationViewModel : ViewModel() {
                 }
 
                 override fun onFailure(value: AuthenticationResponse?) {
-                    setResultCode(-1)
+                    setResultCodeChangePass(-1)
                     setError(ContextHolder.get().getString(R.string.dialog_connection_error))
                     setIsLoading(false)
                 }

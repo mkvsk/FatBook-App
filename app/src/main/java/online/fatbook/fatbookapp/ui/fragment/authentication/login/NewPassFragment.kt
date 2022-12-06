@@ -44,7 +44,6 @@ class NewPassFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handleBackPressed()
-        authViewModel.setResultCode(null)
         initListeners()
         initObservers()
     }
@@ -58,9 +57,10 @@ class NewPassFragment : Fragment() {
             }
         }
 
-        authViewModel.resultCode.observe(viewLifecycleOwner) {
+        authViewModel.resultCodeChangePass.observe(viewLifecycleOwner) {
             when (it) {
                 0 -> {
+                    showDefaultMessage(getString(R.string.dialog_new_pass))
                     saveUserAndProceed()
                 }
                 null -> {
@@ -71,7 +71,6 @@ class NewPassFragment : Fragment() {
                 }
             }
         }
-
     }
 
     private fun initListeners() {

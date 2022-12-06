@@ -44,8 +44,8 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         handleBackPressed()
-        authViewModel.setResultCode(null)
         initListeners()
         initObservers()
     }
@@ -66,11 +66,16 @@ class LoginFragment : Fragment() {
             }
         }
 
-        authViewModel.error.observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                showErrorMessage(it)
-            } else {
-                showDefaultMessage(getString(R.string.dialog_register_email_error))
+        authViewModel.resultCodeAuth.observe(viewLifecycleOwner) {
+            when (it) {
+                1 -> {
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
+                }
+                -1 -> {
+                    hideKeyboard(binding.fragmentLoginEdittextUsername)
+                    hideKeyboard(binding.fragmentLoginEdittextPassword)
+                    showErrorMessage(authViewModel.error.value.toString())
+                }
             }
         }
     }
@@ -139,7 +144,6 @@ class LoginFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
             }
-
         })
     }
 

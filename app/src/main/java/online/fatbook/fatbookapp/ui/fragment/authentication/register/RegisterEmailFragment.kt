@@ -43,7 +43,6 @@ class RegisterEmailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handleBackPressed()
-        authViewModel.setResultCode(null)
         initListeners()
         initObservers()
     }
@@ -95,13 +94,15 @@ class RegisterEmailFragment : Fragment() {
             }
         }
 
-        authViewModel.resultCode.observe(viewLifecycleOwner) {
+        authViewModel.resultCodeEmail.observe(viewLifecycleOwner) {
             when (it) {
                 0 -> {
                     if (timerViewModel.isTimerRunning.value!!) {
                         timerViewModel.setIsTimerRunning(true)
                         timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
                     }
+                    hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
                     navigateToVerificationCode()
                 }
                 -1 -> {
@@ -117,7 +118,6 @@ class RegisterEmailFragment : Fragment() {
                 }
             }
         }
-
     }
 
     private fun handleBackPressed() {

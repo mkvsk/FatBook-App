@@ -41,7 +41,6 @@ class RegisterUsernameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handleBackPressed()
-        authViewModel.setResultCode(null)
         initListeners()
         initObservers()
     }
@@ -55,12 +54,15 @@ class RegisterUsernameFragment : Fragment() {
             }
         }
 
-        authViewModel.resultCode.observe(viewLifecycleOwner) {
+        authViewModel.resultCodeRegister.observe(viewLifecycleOwner) {
             when (it) {
                 0 -> {
+                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
                     navigateToAccountCreated()
                 }
                 null -> {
+                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
                     showDefaultMessage(getString(R.string.dialog_register_email_error))
                 }
                 -1 -> {

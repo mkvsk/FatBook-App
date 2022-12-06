@@ -36,7 +36,8 @@ class WelcomeFragment : Fragment() {
                 .navigate(R.id.action_go_to_register_from_welcome)
         }
         binding.fragmentWelcomeButtonLogin.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_login_from_welcome)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_login_from_welcome)
         }
     }
 

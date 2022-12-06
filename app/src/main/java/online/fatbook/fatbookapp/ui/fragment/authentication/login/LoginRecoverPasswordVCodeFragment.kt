@@ -43,7 +43,6 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handleBackPressed()
-        authViewModel.setResultCode(null)
         initListeners()
         initObservers()
         initViews()
@@ -150,19 +149,14 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
             }
         }
 
-//        authViewModel.allowSetNewPass.observe(viewLifecycleOwner) {
-//            if (it) {
-//                navigateToNewPassFragment()
-//            }
-//        }
-
-        authViewModel.resultCode.observe(viewLifecycleOwner) {
+        authViewModel.resultCodeRecoverPass.observe(viewLifecycleOwner) {
             when (it) {
                 0 -> {
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
                     navigateToNewPassFragment()
                 }
                 -1 -> {
-                    hideKeyboard(binding.fragmentLoginRecoverPassVcodeEdittextVc)
+
                     showErrorMessage(authViewModel.error.value.toString(), false)
                 }
                 null -> {
@@ -180,6 +174,8 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
     }
 
     private fun resendCode() {
+        hideKeyboard(binding.fragmentLoginRecoverPassVcodeEdittextVc)
+        authViewModel.setResultCodeRecoverPass(null)
         authViewModel.recoverPassword(authViewModel.recoverIdentifier.value!!)
     }
 
