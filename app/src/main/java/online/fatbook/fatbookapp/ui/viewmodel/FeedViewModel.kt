@@ -26,6 +26,13 @@ class FeedViewModel : ViewModel() {
         _recipes.value = list
     }
 
+    private val _isLoading = MutableLiveData(true)
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    fun setIsLoading(value: Boolean) {
+        _isLoading.value = value
+    }
+
     fun feed(pid: Long, callback: ResultCallback<List<RecipeSimpleObject>>) {
         repository.feed(pid, object : ResultCallback<List<RecipeSimpleObject>> {
             override fun onResult(value: List<RecipeSimpleObject>?) {

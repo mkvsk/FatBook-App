@@ -42,6 +42,7 @@ class VerificationCodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         handleBackPressed()
+        authViewModel.setResultCode(null)
         initListeners()
         initObservers()
 
@@ -101,6 +102,21 @@ class VerificationCodeFragment : Fragment() {
                 }
             }
         }
+
+        authViewModel.codeResent.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.fragmentVerificationCodeEdittextVc.setText(StringUtils.EMPTY)
+                binding.fragmentVerificationCodeDialogText.setText(R.string.dialog_verification_code)
+                binding.fragmentVerificationCodeDialogText.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.main_text
+                    )
+                )
+                authViewModel.setCodeResent(false)
+                Log.d("CODE ================= ", authViewModel.vCode.toString())
+            }
+        }
     }
 
     private fun initListeners() {
@@ -144,25 +160,27 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun resendCode() {
-        authViewModel.emailCheck(
-            authViewModel.userEmail.value!!,
-            object : ResultCallback<AuthenticationResponse> {
-                override fun onResult(value: AuthenticationResponse?) {
-                    authViewModel.setVCode(value?.vcode!!)
-                    binding.fragmentVerificationCodeEdittextVc.setText(StringUtils.EMPTY)
-                    binding.fragmentVerificationCodeDialogText.setText(R.string.dialog_verification_code)
-                    binding.fragmentVerificationCodeDialogText.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.main_text
-                        )
-                    )
-                    Log.d("CODE ================= ", value.vcode.toString())
-                }
-
-                override fun onFailure(value: AuthenticationResponse?) {
-                }
-            })
+        authViewModel.setCodeResent(true)
+        authViewModel.emailCheck(authViewModel.userEmail.value.toString())
+//        authViewModel.emailCheck(
+//            authViewModel.userEmail.value!!,
+//            object : ResultCallback<AuthenticationResponse> {
+//                override fun onResult(value: AuthenticationResponse?) {
+//                    authViewModel.setVCode(value?.vcode!!)
+//                    binding.fragmentVerificationCodeEdittextVc.setText(StringUtils.EMPTY)
+//                    binding.fragmentVerificationCodeDialogText.setText(R.string.dialog_verification_code)
+//                    binding.fragmentVerificationCodeDialogText.setTextColor(
+//                        ContextCompat.getColor(
+//                            requireContext(),
+//                            R.color.main_text
+//                        )
+//                    )
+//                    Log.d("CODE ================= ", value.vcode.toString())
+//                }
+//
+//                override fun onFailure(value: AuthenticationResponse?) {
+//                }
+//            })
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
@@ -279,7 +297,6 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun popBackStack() {
-        authViewModel.setResultCode(null)
         findNavController().popBackStack()
     }
 

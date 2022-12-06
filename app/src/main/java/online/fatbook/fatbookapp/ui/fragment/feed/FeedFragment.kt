@@ -63,10 +63,20 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("===t=======FeedFragment==========", "onViewCreated")
+
+
+
+        authViewModel.setResultCode(null)
+        initViews()
+        initListeners()
+        initObservers()
         setupSwipeRefresh()
         setupMenu()
         setupAdapter()
+
+
         binding.loader.progressOverlay.visibility = View.VISIBLE
+
         binding.toolbarFeed.visibility = View.GONE
         if (!authViewModel.isUserAuthenticated.value!!) {
             login()
@@ -83,42 +93,76 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         }
     }
 
+    private fun initListeners() {
+
+    }
+
+    private fun initViews() {
+
+    }
+
+    private fun initObservers() {
+        authViewModel.resultCode.observe(viewLifecycleOwner) {
+            when(it) {
+                0-> {
+                    logout()
+                }
+                1-> {
+                    loadUser()
+                }
+            }
+        }
+
+        feedViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loader.progressOverlay.visibility = View.VISIBLE
+                binding.toolbarFeed.visibility = View.GONE
+            } else {
+                binding.loader.progressOverlay.visibility = View.GONE
+                binding.toolbarFeed.visibility = View.VISIBLE
+            }
+        }
+    }
+
     private fun login() {
+        authViewModel.setResultCode(null)
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart("username", authViewModel.username.value!!)
                 .addFormDataPart("password", authViewModel.password.value!!).build()
-        authViewModel.login(request, object : ResultCallback<LoginResponse> {
-            override fun onResult(value: LoginResponse?) {
-                if (value == null || value.access_token.isNullOrEmpty()) {
-                    Log.d("LOGOUT", "${authViewModel.username.value}")
-                    logout()
-                } else {
-                    saveTokens(value)
-                    authViewModel.setIsUserAuthenticated(true)
-                    Log.d("LOGIN", "${authViewModel.username.value}")
-                }
-            }
+        authViewModel.loginFeed(request)
 
-            override fun onFailure(value: LoginResponse?) {
-                login()
-            }
-        })
+//        authViewModel.login(request, object : ResultCallback<LoginResponse> {
+//            override fun onResult(value: LoginResponse?) {
+//                if (value == null || value.access_token.isNullOrEmpty()) {
+//                    Log.d("LOGOUT", "${authViewModel.username.value}")
+//                    logout()
+//                } else {
+//                    saveTokens(value)
+//                    authViewModel.setIsUserAuthenticated(true)
+//                    Log.d("LOGIN", "${authViewModel.username.value}")
+//                }
+//            }
+//
+//            override fun onFailure(value: LoginResponse?) {
+//                login()
+//            }
+//        })
     }
 
-    private fun saveTokens(value: LoginResponse) {
-        authViewModel.setJwtAccess(value.access_token.toString())
-        authViewModel.setJwtRefresh(value.refresh_token.toString())
-        RetrofitFactory.updateJWT(value.access_token!!, value.username!!)
-        loadUser()
-    }
+//    private fun saveTokens(value: LoginResponse) {
+////        authViewModel.setJwtAccess(value.access_token.toString())
+////        authViewModel.setJwtRefresh(value.refresh_token.toString())
+////        RetrofitFactory.updateJWT(value.access_token!!, value.username!!)
+//        loadUser()
+//    }
 
     private fun loadUser() {
         userViewModel.getUserByUsername(authViewModel.username.value!!,
             object : ResultCallback<User> {
                 override fun onResult(value: User?) {
                     userViewModel.setUser(value!!)
-                    binding.toolbarFeed.visibility = View.VISIBLE
-                    binding.loader.progressOverlay.visibility = View.GONE
+
+                    feedViewModel.setIsLoading(false)
                     loadFeed()
                 }
 
@@ -194,8 +238,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     private fun drawFeed() {
         adapter!!.setData(feedViewModel.recipes.value, userViewModel.user.value)
         binding.swipeRefreshFeed.isEnabled = true
-        binding.loader.progressOverlay.visibility = View.GONE
-        binding.toolbarFeed.visibility = View.VISIBLE
+        feedViewModel.setIsLoading(false)
     }
 
     private fun setupAdapter() {

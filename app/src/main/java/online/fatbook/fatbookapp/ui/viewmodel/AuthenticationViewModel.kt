@@ -117,19 +117,12 @@ class AuthenticationViewModel : ViewModel() {
         _resultCode.value = value
     }
 
-//    private val _reconnectCount = MutableLiveData(1)
-//    val reconnectCount: LiveData<Int> get() = _reconnectCount
-//
-//    fun setReconnectCount() {
-//        _reconnectCount.value = _reconnectCount.value?.inc()
-//    }
+    private val _codeResent = MutableLiveData(false)
+    val codeResent: LiveData<Boolean> get() = _codeResent
 
-//    private val _isReconnectCancelled = MutableLiveData(false)
-//    val isReconnectCancelled: LiveData<Boolean> get() = _isReconnectCancelled
-//
-//    fun setIsReconnectCancelled(value: Boolean) {
-//        _isReconnectCancelled.value = value
-//    }
+    fun setCodeResent(value: Boolean) {
+        _codeResent.value = value
+    }
 
     private val _allowSetNewPass = MutableLiveData(false)
     val allowSetNewPass: LiveData<Boolean> get() = _allowSetNewPass
@@ -142,29 +135,40 @@ class AuthenticationViewModel : ViewModel() {
         repository.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
                 value?.let {
-                    when(it.code) {
-                        0-> {
-                            setUsername(it.username.toString())
-                            setVCode(it.vcode.toString())
-                            setResultCode(0)
+                    if (codeResent.value == true) {
+                        setVCode(it.vcode.toString())
+                    } else {
+                        when (it.code) {
+                            0 -> {
+                                setUsername(it.username.toString())
+                                setVCode(it.vcode.toString())
+                                setResultCode(0)
+                            }
+                            4 -> {
+                                setError(
+                                    ContextHolder.get()
+                                        .getString(R.string.dialog_email_used_register_email)
+                                )
+                                setResultCode(4)
+                            }
+                            else -> {
+                                setError(
+                                    ContextHolder.get().getString(R.string.dialog_register_error)
+                                )
+                                setResultCode(4)
+                            }
                         }
-                        4-> {
-                            setError(ContextHolder.get().getString(R.string.dialog_email_used_register_email))
-                            setResultCode(4)
-                        }
-                        else-> {
-                            setError(ContextHolder.get().getString(R.string.dialog_register_error))
-                            setResultCode(4)
-                        }
+                        setIsLoading(false)
                     }
-                    setIsLoading(false)
                 }
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                setError(ContextHolder.get().getString(R.string.dialog_register_error))
-                setResultCode(-1)
-                setIsLoading(false)
+                if (codeResent.value == false) {
+                    setError(ContextHolder.get().getString(R.string.dialog_register_error))
+                    setResultCode(-1)
+                    setIsLoading(false)
+                }
             }
         })
     }
@@ -199,6 +203,26 @@ class AuthenticationViewModel : ViewModel() {
             override fun onFailure(value: LoginResponse?) {
                 setError(ContextHolder.get().getString(R.string.dialog_register_error))
                 setIsLoading(false)
+            }
+        })
+    }
+
+    fun loginFeed(request: RequestBody) {
+        repository.login(request, object : ResultCallback<LoginResponse> {
+            override fun onResult(value: LoginResponse?) {
+                value?.let {
+                    if (it.access_token.isNullOrEmpty()) {
+                        setResultCode(0)
+                    } else {
+                        setJwtAccess(it.access_token.toString())
+                        setJwtRefresh(it.refresh_token.toString())
+                        RetrofitFactory.updateJWT(it.access_token, it.username!!)
+                        setResultCode(1)
+                    }
+                }
+            }
+
+            override fun onFailure(value: LoginResponse?) {
             }
         })
     }
