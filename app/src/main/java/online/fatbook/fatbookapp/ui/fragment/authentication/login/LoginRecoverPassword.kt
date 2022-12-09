@@ -7,15 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentLoginRecoverPassBinding
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.TimerViewModel

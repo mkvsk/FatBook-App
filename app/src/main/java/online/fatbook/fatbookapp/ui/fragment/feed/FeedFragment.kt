@@ -157,7 +157,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             object : ResultCallback<User> {
                 override fun onResult(value: User?) {
                     userViewModel.setUser(value!!)
-
                     feedViewModel.setIsLoading(false)
                     loadFeed()
                 }

@@ -44,7 +44,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         handleBackPressed()
         initListeners()
         initObservers()
@@ -229,5 +228,7 @@ class LoginFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        authViewModel.setResultCodeAuth(null)
+        authViewModel.setError("")
     }
 }

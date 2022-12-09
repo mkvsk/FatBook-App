@@ -245,9 +245,9 @@ class AuthenticationViewModel : ViewModel() {
             }
 
             override fun onFailure(value: LoginResponse?) {
+                setError(ContextHolder.get().getString(R.string.dialog_register_error))
                 setResultCodeAuth(-1)
                 setIsUserAuthenticated(false)
-                setError(ContextHolder.get().getString(R.string.dialog_register_error))
                 setIsLoading(false)
             }
         })
@@ -282,23 +282,23 @@ class AuthenticationViewModel : ViewModel() {
                             setResultCodeRegister(0)
                         }
                         4 -> {
-                            setResultCodeRegister(4)
                             setError(
                                 ContextHolder.get().getString(R.string.dialog_register_email_error)
                             )
+                            setResultCodeRegister(4)
                             setIsLoading(false)
                         }
                         5 -> {
-                            setResultCodeRegister(5)
                             setError(
                                 ContextHolder.get()
                                     .getString(R.string.dialog_register_username_unavailable)
                             )
+                            setResultCodeRegister(5)
                             setIsLoading(false)
                         }
                         else -> {
-                            setResultCodeRegister(6)
                             setError(ContextHolder.get().getString(R.string.dialog_register_error))
+                            setResultCodeRegister(6)
                             setIsLoading(false)
                         }
                     }
@@ -306,8 +306,8 @@ class AuthenticationViewModel : ViewModel() {
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                setResultCodeRegister(-1)
                 setError(ContextHolder.get().getString(R.string.dialog_register_error))
+                setResultCodeRegister(-1)
                 setIsLoading(false)
             }
         })

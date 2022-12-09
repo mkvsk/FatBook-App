@@ -369,5 +369,6 @@
     <string name="date_format_21_sec_ago">%s seconds ago</string>
     <string name="date_format_23_sec_ago">%s seconds ago</string>
     <string name="create_cooking_step_toolbar_title">Description</string>
+    <string name="dialog_default_login_recover_pass">Enter the username or email used to register your account</string>
 
 </resources>

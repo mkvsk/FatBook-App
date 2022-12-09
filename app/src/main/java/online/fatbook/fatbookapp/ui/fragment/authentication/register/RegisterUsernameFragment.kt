@@ -144,7 +144,7 @@ class RegisterUsernameFragment : Fragment() {
         binding.fragmentRegisterUsernameButtonNext.isEnabled = false
         binding.fragmentRegisterUsernameDialogText.setTextColor(
             ContextCompat.getColor(
-                requireContext(), R.color.dialogErrorMess_text
+                requireContext(), R.color.main_text
             )
         )
         binding.fragmentRegisterUsernameDialogText.text = message;
