@@ -440,30 +440,32 @@ class AuthenticationViewModel : ViewModel() {
                 override fun onResult(value: AuthenticationResponse?) {
                     when (value?.code) {
                         0 -> {
-                            setResultCodeChangePass(0)
                             setUsername(recoverUsername.value.toString())
                             setPassword(password)
+                            setResultCodeChangePass(0)
+                            setIsLoading(false)
                         }
                         6 -> {
-                            setResultCodeChangePass(6)
                             setError(
                                 ContextHolder.get()
                                     .getString(R.string.dialog_recover_pass_user_not_found)
                             )
+                            setResultCodeChangePass(6)
+                            setIsLoading(false)
                         }
                         else -> {
-                            setResultCodeChangePass(-1)
                             setError(
                                 ContextHolder.get().getString(R.string.dialog_connection_error)
                             )
+                            setResultCodeChangePass(-1)
+                            setIsLoading(false)
                         }
                     }
-                    setIsLoading(false)
                 }
 
                 override fun onFailure(value: AuthenticationResponse?) {
-                    setResultCodeChangePass(-1)
                     setError(ContextHolder.get().getString(R.string.dialog_connection_error))
+                    setResultCodeChangePass(-1)
                     setIsLoading(false)
                 }
             })
