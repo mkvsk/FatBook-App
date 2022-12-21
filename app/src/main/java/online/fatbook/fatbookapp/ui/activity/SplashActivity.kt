@@ -1,12 +1,21 @@
 package online.fatbook.fatbookapp.ui.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.lifecycle.ViewModelProvider
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivitySplashBinding
+import online.fatbook.fatbookapp.network.LoginResponse
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
+import online.fatbook.fatbookapp.repository.AuthenticationRepository
+import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD
@@ -16,9 +25,12 @@ import org.apache.commons.lang3.StringUtils
 class SplashActivity : AppCompatActivity() {
     private var _binding: ActivitySplashBinding? = null
     private val binding get() = _binding!!
+    private val repository by lazy { AuthenticationRepository() }
 
     private var username: String? = null
     private var password: String? = null
+
+    private var sharedPreferences: SharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +41,13 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun loadSharedPreferences() {
-        val sharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
-        setDefaultNightMode(if (sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)) {
-            MODE_NIGHT_YES
-        } else {
-            MODE_NIGHT_NO
-        })
+        setDefaultNightMode(
+            if (sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)) {
+                MODE_NIGHT_YES
+            } else {
+                MODE_NIGHT_NO
+            }
+        )
 
         username = sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
         password = sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
@@ -42,15 +55,31 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        //login
-        username
-        password
-        val user = User()
-        startMainScreen(user)
+        val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("username", username.toString())
+            .addFormDataPart("password", password.toString()).build()
+        repository.login(request, object : ResultCallback<LoginResponse> {
+            override fun onResult(value: LoginResponse?) {
+                if (value != null) {
+                    RetrofitFactory.updateJWT(
+                        value.access_token.toString(),
+                        value.username.toString()
+                    )
+                    startMainScreen(value.username.toString(), password.toString())
+                } else {
+                    logout()
+                }
+            }
+
+            override fun onFailure(value: LoginResponse?) {
+                logout()
+            }
+        })
     }
 
-    private fun startMainScreen(user: User) {
-
+    private fun logout() {
+        sharedPreferences.edit().putString(SP_TAG_USERNAME, StringUtils.EMPTY)
+        sharedPreferences.edit().putString(SP_TAG_PASSWORD, StringUtils.EMPTY)
     }
 
     private fun startMainScreen(username: String, password: String) {
