@@ -1,10 +1,15 @@
 package online.fatbook.fatbookapp.network.service
 
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Response
 
 class OAuthInterceptor(private val tokenType: String, private val accessToken: String, private val username: String) :
         Interceptor {
+
+    companion object {
+        private const val TAG = "OAuthInterceptor"
+    }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -16,6 +21,28 @@ class OAuthInterceptor(private val tokenType: String, private val accessToken: S
         builder.addHeader("Authorization", "$tokenType $accessToken").build()
         return chain.proceed(builder.build())
     }
+
+//    override fun intercept(chain: Interceptor.Chain): Response {
+//        val request = chain.request()
+//
+//        val builder = request.newBuilder()
+//        try {
+//            builder.addHeader("username", username)
+//        } catch (_: Exception) {}
+//        builder.addHeader("Authorization", "$tokenType $accessToken").build()
+//        val proceed = chain.proceed(builder.build())
+//
+//        when {
+//            proceed.code == 403 || proceed.code == 401 -> {
+//                Log.d(TAG, "token expired")
+//                return proceed
+//            }
+//            else -> {
+//                Log.d(TAG, "token OK")
+//                return proceed
+//            }
+//        }
+//    }
 
 //    override fun intercept(chain: Interceptor.Chain): Response {
 //        val request = chain.request()
