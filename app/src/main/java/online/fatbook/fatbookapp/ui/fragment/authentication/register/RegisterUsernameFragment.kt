@@ -25,9 +25,6 @@ import java.util.regex.Pattern
 
 class RegisterUsernameFragment : Fragment() {
 
-    private var reconnectCount = 1
-    private var isReconnectCancelled = false
-
     private var _binding: FragmentRegisterUsernameBinding? = null
     private val binding get() = _binding!!
 
@@ -43,10 +40,47 @@ class RegisterUsernameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        handleBackPressed()
+        initListeners()
+        initObservers()
+    }
+
+    private fun initObservers() {
+        authViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+            } else {
+                binding.loader.progressOverlayAuth.visibility = View.GONE
+            }
+        }
+
+        authViewModel.resultCodeRegister.observe(viewLifecycleOwner) {
+            when (it) {
+                0 -> {
+                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
+                    navigateToAccountCreated()
+                }
+                null -> {
+                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
+                }
+                -1 -> {
+                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                    showErrorMessage(authViewModel.error.value.toString(), false)
+                }
+                else -> {
+                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                    showErrorMessage(authViewModel.error.value.toString(), true)
+                }
+            }
+        }
+    }
+
+    private fun initListeners() {
         binding.fragmentRegisterUsernameButtonNext.setOnClickListener {
             if (usernameValidate()) {
                 authViewModel.setUsername(binding.fragmentRegisterUsernameEdittextUsername.text.toString())
-                isReconnectCancelled = false
                 createNewUser()
             } else {
                 hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
@@ -77,62 +111,19 @@ class RegisterUsernameFragment : Fragment() {
                 }
             }
         })
-
-        handleBackPressed()
     }
 
     private fun createNewUser() {
-        Log.d("REGISTER attempt", reconnectCount.toString())
-        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+        Log.d("REGISTER attempt", "")
+        authViewModel.setIsLoading(true)
         hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
         authViewModel.register(
             AuthenticationRequest(
                 authViewModel.username.value,
                 authViewModel.password.value,
                 authViewModel.userEmail.value
-            ), object : ResultCallback<AuthenticationResponse> {
-                override fun onResult(value: AuthenticationResponse?) {
-                    binding.loader.progressOverlayAuth.visibility = View.GONE
-                    value?.let {
-                        when (it.code) {
-                            0 -> {
-                                if (!isReconnectCancelled) {
-                                    navigateToAccountCreated()
-                                }
-                            }
-                            4 -> {
-                                hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-                                showErrorMessage(
-                                    getString(R.string.dialog_register_email_error), true
-                                )
-                            }
-                            5 -> {
-                                hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-                                showErrorMessage(
-                                    getString(R.string.dialog_register_username_unavailable), true
-                                )
-                            }
-                            else -> {
-                                hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-                                showErrorMessage(getString(R.string.dialog_register_error), true)
-                            }
-                        }
-                    }
-                }
-
-                override fun onFailure(value: AuthenticationResponse?) {
-                    if (!isReconnectCancelled) {
-                        if (reconnectCount < 6) {
-                            reconnectCount++
-                            createNewUser()
-                        } else {
-                            hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-                            showErrorMessage(getString(R.string.dialog_register_error), false)
-                            binding.loader.progressOverlayAuth.visibility = View.GONE
-                        }
-                    }
-                }
-            })
+            )
+        )
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
@@ -153,7 +144,7 @@ class RegisterUsernameFragment : Fragment() {
         binding.fragmentRegisterUsernameButtonNext.isEnabled = false
         binding.fragmentRegisterUsernameDialogText.setTextColor(
             ContextCompat.getColor(
-                requireContext(), R.color.dialogErrorMess_text
+                requireContext(), R.color.main_text
             )
         )
         binding.fragmentRegisterUsernameDialogText.text = message;
@@ -170,10 +161,9 @@ class RegisterUsernameFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
+                    if (authViewModel.isLoading.value == true) {
+                        authViewModel.setIsLoading(false)
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
-                        isReconnectCancelled = true
                     } else {
                         popBackStack()
                     }

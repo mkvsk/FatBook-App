@@ -16,8 +16,6 @@ class WelcomeFragment : Fragment() {
     private var _binding: FragmentWelcomeBinding? = null
     private val binding get() = _binding!!
 
-    private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,14 +27,18 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initListeners()
+    }
+
+    private fun initListeners() {
         binding.fragmentWelcomeButtonRegister.setOnClickListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_register_from_welcome)
         }
         binding.fragmentWelcomeButtonLogin.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_go_to_login_from_welcome)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_login_from_welcome)
         }
-
     }
 
     override fun onDestroy() {

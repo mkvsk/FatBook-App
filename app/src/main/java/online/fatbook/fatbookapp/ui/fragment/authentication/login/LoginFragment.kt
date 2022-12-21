@@ -17,10 +17,7 @@ import androidx.navigation.fragment.findNavController
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.network.LoginResponse
 import online.fatbook.fatbookapp.databinding.FragmentLoginBinding
-import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants
@@ -47,9 +44,42 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         handleBackPressed()
+        initListeners()
+        initObservers()
+    }
 
+    private fun initObservers() {
+        authViewModel.isUserAuthenticated.observe(viewLifecycleOwner) {
+            if (it) {
+                saveUserDataToSharedPrefs()
+                navigateToFeed()
+            }
+        }
+
+        authViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+            } else {
+                binding.loader.progressOverlayAuth.visibility = View.GONE
+            }
+        }
+
+        authViewModel.resultCodeAuth.observe(viewLifecycleOwner) {
+            when (it) {
+                1 -> {
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
+                }
+                -1 -> {
+                    hideKeyboard(binding.fragmentLoginEdittextUsername)
+                    hideKeyboard(binding.fragmentLoginEdittextPassword)
+                    showErrorMessage(authViewModel.error.value.toString())
+                }
+            }
+        }
+    }
+
+    private fun initListeners() {
         binding.fragmentLoginButtonLogin.setOnClickListener {
             hideKeyboard(binding.fragmentLoginEdittextPassword)
             login(
@@ -58,6 +88,7 @@ class LoginFragment : Fragment() {
             )
         }
 
+        //TODO fix
         binding.fragmentLoginForgotPasswordLink.setOnClickListener {
             var recoverIdentifier: String = authViewModel.recoverIdentifier.value!!
             recoverIdentifier =
@@ -88,7 +119,6 @@ class LoginFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
             }
-
         })
 
         binding.fragmentLoginEdittextPassword.addTextChangedListener(object : TextWatcher {
@@ -113,48 +143,15 @@ class LoginFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
             }
-
         })
     }
 
     private fun login(username: String, password: String) {
         Log.d("LOGIN attempt", "for user $username/$password #$reconnectCount")
-        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("username", username)
             .addFormDataPart("password", password).build()
-        authViewModel.login(request, object : ResultCallback<LoginResponse> {
-            override fun onResult(value: LoginResponse?) {
-                if (!isReconnectCancelled) {
-                    if (value != null) {
-                        authViewModel.setUsername(username)
-                        authViewModel.setPassword(password)
-                        authViewModel.setJwtAccess(value.access_token.toString())
-                        authViewModel.setJwtRefresh(value.refresh_token.toString())
-                        authViewModel.setIsUserAuthenticated(true)
-                        RetrofitFactory.updateJWT(value.access_token!!, value.username!!)
-                        saveUserDataToSharedPrefs()
-                        navigateToFeed()
-                    } else {
-                        showErrorMessage("Sequence not found")
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
-                    }
-                }
-            }
-
-            override fun onFailure(value: LoginResponse?) {
-                if (!isReconnectCancelled) {
-                    if (reconnectCount < 6) {
-                        reconnectCount++
-                        login(username, password)
-                    } else {
-                        hideKeyboard(binding.fragmentLoginEdittextPassword)
-                        showErrorMessage(getString(R.string.dialog_register_error))
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
-                    }
-                }
-            }
-        })
+        authViewModel.login(request, password)
     }
 
     private fun navigateToFeed() {
@@ -167,8 +164,8 @@ class LoginFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
+                    if (authViewModel.isLoading.value == true) {
+                        authViewModel.setIsLoading(false)
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
                         isReconnectCancelled = true
                     } else {
@@ -231,5 +228,7 @@ class LoginFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        authViewModel.setResultCodeAuth(null)
+        authViewModel.setError("")
     }
 }

@@ -26,9 +26,6 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 
 class RegisterEmailFragment : Fragment() {
 
-    private var reconnectCount = 1
-    private var isReconnectCancelled = false
-
     private var _binding: FragmentRegisterEmailBinding? = null
     private val binding get() = _binding!!
 
@@ -44,13 +41,19 @@ class RegisterEmailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        handleBackPressed()
+        initListeners()
+        initObservers()
+    }
+
+    private fun initListeners() {
         binding.fragmentRegisterEmailButtonNext.setOnClickListener {
             if (emailValidate(binding.fragmentRegisterEmailEdittextEmail.text.toString())) {
                 if (authViewModel.userEmail.value!! != binding.fragmentRegisterEmailEdittextEmail.text.toString()) {
                     timerViewModel.setIsTimerRunning(false)
                     timerViewModel.setCurrentCountdown(0)
                     timerViewModel.cancelTimer()
-                    isReconnectCancelled = false
                     emailCheck(binding.fragmentRegisterEmailEdittextEmail.text.toString())
                 } else {
                     if (timerViewModel.isTimerRunning.value == false) {
@@ -80,8 +83,40 @@ class RegisterEmailFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
             }
         })
+    }
 
-        handleBackPressed()
+    private fun initObservers() {
+        authViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+            } else {
+                binding.loader.progressOverlayAuth.visibility = View.GONE
+            }
+        }
+
+        authViewModel.resultCodeEmail.observe(viewLifecycleOwner) {
+            when (it) {
+                0 -> {
+                    if (timerViewModel.isTimerRunning.value!!) {
+                        timerViewModel.setIsTimerRunning(true)
+                        timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
+                    }
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
+                    navigateToVerificationCode()
+                }
+                -1 -> {
+                    showErrorMessage(authViewModel.error.value.toString(), false)
+                    hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
+                }
+                null -> {
+                    showDefaultMessage(getString(R.string.dialog_register_email_error))
+                }
+                else -> {
+                    showErrorMessage(authViewModel.error.value.toString(), true)
+                    hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
+                }
+            }
+        }
     }
 
     private fun handleBackPressed() {
@@ -89,10 +124,9 @@ class RegisterEmailFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (binding.loader.progressOverlayAuth.visibility == View.VISIBLE) {
+                    if (authViewModel.isLoading.value == true) {
                         showDefaultMessage(getString(R.string.dialog_register_email_error))
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
-                        isReconnectCancelled = true
+                        authViewModel.setIsLoading(false)
                     } else {
                         popBackStack()
                     }
@@ -137,52 +171,10 @@ class RegisterEmailFragment : Fragment() {
 
 
     private fun emailCheck(email: String) {
-        Log.d("EMAIL CHECK attempt", reconnectCount.toString())
-        binding.loader.progressOverlayAuth.visibility = View.VISIBLE
+        Log.d("EMAIL CHECK attempt", "")
+        authViewModel.setIsLoading(true)
         hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
-        authViewModel.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
-            override fun onResult(value: AuthenticationResponse?) {
-                binding.loader.progressOverlayAuth.visibility = View.GONE
-                when (value!!.code) {
-                    0 -> {
-                        if (!isReconnectCancelled) {
-                            authViewModel.setUsername(value.email!!)
-                            if (!timerViewModel.isTimerRunning.value!!) {
-                                timerViewModel.setIsTimerRunning(true)
-                                timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
-                            }
-                            authViewModel.setVCode(value.vcode!!)
-                            Log.d("CODE ======================= ", value.vcode!!)
-                            Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG)
-                                .show()
-                            navigateToVerificationCode()
-                        }
-                    }
-                    4 -> {
-                        showErrorMessage(
-                            getString(R.string.dialog_email_used_register_email),
-                            true
-                        )
-                    }
-                    else -> {
-                        showErrorMessage(getString(R.string.dialog_register_error), true)
-                    }
-                }
-            }
-
-            override fun onFailure(value: AuthenticationResponse?) {
-                if (!isReconnectCancelled) {
-                    if (reconnectCount < 6) {
-                        reconnectCount++
-                        emailCheck(email)
-                    } else {
-                        showErrorMessage(getString(R.string.dialog_register_error), false)
-                        hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
-                    }
-                }
-            }
-        })
+        authViewModel.emailCheck(email)
     }
 
     private fun navigateToVerificationCode() {

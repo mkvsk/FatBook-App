@@ -58,7 +58,7 @@ class AuthenticationRepository {
                 ) {
                     Log.d("LOGIN", response.body().toString())
                     if (response.body() == null) {
-                        callback.onResult(null)
+                        callback.onFailure(null)
                     } else {
                         callback.onResult(response.body())
                     }

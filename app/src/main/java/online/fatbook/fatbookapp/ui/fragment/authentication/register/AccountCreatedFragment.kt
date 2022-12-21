@@ -33,11 +33,21 @@ class AccountCreatedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fragmentRegisterAccountCreatedDialogText.text =
-            String.format(getString(R.string.dialog_account_created), authViewModel.username.value)
 
+        initViews()
+        initListeners()
         saveUserDataToSharedPrefs()
+    }
 
+    private fun initViews() {
+        binding.fragmentRegisterAccountCreatedDialogText.text =
+            String.format(
+                getString(R.string.dialog_account_created),
+                authViewModel.username.value
+            )
+    }
+
+    private fun initListeners() {
         binding.fragmentRegisterAccountCreatedButtonNext.setOnClickListener {
             navigateToFeed()
         }
