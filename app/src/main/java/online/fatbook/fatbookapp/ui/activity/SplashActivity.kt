@@ -30,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
     private var username: String? = null
     private var password: String? = null
 
-    private var sharedPreferences: SharedPreferences = getSharedPreferences(SP_TAG, MODE_PRIVATE)
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +41,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun loadSharedPreferences() {
+        sharedPreferences =
+            getSharedPreferences(SP_TAG, MODE_PRIVATE)
         setDefaultNightMode(
             if (sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)) {
                 MODE_NIGHT_YES
@@ -80,6 +82,7 @@ class SplashActivity : AppCompatActivity() {
     private fun logout() {
         sharedPreferences.edit().putString(SP_TAG_USERNAME, StringUtils.EMPTY)
         sharedPreferences.edit().putString(SP_TAG_PASSWORD, StringUtils.EMPTY)
+        startMainScreen("", "")
     }
 
     private fun startMainScreen(username: String, password: String) {
