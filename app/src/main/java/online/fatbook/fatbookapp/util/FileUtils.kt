@@ -25,8 +25,6 @@ object FileUtils {
 
     private const val MEDIA_TYPE_IMAGE = "image/*"
     private const val DEFAULT_USER_IMG_NAME = "image"
-    const val TYPE_RECIPE = "r"
-    const val TYPE_USER = "u"
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
@@ -351,7 +349,7 @@ object FileUtils {
 
     fun getFile(file: File): MultipartBody.Part {
         val requestBody = file.asRequestBody(MEDIA_TYPE_IMAGE.toMediaTypeOrNull())
-        val fileName = DEFAULT_USER_IMG_NAME + file.name.substring(file.name.indexOf('.'))
+        val fileName = System.currentTimeMillis().toString() + file.name.substring(file.name.indexOf('.'))
         return MultipartBody.Part.createFormData("file", fileName, requestBody)
     }
 }

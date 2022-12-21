@@ -1,17 +1,19 @@
 package online.fatbook.fatbookapp.repository
 
 import android.util.Log
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
+import kotlinx.coroutines.*
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.DeleteRequest
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
+import online.fatbook.fatbookapp.util.Constants
+import online.fatbook.fatbookapp.util.Constants.TYPE_RECIPE
+import online.fatbook.fatbookapp.util.Constants.getImageName
+import online.fatbook.fatbookapp.util.Constants.getRecipeImageName
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 class ImageServiceRepository {
@@ -21,22 +23,51 @@ class ImageServiceRepository {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
-    fun upload(file: MultipartBody.Part?, type: String, id: String, step: String, callback: ResultCallback<String>) {
-        scope.launch(Dispatchers.IO) {
-            val call = RetrofitFactory.imgService().imgUpload(file, type, id, step)
+    private lateinit var url: String
 
-            call.enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    Log.d("IMAGE UPLOAD", response.body().toString())
-                    if (response.code() == 200) {
-                        callback.onResult(response.body())
+    companion object {
+        const val TAG = "ImageServiceRepository"
+    }
+
+    fun upload(url: String, body: RequestBody, callback: ResultCallback<String>) {
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.cdnService().upload(url, body)
+
+            call.enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    Log.d("$TAG IMAGE UPLOAD", response.code().toString())
+                    if (response.code() == 201) {
+                        callback.onResult(url)
                     } else {
                         callback.onFailure(null)
                     }
                 }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    Log.d("IMAGE UPLOAD", "error")
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.d("$TAG IMAGE UPLOAD", "error")
+                    t.printStackTrace()
+                    callback.onFailure(null)
+                }
+            })
+        }
+    }
+
+    fun delete(url: String, callback: ResultCallback<Boolean>) {
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.cdnService().delete(url)
+
+            call.enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    Log.d("$TAG IMAGE DELETE", response.code().toString())
+                    if (response.code() == 200 || response.code() == 201) {
+                        callback.onResult(true)
+                    } else {
+                        callback.onFailure(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.d("$TAG IMAGE DELETE", "error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }
@@ -45,26 +76,33 @@ class ImageServiceRepository {
     }
 
 
-    fun delete(request: DeleteRequest, callback: ResultCallback<Void>) {
-        scope.launch(Dispatchers.IO) {
-            val call = RetrofitFactory.imgService().imgDelete(request)
+    fun uploadRecipeImages(images: HashMap<Int, Pair<String, RequestBody?>>, id: String, callback: ResultCallback<Pair<Int, String>>) {
+        scope.launch {
+            images.forEach {
+                launch {
+                    it.value.let { pair ->
+                        pair.second?.let { body ->
+                            url = "$TYPE_RECIPE/$id/${pair.first}"
+                            RetrofitFactory.cdnService().upload(url, body).enqueue(object : Callback<Void> {
+                                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                    Log.d("$TAG RECIPE IMAGE UPLOAD", response.code().toString())
+                                    if (response.code() == 201) {
+                                        callback.onResult(Pair(it.key, it.value.first))
+                                    } else {
+                                        callback.onFailure(Pair(it.key, it.value.first))
+                                    }
+                                }
 
-            call.enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    Log.d("IMAGE DELETE", response.body().toString())
-                    if (response.code() == 200) {
-                        callback.onResult(response.body())
-                    } else {
-                        callback.onFailure(null)
+                                override fun onFailure(call: Call<Void>, t: Throwable) {
+                                    Log.d("$TAG RECIPE IMAGE UPLOAD", "error")
+                                    t.printStackTrace()
+                                    callback.onFailure(Pair(it.key, it.value.first))
+                                }
+                            })
+                        }
                     }
                 }
-
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Log.d("IMAGE DELETE", "error")
-                    t.printStackTrace()
-                    callback.onFailure(null)
-                }
-            })
+            }
         }
     }
 

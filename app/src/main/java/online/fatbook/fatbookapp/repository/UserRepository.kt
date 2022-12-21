@@ -21,13 +21,17 @@ class UserRepository {
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
+    companion object {
+        const val TAG = "UserRepository"
+    }
+
     fun getUserByUsername(username: String, callback: ResultCallback<User>) =
         scope.launch(Dispatchers.IO) {
             val call = RetrofitFactory.apiService().getUserByUsername(username)
 
             call.enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
-                    Log.d("USER LOAD", response.body().toString())
+                    Log.d(TAG, "USER LOAD ${response.body().toString()}")
                     if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
@@ -36,7 +40,7 @@ class UserRepository {
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
-                    Log.d("USER LOAD", "error")
+                    Log.d(TAG, "USER LOAD error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }
@@ -49,7 +53,7 @@ class UserRepository {
 
             call.enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
-                    Log.d("USER UPDATE", response.body().toString())
+                    Log.d(TAG, "USER UPDATE ${response.body().toString()}")
                     if (response.body() == null) {
                         callback.onFailure(null)
                     } else {
@@ -58,7 +62,7 @@ class UserRepository {
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
-                    Log.d("USER UPDATE", "error")
+                    Log.d(TAG, "USER UPDATE error")
                     t.printStackTrace()
                     callback.onFailure(null)
                 }

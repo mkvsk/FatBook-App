@@ -1,6 +1,8 @@
 package online.fatbook.fatbookapp.util
 
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import online.fatbook.fatbookapp.R
+import java.util.*
 
 object Constants {
     const val FEED_TAG = "feed_tag"
@@ -27,11 +29,40 @@ object Constants {
     const val MAX_PORTIONS: Int = 20
     const val MIN_PORTIONS: Int = 1
 
+    val MEDIA_TYPE_OCTET_STREAM = "application/octet-stream".toMediaTypeOrNull()
+
+    const val TYPE_RECIPE = "r"
+    const val TYPE_USER = "u"
+
+    private val RANDOM: Random = Random()
+
+    const val CDN_FB_BASE_URL = "https://cdn.fatbook.online/"
+
+    fun getImageName(type: String, step: Int): String {
+        return if (type == TYPE_RECIPE && step != 0) {
+            "step$step/${String.format("%s%s", System.currentTimeMillis(), RANDOM.nextInt(10))}"
+        } else {
+            String.format("%s%s", System.currentTimeMillis(), RANDOM.nextInt(10))
+        }
+    }
+
+    fun getUserImageName(): String {
+        return String.format("%s%s", System.currentTimeMillis(), RANDOM.nextInt(10))
+    }
+
+    fun getRecipeImageName(step: Int): String {
+        return if (step == 0) {
+            String.format("%s%s", System.currentTimeMillis(), RANDOM.nextInt(10))
+        } else {
+            "step$step/${String.format("%s%s", System.currentTimeMillis(), RANDOM.nextInt(10))}"
+        }
+    }
+
     val rootDestinations = setOf(
-        R.id.feed_dest,
-        R.id.search_dest,
-        R.id.recipe_first_stage_dest,
-        R.id.notification_dest,
-        R.id.user_profile_dest
+            R.id.feed_dest,
+            R.id.search_dest,
+            R.id.recipe_first_stage_dest,
+            R.id.notification_dest,
+            R.id.user_profile_dest
     )
 }

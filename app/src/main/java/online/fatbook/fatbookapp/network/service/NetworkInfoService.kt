@@ -3,14 +3,11 @@ package online.fatbook.fatbookapp.network.service
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.core.DeleteRequest
-import online.fatbook.fatbookapp.network.AuthenticationRequest
-import online.fatbook.fatbookapp.network.AuthenticationResponse
-import online.fatbook.fatbookapp.network.LoginResponse
 import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnit
 import online.fatbook.fatbookapp.core.user.User
-import online.fatbook.fatbookapp.network.UserUpdateRequest
+import online.fatbook.fatbookapp.network.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -76,12 +73,11 @@ interface NetworkInfoService {
     /**
      * Image service
      */
-    @Multipart
-    @POST("upload")
-    fun imgUpload(@Part file: MultipartBody.Part?, @Query(value = "type") type: String, @Query(value = "id") id: String, @Query(value = "step") step: String): Call<String>
+    @PUT
+    fun upload(@Url url: String, @Body body: RequestBody): Call<Void>
 
-    @POST("delete")
-    fun imgDelete(@Body request: DeleteRequest): Call<Void>
+    @DELETE
+    fun delete(@Url url: String): Call<Void>
 
     /**
      * Feed
@@ -93,7 +89,7 @@ interface NetworkInfoService {
      * Recipe
      */
     @POST("recipe/create")
-    fun recipeCreate(@Body recipe: Recipe): Call<Void>
+    fun recipeCreate(@Body recipe: Recipe): Call<Boolean>
 
     @GET("recipe/get")
     fun getRecipeById(@Query(value = "id") id: Long): Call<Recipe>
@@ -125,7 +121,6 @@ interface NetworkInfoService {
 
     @GET("ingredient/get/all")
     fun allIngredients(): Call<List<Ingredient>>
-
 
 
     @POST("recipe/update")

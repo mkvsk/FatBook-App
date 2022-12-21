@@ -7,7 +7,9 @@
     android:background="@color/theme_primary_bgr"
     tools:context=".ui.fragment.recipe.RecipeSecondStageFragment">
 
-    <include layout="@layout/include_progress_overlay" />
+    <include
+        android:id="@+id/loader"
+        layout="@layout/include_progress_overlay" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button_up_recipe_create"
@@ -51,10 +53,10 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:orientation="vertical"
             android:id="@+id/container_recipe_create_2_stage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardview_right_recipe_create_2_stage"
@@ -104,9 +106,9 @@
                         android:layout_marginTop="@dimen/titles_spacing_recipe_create"
                         android:clipToPadding="false"
                         android:overScrollMode="never"
-                        tools:itemCount="0"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@id/textview_ingredients_title_recipe_create_2_stage"
+                        tools:itemCount="0"
                         tools:listitem="@layout/rv_recipe_ingredient" />
 
                     <androidx.appcompat.widget.AppCompatButton

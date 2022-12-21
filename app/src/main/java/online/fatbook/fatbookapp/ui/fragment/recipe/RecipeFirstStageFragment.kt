@@ -46,6 +46,9 @@ import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogBuilder
 import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogListener
 import java.io.File
 import java.time.LocalTime
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
         BaseFragmentActionsListener {
@@ -64,8 +67,6 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecipeFirstStageBinding.inflate(inflater, container, false)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-                View.VISIBLE
         return binding.root
     }
 
@@ -73,6 +74,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("===t=======RecipeCreateFirstStageFragment==========", "onViewCreated")
+        //TODO fix SOFT_INPUT_ADJUST_RESIZE
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         recipeViewModel.isRecipeCreated.value?.let {
             if (it) {
@@ -107,9 +109,10 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
 
         if (recipeViewModel.newRecipeImage.value != null) {
             toggleImageButtons(true)
-            Glide.with(requireContext())
+            Glide
+                    .with(requireContext())
                     .load(recipeViewModel.newRecipeImage.value)
-                    .placeholder(Utils.getCircularProgressDrawable())
+                    .placeholder(requireContext().getDrawable(R.drawable.default_recipe_image_rv_feed))
                     .into(binding.imageviewPhotoRecipe1Stage)
         } else {
             toggleImageButtons(false)
@@ -351,11 +354,10 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
         recipeViewModel.setNewRecipeCookingTimeHours(null)
         recipeViewModel.setNewRecipeCookingTimeMinutes(null)
 
-        recipeViewModel.setNewRecipeSteps(ArrayList())
         recipeViewModel.setNewRecipeIngredients(ArrayList())
         recipeViewModel.setNewRecipeAddIngredient(null)
         recipeViewModel.setNewRecipeAddRecipeIngredient(null)
-        recipeViewModel.setNewRecipeStepImages(null)
+        recipeViewModel.setNewRecipeStepImages(HashMap())
         recipeViewModel.setSelectedCookingStep(null)
         recipeViewModel.setSelectedCookingStepPosition(null)
         (requireActivity() as MainActivity).redrawFragment(2)

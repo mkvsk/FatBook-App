@@ -3,10 +3,10 @@ package online.fatbook.fatbookapp.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.DeleteRequest
 import online.fatbook.fatbookapp.repository.ImageServiceRepository
+import java.io.File
 
 class ImageViewModel : ViewModel() {
 
@@ -37,14 +37,29 @@ class ImageViewModel : ViewModel() {
         _userImageToDelete.value = value
     }
 
-    fun uploadImage(
-        file: MultipartBody.Part?,
-        type: String,
-        id: String,
-        step: String,
-        callback: ResultCallback<String>
-    ) {
-        repository.upload(file, type, id, step, object : ResultCallback<String> {
+    private val _recipeStepImages = MutableLiveData<HashMap<Int, File>?>()
+    val recipeStepImages: LiveData<HashMap<Int, File>?> get() = _recipeStepImages
+
+    fun setNewRecipeStepImages(value: HashMap<Int, File>?) {
+        _recipeStepImages.value = value
+    }
+
+    private val _recipeImageToUpload = MutableLiveData<File?>()
+    val recipeImageToUpload: LiveData<File?> get() = _recipeImageToUpload
+
+    fun setNewRecipeImage(value: File?) {
+        _recipeImageToUpload.value = value
+    }
+
+    private val _imagesToUploadAmount = MutableLiveData<Int>()
+    val imagesToUploadAmount: LiveData<Int> get() = _imagesToUploadAmount
+
+    fun setImagesToUploadAmount(value: Int) {
+        _imagesToUploadAmount.value = value
+    }
+
+    fun upload(url: String, body: RequestBody, callback: ResultCallback<String>) {
+        repository.upload(url, body, object : ResultCallback<String> {
             override fun onResult(value: String?) {
                 callback.onResult(value)
             }
@@ -55,13 +70,25 @@ class ImageViewModel : ViewModel() {
         })
     }
 
-    fun deleteImage(request: DeleteRequest, callback: ResultCallback<Void>) {
-        repository.delete(request, object : ResultCallback<Void> {
-            override fun onResult(value: Void?) {
+    fun delete(url: String, callback: ResultCallback<Boolean>) {
+        repository.delete(url, object : ResultCallback<Boolean> {
+            override fun onResult(value: Boolean?) {
                 callback.onResult(value)
             }
 
-            override fun onFailure(value: Void?) {
+            override fun onFailure(value: Boolean?) {
+                callback.onFailure(value)
+            }
+        })
+    }
+
+    fun uploadRecipeImages(images: HashMap<Int, Pair<String, RequestBody?>>, id: String, callback: ResultCallback<Pair<Int, String>>) {
+        repository.uploadRecipeImages(images, id, object : ResultCallback<Pair<Int, String>> {
+            override fun onResult(value: Pair<Int, String>?) {
+                callback.onResult(value)
+            }
+
+            override fun onFailure(value: Pair<Int, String>?) {
                 callback.onFailure(value)
             }
         })

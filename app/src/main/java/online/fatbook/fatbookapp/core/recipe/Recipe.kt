@@ -11,7 +11,7 @@ data class Recipe(
     var image: String? = "",
     var forks: Int? = 0,
     var createDate: String? = "",
-    val identifier: Long? = null,
+    var identifier: Long? = null,
     var difficulty: CookingDifficulty? = null,
     var portions: Int? = null,
     var cookingTime: String? = "",

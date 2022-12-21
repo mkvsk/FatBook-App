@@ -25,6 +25,8 @@ object FormatUtils {
     private var betweenMin: Long = 0
     private var betweenSec: Long = 0
 
+    private final val RANDOM: Random = Random()
+
     fun setContext(context: Context) {
         this.context = context
     }
@@ -128,5 +130,9 @@ object FormatUtils {
             }
         }
         return String.format(context.getString(R.string.date_format_today_h_m), date.hour, date.minute)
+    }
+
+    fun generateRecipeId(): Long {
+        return String.format("%s%s", System.currentTimeMillis(), RANDOM.nextInt(10)).toLong()
     }
 }
