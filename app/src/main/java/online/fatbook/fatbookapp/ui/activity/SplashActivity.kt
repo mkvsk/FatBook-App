@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivitySplashBinding
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE
@@ -37,17 +38,22 @@ class SplashActivity : AppCompatActivity() {
 
         username = sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
         password = sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
+        login()
+    }
 
-        Log.d("username", username!!)
-        Log.d("password", password!!)
+    private fun login() {
+        //login
+        username
+        password
+        val user = User()
+        startMainScreen(user)
+    }
 
-        startMainScreen(username!!, password!!)
+    private fun startMainScreen(user: User) {
+
     }
 
     private fun startMainScreen(username: String, password: String) {
-//        if (intent.action != null && intent.action != "android.intent.action.MAIN") {
-//            mainScreenIntent.action = intent.action
-//        }
         val intent: Intent
         if (!StringUtils.isEmpty(username) || !StringUtils.isEmpty(password)) {
             intent = Intent(this@SplashActivity, MainActivity::class.java)
