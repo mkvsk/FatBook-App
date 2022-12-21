@@ -139,7 +139,7 @@ class EditUserProfileFragment : Fragment() {
     private fun saveUserProfile() {
         hideKeyboard(binding.profileBio)
         if (imageViewModel.userImageToUpload.value != null) {
-            if (userViewModel.user.value!!.profileImage!!.isNotEmpty()) {
+            if (!userViewModel.user.value!!.profileImage.isNullOrEmpty()) {
                 imageViewModel.setUserImageToDelete(userViewModel.user.value!!.profileImage)
                 deleteImage(true)
             } else {

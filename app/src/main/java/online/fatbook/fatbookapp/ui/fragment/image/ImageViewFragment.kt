@@ -77,7 +77,6 @@ class ImageViewFragment : Fragment() {
             }
 
             override fun onMove(v: View, event: MotionEvent) {
-                Log.d("TAG", "onMove: $v, $event")
             }
         })
 
