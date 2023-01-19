@@ -32,6 +32,10 @@ class SplashActivity : AppCompatActivity() {
 
     private lateinit var sharedPreferences: SharedPreferences
 
+    companion object {
+        private const val TAG = "SplashActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -42,30 +46,36 @@ class SplashActivity : AppCompatActivity() {
 
     private fun loadSharedPreferences() {
         sharedPreferences =
-            getSharedPreferences(SP_TAG, MODE_PRIVATE)
+                getSharedPreferences(SP_TAG, MODE_PRIVATE)
         setDefaultNightMode(
-            if (sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)) {
-                MODE_NIGHT_YES
-            } else {
-                MODE_NIGHT_NO
-            }
+                if (sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)) {
+                    MODE_NIGHT_YES
+                } else {
+                    MODE_NIGHT_NO
+                }
         )
 
         username = sharedPreferences.getString(SP_TAG_USERNAME, StringUtils.EMPTY)
         password = sharedPreferences.getString(SP_TAG_PASSWORD, StringUtils.EMPTY)
-        login()
+        if (username!!.isEmpty() || password!!.isEmpty()) {
+            Log.d(TAG, "logout: no username / password found")
+            logout()
+        } else {
+            Log.d(TAG, "login: $username")
+            login()
+        }
     }
 
     private fun login() {
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-            .addFormDataPart("username", username.toString())
-            .addFormDataPart("password", password.toString()).build()
+                .addFormDataPart("username", username.toString())
+                .addFormDataPart("password", password.toString()).build()
         repository.login(request, object : ResultCallback<LoginResponse> {
             override fun onResult(value: LoginResponse?) {
                 if (value != null) {
                     RetrofitFactory.updateJWT(
-                        value.access_token.toString(),
-                        value.username.toString()
+                            value.access_token.toString(),
+                            value.username.toString()
                     )
                     startMainScreen(value.username.toString(), password.toString())
                 } else {

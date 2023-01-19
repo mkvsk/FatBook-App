@@ -65,7 +65,7 @@ object FormatUtils {
             return String.format(
                     context.getString(R.string.date_format_d_m_y_h_m),
                     date.dayOfMonth,
-                    context.resources.getStringArray(R.array.months)[date.month.ordinal - 1].substring(0, 3),
+                    context.resources.getStringArray(R.array.months)[date.month.ordinal].substring(0, 3),
                     date.year,
                     date.hour,
                     date.minute)
@@ -77,7 +77,7 @@ object FormatUtils {
             return String.format(
                     context.getString(R.string.date_format_d_m_h_m),
                     date.dayOfMonth,
-                    context.resources.getStringArray(R.array.months)[date.month.ordinal - 1].substring(0, 3),
+                    context.resources.getStringArray(R.array.months)[date.month.ordinal].substring(0, 3),
                     date.hour,
                     date.minute)
         }
