@@ -27,8 +27,9 @@
 
         <TextView
             android:id="@+id/textview_ingredient_title_rv_ingredient_recipe_view"
-            android:layout_width="140dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="140dp"
             android:layout_marginStart="15dp"
             android:elevation="6dp"
             android:ellipsize="end"
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:elevation="6dp"
             android:ellipsize="end"
-            android:maxLength="11"
+            android:maxLength="18"
             android:text="(1000 kcal)"
             android:textAppearance="@style/recipeCreateIngredientsTextStyle"
             android:textColor="@color/rv_ingredients_kcals"

@@ -1,6 +1,8 @@
 package online.fatbook.fatbookapp.util
 
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
@@ -32,7 +34,9 @@ object Utils {
                 setCompoundDrawablesWithIntrinsicBounds(0, 0, clearIcon, 0)
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
+                Unit
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
         })
 
@@ -45,5 +49,21 @@ object Utils {
             }
             return@OnTouchListener false
         })
+    }
+
+    fun getCookingStepNumeralIcon(value: Int): Int {
+        return when (value) {
+            1 -> R.drawable.digit_1
+            2 -> R.drawable.digit_2
+            3 -> R.drawable.digit_3
+            4 -> R.drawable.digit_4
+            5 -> R.drawable.digit_5
+            6 -> R.drawable.digit_6
+            7 -> R.drawable.digit_7
+            8 -> R.drawable.digit_8
+            9 -> R.drawable.digit_9
+            10 -> R.drawable.digit_10
+            else -> R.drawable.digit_1
+        }
     }
 }

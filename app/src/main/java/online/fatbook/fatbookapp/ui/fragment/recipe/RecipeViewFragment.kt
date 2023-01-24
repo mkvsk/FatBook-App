@@ -3,7 +3,6 @@ package online.fatbook.fatbookapp.ui.fragment.recipe
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
@@ -12,8 +11,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
+import online.fatbook.fatbookapp.ui.adapters.FullRecipeIngredientAdapter
+import online.fatbook.fatbookapp.ui.adapters.ViewRecipeCookingStepAdapter
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants.MAX_PORTIONS
@@ -21,7 +24,6 @@ import online.fatbook.fatbookapp.util.Constants.MIN_PORTIONS
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
-import org.apache.commons.lang3.StringUtils
 
 class RecipeViewFragment : Fragment() {
 
@@ -34,13 +36,15 @@ class RecipeViewFragment : Fragment() {
     private var recipeForked = false
     private var recipeInFav = false
 
-    private var portionQtt: Int = 0
+    private var portionQty: Int = 0
 
     companion object {
         private const val TAG = "RecipeViewFragment"
     }
 
     private var recipe: Recipe = Recipe()
+    private var ingredientAdapter: FullRecipeIngredientAdapter? = null
+    private var stepAdapter: ViewRecipeCookingStepAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -104,29 +108,61 @@ class RecipeViewFragment : Fragment() {
         }
 
         binding.buttonRemovePortionRecipeView.setOnClickListener {
-            if (portionQtt > MIN_PORTIONS) {
+            if (portionQty > MIN_PORTIONS) {
                 binding.buttonAddPortionRecipeView.isClickable = true
-                portionQtt = portionQtt.dec()
-                if (portionQtt == MIN_PORTIONS) {
+                portionQty = portionQty.dec()
+                calculateIngredients(portionQty)
+
+                if (portionQty == MIN_PORTIONS) {
                     binding.buttonRemovePortionRecipeView.isClickable = false
                 }
-                binding.textviewPortionsQttRecipeView.text = portionQtt.toString()
+                binding.textviewPortionsQttRecipeView.text = portionQty.toString()
             }
+
         }
 
         binding.buttonAddPortionRecipeView.setOnClickListener {
-            if (portionQtt < MAX_PORTIONS) {
+            if (portionQty < MAX_PORTIONS) {
                 binding.buttonRemovePortionRecipeView.isClickable = true
-                portionQtt = portionQtt.inc()
-                if (portionQtt == MAX_PORTIONS) {
+                portionQty = portionQty.inc()
+                calculateIngredients(portionQty)
+
+                if (portionQty == MAX_PORTIONS) {
                     binding.buttonAddPortionRecipeView.isClickable = false
                 }
-                binding.textviewPortionsQttRecipeView.text = portionQtt.toString()
+                binding.textviewPortionsQttRecipeView.text = portionQty.toString()
             }
         }
 
         binding.textViewCommentsAvgViewRecipe.text = binding.rvCommentsRecipeView.size.toString()
 
+        initListeners()
+    }
+
+    private fun calculateIngredients(portionQty: Int) {
+        val listRecipeIngredient = ArrayList<RecipeIngredient>()
+        recipe.ingredients?.forEach {
+            listRecipeIngredient.add(
+                it.copy(
+                    quantity = it.quantity?.div(recipe.portions!!)!!.times(this.portionQty)
+                )
+            )
+        }
+        ingredientAdapter?.setData(listRecipeIngredient)
+    }
+
+    private fun setupIngredientAdapter(ingredients: ArrayList<RecipeIngredient>?) {
+        val rv = binding.rvIngredientsRecipeView
+        ingredientAdapter = FullRecipeIngredientAdapter()
+        ingredientAdapter!!.setData(ingredients)
+        rv.adapter = ingredientAdapter
+    }
+
+    private fun setupStepAdapter(cookingSteps: ArrayList<CookingStep>?) {
+        val rv = binding.rvCookingStepsRecipeView
+        stepAdapter = ViewRecipeCookingStepAdapter(requireContext())
+        stepAdapter!!.setData(cookingSteps)
+        rv.adapter = stepAdapter
     }
 
     private fun checkAuthor() {
@@ -214,18 +250,20 @@ class RecipeViewFragment : Fragment() {
         binding.textViewForksAvgViewRecipe.text = convertNumeric(recipe.forks!!)
         binding.textViewCommentsAvgViewRecipe.text = convertNumeric(recipe.comments?.size ?: 0)
 
-        portionQtt = binding.textviewPortionsQttRecipeView.text.toString().toInt()
-        if (portionQtt == MIN_PORTIONS) {
+        portionQty = binding.textviewPortionsQttRecipeView.text.toString().toInt()
+        if (portionQty == MIN_PORTIONS) {
             binding.buttonRemovePortionRecipeView.isClickable = false
         }
-        if (portionQtt == MAX_PORTIONS) {
+        if (portionQty == MAX_PORTIONS) {
             binding.buttonAddPortionRecipeView.isClickable = false
         }
 
         binding.loader.progressOverlay.visibility = View.GONE
 
-        initListeners()
+        setupIngredientAdapter(recipe.ingredients)
+        setupStepAdapter(recipe.steps)
     }
+
 
     private fun initListeners() {
 
