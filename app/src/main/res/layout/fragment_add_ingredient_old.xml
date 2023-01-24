@@ -23,7 +23,7 @@
             app:navigationIcon="@drawable/arrow_left"
             app:navigationIconTint="@color/color_blue_grey_600"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/title_add_ingredients_and_qtt"
+            app:title="@string/title_add_ingredients_and_qty"
             app:titleTextColor="@color/color_blue_grey_600">
 
             <com.google.android.material.imageview.ShapeableImageView

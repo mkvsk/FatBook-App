@@ -213,7 +213,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/round_corner_ingredient_qtt_units"
+                        android:background="@drawable/round_corner_ingredient_qty_units"
                         android:elevation="4dp"
                         android:hint="@string/hint_quantity"
                         android:inputType="numberDecimal"
@@ -231,7 +231,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/round_corner_ingredient_qtt_units"
+                        android:background="@drawable/round_corner_ingredient_qty_units"
                         android:divider="@android:color/transparent"
                         android:elevation="4dp"
                         android:translationZ="1dp"
@@ -294,7 +294,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
+                            android:id="@+id/textview_ingredient_kcals_qty_recipe_add_ingredients"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:autoSizeMaxTextSize="15sp"
@@ -320,7 +320,7 @@
                             android:text="Proteins"
                             android:textAppearance="@style/recipeCreateTitlesTextStyle"
                             android:textColor="@color/rv_ingredients_kcals"
-                            app:layout_constraintLeft_toRightOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
+                            app:layout_constraintLeft_toRightOf="@id/textview_ingredient_kcals_qty_recipe_add_ingredients"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -353,7 +353,7 @@
                             android:text="@string/no_data_dots"
                             android:textAppearance="@style/recipeCreateTitlesTextStyle"
                             android:textColor="@color/main_text"
-                            app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
+                            app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qty_recipe_add_ingredients"
                             app:layout_constraintLeft_toLeftOf="@id/tv_title_proteins" />
 
                         <TextView
@@ -364,7 +364,7 @@
                             android:text="@string/no_data_dots"
                             android:textAppearance="@style/recipeCreateTitlesTextStyle"
                             android:textColor="@color/main_text"
-                            app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
+                            app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qty_recipe_add_ingredients"
                             app:layout_constraintLeft_toLeftOf="@id/tv_title_fats" />
 
                         <TextView
@@ -375,7 +375,7 @@
                             android:text="@string/no_data_dots"
                             android:textAppearance="@style/recipeCreateTitlesTextStyle"
                             android:textColor="@color/main_text"
-                            app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qtt_recipe_add_ingredients"
+                            app:layout_constraintBottom_toBottomOf="@id/textview_ingredient_kcals_qty_recipe_add_ingredients"
                             app:layout_constraintLeft_toLeftOf="@id/tv_title_carbs" />
 
 

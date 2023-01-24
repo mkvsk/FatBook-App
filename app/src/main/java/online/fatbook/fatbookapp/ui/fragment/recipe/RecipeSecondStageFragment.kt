@@ -49,8 +49,8 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     private var ingredientsAdapter: RecipeIngredientAdapter? = null
     private var cookingStepsAdapter: CookingStepAdapter? = null
 
-    private var maxStepsQtt = 10
-    private var maxIngredientsQtt = 30
+    private var maxStepsQty = 10
+    private var maxIngredientsQty = 30
 
     companion object {
         private const val TAG = "RecipeCreateSecondStageFragment"
@@ -72,8 +72,8 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
         checkEnableMenu()
         initObservers()
         initListeners()
-        checkIngredientsQtt(recipeViewModel.newRecipe.value!!.ingredients!!.size)
-        checkStepsQtt(recipeViewModel.newRecipe.value!!.steps!!.size)
+        checkIngredientsQty(recipeViewModel.newRecipe.value!!.ingredients!!.size)
+        checkStepsQty(recipeViewModel.newRecipe.value!!.steps!!.size)
         setupIngredientsAdapter()
         setupCookingStepsAdapter()
         ingredientsAdapter!!.setData(recipeViewModel.newRecipe.value!!.ingredients)
@@ -241,33 +241,33 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
         })
     }
 
-    private fun checkIngredientsQtt(currentIngredientsQtt: Int) {
-        if (currentIngredientsQtt == maxIngredientsQtt) {
+    private fun checkIngredientsQty(currentIngredientsQty: Int) {
+        if (currentIngredientsQty == maxIngredientsQty) {
             binding.buttonAddIngredientRecipeCreate2Stage.visibility = View.GONE
         }
-        if (currentIngredientsQtt < maxIngredientsQtt) {
+        if (currentIngredientsQty < maxIngredientsQty) {
             binding.buttonAddIngredientRecipeCreate2Stage.visibility = View.VISIBLE
         }
         binding.textviewIngredientCountRecipeCreate2Stage.text =
                 String.format(
                         getString(R.string.format_count),
-                        currentIngredientsQtt,
-                        maxIngredientsQtt
+                        currentIngredientsQty,
+                        maxIngredientsQty
                 )
     }
 
-    private fun checkStepsQtt(currentStepsQtt: Int) {
-        if (currentStepsQtt == maxStepsQtt) {
+    private fun checkStepsQty(currentStepsQty: Int) {
+        if (currentStepsQty == maxStepsQty) {
             binding.cardviewAddCookingStep.visibility = View.GONE
         }
-        if (currentStepsQtt < maxStepsQtt) {
+        if (currentStepsQty < maxStepsQty) {
             binding.cardviewAddCookingStep.visibility = View.VISIBLE
         }
         binding.textviewStepsCountRecipeCreate2Stage.text =
                 String.format(
                         getString(R.string.format_count),
-                        currentStepsQtt,
-                        maxStepsQtt
+                        currentStepsQty,
+                        maxStepsQty
                 )
     }
 
@@ -285,7 +285,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
         recipeViewModel.newRecipe.value!!.ingredients!!.removeAt(selectedItem)
         ingredientsAdapter!!.notifyItemRemoved(selectedItem)
         drawNutritionFacts()
-        checkIngredientsQtt(recipeViewModel.newRecipe.value!!.ingredients!!.size)
+        checkIngredientsQty(recipeViewModel.newRecipe.value!!.ingredients!!.size)
         checkEnableMenu()
     }
 
@@ -317,7 +317,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
         }
         Log.d(TAG, "onRecipeCookingStepDelete: ${recipeViewModel.newRecipe.value!!.steps}")
         cookingStepsAdapter!!.notifyItemRemoved(itemPosition)
-        checkStepsQtt(recipeViewModel.newRecipe.value!!.steps!!.size)
+        checkStepsQty(recipeViewModel.newRecipe.value!!.steps!!.size)
         checkEnableMenu()
         Log.d(TAG, "${recipeViewModel.newRecipe.value!!.steps}")
         Log.d(TAG, "${recipeViewModel.newRecipeStepImages.value}")
@@ -333,17 +333,17 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
                 && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()
         ) {
             showNutritionFacts(true)
-            binding.textviewPortionKcalsQttRecipeCreate2Stage.text =
+            binding.textviewPortionKcalsQtyRecipeCreate2Stage.text =
                     FormatUtils.prettyCount(
                             recipeViewModel.newRecipe.value?.kcalPerPortion.toString().toDouble()
                     )
-            binding.tvQttProteins.text = FormatUtils.prettyCount(
+            binding.tvQtyProteins.text = FormatUtils.prettyCount(
                     recipeViewModel.newRecipe.value?.proteinsPerPortion.toString().toDouble()
             )
-            binding.tvQttFats.text = FormatUtils.prettyCount(
+            binding.tvQtyFats.text = FormatUtils.prettyCount(
                     recipeViewModel.newRecipe.value?.fatsPerPortion.toString().toDouble()
             )
-            binding.tvQttCarbs.text = FormatUtils.prettyCount(
+            binding.tvQtyCarbs.text = FormatUtils.prettyCount(
                     recipeViewModel.newRecipe.value?.carbsPerPortion.toString().toDouble()
             )
         } else {

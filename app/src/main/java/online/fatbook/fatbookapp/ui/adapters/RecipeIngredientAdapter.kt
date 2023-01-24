@@ -66,7 +66,7 @@ class RecipeIngredientAdapter :
                 }
             }
 
-            itemView.textview_ingredient_qtt_title_rv_added_ingredient.text =
+            itemView.textview_ingredient_qty_title_rv_added_ingredient.text =
                 String.format(
                     "%s %s",
                     FormatUtils.prettyCount(value.quantity!!),

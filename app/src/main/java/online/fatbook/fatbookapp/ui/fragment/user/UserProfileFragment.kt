@@ -75,11 +75,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
             binding.toolbar.visibility = View.GONE
             loadUserData()
             setupSwipeRefresh()
-            binding.ovalRecipesQtt.setOnClickListener {
+            binding.ovalRecipesQty.setOnClickListener {
                 focusOnRecipes()
             }
 
-            binding.ovalFollowersQtt.setOnClickListener {
+            binding.ovalFollowersQty.setOnClickListener {
                 NavHostFragment.findNavController(this)
                     .navigate(R.id.action_go_to_followers_from_user_profile)
             }
@@ -259,8 +259,8 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
             binding.isOnlineIndicator.visibility = View.INVISIBLE
             binding.toolbar.subtitle = getString(R.string.subtitle_offline)
         }
-        binding.tvRecipesQtt.text = user.recipeAmount?.let { FormatUtils.prettyCount(it) }
-        binding.tvFollowersQtt.text = user.followersAmount?.let { FormatUtils.prettyCount(it) }
+        binding.tvRecipesQty.text = user.recipeAmount?.let { FormatUtils.prettyCount(it) }
+        binding.tvFollowersQty.text = user.followersAmount?.let { FormatUtils.prettyCount(it) }
         binding.userPhoto.isEnabled = !user.profileImage.isNullOrEmpty()
         Glide
             .with(requireContext())

@@ -185,7 +185,7 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:id="@+id/textview_portion_kcals_qtt_recipe_create_2_stage"
+                                android:id="@+id/textview_portion_kcals_qty_recipe_create_2_stage"
                                 android:layout_width="80dp"
                                 android:layout_height="wrap_content"
                                 android:autoSizeMaxTextSize="15sp"
@@ -211,7 +211,7 @@
                                 android:text="Proteins"
                                 android:textAppearance="@style/recipeCreateTitlesTextStyle"
                                 android:textColor="@color/rv_ingredients_kcals"
-                                app:layout_constraintLeft_toRightOf="@id/textview_portion_kcals_qtt_recipe_create_2_stage"
+                                app:layout_constraintLeft_toRightOf="@id/textview_portion_kcals_qty_recipe_create_2_stage"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
@@ -237,36 +237,36 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:id="@+id/tv_qtt_proteins"
+                                android:id="@+id/tv_qty_proteins"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLength="5"
                                 android:text="0.0"
                                 android:textAppearance="@style/recipeCreateTitlesTextStyle"
                                 android:textColor="@color/main_text"
-                                app:layout_constraintBottom_toBottomOf="@id/textview_portion_kcals_qtt_recipe_create_2_stage"
+                                app:layout_constraintBottom_toBottomOf="@id/textview_portion_kcals_qty_recipe_create_2_stage"
                                 app:layout_constraintLeft_toLeftOf="@id/tv_title_proteins" />
 
                             <TextView
-                                android:id="@+id/tv_qtt_fats"
+                                android:id="@+id/tv_qty_fats"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLength="5"
                                 android:text="0.0"
                                 android:textAppearance="@style/recipeCreateTitlesTextStyle"
                                 android:textColor="@color/main_text"
-                                app:layout_constraintBottom_toBottomOf="@id/textview_portion_kcals_qtt_recipe_create_2_stage"
+                                app:layout_constraintBottom_toBottomOf="@id/textview_portion_kcals_qty_recipe_create_2_stage"
                                 app:layout_constraintLeft_toLeftOf="@id/tv_title_fats" />
 
                             <TextView
-                                android:id="@+id/tv_qtt_carbs"
+                                android:id="@+id/tv_qty_carbs"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLength="5"
                                 android:text="0.0"
                                 android:textAppearance="@style/recipeCreateTitlesTextStyle"
                                 android:textColor="@color/main_text"
-                                app:layout_constraintBottom_toBottomOf="@id/textview_portion_kcals_qtt_recipe_create_2_stage"
+                                app:layout_constraintBottom_toBottomOf="@id/textview_portion_kcals_qty_recipe_create_2_stage"
                                 app:layout_constraintLeft_toLeftOf="@id/tv_title_carbs" />
 
 

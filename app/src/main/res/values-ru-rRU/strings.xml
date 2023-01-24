@@ -39,7 +39,7 @@
     <string name="btn_save_recipe_create">СОХРАНИТЬ</string>
     <string name="hint_rv_add_new_recipe_ingredient">Молоко</string>
     <string name="hint_rv_add_new_recipe_ingredient_quantity">100 мл</string>
-    <string name="title_add_ingredients_and_qtt">Добавить ингредиент</string>
+    <string name="title_add_ingredients_and_qty">Добавить ингредиент</string>
     <string name="text_add">Добавить</string>
     <string name="hint_quantity">количество</string>
     <string name="text_select_ingredient">Ингредиент/продукт</string>
@@ -184,7 +184,7 @@
     <string name="dialog_connection_error">Что-то пошло не так, попробуйте снова позже</string>
     <string name="subtitle_online">В сети</string>
     <string name="subtitle_offline">Не в сети</string>
-    <string name="string_format_kcal_qtt_per_100_gram">(%s ккал/100 грамм)</string>
+    <string name="string_format_kcal_qty_per_100_gram">(%s ккал/100 грамм)</string>
     <string name="menu_image_view_report">Пожаловаться</string>
     <string name="time_picker_format_h_min">%d ч %d мин</string>
     <string name="time_picker_format_h">%d ч</string>

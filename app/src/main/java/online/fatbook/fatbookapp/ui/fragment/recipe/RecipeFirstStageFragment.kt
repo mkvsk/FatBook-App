@@ -27,11 +27,9 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
-import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.databinding.FragmentRecipeFirstStageBinding
 import online.fatbook.fatbookapp.ui.activity.MainActivity
@@ -46,7 +44,6 @@ import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogBuilder
 import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogListener
 import java.io.File
 import java.time.LocalTime
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -145,7 +142,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
                     staticDataViewModel.cookingDifficulties.value!!.find { it.title == difficulty.title }
         }
 
-        binding.edittextPortionsQttRecipe1Stage.addTextChangedListener(object : TextWatcher {
+        binding.edittextPortionsQtyRecipe1Stage.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -153,7 +150,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
                 checkDataPortions()
                 if (!s.isNullOrEmpty()) {
                     recipeViewModel.newRecipe.value!!.portions = s.toString().toInt()
-                    if (binding.edittextPortionsQttRecipe1Stage.length() > 1) {
+                    if (binding.edittextPortionsQtyRecipe1Stage.length() > 1) {
                         hideKeyboard()
                     }
                 } else {
@@ -244,7 +241,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
 
         //TODO remove stub
         binding.edittextTitleRecipe1Stage.setText("Test recipe name, REMOVE ME LATER")
-        binding.edittextPortionsQttRecipe1Stage.setText("1")
+        binding.edittextPortionsQtyRecipe1Stage.setText("1")
         Log.d(TAG, "=======================================================================")
         Log.d(TAG, "onViewCreated: ${recipeViewModel.newRecipe.value}")
         Log.d(TAG, "=======================================================================")
@@ -268,18 +265,18 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     }
 
     private fun checkDataPortions() {
-        if (binding.edittextPortionsQttRecipe1Stage.text.toString().isNotEmpty()
-                && binding.edittextPortionsQttRecipe1Stage.text.toString()
+        if (binding.edittextPortionsQtyRecipe1Stage.text.toString().isNotEmpty()
+                && binding.edittextPortionsQtyRecipe1Stage.text.toString()
                         .toInt() != 0
         ) {
-            binding.edittextPortionsQttRecipe1Stage.background =
+            binding.edittextPortionsQtyRecipe1Stage.background =
                     ContextCompat.getDrawable(
                             requireContext(),
                             R.drawable.round_corner_edittext_recipe_create
                     )
         } else {
-            binding.edittextPortionsQttRecipe1Stage.isFocusable
-            binding.edittextPortionsQttRecipe1Stage.background =
+            binding.edittextPortionsQtyRecipe1Stage.isFocusable
+            binding.edittextPortionsQtyRecipe1Stage.background =
                     ContextCompat.getDrawable(
                             requireContext(),
                             R.drawable.round_corner_edittext_recipe_create_stroke
@@ -289,9 +286,9 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
 
     private fun checkEnableMenu() {
         val isEmpty =
-                binding.edittextPortionsQttRecipe1Stage.text.isNullOrEmpty() ||
+                binding.edittextPortionsQtyRecipe1Stage.text.isNullOrEmpty() ||
                         binding.edittextTitleRecipe1Stage.text.isNullOrEmpty() ||
-                        binding.edittextPortionsQttRecipe1Stage.text.toString().toInt() == 0
+                        binding.edittextPortionsQtyRecipe1Stage.text.toString().toInt() == 0
         binding.toolbarRecipe1Stage.menu.findItem(R.id.menu_create_first_stage_next).isVisible =
                 !isEmpty
     }

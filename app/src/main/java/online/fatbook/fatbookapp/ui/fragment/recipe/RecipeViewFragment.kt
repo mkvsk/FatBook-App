@@ -116,7 +116,7 @@ class RecipeViewFragment : Fragment() {
                 if (portionQty == MIN_PORTIONS) {
                     binding.buttonRemovePortionRecipeView.isClickable = false
                 }
-                binding.textviewPortionsQttRecipeView.text = portionQty.toString()
+                binding.textviewPortionsQtyRecipeView.text = portionQty.toString()
             }
 
         }
@@ -130,7 +130,7 @@ class RecipeViewFragment : Fragment() {
                 if (portionQty == MAX_PORTIONS) {
                     binding.buttonAddPortionRecipeView.isClickable = false
                 }
-                binding.textviewPortionsQttRecipeView.text = portionQty.toString()
+                binding.textviewPortionsQtyRecipeView.text = portionQty.toString()
             }
         }
 
@@ -229,17 +229,17 @@ class RecipeViewFragment : Fragment() {
             recipe.cookingCategories!!.joinToString { it.title.toString() }
         if (recipe.isAllIngredientUnitsValid) {
             binding.cardviewNutritionFactsRecipeView.visibility = View.VISIBLE
-            binding.textviewPortionKcalsQttRecipeView.text = String.format(
+            binding.textviewPortionKcalsQtyRecipeView.text = String.format(
                 "%s kcal/\nper portion",
                 FormatUtils.prettyCount(recipe.kcalPerPortion!!)
             )
-            binding.tvQttProteins.text = FormatUtils.prettyCount(recipe.proteinsPerPortion!!)
-            binding.tvQttFats.text = FormatUtils.prettyCount(recipe.fatsPerPortion!!)
-            binding.tvQttCarbs.text = FormatUtils.prettyCount(recipe.carbsPerPortion!!)
+            binding.tvQtyProteins.text = FormatUtils.prettyCount(recipe.proteinsPerPortion!!)
+            binding.tvQtyFats.text = FormatUtils.prettyCount(recipe.fatsPerPortion!!)
+            binding.tvQtyCarbs.text = FormatUtils.prettyCount(recipe.carbsPerPortion!!)
         } else {
             binding.cardviewNutritionFactsRecipeView.visibility = View.GONE
         }
-        binding.textviewPortionsQttRecipeView.text = recipe.portions.toString()
+        binding.textviewPortionsQtyRecipeView.text = recipe.portions.toString()
 
         Glide
             .with(requireContext())
@@ -250,7 +250,7 @@ class RecipeViewFragment : Fragment() {
         binding.textViewForksAvgViewRecipe.text = convertNumeric(recipe.forks!!)
         binding.textViewCommentsAvgViewRecipe.text = convertNumeric(recipe.comments?.size ?: 0)
 
-        portionQty = binding.textviewPortionsQttRecipeView.text.toString().toInt()
+        portionQty = binding.textviewPortionsQtyRecipeView.text.toString().toInt()
         if (portionQty == MIN_PORTIONS) {
             binding.buttonRemovePortionRecipeView.isClickable = false
         }

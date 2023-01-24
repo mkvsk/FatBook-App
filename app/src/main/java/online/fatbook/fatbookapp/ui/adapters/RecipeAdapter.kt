@@ -11,18 +11,13 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
-import online.fatbook.fatbookapp.core.recipe.Locale
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.RecipeUtils
 import org.apache.commons.lang3.StringUtils
-import java.text.DateFormatSymbols
-import java.time.Duration
-import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.OffsetDateTime
 
 @Log
 class RecipeAdapter :
@@ -92,7 +87,7 @@ class RecipeAdapter :
 
             itemView.textView_rv_card_recipe_title.text = recipe.title
             if (!recipe.ingredientsLocalizedMap.isNullOrEmpty()) {
-                itemView.rv_ingredients_preview.text = String.format(context!!.getString(R.string.title_ingredients_rv_recipe), recipe.ingredientQtt, recipe.ingredientsStr)
+                itemView.rv_ingredients_preview.text = String.format(context!!.getString(R.string.title_ingredients_rv_recipe), recipe.ingredientQty, recipe.ingredientsStr)
             }
             if (recipe.kcalPerPortion == 0.0) {
                 itemView.rv_recipe_kcal_img.visibility = View.GONE
@@ -114,7 +109,7 @@ class RecipeAdapter :
                     .load(recipe.user!!.profileImage)
                     .placeholder(itemView.context.getDrawable(R.drawable.ic_default_userphoto))
                     .into(itemView.imageview_author_photo_rv_recipe_preview)
-            itemView.rv_recipe_comments_qtt.text = recipe.commentQtt.toString()
+            itemView.rv_recipe_comments_qty.text = recipe.commentQty.toString()
             itemView.textView_rv_card_recipe_forks_avg.text = FormatUtils.prettyCount(recipe.forks!!)
             itemView.ll_author_link_rv_recipe_preview.setOnClickListener {
                 listener.onUsernameClick(data[bindingAdapterPosition].user!!.username!!)

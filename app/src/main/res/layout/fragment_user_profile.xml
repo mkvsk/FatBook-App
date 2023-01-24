@@ -76,10 +76,10 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/ovalRecipesQtt"
+                            android:id="@+id/ovalRecipesQty"
                             android:layout_width="50dp"
                             android:layout_height="0dp"
-                            android:background="@drawable/selector_user_recipes_qtt"
+                            android:background="@drawable/selector_user_recipes_qty"
                             android:clickable="true"
                             android:elevation="4dp"
                             android:translationZ="2dp"
@@ -91,17 +91,17 @@
                             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
                         <TextView
-                            android:id="@+id/tvRecipesQtt"
+                            android:id="@+id/tvRecipesQty"
                             style="@style/txtUserProfileStats"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:elevation="6dp"
                             android:text="@string/no_data_dots"
-                            app:layout_constraintBottom_toBottomOf="@id/ovalRecipesQtt"
-                            app:layout_constraintLeft_toLeftOf="@id/ovalRecipesQtt"
-                            app:layout_constraintRight_toRightOf="@id/ovalRecipesQtt"
-                            app:layout_constraintTop_toTopOf="@id/ovalRecipesQtt" />
+                            app:layout_constraintBottom_toBottomOf="@id/ovalRecipesQty"
+                            app:layout_constraintLeft_toLeftOf="@id/ovalRecipesQty"
+                            app:layout_constraintRight_toRightOf="@id/ovalRecipesQty"
+                            app:layout_constraintTop_toTopOf="@id/ovalRecipesQty" />
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/isOnlineIndicator"
@@ -133,10 +133,10 @@
                             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
                         <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/ovalFollowersQtt"
+                            android:id="@+id/ovalFollowersQty"
                             android:layout_width="50dp"
                             android:layout_height="0dp"
-                            android:background="@drawable/selector_user_followers_qtt"
+                            android:background="@drawable/selector_user_followers_qty"
                             android:clickable="true"
                             android:elevation="4dp"
                             android:translationZ="2dp"
@@ -148,17 +148,17 @@
                             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
                         <TextView
-                            android:id="@+id/tvFollowersQtt"
+                            android:id="@+id/tvFollowersQty"
                             style="@style/txtUserProfileStats"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:elevation="6dp"
                             android:text="@string/no_data_dots"
-                            app:layout_constraintBottom_toBottomOf="@id/ovalFollowersQtt"
-                            app:layout_constraintLeft_toLeftOf="@id/ovalFollowersQtt"
-                            app:layout_constraintRight_toRightOf="@id/ovalFollowersQtt"
-                            app:layout_constraintTop_toTopOf="@id/ovalFollowersQtt" />
+                            app:layout_constraintBottom_toBottomOf="@id/ovalFollowersQty"
+                            app:layout_constraintLeft_toLeftOf="@id/ovalFollowersQty"
+                            app:layout_constraintRight_toRightOf="@id/ovalFollowersQty"
+                            app:layout_constraintTop_toTopOf="@id/ovalFollowersQty" />
 
                         <TextView
                             android:id="@+id/profileTitle"

@@ -608,7 +608,7 @@
     <color name="rv_gradient_color">#37474F</color>
     <color name="rv_thumb_color">#546E7A</color>
     <color name="rv_thumb_line_color">#263238</color>
-    <color name="ingredient_qtt_units_bgr">#263238</color>
+    <color name="ingredient_qty_units_bgr">#263238</color>
 
     <color name="ic_send_color">#37474F</color>
     <color name="btn_send_color">#B0BEC5</color>

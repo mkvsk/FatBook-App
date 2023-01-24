@@ -608,7 +608,7 @@
     <color name="rv_gradient_color">#FFFFFF</color>
     <color name="rv_thumb_color">#B0BEC5</color>
     <color name="rv_thumb_line_color">#ECEFF1</color>
-    <color name="ingredient_qtt_units_bgr">#ECEFF1</color>
+    <color name="ingredient_qty_units_bgr">#ECEFF1</color>
 
     <color name="ic_send_color">#FFFFFF</color>
     <color name="btn_send_color">#B0BEC5</color>
