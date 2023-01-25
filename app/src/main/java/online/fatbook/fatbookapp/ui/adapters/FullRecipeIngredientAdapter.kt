@@ -41,7 +41,7 @@ class FullRecipeIngredientAdapter : RecyclerView.Adapter<FullRecipeIngredientAda
             itemView.textview_ingredient_title_rv_ingredient_recipe_view.text =
                 recipeIngredient.ingredient?.title
             itemView.textview_ingredient_kcals_title_rv_ingredient_recipe_view.text =
-                String.format("(%s kcal)", FormatUtils.prettyCount(recipeIngredient.kcal))
+                String.format("(%s kcal)", recipeIngredient.kcal)
             itemView.textview_ingredient_qty_title_rv_ingredient_recipe_view.text =
                 recipeIngredient.quantity.toString() + " " + recipeIngredient.ingredient?.unitRatio?.unit?.title.toString()
         }

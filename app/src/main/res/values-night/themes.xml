@@ -57,6 +57,8 @@
     <color name="bottomNav_ic_tint">#B0BEC5</color>
 
     <color name="photo_stroke_color">#546E7A</color>
+
+    <color name="cooking_step_digit_color">#546E7A</color>
     ///ic colors
     <color name="user_is_online_color">#CDDC39</color>
     <color name="ic_forked_favourite">#FF4081</color>

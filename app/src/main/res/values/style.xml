@@ -5,13 +5,27 @@
         <item name="cornerSize">4%</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.App.CookingStepImage" parent="">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopLeft">4%</item>
+        <item name="cornerSizeTopRight">4%</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CookingStepCard" parent="">
+        <item name="cornerSize">10dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.App.CornerSize20Percent" parent="">
         <item name="cornerSizeTopLeft">20%</item>
         <item name="cornerSizeTopRight">20%</item>
     </style>
 
-    <style name="ShapeAppearanceOverlay.App.AllCornerSize20Percent" parent="">
-        <item name="cornerSize">20%</item>
+    <style name="ShapeAppearanceOverlay.App.AllCornerSize10dp" parent="">
+        <item name="cornerSize">10dp</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.CornerSize15Percent" parent="">

@@ -168,7 +168,7 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textview_nutrition_facts_title_recipe_create_2_stage"
-                        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.AllCornerSize20Percent">
+                        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.AllCornerSize10dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"

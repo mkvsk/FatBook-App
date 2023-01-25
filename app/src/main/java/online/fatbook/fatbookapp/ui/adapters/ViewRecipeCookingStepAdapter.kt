@@ -65,8 +65,8 @@ class ViewRecipeCookingStepAdapter(private val context: Context) :
                     .load(value.image)
                     .into(itemView.imageview_photo_rv_cooking_step_recipe_view)
             } else {
-//                itemView.imageview_photo_rv_cooking_step_recipe_view.visibility = View.GONE
-                itemView.imageview_photo_rv_cooking_step_recipe_view.setImageResource(R.drawable.default_cooking_step_image)
+                itemView.imageview_photo_rv_cooking_step_recipe_view.visibility = View.GONE
+//                itemView.imageview_photo_rv_cooking_step_recipe_view.setImageResource(R.drawable.default_cooking_step_image)
             }
         }
     }

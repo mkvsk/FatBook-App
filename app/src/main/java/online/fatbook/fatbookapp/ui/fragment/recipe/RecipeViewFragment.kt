@@ -258,10 +258,9 @@ class RecipeViewFragment : Fragment() {
             binding.buttonAddPortionRecipeView.isClickable = false
         }
 
-        binding.loader.progressOverlay.visibility = View.GONE
-
         setupIngredientAdapter(recipe.ingredients)
         setupStepAdapter(recipe.steps)
+        binding.loader.progressOverlay.visibility = View.GONE
     }
 
 
