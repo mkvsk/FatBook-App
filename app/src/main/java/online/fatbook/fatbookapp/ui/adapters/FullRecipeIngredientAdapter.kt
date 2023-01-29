@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.rv_ingredients_to_recipe_view.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.util.FormatUtils
+import online.fatbook.fatbookapp.util.FormatUtils.roundOffDecimal
 
 class FullRecipeIngredientAdapter : RecyclerView.Adapter<FullRecipeIngredientAdapter.ViewHolder>(),
     BindableAdapter<RecipeIngredient> {
@@ -40,10 +41,15 @@ class FullRecipeIngredientAdapter : RecyclerView.Adapter<FullRecipeIngredientAda
         fun bind(recipeIngredient: RecipeIngredient) {
             itemView.textview_ingredient_title_rv_ingredient_recipe_view.text =
                 recipeIngredient.ingredient?.title
+
             itemView.textview_ingredient_kcals_title_rv_ingredient_recipe_view.text =
-                String.format("(%s kcal)", recipeIngredient.kcal)
-            itemView.textview_ingredient_qty_title_rv_ingredient_recipe_view.text =
-                recipeIngredient.quantity.toString() + " " + recipeIngredient.ingredient?.unitRatio?.unit?.title.toString()
+                String.format("(%s kcal)", roundOffDecimal(recipeIngredient.kcal))
+
+            itemView.textview_ingredient_qty_title_rv_ingredient_recipe_view.text = String.format(
+                "%s %s",
+                roundOffDecimal(recipeIngredient.quantity!!).toString(),
+                recipeIngredient.ingredient?.unitRatio?.unit?.title.toString()
+            )
         }
     }
 

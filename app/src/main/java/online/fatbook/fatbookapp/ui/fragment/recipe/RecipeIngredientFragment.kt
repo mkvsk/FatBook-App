@@ -157,23 +157,23 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         binding.textviewIngredientKcalsQtyRecipeAddIngredients.text =
             String.format(
                 getString(R.string.format_kcal),
-                FormatUtils.prettyCount(
+                FormatUtils.roundOffDecimal(
                     (nutritionFacts.kcal!! / 100 * newQty) * 1000.toString().toDouble()
                 )
             )
 
         binding.tvIngredientProteinsRecipeAddIngredients.text =
-            FormatUtils.prettyCount(
+            FormatUtils.roundOffDecimal(
                 (nutritionFacts.proteins!! / 100 * newQty) * 1000.toString().toDouble()
-            )
+            ).toString()
         binding.tvIngredientFatsRecipeAddIngredients.text =
-            FormatUtils.prettyCount(
+            FormatUtils.roundOffDecimal(
                 (nutritionFacts.fats!! / 100 * newQty) * 1000.toString().toDouble()
-            )
+            ).toString()
         binding.tvIngredientCarbsRecipeAddIngredients.text =
-            FormatUtils.prettyCount(
+            FormatUtils.roundOffDecimal(
                 (nutritionFacts.carbs!! / 100 * newQty) * 1000.toString().toDouble()
-            )
+            ).toString()
     }
 
     private fun setNutritionFactsForMlAndG(nutritionFacts: IngredientUnitRatio) {
@@ -183,19 +183,23 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         binding.textviewIngredientKcalsQtyRecipeAddIngredients.text =
             String.format(
                 getString(R.string.format_kcal),
-                FormatUtils.prettyCount(
+                FormatUtils.roundOffDecimal(
                     (nutritionFacts.kcal!! / 100 * newQty).toString().toDouble()
                 )
             )
 
         binding.tvIngredientProteinsRecipeAddIngredients.text =
-            FormatUtils.prettyCount(
+            FormatUtils.roundOffDecimal(
                 (nutritionFacts.proteins!! / 100 * newQty).toString().toDouble()
-            )
+            ).toString()
         binding.tvIngredientFatsRecipeAddIngredients.text =
-            FormatUtils.prettyCount((nutritionFacts.fats!! / 100 * newQty).toString().toDouble())
+            FormatUtils.roundOffDecimal(
+                (nutritionFacts.fats!! / 100 * newQty).toString().toDouble()
+            ).toString()
         binding.tvIngredientCarbsRecipeAddIngredients.text =
-            FormatUtils.prettyCount((nutritionFacts.carbs!! / 100 * newQty).toString().toDouble())
+            FormatUtils.roundOffDecimal(
+                (nutritionFacts.carbs!! / 100 * newQty).toString().toDouble()
+            ).toString()
     }
 
     private fun popBackStack() {

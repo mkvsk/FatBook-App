@@ -333,7 +333,7 @@
                             app:contentPaddingBottom="5dp"
                             app:contentPaddingLeft="10dp"
                             app:contentPaddingRight="10dp"
-                            app:contentPaddingTop="5dp"
+                            app:contentPaddingTop="10dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/textview_categories_recipe_view"
@@ -358,10 +358,21 @@
                                     android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/no_data_dots"
-                                    android:textAlignment="center"
                                     android:textAppearance="@style/recipeCreateEditTextStyle"
-                                    android:textColor="@color/main_text"
+                                    android:textColor="@color/pink_a200"
                                     app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="@id/tv_title_kcal_portion"
+                                    app:layout_constraintTop_toBottomOf="@id/tv_title_kcal_portion"
+                                    app:layout_constraintVertical_bias="0.545" />
+
+                                <TextView
+                                    android:id="@+id/tv_title_kcal_portion"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Kcal/portion"
+                                    android:layout_marginStart="10dp"
+                                    android:textAppearance="@style/recipeCreateTitlesTextStyle"
+                                    android:textColor="@color/rv_ingredients_kcals"
                                     app:layout_constraintLeft_toRightOf="@id/imageview_ic_portion_kcals_recipe_view"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -373,7 +384,7 @@
                                     android:text="Proteins"
                                     android:textAppearance="@style/recipeCreateTitlesTextStyle"
                                     android:textColor="@color/rv_ingredients_kcals"
-                                    app:layout_constraintLeft_toRightOf="@id/textview_portion_kcals_qty_recipe_view"
+                                    app:layout_constraintLeft_toRightOf="@id/tv_title_kcal_portion"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView

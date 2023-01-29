@@ -10,8 +10,8 @@ object RecipeUtils {
 
     private lateinit var context: Context
 
-    const val TAG_BOOKMARKS_CHECKED = "tag_bookmarks_checked"
-    const val TAG_BOOKMARKS_UNCHECKED = "tag_bookmarks_unchecked"
+    const val TAG_FAVOURITES_CHECKED = "tag_favourites_checked"
+    const val TAG_FAVOURITES_UNCHECKED = "tag_favourites_unchecked"
     const val TAG_FORK_CHECKED = "tag_fork_checked"
     const val TAG_FORK_UNCHECKED = "tag_fork_unchecked"
 

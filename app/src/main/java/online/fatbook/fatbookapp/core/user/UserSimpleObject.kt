@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.core.user
 
+import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import java.io.Serializable
 import java.time.Duration
 import java.time.LocalDateTime

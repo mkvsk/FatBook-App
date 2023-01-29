@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.util
 
 import android.content.Context
 import online.fatbook.fatbookapp.R
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.Duration
@@ -56,6 +57,12 @@ object FormatUtils {
         } else {
             DecimalFormat().format(number)
         }
+    }
+
+    fun roundOffDecimal(number: Double): Double {
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.CEILING
+        return df.format(number).toDouble()
     }
 
     fun getCreateDate(dateStr: String): String {

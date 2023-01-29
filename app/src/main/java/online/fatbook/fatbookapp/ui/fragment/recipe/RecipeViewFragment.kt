@@ -22,6 +22,7 @@ import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants.MAX_PORTIONS
 import online.fatbook.fatbookapp.util.Constants.MIN_PORTIONS
 import online.fatbook.fatbookapp.util.FormatUtils
+import online.fatbook.fatbookapp.util.FormatUtils.roundOffDecimal
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
@@ -229,13 +230,11 @@ class RecipeViewFragment : Fragment() {
             recipe.cookingCategories!!.joinToString { it.title.toString() }
         if (recipe.isAllIngredientUnitsValid) {
             binding.cardviewNutritionFactsRecipeView.visibility = View.VISIBLE
-            binding.textviewPortionKcalsQtyRecipeView.text = String.format(
-                "%s kcal/\nper portion",
-                FormatUtils.prettyCount(recipe.kcalPerPortion!!)
-            )
-            binding.tvQtyProteins.text = FormatUtils.prettyCount(recipe.proteinsPerPortion!!)
-            binding.tvQtyFats.text = FormatUtils.prettyCount(recipe.fatsPerPortion!!)
-            binding.tvQtyCarbs.text = FormatUtils.prettyCount(recipe.carbsPerPortion!!)
+            binding.textviewPortionKcalsQtyRecipeView.text =
+                roundOffDecimal(recipe.kcalPerPortion!!).toString()
+            binding.tvQtyProteins.text = roundOffDecimal(recipe.proteinsPerPortion!!).toString()
+            binding.tvQtyFats.text = roundOffDecimal(recipe.fatsPerPortion!!).toString()
+            binding.tvQtyCarbs.text = roundOffDecimal(recipe.carbsPerPortion!!).toString()
         } else {
             binding.cardviewNutritionFactsRecipeView.visibility = View.GONE
         }

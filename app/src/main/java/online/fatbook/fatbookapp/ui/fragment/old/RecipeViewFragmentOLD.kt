@@ -100,8 +100,8 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener {
         binding!!.imageViewRecipeViewIconBookmarks.setOnClickListener { view1: View? ->
             val tag = binding!!.imageViewRecipeViewIconBookmarks.tag as String
             when (tag) {
-                RecipeUtils.TAG_BOOKMARKS_CHECKED -> bookmarked(false)
-                RecipeUtils.TAG_BOOKMARKS_UNCHECKED -> bookmarked(true)
+                RecipeUtils.TAG_FAVOURITES_CHECKED -> bookmarked(false)
+                RecipeUtils.TAG_FAVOURITES_UNCHECKED -> bookmarked(true)
             }
         }
         binding!!.buttonRecipeViewIngredientAdd.setOnClickListener { view1: View? ->
@@ -487,10 +487,10 @@ class RecipeViewFragmentOLD : Fragment(), OnRecipeViewDeleteIngredientListener {
     private fun toggleBookmarks(check: Boolean) {
         if (check) {
             binding!!.imageViewRecipeViewIconBookmarks.setImageResource(R.drawable.icon_bookmarks_checked)
-            binding!!.imageViewRecipeViewIconBookmarks.tag = RecipeUtils.TAG_BOOKMARKS_CHECKED
+            binding!!.imageViewRecipeViewIconBookmarks.tag = RecipeUtils.TAG_FAVOURITES_CHECKED
         } else {
             binding!!.imageViewRecipeViewIconBookmarks.setImageResource(R.drawable.icon_bookmarks_unchecked)
-            binding!!.imageViewRecipeViewIconBookmarks.tag = RecipeUtils.TAG_BOOKMARKS_UNCHECKED
+            binding!!.imageViewRecipeViewIconBookmarks.tag = RecipeUtils.TAG_FAVOURITES_UNCHECKED
         }
     }
 
