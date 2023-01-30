@@ -33,7 +33,7 @@ class OAuthInterceptor(private val tokenType: String, private val accessToken: S
         val proceed = chain.proceed(builder.build())
 
         when {
-            proceed.code == 403 || proceed.code == 401 -> {
+            proceed.code == 403 -> {
                 Log.d(TAG, "token expired")
                 return proceed
             }

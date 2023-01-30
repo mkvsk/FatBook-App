@@ -1,16 +1,15 @@
 package online.fatbook.fatbookapp.core.user
 
-import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import java.io.Serializable
 import java.time.Duration
 import java.time.LocalDateTime
 
 data class UserSimpleObject(
-    var pid: Long? = null,
-    var username: String? = "",
-    var title: String? = "",
-    var profileImage: String? = "",
-    var lastAction: String? = ""
+        var pid: Long? = null,
+        var username: String? = "",
+        var title: String? = "",
+        var profileImage: String? = "",
+        var lastAction: String? = ""
 ) : Serializable {
 
     val online: Boolean
