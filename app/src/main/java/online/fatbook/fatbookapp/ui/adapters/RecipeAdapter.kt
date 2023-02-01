@@ -28,8 +28,8 @@ class RecipeAdapter :
     private lateinit var listener: OnRecipeClickListener
     private var context: Context? = null
 
-    private var isForked: Boolean? = null
-    private var isFavourite: Boolean? = null
+    private var recipeForked: Boolean? = null
+    private var recipeInFav: Boolean? = null
 
     fun setUser(user: User) {
         this.user = user
@@ -128,27 +128,23 @@ class RecipeAdapter :
             }
 
             user.recipesForked?.forEach {
-                isForked = (it.identifier?.equals(recipe.identifier) == true)
+                recipeForked = (it.identifier?.equals(recipe.identifier) == true)
             }
-            isForked?.let {
+            recipeForked?.let {
                 toggleForks(itemView.imageView_rv_card_recipe_fork, it)
             }
 
             user.recipesFavourites?.forEach {
-                isFavourite = (it.identifier?.equals(recipe.identifier) == true)
+                recipeInFav = (it.identifier?.equals(recipe.identifier) == true)
             }
-            isFavourite?.let {
-                toggleFavourites(itemView.imageView_rv_card_recipe_favourites, it)
+            if (recipe.user?.username == user.username) {
+                itemView.imageView_rv_card_recipe_favourites.visibility = View.INVISIBLE
+            } else {
+                itemView.imageView_rv_card_recipe_favourites.visibility = View.VISIBLE
+                recipeInFav?.let {
+                    toggleFavourites(itemView.imageView_rv_card_recipe_favourites, it)
+                }
             }
-
-//            if (recipe.user?.username == user.username) {
-//                itemView.imageView_rv_card_recipe_favourites.visibility = View.INVISIBLE
-//            } else {
-//                itemView.imageView_rv_card_recipe_favourites.visibility = View.VISIBLE
-//                isFavourite?.let {
-//                    toggleFavourites(itemView.imageView_rv_card_recipe_favourites, it)
-//                }
-//            }
 
             itemView.rv_card_recipe_preview.setOnClickListener {
                 listener.onRecipeClick(recipe.identifier!!)

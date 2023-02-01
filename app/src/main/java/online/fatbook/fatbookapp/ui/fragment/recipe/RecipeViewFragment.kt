@@ -3,6 +3,7 @@ package online.fatbook.fatbookapp.ui.fragment.recipe
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
@@ -13,24 +14,34 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
+import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.FullRecipeIngredientAdapter
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeCookingStepAdapter
+import online.fatbook.fatbookapp.ui.fragment.feed.FeedFragment
+import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants.MAX_PORTIONS
 import online.fatbook.fatbookapp.util.Constants.MIN_PORTIONS
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.FormatUtils.roundOffDecimal
+import online.fatbook.fatbookapp.util.RecipeUtils
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RecipeViewFragment : Fragment() {
 
     private var _binding: FragmentRecipeViewBinding? = null
     private val binding get() = _binding!!
 
+    private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
@@ -62,6 +73,8 @@ class RecipeViewFragment : Fragment() {
         checkAuthor()
         loadData(recipeViewModel.selectedRecipeId.value!!)
 
+
+
         binding.textviewAuthorUsernameRecipeView.setOnClickListener {
             //val v = textview_author_username_recipe_view.text.toString()
 //            userViewModel.selectedUsername.value = "hewix"
@@ -70,10 +83,20 @@ class RecipeViewFragment : Fragment() {
         }
 
         binding.imageViewForkViewRecipe.setOnClickListener {
+            if (recipeForked) {
+                recipeForked = false
+            } else {
+                recipeForked = true
+            }
             toggleForks(recipeForked)
         }
 
         binding.imageViewRecipeViewFavourites.setOnClickListener {
+            if (recipeInFav) {
+                recipeInFav = false
+            } else {
+                recipeInFav = true
+            }
             toggleFavourites(recipeInFav)
         }
 
@@ -171,38 +194,53 @@ class RecipeViewFragment : Fragment() {
     }
 
     private fun toggleFavourites(inFavourite: Boolean) {
-        recipeInFav = if (inFavourite) {
-            Glide
-                .with(requireContext())
-                .load(requireContext().getDrawable(R.drawable.ic_not_fav))
-                .into(binding.imageViewRecipeViewFavourites)
-            Toast.makeText(context, "Removed from favourites", Toast.LENGTH_SHORT).show()
-            false
+        if (inFavourite) {
+            binding.imageViewRecipeViewFavourites.setImageResource(R.drawable.ic_add_to_fav)
+            binding.imageViewRecipeViewFavourites.tag = RecipeUtils.TAG_FAVOURITES_CHECKED
         } else {
-            Glide
-                .with(requireContext())
-                .load(requireContext().getDrawable(R.drawable.ic_add_to_fav))
-                .into(binding.imageViewRecipeViewFavourites)
-            Toast.makeText(context, "Added to favourites", Toast.LENGTH_SHORT).show()
-            true
+            binding.imageViewRecipeViewFavourites.setImageResource(R.drawable.ic_not_fav)
+            binding.imageViewRecipeViewFavourites.tag = RecipeUtils.TAG_FAVOURITES_UNCHECKED
         }
+
+        recipeSaveToFav(recipe, inFavourite)
+    }
+
+    private fun recipeSaveToFav(recipe: Recipe, inFavourite: Boolean) {
+        Toast.makeText(requireContext(), "bookmarked", Toast.LENGTH_SHORT).show()
+        RetrofitFactory.apiService()
+            .recipeBookmarked(userViewModel.user.value?.pid, recipe.pid, inFavourite)
+            .enqueue(object : Callback<Recipe?> {
+                override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
+                    Log.d(RecipeViewFragment.TAG, "onResponse: bookmark SUCCESS")
+                    recipeViewModel.setSelectedRecipe(response.body())
+                    loadUser()
+                }
+
+                override fun onFailure(call: Call<Recipe?>, t: Throwable) {
+                    Log.d(RecipeViewFragment.TAG, "onResponse: bookmark FAILED")
+                }
+            })
+    }
+
+    private fun loadUser() {
+        userViewModel.getUserByUsername(authViewModel.username.value!!,
+            object : ResultCallback<User> {
+                override fun onResult(value: User?) {
+                    userViewModel.setUser(value!!)
+                }
+
+                override fun onFailure(value: User?) {
+                }
+            })
     }
 
     private fun toggleForks(forked: Boolean) {
-        recipeForked = if (forked) {
-            Glide
-                .with(requireContext())
-                .load(requireContext().getDrawable(R.drawable.ic_fork_unchecked))
-                .into(binding.imageViewForkViewRecipe)
-            Toast.makeText(context, "Recipe not forked :(", Toast.LENGTH_SHORT).show()
-            false
+        if (forked) {
+            binding.imageViewForkViewRecipe.setImageResource(R.drawable.ic_fork_checked)
+            binding.imageViewForkViewRecipe.tag = RecipeUtils.TAG_FORK_CHECKED
         } else {
-            Glide
-                .with(requireContext())
-                .load(requireContext().getDrawable(R.drawable.ic_fork_checked))
-                .into(binding.imageViewForkViewRecipe)
-            Toast.makeText(context, "Recipe forked!", Toast.LENGTH_SHORT).show()
-            true
+            binding.imageViewForkViewRecipe.setImageResource(R.drawable.ic_fork_unchecked)
+            binding.imageViewForkViewRecipe.tag = RecipeUtils.TAG_FORK_UNCHECKED
         }
     }
 
@@ -260,6 +298,16 @@ class RecipeViewFragment : Fragment() {
         setupIngredientAdapter(recipe.ingredients)
         setupStepAdapter(recipe.steps)
         binding.loader.progressOverlay.visibility = View.GONE
+
+        userViewModel.user.value?.recipesFavourites?.forEach {
+            recipeInFav = (it.identifier?.equals(recipe.identifier) == true)
+            toggleFavourites(recipeInFav)
+        }
+
+        userViewModel.user.value?.recipesForked?.forEach {
+            recipeForked = (it.identifier?.equals(recipe.identifier) == true)
+            toggleForks(recipeForked)
+        }
     }
 
 
