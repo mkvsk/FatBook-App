@@ -173,6 +173,7 @@ class RecipeViewFragment : Fragment() {
         binding.toolbarRecipeView.setNavigationOnClickListener {
             popBackStack()
         }
+        binding.toolbarRecipeView.inflateMenu(R.menu.recipe_view_menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -345,6 +346,12 @@ class RecipeViewFragment : Fragment() {
             .load(recipe.image)
             .placeholder(requireContext().getDrawable(R.drawable.default_recipe_image_rv_feed))
             .into(binding.imageViewRecipePhoto)
+
+        Glide
+            .with(requireContext())
+            .load(recipe.user?.profileImage)
+            .placeholder(requireContext().getDrawable(R.drawable.ic_default_userphoto))
+            .into(binding.imageviewAuthorPhotoRecipeView)
 
         binding.textViewForksAvgViewRecipe.text = convertNumeric(recipe.forks!!)
         binding.textViewCommentsAvgViewRecipe.text = convertNumeric(recipe.comments?.size ?: 0)

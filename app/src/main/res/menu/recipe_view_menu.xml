@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/menu_recipe_view_edit"
-        android:icon="@drawable/ic_btn_edit"
+        android:icon="@drawable/ic_edit_recipe_toolbar"
         android:visible="true"
         android:title="edit recipe"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_recipe_view_delete"
-        android:icon="@drawable/ic_btn_delete"
+        android:icon="@drawable/ic_delete_recipe_toolbar"
         android:visible="true"
         android:title="delete recipe"
         app:showAsAction="always" />

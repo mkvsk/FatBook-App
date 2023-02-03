@@ -23,7 +23,7 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "API_SERVICE_URL", '"https://api.fatbook.online/"'
-            buildConfigField "String", "API_SERVICE_TOKEN", '"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2JpbGV1enZlcjEzMzkiLCJyb2xlcyI6WyJVU0VSIl0sImlzcyI6Imh0dHA6Ly9hcGkuZmF0Ym9vay5vbmxpbmUvYXBpL2xvZ2luIiwiZXhwIjoxNjc2NzAzMjcyfQ.BnDIe8d13sEiKRmSAQnBnFlaobTP7isMdMTdmTKQdoc"'
+            buildConfigField "String", "API_SERVICE_TOKEN", '"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2JpbGV1enZlcjEzMzkiLCJyb2xlcyI6WyJVU0VSIl0sImlzcyI6Imh0dHA6Ly9hcGkuZmF0Ym9vay5vbmxpbmUvYXBpL2xvZ2luIiwiZXhwIjoxNjc4MDExMzQzfQ.EAUES8CRrhmQU8_jBfaz1NYitEtcrqIcdGqT0015_VQ"'
             versionNameSuffix "-debug"
             manifestPlaceholders = [appName: "FatBook"]
             testCoverageEnabled = false
