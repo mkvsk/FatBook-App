@@ -7,8 +7,10 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.size
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -69,10 +71,16 @@ class RecipeViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loader.progressOverlay.visibility = View.VISIBLE
-        checkAuthor()
-        loadData(recipeViewModel.selectedRecipeId.value!!)
+        recipeViewModel.setIsLoading(true)
+        handleBackPressed()
+        setupMenu()
 
+        loadData(recipeViewModel.selectedRecipeId.value!!)
+        checkAuthor()
+
+        initViews()
+        initListeners()
+        initObservers()
 
 
         binding.textviewAuthorUsernameRecipeView.setOnClickListener {
@@ -158,9 +166,59 @@ class RecipeViewFragment : Fragment() {
             }
         }
 
-        binding.textViewCommentsAvgViewRecipe.text = binding.rvCommentsRecipeView.size.toString()
+    }
 
-        initListeners()
+    private fun setupMenu() {
+        binding.toolbarRecipeView.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        binding.toolbarRecipeView.setNavigationOnClickListener {
+            popBackStack()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_recipe_view_edit -> {
+//                go to recipe create to edit
+                true
+            }
+            R.id.menu_recipe_view_delete -> {
+//                dialogMsg()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun initViews() {
+        binding.textViewCommentsAvgViewRecipe.text = binding.rvCommentsRecipeView.size.toString()
+    }
+
+    private fun initObservers() {
+        recipeViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loader.progressOverlay.visibility = View.VISIBLE
+            } else {
+                binding.loader.progressOverlay.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun handleBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (recipeViewModel.isLoading.value == true) {
+                        recipeViewModel.setIsLoading(false)
+                    } else {
+                        popBackStack()
+                    }
+                }
+            })
+    }
+
+    private fun popBackStack() {
+        findNavController().popBackStack()
     }
 
     private fun calculateIngredients(portionQty: Int) {
@@ -191,6 +249,10 @@ class RecipeViewFragment : Fragment() {
 
     private fun checkAuthor() {
         //setup menu for author/viewer
+//                TODO Fix icons, check author
+//        if (recipe.user!!.username!! == userViewModel.user.value?.username) {
+//            binding.toolbarRecipeView.inflateMenu(R.menu.recipe_view_menu)
+//        }
     }
 
     private fun toggleFavourites(inFavourite: Boolean) {
@@ -297,7 +359,6 @@ class RecipeViewFragment : Fragment() {
 
         setupIngredientAdapter(recipe.ingredients)
         setupStepAdapter(recipe.steps)
-        binding.loader.progressOverlay.visibility = View.GONE
 
         userViewModel.user.value?.recipesFavourites?.forEach {
             recipeInFav = (it.identifier?.equals(recipe.identifier) == true)
@@ -308,8 +369,9 @@ class RecipeViewFragment : Fragment() {
             recipeForked = (it.identifier?.equals(recipe.identifier) == true)
             toggleForks(recipeForked)
         }
-    }
 
+        recipeViewModel.setIsLoading(false)
+    }
 
     private fun initListeners() {
 
