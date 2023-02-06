@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.ui.fragment.recipe
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -34,6 +35,8 @@ import online.fatbook.fatbookapp.util.Constants.MIN_PORTIONS
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.FormatUtils.roundOffDecimal
 import online.fatbook.fatbookapp.util.RecipeUtils
+import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogBuilder
+import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogListener
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import retrofit2.Call
@@ -185,12 +188,30 @@ class RecipeViewFragment : Fragment() {
                 true
             }
             R.id.menu_recipe_view_delete -> {
-//                dialogMsg()
-                Toast.makeText(requireContext(), "RECIPE DELETED", Toast.LENGTH_SHORT).show()
+                showDeleteRecipeDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showDeleteRecipeDialog() {
+        FBAlertDialogBuilder.getDialogWithPositiveAndNegativeButtons(
+            getString(R.string.dialog_delete_recipe_title),
+            getString(R.string.dialog_delete_recipe_msg),
+            object : FBAlertDialogListener {
+                override fun onClick(dialogInterface: DialogInterface) {
+                    //TODO delete recipe
+                    Toast.makeText(requireContext(), "DELETED", Toast.LENGTH_SHORT).show()
+                    dialogInterface.dismiss()
+                }
+            },
+            object : FBAlertDialogListener {
+                override fun onClick(dialogInterface: DialogInterface) {
+                    Toast.makeText(requireContext(), "=^-^=", Toast.LENGTH_SHORT).show()
+                    dialogInterface.dismiss()
+                }
+            }).show()
     }
 
     private fun initViews() {
@@ -225,12 +246,13 @@ class RecipeViewFragment : Fragment() {
         findNavController().popBackStack()
     }
 
+    //    TODO fix unit
     private fun calculateIngredients(portionQty: Int) {
         val listRecipeIngredient = ArrayList<RecipeIngredient>()
         recipe.ingredients?.forEach {
             listRecipeIngredient.add(
                 it.copy(
-                    quantity = it.quantity?.div(recipe.portions!!)!!.times(this.portionQty)
+                    quantity = it.quantity?.div(recipe.portions!!)!!.times(portionQty)
                 )
             )
         }
@@ -256,15 +278,11 @@ class RecipeViewFragment : Fragment() {
             item.isVisible = user.equals(author)
         }
 
-//        if (user.equals(author)) {
-//            menuList.forEach { item ->
-//                item.isVisible = true
-//            }
-//        } else {
-//            menuList.forEach { item ->
-//                item.isVisible = false
-//            }
-//        }
+        if (author.equals(user)) {
+            binding.imageViewRecipeViewFavourites.visibility = View.GONE
+        } else {
+            binding.imageViewRecipeViewFavourites.visibility = View.VISIBLE
+        }
     }
 
     private fun toggleFavourites(inFavourite: Boolean) {
@@ -295,7 +313,19 @@ class RecipeViewFragment : Fragment() {
     }
 
     private fun recipeForked(recipe: Recipe, fork: Boolean) {
-        //TODO fork
+        Toast.makeText(requireContext(), "forked", Toast.LENGTH_SHORT).show()
+        RetrofitFactory.apiService().recipeForked(userViewModel.user.value?.pid, recipe.pid, fork)
+            .enqueue(object : Callback<Recipe?> {
+                override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
+                    recipeViewModel.setSelectedRecipe(response.body())
+                    loadUser()
+                    binding.textViewForksAvgViewRecipe.text = recipe.forks?.inc().toString()
+                }
+
+                override fun onFailure(call: Call<Recipe?>, t: Throwable) {
+                    Log.d(RecipeViewFragment.TAG, "onResponse: fork FAILED")
+                }
+            })
     }
 
     private fun loadUser() {
@@ -393,8 +423,8 @@ class RecipeViewFragment : Fragment() {
             toggleForks(recipeForked)
         }
 
-        TransitionManager.go(Scene(binding.cardviewRecipeViewFullInfo), AutoTransition())
-        TransitionManager.go(Scene(binding.toolbarRecipeView), AutoTransition())
+//        TransitionManager.go(Scene(binding.cardviewRecipeViewFullInfo), AutoTransition())
+//        TransitionManager.go(Scene(binding.toolbarRecipeView), AutoTransition())
     }
 
     private fun initListeners() {

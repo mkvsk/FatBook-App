@@ -541,6 +541,7 @@
                     android:layout_height="55dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="8dp"
+                    android:visibility="gone"
                     android:src="@drawable/ic_not_fav"
                     android:tag="tag_favourites_unchecked"
                     app:layout_constraintRight_toRightOf="@id/cardview_recipe_view_full_info"
