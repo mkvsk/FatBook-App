@@ -5,12 +5,16 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.forEach
 import androidx.core.view.size
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.transition.AutoTransition
+import androidx.transition.Scene
+import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -48,7 +52,7 @@ class RecipeViewFragment : Fragment() {
     private var recipeForked = false
     private var recipeInFav = false
     private var portionQty: Int = 0
-    private var setUpOptionsMenu = false
+    private lateinit var menuList: Menu
 
     companion object {
         private const val TAG = "RecipeViewFragment"
@@ -73,15 +77,13 @@ class RecipeViewFragment : Fragment() {
         handleBackPressed()
         loadData(recipeViewModel.selectedRecipeId.value!!)
         setupMenu()
-        recipeViewModel.setIsLoading(false)
         initViews()
         initListeners()
         initObservers()
+        recipeViewModel.setIsLoading(false)
 
 
         binding.textviewAuthorUsernameRecipeView.setOnClickListener {
-            //val v = textview_author_username_recipe_view.text.toString()
-//            userViewModel.selectedUsername.value = "hewix"
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_userprofile_from_recipe_view)
         }
@@ -167,13 +169,13 @@ class RecipeViewFragment : Fragment() {
     }
 
     private fun setupMenu() {
+        binding.toolbarRecipeView.inflateMenu(R.menu.recipe_view_menu)
         binding.toolbarRecipeView.setOnMenuItemClickListener(this::onOptionsItemSelected)
         binding.toolbarRecipeView.setNavigationOnClickListener {
             popBackStack()
         }
-        if (setUpOptionsMenu) {
-            binding.toolbarRecipeView.inflateMenu(R.menu.recipe_view_menu)
-        }
+
+        menuList = binding.toolbarRecipeView.menu
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -249,11 +251,20 @@ class RecipeViewFragment : Fragment() {
         rv.adapter = stepAdapter
     }
 
-    private fun checkAuthor(authorPid: Long, authorizedUserPid: Long) {
-        Log.d(TAG, "checkAuthor: $authorPid, $authorizedUserPid")
-        if (authorizedUserPid == authorPid) {
-            setUpOptionsMenu = true
+    private fun checkAuthor(author: String?, user: String?) {
+        menuList.forEach { item ->
+            item.isVisible = user.equals(author)
         }
+
+//        if (user.equals(author)) {
+//            menuList.forEach { item ->
+//                item.isVisible = true
+//            }
+//        } else {
+//            menuList.forEach { item ->
+//                item.isVisible = false
+//            }
+//        }
     }
 
     private fun toggleFavourites(inFavourite: Boolean) {
@@ -313,18 +324,21 @@ class RecipeViewFragment : Fragment() {
         recipeViewModel.getRecipeById(id, object : ResultCallback<Recipe> {
             override fun onResult(value: Recipe?) {
                 recipe = value!!
+                checkAuthor(recipe.user?.username, userViewModel.user.value?.username)
                 drawData()
             }
 
             override fun onFailure(value: Recipe?) {
-                Toast.makeText(requireContext(), "recipe load failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "recipe load failed", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
     }
 
     private fun drawData() {
         binding.textviewAuthorUsernameRecipeView.text = recipe.user?.username
-        binding.textviewDateRecipe.text = FormatUtils.getCreateDate(recipe.createDate.toString())
+        binding.textviewDateRecipe.text =
+            FormatUtils.getCreateDate(recipe.createDate.toString())
         binding.textViewRecipeViewRecipeTitle.text = recipe.title
         binding.textviewDifficultyRecipeView.text = recipe.difficulty!!.title.toString()
         binding.textviewCookingTimeRecipeView.text = recipe.cookingTime.toString()
@@ -379,7 +393,8 @@ class RecipeViewFragment : Fragment() {
             toggleForks(recipeForked)
         }
 
-        checkAuthor(recipe.user!!.pid!!, userViewModel.user.value!!.pid!!)
+        TransitionManager.go(Scene(binding.cardviewRecipeViewFullInfo), AutoTransition())
+        TransitionManager.go(Scene(binding.toolbarRecipeView), AutoTransition())
     }
 
     private fun initListeners() {
