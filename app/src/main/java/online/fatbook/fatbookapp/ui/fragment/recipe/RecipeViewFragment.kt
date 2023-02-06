@@ -22,7 +22,6 @@ import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.FullRecipeIngredientAdapter
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeCookingStepAdapter
-import online.fatbook.fatbookapp.ui.fragment.feed.FeedFragment
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
@@ -93,6 +92,7 @@ class RecipeViewFragment : Fragment() {
             } else {
                 recipeForked = true
             }
+            recipeForked(recipe, recipeForked)
             toggleForks(recipeForked)
         }
 
@@ -102,6 +102,7 @@ class RecipeViewFragment : Fragment() {
             } else {
                 recipeInFav = true
             }
+            recipeAddToFavourite(recipe, recipeInFav)
             toggleFavourites(recipeInFav)
         }
 
@@ -263,14 +264,12 @@ class RecipeViewFragment : Fragment() {
             binding.imageViewRecipeViewFavourites.setImageResource(R.drawable.ic_not_fav)
             binding.imageViewRecipeViewFavourites.tag = RecipeUtils.TAG_FAVOURITES_UNCHECKED
         }
-
-        recipeSaveToFav(recipe, inFavourite)
     }
 
-    private fun recipeSaveToFav(recipe: Recipe, inFavourite: Boolean) {
+    private fun recipeAddToFavourite(recipe: Recipe, favourite: Boolean) {
         Toast.makeText(requireContext(), "bookmarked", Toast.LENGTH_SHORT).show()
         RetrofitFactory.apiService()
-            .recipeBookmarked(userViewModel.user.value?.pid, recipe.pid, inFavourite)
+            .recipeBookmarked(userViewModel.user.value?.pid, recipe.pid, favourite)
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
                     Log.d(RecipeViewFragment.TAG, "onResponse: bookmark SUCCESS")
@@ -282,6 +281,10 @@ class RecipeViewFragment : Fragment() {
                     Log.d(RecipeViewFragment.TAG, "onResponse: bookmark FAILED")
                 }
             })
+    }
+
+    private fun recipeForked(recipe: Recipe, fork: Boolean) {
+        //TODO fork
     }
 
     private fun loadUser() {
