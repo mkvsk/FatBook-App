@@ -297,7 +297,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 //            isDataRefreshed = false
 //            fragmentAdapter!!.setData(user)
 //        } else {
-            setupViewPager()
+        setupViewPager()
 //        }
         binding.loader.progressOverlay.visibility = View.GONE
         binding.toolbar.visibility = View.VISIBLE
@@ -322,16 +322,20 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     private fun loadUser() {
-        userViewModel.getUserByUsername(user.username!!, object : ResultCallback<User> {
-            override fun onResult(value: User?) {
-                user = value!!
-                drawData()
-            }
+        userViewModel.getUserByUsername(user.username!!)
 
-            override fun onFailure(value: User?) {
-                Toast.makeText(requireContext(), "user load failed", Toast.LENGTH_SHORT).show()
+        userViewModel.resultCode.observe(viewLifecycleOwner) {
+            when (it) {
+                0 -> {
+                    drawData()
+                }
+                else -> {
+                    Toast.makeText(requireContext(), "user load failed", Toast.LENGTH_SHORT).show()
+                }
             }
-        })
+        }
+
+
     }
 
     private fun focusOnRecipes() {

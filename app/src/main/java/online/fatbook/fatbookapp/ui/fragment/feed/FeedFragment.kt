@@ -3,6 +3,9 @@ package online.fatbook.fatbookapp.ui.fragment.feed
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -52,6 +55,11 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     private val feedViewModel by lazy { obtainViewModel(FeedViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
+    final val KEY_RECYCLER_STATE = "recycler_state"
+    private var mBundleRecyclerViewState: Bundle? = null
+    private var mListState: Parcelable? = null
+    private var mRecyclerView: RecyclerView? = null
+
     companion object {
         private const val TAG = "FeedFragment"
     }
@@ -77,19 +85,19 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         feedViewModel.setIsLoading(true)
 
         binding.toolbarFeed.visibility = View.GONE
-        if (!authViewModel.isUserAuthenticated.value!!) {
-            login()
-        } else {
-            if (userViewModel.user.value == null) {
-                loadUser()
-            } else {
-                if (feedViewModel.recipes.value == null) {
-                    loadFeed()
-                } else {
-                    drawFeed()
-                }
-            }
-        }
+//        if (!authViewModel.isUserAuthenticated.value!!) {
+//            login()
+//        } else {
+//            if (userViewModel.user.value == null) {
+//                loadUser()
+//            } else {
+//                if (feedViewModel.recipes.value == null) {
+//                    loadFeed()
+//                } else {
+//                    drawFeed()
+//                }
+//            }
+//        }
     }
 
     private fun initListeners() {
@@ -105,6 +113,28 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun initObservers() {
+        authViewModel.isUserAuthenticated.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> {
+                    loadFeed()
+                }
+                else -> {
+                    login()
+                }
+            }
+        }
+
+        feedViewModel.recipes.observe(viewLifecycleOwner) {
+            when(it) {
+                null -> {
+                    loadFeed()
+                }
+                else -> {
+                    drawFeed()
+                }
+            }
+        }
+
         authViewModel.resultCode.observe(viewLifecycleOwner) {
             when (it) {
                 0 -> {
@@ -125,6 +155,18 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                 binding.toolbarFeed.visibility = View.VISIBLE
             }
         }
+
+        userViewModel.resultCode.observe(viewLifecycleOwner) {
+            when (it) {
+                0 -> {
+                    feedViewModel.setIsLoading(false)
+                    loadFeed()
+                }
+                else -> {}
+            }
+        }
+
+
     }
 
     private fun login() {
@@ -132,23 +174,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             .addFormDataPart("username", authViewModel.username.value!!)
             .addFormDataPart("password", authViewModel.password.value!!).build()
         authViewModel.loginFeed(request)
-
-//        authViewModel.login(request, object : ResultCallback<LoginResponse> {
-//            override fun onResult(value: LoginResponse?) {
-//                if (value == null || value.access_token.isNullOrEmpty()) {
-//                    Log.d("LOGOUT", "${authViewModel.username.value}")
-//                    logout()
-//                } else {
-//                    saveTokens(value)
-//                    authViewModel.setIsUserAuthenticated(true)
-//                    Log.d("LOGIN", "${authViewModel.username.value}")
-//                }
-//            }
-//
-//            override fun onFailure(value: LoginResponse?) {
-//                login()
-//            }
-//        })
     }
 
 //    private fun saveTokens(value: LoginResponse) {
@@ -160,18 +185,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun loadUser() {
         userViewModel.getUserByUsername(
-            authViewModel.username.value!!,
-            object : ResultCallback<User> {
-                override fun onResult(value: User?) {
-                    userViewModel.setUser(value!!)
-                    feedViewModel.setIsLoading(false)
-                    loadFeed()
-                }
-
-                override fun onFailure(value: User?) {
-
-                }
-            })
+            authViewModel.username.value!!
+        )
     }
 
     private fun setupSwipeRefresh() {
@@ -244,11 +259,13 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun setupAdapter() {
         rv = binding.rvFeed
+        mRecyclerView = rv
         adapter = RecipeAdapter()
         adapter!!.setClickListener(this)
         adapter!!.setContext(requireContext())
 //        (rv.itemAnimator as SimpleItemAnimator?)!!.supportsChangeAnimations = false
         rv!!.adapter = adapter
+        rv!!.adapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
     override fun onRecipeClick(id: Long) {
@@ -257,10 +274,10 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onBookmarksClick(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {
-        recipeBookmarked(recipe, bookmark, position)
+        recipeBookmarked(recipe, bookmark)
     }
 
-    private fun recipeBookmarked(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {
+    private fun recipeBookmarked(recipe: RecipeSimpleObject?, bookmark: Boolean) {
         Toast.makeText(requireContext(), "bookmarked", Toast.LENGTH_SHORT).show()
         RetrofitFactory.apiService()
             .recipeBookmarked(userViewModel.user.value!!.pid, recipe!!.pid, bookmark)
@@ -269,8 +286,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                     Log.d(TAG, "onResponse: bookmark SUCCESS")
                     recipeViewModel.setSelectedRecipe(response.body())
                     loadUser()
-//                        recipeViewModel.selectedRecipe.value = response.body()
-//                        loadUser(userViewModel.user.value!!.username!!, position)
                 }
 
                 override fun onFailure(call: Call<Recipe?>, t: Throwable) {
@@ -280,7 +295,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
-        recipeForked(recipe, fork, position)
+        recipeForked(recipe, fork)
     }
 
     override fun onUsernameClick(username: String) {
@@ -288,8 +303,11 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         findNavController().navigate(R.id.action_go_to_user_profile_from_feed)
     }
 
-    private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
+    private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean) {
         Toast.makeText(requireContext(), "forked", Toast.LENGTH_SHORT).show()
+
+
+
         RetrofitFactory.apiService()
             .recipeForked(userViewModel.user.value!!.pid, recipe!!.pid, fork)
             .enqueue(object : Callback<Recipe?> {
@@ -297,9 +315,6 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                     Log.d(TAG, "onResponse: fork SUCCESS")
                     recipeViewModel.setSelectedRecipe(response.body())
                     loadUser()
-
-//                        FeedFragment.log(Level.INFO, "fork SUCCESS")
-//                        recipeViewModel.selectedRecipe.value = response.body()
                 }
 
                 override fun onFailure(call: Call<Recipe?>, t: Throwable) {
@@ -322,23 +337,38 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     //TODO check if needed
-//    override fun onResume() {
-//        super.onResume()
+    override fun onResume() {
+        super.onResume()
+
+        if (mBundleRecyclerViewState != null) {
+            Looper.myLooper()?.let {
+                Handler(it).post {
+                    mListState = mBundleRecyclerViewState?.getParcelable(KEY_RECYCLER_STATE)
+                    mRecyclerView!!.layoutManager?.onRestoreInstanceState(mListState)
+                }
+            }
+        }
+
 //        binding!!.root.viewTreeObserver.addOnGlobalLayoutListener(
 //                KeyboardActionUtil(
 //                        binding!!.root, requireActivity()
 //                ).listenerForAdjustResize
 //        )
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        mBundleRecyclerViewState = Bundle()
+        mListState = mRecyclerView!!.layoutManager?.onSaveInstanceState()
+        mBundleRecyclerViewState?.putParcelable(KEY_RECYCLER_STATE, mListState)
+
 //        binding!!.root.viewTreeObserver.removeOnGlobalLayoutListener(
 //                KeyboardActionUtil(
 //                        binding!!.root, requireActivity()
 //                ).listenerForAdjustResize
 //        )
-//    }
+    }
 
     override fun onBackPressedBase(): Boolean {
         Log.d(TAG, "onBackPressedBase")

@@ -329,15 +329,7 @@ class RecipeViewFragment : Fragment() {
     }
 
     private fun loadUser() {
-        userViewModel.getUserByUsername(authViewModel.username.value!!,
-            object : ResultCallback<User> {
-                override fun onResult(value: User?) {
-                    userViewModel.setUser(value!!)
-                }
-
-                override fun onFailure(value: User?) {
-                }
-            })
+        userViewModel.getUserByUsername(authViewModel.username.value!!)
     }
 
     private fun toggleForks(forked: Boolean) {

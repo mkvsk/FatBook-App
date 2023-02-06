@@ -28,8 +28,8 @@ class RecipeAdapter :
     private lateinit var listener: OnRecipeClickListener
     private var context: Context? = null
 
-    private var recipeForked: Boolean? = null
-    private var recipeInFav: Boolean? = null
+    private var recipeForked = false
+    private var recipeInFav = false
 
     fun setUser(user: User) {
         this.user = user
@@ -130,9 +130,7 @@ class RecipeAdapter :
             user.recipesForked?.forEach {
                 recipeForked = (it.identifier?.equals(recipe.identifier) == true)
             }
-            recipeForked?.let {
-                toggleForks(itemView.imageView_rv_card_recipe_fork, it)
-            }
+            toggleForks(itemView.imageView_rv_card_recipe_fork, recipeForked)
 
             user.recipesFavourites?.forEach {
                 recipeInFav = (it.identifier?.equals(recipe.identifier) == true)
@@ -141,35 +139,35 @@ class RecipeAdapter :
                 itemView.imageView_rv_card_recipe_favourites.visibility = View.INVISIBLE
             } else {
                 itemView.imageView_rv_card_recipe_favourites.visibility = View.VISIBLE
-                recipeInFav?.let {
-                    toggleFavourites(itemView.imageView_rv_card_recipe_favourites, it)
-                }
+                toggleFavourites(itemView.imageView_rv_card_recipe_favourites, recipeInFav)
             }
 
             itemView.rv_card_recipe_preview.setOnClickListener {
                 listener.onRecipeClick(recipe.identifier!!)
             }
+
             itemView.imageView_rv_card_recipe_favourites.setOnClickListener {
                 when (itemView.imageView_rv_card_recipe_favourites.tag as String) {
                     RecipeUtils.TAG_FAVOURITES_UNCHECKED -> {
                         toggleFavourites(itemView.imageView_rv_card_recipe_favourites, true)
-                        listener.onBookmarksClick(data[adapterPosition], true, adapterPosition)
+                        listener.onBookmarksClick(data[bindingAdapterPosition], true, bindingAdapterPosition)
                     }
                     RecipeUtils.TAG_FAVOURITES_CHECKED -> {
                         toggleFavourites(itemView.imageView_rv_card_recipe_favourites, false)
-                        listener.onBookmarksClick(data[adapterPosition], false, adapterPosition)
+                        listener.onBookmarksClick(data[bindingAdapterPosition], false, bindingAdapterPosition)
                     }
                 }
             }
+
             itemView.imageView_rv_card_recipe_fork.setOnClickListener {
                 when (itemView.imageView_rv_card_recipe_fork.tag as String) {
                     RecipeUtils.TAG_FORK_UNCHECKED -> {
                         toggleForks(itemView.imageView_rv_card_recipe_fork, true)
-                        listener.onForkClicked(data[adapterPosition], true, adapterPosition)
+                        listener.onForkClicked(data[bindingAdapterPosition], true, bindingAdapterPosition)
                     }
                     RecipeUtils.TAG_FORK_CHECKED -> {
                         toggleForks(itemView.imageView_rv_card_recipe_fork, false)
-                        listener.onForkClicked(data[adapterPosition], false, adapterPosition)
+                        listener.onForkClicked(data[bindingAdapterPosition], false, bindingAdapterPosition)
                     }
                 }
             }
