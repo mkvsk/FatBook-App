@@ -16,7 +16,6 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.core.recipe.Recipe
-import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
@@ -49,8 +48,8 @@ class RecipeViewFragment : Fragment() {
 
     private var recipeForked = false
     private var recipeInFav = false
-
     private var portionQty: Int = 0
+    private var setUpOptionsMenu = false
 
     companion object {
         private const val TAG = "RecipeViewFragment"
@@ -73,11 +72,9 @@ class RecipeViewFragment : Fragment() {
 
         recipeViewModel.setIsLoading(true)
         handleBackPressed()
-        setupMenu()
-
         loadData(recipeViewModel.selectedRecipeId.value!!)
-        checkAuthor()
-
+        setupMenu()
+        recipeViewModel.setIsLoading(false)
         initViews()
         initListeners()
         initObservers()
@@ -173,17 +170,20 @@ class RecipeViewFragment : Fragment() {
         binding.toolbarRecipeView.setNavigationOnClickListener {
             popBackStack()
         }
-        binding.toolbarRecipeView.inflateMenu(R.menu.recipe_view_menu)
+        if (setUpOptionsMenu) {
+            binding.toolbarRecipeView.inflateMenu(R.menu.recipe_view_menu)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_recipe_view_edit -> {
-//                go to recipe create to edit
+                findNavController().navigate(R.id.action_go_to_recipe_edit)
                 true
             }
             R.id.menu_recipe_view_delete -> {
 //                dialogMsg()
+                Toast.makeText(requireContext(), "RECIPE DELETED", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -248,12 +248,11 @@ class RecipeViewFragment : Fragment() {
         rv.adapter = stepAdapter
     }
 
-    private fun checkAuthor() {
-        //setup menu for author/viewer
-//                TODO Fix icons, check author
-//        if (recipe.user!!.username!! == userViewModel.user.value?.username) {
-//            binding.toolbarRecipeView.inflateMenu(R.menu.recipe_view_menu)
-//        }
+    private fun checkAuthor(authorPid: Long, authorizedUserPid: Long) {
+        Log.d(TAG, "checkAuthor: $authorPid, $authorizedUserPid")
+        if (authorizedUserPid == authorPid) {
+            setUpOptionsMenu = true
+        }
     }
 
     private fun toggleFavourites(inFavourite: Boolean) {
@@ -377,7 +376,7 @@ class RecipeViewFragment : Fragment() {
             toggleForks(recipeForked)
         }
 
-        recipeViewModel.setIsLoading(false)
+        checkAuthor(recipe.user!!.pid!!, userViewModel.user.value!!.pid!!)
     }
 
     private fun initListeners() {

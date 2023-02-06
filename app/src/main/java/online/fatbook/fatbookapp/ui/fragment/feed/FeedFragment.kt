@@ -4,17 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.network.LoginResponse
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
@@ -25,11 +29,9 @@ import online.fatbook.fatbookapp.ui.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActionsListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
-import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.FeedViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.*
 import online.fatbook.fatbookapp.util.Constants
+import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
@@ -37,12 +39,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteListener,
-        BaseFragmentActionsListener {
+    BaseFragmentActionsListener {
 
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
 
     private var adapter: RecipeAdapter? = null
+    private var rv: RecyclerView? = null
 
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
@@ -54,7 +57,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFeedBinding.inflate(inflater, container, false)
         return binding.root
@@ -71,8 +74,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         setupMenu()
         setupAdapter()
 
-
-        binding.loader.progressOverlay.visibility = View.VISIBLE
+        feedViewModel.setIsLoading(true)
 
         binding.toolbarFeed.visibility = View.GONE
         if (!authViewModel.isUserAuthenticated.value!!) {
@@ -95,16 +97,20 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun initViews() {
-
+//        binding.rvFeed.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                super.onScrollStateChanged(recyclerView, newState)
+//            }
+//        })
     }
 
     private fun initObservers() {
         authViewModel.resultCode.observe(viewLifecycleOwner) {
-            when(it) {
-                0-> {
+            when (it) {
+                0 -> {
                     logout()
                 }
-                1-> {
+                1 -> {
                     loadUser()
                 }
             }
@@ -123,8 +129,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun login() {
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("username", authViewModel.username.value!!)
-                .addFormDataPart("password", authViewModel.password.value!!).build()
+            .addFormDataPart("username", authViewModel.username.value!!)
+            .addFormDataPart("password", authViewModel.password.value!!).build()
         authViewModel.loginFeed(request)
 
 //        authViewModel.login(request, object : ResultCallback<LoginResponse> {
@@ -153,7 +159,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //    }
 
     private fun loadUser() {
-        userViewModel.getUserByUsername(authViewModel.username.value!!,
+        userViewModel.getUserByUsername(
+            authViewModel.username.value!!,
             object : ResultCallback<User> {
                 override fun onResult(value: User?) {
                     userViewModel.setUser(value!!)
@@ -171,15 +178,14 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         binding.swipeRefreshFeed.isEnabled = false
         binding.swipeRefreshFeed.isRefreshing = false
         binding.swipeRefreshFeed.setProgressBackgroundColorSchemeColor(
-                ContextCompat.getColor(
-                        requireContext(),
-                        R.color.theme_primary_bgr
-                )
+            ContextCompat.getColor(
+                requireContext(), R.color.theme_primary_bgr
+            )
         )
         binding.swipeRefreshFeed.setColorSchemeColors(
-                ContextCompat.getColor(
-                        requireContext(), R.color.color_pink_a200
-                )
+            ContextCompat.getColor(
+                requireContext(), R.color.color_pink_a200
+            )
         )
         binding.swipeRefreshFeed.setOnRefreshListener {
             loadFeed()
@@ -203,7 +209,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun logout() {
         val sharedPreferences = requireActivity().getSharedPreferences(
-                Constants.SP_TAG, Context.MODE_PRIVATE
+            Constants.SP_TAG, Context.MODE_PRIVATE
         )
         val editor = sharedPreferences.edit()
         editor.putString(Constants.SP_TAG_USERNAME, StringUtils.EMPTY)
@@ -237,12 +243,12 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun setupAdapter() {
-        val rv = binding.rvFeed
+        rv = binding.rvFeed
         adapter = RecipeAdapter()
         adapter!!.setClickListener(this)
         adapter!!.setContext(requireContext())
 //        (rv.itemAnimator as SimpleItemAnimator?)!!.supportsChangeAnimations = false
-        rv.adapter = adapter
+        rv!!.adapter = adapter
     }
 
     override fun onRecipeClick(id: Long) {
@@ -257,20 +263,20 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     private fun recipeBookmarked(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {
         Toast.makeText(requireContext(), "bookmarked", Toast.LENGTH_SHORT).show()
         RetrofitFactory.apiService()
-                .recipeBookmarked(userViewModel.user.value!!.pid, recipe!!.pid, bookmark)
-                .enqueue(object : Callback<Recipe?> {
-                    override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
-                        Log.d(TAG, "onResponse: bookmark SUCCESS")
-                        recipeViewModel.setSelectedRecipe(response.body())
-                        loadUser()
+            .recipeBookmarked(userViewModel.user.value!!.pid, recipe!!.pid, bookmark)
+            .enqueue(object : Callback<Recipe?> {
+                override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
+                    Log.d(TAG, "onResponse: bookmark SUCCESS")
+                    recipeViewModel.setSelectedRecipe(response.body())
+                    loadUser()
 //                        recipeViewModel.selectedRecipe.value = response.body()
 //                        loadUser(userViewModel.user.value!!.username!!, position)
-                    }
+                }
 
-                    override fun onFailure(call: Call<Recipe?>, t: Throwable) {
-                        Log.d(TAG, "onResponse: bookmark FAILED")
-                    }
-                })
+                override fun onFailure(call: Call<Recipe?>, t: Throwable) {
+                    Log.d(TAG, "onResponse: bookmark FAILED")
+                }
+            })
     }
 
     override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
@@ -285,21 +291,21 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
         Toast.makeText(requireContext(), "forked", Toast.LENGTH_SHORT).show()
         RetrofitFactory.apiService()
-                .recipeForked(userViewModel.user.value!!.pid, recipe!!.pid, fork)
-                .enqueue(object : Callback<Recipe?> {
-                    override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
-                        Log.d(TAG, "onResponse: fork SUCCESS")
-                        recipeViewModel.setSelectedRecipe(response.body())
-                        loadUser()
+            .recipeForked(userViewModel.user.value!!.pid, recipe!!.pid, fork)
+            .enqueue(object : Callback<Recipe?> {
+                override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
+                    Log.d(TAG, "onResponse: fork SUCCESS")
+                    recipeViewModel.setSelectedRecipe(response.body())
+                    loadUser()
 
 //                        FeedFragment.log(Level.INFO, "fork SUCCESS")
 //                        recipeViewModel.selectedRecipe.value = response.body()
-                    }
+                }
 
-                    override fun onFailure(call: Call<Recipe?>, t: Throwable) {
-                        Log.d(TAG, "onResponse: fork FAILED")
-                    }
-                })
+                override fun onFailure(call: Call<Recipe?>, t: Throwable) {
+                    Log.d(TAG, "onResponse: fork FAILED")
+                }
+            })
     }
 
     override fun onRecipeRevertDeleteClick(recipe: Recipe?) {
@@ -378,7 +384,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //        if (userViewModel.user.value == null) {
         if (login == null) {
             val sharedPreferences =
-                    requireActivity().getSharedPreferences(Constants.APP_PREFS, Context.MODE_PRIVATE)
+                requireActivity().getSharedPreferences(Constants.APP_PREFS, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putString(Constants.USER_LOGIN, StringUtils.EMPTY)
             editor.apply()

@@ -34,6 +34,7 @@ class OAuthInterceptor(private val tokenType: String, private val accessToken: S
 
         when {
             proceed.code == 403 -> {
+                Log.d(TAG, "TOKEN = $accessToken")
                 Log.d(TAG, "token expired")
                 return proceed
             }

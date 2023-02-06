@@ -342,7 +342,7 @@
 
     <fragment
         android:id="@+id/navigation_recipe_create_add_ingredients"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.create.RecipeCreateAddIngredientsFragment"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeIngredientFragment"
         android:label="@null"
         tools:layout="@layout/fragment_recipe_ingredient" >
 

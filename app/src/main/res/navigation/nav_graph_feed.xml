@@ -32,7 +32,15 @@
     <fragment
         android:id="@+id/recipe_view_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeViewFragment"
-        android:label="@null" />
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_recipe_edit"
+            app:destination="@id/recipe_edit_first_stage_dest"
+            app:exitAnim="@anim/nav_default_enter_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
     <fragment
         android:id="@+id/direct_messages_dest"
@@ -42,5 +50,10 @@
     <fragment
         android:id="@+id/user_profile_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.user.UserProfileFragment"
+        android:label="@null" />
+
+    <fragment
+        android:id="@+id/recipe_edit_first_stage_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeFirstStageFragment"
         android:label="@null" />
 </navigation>
