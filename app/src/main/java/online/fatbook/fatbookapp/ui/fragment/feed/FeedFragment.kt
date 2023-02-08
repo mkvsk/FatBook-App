@@ -270,6 +270,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         recipeBookmarked(recipe, bookmark)
     }
 
+    //    TODO need fix
     private fun recipeBookmarked(recipe: RecipeSimpleObject?, bookmark: Boolean) {
         Toast.makeText(requireContext(), "bookmarked", Toast.LENGTH_SHORT).show()
 //        RetrofitFactory.apiService()
@@ -296,6 +297,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         findNavController().navigate(R.id.action_go_to_user_profile_from_feed)
     }
 
+//    TODO need fix
     private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean) {
         Toast.makeText(requireContext(), "forked", Toast.LENGTH_SHORT).show()
 //        RetrofitFactory.apiService()

@@ -14,16 +14,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import okhttp3.MultipartBody
-import okhttp3.Request
-import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.RecipeComment
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
+import online.fatbook.fatbookapp.ui.adapters.ViewRecipeCommentAdapter
 import online.fatbook.fatbookapp.ui.adapters.FullRecipeIngredientAdapter
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeCookingStepAdapter
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
@@ -38,9 +37,11 @@ import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogBuilder
 import online.fatbook.fatbookapp.util.alert_dialog.FBAlertDialogListener
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
+import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDateTime
 
 class RecipeViewFragment : Fragment() {
 
@@ -54,6 +55,8 @@ class RecipeViewFragment : Fragment() {
     private var recipeForked = false
     private var recipeInFav = false
     private var portionQty: Int = 0
+    private var commentText: String? = null
+
     private lateinit var menuList: Menu
 
     companion object {
@@ -63,6 +66,7 @@ class RecipeViewFragment : Fragment() {
     private var recipe: Recipe = Recipe()
     private var ingredientAdapter: FullRecipeIngredientAdapter? = null
     private var stepAdapter: ViewRecipeCookingStepAdapter? = null
+    private var commentAdapter: ViewRecipeCommentAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -130,11 +134,8 @@ class RecipeViewFragment : Fragment() {
         binding.buttonSendComment.setOnClickListener {
             binding.buttonSendComment.visibility = View.GONE
             hideKeyboard(binding.edittextInputComment)
-
-            val comment = binding.edittextInputComment.text.toString()
-
-            recipeViewModel.addComment(recipe.pid!!, comment)
-//            TODO notify adapter
+            commentText = binding.edittextInputComment.text.toString()
+            addComment()
         }
 
         binding.imageViewIcCommentsViewRecipe.setOnClickListener {
@@ -173,6 +174,17 @@ class RecipeViewFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun addComment() {
+        recipeViewModel.addComment(recipe.pid!!, commentText!!)
+
+        val newComment = RecipeComment()
+        newComment.comment = commentText
+        newComment.user = userViewModel.user.value?.convertToSimpleObject()
+        newComment.timestamp = LocalDateTime.now().toString()
+        recipe.comments?.add(newComment)
+        commentAdapter?.notifyItemInserted(recipe.comments!!.size.dec())
     }
 
     private fun setupMenu() {
@@ -231,6 +243,15 @@ class RecipeViewFragment : Fragment() {
                 binding.loader.progressOverlay.visibility = View.GONE
             }
         }
+
+        recipeViewModel.isCommentAdd.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.edittextInputComment.setText(StringUtils.EMPTY)
+                commentText = StringUtils.EMPTY
+            } else {
+                binding.edittextInputComment.setText(commentText)
+            }
+        }
     }
 
     private fun handleBackPressed() {
@@ -276,6 +297,13 @@ class RecipeViewFragment : Fragment() {
         stepAdapter = ViewRecipeCookingStepAdapter(requireContext())
         stepAdapter!!.setData(cookingSteps)
         rv.adapter = stepAdapter
+    }
+
+    private fun setupCommentsAdapter(comments: ArrayList<RecipeComment>?) {
+        val rv = binding.rvCommentsRecipeView
+        commentAdapter = ViewRecipeCommentAdapter(requireContext())
+        commentAdapter!!.setData(comments)
+        rv.adapter = commentAdapter
     }
 
     private fun checkAuthor(author: String?, user: String?) {
@@ -414,6 +442,7 @@ class RecipeViewFragment : Fragment() {
 
         setupIngredientAdapter(recipe.ingredients)
         setupStepAdapter(recipe.steps)
+        setupCommentsAdapter(recipe.comments)
 
         userViewModel.user.value?.recipesFavourites?.forEach {
             recipeInFav = (it.identifier?.equals(recipe.identifier) == true)
@@ -425,6 +454,7 @@ class RecipeViewFragment : Fragment() {
             toggleForks(recipeForked)
         }
     }
+
 
     private fun initListeners() {
 

@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
+        android:visibility="gone"
         android:paddingHorizontal="@dimen/content_padding_10"
         app:layout_constraintBottom_toBottomOf="@id/imageview_userphoto_rv_comment"
         app:layout_constraintRight_toRightOf="parent"

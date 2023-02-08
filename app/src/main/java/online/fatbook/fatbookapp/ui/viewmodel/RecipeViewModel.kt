@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.*
@@ -12,7 +11,6 @@ import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
 import online.fatbook.fatbookapp.repository.RecipeRepository
 import java.io.File
-import java.util.LinkedList
 
 class RecipeViewModel : ViewModel() {
 
@@ -214,14 +212,24 @@ class RecipeViewModel : ViewModel() {
         })
     }
 
+    private val _isCommentAdd = MutableLiveData<Boolean>()
+    val isCommentAdd: LiveData<Boolean> get() = _isCommentAdd
+
+    fun setIsCommentAdd(value: Boolean) {
+        _isCommentAdd.value = value
+    }
+
     fun addComment(pidRecipe: Long, comment: String) {
         repository.addComment(pidRecipe, comment, object : ResultCallback<Recipe> {
             override fun onResult(value: Recipe?) {
                 Log.d(TAG, "onResult: nice comment")
+                setRecipe(value!!)
+                setIsCommentAdd(true)
             }
 
             override fun onFailure(value: Recipe?) {
                 Log.d(TAG, "onFailure: error")
+                setIsCommentAdd(false)
             }
         })
     }
