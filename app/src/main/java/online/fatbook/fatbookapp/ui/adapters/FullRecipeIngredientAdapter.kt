@@ -1,25 +1,29 @@
 package online.fatbook.fatbookapp.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.rv_ingredients_to_recipe_view.view.*
-import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
-import online.fatbook.fatbookapp.util.FormatUtils
+import online.fatbook.fatbookapp.databinding.RvIngredientsToRecipeViewBinding
 import online.fatbook.fatbookapp.util.FormatUtils.roundOffDecimal
 
 class FullRecipeIngredientAdapter : RecyclerView.Adapter<FullRecipeIngredientAdapter.ViewHolder>(),
     BindableAdapter<RecipeIngredient> {
+    private var _binding: RvIngredientsToRecipeViewBinding? = null
+    private val binding get() = _binding!!
 
     private var data: List<RecipeIngredient> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_ingredients_to_recipe_view, parent, false)
-        )
+        _binding =
+            RvIngredientsToRecipeViewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -30,6 +34,7 @@ class FullRecipeIngredientAdapter : RecyclerView.Adapter<FullRecipeIngredientAda
         return data.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun setData(data: List<RecipeIngredient>?) {
         data?.let {
             this.data = it
@@ -39,13 +44,13 @@ class FullRecipeIngredientAdapter : RecyclerView.Adapter<FullRecipeIngredientAda
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(recipeIngredient: RecipeIngredient) {
-            itemView.textview_ingredient_title_rv_ingredient_recipe_view.text =
+            binding.textviewIngredientTitleRvIngredientRecipeView.text =
                 recipeIngredient.ingredient?.title
 
-            itemView.textview_ingredient_kcals_title_rv_ingredient_recipe_view.text =
+            binding.textviewIngredientKcalsTitleRvIngredientRecipeView.text =
                 String.format("(%s kcal)", roundOffDecimal(recipeIngredient.kcal))
 
-            itemView.textview_ingredient_qty_title_rv_ingredient_recipe_view.text = String.format(
+            binding.textviewIngredientQtyTitleRvIngredientRecipeView.text = String.format(
                 "%s %s",
                 roundOffDecimal(recipeIngredient.quantity!!).toString(),
                 recipeIngredient.ingredient?.unitRatio?.unit?.title.toString()

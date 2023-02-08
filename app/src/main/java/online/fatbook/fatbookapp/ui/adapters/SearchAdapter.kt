@@ -1,36 +1,36 @@
 package online.fatbook.fatbookapp.ui.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.rv_search.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
+import online.fatbook.fatbookapp.databinding.RvSearchBinding
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
-import kotlin.math.log
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
     BindableAdapter<StaticDataObject> {
+    private var _binding: RvSearchBinding? = null
+    private val binding get() = _binding!!
 
     private var data: List<StaticDataObject> = ArrayList()
     var listener: OnSearchItemClickListener? = null
     var selectedItems: ArrayList<Int>? = ArrayList()
     var isAllSelected: Boolean = false
 
-    companion object{
+    companion object {
         private const val TAG = "SearchAdapter"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.rv_search, parent, false)
-        )
+        _binding =
+            RvSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -45,6 +45,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setSelectAll(selectAll: StaticDataObject) {
         (data as ArrayList).add(0, selectAll)
         notifyDataSetChanged()
@@ -58,6 +59,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
         return data.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setSelected(arrayList: ArrayList<Int>) {
         selectedItems = arrayList
         notifyDataSetChanged()
@@ -76,17 +78,20 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: StaticDataObject?) {
             if (selectedItems!!.contains(bindingAdapterPosition)) {
-                selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                selectItem(binding.cardviewRvSearch, binding.textviewItemTitleRvSearch)
             } else {
-                unselectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                unselectItem(binding.cardviewRvSearch, binding.textviewItemTitleRvSearch)
             }
-            itemView.textview_item_title_rv_search.text = value!!.title
-            itemView.cardview_rv_search.setOnClickListener {
+            binding.textviewItemTitleRvSearch.text = value!!.title
+            binding.cardviewRvSearch.setOnClickListener {
 
                 if (value.tag == TAG_SELECT_ALL_BUTTON) {
-                    if (!itemView.textview_item_title_rv_search.isSelected) {
+                    if (!binding.textviewItemTitleRvSearch.isSelected) {
                         isAllSelected = true
-                        selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                        selectItem(
+                            binding.cardviewRvSearch,
+                            binding.textviewItemTitleRvSearch
+                        )
                         val list: ArrayList<Int> = ArrayList()
                         for (i in data.indices) {
                             list.add(i)
@@ -95,12 +100,15 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
                         setSelected(list)
                     } else {
                         isAllSelected = false
-                        unselectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                        unselectItem(
+                            binding.cardviewRvSearch,
+                            binding.textviewItemTitleRvSearch
+                        )
                         setSelected(ArrayList())
                     }
                     listener!!.onSelectAllClick()
                 } else {
-                    if (!itemView.textview_item_title_rv_search.isSelected) {
+                    if (!binding.textviewItemTitleRvSearch.isSelected) {
                         addToSelected(bindingAdapterPosition)
                         if (selectedItems!!.size == data.size - 1) {
                             addToSelected(0)

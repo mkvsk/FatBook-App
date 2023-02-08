@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import lombok.extern.java.Log
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
+import online.fatbook.fatbookapp.databinding.RvFeedRecipeCardPreviewBinding
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.RecipeUtils
@@ -22,6 +22,8 @@ import java.time.LocalTime
 @Log
 class RecipeAdapter :
     RecyclerView.Adapter<RecipeAdapter.ViewHolder>(), BindableAdapter<RecipeSimpleObject> {
+    private var _binding: RvFeedRecipeCardPreviewBinding? = null
+    private val binding get() = _binding!!
 
     private var data: List<RecipeSimpleObject> = ArrayList()
     private var user: User = User()
@@ -44,10 +46,13 @@ class RecipeAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_feed_recipe_card_preview, parent, false)
-        )
+        _binding =
+            RvFeedRecipeCardPreviewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -83,91 +88,107 @@ class RecipeAdapter :
                 Glide
                     .with(itemView.context)
                     .load(recipe.image)
-                    .into(itemView.imageView_rv_card_recipe_photo)
+                    .into(binding.imageViewRvCardRecipePhoto)
             } else {
-                itemView.imageView_rv_card_recipe_photo.setImageResource(R.drawable.default_recipe_image_rv_feed)
+                binding.imageViewRvCardRecipePhoto.setImageResource(R.drawable.default_recipe_image_rv_feed)
             }
 
-            itemView.textView_rv_card_recipe_title.text = recipe.title
+            binding.textViewRvCardRecipeTitle.text = recipe.title
             if (!recipe.ingredientsLocalizedMap.isNullOrEmpty()) {
-                itemView.rv_ingredients_preview.text = String.format(
+                binding.rvIngredientsPreview.text = String.format(
                     context!!.getString(R.string.title_ingredients_rv_recipe),
                     recipe.ingredientQty,
                     recipe.ingredientsStr
                 )
             }
             if (recipe.kcalPerPortion == 0.0) {
-                itemView.rv_recipe_kcal_img.visibility = View.GONE
-                itemView.rv_recipe_kcal.visibility = View.GONE
+                binding.rvRecipeKcalImg.visibility = View.GONE
+                binding.rvRecipeKcal.visibility = View.GONE
             } else {
-                itemView.rv_recipe_kcal_img.visibility = View.VISIBLE
-                itemView.rv_recipe_kcal.visibility = View.VISIBLE
+                binding.rvRecipeKcalImg.visibility = View.VISIBLE
+                binding.rvRecipeKcal.visibility = View.VISIBLE
             }
-            itemView.rv_recipe_kcal.text = String.format(
+            binding.rvRecipeKcal.text = String.format(
                 context!!.getString(R.string.format_kcal),
                 recipe.kcalPerPortion.toString()
             )
-            itemView.rv_recipe_cooking_time.text =
+            binding.rvRecipeCookingTime.text =
                 getCookingTime(LocalTime.parse(recipe.cookingTime))
 
-            itemView.rv_recipe_difficulty.text = recipe.difficulty?.title
+            binding.rvRecipeDifficulty.text = recipe.difficulty?.title
 
-            itemView.rv_recipe_create_date.text = FormatUtils.getCreateDate(recipe.createDate!!)
+            binding.rvRecipeCreateDate.text = FormatUtils.getCreateDate(recipe.createDate!!)
 
-            itemView.rv_recipe_author.text = recipe.user!!.username
+            binding.rvRecipeAuthor.text = recipe.user!!.username
             Glide
                 .with(itemView.context)
                 .load(recipe.user!!.profileImage)
                 .placeholder(itemView.context.getDrawable(R.drawable.ic_default_userphoto))
-                .into(itemView.imageview_author_photo_rv_recipe_preview)
-            itemView.rv_recipe_comments_qty.text = recipe.commentQty.toString()
-            itemView.textView_rv_card_recipe_forks_avg.text =
+                .into(binding.imageviewAuthorPhotoRvRecipePreview)
+            binding.rvRecipeCommentsQty.text = recipe.commentQty.toString()
+            binding.textViewRvCardRecipeForksAvg.text =
                 FormatUtils.prettyCount(recipe.forks!!)
-            itemView.ll_author_link_rv_recipe_preview.setOnClickListener {
+            binding.llAuthorLinkRvRecipePreview.setOnClickListener {
                 listener.onUsernameClick(data[bindingAdapterPosition].user!!.username!!)
             }
 
             user.recipesForked?.forEach {
                 recipeForked = (it.identifier?.equals(recipe.identifier) == true)
             }
-            toggleForks(itemView.imageView_rv_card_recipe_fork, recipeForked)
+            toggleForks(binding.imageViewRvCardRecipeFork, recipeForked)
 
             user.recipesFavourites?.forEach {
                 recipeInFav = (it.identifier?.equals(recipe.identifier) == true)
             }
             if (recipe.user?.username == user.username) {
-                itemView.imageView_rv_card_recipe_favourites.visibility = View.INVISIBLE
+                binding.imageViewRvCardRecipeFavourites.visibility = View.INVISIBLE
             } else {
-                itemView.imageView_rv_card_recipe_favourites.visibility = View.VISIBLE
-                toggleFavourites(itemView.imageView_rv_card_recipe_favourites, recipeInFav)
+                binding.imageViewRvCardRecipeFavourites.visibility = View.VISIBLE
+                toggleFavourites(binding.imageViewRvCardRecipeFavourites, recipeInFav)
             }
 
-            itemView.rv_card_recipe_preview.setOnClickListener {
+            binding.rvCardRecipePreview.setOnClickListener {
                 listener.onRecipeClick(recipe.identifier!!)
             }
 
-            itemView.imageView_rv_card_recipe_favourites.setOnClickListener {
-                when (itemView.imageView_rv_card_recipe_favourites.tag as String) {
+            binding.imageViewRvCardRecipeFavourites.setOnClickListener {
+                when (binding.imageViewRvCardRecipeFavourites.tag as String) {
                     RecipeUtils.TAG_FAVOURITES_UNCHECKED -> {
-                        toggleFavourites(itemView.imageView_rv_card_recipe_favourites, true)
-                        listener.onBookmarksClick(data[bindingAdapterPosition], true, bindingAdapterPosition)
+                        toggleFavourites(binding.imageViewRvCardRecipeFavourites, true)
+                        listener.onBookmarksClick(
+                            data[bindingAdapterPosition],
+                            true,
+                            bindingAdapterPosition
+                        )
                     }
                     RecipeUtils.TAG_FAVOURITES_CHECKED -> {
-                        toggleFavourites(itemView.imageView_rv_card_recipe_favourites, false)
-                        listener.onBookmarksClick(data[bindingAdapterPosition], false, bindingAdapterPosition)
+                        toggleFavourites(binding.imageViewRvCardRecipeFavourites, false)
+                        listener.onBookmarksClick(
+                            data[bindingAdapterPosition],
+                            false,
+                            bindingAdapterPosition
+                        )
                     }
                 }
             }
 
-            itemView.imageView_rv_card_recipe_fork.setOnClickListener {
-                when (itemView.imageView_rv_card_recipe_fork.tag as String) {
+            binding.imageViewRvCardRecipeFork.setOnClickListener {
+                when (binding.imageViewRvCardRecipeFork.tag as String) {
                     RecipeUtils.TAG_FORK_UNCHECKED -> {
-                        toggleForks(itemView.imageView_rv_card_recipe_fork, true)
-                        listener.onForkClicked(data[bindingAdapterPosition], true, bindingAdapterPosition)
+                        toggleForks(binding.imageViewRvCardRecipeFork, true)
+                        listener.onForkClicked(
+                            data[bindingAdapterPosition],
+                            true,
+                            bindingAdapterPosition
+                        )
                     }
                     RecipeUtils.TAG_FORK_CHECKED -> {
-                        toggleForks(itemView.imageView_rv_card_recipe_fork, false)
-                        listener.onForkClicked(data[bindingAdapterPosition], false, bindingAdapterPosition)
+                        toggleForks(binding.imageViewRvCardRecipeFork, false)
+                        listener.onForkClicked(
+                            data[bindingAdapterPosition],
+                            false,
+                            bindingAdapterPosition
+                        )
                     }
                 }
             }

@@ -6,15 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.rv_recipe_ingredient.view.*
-import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
+import online.fatbook.fatbookapp.databinding.RvRecipeIngredientBinding
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeIngredientItemClickListener
 import online.fatbook.fatbookapp.util.FormatUtils
 import org.apache.commons.lang3.StringUtils
 
 class RecipeIngredientAdapter :
     RecyclerView.Adapter<RecipeIngredientAdapter.ViewHolder>(), BindableAdapter<RecipeIngredient> {
+    private var _binding: RvRecipeIngredientBinding? = null
+    private val binding get() = _binding!!
 
     private var data: List<RecipeIngredient> = ArrayList()
     var listener: OnRecipeIngredientItemClickListener? = null
@@ -22,10 +23,9 @@ class RecipeIngredientAdapter :
     private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_recipe_ingredient, parent, false)
-        )
+        _binding =
+            RvRecipeIngredientBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -54,26 +54,26 @@ class RecipeIngredientAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: RecipeIngredient?) {
-            itemView.textview_ingredient_title_rv_added_ingredient.text = value!!.ingredient!!.title
+            binding.textviewIngredientTitleRvAddedIngredient.text = value!!.ingredient!!.title
 
-            value.kcal?.let {
+            value.kcal.let {
                 if (value.kcal == 0.0 && value.fats == 0.0 && value.carbs == 0.0 && value.proteins == 0.0) {
-                    itemView.textview_ingredient_kcals_title_rv_added_ingredient.text =
+                    binding.textviewIngredientKcalsTitleRvAddedIngredient.text =
                         StringUtils.EMPTY
                 } else {
-                    itemView.textview_ingredient_kcals_title_rv_added_ingredient.text =
+                    binding.textviewIngredientKcalsTitleRvAddedIngredient.text =
                         String.format("%s kcal", FormatUtils.prettyCount(it))
                 }
             }
 
-            itemView.textview_ingredient_qty_title_rv_added_ingredient.text =
+            binding.textviewIngredientQtyTitleRvAddedIngredient.text =
                 String.format(
                     "%s %s",
                     FormatUtils.prettyCount(value.quantity!!),
                     value.unit!!.title
                 )
 
-            itemView.button_remove_rv_added_ingredient.setOnClickListener {
+            binding.buttonRemoveRvAddedIngredient.setOnClickListener {
                 listener!!.onRecipeIngredientDelete(bindingAdapterPosition)
             }
         }
