@@ -105,11 +105,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun initViews() {
-//        binding.rvFeed.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                super.onScrollStateChanged(recyclerView, newState)
-//            }
-//        })
+
     }
 
     private fun initObservers() {
@@ -170,10 +166,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     private fun login() {
-        val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-            .addFormDataPart("username", authViewModel.username.value!!)
-            .addFormDataPart("password", authViewModel.password.value!!).build()
-        authViewModel.loginFeed(request)
+        authViewModel.loginFeed()
     }
 
 //    private fun saveTokens(value: LoginResponse) {
@@ -279,19 +272,19 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun recipeBookmarked(recipe: RecipeSimpleObject?, bookmark: Boolean) {
         Toast.makeText(requireContext(), "bookmarked", Toast.LENGTH_SHORT).show()
-        RetrofitFactory.apiService()
-            .recipeBookmarked(userViewModel.user.value!!.pid, recipe!!.pid, bookmark)
-            .enqueue(object : Callback<Recipe?> {
-                override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
-                    Log.d(TAG, "onResponse: bookmark SUCCESS")
-                    recipeViewModel.setSelectedRecipe(response.body())
-                    loadUser()
-                }
-
-                override fun onFailure(call: Call<Recipe?>, t: Throwable) {
-                    Log.d(TAG, "onResponse: bookmark FAILED")
-                }
-            })
+//        RetrofitFactory.apiService()
+//            .recipeBookmarked(userViewModel.user.value!!.pid, recipe!!.pid, bookmark)
+//            .enqueue(object : Callback<Recipe?> {
+//                override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
+//                    Log.d(TAG, "onResponse: bookmark SUCCESS")
+//                    recipeViewModel.setSelectedRecipe(response.body())
+//                    loadUser()
+//                }
+//
+//                override fun onFailure(call: Call<Recipe?>, t: Throwable) {
+//                    Log.d(TAG, "onResponse: bookmark FAILED")
+//                }
+//            })
     }
 
     override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
@@ -305,22 +298,19 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 
     private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean) {
         Toast.makeText(requireContext(), "forked", Toast.LENGTH_SHORT).show()
-
-
-
-        RetrofitFactory.apiService()
-            .recipeForked(userViewModel.user.value!!.pid, recipe!!.pid, fork)
-            .enqueue(object : Callback<Recipe?> {
-                override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
-                    Log.d(TAG, "onResponse: fork SUCCESS")
-                    recipeViewModel.setSelectedRecipe(response.body())
-                    loadUser()
-                }
-
-                override fun onFailure(call: Call<Recipe?>, t: Throwable) {
-                    Log.d(TAG, "onResponse: fork FAILED")
-                }
-            })
+//        RetrofitFactory.apiService()
+//            .recipeForked(userViewModel.user.value!!.pid, recipe!!.pid, fork)
+//            .enqueue(object : Callback<Recipe?> {
+//                override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
+//                    Log.d(TAG, "onResponse: fork SUCCESS")
+//                    recipeViewModel.setSelectedRecipe(response.body())
+//                    loadUser()
+//                }
+//
+//                override fun onFailure(call: Call<Recipe?>, t: Throwable) {
+//                    Log.d(TAG, "onResponse: fork FAILED")
+//                }
+//            })
     }
 
     override fun onRecipeRevertDeleteClick(recipe: Recipe?) {

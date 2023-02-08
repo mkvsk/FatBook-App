@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -253,7 +254,10 @@ class AuthenticationViewModel : ViewModel() {
         })
     }
 
-    fun loginFeed(request: RequestBody) {
+    fun loginFeed() {
+        val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("username", username.value.toString())
+            .addFormDataPart("password", password.value.toString()).build()
         repository.login(request, object : ResultCallback<LoginResponse> {
             override fun onResult(value: LoginResponse?) {
                 value?.let {

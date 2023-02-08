@@ -69,4 +69,22 @@ class RecipeRepository {
         }
     }
 
+    fun addComment(pidRecipe: Long, comment: String, callback: ResultCallback<Recipe>) {
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().addComment(pidRecipe, comment)
+            call.enqueue(object : Callback<Recipe> {
+                override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
+                    Log.d(TAG, "COMMENT ADD ${response.body().toString()}")
+                    callback.onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<Recipe>, t: Throwable) {
+                    Log.d(TAG, "COMMENT ADD error")
+                    t.printStackTrace()
+                    callback.onFailure(null)
+                }
+            })
+        }
+    }
+
 }

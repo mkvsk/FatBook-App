@@ -13,16 +13,15 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.transition.AutoTransition
-import androidx.transition.Scene
-import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
+import okhttp3.MultipartBody
+import okhttp3.Request
+import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
-import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.FullRecipeIngredientAdapter
@@ -116,7 +115,7 @@ class RecipeViewFragment : Fragment() {
             }
 
             override fun onTextChanged(str: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (!str.toString().isNullOrEmpty()) {
+                if (!str.toString().isEmpty()) {
                     binding.buttonSendComment.visibility = View.VISIBLE
                 } else {
                     binding.buttonSendComment.visibility = View.GONE
@@ -131,6 +130,11 @@ class RecipeViewFragment : Fragment() {
         binding.buttonSendComment.setOnClickListener {
             binding.buttonSendComment.visibility = View.GONE
             hideKeyboard(binding.edittextInputComment)
+
+            val comment = binding.edittextInputComment.text.toString()
+
+            recipeViewModel.addComment(recipe.pid!!, comment)
+//            TODO notify adapter
         }
 
         binding.imageViewIcCommentsViewRecipe.setOnClickListener {
@@ -184,6 +188,7 @@ class RecipeViewFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_recipe_view_edit -> {
+                recipeViewModel.setEditMode(true)
                 findNavController().navigate(R.id.action_go_to_recipe_edit)
                 true
             }
@@ -319,7 +324,12 @@ class RecipeViewFragment : Fragment() {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
                     recipeViewModel.setSelectedRecipe(response.body())
                     loadUser()
-                    binding.textViewForksAvgViewRecipe.text = recipe.forks?.inc().toString()
+
+                    if (fork) {
+                        binding.textViewForksAvgViewRecipe.text = recipe.forks?.inc().toString()
+                    } else {
+                        binding.textViewForksAvgViewRecipe.text = recipe.forks?.dec().toString()
+                    }
                 }
 
                 override fun onFailure(call: Call<Recipe?>, t: Throwable) {
@@ -414,9 +424,6 @@ class RecipeViewFragment : Fragment() {
             recipeForked = (it.identifier?.equals(recipe.identifier) == true)
             toggleForks(recipeForked)
         }
-
-//        TransitionManager.go(Scene(binding.cardviewRecipeViewFullInfo), AutoTransition())
-//        TransitionManager.go(Scene(binding.toolbarRecipeView), AutoTransition())
     }
 
     private fun initListeners() {

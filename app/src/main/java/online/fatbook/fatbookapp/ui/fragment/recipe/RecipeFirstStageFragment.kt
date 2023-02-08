@@ -93,6 +93,8 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
         setupMenu()
         setupImageEditButtons()
 
+        initObservers()
+
         if (staticDataViewModel.cookingDifficulties.value.isNullOrEmpty()) {
             loadDifficulty()
         } else {
@@ -239,12 +241,28 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
             }
         }
 
-        //TODO remove stub
-        binding.edittextTitleRecipe1Stage.setText("Test recipe name, REMOVE ME LATER")
-        binding.edittextPortionsQtyRecipe1Stage.setText("1")
-        Log.d(TAG, "=======================================================================")
-        Log.d(TAG, "onViewCreated: ${recipeViewModel.newRecipe.value}")
-        Log.d(TAG, "=======================================================================")
+
+    }
+
+    private fun initObservers() {
+        recipeViewModel.isEditMode.observe(viewLifecycleOwner) {
+            when(it) {
+                true -> {
+                    recipeViewModel.setNewRecipe(recipeViewModel.recipe.value)
+//                    fillRecipe()
+//                    binding.edittextTitleRecipe1Stage.setText(recipeViewModel.newRecipe.value?.title)
+//                    binding.edittextPortionsQtyRecipe1Stage.setText(recipeViewModel.newRecipe.value?.portions.toString())
+                }
+                false -> {
+                    //TODO remove stub
+                    binding.edittextTitleRecipe1Stage.setText("Test recipe name, REMOVE ME LATER")
+                    binding.edittextPortionsQtyRecipe1Stage.setText("1")
+                    Log.d(TAG, "=======================================================================")
+                    Log.d(TAG, "onViewCreated: ${recipeViewModel.newRecipe.value}")
+                    Log.d(TAG, "=======================================================================")
+                }
+            }
+        }
     }
 
     private fun checkDataTitle() {

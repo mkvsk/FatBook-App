@@ -1,8 +1,10 @@
 package online.fatbook.fatbookapp.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.*
@@ -208,6 +210,18 @@ class RecipeViewModel : ViewModel() {
 
             override fun onFailure(value: Recipe?) {
                 callback.onFailure(value)
+            }
+        })
+    }
+
+    fun addComment(pidRecipe: Long, comment: String) {
+        repository.addComment(pidRecipe, comment, object : ResultCallback<Recipe> {
+            override fun onResult(value: Recipe?) {
+                Log.d(TAG, "onResult: nice comment")
+            }
+
+            override fun onFailure(value: Recipe?) {
+                Log.d(TAG, "onFailure: error")
             }
         })
     }

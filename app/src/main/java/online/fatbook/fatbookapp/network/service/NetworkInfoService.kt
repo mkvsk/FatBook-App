@@ -18,8 +18,8 @@ interface NetworkInfoService {
      */
     @POST("auth/vc/confirm")
     fun confirmVCode(
-            @Query(value = "email") email: String?,
-            @Query(value = "code") code: String?
+        @Query(value = "email") email: String?,
+        @Query(value = "code") code: String?
     ): Call<AuthenticationResponse>
 
     @GET("auth/username/check")
@@ -39,8 +39,8 @@ interface NetworkInfoService {
 
     @POST("auth/change")
     fun changePassword(
-            @Query(value = "username") username: String?,
-            @Query(value = "password") password: String?
+        @Query(value = "username") username: String?,
+        @Query(value = "password") password: String?
     ): Call<AuthenticationResponse>
 
     /**
@@ -105,9 +105,9 @@ interface NetworkInfoService {
     @Multipart
     @POST("user/upload")
     fun uploadUserImage(
-            @Part image: MultipartBody.Part?,
-            @Query(value = "dir") dir: String?,
-            @Query(value = "login") login: String?
+        @Part image: MultipartBody.Part?,
+        @Query(value = "dir") dir: String?,
+        @Query(value = "login") login: String?
     ): Call<User?>
 
     @GET("user/bookmarks")
@@ -131,24 +131,30 @@ interface NetworkInfoService {
 
     @POST("recipe/forked")
     fun recipeForked(
-            @Query(value = "pidUser") pidUser: Long?,
-            @Query(value = "pidRecipe") pidRecipe: Long?,
-            @Query(value = "forked") forked: Boolean?
+        @Query(value = "pidUser") pidUser: Long?,
+        @Query(value = "pidRecipe") pidRecipe: Long?,
+        @Query(value = "forked") forked: Boolean?
     ): Call<Recipe>
 
     @POST("recipe/bookmarked")
     fun recipeBookmarked(
-            @Query(value = "pidUser") pidUser: Long?,
-            @Query(value = "pidRecipe") pidRecipe: Long?,
-            @Query(value = "bookmarked") bookmark: Boolean?
+        @Query(value = "pidUser") pidUser: Long?,
+        @Query(value = "pidRecipe") pidRecipe: Long?,
+        @Query(value = "bookmarked") bookmark: Boolean?
+    ): Call<Recipe>
+
+    @POST("recipe/comment/add")
+    fun addComment(
+        @Query(value = "pidRecipe") pidRecipe: Long?,
+        @Query(value = "comment") comment: String
     ): Call<Recipe>
 
     @Multipart
     @POST("recipe/upload")
     fun uploadImage(
-            @Part image: MultipartBody.Part?,
-            @Query(value = "dir") dir: String?,
-            @Query(value = "id") id: Long?
+        @Part image: MultipartBody.Part?,
+        @Query(value = "dir") dir: String?,
+        @Query(value = "id") id: Long?
     ): Call<Recipe>
 
     /**
