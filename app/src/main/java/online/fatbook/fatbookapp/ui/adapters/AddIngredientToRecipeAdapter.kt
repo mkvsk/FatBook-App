@@ -5,15 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.rv_ingredient_to_recipe_old.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
-import online.fatbook.fatbookapp.databinding.RvIngredientToRecipeOldBinding
 import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
 
 class AddIngredientToRecipeAdapter :
     RecyclerView.Adapter<AddIngredientToRecipeAdapter.ViewHolder>(), BindableAdapter<Ingredient> {
-    private var _binding: RvIngredientToRecipeOldBinding? = null
-    private val binding get() = _binding!!
 
     private var selectedItem = -1
     private var listener: OnIngredientItemClickListener? = null
@@ -24,12 +22,10 @@ class AddIngredientToRecipeAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        _binding = RvIngredientToRecipeOldBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.rv_ingredient_to_recipe_old, parent, false)
         )
-        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -42,19 +38,15 @@ class AddIngredientToRecipeAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(ingredient: Ingredient, position: Int) {
-            binding.textViewIngredientToRecipe.text = ingredient.title
-            binding.rvItemCard.setCardBackgroundColor(itemView.context.resources.getColor(R.color.white))
+            itemView.textView_ingredient_to_recipe.text = ingredient.title
+            itemView.rv_item_card.setCardBackgroundColor(itemView.context.resources.getColor(R.color.white))
             if (selectedItem == position) {
-                binding.rvItemCard.setCardBackgroundColor(itemView.context.resources.getColor(R.color.color_lime_500))
+                itemView.rv_item_card.setCardBackgroundColor(itemView.context.resources.getColor(R.color.color_lime_500))
             }
             itemView.setOnClickListener {
                 val previousItem = selectedItem
-                selectedItem = bindingAdapterPosition
-                listener!!.onIngredientClick(
-                    previousItem,
-                    selectedItem,
-                    data[bindingAdapterPosition]
-                )
+                selectedItem = adapterPosition
+                listener!!.onIngredientClick(previousItem, selectedItem, data[adapterPosition])
             }
         }
     }

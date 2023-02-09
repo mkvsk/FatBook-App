@@ -6,28 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
+import kotlinx.android.synthetic.main.rv_recipe_methods_categories_items.view.*
+import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingMethod
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
-import online.fatbook.fatbookapp.databinding.RvRecipeMethodsCategoriesItemsBinding
 import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
 
 class StaticDataAdapter :
     RecyclerView.Adapter<StaticDataAdapter.ViewHolder>(), BindableAdapter<StaticDataObject> {
-    private var _binding: RvRecipeMethodsCategoriesItemsBinding? = null
-    private val binding get() = _binding!!
 
     private var data: List<StaticDataObject> = ArrayList()
     var listener: OnStaticDataClickListener? = null
     var selectedItems: List<Int>? = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        _binding =
-            RvRecipeMethodsCategoriesItemsBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        return ViewHolder(binding.root)
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.rv_recipe_methods_categories_items, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -57,23 +53,23 @@ class StaticDataAdapter :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: StaticDataObject?) {
             if (selectedItems!!.contains(bindingAdapterPosition)) {
-                selectItem(binding.cardviewRvRecipeMethodsCategoriesItems)
+                selectItem(itemView.cardview_rv_recipe_methods_categories_items)
             } else {
-                unselectItem(binding.cardviewRvRecipeMethodsCategoriesItems)
+                unselectItem(itemView.cardview_rv_recipe_methods_categories_items)
             }
 
-            binding.textviewRvRecipeMethodsCategoriesItems.text = value!!.title
+            itemView.textview_rv_recipe_methods_categories_items.text = value!!.title
 
-            binding.cardviewRvRecipeMethodsCategoriesItems.setOnClickListener {
+            itemView.cardview_rv_recipe_methods_categories_items.setOnClickListener {
                 if (value is CookingMethod) {
                     listener?.onItemClick(data[bindingAdapterPosition])
                 } else {
-                    if (!binding.textviewRvRecipeMethodsCategoriesItems.isSelected) {
-                        selectItem(binding.cardviewRvRecipeMethodsCategoriesItems)
-                        binding.textviewRvRecipeMethodsCategoriesItems.isSelected = true
+                    if (!itemView.textview_rv_recipe_methods_categories_items.isSelected) {
+                        selectItem(itemView.cardview_rv_recipe_methods_categories_items)
+                        itemView.textview_rv_recipe_methods_categories_items.isSelected = true
                     } else {
-                        unselectItem(binding.cardviewRvRecipeMethodsCategoriesItems)
-                        binding.textviewRvRecipeMethodsCategoriesItems.isSelected = false
+                        unselectItem(itemView.cardview_rv_recipe_methods_categories_items)
+                        itemView.textview_rv_recipe_methods_categories_items.isSelected = false
                     }
                     listener?.onItemClickChoose(data[bindingAdapterPosition])
                 }

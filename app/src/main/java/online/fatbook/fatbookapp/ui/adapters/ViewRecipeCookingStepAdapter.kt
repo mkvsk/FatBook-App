@@ -2,34 +2,32 @@ package online.fatbook.fatbookapp.ui.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.rv_cooking_step_preview.view.*
+import kotlinx.android.synthetic.main.rv_cooking_step_recipe_view.view.*
+import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
-import online.fatbook.fatbookapp.databinding.RvCookingStepRecipeViewBinding
 import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
 import online.fatbook.fatbookapp.util.Utils
+import java.io.File
 
 class ViewRecipeCookingStepAdapter(private val context: Context) :
     RecyclerView.Adapter<ViewRecipeCookingStepAdapter.ViewHolder>(), BindableAdapter<CookingStep> {
-    private var _binding: RvCookingStepRecipeViewBinding? = null
-    private val binding get() = _binding!!
-
 
     private var data: ArrayList<CookingStep> = ArrayList()
 
     var listener: OnCookingStepClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        _binding =
-            RvCookingStepRecipeViewBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        return ViewHolder(binding.root)
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.rv_cooking_step_recipe_view, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -54,9 +52,9 @@ class ViewRecipeCookingStepAdapter(private val context: Context) :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(value: CookingStep?) {
-            binding.textviewDescriptionRvCookingStepRecipeView.text = value?.description
+            itemView.textview_description_rv_cooking_step_recipe_view.text = value?.description
 
-            binding.rvCookingStepNumberRecipeView.setBackgroundResource(
+            itemView.rv_cooking_step_number_recipe_view.setBackgroundResource(
                 Utils.getCookingStepNumeralIcon(
                     value?.stepNumber!!
                 )
@@ -65,10 +63,10 @@ class ViewRecipeCookingStepAdapter(private val context: Context) :
             if (!value.image.isNullOrEmpty()) {
                 Glide.with(context)
                     .load(value.image)
-                    .into(binding.imageviewPhotoRvCookingStepRecipeView)
+                    .into(itemView.imageview_photo_rv_cooking_step_recipe_view)
             } else {
-                binding.imageviewPhotoRvCookingStepRecipeView.visibility = View.GONE
-//                binding.imageviewPhotoRvCookingStepRecipeView.setImageResource(R.drawable.default_cooking_step_image)
+                itemView.imageview_photo_rv_cooking_step_recipe_view.visibility = View.GONE
+//                itemView.imageview_photo_rv_cooking_step_recipe_view.setImageResource(R.drawable.default_cooking_step_image)
             }
         }
     }

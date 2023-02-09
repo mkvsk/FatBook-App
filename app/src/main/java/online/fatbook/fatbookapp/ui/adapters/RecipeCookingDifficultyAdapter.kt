@@ -7,25 +7,24 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
+import kotlinx.android.synthetic.main.rv_difficulty.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
-import online.fatbook.fatbookapp.databinding.RvDifficultyBinding
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeDifficultyClickListener
 
 class RecipeCookingDifficultyAdapter :
     RecyclerView.Adapter<RecipeCookingDifficultyAdapter.ViewHolder>(),
     BindableAdapter<CookingDifficulty> {
-    private var _binding: RvDifficultyBinding? = null
-    private val binding get() = _binding!!
 
     private var data: List<CookingDifficulty> = ArrayList()
     var listener: OnRecipeDifficultyClickListener? = null
     var selectedDifficulty: CookingDifficulty? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        _binding =
-            RvDifficultyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding.root)
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.rv_difficulty, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -52,20 +51,20 @@ class RecipeCookingDifficultyAdapter :
         fun bind(value: CookingDifficulty?) {
             if (selectedDifficulty!!.title == value!!.title) {
                 selectItem(
-                    binding.cardviewRvDifficulty,
-                    binding.textviewItemTitleRvDifficulty
+                    itemView.cardview_rv_difficulty,
+                    itemView.textview_item_title_rv_difficulty
                 )
             } else {
                 unselectItem(
-                    binding.cardviewRvDifficulty,
-                    binding.textviewItemTitleRvDifficulty
+                    itemView.cardview_rv_difficulty,
+                    itemView.textview_item_title_rv_difficulty
                 )
             }
 
-            binding.textviewItemTitleRvDifficulty.text = value.title
+            itemView.textview_item_title_rv_difficulty.text = value.title
 
-            if (binding.cardviewRvDifficulty.isClickable) {
-                binding.cardviewRvDifficulty.setOnClickListener {
+            if (itemView.cardview_rv_difficulty.isClickable) {
+                itemView.cardview_rv_difficulty.setOnClickListener {
                     listener!!.onRecipeDifficultyClick(
                         data.indexOf(selectedDifficulty),
                         bindingAdapterPosition,

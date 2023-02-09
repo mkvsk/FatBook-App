@@ -5,28 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.rv_add_new_recipe_ingredients_old.view.*
+import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
-import online.fatbook.fatbookapp.databinding.RvAddNewRecipeIngredientsOldBinding
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeViewDeleteIngredientListener
 
 class ViewRecipeIngredientAdapter :
     RecyclerView.Adapter<ViewRecipeIngredientAdapter.ViewHolder>(),
     BindableAdapter<RecipeIngredient> {
-    private var _binding: RvAddNewRecipeIngredientsOldBinding? = null
-    private val binding get() = _binding!!
 
     private var data: List<RecipeIngredient> = ArrayList()
     private var isEditAvailable = false
     private var listener: OnRecipeViewDeleteIngredientListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        _binding =
-            RvAddNewRecipeIngredientsOldBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        return ViewHolder(binding.root)
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.rv_add_new_recipe_ingredients_old, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -55,16 +51,16 @@ class ViewRecipeIngredientAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(recipeIngredient: RecipeIngredient) {
-            binding.textViewIngredientInRecipe.text = recipeIngredient.ingredient!!.title
+            itemView.textView_ingredient_in_recipe.text = recipeIngredient.ingredient!!.title
             val quantityName =
                 recipeIngredient.quantity.toString() + " " + recipeIngredient.unit!!.title
-            binding.textViewRvAddRecipeIngredientQuantity.text = quantityName
+            itemView.textView_rv_add_recipe_ingredient_quantity.text = quantityName
             if (isEditAvailable) {
-                binding.btnRvAddRecipeIngredientRemove.visibility = View.VISIBLE
+                itemView.btn_rv_add_recipe_ingredient_remove.visibility = View.VISIBLE
             } else {
-                binding.btnRvAddRecipeIngredientRemove.visibility = View.INVISIBLE
+                itemView.btn_rv_add_recipe_ingredient_remove.visibility = View.INVISIBLE
             }
-            binding.btnRvAddRecipeIngredientRemove.setOnClickListener {
+            itemView.btn_rv_add_recipe_ingredient_remove.setOnClickListener {
                 listener!!.onDeleteIngredientClick(data[adapterPosition], adapterPosition)
             }
         }

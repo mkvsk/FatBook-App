@@ -179,6 +179,7 @@ class RecipeViewFragment : Fragment() {
     private fun addComment() {
         recipeViewModel.addComment(recipe.pid!!, commentText!!)
 
+//        TODO Optimize network
         val newComment = RecipeComment()
         newComment.comment = commentText
         newComment.user = userViewModel.user.value?.convertToSimpleObject()
