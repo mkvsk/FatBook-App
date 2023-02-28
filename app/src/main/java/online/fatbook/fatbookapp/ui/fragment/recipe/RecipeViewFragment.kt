@@ -20,6 +20,7 @@ import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.core.recipe.Recipe
 import online.fatbook.fatbookapp.core.recipe.RecipeComment
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
+import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.FragmentRecipeViewBinding
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeCommentAdapter
@@ -368,7 +369,13 @@ class RecipeViewFragment : Fragment() {
     }
 
     private fun loadUser() {
-        userViewModel.getUserByUsername(authViewModel.username.value!!)
+        userViewModel.getUserByUsername(authViewModel.username.value!!, object : ResultCallback<User>{
+            override fun onResult(value: User?) {
+            }
+
+            override fun onFailure(value: User?) {
+            }
+        })
     }
 
     private fun toggleForks(forked: Boolean) {

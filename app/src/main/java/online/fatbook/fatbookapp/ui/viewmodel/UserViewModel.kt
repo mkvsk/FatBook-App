@@ -3,7 +3,6 @@ package online.fatbook.fatbookapp.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.network.UserUpdateRequest
@@ -38,11 +37,22 @@ class UserViewModel : ViewModel() {
         _resultCode.value = value
     }
 
-    fun getUserByUsername(username: String) {
+    fun loadCurrentUser(username: String, callback: ResultCallback<User>) {
         repository.getUserByUsername(username, object : ResultCallback<User> {
             override fun onResult(value: User?) {
                 setUser(value!!)
-                setResultCode(0)
+                callback.onResult(value)
+            }
+
+            override fun onFailure(value: User?) {
+            }
+        })
+    }
+
+    fun getUserByUsername(username: String, callback: ResultCallback<User>) {
+        repository.getUserByUsername(username, object : ResultCallback<User> {
+            override fun onResult(value: User?) {
+                callback.onResult(value)
             }
 
             override fun onFailure(value: User?) {

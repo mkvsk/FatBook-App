@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -74,6 +75,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
             binding.loader.progressOverlay.visibility = View.VISIBLE
             binding.toolbar.visibility = View.GONE
             loadUserData()
+            setupNavMenu()
             setupSwipeRefresh()
             binding.ovalRecipesQty.setOnClickListener {
                 focusOnRecipes()
@@ -104,6 +106,14 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         }
     }
 
+    private fun setupNavMenu() {
+        if (findNavController().previousBackStackEntry?.destination?.id == null) {
+            binding.toolbar.navigationIcon = null
+        } else {
+            binding.toolbar.navigationIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back)
+        }
+    }
+
     private fun setupSwipeRefresh() {
         binding.swipeRefresh.isEnabled = true
         binding.swipeRefresh.isRefreshing = false
@@ -120,28 +130,30 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         )
         binding.swipeRefresh.setOnRefreshListener {
             isDataRefreshed = true
-            loadUser()
+            loadUserData()
         }
     }
 
     private fun loadUserData() {
-        if (userViewModel.selectedUsername.value.isNullOrEmpty()
-            || userViewModel.selectedUsername.value == userViewModel.user.value!!.username!!
-        ) {
-            user.username = userViewModel.user.value!!.username
-            loadUser()
-            setupViewForCurrentUser()
-            if (userViewModel.selectedUsername.value == userViewModel.user.value!!.username!!) {
-                binding.toolbar.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
+        if (StringUtils.isEmpty(user.username)) {
+            if (userViewModel.selectedUsername.value.isNullOrEmpty()
+                || userViewModel.selectedUsername.value == userViewModel.user.value!!.username!!
+            ) {
+                loadCurrentUser(userViewModel.user.value!!.username!!)
+            } else {
+                loadUser(userViewModel.selectedUsername.value!!)
             }
         } else {
-            user.username = userViewModel.selectedUsername.value
-            loadUser()
-            setupViewForSelectedUser()
+            if (user.username == userViewModel.user.value!!.username!!) {
+                loadCurrentUser(user.username!!)
+            } else {
+                loadUser(user.username!!)
+            }
         }
     }
 
     private fun setupMenu(menu: Int) {
+        binding.toolbar.menu.clear()
         binding.toolbar.inflateMenu(menu)
         binding.toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected)
         binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
@@ -239,14 +251,12 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         setupMenu(R.menu.user_profile_current_menu)
         binding.llBtnsFollowMessage.visibility = View.GONE
         binding.tabLayout.visibility = View.VISIBLE
-        binding.toolbar.navigationIcon = null
     }
 
     private fun setupViewForSelectedUser() {
         setupMenu(R.menu.user_profile_selected_menu)
         binding.llBtnsFollowMessage.visibility = View.VISIBLE
         binding.tabLayout.visibility = View.GONE
-        binding.toolbar.navigationIcon = context?.getDrawable(R.drawable.ic_arrow_back)
     }
 
     private fun drawData() {
@@ -321,21 +331,36 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 //        ViewPager2ViewHeightAnimator().viewPager2 = viewPager
     }
 
-    private fun loadUser() {
-        userViewModel.getUserByUsername(user.username!!)
-
-        userViewModel.resultCode.observe(viewLifecycleOwner) {
-            when (it) {
-                0 -> {
-                    drawData()
+    private fun loadUser(username: String) {
+        setupViewForSelectedUser()
+        userViewModel.getUserByUsername(username, object : ResultCallback<User> {
+            override fun onResult(value: User?) {
+                if (value != null) {
+                    user = value
                 }
-                else -> {
-                    Toast.makeText(requireContext(), "user load failed", Toast.LENGTH_SHORT).show()
-                }
+                drawData()
             }
-        }
 
+            override fun onFailure(value: User?) {
+                binding.swipeRefresh.isRefreshing = false
+            }
+        })
+    }
 
+    private fun loadCurrentUser(username: String) {
+        setupViewForCurrentUser()
+        userViewModel.loadCurrentUser(username, object : ResultCallback<User> {
+            override fun onResult(value: User?) {
+                if (value != null) {
+                    user = value
+                }
+                drawData()
+            }
+
+            override fun onFailure(value: User?) {
+                binding.swipeRefresh.isRefreshing = false
+            }
+        })
     }
 
     private fun focusOnRecipes() {

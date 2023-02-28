@@ -11,15 +11,12 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.Recipe
@@ -34,7 +31,6 @@ import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
 import online.fatbook.fatbookapp.ui.viewmodel.*
 import online.fatbook.fatbookapp.util.Constants
-import online.fatbook.fatbookapp.util.KeyboardActionUtil
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
@@ -152,15 +148,15 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             }
         }
 
-        userViewModel.resultCode.observe(viewLifecycleOwner) {
-            when (it) {
-                0 -> {
-                    feedViewModel.setIsLoading(false)
-                    loadFeed()
-                }
-                else -> {}
-            }
-        }
+//        userViewModel.resultCode.observe(viewLifecycleOwner) {
+//            when (it) {
+//                0 -> {
+//                    feedViewModel.setIsLoading(false)
+//                    loadFeed()
+//                }
+//                else -> {}
+//            }
+//        }
 
 
     }
@@ -177,9 +173,15 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //    }
 
     private fun loadUser() {
-        userViewModel.getUserByUsername(
-            authViewModel.username.value!!
-        )
+        userViewModel.loadCurrentUser(authViewModel.username.value!!, object :ResultCallback<User>{
+            override fun onResult(value: User?) {
+                feedViewModel.setIsLoading(false)
+                loadFeed()
+            }
+
+            override fun onFailure(value: User?) {
+            }
+        })
     }
 
     private fun setupSwipeRefresh() {
