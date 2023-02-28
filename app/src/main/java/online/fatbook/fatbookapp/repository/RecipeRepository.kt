@@ -75,7 +75,11 @@ class RecipeRepository {
             call.enqueue(object : Callback<Recipe> {
                 override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
                     Log.d(TAG, "COMMENT ADD ${response.body().toString()}")
-                    callback.onResult(response.body())
+                    if (response.body() == null) {
+                        callback.onFailure(null)
+                    } else {
+                        callback.onResult(response.body())
+                    }
                 }
 
                 override fun onFailure(call: Call<Recipe>, t: Throwable) {

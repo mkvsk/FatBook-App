@@ -219,17 +219,19 @@ class RecipeViewModel : ViewModel() {
         _isCommentAdd.value = value
     }
 
-    fun addComment(pidRecipe: Long, comment: String) {
+    fun addComment(pidRecipe: Long, comment: String, callback: ResultCallback<Recipe>) {
         repository.addComment(pidRecipe, comment, object : ResultCallback<Recipe> {
             override fun onResult(value: Recipe?) {
-                Log.d(TAG, "onResult: nice comment")
-                setRecipe(value!!)
-                setIsCommentAdd(true)
+//                Log.d(TAG, "onResult: nice comment")
+//                setRecipe(value!!)
+//                setIsCommentAdd(true)
+                callback.onResult(value)
             }
 
             override fun onFailure(value: Recipe?) {
-                Log.d(TAG, "onFailure: error")
-                setIsCommentAdd(false)
+//                Log.d(TAG, "onFailure: error")
+//                setIsCommentAdd(false)
+                callback.onFailure(value)
             }
         })
     }

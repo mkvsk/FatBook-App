@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.rv_cooking_step_preview.view.*
@@ -13,6 +14,8 @@ import kotlinx.android.synthetic.main.rv_cooking_step_recipe_view.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeStepImageClickListener
+import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.util.Utils
 import java.io.File
 
@@ -22,6 +25,8 @@ class ViewRecipeCookingStepAdapter(private val context: Context) :
     private var data: ArrayList<CookingStep> = ArrayList()
 
     var listener: OnCookingStepClickListener? = null
+
+    private lateinit var imageViewlistener: OnRecipeStepImageClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -46,6 +51,10 @@ class ViewRecipeCookingStepAdapter(private val context: Context) :
         this.listener = listener
     }
 
+    fun setImageListener(imageViewlistener: OnRecipeStepImageClickListener) {
+        this.imageViewlistener = imageViewlistener
+    }
+
     override fun getItemCount(): Int {
         return data.size
     }
@@ -67,6 +76,14 @@ class ViewRecipeCookingStepAdapter(private val context: Context) :
             } else {
                 itemView.imageview_photo_rv_cooking_step_recipe_view.visibility = View.GONE
 //                itemView.imageview_photo_rv_cooking_step_recipe_view.setImageResource(R.drawable.default_cooking_step_image)
+            }
+
+
+            itemView.imageview_photo_rv_cooking_step_recipe_view.setOnClickListener {
+                val img = value.image
+                if (img != null) {
+                    imageViewlistener.onStepImageClick(img)
+                }
             }
         }
     }

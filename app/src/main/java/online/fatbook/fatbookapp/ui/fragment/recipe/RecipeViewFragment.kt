@@ -8,9 +8,13 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -26,9 +30,8 @@ import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeCommentAdapter
 import online.fatbook.fatbookapp.ui.adapters.FullRecipeIngredientAdapter
 import online.fatbook.fatbookapp.ui.adapters.ViewRecipeCookingStepAdapter
-import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
+import online.fatbook.fatbookapp.ui.listeners.OnRecipeStepImageClickListener
+import online.fatbook.fatbookapp.ui.viewmodel.*
 import online.fatbook.fatbookapp.util.Constants.MAX_PORTIONS
 import online.fatbook.fatbookapp.util.Constants.MIN_PORTIONS
 import online.fatbook.fatbookapp.util.FormatUtils
@@ -44,7 +47,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDateTime
 
-class RecipeViewFragment : Fragment() {
+class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
 
     private var _binding: FragmentRecipeViewBinding? = null
     private val binding get() = _binding!!
@@ -52,13 +55,14 @@ class RecipeViewFragment : Fragment() {
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
-
+    private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
     private var recipeForked = false
     private var recipeInFav = false
     private var portionQty: Int = 0
     private var commentText: String? = null
-
     private lateinit var menuList: Menu
+
+    private val sharedViewModel by lazy { obtainViewModel(SharedViewModel::class.java) }
 
     companion object {
         private const val TAG = "RecipeViewFragment"
@@ -77,6 +81,16 @@ class RecipeViewFragment : Fragment() {
         return binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause: PPPPAAAAUUUSSEEEE")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: RRRRREEEESUUUUMEEEEEEEE")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -84,6 +98,7 @@ class RecipeViewFragment : Fragment() {
         handleBackPressed()
         loadData(recipeViewModel.selectedRecipeId.value!!)
         setupMenu()
+        setupSwipeRefresh()
         initViews()
         initListeners()
         initObservers()
@@ -120,7 +135,7 @@ class RecipeViewFragment : Fragment() {
             }
 
             override fun onTextChanged(str: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (!str.toString().isEmpty()) {
+                if (str.toString().isNotEmpty()) {
                     binding.buttonSendComment.visibility = View.VISIBLE
                 } else {
                     binding.buttonSendComment.visibility = View.GONE
@@ -141,7 +156,7 @@ class RecipeViewFragment : Fragment() {
 
         binding.imageViewIcCommentsViewRecipe.setOnClickListener {
             binding.nsvRecipeView.post {
-                binding.nsvRecipeView.scrollTo(
+                binding.nsvRecipeView.smoothScrollTo(
                     0,
                     binding.cardviewRecipeViewFullInfo.bottom
                 )
@@ -175,18 +190,54 @@ class RecipeViewFragment : Fragment() {
             }
         }
 
+        binding.imageViewRecipePhoto.setOnClickListener {
+            imageViewModel.setImage(recipe.image)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_go_to_view_image_from_recipe_view)
+        }
+
+    }
+
+    private fun setupSwipeRefresh() {
+        binding.swipeRefreshRecipeView.isEnabled = true
+        binding.swipeRefreshRecipeView.isRefreshing = false
+        binding.swipeRefreshRecipeView.setProgressBackgroundColorSchemeColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.theme_primary_bgr
+            )
+        )
+        binding.swipeRefreshRecipeView.setColorSchemeColors(
+            ContextCompat.getColor(
+                requireContext(), R.color.color_pink_a200
+            )
+        )
+        binding.swipeRefreshRecipeView.setOnRefreshListener {
+            loadData(recipeViewModel.selectedRecipeId.value!!)
+        }
     }
 
     private fun addComment() {
-        recipeViewModel.addComment(recipe.pid!!, commentText!!)
+        recipeViewModel.addComment(recipe.pid!!, commentText!!, object : ResultCallback<Recipe> {
+            override fun onResult(value: Recipe?) {
+                binding.edittextInputComment.text.clear()
+
+                val newComment = RecipeComment()
+                newComment.comment = commentText
+                newComment.user = userViewModel.user.value?.convertToSimpleObject()
+                newComment.timestamp = LocalDateTime.now().toString()
+                recipe.comments?.add(0, newComment)
+                commentAdapter?.notifyItemInserted(0)
+                commentText = StringUtils.EMPTY
+            }
+
+            override fun onFailure(value: Recipe?) {
+            }
+
+        })
 
 //        TODO Optimize network
-        val newComment = RecipeComment()
-        newComment.comment = commentText
-        newComment.user = userViewModel.user.value?.convertToSimpleObject()
-        newComment.timestamp = LocalDateTime.now().toString()
-        recipe.comments?.add(newComment)
-        commentAdapter?.notifyItemInserted(recipe.comments!!.size.dec())
+
     }
 
     private fun setupMenu() {
@@ -246,14 +297,14 @@ class RecipeViewFragment : Fragment() {
             }
         }
 
-        recipeViewModel.isCommentAdd.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.edittextInputComment.setText(StringUtils.EMPTY)
-                commentText = StringUtils.EMPTY
-            } else {
-                binding.edittextInputComment.setText(commentText)
-            }
-        }
+//        recipeViewModel.isCommentAdd.observe(viewLifecycleOwner) {
+//            if (it) {
+//                binding.edittextInputComment.setText(StringUtils.EMPTY)
+//                commentText = StringUtils.EMPTY
+//            } else {
+//                binding.edittextInputComment.setText(commentText)
+//            }
+//        }
     }
 
     private fun handleBackPressed() {
@@ -297,6 +348,7 @@ class RecipeViewFragment : Fragment() {
     private fun setupStepAdapter(cookingSteps: ArrayList<CookingStep>?) {
         val rv = binding.rvCookingStepsRecipeView
         stepAdapter = ViewRecipeCookingStepAdapter(requireContext())
+        stepAdapter!!.setImageListener(this)
         stepAdapter!!.setData(cookingSteps)
         rv.adapter = stepAdapter
     }
@@ -369,13 +421,15 @@ class RecipeViewFragment : Fragment() {
     }
 
     private fun loadUser() {
-        userViewModel.getUserByUsername(authViewModel.username.value!!, object : ResultCallback<User>{
-            override fun onResult(value: User?) {
-            }
+        userViewModel.getUserByUsername(
+            authViewModel.username.value!!,
+            object : ResultCallback<User> {
+                override fun onResult(value: User?) {
+                }
 
-            override fun onFailure(value: User?) {
-            }
-        })
+                override fun onFailure(value: User?) {
+                }
+            })
     }
 
     private fun toggleForks(forked: Boolean) {
@@ -450,6 +504,7 @@ class RecipeViewFragment : Fragment() {
 
         setupIngredientAdapter(recipe.ingredients)
         setupStepAdapter(recipe.steps)
+
         setupCommentsAdapter(recipe.comments)
 
         userViewModel.user.value?.recipesFavourites?.forEach {
@@ -461,6 +516,8 @@ class RecipeViewFragment : Fragment() {
             recipeForked = (it.identifier?.equals(recipe.identifier) == true)
             toggleForks(recipeForked)
         }
+
+        binding.swipeRefreshRecipeView.isRefreshing = false
     }
 
 
@@ -475,6 +532,12 @@ class RecipeViewFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onStepImageClick(image: String) {
+        imageViewModel.setImage(image)
+        NavHostFragment.findNavController(this)
+            .navigate(R.id.action_go_to_view_image_from_recipe_view)
     }
 }
 
