@@ -31,7 +31,7 @@ android {
         }
         local {
             buildConfigField "String", "API_SERVICE_URL", '"http://10.0.2.2:8080/"'
-            buildConfigField "String", "API_SERVICE_TOKEN", '"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2JpbGV1enZlcjEzMzkiLCJyb2xlcyI6WyJVU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9sb2dpbiIsImV4cCI6MTY3MTYwNTU2OX0.Ff5Mu_vz9dXVPb60WpG2wCU9g68--HiYaX89P224lSo"'
+            buildConfigField "String", "API_SERVICE_TOKEN", '"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2JpbGV1enZlcjEzMzkiLCJyb2xlcyI6WyJVU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9sb2dpbiIsImV4cCI6MTY4MDI0MDQzOX0.0xWtZ-wVQsWcaLhJ7PzK1O1Lp8QxEawYCw_-pykwpnc"'
             versionNameSuffix "-local"
             manifestPlaceholders = [appName: "FatBook Local"]
             testCoverageEnabled = false

@@ -212,25 +212,13 @@ class RecipeViewModel : ViewModel() {
         })
     }
 
-    private val _isCommentAdd = MutableLiveData<Boolean>()
-    val isCommentAdd: LiveData<Boolean> get() = _isCommentAdd
-
-    fun setIsCommentAdd(value: Boolean) {
-        _isCommentAdd.value = value
-    }
-
-    fun addComment(pidRecipe: Long, comment: String, callback: ResultCallback<Recipe>) {
-        repository.addComment(pidRecipe, comment, object : ResultCallback<Recipe> {
-            override fun onResult(value: Recipe?) {
-//                Log.d(TAG, "onResult: nice comment")
-//                setRecipe(value!!)
-//                setIsCommentAdd(true)
+    fun addComment(pidRecipe: Long, comment: String, callback: ResultCallback<List<RecipeComment>>) {
+        repository.addComment(pidRecipe, comment, object : ResultCallback<List<RecipeComment>> {
+            override fun onResult(value: List<RecipeComment>?) {
                 callback.onResult(value)
             }
 
-            override fun onFailure(value: Recipe?) {
-//                Log.d(TAG, "onFailure: error")
-//                setIsCommentAdd(false)
+            override fun onFailure(value: List<RecipeComment>?) {
                 callback.onFailure(value)
             }
         })

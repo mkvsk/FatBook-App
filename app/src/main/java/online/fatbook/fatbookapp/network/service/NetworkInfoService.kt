@@ -147,7 +147,7 @@ interface NetworkInfoService {
     fun addComment(
         @Query(value = "pidRecipe") pidRecipe: Long?,
         @Query(value = "comment") comment: String
-    ): Call<Recipe>
+    ): Call<List<RecipeComment>>
 
     @Multipart
     @POST("recipe/upload")

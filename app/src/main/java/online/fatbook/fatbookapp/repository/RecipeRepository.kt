@@ -7,6 +7,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.Recipe
+import online.fatbook.fatbookapp.core.recipe.RecipeComment
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
@@ -69,11 +70,11 @@ class RecipeRepository {
         }
     }
 
-    fun addComment(pidRecipe: Long, comment: String, callback: ResultCallback<Recipe>) {
+    fun addComment(pidRecipe: Long, comment: String, callback: ResultCallback<List<RecipeComment>>) {
         scope.launch(Dispatchers.IO) {
             val call = RetrofitFactory.apiService().addComment(pidRecipe, comment)
-            call.enqueue(object : Callback<Recipe> {
-                override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
+            call.enqueue(object : Callback<List<RecipeComment>> {
+                override fun onResponse(call: Call<List<RecipeComment>>, response: Response<List<RecipeComment>>) {
                     Log.d(TAG, "COMMENT ADD ${response.body().toString()}")
                     if (response.body() == null) {
                         callback.onFailure(null)
@@ -82,7 +83,7 @@ class RecipeRepository {
                     }
                 }
 
-                override fun onFailure(call: Call<Recipe>, t: Throwable) {
+                override fun onFailure(call: Call<List<RecipeComment>>, t: Throwable) {
                     Log.d(TAG, "COMMENT ADD error")
                     t.printStackTrace()
                     callback.onFailure(null)

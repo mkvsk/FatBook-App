@@ -62,8 +62,6 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     private var commentText: String? = null
     private lateinit var menuList: Menu
 
-    private val sharedViewModel by lazy { obtainViewModel(SharedViewModel::class.java) }
-
     companion object {
         private const val TAG = "RecipeViewFragment"
     }
@@ -111,21 +109,13 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
         }
 
         binding.imageViewForkViewRecipe.setOnClickListener {
-            if (recipeForked) {
-                recipeForked = false
-            } else {
-                recipeForked = true
-            }
+            recipeForked = !recipeForked
             recipeForked(recipe, recipeForked)
             toggleForks(recipeForked)
         }
 
         binding.imageViewRecipeViewFavourites.setOnClickListener {
-            if (recipeInFav) {
-                recipeInFav = false
-            } else {
-                recipeInFav = true
-            }
+            recipeInFav = !recipeInFav
             recipeAddToFavourite(recipe, recipeInFav)
             toggleFavourites(recipeInFav)
         }
@@ -218,10 +208,11 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     }
 
     private fun addComment() {
-        recipeViewModel.addComment(recipe.pid!!, commentText!!, object : ResultCallback<Recipe> {
-            override fun onResult(value: Recipe?) {
+        recipeViewModel.addComment(recipe.pid!!, commentText!!, object : ResultCallback<List<RecipeComment>> {
+            override fun onResult(value: List<RecipeComment>?) {
+                //TODO подгружать все комменты и отрисосвывать только новые
                 binding.edittextInputComment.text.clear()
-
+                binding.textViewCommentsAvgViewRecipe.text = (recipe.comments?.size?.plus(1)).toString()
                 val newComment = RecipeComment()
                 newComment.comment = commentText
                 newComment.user = userViewModel.user.value?.convertToSimpleObject()
@@ -231,13 +222,10 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
                 commentText = StringUtils.EMPTY
             }
 
-            override fun onFailure(value: Recipe?) {
+            override fun onFailure(value: List<RecipeComment>?) {
             }
 
         })
-
-//        TODO Optimize network
-
     }
 
     private fun setupMenu() {
