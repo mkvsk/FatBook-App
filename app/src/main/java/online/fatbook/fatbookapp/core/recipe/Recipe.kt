@@ -82,5 +82,11 @@ data class Recipe(
                 0.0
             }
         }
+
+    fun convertToSimpleObject(): RecipeSimpleObject {
+        return RecipeSimpleObject(
+            pid, title, user, image, forks, createDate, identifier, difficulty, cookingTime,
+            kcalPerPortion, comments!!.size, ingredients!!.size, isPrivate)
+    }
 }
 

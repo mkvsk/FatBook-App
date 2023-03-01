@@ -3,8 +3,8 @@
     <string name="app_name" translatable="false">FatBook</string>
     <string name="app_name_beta" translatable="false">FatBook BETA</string>
     <string name="tagline_fatbook">Get your forks ready</string>
-    <string name="tag_copyright" translatable="false">Ⓒ 2022 PotatoCorp V 2.0.0</string>
-    <string name="tag_version" translatable="false">Ⓒ 2022 PotatoCorp V 2.0.0</string>
+    <string name="tag_copyright" translatable="false">Ⓒ 2023 PotatoCorp V 2.0.0</string>
+    <string name="tag_version" translatable="false">Ⓒ 2023 PotatoCorp V 2.0.0</string>
 
     ///fragment welcome
     <string name="title_welcome">welcome to</string>
@@ -373,5 +373,6 @@
     <string name="title_error_images_upload">Failed to upload pictures</string>
     <string name="dialog_delete_recipe_title">Delete this recipe</string>
     <string name="dialog_delete_recipe_msg">Are you sure you want to delete this yummy thing? :(</string>
+    <string name="error_common_network">Network error</string>
 
 </resources>

@@ -17,6 +17,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_recipe_view.view.*
+import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
+import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.view_click_fork
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.Recipe
@@ -31,6 +34,7 @@ import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeRevertDeleteListener
 import online.fatbook.fatbookapp.ui.viewmodel.*
 import online.fatbook.fatbookapp.util.Constants
+import online.fatbook.fatbookapp.util.RecipeUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 import retrofit2.Call
@@ -117,7 +121,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         }
 
         feedViewModel.recipes.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 null -> {
                     loadFeed()
                 }
@@ -173,15 +177,16 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //    }
 
     private fun loadUser() {
-        userViewModel.loadCurrentUser(authViewModel.username.value!!, object :ResultCallback<User>{
-            override fun onResult(value: User?) {
-                feedViewModel.setIsLoading(false)
-                loadFeed()
-            }
+        userViewModel.loadCurrentUser(authViewModel.username.value!!,
+            object : ResultCallback<User> {
+                override fun onResult(value: User?) {
+                    feedViewModel.setIsLoading(false)
+                    loadFeed()
+                }
 
-            override fun onFailure(value: User?) {
-            }
-        })
+                override fun onFailure(value: User?) {
+                }
+            })
     }
 
     private fun setupSwipeRefresh() {
@@ -198,7 +203,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             )
         )
         binding.swipeRefreshFeed.setOnRefreshListener {
-            loadFeed()
+            loadUser()
         }
     }
 
@@ -260,7 +265,8 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         adapter!!.setContext(requireContext())
 //        (rv.itemAnimator as SimpleItemAnimator?)!!.supportsChangeAnimations = false
         rv!!.adapter = adapter
-        rv!!.adapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        rv!!.adapter?.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
     override fun onRecipeClick(id: Long) {
@@ -291,30 +297,37 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
-        recipeForked(recipe, fork)
+    }
+
+    override fun onForkClicked(
+        recipe: RecipeSimpleObject?,
+        fork: Boolean,
+        position: Int,
+        viewHolder: RecipeAdapter.ViewHolder
+    ) {
+        recipeViewModel.recipeFork(recipe!!.pid!!, fork, object : ResultCallback<Int> {
+            override fun onResult(value: Int?) {
+                if (fork) {
+                    userViewModel.user.value!!.recipesForked!!.add(recipe)
+                } else {
+                    userViewModel.user.value!!.recipesForked!!.removeIf { recipe.pid == it.pid }
+                }
+                viewHolder.itemView.textView_rv_card_recipe_forks_avg.text = value.toString()
+                viewHolder.itemView.view_click_fork.tag = RecipeUtils.TAG_CLICK_FALSE
+                adapter!!.toggleForks(viewHolder.itemView.imageView_rv_card_recipe_fork, fork)
+            }
+
+            override fun onFailure(value: Int?) {
+                Toast.makeText(
+                    requireContext(), getString(R.string.error_common_network), Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
     override fun onUsernameClick(username: String) {
         userViewModel.setSelectedUsername(username)
         findNavController().navigate(R.id.action_go_to_user_profile_from_feed)
-    }
-
-//    TODO need fix
-    private fun recipeForked(recipe: RecipeSimpleObject?, fork: Boolean) {
-        Toast.makeText(requireContext(), "forked", Toast.LENGTH_SHORT).show()
-//        RetrofitFactory.apiService()
-//            .recipeForked(userViewModel.user.value!!.pid, recipe!!.pid, fork)
-//            .enqueue(object : Callback<Recipe?> {
-//                override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
-//                    Log.d(TAG, "onResponse: fork SUCCESS")
-//                    recipeViewModel.setSelectedRecipe(response.body())
-//                    loadUser()
-//                }
-//
-//                override fun onFailure(call: Call<Recipe?>, t: Throwable) {
-//                    Log.d(TAG, "onResponse: fork FAILED")
-//                }
-//            })
     }
 
     override fun onRecipeRevertDeleteClick(recipe: Recipe?) {

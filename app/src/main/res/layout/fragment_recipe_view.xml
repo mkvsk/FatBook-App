@@ -129,7 +129,16 @@
 
                         </LinearLayout>
 
-                        <ImageView
+                        <View
+                            android:id="@+id/view_click_fork"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:tag="click_false"
+                            app:layout_constraintBottom_toBottomOf="@id/ll_author_link_recipe_view"
+                            app:layout_constraintLeft_toLeftOf="@id/textView_forks_avg_view_recipe"
+                            app:layout_constraintRight_toRightOf="@id/imageView_fork_view_recipe" />
+
+                        RecipeUtils.TAG_CLICK_FALSE<ImageView
                             android:id="@+id/imageView_fork_view_recipe"
                             android:layout_width="14dp"
                             android:layout_height="30dp"
@@ -155,6 +164,14 @@
                             android:translationZ="4dp"
                             app:layout_constraintBottom_toBottomOf="@id/ll_author_link_recipe_view"
                             app:layout_constraintRight_toLeftOf="@id/imageView_fork_view_recipe" />
+
+                        <View
+                            android:id="@+id/view_click_comments"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            app:layout_constraintBottom_toBottomOf="@id/ll_author_link_recipe_view"
+                            app:layout_constraintLeft_toLeftOf="@id/textView_comments_avg_view_recipe"
+                            app:layout_constraintRight_toRightOf="@id/imageView_ic_comments_view_recipe" />
 
                         <ImageView
                             android:id="@+id/imageView_ic_comments_view_recipe"
@@ -541,9 +558,9 @@
                     android:layout_height="55dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="8dp"
-                    android:visibility="gone"
                     android:src="@drawable/ic_not_fav"
                     android:tag="tag_favourites_unchecked"
+                    android:visibility="gone"
                     app:layout_constraintRight_toRightOf="@id/cardview_recipe_view_full_info"
                     app:layout_constraintTop_toTopOf="parent" />
 

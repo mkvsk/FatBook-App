@@ -14,6 +14,8 @@ object RecipeUtils {
     const val TAG_FAVOURITES_UNCHECKED = "tag_favourites_unchecked"
     const val TAG_FORK_CHECKED = "tag_fork_checked"
     const val TAG_FORK_UNCHECKED = "tag_fork_unchecked"
+    const val TAG_CLICK_FALSE = "click_false"
+    const val TAG_CLICK_TRUE = "click_true"
 
     /**
      * Default cooking time in minutes

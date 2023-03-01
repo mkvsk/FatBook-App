@@ -223,6 +223,17 @@
         app:layout_constraintRight_toRightOf="@id/rv_card_recipe_preview"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:id="@+id/view_click_fork"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="20dp"
+        android:elevation="6dp"
+        android:tag="click_false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/textView_rv_card_recipe_forks_avg"
+        app:layout_constraintRight_toRightOf="@id/imageView_rv_card_recipe_favourites" />
+
     <ImageView
         android:id="@+id/imageView_rv_card_recipe_fork"
         android:layout_width="wrap_content"
@@ -230,8 +241,8 @@
         android:layout_marginBottom="20dp"
         android:elevation="6dp"
         android:src="@drawable/ic_fork_unchecked"
-        android:tag="tag_fork_unchecked"
         android:translationZ="4dp"
+        android:tag="tag_fork_unchecked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/imageView_rv_card_recipe_favourites"
         app:layout_constraintRight_toRightOf="@id/imageView_rv_card_recipe_favourites" />
@@ -251,6 +262,16 @@
         app:layout_constraintBottom_toBottomOf="@id/imageView_rv_card_recipe_fork"
         app:layout_constraintRight_toLeftOf="@id/imageView_rv_card_recipe_fork" />
 
+    <View
+        android:id="@+id/view_click_comments"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="20dp"
+        android:elevation="6dp"
+        app:layout_constraintRight_toRightOf="@id/imageView_rv_card_recipe_comments"
+        app:layout_constraintLeft_toLeftOf="@id/rv_recipe_comments_qty"
+        app:layout_constraintTop_toTopOf="@id/view_click_fork" />
+
     <ImageView
         android:id="@+id/imageView_rv_card_recipe_comments"
         android:layout_width="wrap_content"
@@ -258,7 +279,6 @@
         android:layout_marginEnd="20dp"
         android:elevation="6dp"
         android:src="@drawable/ic_comments"
-        android:tag="tag_fork_unchecked"
         android:translationZ="4dp"
         app:layout_constraintRight_toLeftOf="@id/textView_rv_card_recipe_forks_avg"
         app:layout_constraintTop_toTopOf="@id/imageView_rv_card_recipe_fork" />

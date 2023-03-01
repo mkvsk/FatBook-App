@@ -410,6 +410,15 @@ class UserProfileFragmentOLD : Fragment(), OnRecipeClickListener {
         recipeForked(recipe, fork, position)
     }
 
+    override fun onForkClicked(
+        recipe: RecipeSimpleObject?,
+        fork: Boolean,
+        position: Int,
+        viewHolder: RecipeAdapter.ViewHolder
+    ) {
+
+    }
+
     override fun onUsernameClick(username: String) {
     }
 

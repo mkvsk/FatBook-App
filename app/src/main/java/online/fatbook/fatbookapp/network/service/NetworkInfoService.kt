@@ -94,6 +94,11 @@ interface NetworkInfoService {
     @GET("recipe/get")
     fun getRecipeById(@Query(value = "id") id: Long): Call<Recipe>
 
+    @POST("recipe/fork")
+    fun recipeFork(
+        @Query(value = "pidRecipe") pidRecipe: Long?, @Query(value = "forked") forked: Boolean?
+    ): Call<Int>
+
 //    ==========================================================================================
 
     @POST("user/create")

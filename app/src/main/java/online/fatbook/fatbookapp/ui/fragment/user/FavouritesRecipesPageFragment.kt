@@ -61,6 +61,14 @@ class FavouritesRecipesPageFragment(val user: User) : Fragment(), OnRecipeClickL
         Log.d("fork click", position.toString())
     }
 
+    override fun onForkClicked(
+        recipe: RecipeSimpleObject?,
+        fork: Boolean,
+        position: Int,
+        viewHolder: RecipeAdapter.ViewHolder
+    ) {
+    }
+
     override fun onUsernameClick(username: String) {
         Log.d("username click", username)
     }

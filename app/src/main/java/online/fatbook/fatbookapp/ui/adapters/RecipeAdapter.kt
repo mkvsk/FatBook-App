@@ -16,6 +16,10 @@ import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeClickListener
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.RecipeUtils
+import online.fatbook.fatbookapp.util.RecipeUtils.TAG_CLICK_FALSE
+import online.fatbook.fatbookapp.util.RecipeUtils.TAG_CLICK_TRUE
+import online.fatbook.fatbookapp.util.RecipeUtils.TAG_FORK_CHECKED
+import online.fatbook.fatbookapp.util.RecipeUtils.TAG_FORK_UNCHECKED
 import org.apache.commons.lang3.StringUtils
 import java.time.LocalTime
 
@@ -79,6 +83,9 @@ class RecipeAdapter :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(recipe: RecipeSimpleObject) {
+            recipeForked = false
+            recipeInFav = false
+            itemView.view_click_fork.tag = TAG_CLICK_FALSE
             if (StringUtils.isNotEmpty(recipe.image)) {
                 Glide
                     .with(itemView.context)
@@ -89,7 +96,7 @@ class RecipeAdapter :
             }
 
             itemView.textView_rv_card_recipe_title.text = recipe.title
-            if (!recipe.ingredientsLocalizedMap.isNullOrEmpty()) {
+            if (recipe.ingredientsLocalizedMap.isNotEmpty()) {
                 itemView.rv_ingredients_preview.text = String.format(
                     context!!.getString(R.string.title_ingredients_rv_recipe),
                     recipe.ingredientQty,
@@ -150,26 +157,41 @@ class RecipeAdapter :
                 when (itemView.imageView_rv_card_recipe_favourites.tag as String) {
                     RecipeUtils.TAG_FAVOURITES_UNCHECKED -> {
                         toggleFavourites(itemView.imageView_rv_card_recipe_favourites, true)
-                        listener.onBookmarksClick(data[bindingAdapterPosition], true, bindingAdapterPosition)
+                        listener.onBookmarksClick(
+                            data[bindingAdapterPosition],
+                            true,
+                            bindingAdapterPosition
+                        )
                     }
                     RecipeUtils.TAG_FAVOURITES_CHECKED -> {
                         toggleFavourites(itemView.imageView_rv_card_recipe_favourites, false)
-                        listener.onBookmarksClick(data[bindingAdapterPosition], false, bindingAdapterPosition)
+                        listener.onBookmarksClick(
+                            data[bindingAdapterPosition],
+                            false,
+                            bindingAdapterPosition
+                        )
                     }
                 }
             }
-
-            itemView.imageView_rv_card_recipe_fork.setOnClickListener {
-                when (itemView.imageView_rv_card_recipe_fork.tag as String) {
-                    RecipeUtils.TAG_FORK_UNCHECKED -> {
-                        toggleForks(itemView.imageView_rv_card_recipe_fork, true)
-                        listener.onForkClicked(data[bindingAdapterPosition], true, bindingAdapterPosition)
-                    }
-                    RecipeUtils.TAG_FORK_CHECKED -> {
-                        toggleForks(itemView.imageView_rv_card_recipe_fork, false)
-                        listener.onForkClicked(data[bindingAdapterPosition], false, bindingAdapterPosition)
+            itemView.view_click_fork.setOnClickListener {
+                if (itemView.view_click_fork.tag as String == TAG_CLICK_FALSE) {
+                    itemView.view_click_fork.tag = TAG_CLICK_TRUE
+                    if (itemView.imageView_rv_card_recipe_fork.tag as String == TAG_FORK_CHECKED) {
+                        listener.onForkClicked(
+                            data[bindingAdapterPosition],
+                            false,
+                            bindingAdapterPosition, this
+                        )
+                    } else {
+                        listener.onForkClicked(
+                            data[bindingAdapterPosition],
+                            true,
+                            bindingAdapterPosition, this
+                        )
                     }
                 }
+            }
+            itemView.view_click_comments.setOnClickListener {
             }
         }
     }
@@ -186,13 +208,13 @@ class RecipeAdapter :
         }
     }
 
-    private fun toggleForks(fork: ImageView, selected: Boolean) {
+    public fun toggleForks(fork: ImageView, selected: Boolean) {
         if (selected) {
             fork.setImageResource(R.drawable.ic_fork_checked)
-            fork.tag = RecipeUtils.TAG_FORK_CHECKED
+            fork.tag = TAG_FORK_CHECKED
         } else {
             fork.setImageResource(R.drawable.ic_fork_unchecked)
-            fork.tag = RecipeUtils.TAG_FORK_UNCHECKED
+            fork.tag = TAG_FORK_UNCHECKED
         }
     }
 

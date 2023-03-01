@@ -92,4 +92,26 @@ class RecipeRepository {
         }
     }
 
+    fun recipeFork(pidRecipe: Long, fork: Boolean, callback: ResultCallback<Int>) {
+        scope.launch(Dispatchers.IO) {
+            val call = RetrofitFactory.apiService().recipeFork(pidRecipe, fork)
+            call.enqueue(object : Callback<Int>{
+                override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                    Log.d(TAG, "RECIPE FORK ${response.body().toString()}")
+                    if (response.body() == null) {
+                        callback.onFailure(null)
+                    } else {
+                        callback.onResult(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<Int>, t: Throwable) {
+                    Log.d(TAG, "RECIPE FORK error")
+                    t.printStackTrace()
+                    callback.onFailure(null)
+                }
+            })
+        }
+    }
+
 }

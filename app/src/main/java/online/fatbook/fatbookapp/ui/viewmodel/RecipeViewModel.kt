@@ -212,13 +212,29 @@ class RecipeViewModel : ViewModel() {
         })
     }
 
-    fun addComment(pidRecipe: Long, comment: String, callback: ResultCallback<List<RecipeComment>>) {
+    fun addComment(
+        pidRecipe: Long,
+        comment: String,
+        callback: ResultCallback<List<RecipeComment>>
+    ) {
         repository.addComment(pidRecipe, comment, object : ResultCallback<List<RecipeComment>> {
             override fun onResult(value: List<RecipeComment>?) {
                 callback.onResult(value)
             }
 
             override fun onFailure(value: List<RecipeComment>?) {
+                callback.onFailure(value)
+            }
+        })
+    }
+
+    fun recipeFork(pidRecipe: Long, fork: Boolean, callback: ResultCallback<Int>) {
+        repository.recipeFork(pidRecipe, fork, object : ResultCallback<Int> {
+            override fun onResult(value: Int?) {
+                callback.onResult(value)
+            }
+
+            override fun onFailure(value: Int?) {
                 callback.onFailure(value)
             }
         })
