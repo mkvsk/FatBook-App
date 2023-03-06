@@ -57,8 +57,8 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
 
     private fun initListeners() {
         //TODO убрать
-        binding.fragmentLoginRecoverPassVcodeEdittextVc.setText(authViewModel.vCode.value)
-        binding.fragmentLoginRecoverPassVcodeButtonNext.isEnabled = true
+//        binding.fragmentLoginRecoverPassVcodeEdittextVc.setText(authViewModel.vCode.value)
+//        binding.fragmentLoginRecoverPassVcodeButtonNext.isEnabled = true
 
         binding.fragmentLoginRecoverPassVcodeResendLink.setOnClickListener {
             if (!timerViewModel.isTimerRunning.value!!) {

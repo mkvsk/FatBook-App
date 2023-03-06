@@ -51,7 +51,14 @@
     <fragment
         android:id="@+id/new_pass_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.NewPassFragment"
-        android:label="@null" />
+        android:label="@null">
+
+
+        <action
+            android:id="@+id/action_go_to_login_from_new_pass"
+            app:destination="@+id/login_dest"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/register_dest"
