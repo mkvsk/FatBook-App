@@ -44,6 +44,11 @@
         <action
             android:id="@+id/action_go_to_view_image_from_recipe_view"
             app:destination="@id/image_view_dest" />
+
+        <action
+            android:id="@+id/action_go_to_author_profile_from_recipe_view"
+            app:destination="@id/user_profile_dest"
+            />
     </fragment>
 
     <fragment

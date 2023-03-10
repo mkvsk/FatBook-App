@@ -98,9 +98,10 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
         initObservers()
         recipeViewModel.setIsLoading(false)
 
-        binding.textviewAuthorUsernameRecipeView.setOnClickListener {
-            NavHostFragment.findNavController(this)
-                .navigate(R.id.action_go_to_userprofile_from_recipe_view)
+        binding.llAuthorLinkRecipeView.setOnClickListener {
+            userViewModel.setSelectedUsername(binding.textviewAuthorUsernameRecipeView.text.toString())
+            findNavController()
+                .navigate(R.id.action_go_to_author_profile_from_recipe_view)
         }
 
         binding.viewClickFork.setOnClickListener {

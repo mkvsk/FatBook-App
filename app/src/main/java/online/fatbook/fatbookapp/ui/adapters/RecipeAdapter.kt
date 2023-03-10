@@ -130,6 +130,7 @@ class RecipeAdapter :
             itemView.rv_recipe_comments_qty.text = recipe.commentQty.toString()
             itemView.textView_rv_card_recipe_forks_avg.text =
                 FormatUtils.prettyCount(recipe.forks!!)
+
             itemView.ll_author_link_rv_recipe_preview.setOnClickListener {
                 listener.onUsernameClick(data[bindingAdapterPosition].user!!.username!!)
             }
