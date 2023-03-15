@@ -51,7 +51,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     private var rv: RecyclerView? = null
 
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
-    private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
+    private val recipeViewViewModel by lazy { obtainViewModel(RecipeViewViewModel::class.java) }
     private val feedViewModel by lazy { obtainViewModel(FeedViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
 
@@ -270,7 +270,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
     }
 
     override fun onRecipeClick(id: Long) {
-        recipeViewModel.setSelectedRecipeId(id)
+        recipeViewViewModel.setSelectedRecipeId(id)
         NavHostFragment.findNavController(this).navigate(R.id.action_go_to_recipe_view_from_feed)
     }
 
@@ -286,7 +286,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
 //            .enqueue(object : Callback<Recipe?> {
 //                override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
 //                    Log.d(TAG, "onResponse: bookmark SUCCESS")
-//                    recipeViewModel.setSelectedRecipe(response.body())
+//                    recipeViewViewModel.setSelectedRecipe(response.body())
 //                    loadUser()
 //                }
 //
@@ -305,7 +305,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         position: Int,
         viewHolder: RecipeAdapter.ViewHolder
     ) {
-        recipeViewModel.recipeFork(recipe!!.pid!!, fork, object : ResultCallback<Int> {
+        recipeViewViewModel.recipeFork(recipe!!.pid!!, fork, object : ResultCallback<Int> {
             override fun onResult(value: Int?) {
                 if (fork) {
                     userViewModel.user.value!!.recipesForked!!.add(recipe)
@@ -436,16 +436,16 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                         println(userViewModel.user.value)
                         adapter!!.setUser(userViewModel.user.value!!)
 //                            if (position != null) {
-//                                if (recipeViewModel.selectedRecipe.value != null) {
+//                                if (recipeViewViewModel.selectedRecipe.value != null) {
 //                                    userViewModel.feedRecipeList.value!![position].forks =
-//                                        recipeViewModel.selectedRecipe.value!!.forks
+//                                        recipeViewViewModel.selectedRecipe.value!!.forks
 //                                    adapter!!.notifyItemChanged(position)
 //                                } else {
 //                                    userViewModel.feedRecipeList.value!!.removeAt(position)
 //                                    adapter!!.notifyItemRemoved(position)
 //                                }
-//                                recipeViewModel.selectedRecipe.value = null
-//                                recipeViewModel.selectedRecipePosition.value = null
+//                                recipeViewViewModel.selectedRecipe.value = null
+//                                recipeViewViewModel.selectedRecipePosition.value = null
 //                            } else {
 //                                adapter!!.notifyDataSetChanged()
 //                            }

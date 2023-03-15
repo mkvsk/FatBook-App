@@ -49,7 +49,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     private var _binding: FragmentRecipeViewBinding? = null
     private val binding get() = _binding!!
 
-    private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
+    private val recipeEditViewModel by lazy { obtainViewModel(RecipeEditViewModel::class.java) }
     private val recipeViewViewModel by lazy { obtainViewModel(RecipeViewViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
@@ -246,7 +246,8 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_recipe_view_edit -> {
-                recipeViewViewModel.setEditMode(true)
+                recipeEditViewModel.setRecipe(recipe)
+                recipeEditViewModel.setEditMode(true)
                 findNavController().navigate(R.id.action_go_to_recipe_edit)
                 true
             }
@@ -279,6 +280,8 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
 
     private fun initViews() {
         binding.textViewCommentsAvgViewRecipe.text = binding.rvCommentsRecipeView.size.toString()
+
+
     }
 
     private fun initObservers() {

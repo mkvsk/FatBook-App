@@ -11,7 +11,7 @@ import online.fatbook.fatbookapp.repository.RecipeRepository
 class RecipeViewViewModel : ViewModel() {
 
     companion object {
-        private const val TAG = "RecipeViewModel"
+        private const val TAG = "RecipeViewViewModel"
     }
 
     private val repository by lazy { RecipeRepository() }
@@ -21,6 +21,27 @@ class RecipeViewViewModel : ViewModel() {
 
     fun setRecipe(value: Recipe) {
         _recipe.value = value
+    }
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    fun setIsLoading(value: Boolean) {
+        _isLoading.value = value
+    }
+
+    private val _selectedRecipe = MutableLiveData<Recipe?>()
+    val selectedRecipe: LiveData<Recipe?> get() = _selectedRecipe
+
+    fun setSelectedRecipe(value: Recipe?) {
+        _selectedRecipe.value = value
+    }
+
+    private val _selectedRecipeId = MutableLiveData<Long>()
+    val selectedRecipeId: LiveData<Long> get() = _selectedRecipeId
+
+    fun setSelectedRecipeId(value: Long) {
+        _selectedRecipeId.value = value
     }
 
     fun recipeCreate(recipe: Recipe, callback: ResultCallback<Boolean>) {
