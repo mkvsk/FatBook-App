@@ -51,7 +51,6 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
 
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
     private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
-    private val recipeEditViewModel by lazy { obtainViewModel(RecipeEditViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
     private var recipeInFav = false
@@ -247,7 +246,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_recipe_view_edit -> {
-                recipeEditViewModel.setEditMode(true)
+                recipeViewModel.setEditMode(true)
                 findNavController().navigate(R.id.action_go_to_recipe_edit)
                 true
             }
@@ -291,11 +290,6 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
             }
         }
 
-        recipeEditViewModel.isEditMode.observe(viewLifecycleOwner) {
-            if (it) {
-                recipeEditViewModel.setRecipe(recipe)
-            }
-        }
 //        recipeViewModel.isCommentAdd.observe(viewLifecycleOwner) {
 //            if (it) {
 //                binding.edittextInputComment.setText(StringUtils.EMPTY)
