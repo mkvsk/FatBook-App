@@ -50,7 +50,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     private val binding get() = _binding!!
 
     private val authViewModel by lazy { obtainViewModel(AuthenticationViewModel::class.java) }
-    private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
+    private val recipeViewViewModel by lazy { obtainViewModel(RecipeViewViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
     private var recipeInFav = false
@@ -88,15 +88,15 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recipeViewModel.setIsLoading(true)
+        recipeViewViewModel.setIsLoading(true)
         handleBackPressed()
-        loadData(recipeViewModel.selectedRecipeId.value!!)
+        loadData(recipeViewViewModel.selectedRecipeId.value!!)
         setupMenu()
         setupSwipeRefresh()
         initViews()
         initListeners()
         initObservers()
-        recipeViewModel.setIsLoading(false)
+        recipeViewViewModel.setIsLoading(false)
 
         binding.llAuthorLinkRecipeView.setOnClickListener {
             userViewModel.setSelectedUsername(binding.textviewAuthorUsernameRecipeView.text.toString())
@@ -204,12 +204,12 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
             )
         )
         binding.swipeRefreshRecipeView.setOnRefreshListener {
-            loadData(recipeViewModel.selectedRecipeId.value!!)
+            loadData(recipeViewViewModel.selectedRecipeId.value!!)
         }
     }
 
     private fun addComment() {
-        recipeViewModel.addComment(
+        recipeViewViewModel.addComment(
             recipe.pid!!,
             commentText!!,
             object : ResultCallback<List<RecipeComment>> {
@@ -246,7 +246,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_recipe_view_edit -> {
-                recipeViewModel.setEditMode(true)
+                recipeViewViewModel.setEditMode(true)
                 findNavController().navigate(R.id.action_go_to_recipe_edit)
                 true
             }
@@ -282,22 +282,13 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     }
 
     private fun initObservers() {
-        recipeViewModel.isLoading.observe(viewLifecycleOwner) {
+        recipeViewViewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
                 binding.loader.progressOverlay.visibility = View.VISIBLE
             } else {
                 binding.loader.progressOverlay.visibility = View.GONE
             }
         }
-
-//        recipeViewModel.isCommentAdd.observe(viewLifecycleOwner) {
-//            if (it) {
-//                binding.edittextInputComment.setText(StringUtils.EMPTY)
-//                commentText = StringUtils.EMPTY
-//            } else {
-//                binding.edittextInputComment.setText(commentText)
-//            }
-//        }
     }
 
     private fun handleBackPressed() {
@@ -305,8 +296,8 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (recipeViewModel.isLoading.value == true) {
-                        recipeViewModel.setIsLoading(false)
+                    if (recipeViewViewModel.isLoading.value == true) {
+                        recipeViewViewModel.setIsLoading(false)
                     } else {
                         popBackStack()
                     }
@@ -382,8 +373,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
             .enqueue(object : Callback<Recipe?> {
                 override fun onResponse(call: Call<Recipe?>, response: Response<Recipe?>) {
                     Log.d(RecipeViewFragment.TAG, "onResponse: bookmark SUCCESS")
-                    recipeViewModel.setSelectedRecipe(response.body())
-                    loadUser()
+                    recipeViewViewModel.setSelectedRecipe(response.body())
                 }
 
                 override fun onFailure(call: Call<Recipe?>, t: Throwable) {
@@ -393,7 +383,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     }
 
     private fun recipeForked(recipeForked: Recipe, fork: Boolean) {
-        recipeViewModel.recipeFork(recipeForked.pid!!, fork, object : ResultCallback<Int> {
+        recipeViewViewModel.recipeFork(recipeForked.pid!!, fork, object : ResultCallback<Int> {
             override fun onResult(value: Int?) {
                 toggleForks(fork)
                 recipe.forks = value
@@ -414,18 +404,6 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
         })
     }
 
-    private fun loadUser() {
-        userViewModel.getUserByUsername(
-            authViewModel.username.value!!,
-            object : ResultCallback<User> {
-                override fun onResult(value: User?) {
-                }
-
-                override fun onFailure(value: User?) {
-                }
-            })
-    }
-
     private fun toggleForks(forked: Boolean) {
         if (forked) {
             binding.imageViewForkViewRecipe.setImageResource(R.drawable.ic_fork_checked)
@@ -437,7 +415,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
     }
 
     private fun loadData(id: Long) {
-        recipeViewModel.getRecipeById(id, object : ResultCallback<Recipe> {
+        recipeViewViewModel.getRecipeById(id, object : ResultCallback<Recipe> {
             override fun onResult(value: Recipe?) {
                 recipe = value!!
                 checkAuthor(recipe.user?.username, userViewModel.user.value?.username)
