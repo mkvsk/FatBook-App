@@ -339,7 +339,7 @@ class AuthenticationViewModel : ViewModel() {
     fun confirmVCode(vCode: String) {
         repository.confirmVCode(
             vCode,
-            userEmail.value.toString(),
+            recoverEmail.value.toString(),
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
                     setIsLoading(false)

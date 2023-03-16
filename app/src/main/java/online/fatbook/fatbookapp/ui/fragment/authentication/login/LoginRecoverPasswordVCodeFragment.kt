@@ -149,7 +149,7 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
             }
         }
 
-        authViewModel.resultCodeRecoverPass.observe(viewLifecycleOwner) {
+        authViewModel.resultCodeVCode.observe(viewLifecycleOwner) {
             when (it) {
                 0 -> {
                     showDefaultMessage(getString(R.string.dialog_register_email_error))
