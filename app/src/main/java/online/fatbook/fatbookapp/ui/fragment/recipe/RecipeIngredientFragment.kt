@@ -25,7 +25,7 @@ import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnitRatio
 import online.fatbook.fatbookapp.databinding.FragmentRecipeIngredientBinding
 import online.fatbook.fatbookapp.ui.adapters.IngredientAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnIngredientItemClickListener
-import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.RecipeEditViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
@@ -37,7 +37,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     private var _binding: FragmentRecipeIngredientBinding? = null
     private val binding get() = _binding!!
 
-    private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
+    private val recipeEditViewModel by lazy { obtainViewModel(RecipeEditViewModel::class.java) }
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private var adapter: IngredientAdapter? = null
     private var units: ArrayList<IngredientUnit> = ArrayList()
@@ -81,7 +81,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
                     if (s.isEmpty()) {
                         binding.toolbarRecipeAddIngredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
                             false
-                        recipeViewModel.newRecipeAddIngredient.value?.let {
+                        recipeEditViewModel.recipeAddIngredient.value?.let {
                             setDefaultNutritionFacts(
                                 it
                             )
@@ -89,7 +89,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
                     } else {
                         binding.toolbarRecipeAddIngredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
                             true
-                        recipeViewModel.newRecipeAddIngredient.value?.let { calculateNutrition(it) }
+                        recipeEditViewModel.recipeAddIngredient.value?.let { calculateNutrition(it) }
                     }
                 }
 
@@ -118,9 +118,11 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
             override fun onResult(value: List<IngredientUnit>?) {
                 value?.let {
                     staticDataViewModel.setIngredientUnits(value)
-                    staticDataViewModel.setUnitG(value.find { ingredientUnit -> ingredientUnit.ordinal == 1 })
+                    value.find { ingredientUnit -> ingredientUnit.ordinal == 1 }
+                        ?.let { it1 -> staticDataViewModel.setUnitG(it1) }
 
-                    staticDataViewModel.setUnitML(value.find { ingredientUnit -> ingredientUnit.ordinal == 2 })
+                    value.find { ingredientUnit -> ingredientUnit.ordinal == 2 }
+                        ?.let { it1 -> staticDataViewModel.setUnitML(it1) }
                 }
                 setupUnitPicker(null)
             }
@@ -237,11 +239,11 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
         val recipeIngredient = RecipeIngredient(
             pid = null,
-            ingredient = recipeViewModel.newRecipeAddIngredient.value,
+            ingredient = recipeEditViewModel.recipeAddIngredient.value,
             unit = selectedUnit,
             quantity = selectedQty
         )
-        recipeViewModel.newRecipe.value!!.ingredients!!.add(recipeIngredient)
+        recipeEditViewModel.recipe.value!!.ingredients!!.add(recipeIngredient)
         findNavController().popBackStack()
     }
 
@@ -292,7 +294,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
             staticDataViewModel.ingredients.value!!.find { it.title == ingredient!!.title }
         adapter!!.notifyItemChanged(previousItem)
         adapter!!.notifyItemChanged(selectedItem)
-        recipeViewModel.setNewRecipeAddIngredient(ingredient)
+        recipeEditViewModel.setRecipeAddIngredient(ingredient)
 
         binding.textViewSelectedIngredientRecipeAddIngredients.text = ingredient!!.title
         setupUnitPicker(ingredient)

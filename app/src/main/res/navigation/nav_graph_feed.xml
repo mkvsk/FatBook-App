@@ -43,12 +43,11 @@
 
         <action
             android:id="@+id/action_go_to_view_image_from_recipe_view"
-            app:destination="@id/image_view_dest" />
+            app:destination="@id/image_view_recipe_edit_dest" />
 
         <action
             android:id="@+id/action_go_to_author_profile_from_recipe_view"
-            app:destination="@id/user_profile_dest"
-            />
+            app:destination="@id/user_profile_dest" />
     </fragment>
 
     <fragment
@@ -64,10 +63,57 @@
     <fragment
         android:id="@+id/recipe_edit_first_stage_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeFirstStageFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_method_category_from_edit"
+            app:destination="@id/recipe_edit_method_category_dest" />
+
+        <action
+            android:id="@+id/action_go_to_second_stage_from_edit"
+            app:destination="@id/recipe_edit_second_stage_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipe_edit_method_category_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeMethodsCategoriesFragment"
         android:label="@null" />
 
     <fragment
-        android:id="@+id/image_view_dest"
+        android:id="@+id/recipe_edit_second_stage_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeSecondStageFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_ingredient_from_edit"
+            app:destination="@id/recipe_edit_ingredients_dest" />
+
+        <action
+            android:id="@+id/action_go_to_cooking_step_from_edit"
+            app:destination="@id/recipe_edit_cooking_step_dest" />
+
+        <action
+            android:id="@+id/action_go_to_recipe_view_from_edit"
+            app:destination="@+id/recipe_view_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipe_edit_cooking_step_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeCookingStepFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_view_image_from_cooking_step_edit"
+            app:destination="@id/image_view_recipe_edit_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipe_edit_ingredients_dest"
+        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeIngredientFragment"
+        android:label="@null" />
+
+    <fragment
+        android:id="@+id/image_view_recipe_edit_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.image.ImageViewFragment"
         android:label="@null" />
 </navigation>

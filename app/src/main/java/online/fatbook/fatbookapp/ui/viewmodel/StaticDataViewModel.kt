@@ -58,14 +58,14 @@ class StaticDataViewModel : ViewModel() {
     private val _unitG = MutableLiveData<IngredientUnit>()
     val unitG: LiveData<IngredientUnit> get() = _unitG
 
-    fun setUnitG(value: IngredientUnit?) {
+    fun setUnitG(value: IngredientUnit) {
         _unitG.value = value
     }
 
     private val _unitML = MutableLiveData<IngredientUnit>()
     val unitML: LiveData<IngredientUnit> get() = _unitML
 
-    fun setUnitML(value: IngredientUnit?) {
+    fun setUnitML(value: IngredientUnit) {
         _unitML.value = value
     }
 

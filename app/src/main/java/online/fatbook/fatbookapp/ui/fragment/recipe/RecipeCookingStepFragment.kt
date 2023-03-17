@@ -25,7 +25,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
 import online.fatbook.fatbookapp.databinding.FragmentRecipeCookingStepBinding
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.RecipeEditViewModel
 import online.fatbook.fatbookapp.util.Constants.getRecipeImageName
 import online.fatbook.fatbookapp.util.FileUtils
 import online.fatbook.fatbookapp.util.hideKeyboard
@@ -37,7 +37,7 @@ class RecipeCookingStepFragment : Fragment() {
     private var _binding: FragmentRecipeCookingStepBinding? = null
     private val binding get() = _binding!!
 
-    private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
+    private val recipeEditViewModel by lazy { obtainViewModel(RecipeEditViewModel::class.java) }
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
     private var cookingStep: CookingStep? = CookingStep()
     private var selectedCookingStep: CookingStep? = null
@@ -77,8 +77,8 @@ class RecipeCookingStepFragment : Fragment() {
         binding.toolbarRecipeCreateCookingStep.title =
             getString(R.string.create_cooking_step_toolbar_title)
 
-        if (recipeViewModel.selectedCookingStep.value != null) {
-            selectedCookingStep = recipeViewModel.selectedCookingStep.value
+        if (recipeEditViewModel.selectedCookingStep.value != null) {
+            selectedCookingStep = recipeEditViewModel.selectedCookingStep.value
             binding.edittextRecipeCreateCookingStep.setText(selectedCookingStep!!.description.toString())
             checkEnableMenu()
         }
@@ -114,7 +114,7 @@ class RecipeCookingStepFragment : Fragment() {
 
 //    private fun getValuesFromBundle(fragment: RecipeCookingStepFragment) {
 //        if (fragment.arguments != null) {
-//            recipeViewModel.setInitialData(
+//            recipeEditViewModel.setInitialData(
 //                fragment.arguments?.getLong(
 //                    "BUNDLE_KEY_RECIPE_ID",
 //                    0L
@@ -161,7 +161,7 @@ class RecipeCookingStepFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_create_step_confirm -> {
-//                recipeViewModel.createStep(
+//                recipeEditViewModel.createStep(
 //                    binding.edittextRecipeCreateCookingStep.text.toString()
 //                        .replace("\\s+".toRegex(), " "), cookingStep!!, image
 //                )
@@ -180,17 +180,17 @@ class RecipeCookingStepFragment : Fragment() {
         if (selectedCookingStep != null) {
             selectedCookingStep!!.description = description
         } else {
-            var cookingStepsAmount = recipeViewModel.newRecipe.value!!.steps!!.size
+            var cookingStepsAmount = recipeEditViewModel.recipe.value!!.steps!!.size
             cookingStep!!.description = description
             cookingStep!!.stepNumber = ++cookingStepsAmount
             image?.let {
                 cookingStep!!.imageFile = it
                 cookingStep!!.imageName = getRecipeImageName(cookingStepsAmount) + it.name.substring(it.name.indexOf('.'))
             }
-            recipeViewModel.newRecipe.value!!.steps!!.add(cookingStep!!)
+            recipeEditViewModel.recipe.value!!.steps!!.add(cookingStep!!)
         }
-        recipeViewModel.setSelectedCookingStep(null)
-        recipeViewModel.setSelectedCookingStepPosition(null)
+        recipeEditViewModel.setSelectedCookingStep(null)
+        recipeEditViewModel.setSelectedCookingStepPosition(null)
         findNavController().popBackStack()
     }
 

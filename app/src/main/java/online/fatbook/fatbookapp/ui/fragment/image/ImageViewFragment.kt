@@ -41,8 +41,12 @@ class ImageViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-            View.GONE
+
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).animate()
+            .alpha(0.0f)
+
+//        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+//            View.GONE
         setupMenu()
 
         binding.imageviewFullImage.setOnDoubleTapListener(object : OnDoubleTapListener {
@@ -222,9 +226,13 @@ class ImageViewFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+
         imageViewModel.setImage(null)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
-            View.VISIBLE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).animate()
+            .alpha(1.0f)
+//        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+//            View.VISIBLE
+
         _binding = null
     }
 

@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_recipe_view.view.*
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.view_click_fork
 import online.fatbook.fatbookapp.R

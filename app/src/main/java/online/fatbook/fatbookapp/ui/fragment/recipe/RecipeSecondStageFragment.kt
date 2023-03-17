@@ -22,7 +22,7 @@ import online.fatbook.fatbookapp.ui.adapters.RecipeIngredientAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeIngredientItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.RecipeEditViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants
@@ -41,8 +41,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     private var _binding: FragmentRecipeSecondStageBinding? = null
     private val binding get() = _binding!!
 
-    private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
-    private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
+    private val recipeEditViewModel by lazy { obtainViewModel(RecipeEditViewModel::class.java) }
     private val userViewModel by lazy { obtainViewModel(UserViewModel::class.java) }
     private val imageViewModel by lazy { obtainViewModel(ImageViewModel::class.java) }
 
@@ -67,18 +66,18 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbarRecipeCreate2Stage.title = "TODO title"
-        recipeViewModel.setIsLoading(false)
+        recipeEditViewModel.setIsLoading(false)
         setupMenu()
         checkEnableMenu()
         initObservers()
         initListeners()
-        checkIngredientsQty(recipeViewModel.newRecipe.value!!.ingredients!!.size)
-        checkStepsQty(recipeViewModel.newRecipe.value!!.steps!!.size)
+        checkIngredientsQty(recipeEditViewModel.recipe.value!!.ingredients!!.size)
+        checkStepsQty(recipeEditViewModel.recipe.value!!.steps!!.size)
         setupIngredientsAdapter()
         setupCookingStepsAdapter()
-        ingredientsAdapter!!.setData(recipeViewModel.newRecipe.value!!.ingredients)
-        cookingStepsAdapter!!.setData(recipeViewModel.newRecipe.value!!.steps)
-        recipeViewModel.setSelectedCookingStep(null)
+        ingredientsAdapter!!.setData(recipeEditViewModel.recipe.value!!.ingredients)
+        cookingStepsAdapter!!.setData(recipeEditViewModel.recipe.value!!.steps)
+        recipeEditViewModel.setSelectedCookingStep(null)
     }
 
     private fun initListeners() {
@@ -111,12 +110,12 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     private fun initObservers() {
         imageViewModel.imagesToUploadAmount.observe(viewLifecycleOwner) {
             if (it == 0) {
-                if (recipeViewModel.newRecipe.value!!.identifier != null) {
+                if (recipeEditViewModel.recipe.value!!.identifier != null) {
                     saveRecipe()
                 }
             }
         }
-        recipeViewModel.isLoading.observe(viewLifecycleOwner) {
+        recipeEditViewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
                 binding.toolbarRecipeCreate2Stage.visibility = View.GONE
                 binding.loader.progressOverlay.visibility = View.VISIBLE
@@ -129,7 +128,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
 
     private fun checkEnableMenu() {
         val isEmpty =
-                recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty() || recipeViewModel.newRecipe.value!!.steps.isNullOrEmpty()
+                recipeEditViewModel.recipe.value!!.ingredients.isNullOrEmpty() || recipeEditViewModel.recipe.value!!.steps.isNullOrEmpty()
         binding.toolbarRecipeCreate2Stage.menu.findItem(R.id.menu_create_second_stage_save_recipe).isVisible =
                 !isEmpty
     }
@@ -154,13 +153,13 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     }
 
     private fun checkRecipe() {
-        if (recipeViewModel.newRecipeImage.value == null && !recipeViewModel.newRecipe.value!!.isPrivate!!) {
+        if (recipeEditViewModel.recipeImage.value == null && !recipeEditViewModel.recipe.value!!.isPrivate!!) {
             FBAlertDialogBuilder.getDialogWithPositiveAndNegativeButtons(
                     title = "Notice",
                     msg = "Recipe without an image will be visible only for you. Would you still want to create new recipe?",
                     positiveBtnListener = object : FBAlertDialogListener {
                         override fun onClick(dialogInterface: DialogInterface) {
-                            recipeViewModel.newRecipe.value!!.isPrivate = true
+                            recipeEditViewModel.recipe.value!!.isPrivate = true
                             dialogInterface.dismiss()
                             fillRecipe()
                             uploadImages()
@@ -176,18 +175,18 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     }
 
     private fun uploadImages() {
-        imageViewModel.setImagesToUploadAmount(recipeViewModel.newRecipeStepImages.value!!.size)
+        imageViewModel.setImagesToUploadAmount(recipeEditViewModel.recipeStepImages.value!!.size)
         imageViewModel.uploadRecipeImages(
-                recipeViewModel.newRecipeStepImages.value!!,
-                recipeViewModel.newRecipe.value!!.identifier!!.toString(),
+                recipeEditViewModel.recipeStepImages.value!!,
+                recipeEditViewModel.recipe.value!!.identifier!!.toString(),
                 object : ResultCallback<Pair<Int, String>> {
                     override fun onResult(value: Pair<Int, String>?) {
                         value?.let {
                             if (it.first == 0) {
-                                recipeViewModel.newRecipe.value!!.image = "${CDN_FB_BASE_URL}r/${recipeViewModel.newRecipe.value!!.identifier}/${it.second}"
+                                recipeEditViewModel.recipe.value!!.image = "${CDN_FB_BASE_URL}r/${recipeEditViewModel.recipe.value!!.identifier}/${it.second}"
                             } else {
-                                val find = recipeViewModel.newRecipe.value!!.steps!!.find { cookingStep -> cookingStep.stepNumber == it.first }
-                                find!!.image = "${CDN_FB_BASE_URL}r/${recipeViewModel.newRecipe.value!!.identifier}/${it.second}"
+                                val find = recipeEditViewModel.recipe.value!!.steps!!.find { cookingStep -> cookingStep.stepNumber == it.first }
+                                find!!.image = "${CDN_FB_BASE_URL}r/${recipeEditViewModel.recipe.value!!.identifier}/${it.second}"
                             }
                             imageViewModel.setImagesToUploadAmount(imageViewModel.imagesToUploadAmount.value!! - 1)
                         }
@@ -205,33 +204,33 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     }
 
     private fun fillRecipe() {
-        recipeViewModel.setIsLoading(true)
-        recipeViewModel.newRecipe.value!!.identifier = FormatUtils.generateRecipeId()
-        recipeViewModel.newRecipe.value!!.createDate = FormatUtils.dateFormat.format(Date())
-        with(recipeViewModel.newRecipe.value!!) {
+        recipeEditViewModel.setIsLoading(true)
+        recipeEditViewModel.recipe.value!!.identifier = FormatUtils.generateRecipeId()
+        recipeEditViewModel.recipe.value!!.createDate = FormatUtils.dateFormat.format(Date())
+        with(recipeEditViewModel.recipe.value!!) {
             kcalPerPortion = (kcalPerPortion!! * 100.0).roundToInt() / 100.0
             fatsPerPortion = (fatsPerPortion!! * 100.0).roundToInt() / 100.0
             carbsPerPortion = (carbsPerPortion!! * 100.0).roundToInt() / 100.0
             proteinsPerPortion = (proteinsPerPortion!! * 100.0).roundToInt() / 100.0
         }
-        recipeViewModel.setNewRecipeStepImages(HashMap())
-        recipeViewModel.newRecipeImage.value?.let {
-            recipeViewModel.newRecipeStepImages.value!![0] = Pair(getRecipeImageName(0) + it.name.substring(it.name.indexOf('.')), it.asRequestBody(Constants.MEDIA_TYPE_OCTET_STREAM))
+        recipeEditViewModel.setRecipeStepImages(HashMap())
+        recipeEditViewModel.recipeImage.value?.let {
+            recipeEditViewModel.recipeStepImages.value!![0] = Pair(getRecipeImageName(0) + it.name.substring(it.name.indexOf('.')), it.asRequestBody(Constants.MEDIA_TYPE_OCTET_STREAM))
         }
-        recipeViewModel.newRecipe.value!!.steps!!.forEach { step ->
+        recipeEditViewModel.recipe.value!!.steps!!.forEach { step ->
             step.imageFile?.let {
-                recipeViewModel.newRecipeStepImages.value!![step.stepNumber!!] = Pair(step.imageName!!, it.asRequestBody(Constants.MEDIA_TYPE_OCTET_STREAM))
+                recipeEditViewModel.recipeStepImages.value!![step.stepNumber!!] = Pair(step.imageName!!, it.asRequestBody(Constants.MEDIA_TYPE_OCTET_STREAM))
             }
         }
-        Log.d(TAG, "loadImages: ${recipeViewModel.newRecipeStepImages.value!!.size} | ${recipeViewModel.newRecipeStepImages.value}")
+        Log.d(TAG, "loadImages: ${recipeEditViewModel.recipeStepImages.value!!.size} | ${recipeEditViewModel.recipeStepImages.value}")
     }
 
     private fun saveRecipe() {
-        recipeViewModel.recipeCreate(
-                recipeViewModel.newRecipe.value!!, object : ResultCallback<Boolean> {
+        recipeEditViewModel.recipeCreate(
+                recipeEditViewModel.recipe.value!!, object : ResultCallback<Boolean> {
             override fun onResult(value: Boolean?) {
                 Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
-                recipeViewModel.setIsRecipeCreated(true)
+                recipeEditViewModel.setIsRecipeCreated(true)
                 popBackStack()
             }
 
@@ -282,10 +281,10 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     //TODO ANIM
     override fun onRecipeIngredientDelete(selectedItem: Int) {
 //        TransitionManager.go(Scene(cardview_right_recipe_create_2_stage), AutoTransition())
-        recipeViewModel.newRecipe.value!!.ingredients!!.removeAt(selectedItem)
+        recipeEditViewModel.recipe.value!!.ingredients!!.removeAt(selectedItem)
         ingredientsAdapter!!.notifyItemRemoved(selectedItem)
         drawNutritionFacts()
-        checkIngredientsQty(recipeViewModel.newRecipe.value!!.ingredients!!.size)
+        checkIngredientsQty(recipeEditViewModel.recipe.value!!.ingredients!!.size)
         checkEnableMenu()
     }
 
@@ -297,8 +296,8 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     }
 
     override fun onCookingStepClick(value: CookingStep, itemPosition: Int) {
-        recipeViewModel.setSelectedCookingStep(value)
-        recipeViewModel.setSelectedCookingStepPosition(itemPosition)
+        recipeEditViewModel.setSelectedCookingStep(value)
+        recipeEditViewModel.setSelectedCookingStepPosition(itemPosition)
         NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_step_from_second_stage)
     }
@@ -307,20 +306,20 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     override fun onRecipeCookingStepDelete(itemPosition: Int) {
 //        TransitionManager.go(Scene(rv_steps_recipe_create_2_stage), AutoTransition())
         var step = itemPosition + 1
-        recipeViewModel.newRecipe.value!!.steps!!.removeAt(itemPosition)
-        recipeViewModel.newRecipeStepImages.value!!.remove(itemPosition)
-        recipeViewModel.newRecipe.value!!.steps!!.forEach { cookingStep ->
+        recipeEditViewModel.recipe.value!!.steps!!.removeAt(itemPosition)
+        recipeEditViewModel.recipeStepImages.value!!.remove(itemPosition)
+        recipeEditViewModel.recipe.value!!.steps!!.forEach { cookingStep ->
             if (cookingStep.stepNumber!! >= step) {
                 cookingStep.stepNumber = step
                 step++
             }
         }
-        Log.d(TAG, "onRecipeCookingStepDelete: ${recipeViewModel.newRecipe.value!!.steps}")
+        Log.d(TAG, "onRecipeCookingStepDelete: ${recipeEditViewModel.recipe.value!!.steps}")
         cookingStepsAdapter!!.notifyItemRemoved(itemPosition)
-        checkStepsQty(recipeViewModel.newRecipe.value!!.steps!!.size)
+        checkStepsQty(recipeEditViewModel.recipe.value!!.steps!!.size)
         checkEnableMenu()
-        Log.d(TAG, "${recipeViewModel.newRecipe.value!!.steps}")
-        Log.d(TAG, "${recipeViewModel.newRecipeStepImages.value}")
+        Log.d(TAG, "${recipeEditViewModel.recipe.value!!.steps}")
+        Log.d(TAG, "${recipeEditViewModel.recipeStepImages.value}")
     }
 
     override fun onResume() {
@@ -329,22 +328,22 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
     }
 
     private fun drawNutritionFacts() {
-        if (recipeViewModel.newRecipe.value!!.isAllIngredientUnitsValid
-                && !recipeViewModel.newRecipe.value!!.ingredients.isNullOrEmpty()
+        if (recipeEditViewModel.recipe.value!!.isAllIngredientUnitsValid
+                && !recipeEditViewModel.recipe.value!!.ingredients.isNullOrEmpty()
         ) {
             showNutritionFacts(true)
             binding.textviewPortionKcalsQtyRecipeCreate2Stage.text =
                     FormatUtils.prettyCount(
-                            recipeViewModel.newRecipe.value?.kcalPerPortion.toString().toDouble()
+                            recipeEditViewModel.recipe.value?.kcalPerPortion.toString().toDouble()
                     )
             binding.tvQtyProteins.text = FormatUtils.prettyCount(
-                    recipeViewModel.newRecipe.value?.proteinsPerPortion.toString().toDouble()
+                    recipeEditViewModel.recipe.value?.proteinsPerPortion.toString().toDouble()
             )
             binding.tvQtyFats.text = FormatUtils.prettyCount(
-                    recipeViewModel.newRecipe.value?.fatsPerPortion.toString().toDouble()
+                    recipeEditViewModel.recipe.value?.fatsPerPortion.toString().toDouble()
             )
             binding.tvQtyCarbs.text = FormatUtils.prettyCount(
-                    recipeViewModel.newRecipe.value?.carbsPerPortion.toString().toDouble()
+                    recipeEditViewModel.recipe.value?.carbsPerPortion.toString().toDouble()
             )
         } else {
             showNutritionFacts(false)

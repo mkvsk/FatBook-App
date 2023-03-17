@@ -248,6 +248,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
             R.id.menu_recipe_view_edit -> {
                 recipeEditViewModel.setRecipe(recipe)
                 recipeEditViewModel.setEditMode(true)
+                recipeEditViewModel.setIsLoading(true)
                 findNavController().navigate(R.id.action_go_to_recipe_edit)
                 true
             }
@@ -290,6 +291,15 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
                 binding.loader.progressOverlay.visibility = View.VISIBLE
             } else {
                 binding.loader.progressOverlay.visibility = View.GONE
+            }
+        }
+
+        //TODO fix
+        recipeEditViewModel.isEditMode.observe(viewLifecycleOwner) {
+            if (it) {
+                recipeViewViewModel.setIsLoading(true)
+            } else {
+                recipeViewViewModel.setIsLoading(false)
             }
         }
     }

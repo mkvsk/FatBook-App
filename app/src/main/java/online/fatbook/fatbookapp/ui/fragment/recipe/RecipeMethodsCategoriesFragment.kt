@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
@@ -14,7 +13,7 @@ import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.databinding.FragmentRecipeMethodsCategoriesBinding
 import online.fatbook.fatbookapp.ui.adapters.StaticDataAdapter
 import online.fatbook.fatbookapp.ui.listeners.OnStaticDataClickListener
-import online.fatbook.fatbookapp.ui.viewmodel.RecipeViewModel
+import online.fatbook.fatbookapp.ui.viewmodel.RecipeEditViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.obtainViewModel
 
@@ -23,7 +22,7 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
     private var _binding: FragmentRecipeMethodsCategoriesBinding? = null
     private val binding get() = _binding!!
 
-    private val recipeViewModel by lazy { obtainViewModel(RecipeViewModel::class.java) }
+    private val recipeEditViewModel by lazy { obtainViewModel(RecipeEditViewModel::class.java) }
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private var adapter: StaticDataAdapter? = null
 
@@ -37,8 +36,8 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (recipeViewModel.newRecipeCookingCategories.value == null) {
-            recipeViewModel.setNewRecipeCookingCategories(ArrayList())
+        if (recipeEditViewModel.recipeCookingCategories.value == null) {
+            recipeEditViewModel.setRecipeCookingCategories(ArrayList())
         }
         setupItemsAdapter()
         if (staticDataViewModel.loadCookingMethod.value!!) {
@@ -65,8 +64,8 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_add_categories -> {
-                recipeViewModel.newRecipe.value!!.cookingCategories =
-                    recipeViewModel.newRecipeCookingCategories.value as ArrayList<CookingCategory>
+                recipeEditViewModel.recipe.value!!.cookingCategories =
+                    recipeEditViewModel.recipeCookingCategories.value as ArrayList<CookingCategory>
                 findNavController().popBackStack()
                 true
             }
@@ -88,8 +87,8 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
                     staticDataViewModel.setCookingCategories(value)
                     adapter?.setData(value)
                     val list: ArrayList<Int> = ArrayList()
-                    if (!recipeViewModel.newRecipe.value!!.cookingCategories.isNullOrEmpty()) {
-                        for (i in recipeViewModel.newRecipe.value!!.cookingCategories!!) {
+                    if (!recipeEditViewModel.recipe.value!!.cookingCategories.isNullOrEmpty()) {
+                        for (i in recipeEditViewModel.recipe.value!!.cookingCategories!!) {
                             if (value.contains(i)) {
                                 list.add(value.indexOf(i))
                             }
@@ -111,8 +110,8 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
                     staticDataViewModel.setCookingMethods(value)
                     adapter?.setData(value)
                     val list: ArrayList<Int> = ArrayList()
-                    if (recipeViewModel.newRecipe.value!!.cookingMethod != null) {
-                        list.add(value.indexOf(recipeViewModel.newRecipe.value!!.cookingMethod!!))
+                    if (recipeEditViewModel.recipe.value!!.cookingMethod != null) {
+                        list.add(value.indexOf(recipeEditViewModel.recipe.value!!.cookingMethod!!))
                     }
                     adapter?.setSelected(list)
                 }
@@ -124,26 +123,26 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
     }
 
     override fun onItemClick(item: StaticDataObject) {
-        recipeViewModel.setNewRecipeCookingMethod(item as CookingMethod)
-        recipeViewModel.newRecipe.value!!.cookingMethod =
-            recipeViewModel.newRecipeCookingMethod.value
+        recipeEditViewModel.setRecipeCookingMethod(item as CookingMethod)
+        recipeEditViewModel.recipe.value!!.cookingMethod =
+            recipeEditViewModel.recipeCookingMethod.value
         Log.i("============================================================", "")
-        Log.i("SELECTED METHOD", "${recipeViewModel.newRecipe.value!!.cookingMethod}")
+        Log.i("SELECTED METHOD", "${recipeEditViewModel.recipe.value!!.cookingMethod}")
         Log.i("============================================================", "")
         findNavController().popBackStack()
     }
 
     override fun onItemClickChoose(item: StaticDataObject) {
-        if (recipeViewModel.newRecipeCookingCategories.value!!.contains(item as CookingCategory)) {
-            recipeViewModel.newRecipeCookingCategories.value!!.remove(item)
+        if (recipeEditViewModel.recipeCookingCategories.value!!.contains(item as CookingCategory)) {
+            recipeEditViewModel.recipeCookingCategories.value!!.remove(item)
         } else {
-            recipeViewModel.newRecipeCookingCategories.value!!.add(item)
+            recipeEditViewModel.recipeCookingCategories.value!!.add(item)
         }
-        recipeViewModel.newRecipe.value!!.cookingCategories =
-            recipeViewModel.newRecipeCookingCategories.value
+        recipeEditViewModel.recipe.value!!.cookingCategories =
+            recipeEditViewModel.recipeCookingCategories.value
 
         Log.i("============================================================", "")
-        Log.i("SELECTED CATEGORIES", "${recipeViewModel.newRecipe.value!!.cookingCategories}")
+        Log.i("SELECTED CATEGORIES", "${recipeEditViewModel.recipe.value!!.cookingCategories}")
         Log.i("============================================================", "")
     }
 

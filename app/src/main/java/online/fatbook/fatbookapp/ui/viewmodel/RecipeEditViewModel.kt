@@ -118,4 +118,22 @@ class RecipeEditViewModel : ViewModel() {
         _selectedCookingStepPosition.value = value
     }
 
+    private val _isRecipeCreated = MutableLiveData<Boolean?>()
+    val isRecipeCreated: LiveData<Boolean?> get() = _isRecipeCreated
+
+    fun setIsRecipeCreated(value: Boolean?) {
+        _isRecipeCreated.value = value
+    }
+
+    fun recipeCreate(recipe: Recipe, callback: ResultCallback<Boolean>) {
+        repository.recipeCreate(recipe, object : ResultCallback<Boolean> {
+            override fun onResult(value: Boolean?) {
+                callback.onResult(value)
+            }
+
+            override fun onFailure(value: Boolean?) {
+                callback.onFailure(value)
+            }
+        })
+    }
 }

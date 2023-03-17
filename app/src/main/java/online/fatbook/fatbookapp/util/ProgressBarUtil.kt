@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.view.View
 import androidx.fragment.app.FragmentActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 object ProgressBarUtil {
 
