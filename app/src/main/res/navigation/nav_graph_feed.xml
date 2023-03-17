@@ -43,7 +43,7 @@
 
         <action
             android:id="@+id/action_go_to_view_image_from_recipe_view"
-            app:destination="@id/image_view_recipe_edit_dest" />
+            app:destination="@id/image_view_dest" />
 
         <action
             android:id="@+id/action_go_to_author_profile_from_recipe_view"
@@ -104,7 +104,7 @@
 
         <action
             android:id="@+id/action_go_to_view_image_from_cooking_step_edit"
-            app:destination="@id/image_view_recipe_edit_dest" />
+            app:destination="@id/image_view_dest" />
     </fragment>
 
     <fragment
@@ -113,7 +113,7 @@
         android:label="@null" />
 
     <fragment
-        android:id="@+id/image_view_recipe_edit_dest"
+        android:id="@+id/image_view_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.image.ImageViewFragment"
         android:label="@null" />
 </navigation>

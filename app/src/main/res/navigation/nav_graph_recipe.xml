@@ -14,7 +14,7 @@
             app:destination="@id/recipe_second_stage_dest" />
         <action
             android:id="@+id/action_go_to_image_view_from_first_stage"
-            app:destination="@id/image_view_recipe_edit_dest" />
+            app:destination="@id/image_view_dest" />
         <action
             android:id="@+id/action_go_to_method_category_from_first_stage"
             app:destination="@id/method_category_dest" />
@@ -51,11 +51,11 @@
 
         <action
             android:id="@+id/action_go_to_image_view_from_step"
-            app:destination="@id/image_view_recipe_edit_dest" />
+            app:destination="@id/image_view_dest" />
     </fragment>
 
     <fragment
-        android:id="@+id/image_view_recipe_edit_dest"
+        android:id="@+id/image_view_dest"
         android:name="online.fatbook.fatbookapp.ui.fragment.image.ImageViewFragment"
         android:label="@null" />
 </navigation>
