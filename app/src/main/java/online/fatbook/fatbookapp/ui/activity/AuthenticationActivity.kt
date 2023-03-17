@@ -1,5 +1,6 @@
 package online.fatbook.fatbookapp.ui.activity
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import online.fatbook.fatbookapp.R

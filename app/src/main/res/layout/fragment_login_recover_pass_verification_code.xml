@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/start_fragments_bgr"
-    tools:context=".ui.fragment.authentication.register.VerificationCodeFragment">
+    tools:context=".ui.fragment.authentication.login.LoginRecoverPasswordVCodeFragment">
 
     <include
         android:id="@+id/loader"
