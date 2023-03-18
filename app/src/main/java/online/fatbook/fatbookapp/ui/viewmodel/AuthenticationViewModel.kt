@@ -1,8 +1,5 @@
 package online.fatbook.fatbookapp.ui.viewmodel
 
-import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,8 +13,6 @@ import online.fatbook.fatbookapp.network.LoginResponse
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
 import online.fatbook.fatbookapp.util.ContextHolder
-import online.fatbook.fatbookapp.util.hideKeyboard
-import org.intellij.lang.annotations.Identifier
 
 class AuthenticationViewModel : ViewModel() {
 
@@ -132,27 +127,6 @@ class AuthenticationViewModel : ViewModel() {
         _allowSetNewPass.value = value
     }
 
-    private val _resultCodeEmail = MutableLiveData<Int?>(null)
-    val resultCodeEmail: LiveData<Int?> get() = _resultCodeEmail
-
-    fun setResultCodeEmail(value: Int) {
-        _resultCodeEmail.value = value
-    }
-
-    private val _resultCodeVCode = MutableLiveData<Int?>(null)
-    val resultCodeVCode: LiveData<Int?> get() = _resultCodeVCode
-
-    fun setResultCodeVCode(value: Int?) {
-        _resultCodeVCode.value = value
-    }
-
-    private val _resultCodeRegister = MutableLiveData<Int?>(null)
-    val resultCodeRegister: LiveData<Int?> get() = _resultCodeRegister
-
-    fun setResultCodeRegister(value: Int?) {
-        _resultCodeRegister.value = value
-    }
-
     private val _resultCodeAuth = MutableLiveData<Int?>(null)
     val resultCodeAuth: LiveData<Int?> get() = _resultCodeAuth
 
@@ -174,46 +148,14 @@ class AuthenticationViewModel : ViewModel() {
         _resultCodeChangePass.value = value
     }
 
-    fun emailCheck(email: String) {
+    fun emailCheck(email: String, callback: ResultCallback<AuthenticationResponse>) {
         repository.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                value?.let {
-                    if (codeResent.value == true) {
-                        setVCode(it.vcode.toString())
-                    } else {
-                        when (it.code) {
-                            0 -> {
-                                setUserEmail(it.email.toString())
-                                setVCode(it.vcode.toString())
-                                setResultCodeEmail(0)
-                            }
-                            4 -> {
-                                setError(
-                                    ContextHolder.get()
-                                        .getString(R.string.dialog_email_used_register_email)
-                                )
-                                setResultCodeEmail(4)
-                                setIsLoading(false)
-                            }
-                            else -> {
-                                setError(
-                                    ContextHolder.get().getString(R.string.dialog_register_error)
-                                )
-                                setResultCodeEmail(4)
-                                setIsLoading(false)
-                            }
-                        }
-
-                    }
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                if (codeResent.value == false) {
-                    setError(ContextHolder.get().getString(R.string.dialog_register_error))
-                    setResultCodeEmail(-1)
-                    setIsLoading(false)
-                }
+                callback.onFailure(value)
             }
         })
     }
@@ -277,221 +219,59 @@ class AuthenticationViewModel : ViewModel() {
         })
     }
 
-    fun register(request: AuthenticationRequest) {
+    fun register(request: AuthenticationRequest, callback: ResultCallback<AuthenticationResponse>) {
         repository.register(request, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                value?.let {
-                    when (it.code) {
-                        0 -> {
-                            setResultCodeRegister(0)
-                        }
-                        4 -> {
-                            setError(
-                                ContextHolder.get().getString(R.string.dialog_register_email_error)
-                            )
-                            setResultCodeRegister(4)
-                            setIsLoading(false)
-                        }
-                        5 -> {
-                            setError(
-                                ContextHolder.get()
-                                    .getString(R.string.dialog_register_username_unavailable)
-                            )
-                            setResultCodeRegister(5)
-                            setIsLoading(false)
-                        }
-                        else -> {
-                            setError(ContextHolder.get().getString(R.string.dialog_register_error))
-                            setResultCodeRegister(6)
-                            setIsLoading(false)
-                        }
-                    }
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                setError(ContextHolder.get().getString(R.string.dialog_register_error))
-                setResultCodeRegister(-1)
-                setIsLoading(false)
+                callback.onFailure(value)
             }
         })
     }
 
-//    fun confirmVCode(vCode: String) {
-//        repository.confirmVCode(vCode, recoverEmail.toString(), object : ResultCallback<AuthenticationResponse> {
-//            override fun onResult(value: AuthenticationResponse?) {
-//                callback.onResult(value)
-//            }
-//
-//            override fun onFailure(value: AuthenticationResponse?) {
-//            }
-//
-//        })
-//    }
+    fun confirmVCode(
+        vCode: String, email: String, callback: ResultCallback<AuthenticationResponse>
+    ) {
+        repository.confirmVCode(vCode, email, object : ResultCallback<AuthenticationResponse> {
+            override fun onResult(value: AuthenticationResponse?) {
+                callback.onResult(value)
+            }
 
-    /*
-        * resultCode 0 - V_CODE_CONFIRMED
-        * resultCode 1 - V_CODE_ALREADY_CONFIRMED
-        * resultCode 2 - V_CODE_NOT_FOUND
-        * resultCode 3 - V_CODE_EXPIRED
-        * resultCode 500 - V_CODE_UNKNOWN
-        * */
-    fun confirmVCode(vCode: String) {
-        repository.confirmVCode(
-            vCode,
-            recoverEmail.value.toString(),
-            object : ResultCallback<AuthenticationResponse> {
-                override fun onResult(value: AuthenticationResponse?) {
-                    setIsLoading(false)
-                    value?.let {
-                        when (it.code) {
-                            0 -> {
-                                setAllowSetNewPass(true)
-                                setResultCodeVCode(0)
-                            }
-                            1 -> {
-                                setError(
-                                    ContextHolder.get()
-                                        .getString(R.string.dialog_wrong_verification_code_1)
-                                )
-                                setResultCodeVCode(1)
-                            }
-                            2 -> {
-                                setError(
-                                    ContextHolder.get()
-                                        .getString(R.string.dialog_wrong_verification_code_2_500)
-                                )
-                                setResultCodeVCode(2)
-                            }
-                            3 -> {
-                                setError(
-                                    ContextHolder.get()
-                                        .getString(R.string.dialog_wrong_verification_code_3)
-                                )
-                                setResultCodeVCode(3)
-                            }
-                            else -> {
-                                setError(
-                                    ContextHolder.get()
-                                        .getString(R.string.dialog_wrong_verification_code_2_500)
-                                )
-                                setResultCodeVCode(500)
-                            }
-                        }
-                        Log.d(TAG, "onResult: ${it.code}")
-                    }
-                }
-
-                override fun onFailure(value: AuthenticationResponse?) {
-                    setError(ContextHolder.get().getString(R.string.dialog_register_error))
-                    setResultCodeVCode(-1)
-                    setIsLoading(false)
-                }
-            })
+            override fun onFailure(value: AuthenticationResponse?) {
+                callback.onFailure(value)
+            }
+        })
     }
 
-    fun recoverPassword(identifier: String) {
+    fun recoverPassword(identifier: String, callback: ResultCallback<AuthenticationResponse>) {
         repository.recoverPassword(identifier, object : ResultCallback<AuthenticationResponse> {
             override fun onResult(value: AuthenticationResponse?) {
-                setIsLoading(false)
-                when (value?.code) {
-                    0 -> {
-                        setResultCodeRecoverPass(0)
-                        setRecoverIdentifier(identifier)
-                        setRecoverEmail(value.email.toString())
-                        setRecoverUsername(value.username.toString())
-                        setVCode(value.vcode.toString())
-                    }
-                    6 -> {
-                        setResultCodeRecoverPass(6)
-                        setError(
-                            ContextHolder.get()
-                                .getString(R.string.dialog_recover_pass_user_not_found)
-                        )
-                    }
-                    else -> {
-                        setResultCodeRecoverPass(7)
-                    }
-                }
+                callback.onResult(value)
             }
 
             override fun onFailure(value: AuthenticationResponse?) {
-                setResultCodeRecoverPass(-1)
-                setError(ContextHolder.get().getString(R.string.dialog_register_error))
-                setIsLoading(false)
+                callback.onFailure(value)
             }
         })
     }
 
-//    fun recoverPassword(identifier: String) {
-//        repository.recoverPassword(identifier, object : ResultCallback<AuthenticationResponse> {
-//
-//            override fun onResult(value: AuthenticationResponse?) {
-//                setVCode(value?.vcode.toString())
-//                Log.d("CODE ================= ", value?.vcode.toString())
-//            }
-//
-//            override fun onFailure(value: AuthenticationResponse?) {
-//            }
-//        })
-//    }
-
-    fun changePassword(password: String) {
+    fun changePassword(
+        username: String, password: String, callback: ResultCallback<AuthenticationResponse>
+    ) {
         repository.changePassword(
-            recoverUsername.value.toString(),
+            username,
             password,
             object : ResultCallback<AuthenticationResponse> {
                 override fun onResult(value: AuthenticationResponse?) {
-                    when (value?.code) {
-                        0 -> {
-                            setUsername(recoverUsername.value.toString())
-                            setPassword(password)
-                            setResultCodeChangePass(0)
-                            setIsLoading(false)
-                        }
-                        6 -> {
-                            setError(
-                                ContextHolder.get()
-                                    .getString(R.string.dialog_recover_pass_user_not_found)
-                            )
-                            setResultCodeChangePass(6)
-                            setIsLoading(false)
-                        }
-                        else -> {
-                            setError(
-                                ContextHolder.get().getString(R.string.dialog_connection_error)
-                            )
-                            setResultCodeChangePass(-1)
-                            setIsLoading(false)
-                        }
-                    }
+                    callback.onResult(value)
                 }
 
                 override fun onFailure(value: AuthenticationResponse?) {
-                    setError(ContextHolder.get().getString(R.string.dialog_connection_error))
-                    setResultCodeChangePass(-1)
-                    setIsLoading(false)
+                    callback.onFailure(value)
                 }
             })
     }
-
-//    fun changePassword(
-//        username: String,
-//        password: String,
-//        callback: ResultCallback<AuthenticationResponse>
-//    ) {
-//        repository.changePassword(
-//            username,
-//            password,
-//            object : ResultCallback<AuthenticationResponse> {
-//                override fun onResult(value: AuthenticationResponse?) {
-//                    callback.onResult(value)
-//                }
-//
-//                override fun onFailure(value: AuthenticationResponse?) {
-//                    callback.onFailure(value)
-//                }
-//            })
-//    }
 
 }

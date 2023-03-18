@@ -46,6 +46,7 @@ class NewPassFragment : Fragment() {
         handleBackPressed()
         initListeners()
         initObservers()
+        authViewModel.setIsLoading(false)
     }
 
     private fun initObservers() {
@@ -54,21 +55,6 @@ class NewPassFragment : Fragment() {
                 binding.loader.progressOverlayAuth.visibility = View.VISIBLE
             } else {
                 binding.loader.progressOverlayAuth.visibility = View.GONE
-            }
-        }
-
-        authViewModel.resultCodeChangePass.observe(viewLifecycleOwner) {
-            when (it) {
-                0 -> {
-                    showDefaultMessage(getString(R.string.dialog_new_pass))
-                    saveUserAndProceed()
-                }
-                null -> {
-                    showDefaultMessage(getString(R.string.dialog_new_pass))
-                }
-                else -> {
-                    showErrorMessage(authViewModel.error.toString())
-                }
             }
         }
     }
@@ -81,7 +67,7 @@ class NewPassFragment : Fragment() {
                 )
             ) {
                 if (passwordValidate()) {
-                    authViewModel.changePassword(binding.fragmentNewPassEdittextNewPassword.text.toString())
+                    changePassword(binding.fragmentNewPassEdittextNewPassword.text.toString())
                 } else {
                     showErrorMessage(getString(R.string.dialog_new_pass))
                 }
@@ -138,6 +124,35 @@ class NewPassFragment : Fragment() {
         })
     }
 
+    private fun changePassword(password: String) {
+        authViewModel.setIsLoading(true)
+        authViewModel.changePassword(
+            authViewModel.recoverUsername.value!!,
+            password,
+            object : ResultCallback<AuthenticationResponse> {
+                override fun onResult(value: AuthenticationResponse?) {
+                    when (value!!.code) {
+                        0 -> {
+                            saveUserAndProceed(value.username, password)
+                        }
+                        6 -> {
+                            authViewModel.setIsLoading(false)
+                            showErrorMessage(getString(R.string.dialog_recover_pass_user_not_found))
+                        }
+                        else -> {
+                            authViewModel.setIsLoading(false)
+                            showErrorMessage(getString(R.string.dialog_connection_error))
+                        }
+                    }
+                }
+
+                override fun onFailure(value: AuthenticationResponse?) {
+                    showErrorMessage(getString(R.string.dialog_connection_error))
+                    binding.loader.progressOverlayAuth.visibility = View.GONE
+                }
+            })
+    }
+
     private fun navigateToFeed() {
         requireActivity().startActivity(Intent(requireContext(), MainActivity::class.java))
         requireActivity().finish()
@@ -162,7 +177,9 @@ class NewPassFragment : Fragment() {
         findNavController().popBackStack()
     }
 
-    private fun saveUserAndProceed() {
+    private fun saveUserAndProceed(username: String?, password: String) {
+        authViewModel.setUsername(username!!)
+        authViewModel.setPassword(password)
         val sharedPreferences = requireActivity().getSharedPreferences(
             Constants.SP_TAG,
             Context.MODE_PRIVATE

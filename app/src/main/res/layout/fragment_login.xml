@@ -108,7 +108,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/fragment_login_forgot_password_link"
+        android:id="@+id/button_forgot_password"
         style="@style/registerUnderlinedText"
         android:layout_marginTop="@dimen/start_fragments_link_spacing"
         android:text="@string/forgot_password"

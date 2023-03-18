@@ -68,7 +68,7 @@ class LoginFragment : Fragment() {
         authViewModel.resultCodeAuth.observe(viewLifecycleOwner) {
             when (it) {
                 1 -> {
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
+                    showDefaultMessage(getString(R.string.dialog_register_email_default))
                 }
                 -1 -> {
                     hideKeyboard(binding.fragmentLoginEdittextUsername)
@@ -88,11 +88,8 @@ class LoginFragment : Fragment() {
             )
         }
 
-        //TODO fix
-        binding.fragmentLoginForgotPasswordLink.setOnClickListener {
-            var recoverIdentifier: String = authViewModel.recoverIdentifier.value!!
-            recoverIdentifier =
-                binding.fragmentLoginEdittextUsername.text.toString()
+        binding.buttonForgotPassword.setOnClickListener {
+            authViewModel.setRecoverIdentifier(binding.fragmentLoginEdittextUsername.text.toString())
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_go_to_login_recover_pass_from_login)
         }
@@ -166,7 +163,7 @@ class LoginFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     if (authViewModel.isLoading.value == true) {
                         authViewModel.setIsLoading(false)
-                        showDefaultMessage(getString(R.string.dialog_register_email_error))
+                        showDefaultMessage(getString(R.string.dialog_register_email_default))
                         isReconnectCancelled = true
                     } else {
                         popBackStack()

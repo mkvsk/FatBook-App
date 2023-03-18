@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -46,8 +47,8 @@ class VerificationCodeFragment : Fragment() {
         initObservers()
         authViewModel.setIsLoading(false)
         //TODO убрать
-        binding.fragmentVerificationCodeEdittextVc.setText(authViewModel.vCode.value)
-        binding.fragmentVerificationCodeButtonNext.isEnabled = true
+//        binding.fragmentVerificationCodeEdittextVc.setText(authViewModel.vCode.value)
+//        binding.fragmentVerificationCodeButtonNext.isEnabled = true
     }
 
     private fun initObservers() {
@@ -81,25 +82,6 @@ class VerificationCodeFragment : Fragment() {
                 binding.loader.progressOverlayAuth.visibility = View.VISIBLE
             } else {
                 binding.loader.progressOverlayAuth.visibility = View.GONE
-            }
-        }
-
-        authViewModel.resultCodeVCode.observe(viewLifecycleOwner) {
-            when (it) {
-                0 -> {
-                    hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
-                    navigateToRegisterPassword()
-                }
-                -1 -> {
-                    showErrorMessage(authViewModel.error.value.toString(), false)
-                }
-                null -> {
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
-                }
-                else -> {
-                    showErrorMessage(authViewModel.error.value.toString(), true)
-                }
             }
         }
 
@@ -162,7 +144,26 @@ class VerificationCodeFragment : Fragment() {
     private fun resendCode() {
         hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
         authViewModel.setCodeResent(true)
-        authViewModel.emailCheck(authViewModel.userEmail.value.toString())
+        authViewModel.emailCheck(
+            authViewModel.userEmail.value!!,
+            object : ResultCallback<AuthenticationResponse> {
+                override fun onResult(value: AuthenticationResponse?) {
+                    authViewModel.setVCode(value?.vcode!!)
+                    binding.fragmentVerificationCodeEdittextVc.setText(StringUtils.EMPTY)
+                    binding.fragmentVerificationCodeDialogText.setText(R.string.dialog_verification_code)
+                    binding.fragmentVerificationCodeDialogText.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.main_text
+                        )
+                    )
+                    Log.d("CODE ================= ", value.vcode.toString())
+                    Toast.makeText(requireContext(), value.vcode.toString(), Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(value: AuthenticationResponse?) {
+                }
+            })
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
@@ -203,7 +204,52 @@ class VerificationCodeFragment : Fragment() {
         Log.d("VCODE CONFIRM attempt", "")
         hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
         authViewModel.setIsLoading(true)
-        authViewModel.confirmVCode(vCode)
+        authViewModel.confirmVCode(
+            vCode,
+            authViewModel.userEmail.value!!,
+            object : ResultCallback<AuthenticationResponse> {
+                override fun onResult(value: AuthenticationResponse?) {
+                    when (value?.code) {
+                        0 -> {
+                            navigateToRegisterPassword()
+                        }
+                        1 -> {
+                            authViewModel.setIsLoading(false)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_1),
+                                true
+                            )
+                        }
+                        2 -> {
+                            authViewModel.setIsLoading(false)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_2_500),
+                                true
+                            )
+                        }
+                        3 -> {
+                            authViewModel.setIsLoading(false)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_3),
+                                true
+                            )
+                        }
+                        else -> {
+                            authViewModel.setIsLoading(false)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_2_500),
+                                true
+                            )
+                        }
+                    }
+                }
+
+                override fun onFailure(value: AuthenticationResponse?) {
+                    hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
+                    showErrorMessage(getString(R.string.dialog_register_error), false)
+                    binding.loader.progressOverlayAuth.visibility = View.GONE
+                }
+            })
     }
 
     private fun navigateToRegisterPassword() {
@@ -217,7 +263,7 @@ class VerificationCodeFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (authViewModel.isLoading.value == true) {
-                        showDefaultMessage(getString(R.string.dialog_register_email_error))
+                        showDefaultMessage(getString(R.string.dialog_register_email_default))
                         authViewModel.setIsLoading(false)
                     } else {
                         popBackStack()

@@ -42,9 +42,9 @@
     <string name="adds_register_email">Enter actual e-mail:</string>
     <string name="hint_email_register_email" translatable="false">e-mail</string>
     <string name="btn_next_register_email">next</string>
-    <string name="dialog_register_email_error">Only one user can be \n registered to an email</string>
+    <string name="dialog_register_email_default">Only one user can be \n registered to an email</string>
+    <string name="dialog_register_email_error">This email is already in \n use</string>
     <string name="dialog_wrong_data_register_email">This email is not entered \n correctly</string>
-    <string name="dialog_email_used_register_email">This email is already in \n use</string>
     <string name="dialog_register_error">Something went wrong. \n Try again</string>
 
     ///fragment register password

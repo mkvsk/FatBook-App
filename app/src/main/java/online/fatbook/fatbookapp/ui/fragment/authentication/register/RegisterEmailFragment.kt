@@ -16,8 +16,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentRegisterEmailBinding
+import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.TimerViewModel
 import online.fatbook.fatbookapp.util.Constants.SYMBOL_AT
@@ -93,30 +93,6 @@ class RegisterEmailFragment : Fragment() {
                 binding.loader.progressOverlayAuth.visibility = View.GONE
             }
         }
-
-        authViewModel.resultCodeEmail.observe(viewLifecycleOwner) {
-            when (it) {
-                0 -> {
-                    if (timerViewModel.isTimerRunning.value!!) {
-                        timerViewModel.setIsTimerRunning(true)
-                        timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
-                    }
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
-                    navigateToVerificationCode()
-                }
-                -1 -> {
-                    showErrorMessage(authViewModel.error.value.toString(), false)
-                    hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
-                }
-                null -> {
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
-                }
-                else -> {
-                    showErrorMessage(authViewModel.error.value.toString(), true)
-                    hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
-                }
-            }
-        }
     }
 
     private fun handleBackPressed() {
@@ -125,7 +101,7 @@ class RegisterEmailFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (authViewModel.isLoading.value == true) {
-                        showDefaultMessage(getString(R.string.dialog_register_email_error))
+                        showDefaultMessage(getString(R.string.dialog_register_email_default))
                         authViewModel.setIsLoading(false)
                     } else {
                         popBackStack()
@@ -174,7 +150,41 @@ class RegisterEmailFragment : Fragment() {
         Log.d("EMAIL CHECK attempt", "")
         authViewModel.setIsLoading(true)
         hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
-        authViewModel.emailCheck(email)
+        authViewModel.emailCheck(email, object : ResultCallback<AuthenticationResponse> {
+            override fun onResult(value: AuthenticationResponse?) {
+                when (value!!.code) {
+                    0 -> {
+                        if (!timerViewModel.isTimerRunning.value!!) {
+                            timerViewModel.setIsTimerRunning(true)
+                            timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
+                        }
+                        authViewModel.setUserEmail(value.email!!)
+                        authViewModel.setVCode(value.vcode!!)
+                        Log.d("CODE ======================= ", value.vcode!!)
+                        Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG)
+                            .show()
+                        navigateToVerificationCode()
+                    }
+                    4 -> {
+                        authViewModel.setIsLoading(false)
+                        showErrorMessage(
+                            getString(R.string.dialog_register_email_error),
+                            true
+                        )
+                    }
+                    else -> {
+                        authViewModel.setIsLoading(false)
+                        showErrorMessage(getString(R.string.dialog_register_error), true)
+                    }
+                }
+            }
+
+            override fun onFailure(value: AuthenticationResponse?) {
+                showErrorMessage(getString(R.string.dialog_register_error), false)
+                hideKeyboard(binding.fragmentRegisterEmailEdittextEmail)
+                binding.loader.progressOverlayAuth.visibility = View.GONE
+            }
+        })
     }
 
     private fun navigateToVerificationCode() {

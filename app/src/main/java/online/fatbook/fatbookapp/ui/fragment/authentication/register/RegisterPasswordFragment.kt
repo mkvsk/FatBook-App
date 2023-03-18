@@ -36,9 +36,9 @@ class RegisterPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         handleBackPressed()
         initListeners()
+        authViewModel.setIsLoading(false)
     }
 
     private fun initListeners() {
@@ -91,9 +91,7 @@ class RegisterPasswordFragment : Fragment() {
         )
     }
 
-    //TODO remove
     private fun passwordValidate(): Boolean {
-//        return true
         return Pattern.compile(PASSWORD_REGEX).matcher(binding.fragmentRegisterPasswordEdittextPassword.text.toString()).matches()
     }
 

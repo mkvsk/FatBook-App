@@ -15,8 +15,8 @@ import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationRequest
-import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentRegisterUsernameBinding
+import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.USERNAME_REGEX
 import online.fatbook.fatbookapp.util.hideKeyboard
@@ -51,28 +51,6 @@ class RegisterUsernameFragment : Fragment() {
                 binding.loader.progressOverlayAuth.visibility = View.VISIBLE
             } else {
                 binding.loader.progressOverlayAuth.visibility = View.GONE
-            }
-        }
-
-        authViewModel.resultCodeRegister.observe(viewLifecycleOwner) {
-            when (it) {
-                0 -> {
-                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
-                    navigateToAccountCreated()
-                }
-                null -> {
-                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
-                }
-                -1 -> {
-                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-                    showErrorMessage(authViewModel.error.value.toString(), false)
-                }
-                else -> {
-                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
-                    showErrorMessage(authViewModel.error.value.toString(), true)
-                }
             }
         }
     }
@@ -122,8 +100,42 @@ class RegisterUsernameFragment : Fragment() {
                 authViewModel.username.value,
                 authViewModel.password.value,
                 authViewModel.userEmail.value
-            )
-        )
+            ), object : ResultCallback<AuthenticationResponse> {
+                override fun onResult(value: AuthenticationResponse?) {
+                    value?.let {
+                        when (it.code) {
+                            0 -> {
+                                navigateToAccountCreated()
+                            }
+                            4 -> {
+                                authViewModel.setIsLoading(false)
+                                hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                                showErrorMessage(
+                                    getString(R.string.dialog_register_email_error), true
+                                )
+                            }
+                            5 -> {
+                                authViewModel.setIsLoading(false)
+                                hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                                showErrorMessage(
+                                    getString(R.string.dialog_register_username_unavailable), true
+                                )
+                            }
+                            else -> {
+                                authViewModel.setIsLoading(false)
+                                hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                                showErrorMessage(getString(R.string.dialog_register_error), true)
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(value: AuthenticationResponse?) {
+                    hideKeyboard(binding.fragmentRegisterUsernameEdittextUsername)
+                    showErrorMessage(getString(R.string.dialog_register_error), false)
+                    authViewModel.setIsLoading(false)
+                }
+            })
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
@@ -163,7 +175,7 @@ class RegisterUsernameFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     if (authViewModel.isLoading.value == true) {
                         authViewModel.setIsLoading(false)
-                        showDefaultMessage(getString(R.string.dialog_register_email_error))
+                        showDefaultMessage(getString(R.string.dialog_register_email_default))
                     } else {
                         popBackStack()
                     }

@@ -14,8 +14,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.databinding.FragmentLoginRecoverPassVerificationCodeBinding
+import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.TimerViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
@@ -46,6 +46,7 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
         initListeners()
         initObservers()
         initViews()
+        authViewModel.setIsLoading(false)
     }
 
     private fun initViews() {
@@ -149,34 +150,34 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
             }
         }
 
-        authViewModel.resultCodeVCode.observe(viewLifecycleOwner) {
-            when (it) {
-                0 -> {
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
-                    navigateToNewPassFragment()
-                }
-                -1 -> {
-
-                    showErrorMessage(authViewModel.error.value.toString(), false)
-                }
-                null -> {
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
-                }
-                else -> {
-                    showErrorMessage(authViewModel.error.value.toString(), true)
-                }
-            }
-        }
     }
 
     private fun getEmailHidden(): String {
         return authViewModel.recoverEmail.value!!
     }
 
+
     private fun resendCode() {
         hideKeyboard(binding.fragmentLoginRecoverPassVcodeEdittextVc)
-        authViewModel.setResultCodeRecoverPass(null)
-        authViewModel.recoverPassword(authViewModel.recoverIdentifier.value!!)
+        authViewModel.recoverPassword(
+            authViewModel.recoverIdentifier.value!!,
+            object : ResultCallback<AuthenticationResponse> {
+                override fun onResult(value: AuthenticationResponse?) {
+                    authViewModel.setVCode(value!!.vcode.toString())
+                    binding.fragmentLoginRecoverPassVcodeEdittextVc.setText(StringUtils.EMPTY)
+                    binding.fragmentLoginRecoverPassVcodeDialogText.setText(R.string.dialog_verification_code)
+                    binding.fragmentLoginRecoverPassVcodeDialogText.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.main_text
+                        )
+                    )
+                    Log.d("CODE ================= ", value.vcode.toString())
+                }
+
+                override fun onFailure(value: AuthenticationResponse?) {
+                }
+            })
     }
 
     private fun showErrorMessage(message: String, dyeEditText: Boolean) {
@@ -217,7 +218,52 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
         Log.d("VCODE CONFIRM attempt", "")
         hideKeyboard(binding.fragmentLoginRecoverPassVcodeEdittextVc)
         authViewModel.setIsLoading(true)
-        authViewModel.confirmVCode(vCode)
+        authViewModel.confirmVCode(
+            vCode,
+            authViewModel.recoverEmail.value!!,
+            object : ResultCallback<AuthenticationResponse> {
+                override fun onResult(value: AuthenticationResponse?) {
+                    when (value!!.code) {
+                        0 -> {
+                            navigateToNewPassFragment()
+                        }
+                        1 -> {
+                            authViewModel.setIsLoading(false)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_1),
+                                true
+                            )
+                        }
+                        2 -> {
+                            authViewModel.setIsLoading(false)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_2_500),
+                                true
+                            )
+                        }
+                        3 -> {
+                            authViewModel.setIsLoading(false)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_3),
+                                true
+                            )
+                        }
+                        else -> {
+                            authViewModel.setIsLoading(false)
+                            showErrorMessage(
+                                getString(R.string.dialog_wrong_verification_code_2_500),
+                                true
+                            )
+                        }
+                    }
+                }
+
+                override fun onFailure(value: AuthenticationResponse?) {
+                    hideKeyboard(binding.fragmentLoginRecoverPassVcodeEdittextVc)
+                    showErrorMessage(getString(R.string.dialog_register_error), false)
+                    binding.loader.progressOverlayAuth.visibility = View.GONE
+                }
+            })
     }
 
     private fun navigateToNewPassFragment() {
@@ -231,7 +277,7 @@ class LoginRecoverPasswordVCodeFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (authViewModel.isLoading.value == true) {
-                        showDefaultMessage(getString(R.string.dialog_register_email_error))
+                        showDefaultMessage(getString(R.string.dialog_register_email_default))
                         authViewModel.setIsLoading(false)
                     } else {
                         popBackStack()

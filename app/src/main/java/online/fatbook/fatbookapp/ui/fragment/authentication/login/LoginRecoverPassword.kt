@@ -7,13 +7,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.databinding.FragmentLoginRecoverPassBinding
+import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.TimerViewModel
 import online.fatbook.fatbookapp.util.hideKeyboard
@@ -54,29 +57,6 @@ class LoginRecoverPassword : Fragment() {
                 binding.loader.progressOverlayAuth.visibility = View.VISIBLE
             } else {
                 binding.loader.progressOverlayAuth.visibility = View.GONE
-            }
-        }
-
-        authViewModel.resultCodeRecoverPass.observe(viewLifecycleOwner) {
-            when (it) {
-                0 -> {
-                    if (!timerViewModel.isTimerRunning.value!!) {
-                        timerViewModel.setIsTimerRunning(true)
-                        timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
-                    }
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
-                    navigateToVerificationCode()
-                }
-                -1 -> {
-                    showErrorMessage(authViewModel.error.value.toString())
-                    hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
-                }
-                null -> {
-                    showDefaultMessage(getString(R.string.dialog_register_email_error))
-                }
-                else -> {
-                    showErrorMessage(authViewModel.error.value.toString())
-                }
             }
         }
     }
@@ -121,7 +101,40 @@ class LoginRecoverPassword : Fragment() {
         Log.d("RECOVER PASSWORD attempt", "")
         authViewModel.setIsLoading(true)
         hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
-        authViewModel.recoverPassword(identifier)
+        authViewModel.recoverPassword(identifier, object : ResultCallback<AuthenticationResponse> {
+            override fun onResult(value: AuthenticationResponse?) {
+                when (value!!.code) {
+                    0 -> {
+                        if (!timerViewModel.isTimerRunning.value!!) {
+                            timerViewModel.setIsTimerRunning(true)
+                            timerViewModel.startTimer(timerViewModel.resendVCTimer.value!!)
+                        }
+                        authViewModel.setRecoverIdentifier(identifier)
+                        authViewModel.setRecoverEmail(value.email.toString())
+                        authViewModel.setRecoverUsername(value.username.toString())
+                        authViewModel.setVCode(value.vcode.toString())
+                        Log.d("CODE ======================= ", value.vcode!!)
+                        Toast.makeText(requireContext(), value.vcode, Toast.LENGTH_LONG)
+                            .show()
+                        navigateToVerificationCode()
+                    }
+                    6 -> {
+                        authViewModel.setIsLoading(false)
+                        showErrorMessage(getString(R.string.dialog_recover_pass_user_not_found))
+                    }
+                    else -> {
+                        authViewModel.setIsLoading(false)
+                        showErrorMessage(getString(R.string.dialog_register_error))
+                    }
+                }
+            }
+
+            override fun onFailure(value: AuthenticationResponse?) {
+                showErrorMessage(getString(R.string.dialog_register_error))
+                hideKeyboard(binding.fragmentLoginRecoverPassEdittextUsername)
+                binding.loader.progressOverlayAuth.visibility = View.GONE
+            }
+        })
     }
 
     private fun navigateToVerificationCode() {
@@ -168,7 +181,7 @@ class LoginRecoverPassword : Fragment() {
                 override fun handleOnBackPressed() {
                     if (authViewModel.isLoading.value == true) {
                         authViewModel.setIsLoading(false)
-                        showDefaultMessage(getString(R.string.dialog_register_email_error))
+                        showDefaultMessage(getString(R.string.dialog_register_email_default))
                     } else {
                         popBackStack()
                     }
