@@ -1,6 +1,5 @@
 package online.fatbook.fatbookapp.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -118,11 +117,11 @@ class RecipeEditViewModel : ViewModel() {
         _selectedCookingStepPosition.value = value
     }
 
-    private val _isRecipeCreated = MutableLiveData<Boolean?>()
-    val isRecipeCreated: LiveData<Boolean?> get() = _isRecipeCreated
+    private val _isRecipeEditFinished = MutableLiveData<Boolean?>()
+    val isRecipeEditFinished: LiveData<Boolean?> get() = _isRecipeEditFinished
 
-    fun setIsRecipeCreated(value: Boolean?) {
-        _isRecipeCreated.value = value
+    fun setIsRecipeEditFinishedCreated(value: Boolean?) {
+        _isRecipeEditFinished.value = value
     }
 
     fun recipeCreate(recipe: Recipe, callback: ResultCallback<Boolean>) {

@@ -23,7 +23,6 @@ import online.fatbook.fatbookapp.ui.listeners.OnCookingStepClickListener
 import online.fatbook.fatbookapp.ui.listeners.OnRecipeIngredientItemClickListener
 import online.fatbook.fatbookapp.ui.viewmodel.ImageViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.RecipeEditViewModel
-import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants
 import online.fatbook.fatbookapp.util.Constants.CDN_FB_BASE_URL
@@ -230,7 +229,8 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
                 recipeEditViewModel.recipe.value!!, object : ResultCallback<Boolean> {
             override fun onResult(value: Boolean?) {
                 Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
-                recipeEditViewModel.setIsRecipeCreated(true)
+                recipeEditViewModel.setIsRecipeEditFinishedCreated(true)
+                recipeEditViewModel.setIsLoading(false)
                 popBackStack()
             }
 

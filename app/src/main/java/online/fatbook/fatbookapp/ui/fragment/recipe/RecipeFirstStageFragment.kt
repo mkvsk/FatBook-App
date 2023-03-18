@@ -16,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.TimePicker
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -293,15 +294,12 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
             }
         }
 
-//        staticDataViewModel.loadCookingMethod.observe(viewLifecycleOwner) {
-//            when(it) {
-//                true -> {
-//                }
-//                false -> {
-//
-//                }
-//            }
-//        }
+        recipeEditViewModel.isRecipeEditFinished.observe(viewLifecycleOwner) {
+            if (it == true) {
+                clearForm()
+                recipeEditViewModel.setIsRecipeEditFinishedCreated(false)
+            }
+        }
     }
 
     private fun fillData() {
@@ -312,7 +310,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
             Glide
                 .with(requireContext())
                 .load(recipeEditViewModel.recipe.value!!.image)
-                .placeholder(requireContext().getDrawable(R.drawable.default_recipe_image_rv_feed))
+                .placeholder(AppCompatResources.getDrawable(requireContext(), R.drawable.default_recipe_image_rv_feed))
                 .into(binding.imageviewPhotoRecipe1Stage)
         }
 
@@ -542,7 +540,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     }
 
     private fun navigation(nextStep: Boolean) {
-        when(nextStep) {
+        when (nextStep) {
             true -> {
                 if (recipeEditViewModel.isEditMode.value == true) {
                     findNavController().navigate(R.id.action_go_to_second_stage_from_edit)

@@ -29,9 +29,6 @@ import online.fatbook.fatbookapp.util.obtainViewModel
 
 class LoginFragment : Fragment() {
 
-    private var reconnectCount = 1
-    private var isReconnectCancelled = false
-
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
@@ -134,40 +131,32 @@ class LoginFragment : Fragment() {
     }
 
     private fun login(username: String, password: String) {
-        Log.d("LOGIN attempt", "for user $username/$password #$reconnectCount")
+        authViewModel.setIsLoading(true)
+        Log.d("LOGIN attempt", "for user $username/$password")
         val request: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("username", username)
             .addFormDataPart("password", password).build()
         authViewModel.login(request, object : ResultCallback<LoginResponse> {
             override fun onResult(value: LoginResponse?) {
-                if (!isReconnectCancelled) {
-                    if (value != null) {
-                        authViewModel.setUsername(username)
-                        authViewModel.setPassword(password)
-                        authViewModel.setJwtAccess(value.access_token.toString())
-                        authViewModel.setJwtRefresh(value.refresh_token.toString())
-                        authViewModel.setIsUserAuthenticated(true)
-                        RetrofitFactory.updateJWT(value.access_token!!, value.username!!)
-                        saveUserDataToSharedPrefs()
-                        navigateToFeed()
-                    } else {
-                        showErrorMessage("Sequence not found")
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
-                    }
+                if (value != null) {
+                    authViewModel.setUsername(username)
+                    authViewModel.setPassword(password)
+                    authViewModel.setJwtAccess(value.access_token.toString())
+                    authViewModel.setJwtRefresh(value.refresh_token.toString())
+                    authViewModel.setIsUserAuthenticated(true)
+                    RetrofitFactory.updateJWT(value.access_token!!, value.username!!)
+                    saveUserDataToSharedPrefs()
+                    navigateToFeed()
+                } else {
+                    showErrorMessage("Sequence not found")
+                    authViewModel.setIsLoading(false)
                 }
             }
 
             override fun onFailure(value: LoginResponse?) {
-                if (!isReconnectCancelled) {
-                    if (reconnectCount < 6) {
-                        reconnectCount++
-                        login(username, password)
-                    } else {
-                        hideKeyboard(binding.fragmentLoginEdittextPassword)
-                        showErrorMessage(getString(R.string.dialog_register_error))
-                        binding.loader.progressOverlayAuth.visibility = View.GONE
-                    }
-                }
+                hideKeyboard(binding.fragmentLoginEdittextPassword)
+                showErrorMessage(getString(R.string.dialog_register_error))
+                authViewModel.setIsLoading(false)
             }
         })
     }
@@ -185,7 +174,6 @@ class LoginFragment : Fragment() {
                     if (authViewModel.isLoading.value == true) {
                         authViewModel.setIsLoading(false)
                         showDefaultMessage(getString(R.string.dialog_register_email_default))
-                        isReconnectCancelled = true
                     } else {
                         popBackStack()
                     }

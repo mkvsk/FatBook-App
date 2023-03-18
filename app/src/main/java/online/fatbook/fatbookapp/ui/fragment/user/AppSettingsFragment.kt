@@ -35,8 +35,6 @@ class AppSettingsFragment : Fragment() {
             requireActivity().getSharedPreferences(SP_TAG, Context.MODE_PRIVATE)
         binding.switchAppTheme.isChecked = sharedPreferences.getBoolean(SP_TAG_DARK_MODE, false)
         val intent = Intent(requireContext(), SplashActivity::class.java)
-//        requireActivity().overridePendingTransition(0, 0)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         val editor = sharedPreferences.edit()
         binding.switchAppTheme.setOnCheckedChangeListener { _, isChecked ->
             editor.putBoolean(SP_TAG_DARK_MODE_CHANGED, true)
@@ -46,7 +44,6 @@ class AppSettingsFragment : Fragment() {
                     editor.apply()
                     requireActivity().finish()
                     requireActivity().startActivity(intent)
-//                    requireActivity().overridePendingTransition(0, 0)
                     Log.d("MAINACTIVITY app settings", "finish() called, true")
                 }
                 else -> {
@@ -55,7 +52,6 @@ class AppSettingsFragment : Fragment() {
 
                     requireActivity().finish()
                     requireActivity().startActivity(intent)
-//                    requireActivity().overridePendingTransition(0, 0)
                     Log.d("MAINACTIVITY app settings", "finish() called, false")
                 }
             }
