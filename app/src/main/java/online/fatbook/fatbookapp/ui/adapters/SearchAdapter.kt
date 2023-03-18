@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.rv_search.view.*
 import online.fatbook.fatbookapp.R
+import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
@@ -102,9 +103,11 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
                 } else {
                     if (!itemView.textview_item_title_rv_search.isSelected) {
                         addToSelected(bindingAdapterPosition)
-                        if (selectedItems!!.size == data.size - 1) {
-                            addToSelected(0)
-                            isAllSelected = true
+                        if (value !is CookingDifficulty) {
+                            if (selectedItems!!.size == data.size - 1) {
+                                addToSelected(0)
+                                isAllSelected = true
+                            }
                         }
                     } else {
                         removeFromSelected(bindingAdapterPosition)

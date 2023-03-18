@@ -6,16 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
-import androidx.lifecycle.ViewModelProvider
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivitySplashBinding
-import online.fatbook.fatbookapp.network.LoginResponse
+import online.fatbook.fatbookapp.network.response.LoginResponse
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
-import online.fatbook.fatbookapp.ui.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants.SP_TAG
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_DARK_MODE
 import online.fatbook.fatbookapp.util.Constants.SP_TAG_PASSWORD

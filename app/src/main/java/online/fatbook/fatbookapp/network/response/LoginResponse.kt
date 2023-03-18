@@ -1,4 +1,4 @@
-package online.fatbook.fatbookapp.network
+package online.fatbook.fatbookapp.network.response
 
 import java.io.Serializable
 

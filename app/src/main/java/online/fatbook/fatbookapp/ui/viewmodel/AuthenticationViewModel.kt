@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.network.AuthenticationRequest
-import online.fatbook.fatbookapp.network.AuthenticationResponse
-import online.fatbook.fatbookapp.network.LoginResponse
+import online.fatbook.fatbookapp.network.request.AuthenticationRequest
+import online.fatbook.fatbookapp.network.response.AuthenticationResponse
+import online.fatbook.fatbookapp.network.response.LoginResponse
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
 

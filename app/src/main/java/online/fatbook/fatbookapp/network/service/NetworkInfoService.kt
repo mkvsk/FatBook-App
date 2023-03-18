@@ -2,12 +2,16 @@ package online.fatbook.fatbookapp.network.service
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import online.fatbook.fatbookapp.core.DeleteRequest
 import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnit
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.network.*
+import online.fatbook.fatbookapp.network.request.AuthenticationRequest
+import online.fatbook.fatbookapp.network.request.SearchRequest
+import online.fatbook.fatbookapp.network.request.UserUpdateRequest
+import online.fatbook.fatbookapp.network.response.AuthenticationResponse
+import online.fatbook.fatbookapp.network.response.LoginResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -84,6 +88,12 @@ interface NetworkInfoService {
      */
     @GET("feed")
     fun feed(@Query(value = "pid") pid: Long?): Call<List<RecipeSimpleObject>>
+
+    /**
+     * Search
+     */
+    @POST("search")
+    fun search(@Body request: SearchRequest): Call<List<RecipeSimpleObject>>
 
     /**
      * Recipe

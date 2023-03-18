@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
@@ -17,11 +16,9 @@ import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.core.recipe.CookingCategory
-import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
-import online.fatbook.fatbookapp.core.recipe.CookingMethod
-import online.fatbook.fatbookapp.core.recipe.StaticDataObject
+import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
+import online.fatbook.fatbookapp.network.request.SearchRequest
 import online.fatbook.fatbookapp.ui.adapters.SearchAdapter
 import online.fatbook.fatbookapp.ui.listeners.BaseFragmentActionsListener
 import online.fatbook.fatbookapp.ui.listeners.OnSearchItemClickListener
@@ -29,7 +26,6 @@ import online.fatbook.fatbookapp.ui.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
 import online.fatbook.fatbookapp.util.obtainViewModel
-import java.util.Collections
 
 class SearchFragment : Fragment(), BaseFragmentActionsListener {
 
@@ -52,7 +48,6 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -60,20 +55,10 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         super.onViewCreated(view, savedInstanceState)
         Log.d("==========SearchFragment==========", "onViewCreated")
         binding.loader.progressOverlay.visibility = View.VISIBLE
-        binding.toolbar.visibility = View.GONE
-
-        if (searchViewModel.selectedCategories.value.isNullOrEmpty()) {
-            searchViewModel.setSelectedCategories(ArrayList())
-        }
-        if (searchViewModel.selectedMethods.value.isNullOrEmpty()) {
-            searchViewModel.setSelectedMethods(ArrayList())
-        }
-        if (searchViewModel.selectedDifficulties.value.isNullOrEmpty()) {
-            searchViewModel.setSelectedDifficulties(ArrayList())
-        }
-
+        searchViewModel.setSearchRequest(SearchRequest())
         setupAdapters()
-
+        initObservers()
+        setupListeners()
         loadCategories()
         loadMethods()
         loadDifficulty()
@@ -92,10 +77,14 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
             }
         })
 
+    }
+
+    private fun setupListeners() {
         binding.bottomSheetSearch.seekbarKcalsLimit.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
                 binding.bottomSheetSearch.textviewKcalsLimitSettedSearch.text = progress.toString()
+                searchViewModel.searchRequest.value!!.kcal = progress
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -105,22 +94,36 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
             }
         })
 
-        //TODO save to shared prefs ??????????????
         binding.bottomSheetSearch.buttonApplySearch.setOnClickListener {
-            Log.d(
-                TAG,
-                "methods: ${searchViewModel.selectedMethods.value!!.size}; ${searchViewModel.selectedMethods.value}"
-            )
-            Log.d(
-                TAG,
-                "categories: ${searchViewModel.selectedCategories.value!!.size}; ${searchViewModel.selectedCategories.value}"
-            )
-            Log.d(
-                TAG,
-                "difficulties: ${searchViewModel.selectedDifficulties.value!!.size}; ${searchViewModel.selectedDifficulties.value}"
-            )
-            Log.d(TAG, "kcal: ${binding.bottomSheetSearch.seekbarKcalsLimit.progress}")
             bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
+            searchViewModel.setIsLoading(true)
+            searchViewModel.search(object : ResultCallback<List<RecipeSimpleObject>> {
+                override fun onResult(value: List<RecipeSimpleObject>?) {
+                    value?.let {
+                        searchViewModel.setSearchRecipes(value)
+                        drawData()
+                    }
+                }
+
+                override fun onFailure(value: List<RecipeSimpleObject>?) {
+                    searchViewModel.setIsLoading(false)
+                }
+            })
+        }
+    }
+
+    private fun drawData() {
+        Log.d(TAG, "drawData: ${searchViewModel.searchRecipes.value}")
+        searchViewModel.setIsLoading(false)
+    }
+
+    private fun initObservers() {
+        searchViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loader.progressOverlay.visibility = View.VISIBLE
+            } else {
+                binding.loader.progressOverlay.visibility = View.GONE
+            }
         }
     }
 
@@ -137,20 +140,20 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         adapterCategories!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingCategory
-                if (searchViewModel.selectedCategories.value!!.contains(item)) {
-                    searchViewModel.selectedCategories.value!!.remove(item)
+                if (searchViewModel.searchRequest.value!!.categories.contains(item)) {
+                    searchViewModel.searchRequest.value!!.categories.remove(item)
                 } else {
-                    searchViewModel.selectedCategories.value!!.add(item)
+                    searchViewModel.searchRequest.value!!.categories.add(item)
                 }
             }
 
             override fun onSelectAllClick() {
                 if (adapterCategories!!.selectedItems!!.isEmpty()) {
-                    searchViewModel.selectedCategories.value!!.clear()
+                    searchViewModel.searchRequest.value!!.categories.clear()
                 } else {
-                    searchViewModel.selectedCategories.value!!.clear()
-                    searchViewModel.selectedCategories.value!!.addAll(searchViewModel.categories.value!!)
-                    searchViewModel.selectedCategories.value!!.removeAt(0)
+                    searchViewModel.searchRequest.value!!.categories.clear()
+                    searchViewModel.searchRequest.value!!.categories.addAll(searchViewModel.categories.value!!)
+                    searchViewModel.searchRequest.value!!.categories.removeAt(0)
                 }
             }
         })
@@ -161,20 +164,20 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         adapterMethods!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingMethod
-                if (searchViewModel.selectedMethods.value!!.contains(item)) {
-                    searchViewModel.selectedMethods.value!!.remove(item)
+                if (searchViewModel.searchRequest.value!!.methods.contains(item)) {
+                    searchViewModel.searchRequest.value!!.methods.remove(item)
                 } else {
-                    searchViewModel.selectedMethods.value!!.add(item)
+                    searchViewModel.searchRequest.value!!.methods.add(item)
                 }
             }
 
             override fun onSelectAllClick() {
                 if (adapterMethods!!.selectedItems!!.isEmpty()) {
-                    searchViewModel.selectedMethods.value!!.clear()
+                    searchViewModel.searchRequest.value!!.methods.clear()
                 } else {
-                    searchViewModel.selectedMethods.value!!.clear()
-                    searchViewModel.selectedMethods.value!!.addAll(searchViewModel.methods.value!!)
-                    searchViewModel.selectedMethods.value!!.removeAt(0)
+                    searchViewModel.searchRequest.value!!.methods.clear()
+                    searchViewModel.searchRequest.value!!.methods.addAll(searchViewModel.methods.value!!)
+                    searchViewModel.searchRequest.value!!.methods.removeAt(0)
                 }
             }
         })
@@ -185,10 +188,10 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         adapterDifficulty!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingDifficulty
-                if (searchViewModel.selectedDifficulties.value!!.contains(item)) {
-                    searchViewModel.selectedDifficulties.value!!.remove(item)
+                if (searchViewModel.searchRequest.value!!.difficulties.contains(item)) {
+                    searchViewModel.searchRequest.value!!.difficulties.remove(item)
                 } else {
-                    searchViewModel.selectedDifficulties.value!!.add(item)
+                    searchViewModel.searchRequest.value!!.difficulties.add(item)
                 }
             }
 
@@ -214,11 +217,9 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
                 adapterCategories?.setData(value)
                 adapterCategories?.setSelectAll(
                     StaticDataObject(
-                        getString(R.string.title_search_btn_select_all),
-                        TAG_SELECT_ALL_BUTTON
+                        getString(R.string.title_search_btn_select_all), TAG_SELECT_ALL_BUTTON
                     )
                 )
-                adapterCategories?.setSelected(getPreselectedCategories())
                 checkStaticDataLoaded()
             }
 
@@ -236,11 +237,9 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
                 adapterMethods?.setData(value)
                 adapterMethods?.setSelectAll(
                     StaticDataObject(
-                        getString(R.string.title_search_btn_select_all),
-                        TAG_SELECT_ALL_BUTTON
+                        getString(R.string.title_search_btn_select_all), TAG_SELECT_ALL_BUTTON
                     )
                 )
-                adapterMethods?.setSelected(getPreselectedMethods())
                 checkStaticDataLoaded()
             }
 
@@ -257,7 +256,6 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
                 searchViewModel.setDifficulties(ArrayList(value!!))
                 staticDataViewModel.setCookingDifficulties(ArrayList(value))
                 adapterDifficulty?.setData(value)
-                adapterDifficulty?.setSelected(getPreselectedDifficulties())
                 checkStaticDataLoaded()
             }
 
@@ -265,36 +263,6 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
                 loadDifficulty()
             }
         })
-    }
-
-    //TODO shared prefs
-    private fun getPreselectedCategories(): ArrayList<Int> {
-        return ArrayList()
-    }
-
-    //TODO shared prefs
-    private fun setPreselectedCategories(value: Int) {
-        getPreselectedCategories().add(value)
-    }
-
-    //TODO shared prefs
-    private fun getPreselectedMethods(): ArrayList<Int> {
-        return ArrayList()
-    }
-
-    //TODO shared prefs
-    private fun setPreselectedMethods(value: Int) {
-        getPreselectedMethods().add(value)
-    }
-
-    //TODO shared prefs
-    private fun getPreselectedDifficulties(): ArrayList<Int> {
-        return ArrayList()
-    }
-
-    //TODO shared prefs
-    private fun setPreselectedDifficulties(value: Int) {
-        getPreselectedDifficulties().add(value)
     }
 
     private fun popBackStack() {

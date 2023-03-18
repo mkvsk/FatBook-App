@@ -14,9 +14,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
-import online.fatbook.fatbookapp.network.AuthenticationRequest
+import online.fatbook.fatbookapp.network.request.AuthenticationRequest
 import online.fatbook.fatbookapp.databinding.FragmentRegisterUsernameBinding
-import online.fatbook.fatbookapp.network.AuthenticationResponse
+import online.fatbook.fatbookapp.network.response.AuthenticationResponse
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.util.Constants.USERNAME_REGEX
 import online.fatbook.fatbookapp.util.hideKeyboard

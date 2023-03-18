@@ -19,7 +19,7 @@ import okhttp3.RequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.databinding.FragmentLoginBinding
-import online.fatbook.fatbookapp.network.LoginResponse
+import online.fatbook.fatbookapp.network.response.LoginResponse
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.ui.activity.MainActivity
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel

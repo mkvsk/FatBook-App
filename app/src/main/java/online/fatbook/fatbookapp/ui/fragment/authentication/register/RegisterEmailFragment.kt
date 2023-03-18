@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.databinding.FragmentRegisterEmailBinding
-import online.fatbook.fatbookapp.network.AuthenticationResponse
+import online.fatbook.fatbookapp.network.response.AuthenticationResponse
 import online.fatbook.fatbookapp.ui.viewmodel.AuthenticationViewModel
 import online.fatbook.fatbookapp.ui.viewmodel.TimerViewModel
 import online.fatbook.fatbookapp.util.Constants.SYMBOL_AT

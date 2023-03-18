@@ -3,9 +3,11 @@ package online.fatbook.fatbookapp.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import online.fatbook.fatbookapp.core.recipe.CookingCategory
-import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
-import online.fatbook.fatbookapp.core.recipe.CookingMethod
+import online.fatbook.fatbookapp.callback.ResultCallback
+import online.fatbook.fatbookapp.core.recipe.*
+import online.fatbook.fatbookapp.network.request.SearchRequest
+import online.fatbook.fatbookapp.repository.FeedRepository
+import online.fatbook.fatbookapp.repository.SearchRepository
 
 class SearchViewModel : ViewModel() {
 
@@ -13,25 +15,20 @@ class SearchViewModel : ViewModel() {
         private const val TAG = "SearchViewModel"
     }
 
-    private val _selectedCategories = MutableLiveData<ArrayList<CookingCategory>>()
-    val selectedCategories: LiveData<ArrayList<CookingCategory>> get() = _selectedCategories
+    private val repository by lazy { SearchRepository() }
 
-    fun setSelectedCategories(value: ArrayList<CookingCategory>) {
-        _selectedCategories.value = value
+    private val _searchRequest = MutableLiveData<SearchRequest>()
+    val searchRequest: LiveData<SearchRequest> get() = _searchRequest
+
+    fun setSearchRequest(value: SearchRequest) {
+        _searchRequest.value = value
     }
 
-    private val _selectedMethods = MutableLiveData<ArrayList<CookingMethod>>()
-    val selectedMethods: LiveData<ArrayList<CookingMethod>> get() = _selectedMethods
+    private val _searchRecipes = MutableLiveData<List<RecipeSimpleObject>>()
+    val searchRecipes: LiveData<List<RecipeSimpleObject>> get() = _searchRecipes
 
-    fun setSelectedMethods(value: ArrayList<CookingMethod>) {
-        _selectedMethods.value = value
-    }
-
-    private val _selectedDifficulties = MutableLiveData<ArrayList<CookingDifficulty>>()
-    val selectedDifficulties: LiveData<ArrayList<CookingDifficulty>> get() = _selectedDifficulties
-
-    fun setSelectedDifficulties(value: ArrayList<CookingDifficulty>) {
-        _selectedDifficulties.value = value
+    fun setSearchRecipes(value: List<RecipeSimpleObject>){
+        _searchRecipes.value = value
     }
 
     private val _categories = MutableLiveData<ArrayList<CookingCategory>>()
@@ -53,6 +50,25 @@ class SearchViewModel : ViewModel() {
 
     fun setDifficulties(value: ArrayList<CookingDifficulty>) {
         _difficulties.value = value
+    }
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    fun setIsLoading(value: Boolean) {
+        _isLoading.value = value
+    }
+
+    fun search(callback: ResultCallback<List<RecipeSimpleObject>>) {
+        repository.search(searchRequest.value!!, object : ResultCallback<List<RecipeSimpleObject>>{
+            override fun onResult(value: List<RecipeSimpleObject>?) {
+                callback.onResult(value)
+            }
+
+            override fun onFailure(value: List<RecipeSimpleObject>?) {
+                callback.onFailure(value)
+            }
+        })
     }
 
 }
