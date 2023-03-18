@@ -84,21 +84,6 @@ class VerificationCodeFragment : Fragment() {
                 binding.loader.progressOverlayAuth.visibility = View.GONE
             }
         }
-
-        authViewModel.codeResent.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.fragmentVerificationCodeEdittextVc.setText(StringUtils.EMPTY)
-                binding.fragmentVerificationCodeDialogText.setText(R.string.dialog_verification_code)
-                binding.fragmentVerificationCodeDialogText.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.main_text
-                    )
-                )
-                authViewModel.setCodeResent(false)
-                Log.d("CODE ================= ", authViewModel.vCode.toString())
-            }
-        }
     }
 
     private fun initListeners() {
@@ -143,7 +128,6 @@ class VerificationCodeFragment : Fragment() {
 
     private fun resendCode() {
         hideKeyboard(binding.fragmentVerificationCodeEdittextVc)
-        authViewModel.setCodeResent(true)
         authViewModel.emailCheck(
             authViewModel.userEmail.value!!,
             object : ResultCallback<AuthenticationResponse> {

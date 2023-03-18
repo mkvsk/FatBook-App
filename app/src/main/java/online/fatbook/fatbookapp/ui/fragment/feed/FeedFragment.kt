@@ -130,7 +130,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
             }
         }
 
-        authViewModel.resultCode.observe(viewLifecycleOwner) {
+        authViewModel.loginFeedResultCode.observe(viewLifecycleOwner) {
             when (it) {
                 0 -> {
                     logout()

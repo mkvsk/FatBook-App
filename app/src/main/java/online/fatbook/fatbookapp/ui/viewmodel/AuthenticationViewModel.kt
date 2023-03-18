@@ -5,14 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.callback.ResultCallback
 import online.fatbook.fatbookapp.network.AuthenticationRequest
 import online.fatbook.fatbookapp.network.AuthenticationResponse
 import online.fatbook.fatbookapp.network.LoginResponse
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import online.fatbook.fatbookapp.repository.AuthenticationRepository
-import online.fatbook.fatbookapp.util.ContextHolder
 
 class AuthenticationViewModel : ViewModel() {
 
@@ -92,13 +90,6 @@ class AuthenticationViewModel : ViewModel() {
         _recoverUsername.value = value
     }
 
-    private val _error = MutableLiveData<String?>(null)
-    val error: LiveData<String?> get() = _error
-
-    fun setError(message: String?) {
-        _error.value = message
-    }
-
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
@@ -106,46 +97,11 @@ class AuthenticationViewModel : ViewModel() {
         _isLoading.value = value
     }
 
-    private val _resultCode = MutableLiveData<Int?>()
-    val resultCode: LiveData<Int?> get() = _resultCode
+    private val _loginFeedResultCode = MutableLiveData<Int?>()
+    val loginFeedResultCode: LiveData<Int?> get() = _loginFeedResultCode
 
-    fun setResultCode(value: Int?) {
-        _resultCode.value = value
-    }
-
-    private val _codeResent = MutableLiveData(false)
-    val codeResent: LiveData<Boolean> get() = _codeResent
-
-    fun setCodeResent(value: Boolean) {
-        _codeResent.value = value
-    }
-
-    private val _allowSetNewPass = MutableLiveData(false)
-    val allowSetNewPass: LiveData<Boolean> get() = _allowSetNewPass
-
-    fun setAllowSetNewPass(value: Boolean) {
-        _allowSetNewPass.value = value
-    }
-
-    private val _resultCodeAuth = MutableLiveData<Int?>(null)
-    val resultCodeAuth: LiveData<Int?> get() = _resultCodeAuth
-
-    fun setResultCodeAuth(value: Int?) {
-        _resultCodeAuth.value = value
-    }
-
-    private val _resultCodeRecoverPass = MutableLiveData<Int?>(null)
-    val resultCodeRecoverPass: LiveData<Int?> get() = _resultCodeRecoverPass
-
-    fun setResultCodeRecoverPass(value: Int?) {
-        _resultCodeRecoverPass.value = value
-    }
-
-    private val _resultCodeChangePass = MutableLiveData<Int?>(null)
-    val resultCodeChangePass: LiveData<Int?> get() = _resultCodeChangePass
-
-    fun setResultCodeChangePass(value: Int?) {
-        _resultCodeChangePass.value = value
+    fun setLoginFeedResultCode(value: Int?) {
+        _loginFeedResultCode.value = value
     }
 
     fun emailCheck(email: String, callback: ResultCallback<AuthenticationResponse>) {
@@ -172,26 +128,14 @@ class AuthenticationViewModel : ViewModel() {
 //        })
 //    }
 
-    fun login(request: RequestBody, password: String) {
-        setIsLoading(true)
+    fun login(request: RequestBody, callback: ResultCallback<LoginResponse>) {
         repository.login(request, object : ResultCallback<LoginResponse> {
             override fun onResult(value: LoginResponse?) {
-                value?.let {
-                    setUsername(it.username.toString())
-                    setPassword(password)
-                    setJwtAccess(it.access_token.toString())
-                    setJwtRefresh(it.refresh_token.toString())
-                    setIsUserAuthenticated(true)
-                    RetrofitFactory.updateJWT(it.access_token.toString(), it.username.toString())
-                }
-                setResultCodeAuth(1)
+                callback.onResult(value)
             }
 
             override fun onFailure(value: LoginResponse?) {
-                setError(ContextHolder.get().getString(R.string.dialog_register_error))
-                setResultCodeAuth(-1)
-                setIsUserAuthenticated(false)
-                setIsLoading(false)
+                callback.onFailure(value)
             }
         })
     }
@@ -204,12 +148,12 @@ class AuthenticationViewModel : ViewModel() {
             override fun onResult(value: LoginResponse?) {
                 value?.let {
                     if (it.access_token.isNullOrEmpty()) {
-                        setResultCode(0)
+                        setLoginFeedResultCode(0)
                     } else {
                         setJwtAccess(it.access_token.toString())
                         setJwtRefresh(it.refresh_token.toString())
                         RetrofitFactory.updateJWT(it.access_token, it.username!!)
-                        setResultCode(1)
+                        setLoginFeedResultCode(1)
                     }
                 }
             }
