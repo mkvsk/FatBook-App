@@ -37,7 +37,7 @@
 <!--            app:layout_constraintTop_toTopOf="parent" />-->
 <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-    <online.fatbook.fatbookapp.ui.fragment.navigation.NonSwipingViewPager
+    <online.fatbook.fatbookapp.ui.navigation.NonSwipingViewPager
         android:id="@+id/main_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
