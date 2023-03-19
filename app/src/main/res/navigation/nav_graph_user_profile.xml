@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/user_profile_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.user.UserProfileFragment"
+        android:name="online.fatbook.fatbookapp.ui.user.ui.UserProfileFragment"
         android:label="@string/nav_user_profile">
 
         <action
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/edit_profile_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.user.EditUserProfileFragment"
+        android:name="online.fatbook.fatbookapp.ui.user.ui.EditUserProfileFragment"
         android:label="@null">
 
         <action
@@ -42,19 +42,19 @@
     </fragment>
     <fragment
         android:id="@+id/follow_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.user.FollowersFragment"
+        android:name="online.fatbook.fatbookapp.ui.user.ui.FollowersFragment"
         android:label="@null" />
     <fragment
         android:id="@+id/image_view_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.image.ImageViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.image.ImageViewFragment"
         android:label="@null" />
     <fragment
         android:id="@+id/app_settings_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.user.AppSettingsFragment"
+        android:name="online.fatbook.fatbookapp.ui.user.ui.AppSettingsFragment"
         android:label="@null" />
     <fragment
         android:id="@+id/badges_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.user.BadgesFragment"
+        android:name="online.fatbook.fatbookapp.ui.user.ui.BadgesFragment"
         android:label="@null" />
 
 </navigation>

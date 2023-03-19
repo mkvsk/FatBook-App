@@ -103,7 +103,6 @@ class RecipeViewFragmentOLD : Fragment() {
         }
         binding!!.buttonRecipeViewIngredientAdd.setOnClickListener { view1: View? ->
             addIngredient = true
-            NavHostFragment.findNavController(this).navigate(R.id.navigation_add_ingredient_old)
         }
         binding!!.buttonRecipeViewImageAdd.setOnClickListener { view1: View? ->
             verifyStoragePermissions(requireActivity())

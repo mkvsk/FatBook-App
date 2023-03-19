@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/login_recover_pass_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginRecoverPassword"
+        android:name="online.fatbook.fatbookapp.ui.authentication.login.LoginRecoverPassword"
         android:label="@null">
 
         <action
@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/login_recover_pass_vcode_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.LoginRecoverPasswordVCodeFragment"
+        android:name="online.fatbook.fatbookapp.ui.authentication.login.LoginRecoverPasswordVCodeFragment"
         android:label="@null">
 
         <action
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/new_pass_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.login.NewPassFragment"
+        android:name="online.fatbook.fatbookapp.ui.authentication.login.NewPassFragment"
         android:label="@null">
 
 
@@ -62,7 +62,7 @@
 
     <fragment
         android:id="@+id/register_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.RegisterEmailFragment"
+        android:name="online.fatbook.fatbookapp.ui.authentication.register.RegisterEmailFragment"
         android:label="@null">
 
         <action
@@ -72,7 +72,7 @@
 
     <fragment
         android:id="@+id/verification_code_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.VerificationCodeFragment"
+        android:name="online.fatbook.fatbookapp.ui.authentication.register.VerificationCodeFragment"
         android:label="@null">
 
         <action
@@ -82,7 +82,7 @@
 
     <fragment
         android:id="@+id/register_password_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.RegisterPasswordFragment"
+        android:name="online.fatbook.fatbookapp.ui.authentication.register.RegisterPasswordFragment"
         android:label="@null">
 
         <action
@@ -92,7 +92,7 @@
 
     <fragment
         android:id="@+id/register_username_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.RegisterUsernameFragment"
+        android:name="online.fatbook.fatbookapp.ui.authentication.register.RegisterUsernameFragment"
         android:label="@null">
 
         <action
@@ -102,6 +102,6 @@
 
     <fragment
         android:id="@+id/account_created_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.authentication.register.AccountCreatedFragment"
+        android:name="online.fatbook.fatbookapp.ui.authentication.register.AccountCreatedFragment"
         android:label="@null" />
 </navigation>

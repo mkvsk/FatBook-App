@@ -75,9 +75,6 @@ class RecipeCreateFragmentOLD : Fragment() {
         }
         binding!!.buttonRecipeAddSaveV1.setOnClickListener { _view: View? -> saveRecipe() }
         binding!!.buttonRecipeAddIngredientAddV1.setOnClickListener { _view: View? ->
-            NavHostFragment.findNavController(
-                this
-            ).navigate(R.id.navigation_add_ingredient_old)
         }
         setupAdapter()
         binding!!.editTextRecipeAddTitleV1.addTextChangedListener(object : TextWatcher {

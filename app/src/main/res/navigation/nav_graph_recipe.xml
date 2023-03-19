@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/recipe_first_stage_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeFirstStageFragment"
+        android:name="online.fatbook.fatbookapp.ui.recipe.edit.RecipeFirstStageFragment"
         android:label="@string/nav_recipe">
 
         <action
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/recipe_second_stage_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeSecondStageFragment"
+        android:name="online.fatbook.fatbookapp.ui.recipe.edit.RecipeSecondStageFragment"
         android:label="@null">
 
         <action
@@ -36,17 +36,17 @@
 
     <fragment
         android:id="@+id/method_category_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeMethodsCategoriesFragment"
+        android:name="online.fatbook.fatbookapp.ui.recipe.edit.RecipeMethodsCategoriesFragment"
         android:label="@null" />
 
     <fragment
         android:id="@+id/ingredient_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeIngredientFragment"
+        android:name="online.fatbook.fatbookapp.ui.recipe.edit.RecipeIngredientFragment"
         android:label="@null" />
 
     <fragment
         android:id="@+id/cooking_step_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.recipe.RecipeCookingStepFragment"
+        android:name="online.fatbook.fatbookapp.ui.recipe.edit.RecipeCookingStepFragment"
         android:label="@null">
 
         <action
@@ -56,6 +56,6 @@
 
     <fragment
         android:id="@+id/image_view_dest"
-        android:name="online.fatbook.fatbookapp.ui.fragment.image.ImageViewFragment"
+        android:name="online.fatbook.fatbookapp.ui.image.ImageViewFragment"
         android:label="@null" />
 </navigation>
