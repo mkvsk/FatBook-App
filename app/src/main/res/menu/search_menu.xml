@@ -2,17 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    <item-->
-<!--        android:id="@+id/action_search"-->
-<!--        android:icon="@drawable/ic_search"-->
-<!--        android:title="@string/app_name"-->
-<!--        app:actionViewClass="androidx.appcompat.widget.SearchView"-->
-<!--        app:showAsAction="ifRoom|collapseActionView" />-->
+    <!--    <item-->
+    <!--        android:id="@+id/action_search"-->
+    <!--        android:icon="@drawable/ic_search"-->
+    <!--        android:title="@string/app_name"-->
+    <!--        app:actionViewClass="androidx.appcompat.widget.SearchView"-->
+    <!--        app:showAsAction="ifRoom|collapseActionView" />-->
 
     <item
-        android:id="@+id/menu_search_by_text"
-        android:icon="@drawable/ic_search_recipe"
-        android:title="search"
+        android:id="@+id/menu_search_user"
+        android:icon="@drawable/ic_search_user"
+        android:title="search user"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_search_recipe"
+        android:icon="@drawable/ic_search_recipe"
+        android:title="search recipe"
+        app:showAsAction="always" />
+
 
 </menu>

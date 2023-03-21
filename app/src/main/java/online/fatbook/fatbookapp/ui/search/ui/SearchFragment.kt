@@ -7,20 +7,20 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.SearchView.OnCloseListener
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.Fade
 import androidx.transition.Scene
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.fragment_search.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
@@ -33,6 +33,7 @@ import online.fatbook.fatbookapp.ui.search.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.staticdata.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
 import online.fatbook.fatbookapp.util.obtainViewModel
+
 
 class SearchFragment : Fragment(), BaseFragmentActionsListener {
 
@@ -48,6 +49,9 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
     private lateinit var bottomSheetSearchFilter: BottomSheetBehavior<*>
 
     private var inSearch = false
+    private lateinit var searchModeItem: MenuItem
+    private lateinit var invisibleItem: MenuItem
+    private lateinit var applySearch: MenuItem
 
     companion object {
         private const val TAG = "SearchFragment"
@@ -115,32 +119,51 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_search_by_text -> {
-                androidx.transition.TransitionManager.go(
-                    Scene(binding.toolbar.search_view),
-                    androidx.transition.Fade()
+            R.id.menu_search_recipe -> {
+                setSearchMode(
+                    selectedItemId = binding.toolbar.menu.findItem(R.id.menu_search_recipe),
+                    iconSearch = R.drawable.ic_search_recipe,
+                    hideItem = binding.toolbar.menu.findItem(R.id.menu_search_user)
                 )
-                if (inSearch) {
-                    inSearch = false
-                    binding.toolbar.search_view.visibility = View.GONE
-                    item.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_search_recipe)
-                } else {
-                    inSearch = true
-                    binding.toolbar.search_view.visibility = View.VISIBLE
-                    item.icon =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_apply_search)
-                }
-
-                //                binding.toolbar.search_view.animate()
-//                    .alpha(1.0f)
+                true
+            }
+            R.id.menu_search_user -> {
+                setSearchMode(
+                    selectedItemId = binding.toolbar.menu.findItem(R.id.menu_search_user),
+                    iconSearch = R.drawable.ic_search_user,
+                    hideItem = binding.toolbar.menu.findItem(R.id.menu_search_recipe)
+                )
                 true
             }
             else -> {
                 super.onOptionsItemSelected(item)
             }
         }
-
     }
+
+    private fun setSearchMode(selectedItemId: MenuItem, iconSearch: Int, hideItem: MenuItem) {
+        searchModeItem = selectedItemId
+        invisibleItem = hideItem.setVisible(false)
+        androidx.transition.TransitionManager.go(
+            Scene(binding.searchView),
+            Fade()
+        )
+        if (inSearch) {
+            inSearch = false
+            binding.searchView.visibility = View.GONE
+            searchModeItem.icon =
+                ContextCompat.getDrawable(requireContext(), iconSearch)
+            binding.toolbar.menu.forEach { item: MenuItem ->
+                item.isVisible = true
+            }
+        } else {
+            inSearch = true
+            binding.searchView.visibility = View.VISIBLE
+            searchModeItem.icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_apply_search)
+        }
+    }
+
 
     private fun setupListeners() {
         binding.bottomSheetSearch.seekbarKcalsLimit.setOnSeekBarChangeListener(object :

@@ -3,6 +3,6 @@
     <solid android:color="@color/editText_catdialog_bgr"/>
     <stroke
         android:width="1dp"
-        android:color="@color/color_pink_a200" />
+        android:color="@color/theme_toolbar_ic_color" />
     <corners android:radius="30dp"/>
 </shape>
