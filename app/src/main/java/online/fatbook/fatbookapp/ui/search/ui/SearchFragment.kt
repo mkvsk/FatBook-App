@@ -1,19 +1,18 @@
 package online.fatbook.fatbookapp.ui.search.ui
 
 import android.os.Bundle
+import android.transition.AutoTransition
 import android.transition.TransitionInflater
+import android.transition.TransitionManager
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SearchView
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.AutoTransition
 import androidx.transition.Fade
 import androidx.transition.Scene
 import com.google.android.flexbox.FlexDirection
@@ -32,6 +31,7 @@ import online.fatbook.fatbookapp.ui.search.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.ui.search.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.staticdata.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
+import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
 
@@ -48,6 +48,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
 
     private lateinit var bottomSheetSearchFilter: BottomSheetBehavior<*>
 
+    private var searchView: SearchView? = null
     private var inSearch = false
     private lateinit var searchModeItem: MenuItem
     private lateinit var invisibleItem: MenuItem
@@ -73,43 +74,20 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("==========SearchFragment==========", "onViewCreated")
+        searchView = binding.searchView
+
         binding.loader.progressOverlay.visibility = View.VISIBLE
         searchViewModel.setSearchRequest(SearchRequest())
         setupMenu()
         setupAdapters()
+        initViews()
         initObservers()
-        setupListeners()
-        loadCategories()
-        loadMethods()
-        loadDifficulty()
+        initListeners()
+    }
 
-//------------------------------------------
-//        binding.searchView.setOnCloseListener(, object : OnCloseListener {
-//            override fun onClose(): Boolean {
-//                 ContextCompat.getColor(
-//                    requireContext(),
-//                    R.color.main_text
-//                )
-//                return true
-//            }
-//        })
-//------------------------------------------
-
-
+    private fun initViews() {
         bottomSheetSearchFilter = BottomSheetBehavior.from(binding.bottomSheetSearch.sheetSearch)
         bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
-        bottomSheetSearchFilter.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    binding.bottomSheetSearch.scrollViewBottomSheetSearch.scrollTo(0, 0)
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            }
-        })
-
     }
 
     private fun setupMenu() {
@@ -150,22 +128,63 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         )
         if (inSearch) {
             inSearch = false
-            binding.searchView.visibility = View.GONE
+            searchView!!.visibility = View.GONE
             searchModeItem.icon =
                 ContextCompat.getDrawable(requireContext(), iconSearch)
             binding.toolbar.menu.forEach { item: MenuItem ->
                 item.isVisible = true
             }
+            findRecipe(searchView!!.query.toString())
         } else {
             inSearch = true
-            binding.searchView.visibility = View.VISIBLE
+            searchView!!.visibility = View.VISIBLE
             searchModeItem.icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_apply_search)
         }
     }
 
+    private fun findRecipe(txt: String) {
 
-    private fun setupListeners() {
+        bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
+
+        val sr = SearchRequest(txt, ArrayList(), ArrayList(), ArrayList())
+        searchViewModel.setSearchRequest(sr)
+        searchViewModel.setIsLoading(true)
+        searchViewModel.searchRecipe(object : ResultCallback<List<RecipeSimpleObject>> {
+            override fun onResult(value: List<RecipeSimpleObject>?) {
+                value?.let {
+                    searchViewModel.setSearchRecipes(value)
+                    drawData()
+                }
+            }
+
+            override fun onFailure(value: List<RecipeSimpleObject>?) {
+                searchViewModel.setIsLoading(false)
+            }
+        })
+    }
+
+    private fun initListeners() {
+        loadCategories()
+        loadMethods()
+        loadDifficulty()
+
+        bottomSheetSearchFilter.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    TransitionManager.go(
+                        android.transition.Scene(binding.clBottomSheet),
+                        AutoTransition()
+                    )
+                    binding.bottomSheetSearch.scrollViewBottomSheetSearch.scrollTo(0, 0)
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
+
         binding.bottomSheetSearch.seekbarKcalsLimit.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
@@ -181,22 +200,23 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         })
 
         binding.bottomSheetSearch.buttonApplySearch.setOnClickListener {
-            bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
-            searchViewModel.setIsLoading(true)
-            searchViewModel.search(object : ResultCallback<List<RecipeSimpleObject>> {
-                override fun onResult(value: List<RecipeSimpleObject>?) {
-                    value?.let {
-                        searchViewModel.setSearchRecipes(value)
-                        drawData()
-                    }
-                }
-
-                override fun onFailure(value: List<RecipeSimpleObject>?) {
-                    searchViewModel.setIsLoading(false)
-                }
-            })
+            findRecipe("")
         }
 
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(queryText: String?): Boolean {
+                Log.d(TAG, "onQueryTextSubmit: TEST")
+                hideKeyboard()
+                findRecipe(queryText.toString())
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                Log.d(TAG, "onQueryTextChange: EVENT TEXT HAS BEEN CHANGED")
+                return true
+            }
+
+        })
 
     }
 

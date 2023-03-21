@@ -26,7 +26,7 @@ class SearchViewModel : ViewModel() {
     private val _searchRecipes = MutableLiveData<List<RecipeSimpleObject>>()
     val searchRecipes: LiveData<List<RecipeSimpleObject>> get() = _searchRecipes
 
-    fun setSearchRecipes(value: List<RecipeSimpleObject>){
+    fun setSearchRecipes(value: List<RecipeSimpleObject>) {
         _searchRecipes.value = value
     }
 
@@ -58,7 +58,7 @@ class SearchViewModel : ViewModel() {
         _isLoading.value = value
     }
 
-    fun search(callback: ResultCallback<List<RecipeSimpleObject>>) {
+    fun searchRecipe(callback: ResultCallback<List<RecipeSimpleObject>>) {
         repository.search(searchRequest.value!!, object : ResultCallback<List<RecipeSimpleObject>> {
             override fun onResult(value: List<RecipeSimpleObject>?) {
                 callback.onResult(value)
@@ -69,5 +69,8 @@ class SearchViewModel : ViewModel() {
             }
         })
     }
+
+//    TODO searchUser callback
+//    fun searchUser() {}
 
 }

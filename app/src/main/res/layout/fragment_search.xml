@@ -5,6 +5,7 @@
     android:id="@+id/search_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/theme_primary_bgr"
     android:orientation="vertical"
     tools:context=".ui.search.ui.SearchFragment">
@@ -14,9 +15,12 @@
         layout="@layout/include_progress_overlay" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/cl_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="100dp"
+        android:elevation="4dp"
+        android:translationZ="2dp">
 
         <include
             android:id="@+id/bottomSheetSearch"
@@ -44,7 +48,7 @@
             local:titleTextAppearance="@style/txtToolbar"
             local:titleTextColor="@color/main_text">
 
-            <androidx.appcompat.widget.SearchView
+            <SearchView
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
@@ -56,8 +60,42 @@
                 local:queryHint="find in users or recipes"
                 local:searchIcon="@drawable/ic_search_recipe" />
         </androidx.appcompat.widget.Toolbar>
-
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsv_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:overScrollMode="never">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_find_recipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:paddingTop="5dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/rv_feed_recipe_card_preview" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

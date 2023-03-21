@@ -23,7 +23,7 @@ class SearchRepository : ViewModel() {
     private val scope = CoroutineScope(coroutineContext)
 
     companion object {
-        const val TAG = "FeedRepository"
+        const val TAG = "SearchRepository"
     }
 
     fun search(request: SearchRequest, callback: ResultCallback<List<RecipeSimpleObject>>) {
