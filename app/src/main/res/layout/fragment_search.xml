@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/theme_primary_bgr"
     android:orientation="vertical"
-    tools:context=".ui.fragment.search.SearchFragment">
+    tools:context=".ui.search.ui.SearchFragment">
 
     <include
         android:id="@+id/loader"
@@ -42,7 +42,20 @@
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
             local:title="Search"
             local:titleTextAppearance="@style/txtToolbar"
-            local:titleTextColor="@color/main_text" />
+            local:titleTextColor="@color/main_text">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/round_corner_edittext_pink_frame"
+                android:visibility="gone"
+                app:theme="@style/SearchViewStyle"
+                local:queryHint="find in users or recipes"
+                local:searchIcon="@drawable/ic_search_recipe" />
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

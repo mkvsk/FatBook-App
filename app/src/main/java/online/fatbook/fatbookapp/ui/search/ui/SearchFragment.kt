@@ -1,19 +1,26 @@
 package online.fatbook.fatbookapp.ui.search.ui
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import android.widget.SearchView.OnCloseListener
 import android.widget.SeekBar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Scene
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.fragment_search.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
@@ -40,8 +47,16 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
 
     private lateinit var bottomSheetSearchFilter: BottomSheetBehavior<*>
 
+    private var inSearch = false
+
     companion object {
         private const val TAG = "SearchFragment"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_right)
     }
 
     override fun onCreateView(
@@ -56,12 +71,26 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
         Log.d("==========SearchFragment==========", "onViewCreated")
         binding.loader.progressOverlay.visibility = View.VISIBLE
         searchViewModel.setSearchRequest(SearchRequest())
+        setupMenu()
         setupAdapters()
         initObservers()
         setupListeners()
         loadCategories()
         loadMethods()
         loadDifficulty()
+
+//------------------------------------------
+//        binding.searchView.setOnCloseListener(, object : OnCloseListener {
+//            override fun onClose(): Boolean {
+//                 ContextCompat.getColor(
+//                    requireContext(),
+//                    R.color.main_text
+//                )
+//                return true
+//            }
+//        })
+//------------------------------------------
+
 
         bottomSheetSearchFilter = BottomSheetBehavior.from(binding.bottomSheetSearch.sheetSearch)
         bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -76,6 +105,40 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
         })
+
+    }
+
+    private fun setupMenu() {
+        binding.toolbar.inflateMenu(R.menu.search_menu)
+        binding.toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_search_by_text -> {
+                androidx.transition.TransitionManager.go(
+                    Scene(binding.toolbar.search_view),
+                    androidx.transition.Fade()
+                )
+                if (inSearch) {
+                    inSearch = false
+                    binding.toolbar.search_view.visibility = View.GONE
+                    item.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_search_recipe)
+                } else {
+                    inSearch = true
+                    binding.toolbar.search_view.visibility = View.VISIBLE
+                    item.icon =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_apply_search)
+                }
+
+                //                binding.toolbar.search_view.animate()
+//                    .alpha(1.0f)
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
 
     }
 
@@ -110,6 +173,8 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
                 }
             })
         }
+
+
     }
 
     private fun drawData() {

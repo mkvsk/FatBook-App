@@ -47,8 +47,8 @@ class BookmarksFragmentOLD : Fragment(), OnRecipeClickListener {
             userUpdated = false
             loadRecipes()
         }
-        userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
-        recipeViewModel = ViewModelProvider(requireActivity()).get(RecipeViewModel::class.java)
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        recipeViewModel = ViewModelProvider(requireActivity())[RecipeViewModel::class.java]
         user = userViewModel!!.user.value
         recipeList = ArrayList()
         userViewModel!!.user.observe(viewLifecycleOwner) { _user: User? ->

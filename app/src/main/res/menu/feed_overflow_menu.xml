@@ -7,6 +7,4 @@
         android:title="direct_messages"
         android:icon="@drawable/ic_msg_0"
         app:showAsAction="always"/>
-
-
 </menu>

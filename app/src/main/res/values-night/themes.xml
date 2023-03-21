@@ -23,6 +23,17 @@
     <style name="IconMenuOverFlow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
         <item name="tint">@color/theme_toolbar_ic_color</item>
     </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!--        ic search and close in edittext-->
+        <item name="android:textColorSecondary">@color/hint_text</item>
+        <!--        user input text color-->
+        <item name="android:editTextColor">@color/main_text</item>
+        <!--        search query color text hint-->
+        <item name="android:textColorHint">@color/hint_text</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
     ///v2.0.0
     <color name="blue_grey_50">#ECEFF1</color>
     <color name="blue_grey_200">#B0BEC5</color>
@@ -96,12 +107,12 @@
     <color name="rv_recipe_preview_ic_color">#B0BEC5</color>
     <color name="rv_forks_qqt">#B0BEC5</color>
     <color name="rv_bottom_bgr_default_recipe_photo">#66263238</color>
-<!--    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">-->
-<!--        <item name="titleTextColor">@color/theme_toolbar_text_color</item>-->
-<!--        <item name="backgroundColor">@color/theme_toolbar_color</item>-->
-<!--        <item name="actionOverflowButtonStyle">@style/ToolbarTheme.OverFlow</item>-->
-<!--        <item name="titleTextAppearance">@style/txtToolbar</item>-->
-<!--    </style>-->
+    <!--    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">-->
+    <!--        <item name="titleTextColor">@color/theme_toolbar_text_color</item>-->
+    <!--        <item name="backgroundColor">@color/theme_toolbar_color</item>-->
+    <!--        <item name="actionOverflowButtonStyle">@style/ToolbarTheme.OverFlow</item>-->
+    <!--        <item name="titleTextAppearance">@style/txtToolbar</item>-->
+    <!--    </style>-->
 
     <style name="ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary." parent="Theme.AppCompat.Light">
         <item name="android:colorBackground">@color/theme_primary_bgr</item>
@@ -665,4 +676,18 @@
         <item name="cornerSizeBottomRight">15dp</item>
         <item name="cornerSizeBottomLeft">15dp</item>
     </style>
+
+    <!--    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">-->
+    <!--        <item name="fontFamily">@font/roboto_regular</item>-->
+    <!--        <item name="android:textSize">13sp</item>-->
+    <!--        <item name="hintTextColor">@color/pink_a200</item>-->
+    <!--        <item name="android:textAppearance">@style/recipeCreateEditTextStyle</item>-->
+
+    <!--    </style>-->
+
+    <!--    <style name="MySearchViewText" parent="searchEditText">-->
+    <!--        <item name="android:textSize">9sp</item>-->
+    <!--        <item name="android:textColor">@color/pink_a200</item>-->
+    <!--    </style>-->
+
 </resources>
