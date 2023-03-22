@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
         android:elevation="4dp"
-        android:translationZ="2dp">
+        android:translationZ="6dp">
 
         <include
             android:id="@+id/bottomSheetSearch"
@@ -82,18 +82,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_find_recipe"
+                <include
+                    android:id="@+id/search_rv_find_user"
+                    layout="@layout/include_rv_user_search"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_space_not_spice"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:overScrollMode="never"
-                    android:paddingTop="5dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_height="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:listitem="@layout/rv_feed_recipe_card_preview" />
+                    app:layout_constraintTop_toBottomOf="@id/search_rv_find_recipe" />
+
+                <include
+                    android:id="@+id/search_rv_find_recipe"
+                    layout="@layout/include_rv_recipe_search"
+                    android:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

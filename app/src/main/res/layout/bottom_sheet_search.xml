@@ -7,8 +7,10 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="2dp"
     android:background="@drawable/bottom_sheet_search_bgr"
-    android:elevation="2dp"
+    android:elevation="6dp"
     android:orientation="vertical"
+    android:translationZ="6dp"
+    android:animateLayoutChanges="true"
     app:behavior_peekHeight="30dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -23,13 +25,13 @@
         android:id="@+id/scroll_view_bottom_sheet_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:clipToPadding="false"
         android:fadingEdge="horizontal"
         android:fadingEdgeLength="50dp"
         android:overScrollMode="never"
         android:requiresFadingEdge="vertical"
         app:fastScrollEnabled="true"
-        android:layout_marginTop="30dp"
         app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
         app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
         app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
@@ -129,25 +131,25 @@
                 tools:listitem="@layout/rv_search" />
 
 
-<!--            <ToggleButton-->
-<!--                app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/rv_cooking_difficulty_search"-->
-<!--                android:id="@+id/radiobutton_select_all_difficulties"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                android:background="@drawable/selector_radio_btns"-->
-<!--                android:button="@drawable/null_radio_button"-->
-<!--                android:elevation="4dp"-->
-<!--                android:textOn="All"-->
-<!--                android:textOff="All"-->
-<!--                android:maxLines="1"-->
-<!--                android:clickable="true"-->
-<!--                android:textSize="13sp"-->
-<!--                android:textAlignment="center"-->
-<!--                android:fontFamily="@font/roboto_medium"-->
-<!--                android:textColor="@drawable/selector_search_item_text"-->
-<!--                android:translationZ="1dp" />-->
+            <!--            <ToggleButton-->
+            <!--                app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/rv_cooking_difficulty_search"-->
+            <!--                android:id="@+id/radiobutton_select_all_difficulties"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:layout_marginStart="10dp"-->
+            <!--                android:background="@drawable/selector_radio_btns"-->
+            <!--                android:button="@drawable/null_radio_button"-->
+            <!--                android:elevation="4dp"-->
+            <!--                android:textOn="All"-->
+            <!--                android:textOff="All"-->
+            <!--                android:maxLines="1"-->
+            <!--                android:clickable="true"-->
+            <!--                android:textSize="13sp"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:fontFamily="@font/roboto_medium"-->
+            <!--                android:textColor="@drawable/selector_search_item_text"-->
+            <!--                android:translationZ="1dp" />-->
 
             <TextView
                 android:id="@+id/textview_title_kcals_search"

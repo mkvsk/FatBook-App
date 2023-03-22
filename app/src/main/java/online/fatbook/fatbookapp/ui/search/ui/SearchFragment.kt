@@ -25,6 +25,8 @@ import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
 import online.fatbook.fatbookapp.network.callback.ResultCallback
 import online.fatbook.fatbookapp.network.request.SearchRequest
+import online.fatbook.fatbookapp.ui.base.OnRecipeClickListener
+import online.fatbook.fatbookapp.ui.feed.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.navigation.listeners.BaseFragmentActionsListener
 import online.fatbook.fatbookapp.ui.search.adapters.SearchAdapter
 import online.fatbook.fatbookapp.ui.search.listeners.OnSearchItemClickListener
@@ -35,10 +37,15 @@ import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 
 
-class SearchFragment : Fragment(), BaseFragmentActionsListener {
+class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+
+    private var adapterRecipe: RecipeAdapter? = null
+    private var rvRecipe: RecyclerView? = null
+//    private var adapterUser: ? = null
+//    private var rvUser: RecyclerView? = null
 
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private val searchViewModel by lazy { obtainViewModel(SearchViewModel::class.java) }
@@ -144,7 +151,6 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     private fun findRecipe(txt: String) {
-
         bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
 
         val sr = SearchRequest(txt, ArrayList(), ArrayList(), ArrayList())
@@ -222,6 +228,8 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
 
     private fun drawData() {
         Log.d(TAG, "drawData: ${searchViewModel.searchRecipes.value}")
+        adapterRecipe!!.setData(searchViewModel.searchRecipes.value)
+        binding.swipeRefreshSearch.isEnabled = true
         searchViewModel.setIsLoading(false)
     }
 
@@ -243,6 +251,26 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
     }
 
     private fun setupAdapters() {
+        bottomSheetAdapters()
+        recipeAdapter()
+//        userAdapter()
+    }
+
+    private fun userAdapter() {
+//        TODO
+    }
+
+    private fun recipeAdapter() {
+        rvRecipe = binding.searchRvFindRecipe.rvRecipeSearch
+        adapterRecipe = RecipeAdapter()
+        adapterRecipe!!.setClickListener(this)
+        adapterRecipe!!.setContext(requireContext())
+        rvRecipe!!.adapter = adapterRecipe
+        rvRecipe!!.adapter?.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+    }
+
+    private fun bottomSheetAdapters() {
         binding.bottomSheetSearch.rvCookingCategoriesSearch.layoutManager = getLayoutManager()
         adapterCategories = SearchAdapter()
         adapterCategories!!.setClickListener(object : OnSearchItemClickListener {
@@ -379,7 +407,6 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("==========SearchFragment==========", "onDestroy")
         _binding = null
     }
 
@@ -396,5 +423,30 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener {
     override fun scrollUpBase() {
         binding.searchLayout.scrollTo(0, 0)
         binding.appBarLayout.setExpanded(true, false)
+    }
+
+    override fun onRecipeClick(id: Long) {
+//        TODO
+    }
+
+    override fun onBookmarksClick(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {
+//        TODO
+    }
+
+    override fun onForkClicked(recipe: RecipeSimpleObject?, fork: Boolean, position: Int) {
+//        TODO
+    }
+
+    override fun onForkClicked(
+        recipe: RecipeSimpleObject?,
+        fork: Boolean,
+        position: Int,
+        viewHolder: RecipeAdapter.ViewHolder
+    ) {
+//        TODO
+    }
+
+    override fun onUsernameClick(username: String) {
+//        TODO
     }
 }
