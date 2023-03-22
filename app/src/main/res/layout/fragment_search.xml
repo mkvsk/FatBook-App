@@ -85,21 +85,22 @@
                 <include
                     android:id="@+id/search_rv_find_user"
                     layout="@layout/include_rv_user_search"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
+
+
+                <include
+                    android:id="@+id/search_rv_find_recipe"
+                    layout="@layout/include_rv_recipe_search"
+                    android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/tv_space_not_spice"
+                    android:id="@+id/space_not_spice"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/search_rv_find_recipe" />
-
-                <include
-                    android:id="@+id/search_rv_find_recipe"
-                    layout="@layout/include_rv_recipe_search"
-                    android:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

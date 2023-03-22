@@ -195,7 +195,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
                 binding.bottomSheetSearch.textviewKcalsLimitSettedSearch.text = progress.toString()
-                searchViewModel.searchRequest.value!!.kcal = progress
+                searchViewModel.searchRequestRecipe.value!!.kcal = progress
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -228,6 +228,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
     private fun drawData() {
         Log.d(TAG, "drawData: ${searchViewModel.searchRecipes.value}")
+        binding.searchRvFindRecipe.root.visibility = View.VISIBLE
         adapterRecipe!!.setData(searchViewModel.searchRecipes.value)
         binding.swipeRefreshSearch.isEnabled = true
         searchViewModel.setIsLoading(false)
@@ -276,20 +277,20 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         adapterCategories!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingCategory
-                if (searchViewModel.searchRequest.value!!.categories.contains(item)) {
-                    searchViewModel.searchRequest.value!!.categories.remove(item)
+                if (searchViewModel.searchRequestRecipe.value!!.categories.contains(item)) {
+                    searchViewModel.searchRequestRecipe.value!!.categories.remove(item)
                 } else {
-                    searchViewModel.searchRequest.value!!.categories.add(item)
+                    searchViewModel.searchRequestRecipe.value!!.categories.add(item)
                 }
             }
 
             override fun onSelectAllClick() {
                 if (adapterCategories!!.selectedItems!!.isEmpty()) {
-                    searchViewModel.searchRequest.value!!.categories.clear()
+                    searchViewModel.searchRequestRecipe.value!!.categories.clear()
                 } else {
-                    searchViewModel.searchRequest.value!!.categories.clear()
-                    searchViewModel.searchRequest.value!!.categories.addAll(searchViewModel.categories.value!!)
-                    searchViewModel.searchRequest.value!!.categories.removeAt(0)
+                    searchViewModel.searchRequestRecipe.value!!.categories.clear()
+                    searchViewModel.searchRequestRecipe.value!!.categories.addAll(searchViewModel.categories.value!!)
+                    searchViewModel.searchRequestRecipe.value!!.categories.removeAt(0)
                 }
             }
         })
@@ -300,20 +301,20 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         adapterMethods!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingMethod
-                if (searchViewModel.searchRequest.value!!.methods.contains(item)) {
-                    searchViewModel.searchRequest.value!!.methods.remove(item)
+                if (searchViewModel.searchRequestRecipe.value!!.methods.contains(item)) {
+                    searchViewModel.searchRequestRecipe.value!!.methods.remove(item)
                 } else {
-                    searchViewModel.searchRequest.value!!.methods.add(item)
+                    searchViewModel.searchRequestRecipe.value!!.methods.add(item)
                 }
             }
 
             override fun onSelectAllClick() {
                 if (adapterMethods!!.selectedItems!!.isEmpty()) {
-                    searchViewModel.searchRequest.value!!.methods.clear()
+                    searchViewModel.searchRequestRecipe.value!!.methods.clear()
                 } else {
-                    searchViewModel.searchRequest.value!!.methods.clear()
-                    searchViewModel.searchRequest.value!!.methods.addAll(searchViewModel.methods.value!!)
-                    searchViewModel.searchRequest.value!!.methods.removeAt(0)
+                    searchViewModel.searchRequestRecipe.value!!.methods.clear()
+                    searchViewModel.searchRequestRecipe.value!!.methods.addAll(searchViewModel.methods.value!!)
+                    searchViewModel.searchRequestRecipe.value!!.methods.removeAt(0)
                 }
             }
         })
@@ -324,10 +325,10 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         adapterDifficulty!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingDifficulty
-                if (searchViewModel.searchRequest.value!!.difficulties.contains(item)) {
-                    searchViewModel.searchRequest.value!!.difficulties.remove(item)
+                if (searchViewModel.searchRequestRecipe.value!!.difficulties.contains(item)) {
+                    searchViewModel.searchRequestRecipe.value!!.difficulties.remove(item)
                 } else {
-                    searchViewModel.searchRequest.value!!.difficulties.add(item)
+                    searchViewModel.searchRequestRecipe.value!!.difficulties.add(item)
                 }
             }
 
