@@ -8,7 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import online.fatbook.fatbookapp.network.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
-import online.fatbook.fatbookapp.network.request.SearchRequest
+import online.fatbook.fatbookapp.network.request.RecipeSearchRequest
 import online.fatbook.fatbookapp.network.service.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,7 +26,7 @@ class SearchRepository : ViewModel() {
         const val TAG = "SearchRepository"
     }
 
-    fun search(request: SearchRequest, callback: ResultCallback<List<RecipeSimpleObject>>) {
+    fun search(request: RecipeSearchRequest, callback: ResultCallback<List<RecipeSimpleObject>>) {
         scope.launch(Dispatchers.IO) {
             val call = RetrofitFactory.apiService().search(request)
 

@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import online.fatbook.fatbookapp.network.callback.ResultCallback
 import online.fatbook.fatbookapp.core.recipe.*
-import online.fatbook.fatbookapp.network.request.SearchRequest
+import online.fatbook.fatbookapp.core.user.UserSimpleObject
+import online.fatbook.fatbookapp.network.request.RecipeSearchRequest
+import online.fatbook.fatbookapp.network.request.UserSearchRequest
 import online.fatbook.fatbookapp.ui.search.repository.SearchRepository
 
 class SearchViewModel : ViewModel() {
@@ -16,11 +18,18 @@ class SearchViewModel : ViewModel() {
 
     private val repository by lazy { SearchRepository() }
 
-    private val _searchRequestRecipe = MutableLiveData<SearchRequest>()
-    val searchRequestRecipe: LiveData<SearchRequest> get() = _searchRequestRecipe
+    private val _isSearchRecipe = MutableLiveData<Boolean?>()
+    val isSearchRecipe: LiveData<Boolean?> get() = _isSearchRecipe
 
-    fun setSearchRequest(value: SearchRequest) {
-        _searchRequestRecipe.value = value
+    fun setIsSearchRecipe(value: Boolean?) {
+        _isSearchRecipe.value = value!!
+    }
+
+    private val _recipeSearchRequest = MutableLiveData<RecipeSearchRequest>()
+    val recipeSearchRequest: LiveData<RecipeSearchRequest> get() = _recipeSearchRequest
+
+    fun setRecipeSearchRequest(value: RecipeSearchRequest) {
+        _recipeSearchRequest.value = value
     }
 
     private val _searchRecipes = MutableLiveData<List<RecipeSimpleObject>>()
@@ -59,18 +68,34 @@ class SearchViewModel : ViewModel() {
     }
 
     fun searchRecipe(callback: ResultCallback<List<RecipeSimpleObject>>) {
-        repository.search(searchRequestRecipe.value!!, object : ResultCallback<List<RecipeSimpleObject>> {
-            override fun onResult(value: List<RecipeSimpleObject>?) {
-                callback.onResult(value)
-            }
+        repository.search(
+            recipeSearchRequest.value!!,
+            object : ResultCallback<List<RecipeSimpleObject>> {
+                override fun onResult(value: List<RecipeSimpleObject>?) {
+                    callback.onResult(value)
+                }
 
-            override fun onFailure(value: List<RecipeSimpleObject>?) {
-                callback.onFailure(value)
-            }
-        })
+                override fun onFailure(value: List<RecipeSimpleObject>?) {
+                    callback.onFailure(value)
+                }
+            })
     }
 
 //    TODO searchUser callback
 //    fun searchUser() {}
+
+    private val _userSearchRequest = MutableLiveData<UserSearchRequest>()
+    val userSearchRequest: LiveData<UserSearchRequest> get() = _userSearchRequest
+
+    fun setUserSearchRequest(value: UserSearchRequest) {
+        _userSearchRequest.value = value
+    }
+
+    private val _searchUsers = MutableLiveData<List<UserSimpleObject>>()
+    val searchUsers: LiveData<List<UserSimpleObject>> get() = _searchUsers
+
+    fun setSearchUsers(value: List<UserSimpleObject>) {
+        _searchUsers.value = value
+    }
 
 }

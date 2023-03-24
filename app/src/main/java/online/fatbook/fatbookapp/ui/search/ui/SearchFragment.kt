@@ -8,13 +8,13 @@ import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Fade
 import androidx.transition.Scene
+import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -22,9 +22,10 @@ import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.*
+import online.fatbook.fatbookapp.core.user.UserSimpleObject
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
 import online.fatbook.fatbookapp.network.callback.ResultCallback
-import online.fatbook.fatbookapp.network.request.SearchRequest
+import online.fatbook.fatbookapp.network.request.RecipeSearchRequest
 import online.fatbook.fatbookapp.ui.base.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.feed.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.navigation.listeners.BaseFragmentActionsListener
@@ -35,6 +36,8 @@ import online.fatbook.fatbookapp.ui.staticdata.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
+import org.apache.commons.lang3.StringUtils
+import java.time.LocalDateTime
 
 
 class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickListener {
@@ -56,10 +59,9 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     private lateinit var bottomSheetSearchFilter: BottomSheetBehavior<*>
 
     private var searchView: SearchView? = null
-    private var inSearch = false
-    private lateinit var searchModeItem: MenuItem
-    private lateinit var invisibleItem: MenuItem
     private lateinit var applySearch: MenuItem
+
+    private var userTmp: UserSimpleObject = UserSimpleObject()
 
     companion object {
         private const val TAG = "SearchFragment"
@@ -84,7 +86,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         searchView = binding.searchView
 
         binding.loader.progressOverlay.visibility = View.VISIBLE
-        searchViewModel.setSearchRequest(SearchRequest())
+        searchViewModel.setRecipeSearchRequest(RecipeSearchRequest())
         setupMenu()
         setupAdapters()
         initViews()
@@ -95,6 +97,11 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     private fun initViews() {
         bottomSheetSearchFilter = BottomSheetBehavior.from(binding.bottomSheetSearch.sheetSearch)
         bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
+        setSearchMode(
+            true,
+            searchItem = binding.toolbar.menu.findItem(R.id.menu_search_recipe),
+            unselectItem = binding.toolbar.menu.findItem(R.id.menu_search_user)
+        )
     }
 
     private fun setupMenu() {
@@ -105,18 +112,20 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_search_recipe -> {
+                searchViewModel.setIsSearchRecipe(true)
                 setSearchMode(
-                    selectedItemId = binding.toolbar.menu.findItem(R.id.menu_search_recipe),
-                    iconSearch = R.drawable.ic_search_recipe,
-                    hideItem = binding.toolbar.menu.findItem(R.id.menu_search_user)
+                    true,
+                    searchItem = binding.toolbar.menu.findItem(R.id.menu_search_recipe),
+                    unselectItem = binding.toolbar.menu.findItem(R.id.menu_search_user)
                 )
                 true
             }
             R.id.menu_search_user -> {
+                searchViewModel.setIsSearchRecipe(false)
                 setSearchMode(
-                    selectedItemId = binding.toolbar.menu.findItem(R.id.menu_search_user),
-                    iconSearch = R.drawable.ic_search_user,
-                    hideItem = binding.toolbar.menu.findItem(R.id.menu_search_recipe)
+                    false,
+                    searchItem = binding.toolbar.menu.findItem(R.id.menu_search_user),
+                    unselectItem = binding.toolbar.menu.findItem(R.id.menu_search_recipe)
                 )
                 true
             }
@@ -126,35 +135,30 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         }
     }
 
-    private fun setSearchMode(selectedItemId: MenuItem, iconSearch: Int, hideItem: MenuItem) {
-        searchModeItem = selectedItemId
-        invisibleItem = hideItem.setVisible(false)
+    private fun setSearchMode(
+        searchRecipe: Boolean,
+        searchItem: MenuItem?,
+        unselectItem: MenuItem?
+    ) {
         androidx.transition.TransitionManager.go(
-            Scene(binding.searchView),
-            Fade()
+            Scene(binding.toolbar),
+            androidx.transition.AutoTransition()
         )
-        if (inSearch) {
-            inSearch = false
-            searchView!!.visibility = View.GONE
-            searchModeItem.icon =
-                ContextCompat.getDrawable(requireContext(), iconSearch)
-            binding.toolbar.menu.forEach { item: MenuItem ->
-                item.isVisible = true
-            }
-            findRecipe(searchView!!.query.toString())
+        binding.searchView.setQuery(StringUtils.EMPTY, false)
+        searchItem?.icon!!.setTint(ContextCompat.getColor(context!!, R.color.pink_a200))
+        unselectItem?.icon!!.setTint(ContextCompat.getColor(context!!, R.color.main_text))
+        if (searchRecipe) {
+            binding.searchView.queryHint = "search recipe"
         } else {
-            inSearch = true
-            searchView!!.visibility = View.VISIBLE
-            searchModeItem.icon =
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_apply_search)
+            binding.searchView.queryHint = "search user"
         }
     }
 
     private fun findRecipe(txt: String) {
         bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
 
-        val sr = SearchRequest(txt, ArrayList(), ArrayList(), ArrayList())
-        searchViewModel.setSearchRequest(sr)
+        val sr = RecipeSearchRequest(txt, ArrayList(), ArrayList(), ArrayList())
+        searchViewModel.setRecipeSearchRequest(sr)
         searchViewModel.setIsLoading(true)
         searchViewModel.searchRecipe(object : ResultCallback<List<RecipeSimpleObject>> {
             override fun onResult(value: List<RecipeSimpleObject>?) {
@@ -195,7 +199,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
                 binding.bottomSheetSearch.textviewKcalsLimitSettedSearch.text = progress.toString()
-                searchViewModel.searchRequestRecipe.value!!.kcal = progress
+                searchViewModel.recipeSearchRequest.value!!.kcal = progress
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -206,6 +210,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         })
 
         binding.bottomSheetSearch.buttonApplySearch.setOnClickListener {
+            searchViewModel.setIsSearchRecipe(true)
             findRecipe("")
         }
 
@@ -213,7 +218,14 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
             override fun onQueryTextSubmit(queryText: String?): Boolean {
                 Log.d(TAG, "onQueryTextSubmit: TEST")
                 hideKeyboard()
-                findRecipe(queryText.toString())
+                when (searchViewModel.isSearchRecipe.value) {
+                    true -> {
+                        findRecipe(queryText.toString())
+                    }
+                    false -> {
+                        findUser(queryText.toString())
+                    }
+                }
                 return true
             }
 
@@ -242,6 +254,27 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
                 binding.loader.progressOverlay.visibility = View.GONE
             }
         }
+
+//        searchViewModel.isSearchRecipe.observe(viewLifecycleOwner) {
+//            when (it) {
+//                true -> {
+//
+//                }
+//                false -> {
+//
+//                }
+//                else -> {
+//
+//                }
+//            }
+//        }
+    }
+
+    private fun findUser(toString: String) {
+        Toast.makeText(requireContext(), "find in users", Toast.LENGTH_LONG).show()
+
+//        userTmp.title = "find_in_users_username"
+
     }
 
     private fun checkStaticDataLoaded() {
@@ -277,20 +310,22 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         adapterCategories!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingCategory
-                if (searchViewModel.searchRequestRecipe.value!!.categories.contains(item)) {
-                    searchViewModel.searchRequestRecipe.value!!.categories.remove(item)
+                if (searchViewModel.recipeSearchRequest.value!!.categories.contains(item)) {
+                    searchViewModel.recipeSearchRequest.value!!.categories.remove(item)
                 } else {
-                    searchViewModel.searchRequestRecipe.value!!.categories.add(item)
+                    searchViewModel.recipeSearchRequest.value!!.categories.add(item)
                 }
             }
 
             override fun onSelectAllClick() {
                 if (adapterCategories!!.selectedItems!!.isEmpty()) {
-                    searchViewModel.searchRequestRecipe.value!!.categories.clear()
+                    searchViewModel.recipeSearchRequest.value!!.categories.clear()
                 } else {
-                    searchViewModel.searchRequestRecipe.value!!.categories.clear()
-                    searchViewModel.searchRequestRecipe.value!!.categories.addAll(searchViewModel.categories.value!!)
-                    searchViewModel.searchRequestRecipe.value!!.categories.removeAt(0)
+                    searchViewModel.recipeSearchRequest.value!!.categories.clear()
+                    searchViewModel.recipeSearchRequest.value!!.categories.addAll(
+                        searchViewModel.categories.value!!
+                    )
+                    searchViewModel.recipeSearchRequest.value!!.categories.removeAt(0)
                 }
             }
         })
@@ -301,20 +336,20 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         adapterMethods!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingMethod
-                if (searchViewModel.searchRequestRecipe.value!!.methods.contains(item)) {
-                    searchViewModel.searchRequestRecipe.value!!.methods.remove(item)
+                if (searchViewModel.recipeSearchRequest.value!!.methods.contains(item)) {
+                    searchViewModel.recipeSearchRequest.value!!.methods.remove(item)
                 } else {
-                    searchViewModel.searchRequestRecipe.value!!.methods.add(item)
+                    searchViewModel.recipeSearchRequest.value!!.methods.add(item)
                 }
             }
 
             override fun onSelectAllClick() {
                 if (adapterMethods!!.selectedItems!!.isEmpty()) {
-                    searchViewModel.searchRequestRecipe.value!!.methods.clear()
+                    searchViewModel.recipeSearchRequest.value!!.methods.clear()
                 } else {
-                    searchViewModel.searchRequestRecipe.value!!.methods.clear()
-                    searchViewModel.searchRequestRecipe.value!!.methods.addAll(searchViewModel.methods.value!!)
-                    searchViewModel.searchRequestRecipe.value!!.methods.removeAt(0)
+                    searchViewModel.recipeSearchRequest.value!!.methods.clear()
+                    searchViewModel.recipeSearchRequest.value!!.methods.addAll(searchViewModel.methods.value!!)
+                    searchViewModel.recipeSearchRequest.value!!.methods.removeAt(0)
                 }
             }
         })
@@ -325,10 +360,10 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         adapterDifficulty!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingDifficulty
-                if (searchViewModel.searchRequestRecipe.value!!.difficulties.contains(item)) {
-                    searchViewModel.searchRequestRecipe.value!!.difficulties.remove(item)
+                if (searchViewModel.recipeSearchRequest.value!!.difficulties.contains(item)) {
+                    searchViewModel.recipeSearchRequest.value!!.difficulties.remove(item)
                 } else {
-                    searchViewModel.searchRequestRecipe.value!!.difficulties.add(item)
+                    searchViewModel.recipeSearchRequest.value!!.difficulties.add(item)
                 }
             }
 
@@ -347,7 +382,8 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     }
 
     private fun loadCategories() {
-        staticDataViewModel.getAllCookingCategories(object : ResultCallback<List<CookingCategory>> {
+        staticDataViewModel.getAllCookingCategories(object :
+            ResultCallback<List<CookingCategory>> {
             override fun onResult(value: List<CookingCategory>?) {
                 searchViewModel.setCategories(ArrayList(value!!))
                 staticDataViewModel.setCookingCategories(ArrayList(value))
@@ -430,7 +466,11 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 //        TODO
     }
 
-    override fun onBookmarksClick(recipe: RecipeSimpleObject?, bookmark: Boolean, position: Int) {
+    override fun onBookmarksClick(
+        recipe: RecipeSimpleObject?,
+        bookmark: Boolean,
+        position: Int
+    ) {
 //        TODO
     }
 

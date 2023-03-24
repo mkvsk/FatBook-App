@@ -44,7 +44,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             local:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary."
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
-            local:title="Search"
+            local:title=""
             local:titleTextAppearance="@style/txtToolbar"
             local:titleTextColor="@color/main_text">
 
@@ -52,10 +52,10 @@
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginHorizontal="10dp"
                 android:animateLayoutChanges="true"
                 android:background="@drawable/round_corner_edittext_pink_frame"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:theme="@style/SearchViewStyle"
                 local:queryHint="find in users or recipes"
                 local:searchIcon="@drawable/ic_search_recipe" />
