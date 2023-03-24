@@ -18,11 +18,11 @@ class SearchViewModel : ViewModel() {
 
     private val repository by lazy { SearchRepository() }
 
-    private val _isSearchRecipe = MutableLiveData<Boolean?>()
-    val isSearchRecipe: LiveData<Boolean?> get() = _isSearchRecipe
+    private val _isSearchRecipe = MutableLiveData<Boolean>(true)
+    val isSearchRecipe: LiveData<Boolean> get() = _isSearchRecipe
 
-    fun setIsSearchRecipe(value: Boolean?) {
-        _isSearchRecipe.value = value!!
+    fun setIsSearchRecipe(value: Boolean) {
+        _isSearchRecipe.value = value
     }
 
     private val _recipeSearchRequest = MutableLiveData<RecipeSearchRequest>()

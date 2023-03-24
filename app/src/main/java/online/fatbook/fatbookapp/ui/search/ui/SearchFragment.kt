@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Fade
 import androidx.transition.Scene
-import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -33,22 +33,24 @@ import online.fatbook.fatbookapp.ui.search.adapters.SearchAdapter
 import online.fatbook.fatbookapp.ui.search.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.ui.search.viewmodel.SearchViewModel
 import online.fatbook.fatbookapp.ui.staticdata.viewmodel.StaticDataViewModel
+import online.fatbook.fatbookapp.ui.user.adapters.FollowAdapter
+import online.fatbook.fatbookapp.ui.user.listeners.OnUserFollowClickListener
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
-import java.time.LocalDateTime
 
 
-class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickListener {
+class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickListener,
+    OnUserFollowClickListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
     private var adapterRecipe: RecipeAdapter? = null
     private var rvRecipe: RecyclerView? = null
-//    private var adapterUser: ? = null
-//    private var rvUser: RecyclerView? = null
+    private var adapterUser: FollowAdapter? = null
+    private var rvUser: RecyclerView? = null
 
     private val staticDataViewModel by lazy { obtainViewModel(StaticDataViewModel::class.java) }
     private val searchViewModel by lazy { obtainViewModel(SearchViewModel::class.java) }
@@ -240,6 +242,12 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
     private fun drawData() {
         Log.d(TAG, "drawData: ${searchViewModel.searchRecipes.value}")
+
+        TransitionManager.go(
+            android.transition.Scene(binding.containerSearch),
+            android.transition.Fade()
+        )
+        binding.searchRvFindUser.root.visibility = View.GONE
         binding.searchRvFindRecipe.root.visibility = View.VISIBLE
         adapterRecipe!!.setData(searchViewModel.searchRecipes.value)
         binding.swipeRefreshSearch.isEnabled = true
@@ -273,8 +281,25 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     private fun findUser(toString: String) {
         Toast.makeText(requireContext(), "find in users", Toast.LENGTH_LONG).show()
 
-//        userTmp.title = "find_in_users_username"
-
+//        TODO remove stub
+        userTmp.username = "shrek_"
+        userTmp.profileImage =
+            "https://sun9-15.userapi.com/impg/fbOo5FiA1MTsDcXhyiIIXu_p-dZP-SkKrxt0LQ/3rh_yUkw8Gc.jpg?size=1470x1960&quality=95&sign=6297081e88937bc8368dea3b6b92aae0&type=album"
+        val arr: ArrayList<UserSimpleObject> = ArrayList()
+        for (i in 1..6) {
+            userTmp.username = "neshik"
+            arr.add(userTmp)
+        }
+        searchViewModel.setSearchUsers(arr)
+        TransitionManager.go(
+            android.transition.Scene(binding.containerSearch),
+            android.transition.Fade()
+        )
+        binding.searchRvFindRecipe.root.visibility = View.GONE
+        binding.searchRvFindUser.root.visibility = View.VISIBLE
+        adapterUser!!.setData(searchViewModel.searchUsers.value)
+        binding.swipeRefreshSearch.isEnabled = true
+        searchViewModel.setIsLoading(false)
     }
 
     private fun checkStaticDataLoaded() {
@@ -287,11 +312,18 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     private fun setupAdapters() {
         bottomSheetAdapters()
         recipeAdapter()
-//        userAdapter()
+        userAdapter()
     }
 
     private fun userAdapter() {
 //        TODO
+        rvUser = binding.searchRvFindUser.rvUserSearch
+        adapterUser = FollowAdapter()
+        adapterUser!!.setRvFollowClickListener(this)
+        adapterUser!!.setContext(requireContext())
+        rvUser!!.adapter = adapterUser
+        rvUser!!.adapter?.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
     private fun recipeAdapter() {
@@ -462,6 +494,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         binding.appBarLayout.setExpanded(true, false)
     }
 
+    //    rv recipe listeners
     override fun onRecipeClick(id: Long) {
 //        TODO
     }
@@ -488,6 +521,19 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     }
 
     override fun onUsernameClick(username: String) {
+//        TODO
+    }
+
+    //    rv follow listeners
+    override fun onUserLinkClick(user: UserSimpleObject) {
+        //        TODO
+    }
+
+    override fun onUserSendMessageClick() {
+//        TODO
+    }
+
+    override fun onUserFollowClick() {
 //        TODO
     }
 }
