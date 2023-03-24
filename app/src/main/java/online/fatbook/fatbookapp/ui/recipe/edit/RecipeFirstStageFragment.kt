@@ -283,7 +283,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
                     TransitionManager.go(Scene(binding.containerLl), AutoTransition())
 
                     Glide.with(requireContext())
-                        .load(R.drawable.default_recipe_image_rv_feed)
+                        .load(R.drawable.default_recipe_image_recipe_create_first_stage_step)
                         .into(binding.imageviewPhotoRecipe1Stage)
 
                     toggleImageButtons(false)
