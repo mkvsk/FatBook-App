@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
@@ -84,6 +85,24 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>(),
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(recipe: RecipeSimpleObject) {
+            if (recipe.isPrivate == true) {
+                itemView.imageView_rv_recipe_private.visibility = View.VISIBLE
+                itemView.view_click_comments.visibility = View.GONE
+                itemView.view_click_fork.visibility = View.GONE
+                itemView.textView_rv_card_recipe_forks_avg.visibility = View.GONE
+                itemView.imageView_rv_card_recipe_fork.visibility = View.GONE
+                itemView.imageView_rv_card_recipe_comments.visibility = View.GONE
+                itemView.rv_recipe_comments_qty.visibility = View.GONE
+            } else {
+                itemView.imageView_rv_recipe_private.visibility = View.GONE
+                itemView.view_click_comments.visibility = View.VISIBLE
+                itemView.view_click_fork.visibility = View.VISIBLE
+                itemView.textView_rv_card_recipe_forks_avg.visibility = View.VISIBLE
+                itemView.imageView_rv_card_recipe_fork.visibility = View.VISIBLE
+                itemView.imageView_rv_card_recipe_comments.visibility = View.VISIBLE
+                itemView.rv_recipe_comments_qty.visibility = View.VISIBLE
+            }
+
             recipeForked = false
             recipeInFav = false
             itemView.view_click_fork.tag = TAG_CLICK_FALSE
