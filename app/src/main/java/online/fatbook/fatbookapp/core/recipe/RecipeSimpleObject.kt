@@ -31,20 +31,21 @@ data class RecipeSimpleObject(
         }
 
     constructor(parcel: Parcel) : this(
-        parcel.readValue(Long::class.java.classLoader) as? Long,
-        parcel.readString(),
-        parcel.readValue(UserSimpleObject::class.java.classLoader) as? UserSimpleObject,
-        parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readValue(Long::class.java.classLoader) as? Long,
-        parcel.readValue(CookingDifficulty::class.java.classLoader) as? CookingDifficulty,
-        parcel.readString(),
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-        (parcel.readValue(Map::class.java.classLoader) as? EnumMap<Locale, String>)!!
+        pid = parcel.readValue(Long::class.java.classLoader) as? Long,
+        title = parcel.readString(),
+        user = parcel.readValue(UserSimpleObject::class.java.classLoader) as? UserSimpleObject,
+        image = parcel.readString(),
+        forks = parcel.readValue(Int::class.java.classLoader) as? Int,
+        createDate = parcel.readString(),
+        identifier = parcel.readValue(Long::class.java.classLoader) as? Long,
+        difficulty = parcel.readValue(CookingDifficulty::class.java.classLoader) as? CookingDifficulty,
+        cookingTime = parcel.readString(),
+        kcalPerPortion = parcel.readValue(Double::class.java.classLoader) as? Double,
+        commentQty = parcel.readValue(Int::class.java.classLoader) as? Int,
+        ingredientQty = parcel.readValue(Int::class.java.classLoader) as? Int,
+        isPrivate = parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        ingredientsLocalizedMap = parcel.readBundle(Map::class.java.classLoader) as Map<Locale, String>
+//        (parcel.readValue(Map::class.java.classLoader) as? EnumMap<Locale, String>)!!
     ) {
     }
 

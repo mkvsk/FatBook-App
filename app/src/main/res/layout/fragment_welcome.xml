@@ -33,33 +33,33 @@
             android:text="@string/title_app_name_welcome" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/fragment_welcome_button_register"
-            android:layout_height="@dimen/btn_pink_h"
-            android:layout_width="@dimen/btn_pink_w"
-            android:background="@drawable/selector_btn_in_auth"
-            style="@style/btnPink"
-            android:elevation="4dp"
-            android:translationZ="2dp"
-            android:text="@string/btn_register_welcome"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="@dimen/start_fragments_element_spacing"
-            app:layout_constraintBottom_toTopOf="@id/fragment_welcome_button_login"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fragment_welcome_button_register"
+        style="@style/btnPink"
+        android:layout_width="@dimen/btn_pink_w"
+        android:layout_height="@dimen/btn_pink_h"
+        android:layout_marginBottom="@dimen/start_fragments_element_spacing"
+        android:background="@drawable/selector_btn_in_auth"
+        android:elevation="4dp"
+        android:text="@string/btn_register_welcome"
+        android:translationZ="2dp"
+        app:layout_constraintBottom_toTopOf="@id/fragment_welcome_button_login"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/fragment_welcome_button_login"
-            android:layout_height="@dimen/btn_pink_h"
-            android:layout_width="@dimen/btn_pink_w"
-            android:background="@drawable/selector_btn_in_auth"
-            style="@style/btnPink"
-            android:elevation="4dp"
-            android:translationZ="2dp"
-            android:text="@string/btn_login_welcome"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fragment_welcome_button_login"
+        style="@style/btnPink"
+        android:layout_width="@dimen/btn_pink_w"
+        android:layout_height="@dimen/btn_pink_h"
+        android:background="@drawable/selector_btn_in_auth"
+        android:elevation="4dp"
+        android:text="@string/btn_login_welcome"
+        android:translationZ="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/fragment_welcome_kuzya_dialog"
