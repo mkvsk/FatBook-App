@@ -191,10 +191,10 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="30dp"
                             android:autoLink="all"
+                            android:fontFamily="@font/roboto_medium"
+                            android:lines="1"
                             android:linksClickable="true"
                             android:maxLines="1"
-                            android:lines="1"
-                            android:fontFamily="@font/roboto_medium"
                             android:text="@string/no_data_dots"
                             android:textSize="11sp"
                             app:layout_constraintLeft_toRightOf="@id/icProfileWebsite"
@@ -235,7 +235,7 @@
                                 android:layout_marginEnd="30dp"
                                 android:ellipsize="end"
                                 android:maxLines="3"
-                                android:text="@string/no_data_dots"/>
+                                android:text="@string/no_data_dots" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -319,21 +319,6 @@
                         android:background="@android:color/transparent"
                         app:layout_constraintTop_toBottomOf="@+id/tabLayout_userprofile" />
                 </LinearLayout>
-
-
-                <!--                <androidx.recyclerview.widget.RecyclerView-->
-                <!--                    android:id="@+id/rv_user_recipe"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:clipToPadding="false"-->
-                <!--                    android:overScrollMode="never"-->
-                <!--                    android:paddingTop="15dp"-->
-                <!--                    android:visibility="gone"-->
-                <!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@+id/ll_viewpager"-->
-                <!--                    tools:listitem="@layout/rv_feed_recipe_card_preview" />-->
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>

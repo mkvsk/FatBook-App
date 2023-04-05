@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import online.fatbook.fatbookapp.core.user.UserSimpleObject
 import online.fatbook.fatbookapp.util.AppInfo
-import java.io.Serializable
 import java.util.*
 
 data class RecipeSimpleObject(
@@ -48,7 +47,7 @@ data class RecipeSimpleObject(
         (parcel.readValue(Map::class.java.classLoader) as? EnumMap<Locale, String>)!!
     ) {
     }
-    //TODO ingredientsLocalizedMap
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(pid)
         parcel.writeString(title)
