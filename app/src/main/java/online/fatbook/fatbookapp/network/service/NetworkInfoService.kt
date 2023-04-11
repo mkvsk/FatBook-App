@@ -6,9 +6,11 @@ import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
 import online.fatbook.fatbookapp.core.recipe.ingredient.unit.IngredientUnit
 import online.fatbook.fatbookapp.core.user.User
+import online.fatbook.fatbookapp.core.user.UserSimpleObject
 import online.fatbook.fatbookapp.network.*
 import online.fatbook.fatbookapp.network.request.AuthenticationRequest
 import online.fatbook.fatbookapp.network.request.RecipeSearchRequest
+import online.fatbook.fatbookapp.network.request.UserSearchRequest
 import online.fatbook.fatbookapp.network.request.UserUpdateRequest
 import online.fatbook.fatbookapp.network.response.AuthenticationResponse
 import online.fatbook.fatbookapp.network.response.LoginResponse
@@ -92,8 +94,11 @@ interface NetworkInfoService {
     /**
      * Search
      */
-    @POST("search")
-    fun search(@Body request: RecipeSearchRequest): Call<List<RecipeSimpleObject>>
+    @POST("search/recipe")
+    fun searchRecipe(@Body request: RecipeSearchRequest): Call<List<RecipeSimpleObject>>
+
+    @POST("search/user")
+    fun searchUser(@Body request: UserSearchRequest): Call<List<UserSimpleObject>>
 
     /**
      * Recipe
