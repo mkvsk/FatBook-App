@@ -5,15 +5,16 @@ import android.transition.AutoTransition
 import android.transition.TransitionInflater
 import android.transition.TransitionManager
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Fade
 import androidx.transition.Scene
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -26,6 +27,7 @@ import online.fatbook.fatbookapp.core.user.UserSimpleObject
 import online.fatbook.fatbookapp.databinding.FragmentSearchBinding
 import online.fatbook.fatbookapp.network.callback.ResultCallback
 import online.fatbook.fatbookapp.network.request.RecipeSearchRequest
+import online.fatbook.fatbookapp.network.request.UserSearchRequest
 import online.fatbook.fatbookapp.ui.base.OnRecipeClickListener
 import online.fatbook.fatbookapp.ui.feed.adapters.RecipeAdapter
 import online.fatbook.fatbookapp.ui.navigation.listeners.BaseFragmentActionsListener
@@ -89,6 +91,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
         binding.loader.progressOverlay.visibility = View.VISIBLE
         searchViewModel.setRecipeSearchRequest(RecipeSearchRequest())
+        searchViewModel.setUserSearchRequest(UserSearchRequest())
         setupMenu()
         setupAdapters()
         initViews()
@@ -158,10 +161,8 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
     private fun findRecipe(txt: String) {
         bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
-
-        val sr = RecipeSearchRequest(txt, ArrayList(), ArrayList(), ArrayList())
-        searchViewModel.setRecipeSearchRequest(sr)
         searchViewModel.setIsLoading(true)
+        searchViewModel.recipeSearchRequest.value!!.searchString = txt
         searchViewModel.searchRecipe(object : ResultCallback<List<RecipeSimpleObject>> {
             override fun onResult(value: List<RecipeSimpleObject>?) {
                 value?.let {
@@ -220,13 +221,10 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
             override fun onQueryTextSubmit(queryText: String?): Boolean {
                 Log.d(TAG, "onQueryTextSubmit: TEST")
                 hideKeyboard()
-                when (searchViewModel.isSearchRecipe.value) {
-                    true -> {
-                        findRecipe(queryText.toString())
-                    }
-                    false -> {
-                        findUser(queryText.toString())
-                    }
+                if (searchViewModel.isSearchRecipe.value == true) {
+                    findRecipe(queryText.toString())
+                } else {
+                    findUser(queryText.toString())
                 }
                 return true
             }
@@ -235,9 +233,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
                 Log.d(TAG, "onQueryTextChange: EVENT TEXT HAS BEEN CHANGED")
                 return true
             }
-
         })
-
     }
 
     private fun drawData() {
@@ -262,44 +258,40 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
                 binding.loader.progressOverlay.visibility = View.GONE
             }
         }
-
-//        searchViewModel.isSearchRecipe.observe(viewLifecycleOwner) {
-//            when (it) {
-//                true -> {
-//
-//                }
-//                false -> {
-//
-//                }
-//                else -> {
-//
-//                }
-//            }
-//        }
     }
 
-    private fun findUser(toString: String) {
-        Toast.makeText(requireContext(), "find in users", Toast.LENGTH_LONG).show()
+    private fun findUser(txt: String) {
+        searchViewModel.userSearchRequest.value!!.searchString = txt
+        searchViewModel.searchUser(object : ResultCallback<List<UserSimpleObject>>{
+            override fun onResult(value: List<UserSimpleObject>?) {
+                Log.i(TAG, "$value")
+            }
 
-//        TODO remove stub
-        userTmp.username = "shrek_"
-        userTmp.profileImage =
-            "https://sun9-15.userapi.com/impg/fbOo5FiA1MTsDcXhyiIIXu_p-dZP-SkKrxt0LQ/3rh_yUkw8Gc.jpg?size=1470x1960&quality=95&sign=6297081e88937bc8368dea3b6b92aae0&type=album"
-        val arr: ArrayList<UserSimpleObject> = ArrayList()
-        for (i in 1..6) {
-            userTmp.username = "neshik"
-            arr.add(userTmp)
-        }
-        searchViewModel.setSearchUsers(arr)
-        TransitionManager.go(
-            android.transition.Scene(binding.containerSearch),
-            android.transition.Fade()
-        )
-        binding.searchRvFindRecipe.root.visibility = View.GONE
-        binding.searchRvFindUser.root.visibility = View.VISIBLE
-        adapterUser!!.setData(searchViewModel.searchUsers.value)
-        binding.swipeRefreshSearch.isEnabled = true
-        searchViewModel.setIsLoading(false)
+            override fun onFailure(value: List<UserSimpleObject>?) {
+                Log.i(TAG, "failed")
+            }
+        })
+//        Toast.makeText(requireContext(), "find in users", Toast.LENGTH_LONG).show()
+//
+////        TODO remove stub
+//        userTmp.username = "shrek_"
+//        userTmp.profileImage =
+//            "https://sun9-15.userapi.com/impg/fbOo5FiA1MTsDcXhyiIIXu_p-dZP-SkKrxt0LQ/3rh_yUkw8Gc.jpg?size=1470x1960&quality=95&sign=6297081e88937bc8368dea3b6b92aae0&type=album"
+//        val arr: ArrayList<UserSimpleObject> = ArrayList()
+//        for (i in 1..6) {
+//            userTmp.username = "neshik"
+//            arr.add(userTmp)
+//        }
+//        searchViewModel.setSearchUsers(arr)
+//        TransitionManager.go(
+//            android.transition.Scene(binding.containerSearch),
+//            android.transition.Fade()
+//        )
+//        binding.searchRvFindRecipe.root.visibility = View.GONE
+//        binding.searchRvFindUser.root.visibility = View.VISIBLE
+//        adapterUser!!.setData(searchViewModel.searchUsers.value)
+//        binding.swipeRefreshSearch.isEnabled = true
+//        searchViewModel.setIsLoading(false)
     }
 
     private fun checkStaticDataLoaded() {
