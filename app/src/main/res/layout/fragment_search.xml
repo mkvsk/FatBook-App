@@ -85,13 +85,13 @@
                 <include
                     android:id="@+id/search_rv_find_user"
                     layout="@layout/include_rv_user_search"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
 
                 <include
                     android:id="@+id/search_rv_find_recipe"
                     layout="@layout/include_rv_recipe_search"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/space_not_spice"

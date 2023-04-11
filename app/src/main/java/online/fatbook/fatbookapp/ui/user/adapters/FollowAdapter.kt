@@ -63,8 +63,10 @@ class FollowAdapter : RecyclerView.Adapter<FollowAdapter.ViewHolder>(),
             Glide.with(itemView.context).load(userSimpleObject.profileImage)
                 .into(itemView.imageview_userphoto_rv_follow)
 
+            itemView.cardview_rv_follow.setOnClickListener {
+                listener.onSimpleUserClick(userSimpleObject.username!!.toString())
+            }
             listener.onUserFollowClick()
-            listener.onUserLinkClick(UserSimpleObject())
             listener.onUserSendMessageClick()
         }
     }
