@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.SplashActivity

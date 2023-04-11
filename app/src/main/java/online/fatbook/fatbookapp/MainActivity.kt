@@ -5,12 +5,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationBarView
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.google.firebase.remoteconfig.ktx.get
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.authentication.viewmodel.AuthenticationViewModel
@@ -90,6 +97,36 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             "MAINACTIVITY",
             "---Created"
         )
+
+        val remoteConfig = Firebase.remoteConfig
+
+        val isEnabled = remoteConfig["is_enabled"].asBoolean()
+        val fileBytes = remoteConfig["file_bytes"].asByteArray()
+        val audioVolume = remoteConfig["audio_volume"].asDouble()
+        val maxCharacters = remoteConfig["max_characters"].asLong()
+        val accessKey = remoteConfig["access_key"].asString()
+
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 3600
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
+
+        remoteConfig.fetchAndActivate()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val updated = task.result
+                    Log.d("QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ ", "Config params updated: $updated")
+                    Toast.makeText(this, "Fetch and activate succeeded",
+                        Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Fetch failed",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        val welcome_text = remoteConfig.getString("welcome_text")
+        Log.d("QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ ", "onCreate: $welcome_text")
 
         instantiateViewModels()
         _binding = ActivityMainBinding.inflate(layoutInflater)

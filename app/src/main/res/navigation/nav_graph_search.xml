@@ -7,5 +7,34 @@
     <fragment
         android:id="@+id/search_dest"
         android:name="online.fatbook.fatbookapp.ui.search.ui.SearchFragment"
-        android:label="@string/nav_search" />
+        android:label="@string/nav_search">
+
+        <action
+            android:id="@+id/action_go_to_recipe_view_from_search"
+            app:destination="@id/recipe_view_dest" />
+
+        <action
+            android:id="@+id/action_go_to_user_profile_from_search"
+            app:destination="@+id/user_profile_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipe_view_dest"
+        android:name="online.fatbook.fatbookapp.ui.recipe.view.RecipeViewFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_user_from_find_recipe"
+            app:destination="@id/user_profile_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/user_profile_dest"
+        android:name="online.fatbook.fatbookapp.ui.user.ui.UserProfileFragment"
+        android:label="@null">
+
+        <action
+            android:id="@+id/action_go_to_recipe_view_from_find_user"
+            app:destination="@id/recipe_view_dest" />
+    </fragment>
 </navigation>
