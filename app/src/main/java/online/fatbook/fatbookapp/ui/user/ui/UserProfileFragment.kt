@@ -58,6 +58,18 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     private var user: User = User()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (savedInstanceState == null) {
+            setupViewPager(savedInstanceState!!);
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -107,6 +119,10 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
                 animateTextExpand()
             }
         }
+    }
+
+    private fun initObservers() {
+
     }
 
     private fun setupNavMenu() {
@@ -311,13 +327,13 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 //            isDataRefreshed = false
 //            fragmentAdapter!!.setData(user)
 //        } else {
-        setupViewPager()
+        setupViewPager(Bundle())
 //        }
         binding.loader.progressOverlay.visibility = View.GONE
         binding.toolbar.visibility = View.VISIBLE
     }
 
-    private fun setupViewPager() {
+    private fun setupViewPager(savedInstanceState: Bundle) {
         fragmentAdapter = UserProfileRecipesAdapter(this, user)
         viewPager = binding.vpUserprofile
         viewPager.isUserInputEnabled = false
@@ -331,6 +347,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
                     resources.getString(R.string.title_favourites_profile)
                 }
         }.attach()
+
         //TODO fix
 //        ViewPager2ViewHeightAnimator().viewPager2 = viewPager
     }
@@ -389,4 +406,5 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
         binding.nsv.smoothScrollTo(0, 0)
         binding.appBarLayout.setExpanded(true, false)
     }
+
 }
