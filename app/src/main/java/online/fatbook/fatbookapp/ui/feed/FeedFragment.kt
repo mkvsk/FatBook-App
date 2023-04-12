@@ -353,7 +353,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         if (mBundleRecyclerViewState != null) {
             Looper.myLooper()?.let {
                 Handler(it).post {
-                    mListState = mBundleRecyclerViewState?.getParcelable(KEY_RECYCLER_STATE)
+                    mListState = mBundleRecyclerViewState?.getBundle(KEY_RECYCLER_STATE)
                     mRecyclerView!!.layoutManager?.onRestoreInstanceState(mListState)
                 }
             }

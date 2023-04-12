@@ -12,9 +12,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.SeekBar
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -75,7 +73,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
     private var searchView: SearchView? = null
 
-    final val KEY_RECYCLER_STATE = "rv_state"
+    final val KEY_STATE_SEARCH = "rv_state"
     private var mBundleRecyclerViewState: Bundle? = null
     private var mListState: Parcelable? = null
     private var mRecyclerView: RecyclerView? = null
@@ -120,6 +118,12 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
             searchItem = binding.toolbar.menu.findItem(R.id.menu_search_recipe),
             unselectItem = binding.toolbar.menu.findItem(R.id.menu_search_user)
         )
+
+        if (!searchViewModel.searchUsers.value.isNullOrEmpty()
+            || !searchViewModel.searchRecipes.value.isNullOrEmpty()
+        ) {
+            drawData()
+        }
     }
 
     private fun setupMenu() {
@@ -179,7 +183,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         searchViewModel.searchRecipe(object : ResultCallback<List<RecipeSimpleObject>> {
             override fun onResult(value: List<RecipeSimpleObject>?) {
                 value?.let {
-                    searchViewModel.setSearchRecipes(value!!)
+                    searchViewModel.setSearchRecipes(value)
                     drawData()
                 }
             }
@@ -195,7 +199,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         searchViewModel.searchUser(object : ResultCallback<List<UserSimpleObject>> {
             override fun onResult(value: List<UserSimpleObject>?) {
                 searchViewModel.setSearchUsers(value!!)
-                drawDataUsers()
+                drawData()
             }
 
             override fun onFailure(value: List<UserSimpleObject>?) {
@@ -249,6 +253,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
                 Log.d(TAG, "onQueryTextSubmit: TEST")
                 if (binding.searchView.query.length > 2) {
                     hideKeyboard()
+                    binding.nsvSearch.smoothScrollTo(0, 0)
                     if (searchViewModel.isSearchRecipe.value == true) {
                         findRecipe(queryText.toString())
                     } else {
@@ -267,15 +272,25 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
     private fun drawData() {
         Log.d(TAG, "drawData: ${searchViewModel.searchRecipes.value}")
+        Log.d(TAG, "drawDataUsers: ${searchViewModel.searchUsers.value}")
 
         TransitionManager.go(
             android.transition.Scene(binding.containerSearch),
             android.transition.Fade()
         )
+        if (searchViewModel.isSearchRecipe.value == true) {
+            binding.searchRvFindUser.root.visibility = View.GONE
+            binding.searchRvFindRecipe.root.visibility = View.VISIBLE
+            adapterRecipe!!.setData(searchViewModel.searchRecipes.value)
+        } else {
+            binding.searchRvFindRecipe.root.visibility = View.GONE
+            binding.searchRvFindUser.root.visibility = View.VISIBLE
+            adapterUser!!.setData(searchViewModel.searchUsers.value)
+        }
+
 //        binding.searchRvFindUser.root.visibility = View.GONE
 //        binding.searchRvFindRecipe.root.visibility = View.VISIBLE
-        adapterRecipe!!.setData(searchViewModel.searchRecipes.value)
-        binding.swipeRefreshSearch.isEnabled = false
+//        adapterRecipe!!.setData(searchViewModel.searchRecipes.value)
         searchViewModel.setIsLoading(false)
     }
 
@@ -289,20 +304,18 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         }
     }
 
-
-    private fun drawDataUsers() {
-        Log.d(TAG, "drawDataUsers: ${searchViewModel.searchUsers.value}")
-
-        TransitionManager.go(
-            android.transition.Scene(binding.containerSearch),
-            android.transition.Fade()
-        )
+//    private fun drawDataUsers() {
+//        Log.d(TAG, "drawDataUsers: ${searchViewModel.searchUsers.value}")
+//
+//        TransitionManager.go(
+//            android.transition.Scene(binding.containerSearch),
+//            android.transition.Fade()
+//        )
 //        binding.searchRvFindRecipe.root.visibility = View.GONE
 //        binding.searchRvFindUser.root.visibility = View.VISIBLE
-        adapterUser!!.setData(searchViewModel.searchUsers.value)
-        binding.swipeRefreshSearch.isEnabled = false
-        searchViewModel.setIsLoading(false)
-    }
+//        adapterUser!!.setData(searchViewModel.searchUsers.value)
+//        searchViewModel.setIsLoading(false)
+//    }
 
     private fun checkStaticDataLoaded() {
         if (!searchViewModel.methods.value.isNullOrEmpty() && !searchViewModel.categories.value.isNullOrEmpty() && !searchViewModel.difficulties.value.isNullOrEmpty()) {
@@ -330,13 +343,13 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
     private fun recipeAdapter() {
         rvRecipe = binding.searchRvFindRecipe.rvRecipeSearch
-//        mRecyclerView = rvRecipe
+        mRecyclerView = rvRecipe
         adapterRecipe = RecipeAdapter()
         adapterRecipe!!.setClickListener(this)
         adapterRecipe!!.setContext(requireContext())
         rvRecipe!!.adapter = adapterRecipe
-//        rvRecipe!!.adapter?.stateRestorationPolicy =
-//            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        rvRecipe!!.adapter?.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
 
     private fun bottomSheetAdapters() {
@@ -478,6 +491,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     }
 
     override fun onDestroy() {
+        Log.d(TAG, "onDestroy: SEARCH DEAD")
         super.onDestroy()
         _binding = null
     }
@@ -528,6 +542,13 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
                 } else {
                     userViewModel.user.value!!.recipesForked!!.removeIf { recipe.pid == it.pid }
                 }
+
+//                val tv: TextView = viewHolder.itemView.findViewById(R.id.textView_rv_card_recipe_forks_avg)
+//                tv.text = value.toString()
+//
+//                val vc: ImageView = viewHolder.itemView.findViewById(R.id.view_click_fork)
+//                vc.tag = RecipeUtils.TAG_CLICK_FALSE
+
                 viewHolder.itemView.textView_rv_card_recipe_forks_avg.text = value.toString()
                 viewHolder.itemView.view_click_fork.tag = RecipeUtils.TAG_CLICK_FALSE
                 adapterRecipe!!.toggleForks(viewHolder.itemView.imageView_rv_card_recipe_fork, fork)
@@ -561,25 +582,37 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     }
 
     override fun onResume() {
+        Log.d("==========SearchFragment==========", "onResume")
+
         super.onResume()
         if (mBundleRecyclerViewState != null) {
             Looper.myLooper()?.let {
                 Handler(it).post {
-                    mListState = mBundleRecyclerViewState?.getParcelable(KEY_RECYCLER_STATE)
+                    mListState = mBundleRecyclerViewState?.getBundle(KEY_STATE_SEARCH)
                     mRecyclerView!!.layoutManager?.onRestoreInstanceState(mListState)
                 }
             }
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-    }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        outState.run {
+//            putBundle(KEY_STATE_SEARCH, mBundleRecyclerViewState)
+//        }
+//        super.onSaveInstanceState(outState)
+//    }
+//
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//        mRecyclerView = savedInstanceState?.getParcelable(KEY_STATE_SEARCH)
+//    }
 
     override fun onPause() {
+        Log.d("==========SearchFragment==========", "onPause")
+
         super.onPause()
         mBundleRecyclerViewState = Bundle()
         mListState = mRecyclerView!!.layoutManager?.onSaveInstanceState()
-        mBundleRecyclerViewState?.putParcelable(KEY_RECYCLER_STATE, mListState)
+        mBundleRecyclerViewState?.putParcelable(KEY_STATE_SEARCH, mListState)
     }
 }
