@@ -245,7 +245,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
         binding.bottomSheetSearch.buttonApplySearch.setOnClickListener {
             searchViewModel.setIsSearchRecipe(true)
-            findRecipe("")
+            findRecipe(binding.searchView.query.toString())
         }
 
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -287,10 +287,6 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
             binding.searchRvFindUser.root.visibility = View.VISIBLE
             adapterUser!!.setData(searchViewModel.searchUsers.value)
         }
-
-//        binding.searchRvFindUser.root.visibility = View.GONE
-//        binding.searchRvFindRecipe.root.visibility = View.VISIBLE
-//        adapterRecipe!!.setData(searchViewModel.searchRecipes.value)
         searchViewModel.setIsLoading(false)
     }
 
@@ -303,19 +299,6 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
             }
         }
     }
-
-//    private fun drawDataUsers() {
-//        Log.d(TAG, "drawDataUsers: ${searchViewModel.searchUsers.value}")
-//
-//        TransitionManager.go(
-//            android.transition.Scene(binding.containerSearch),
-//            android.transition.Fade()
-//        )
-//        binding.searchRvFindRecipe.root.visibility = View.GONE
-//        binding.searchRvFindUser.root.visibility = View.VISIBLE
-//        adapterUser!!.setData(searchViewModel.searchUsers.value)
-//        searchViewModel.setIsLoading(false)
-//    }
 
     private fun checkStaticDataLoaded() {
         if (!searchViewModel.methods.value.isNullOrEmpty() && !searchViewModel.categories.value.isNullOrEmpty() && !searchViewModel.difficulties.value.isNullOrEmpty()) {
