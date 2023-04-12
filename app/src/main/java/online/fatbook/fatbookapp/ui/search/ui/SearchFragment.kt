@@ -78,6 +78,8 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     private var mListState: Parcelable? = null
     private var mRecyclerView: RecyclerView? = null
 
+    private var recipeSearchRequest: RecipeSearchRequest = RecipeSearchRequest()
+
     companion object {
         private const val TAG = "SearchFragment"
     }
@@ -124,6 +126,79 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         ) {
             drawData()
         }
+    }
+
+    private fun initObservers() {
+        searchViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.loader.progressOverlay.visibility = View.VISIBLE
+            } else {
+                binding.loader.progressOverlay.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun initListeners() {
+        loadCategories()
+        loadMethods()
+        loadDifficulty()
+
+        bottomSheetSearchFilter.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    TransitionManager.go(
+                        android.transition.Scene(binding.clBottomSheet),
+                        AutoTransition()
+                    )
+                    binding.bottomSheetSearch.scrollViewBottomSheetSearch.scrollTo(0, 0)
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
+
+        binding.bottomSheetSearch.seekbarKcalsLimit.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
+                binding.bottomSheetSearch.textviewKcalsLimitSettedSearch.text = progress.toString()
+                searchViewModel.recipeSearchRequest.value!!.kcal = progress
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+            }
+        })
+
+        binding.bottomSheetSearch.buttonApplySearch.setOnClickListener {
+            searchViewModel.setIsSearchRecipe(true)
+            findRecipe(binding.searchView.query.toString())
+        }
+
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(queryText: String?): Boolean {
+                Log.d(TAG, "onQueryTextSubmit: TEST")
+                if (binding.searchView.query.length > 2) {
+                    hideKeyboard()
+                    binding.nsvSearch.smoothScrollTo(0, 0)
+                    if (searchViewModel.isSearchRecipe.value == true) {
+                        recipeSearchRequest.searchString = queryText.toString()
+                        findRecipe(queryText.toString())
+                    } else {
+                        findUser(queryText.toString())
+                    }
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                Log.d(TAG, "onQueryTextChange: EVENT TEXT HAS BEEN CHANGED")
+                return true
+            }
+        })
     }
 
     private fun setupMenu() {
@@ -179,7 +254,12 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     private fun findRecipe(txt: String) {
         bottomSheetSearchFilter.state = BottomSheetBehavior.STATE_COLLAPSED
         searchViewModel.setIsLoading(true)
-        searchViewModel.recipeSearchRequest.value!!.searchString = txt
+
+        searchViewModel.recipeSearchRequest.value!!.categories.addAll(recipeSearchRequest.categories)
+        searchViewModel.recipeSearchRequest.value!!.methods.addAll(recipeSearchRequest.methods)
+        searchViewModel.recipeSearchRequest.value!!.difficulties.addAll(recipeSearchRequest.difficulties)
+        recipeSearchRequest = searchViewModel.recipeSearchRequest.value!!
+        searchViewModel.setRecipeSearchRequest(recipeSearchRequest)
         searchViewModel.searchRecipe(object : ResultCallback<List<RecipeSimpleObject>> {
             override fun onResult(value: List<RecipeSimpleObject>?) {
                 value?.let {
@@ -208,67 +288,6 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         })
     }
 
-    private fun initListeners() {
-        loadCategories()
-        loadMethods()
-        loadDifficulty()
-
-        bottomSheetSearchFilter.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    TransitionManager.go(
-                        android.transition.Scene(binding.clBottomSheet),
-                        AutoTransition()
-                    )
-                    binding.bottomSheetSearch.scrollViewBottomSheetSearch.scrollTo(0, 0)
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            }
-        })
-
-        binding.bottomSheetSearch.seekbarKcalsLimit.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
-                binding.bottomSheetSearch.textviewKcalsLimitSettedSearch.text = progress.toString()
-                searchViewModel.recipeSearchRequest.value!!.kcal = progress
-            }
-
-            override fun onStartTrackingTouch(p0: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(p0: SeekBar?) {
-            }
-        })
-
-        binding.bottomSheetSearch.buttonApplySearch.setOnClickListener {
-            searchViewModel.setIsSearchRecipe(true)
-            findRecipe(binding.searchView.query.toString())
-        }
-
-        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(queryText: String?): Boolean {
-                Log.d(TAG, "onQueryTextSubmit: TEST")
-                if (binding.searchView.query.length > 2) {
-                    hideKeyboard()
-                    binding.nsvSearch.smoothScrollTo(0, 0)
-                    if (searchViewModel.isSearchRecipe.value == true) {
-                        findRecipe(queryText.toString())
-                    } else {
-                        findUser(queryText.toString())
-                    }
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                Log.d(TAG, "onQueryTextChange: EVENT TEXT HAS BEEN CHANGED")
-                return true
-            }
-        })
-    }
 
     private fun drawData() {
         Log.d(TAG, "drawData: ${searchViewModel.searchRecipes.value}")
@@ -290,18 +309,11 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         searchViewModel.setIsLoading(false)
     }
 
-    private fun initObservers() {
-        searchViewModel.isLoading.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.loader.progressOverlay.visibility = View.VISIBLE
-            } else {
-                binding.loader.progressOverlay.visibility = View.GONE
-            }
-        }
-    }
-
     private fun checkStaticDataLoaded() {
-        if (!searchViewModel.methods.value.isNullOrEmpty() && !searchViewModel.categories.value.isNullOrEmpty() && !searchViewModel.difficulties.value.isNullOrEmpty()) {
+        if (!searchViewModel.methods.value.isNullOrEmpty() &&
+            !searchViewModel.categories.value.isNullOrEmpty() &&
+            !searchViewModel.difficulties.value.isNullOrEmpty()
+        ) {
             binding.toolbar.visibility = View.VISIBLE
             binding.loader.progressOverlay.visibility = View.GONE
         }
@@ -525,16 +537,8 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
                 } else {
                     userViewModel.user.value!!.recipesForked!!.removeIf { recipe.pid == it.pid }
                 }
-
-//                val tv: TextView = viewHolder.itemView.findViewById(R.id.textView_rv_card_recipe_forks_avg)
-//                tv.text = value.toString()
-//
-//                val vc: ImageView = viewHolder.itemView.findViewById(R.id.view_click_fork)
-//                vc.tag = RecipeUtils.TAG_CLICK_FALSE
-
                 viewHolder.itemView.textView_rv_card_recipe_forks_avg.text = value.toString()
-                viewHolder.itemView.view_click_fork.tag = RecipeUtils.TAG_CLICK_FALSE
-                adapterRecipe!!.toggleForks(viewHolder.itemView.imageView_rv_card_recipe_fork, fork)
+//                viewHolder.itemView.view_click_fork.tag = RecipeUtils.TAG_CLICK_FALSE
             }
 
             override fun onFailure(value: Int?) {

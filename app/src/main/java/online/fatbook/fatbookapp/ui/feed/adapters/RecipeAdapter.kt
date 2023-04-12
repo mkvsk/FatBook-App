@@ -103,8 +103,6 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>(),
                 itemView.rv_recipe_comments_qty.visibility = View.VISIBLE
             }
 
-            recipeForked = false
-            recipeInFav = false
             itemView.view_click_fork.tag = TAG_CLICK_FALSE
             if (StringUtils.isNotEmpty(recipe.image)) {
                 Glide.with(itemView.context).load(recipe.image)
@@ -155,6 +153,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>(),
             }
             toggleForks(itemView.imageView_rv_card_recipe_fork, recipeForked)
 
+//            TODO fav
             user.recipesFavourites?.forEach {
                 recipeInFav = (it.identifier?.equals(recipe.identifier) == true)
             }
@@ -187,15 +186,19 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>(),
             }
             itemView.view_click_fork.setOnClickListener {
                 if (itemView.view_click_fork.tag as String == TAG_CLICK_FALSE) {
-                    itemView.view_click_fork.tag = TAG_CLICK_TRUE
+//                    itemView.view_click_fork.tag = TAG_CLICK_TRUE
                     if (itemView.imageView_rv_card_recipe_fork.tag as String == TAG_FORK_CHECKED) {
                         listener.onForkClicked(
                             data[bindingAdapterPosition], false, bindingAdapterPosition, this
                         )
+                        toggleForks(itemView.imageView_rv_card_recipe_fork, false)
+                        recipeForked = false
                     } else {
                         listener.onForkClicked(
                             data[bindingAdapterPosition], true, bindingAdapterPosition, this
                         )
+                        toggleForks(itemView.imageView_rv_card_recipe_fork, true)
+                        recipeForked = true
                     }
                 }
             }

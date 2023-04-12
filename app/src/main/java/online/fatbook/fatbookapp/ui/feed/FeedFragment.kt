@@ -316,8 +316,7 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
                     userViewModel.user.value!!.recipesForked!!.removeIf { recipe.pid == it.pid }
                 }
                 viewHolder.itemView.textView_rv_card_recipe_forks_avg.text = value.toString()
-                viewHolder.itemView.view_click_fork.tag = RecipeUtils.TAG_CLICK_FALSE
-                adapter!!.toggleForks(viewHolder.itemView.imageView_rv_card_recipe_fork, fork)
+//                viewHolder.itemView.view_click_fork.tag = RecipeUtils.TAG_CLICK_FALSE
             }
 
             override fun onFailure(value: Int?) {
