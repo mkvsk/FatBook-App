@@ -60,10 +60,6 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (savedInstanceState == null) {
-            setupViewPager(savedInstanceState!!);
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

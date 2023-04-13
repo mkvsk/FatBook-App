@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_primary_bgr"
-    tools:context=".ui.fragment.recipe.RecipeIngredientFragment">
+    android:animateLayoutChanges="true"
+    tools:context=".ui.recipe.edit.RecipeIngredientFragment">
 
     <include
         android:id="@+id/loader"

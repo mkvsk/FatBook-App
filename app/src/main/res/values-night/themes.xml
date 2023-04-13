@@ -629,7 +629,7 @@
 
     <color name="method_categories_selected_stroke_color">#FF4081</color>
     <color name="method_categories_color_text">#FF4081</color>
-    <color name="method_categories_not_selected_color">#263238</color>
+    <color name="method_categories_not_selected_color">#37474F</color>
     <color name="method_categories_not_selected_color_text">#FFFFFF</color>
 
     <style name="myMaterialCardMethodCategories" parent="@style/Widget.MaterialComponents.CardView">

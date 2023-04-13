@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.ui.recipe.edit
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.rv_cooking_step_preview.view.*
 import okhttp3.RequestBody.Companion.asRequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
@@ -314,7 +316,10 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
 
     //TODO ANIM
     override fun onRecipeCookingStepDelete(itemPosition: Int) {
-//        TransitionManager.go(Scene(rv_steps_recipe_create_2_stage), AutoTransition())
+        TransitionManager.go(
+            android.transition.Scene(binding.rvStepsRecipeCreate2Stage),
+            android.transition.Fade()
+        )
         var step = itemPosition + 1
         recipeEditViewModel.recipe.value!!.steps!!.removeAt(itemPosition)
         recipeEditViewModel.recipeStepImages.value!!.remove(itemPosition)

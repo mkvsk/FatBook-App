@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.Scene
 import androidx.transition.TransitionManager
@@ -30,6 +31,7 @@ import online.fatbook.fatbookapp.ui.staticdata.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.FormatUtils
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
+import kotlin.math.absoluteValue
 
 class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
@@ -44,7 +46,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     private var selectedUnit: IngredientUnit? = null
     private var selectedQty: Double = 0.0
     private var newQty: Double = 0.0
-
+    private lateinit var rv: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,7 +64,6 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
         loadIngredientUnits()
         setupIngredientsAdapter()
         setupMenu()
-
         binding.cardviewLeftRecipeAddIngredients.visibility = View.GONE
         binding.textViewSelectedIngredientRecipeAddIngredients.doOnTextChanged { _, _, _, _ ->
             binding.toolbarRecipeAddIngredients.menu.findItem(R.id.menu_add_ingredient_to_recipe).isVisible =
@@ -109,6 +110,16 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
             }
 
         })
+
+        initViews()
+
+    }
+
+    private fun initViews() {
+//        android.transition.TransitionManager.go(
+//            android.transition.Scene(binding.rvIngredientsRecipeAddIngredients),
+//            android.transition.ChangeScroll()
+//        )
     }
 
     //TODO unit fix progress bar
@@ -267,7 +278,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     }
 
     private fun setupIngredientsAdapter() {
-        val rv = binding.rvIngredientsRecipeAddIngredients
+        rv = binding.rvIngredientsRecipeAddIngredients
         adapter = IngredientAdapter()
         adapter!!.setContext(requireContext())
         adapter!!.setClickListener(this)
@@ -289,11 +300,27 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     }
 
     override fun onIngredientClick(previousItem: Int, selectedItem: Int, ingredient: Ingredient?) {
+        android.transition.TransitionManager.go(
+            android.transition.Scene(binding.rvIngredientsRecipeAddIngredients),
+            android.transition.AutoTransition()
+        )
+
+
         adapter!!.selectedIngredient =
             staticDataViewModel.ingredients.value!!.find { it.title == ingredient!!.title }
         adapter!!.notifyItemChanged(previousItem)
         adapter!!.notifyItemChanged(selectedItem)
         recipeEditViewModel.setRecipeAddIngredient(ingredient)
+//TODO scroll to element
+        val i = previousItem.toInt()
+        val j = selectedItem.toInt()
+        val k = i.minus(j).absoluteValue
+        if (selectedItem >= 12 && k >= 12) {
+//            rv.smoothScrollToPosition(600)
+            binding.rvIngredientsRecipeAddIngredients.smoothScrollToPosition(selectedItem)
+        }
+
+//        Log.d("SCROLL POSITION", "onIngredientClick: ${.toString()}")
 
         binding.textViewSelectedIngredientRecipeAddIngredients.text = ingredient!!.title
         setupUnitPicker(ingredient)
