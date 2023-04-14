@@ -32,6 +32,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/theme_primary_bgr"
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.Toolbar xmlns:local="http://schemas.android.com/apk/res-auto"
@@ -43,22 +44,54 @@
             app:layout_scrollFlags="enterAlways"
             local:popupTheme="@style/ThemeOverlay.MaterialComponents.Toolbar.Popup.Primary."
             local:theme="@style/ThemeOverlay.AppCompat.Dark"
-            local:title=""
+            local:title="Search recipe"
             local:titleTextAppearance="@style/txtToolbar"
-            local:titleTextColor="@color/main_text">
+            local:titleTextColor="@color/main_text"/>
 
-            <SearchView
-                android:id="@+id/search_view"
+
+<!--            <SearchView-->
+<!--                android:id="@+id/search_view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:animateLayoutChanges="true"-->
+<!--                android:background="@drawable/round_corner_edittext_pink_frame"-->
+<!--                android:visibility="gone"-->
+<!--                app:theme="@style/SearchViewStyle"-->
+<!--                local:queryHint="find in users or recipes"-->
+<!--                local:searchIcon="@drawable/ic_search_recipe" />-->
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_search_layout"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginHorizontal="10dp"
-                android:animateLayoutChanges="true"
-                android:background="@drawable/round_corner_edittext_pink_frame"
-                android:visibility="visible"
-                app:theme="@style/SearchViewStyle"
-                local:queryHint="find in users or recipes"
-                local:searchIcon="@drawable/ic_search_recipe" />
-        </androidx.appcompat.widget.Toolbar>
+                android:layout_marginBottom="5dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:endIconDrawable="@drawable/ic_clear_text"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/hint_text"
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edittext_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="@dimen/cards_margin_start"
+                    android:background="@drawable/round_corner_edittext_search"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="5dp"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:padding="5dp"
+                    android:paddingHorizontal="5dp"
+                    android:textAppearance="@style/searchEditText" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView

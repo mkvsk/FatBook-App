@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Parcelable
+import android.text.Editable
+import android.text.TextWatcher
 import android.transition.AutoTransition
 import android.transition.TransitionInflater
 import android.transition.TransitionManager
@@ -44,8 +46,6 @@ import online.fatbook.fatbookapp.ui.user.adapters.FollowAdapter
 import online.fatbook.fatbookapp.ui.user.listeners.OnUserFollowClickListener
 import online.fatbook.fatbookapp.ui.user.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
-import online.fatbook.fatbookapp.util.RecipeUtils
-import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 
@@ -71,7 +71,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
     private lateinit var bottomSheetSearchFilter: BottomSheetBehavior<*>
 
-    private var searchView: SearchView? = null
+//    private var searchView: SearchView? = null
 
     final val KEY_STATE_SEARCH = "rv_state"
     private var mBundleRecyclerViewState: Bundle? = null
@@ -100,7 +100,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("==========SearchFragment==========", "onViewCreated")
-        searchView = binding.searchView
+//        searchView = binding.searchView
 
         binding.loader.progressOverlay.visibility = View.VISIBLE
         searchViewModel.setRecipeSearchRequest(RecipeSearchRequest())
@@ -175,29 +175,47 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
         binding.bottomSheetSearch.buttonApplySearch.setOnClickListener {
             searchViewModel.setIsSearchRecipe(true)
-            findRecipe(binding.searchView.query.toString())
+//            findRecipe(binding.searchView.query.toString())
+            findRecipe(binding.edittextSearch.text.toString())
+
         }
 
-        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(queryText: String?): Boolean {
-                Log.d(TAG, "onQueryTextSubmit: TEST")
-                if (binding.searchView.query.length > 2) {
-                    hideKeyboard()
-                    binding.nsvSearch.smoothScrollTo(0, 0)
-                    if (searchViewModel.isSearchRecipe.value == true) {
-                        recipeSearchRequest.searchString = queryText.toString()
-                        findRecipe(queryText.toString())
-                    } else {
-                        findUser(queryText.toString())
-                    }
+//        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(queryText: String?): Boolean {
+//                Log.d(TAG, "onQueryTextSubmit: TEST")
+//                if (binding.searchView.query.length > 2) {
+//                    hideKeyboard()
+//                    binding.nsvSearch.smoothScrollTo(0, 0)
+//                    if (searchViewModel.isSearchRecipe.value == true) {
+//                        recipeSearchRequest.searchString = queryText.toString()
+//                        findRecipe(queryText.toString())
+//                    } else {
+//                        findUser(queryText.toString())
+//                    }
+//                }
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(p0: String?): Boolean {
+//                Log.d(TAG, "onQueryTextChange: EVENT TEXT HAS BEEN CHANGED")
+//                return true
+//            }
+//        })
+
+        binding.edittextSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(queryText: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (searchViewModel.isSearchRecipe.value == true && queryText!!.length >= 2) {
+                    recipeSearchRequest.searchString = queryText.toString()
+                    findRecipe(queryText.toString())
+                } else {
+                    findUser(queryText.toString())
                 }
-                return true
             }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
-                Log.d(TAG, "onQueryTextChange: EVENT TEXT HAS BEEN CHANGED")
-                return true
-            }
+            override fun afterTextChanged(p0: Editable?) {}
+
         })
     }
 
@@ -241,13 +259,16 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
             Scene(binding.toolbar),
             androidx.transition.AutoTransition()
         )
-        binding.searchView.setQuery(StringUtils.EMPTY, false)
+//        binding.searchView.setQuery(StringUtils.EMPTY, false)
         searchItem?.icon!!.setTint(ContextCompat.getColor(context!!, R.color.pink_a200))
         unselectItem?.icon!!.setTint(ContextCompat.getColor(context!!, R.color.main_text))
         if (searchRecipe) {
-            binding.searchView.queryHint = "search recipe"
+            binding.edittextSearch.hint = "Search recipe..."
+//            binding.searchView.queryHint = "search recipe"
         } else {
-            binding.searchView.queryHint = "search user"
+            binding.edittextSearch.hint = "Search user..."
+
+//            binding.searchView.queryHint = "search user"
         }
     }
 
