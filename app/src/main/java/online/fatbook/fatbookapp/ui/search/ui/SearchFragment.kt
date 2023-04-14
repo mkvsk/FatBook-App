@@ -288,7 +288,6 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         })
     }
 
-
     private fun drawData() {
         Log.d(TAG, "drawData: ${searchViewModel.searchRecipes.value}")
         Log.d(TAG, "drawDataUsers: ${searchViewModel.searchUsers.value}")

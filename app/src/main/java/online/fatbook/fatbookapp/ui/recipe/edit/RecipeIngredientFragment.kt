@@ -47,6 +47,8 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     private var selectedQty: Double = 0.0
     private var newQty: Double = 0.0
     private lateinit var rv: RecyclerView
+    var words = emptyList<String>()
+    private var newData: MutableList<Ingredient>? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -386,7 +388,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
     private fun filter(text: String) {
         try {
             val temp = staticDataViewModel.ingredients.value!!.filter {
-                StringUtils.startsWithIgnoreCase(
+                StringUtils.containsIgnoreCase(
                     it.title,
                     text
                 )

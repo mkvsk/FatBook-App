@@ -98,35 +98,35 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             "---Created"
         )
 
-        val remoteConfig = Firebase.remoteConfig
-
-        val isEnabled = remoteConfig["is_enabled"].asBoolean()
-        val fileBytes = remoteConfig["file_bytes"].asByteArray()
-        val audioVolume = remoteConfig["audio_volume"].asDouble()
-        val maxCharacters = remoteConfig["max_characters"].asLong()
-        val accessKey = remoteConfig["access_key"].asString()
-
-        val configSettings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = 3600
-        }
-        remoteConfig.setConfigSettingsAsync(configSettings)
-        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
-
-        remoteConfig.fetchAndActivate()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val updated = task.result
-                    Log.d("QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ ", "Config params updated: $updated")
-                    Toast.makeText(this, "Fetch and activate succeeded",
-                        Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Fetch failed",
-                        Toast.LENGTH_SHORT).show()
-                }
-            }
-
-        val welcome_text = remoteConfig.getString("welcome_text")
-        Log.d("QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ ", "onCreate: $welcome_text")
+//        val remoteConfig = Firebase.remoteConfig
+//
+//        val isEnabled = remoteConfig["is_enabled"].asBoolean()
+//        val fileBytes = remoteConfig["file_bytes"].asByteArray()
+//        val audioVolume = remoteConfig["audio_volume"].asDouble()
+//        val maxCharacters = remoteConfig["max_characters"].asLong()
+//        val accessKey = remoteConfig["access_key"].asString()
+//
+//        val configSettings = remoteConfigSettings {
+//            minimumFetchIntervalInSeconds = 3600
+//        }
+//        remoteConfig.setConfigSettingsAsync(configSettings)
+//        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
+//
+//        remoteConfig.fetchAndActivate()
+//            .addOnCompleteListener(this) { task ->
+//                if (task.isSuccessful) {
+//                    val updated = task.result
+//                    Log.d("QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ ", "Config params updated: $updated")
+//                    Toast.makeText(this, "Fetch and activate succeeded",
+//                        Toast.LENGTH_SHORT).show()
+//                } else {
+//                    Toast.makeText(this, "Fetch failed",
+//                        Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//        val welcome_text = remoteConfig.getString("welcome_text")
+//        Log.d("QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ QWAQ ", "onCreate: $welcome_text")
 
         instantiateViewModels()
         _binding = ActivityMainBinding.inflate(layoutInflater)
