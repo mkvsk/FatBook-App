@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -29,6 +27,7 @@ import online.fatbook.fatbookapp.ui.recipe.listeners.OnIngredientItemClickListen
 import online.fatbook.fatbookapp.ui.recipe.viewmodel.RecipeEditViewModel
 import online.fatbook.fatbookapp.ui.staticdata.viewmodel.StaticDataViewModel
 import online.fatbook.fatbookapp.util.FormatUtils
+import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
 import org.apache.commons.lang3.StringUtils
 import kotlin.math.absoluteValue
@@ -112,6 +111,16 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
             }
 
         })
+
+        binding.edittextSearchRecipeAddIngredients.setOnEditorActionListener { _, keyCode, event ->
+            if (((event?.action ?: -1) == KeyEvent.KEYCODE_ENTER)
+                || keyCode == EditorInfo.IME_ACTION_DONE
+            ) {
+                hideKeyboard(binding.edittextSearchRecipeAddIngredients)
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
 
         initViews()
 
