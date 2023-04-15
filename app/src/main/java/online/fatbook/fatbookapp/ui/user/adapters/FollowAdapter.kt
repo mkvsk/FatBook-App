@@ -60,7 +60,10 @@ class FollowAdapter : RecyclerView.Adapter<FollowAdapter.ViewHolder>(),
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(userSimpleObject: UserSimpleObject) {
             itemView.textview_username_rv_follow.setText(userSimpleObject.username)
-            Glide.with(itemView.context).load(userSimpleObject.profileImage)
+
+            Glide.with(itemView.context)
+                .load(userSimpleObject.profileImage)
+                .placeholder(itemView.context.getDrawable(R.drawable.ic_default_userphoto))
                 .into(itemView.imageview_userphoto_rv_follow)
 
             itemView.cardview_rv_follow.setOnClickListener {
