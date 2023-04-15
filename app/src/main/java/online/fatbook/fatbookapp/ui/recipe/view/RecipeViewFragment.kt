@@ -347,8 +347,8 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
 
     private fun setupCommentsAdapter(comments: ArrayList<RecipeComment>?) {
         val rv = binding.rvCommentsRecipeView
-        commentAdapter = ViewRecipeCommentAdapter(requireContext())
-        commentAdapter!!.setData(comments)
+        commentAdapter = ViewRecipeCommentAdapter(requireContext(), comments!!)
+//        commentAdapter!!.setData(comments)
         rv.adapter = commentAdapter
     }
 

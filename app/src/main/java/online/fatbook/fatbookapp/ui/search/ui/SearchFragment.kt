@@ -547,7 +547,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
                 } else {
                     userViewModel.user.value!!.recipesForked!!.removeIf { recipe.pid == it.pid }
                 }
-                viewHolder.itemView.textView_rv_card_recipe_forks_avg.text = value.toString()
+//                viewHolder.itemView.textView_rv_card_recipe_forks_avg.text = value.toString()
 //                viewHolder.itemView.view_click_fork.tag = RecipeUtils.TAG_CLICK_FALSE
             }
 

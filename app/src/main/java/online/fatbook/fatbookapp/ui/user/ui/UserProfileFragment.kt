@@ -100,7 +100,7 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
             binding.userPhoto.setOnClickListener {
                 imageViewModel.setImage(user.profileImage)
                 NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_go_to_view_image_from_user_profile1)
+                    .navigate(R.id.action_go_to_view_image_from_user_profile)
             }
 
             binding.nsv.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->

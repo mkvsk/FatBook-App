@@ -18,8 +18,8 @@
             app:destination="@id/follow_dest" />
 
         <action
-            android:id="@+id/action_go_to_view_image_from_user_profile1"
-            app:destination="@id/image_view_dest" />
+            android:id="@+id/action_go_to_view_image_from_user_profile"
+            app:destination="@id/image_view_userprofile_dest" />
 
         <action
             android:id="@+id/action_go_to_app_settings_from_user_profile"
@@ -41,14 +41,14 @@
 
         <action
             android:id="@+id/action_go_to_image_view_from_edit_profile"
-            app:destination="@id/image_view_dest" />
+            app:destination="@id/image_view_userprofile_dest" />
     </fragment>
     <fragment
         android:id="@+id/follow_dest"
         android:name="online.fatbook.fatbookapp.ui.user.ui.FollowersFragment"
         android:label="@null" />
     <fragment
-        android:id="@+id/image_view_dest"
+        android:id="@+id/image_view_userprofile_dest"
         android:name="online.fatbook.fatbookapp.ui.image.ImageViewFragment"
         android:label="@null" />
     <fragment
