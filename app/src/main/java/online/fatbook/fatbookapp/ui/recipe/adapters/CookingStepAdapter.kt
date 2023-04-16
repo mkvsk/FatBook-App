@@ -3,8 +3,8 @@ package online.fatbook.fatbookapp.ui.recipe.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import online.fatbook.fatbookapp.R
@@ -15,24 +15,22 @@ import online.fatbook.fatbookapp.util.BindableAdapter
 import java.io.File
 
 class CookingStepAdapter(private val context: Context) :
-    RecyclerView.Adapter<CookingStepAdapter.ViewHolder>(), BindableAdapter<CookingStep> {
-    private var _binding: RvCookingStepPreviewBinding? = null
-    private val binding get() = _binding!!
+    RecyclerView.Adapter<CookingStepAdapter.CookingStepItemViewHolder>(),
+    BindableAdapter<CookingStep> {
 
     private var data: ArrayList<CookingStep> = ArrayList()
     private var images: HashMap<Int, File?> = HashMap()
     var listener: OnCookingStepClickListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        _binding =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CookingStepItemViewHolder {
+        val binding =
             RvCookingStepPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(
-            binding.root
-        )
+        return CookingStepItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(data[position])
+    override fun onBindViewHolder(holder: CookingStepItemViewHolder, position: Int) {
+        val cookingStepItem = data[position]
+        holder.bind(cookingStepItem)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -43,6 +41,7 @@ class CookingStepAdapter(private val context: Context) :
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setImages(map: HashMap<Int, File?>?) {
         map?.let {
             images = map
@@ -58,14 +57,21 @@ class CookingStepAdapter(private val context: Context) :
         return data.size
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(value: CookingStep?) {
+    inner class CookingStepItemViewHolder(rvCookingStepPreviewBinding: RvCookingStepPreviewBinding) :
+        RecyclerView.ViewHolder(rvCookingStepPreviewBinding.root) {
+        private val binding = rvCookingStepPreviewBinding
+        fun bind(cookingStepItem: CookingStep?) {
 
-            binding.textviewDescriptionRvCookingStep.text = value!!.description
+            binding.textviewDescriptionRvCookingStep.text = cookingStepItem!!.description
             Glide
                 .with(context)
-                .load(value.imageFile ?: value.image)
-                .placeholder(context.getDrawable(R.drawable.default_recipe_image_recipe_create_second_stage))
+                .load(cookingStepItem.imageFile ?: cookingStepItem.image)
+                .placeholder(
+                    AppCompatResources.getDrawable(
+                        context,
+                        R.drawable.default_recipe_image_recipe_create_second_stage
+                    )
+                )
                 .into(binding.imageviewPhotoRvCookingStep)
 
             binding.buttonRemoveRvCookingStep.setOnClickListener {
