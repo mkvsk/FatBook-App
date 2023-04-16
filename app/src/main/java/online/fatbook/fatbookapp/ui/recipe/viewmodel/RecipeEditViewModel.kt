@@ -19,7 +19,14 @@ class RecipeEditViewModel : ViewModel() {
 
     private val repository by lazy { RecipeRepository() }
 
-    private val _isEditMode = MutableLiveData<Boolean>(false)
+    private val _isRecipeEditFinish = MutableLiveData(false)
+    val isRecipeEditFinish: LiveData<Boolean> get() = _isRecipeEditFinish
+
+    fun setRecipeEditFinish(value: Boolean) {
+        _isRecipeEditFinish.value = value
+    }
+
+    private val _isEditMode = MutableLiveData(false)
     val isEditMode: LiveData<Boolean> get() = _isEditMode
 
     fun setEditMode(value: Boolean) {

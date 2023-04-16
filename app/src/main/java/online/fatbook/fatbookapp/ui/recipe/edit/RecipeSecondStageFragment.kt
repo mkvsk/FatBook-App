@@ -13,7 +13,6 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.rv_cooking_step_preview.view.*
 import okhttp3.RequestBody.Companion.asRequestBody
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
@@ -243,13 +242,18 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
                     Toast.makeText(requireContext(), "Recipe created!", Toast.LENGTH_SHORT).show()
                     recipeEditViewModel.setIsRecipeEditFinishedCreated(true)
                     recipeEditViewModel.setIsLoading(false)
-                    popBackStack()
+                    navigateToFeed()
                 }
 
                 override fun onFailure(value: Boolean?) {
                     Toast.makeText(requireContext(), "Error!", Toast.LENGTH_SHORT).show()
                 }
             })
+    }
+
+    private fun navigateToFeed() {
+        recipeEditViewModel.setRecipeEditFinish(true)
+        popBackStack()
     }
 
     private fun checkIngredientsQty(currentIngredientsQty: Int) {

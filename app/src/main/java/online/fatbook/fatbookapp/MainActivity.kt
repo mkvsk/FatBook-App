@@ -198,6 +198,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         if (binding.mainPager.currentItem != position) {
             setItem(position)
         }
+        (adapter!!.getItem(position) as FragmentLifecycleListener).openFragment()
         return true
     }
 
@@ -223,7 +224,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 binding.mainPager.currentItem = backStack.peek()
 
             } else {
-                super.onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
             }
         }
     }
@@ -267,9 +268,5 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         super.onDestroy()
         Log.d("MAINACTIVITY", "onDestroy: state saved $backStack")
         _binding = null
-    }
-
-    fun navigateToFeed() {
-
     }
 }

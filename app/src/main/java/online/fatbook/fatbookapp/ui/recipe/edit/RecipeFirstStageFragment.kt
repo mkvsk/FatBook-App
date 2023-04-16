@@ -73,6 +73,10 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (recipeEditViewModel.isRecipeEditFinish.value!!) {
+            recipeEditViewModel.setRecipeEditFinish(false)
+            popBackStack()
+        }
         Log.d("===t=======RecipeCreateFirstStageFragment==========", "onViewCreated")
         //TODO fix SOFT_INPUT_ADJUST_RESIZE
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -649,6 +653,10 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
         adapter!!.notifyItemChanged(previousItem)
         adapter!!.notifyItemChanged(selectedItem)
         recipeEditViewModel.recipe.value!!.difficulty = difficulty
+    }
+
+    private fun popBackStack() {
+        findNavController().popBackStack()
     }
 
     companion object {
