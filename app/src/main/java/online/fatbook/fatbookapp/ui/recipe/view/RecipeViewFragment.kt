@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import androidx.core.view.size
@@ -148,7 +149,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
         binding.viewClickComments.setOnClickListener {
             binding.nsvRecipeView.post {
                 binding.nsvRecipeView.smoothScrollTo(
-                    0, binding.cardviewRecipeViewFullInfo.bottom
+                    0, binding.llInputComment.top
                 )
             }
         }
@@ -298,6 +299,81 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
                 recipeViewViewModel.setIsLoading(false)
             }
         }
+
+
+//        -------------------------------------------------------------------------------------
+
+        recipeViewViewModel.recipe.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.textviewAuthorUsernameRecipeView.text = it.user?.username
+                binding.textviewDateRecipe.text =
+                    FormatUtils.getCreateDate(it.createDate.toString())
+                binding.textViewRecipeViewRecipeTitle.text = it.title
+                binding.textviewDifficultyRecipeView.text = it.difficulty!!.title.toString()
+                binding.textviewCookingTimeRecipeView.text = it.cookingTime.toString()
+                binding.textviewMethodRecipeView.text = it.cookingMethod!!.title.toString()
+                binding.textviewCategoriesRecipeView.text =
+                    it.cookingCategories!!.joinToString { cookingCategory -> cookingCategory.title.toString() }
+
+                if (it.isAllIngredientUnitsValid) {
+                    binding.cardviewNutritionFactsRecipeView.visibility = View.VISIBLE
+                    binding.textviewPortionKcalsQtyRecipeView.text =
+                        roundOffDecimal(it.kcalPerPortion!!).toString()
+                    binding.tvQtyProteins.text = roundOffDecimal(it.proteinsPerPortion!!).toString()
+                    binding.tvQtyFats.text = roundOffDecimal(it.fatsPerPortion!!).toString()
+                    binding.tvQtyCarbs.text = roundOffDecimal(it.carbsPerPortion!!).toString()
+                } else {
+                    binding.cardviewNutritionFactsRecipeView.visibility = View.GONE
+                }
+                binding.textviewPortionsQtyRecipeView.text = it.portions.toString()
+
+                Glide.with(requireContext()).load(it.image)
+                    .placeholder(
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.default_recipe_image_rv_feed
+                        )
+                    )
+                    .into(binding.imageViewRecipePhoto)
+
+                Glide.with(requireContext()).load(it.user?.profileImage)
+                    .placeholder(
+                        AppCompatResources.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_default_userphoto
+                        )
+                    )
+                    .into(binding.imageviewAuthorPhotoRecipeView)
+
+                binding.textViewForksAvgViewRecipe.text = convertNumeric(it.forks!!)
+                binding.textViewCommentsAvgViewRecipe.text = convertNumeric(it.comments?.size ?: 0)
+
+                portionQty = binding.textviewPortionsQtyRecipeView.text.toString().toInt()
+                if (portionQty == MIN_PORTIONS) {
+                    binding.buttonRemovePortionRecipeView.isClickable = false
+                }
+                if (portionQty == MAX_PORTIONS) {
+                    binding.buttonAddPortionRecipeView.isClickable = false
+                }
+
+                setupIngredientAdapter(it.ingredients)
+                setupStepAdapter(it.steps)
+                setupCommentsAdapter(it.comments)
+
+                userViewModel.user.value?.recipesFavourites?.forEach { recipeSimpleObject ->
+                    recipeInFav = (recipeSimpleObject.identifier?.equals(it.identifier) == true)
+                    toggleFavourites(recipeInFav)
+                }
+
+                userViewModel.user.value?.recipesForked?.forEach { recipeSimpleObject ->
+                    toggleForks(recipeSimpleObject.identifier?.equals(it.identifier) == true)
+                }
+
+                binding.swipeRefreshRecipeView.isRefreshing = false
+            } else {
+                recipeViewViewModel.setIsLoading(true)
+            }
+        }
     }
 
     private fun handleBackPressed() {
@@ -347,8 +423,8 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
 
     private fun setupCommentsAdapter(comments: ArrayList<RecipeComment>?) {
         val rv = binding.rvCommentsRecipeView
-        commentAdapter = ViewRecipeCommentAdapter(requireContext(), comments!!)
-//        commentAdapter!!.setData(comments)
+        commentAdapter = ViewRecipeCommentAdapter(requireContext())
+        commentAdapter!!.setData(comments)
         rv.adapter = commentAdapter
     }
 
@@ -422,12 +498,15 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
         }
     }
 
+//    TODO ref
     private fun loadData(id: Long) {
         recipeViewViewModel.getRecipeById(id, object : ResultCallback<Recipe> {
             override fun onResult(value: Recipe?) {
                 recipe = value!!
                 checkAuthor(recipe.user?.username, userViewModel.user.value?.username)
-                drawData()
+//                drawData()
+//                initObservers()
+                recipeViewViewModel.setIsLoading(false)
             }
 
             override fun onFailure(value: Recipe?) {

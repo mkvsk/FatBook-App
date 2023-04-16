@@ -60,6 +60,7 @@ class RecipeViewViewModel : ViewModel() {
         repository.getRecipeById(id, object : ResultCallback<Recipe> {
             override fun onResult(value: Recipe?) {
                 callback.onResult(value)
+                setRecipe(value!!)
             }
 
             override fun onFailure(value: Recipe?) {

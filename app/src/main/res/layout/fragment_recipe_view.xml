@@ -138,7 +138,7 @@
                             app:layout_constraintLeft_toLeftOf="@id/textView_forks_avg_view_recipe"
                             app:layout_constraintRight_toRightOf="@id/imageView_fork_view_recipe" />
 
-                        RecipeUtils.TAG_CLICK_FALSE<ImageView
+                        <ImageView
                             android:id="@+id/imageView_fork_view_recipe"
                             android:layout_width="14dp"
                             android:layout_height="30dp"

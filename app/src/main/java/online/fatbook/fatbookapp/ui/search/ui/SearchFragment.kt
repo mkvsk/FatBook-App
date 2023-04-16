@@ -29,7 +29,6 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.*
 import online.fatbook.fatbookapp.core.user.UserSimpleObject

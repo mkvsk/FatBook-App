@@ -13,10 +13,11 @@ import online.fatbook.fatbookapp.databinding.RvCommentRecipeViewBinding
 import online.fatbook.fatbookapp.util.BindableAdapter
 
 class ViewRecipeCommentAdapter(
-    private val context: Context,
-    private var commentItemList: List<RecipeComment>
+    private val context: Context
 ) : RecyclerView.Adapter<ViewRecipeCommentAdapter.CommentItemViewHolder>(),
     BindableAdapter<RecipeComment> {
+
+    private var commentItemList: List<RecipeComment> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentItemViewHolder {
         val binding =
