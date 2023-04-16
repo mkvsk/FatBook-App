@@ -3,34 +3,32 @@ package online.fatbook.fatbookapp.ui.recipe.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.rv_ingredient.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.Ingredient
+import online.fatbook.fatbookapp.databinding.RvIngredientBinding
 import online.fatbook.fatbookapp.ui.recipe.listeners.OnIngredientItemClickListener
 import online.fatbook.fatbookapp.util.BindableAdapter
 
-class IngredientAdapter :
-    RecyclerView.Adapter<IngredientAdapter.ViewHolder>(), BindableAdapter<Ingredient> {
+class IngredientAdapter(private val context: Context) :
+    RecyclerView.Adapter<IngredientAdapter.IngredientItemViewHolder>(),
+    BindableAdapter<Ingredient> {
 
     private var data: List<Ingredient> = ArrayList()
     var listener: OnIngredientItemClickListener? = null
     var selectedIngredient: Ingredient? = Ingredient()
-    private lateinit var context: Context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_ingredient, parent, false)
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientItemViewHolder {
+        val binding = RvIngredientBinding.inflate(LayoutInflater.from(context), parent, false)
+        return IngredientItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(data[position])
+    override fun onBindViewHolder(holder: IngredientItemViewHolder, position: Int) {
+        val ingredientItem = data[position]
+        holder.bind(ingredientItem)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -41,10 +39,6 @@ class IngredientAdapter :
         }
     }
 
-    fun setContext(context: Context) {
-        this.context = context
-    }
-
     fun setClickListener(listener: OnIngredientItemClickListener) {
         this.listener = listener
     }
@@ -53,33 +47,35 @@ class IngredientAdapter :
         return data.size
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(value: Ingredient?) {
-            if (selectedIngredient!!.title == value!!.title) {
+    inner class IngredientItemViewHolder(rvIngredientBinding: RvIngredientBinding) :
+        RecyclerView.ViewHolder(rvIngredientBinding.root) {
+        private val binding = rvIngredientBinding
+        fun bind(ingredientItem: Ingredient?) {
+            if (selectedIngredient!!.title == ingredientItem!!.title) {
                 selectItem(
-                    itemView.cardview_rv_ingredient,
-                    itemView.textview_ingredient_title_rv_ingredient,
-                    itemView.textview_ingredient_kcals_title_rv_ingredient
+                    binding.cardviewRvIngredient,
+                    binding.textviewIngredientTitleRvIngredient,
+                    binding.textviewIngredientKcalsTitleRvIngredient
                 )
             } else {
                 unselectItem(
-                    itemView.cardview_rv_ingredient,
-                    itemView.textview_ingredient_title_rv_ingredient,
-                    itemView.textview_ingredient_kcals_title_rv_ingredient
+                    binding.cardviewRvIngredient,
+                    binding.textviewIngredientTitleRvIngredient,
+                    binding.textviewIngredientKcalsTitleRvIngredient
                 )
             }
 
-            itemView.textview_ingredient_title_rv_ingredient.text = value.title
+            binding.textviewIngredientTitleRvIngredient.text = ingredientItem.title
 
-            itemView.textview_ingredient_kcals_title_rv_ingredient.text =
-                "${value.unitRatio!!.kcal} kcal/${value.unitRatio.amount} ${value.unitRatio.unit!!.title}"
+            binding.textviewIngredientKcalsTitleRvIngredient.text =
+                "${ingredientItem.unitRatio!!.kcal} kcal/${ingredientItem.unitRatio.amount} ${ingredientItem.unitRatio.unit!!.title}"
 
-            if (itemView.cardview_rv_ingredient.isClickable) {
-                itemView.cardview_rv_ingredient.setOnClickListener {
+            if (binding.cardviewRvIngredient.isClickable) {
+                binding.cardviewRvIngredient.setOnClickListener {
                     listener!!.onIngredientClick(
                         data.indexOf(selectedIngredient),
                         bindingAdapterPosition,
-                        value
+                        ingredientItem
                     )
                 }
             }
