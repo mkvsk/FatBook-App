@@ -58,8 +58,13 @@
     <fragment
         android:id="@+id/user_profile_dest"
         android:name="online.fatbook.fatbookapp.ui.user.ui.UserProfileFragment"
-        android:label="@null" />
+        android:label="@null">
 
+        <action
+            android:id="@+id/action_go_to_view_image_from_user_profile"
+            app:destination="@id/image_view_dest" />
+
+    </fragment>
     <fragment
         android:id="@+id/recipe_edit_first_stage_dest"
         android:name="online.fatbook.fatbookapp.ui.recipe.edit.RecipeFirstStageFragment"
