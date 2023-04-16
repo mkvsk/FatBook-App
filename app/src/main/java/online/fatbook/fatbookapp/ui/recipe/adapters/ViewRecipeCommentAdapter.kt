@@ -66,7 +66,7 @@ class ViewRecipeCommentAdapter(
             //    TODO need fix
 //            binding.textviewDateRvComment.text =
             Log.d("date parse comment", "${comment?.timestamp}")
-            FormatUtils.getCreateDate(comment?.timestamp.toString())
+//            FormatUtils.getCreateDate(comment?.timestamp.toString())
             binding.textviewDateRvComment.text = comment?.timestamp.toString()
             binding.textviewUserCommentRvComment.text = comment?.comment.toString()
         }

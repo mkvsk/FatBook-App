@@ -100,7 +100,6 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
         initViews()
         initListeners()
         initObservers()
-        recipeViewViewModel.setIsLoading(false)
 
         binding.llAuthorLinkRecipeView.setOnClickListener {
             userViewModel.setSelectedUsername(binding.textviewAuthorUsernameRecipeView.text.toString())
@@ -294,18 +293,21 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
         }
 
         //TODO fix
+/*
         recipeEditViewModel.isEditMode.observe(viewLifecycleOwner) {
             if (it) {
                 recipeViewViewModel.setIsLoading(true)
             } else {
+                Log.d(TAG, "initObservers: isEditMode")
                 recipeViewViewModel.setIsLoading(false)
             }
         }
+*/
 
 
 //        -------------------------------------------------------------------------------------
 
-        recipeViewViewModel.recipe.observe(viewLifecycleOwner) {
+        /*recipeViewViewModel.recipe.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.textviewAuthorUsernameRecipeView.text = it.user?.username
                 binding.textviewDateRecipe.text =
@@ -376,7 +378,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
             } else {
                 recipeViewViewModel.setIsLoading(true)
             }
-        }
+        }*/
     }
 
     private fun handleBackPressed() {
@@ -501,15 +503,13 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
         }
     }
 
-//    TODO ref
+    //    TODO ref
     private fun loadData(id: Long) {
         recipeViewViewModel.getRecipeById(id, object : ResultCallback<Recipe> {
             override fun onResult(value: Recipe?) {
                 recipe = value!!
                 checkAuthor(recipe.user?.username, userViewModel.user.value?.username)
-//                drawData()
-//                initObservers()
-                recipeViewViewModel.setIsLoading(false)
+                drawData()
             }
 
             override fun onFailure(value: Recipe?) {
@@ -573,8 +573,8 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
         }
 
         binding.swipeRefreshRecipeView.isRefreshing = false
+        recipeViewViewModel.setIsLoading(false)
     }
-
 
     private fun initListeners() {
 
