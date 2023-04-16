@@ -358,7 +358,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
 
     private fun bottomSheetAdapters() {
         binding.bottomSheetSearch.rvCookingCategoriesSearch.layoutManager = getLayoutManager()
-        adapterCategories = SearchAdapter()
+        adapterCategories = SearchAdapter(requireContext())
         adapterCategories!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingCategory
@@ -384,7 +384,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         binding.bottomSheetSearch.rvCookingCategoriesSearch.adapter = adapterCategories
 
         binding.bottomSheetSearch.rvCookingMethodsSearch.layoutManager = getLayoutManager()
-        adapterMethods = SearchAdapter()
+        adapterMethods = SearchAdapter(requireContext())
         adapterMethods!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingMethod
@@ -408,7 +408,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         binding.bottomSheetSearch.rvCookingMethodsSearch.adapter = adapterMethods
 
         binding.bottomSheetSearch.rvCookingDifficultySearch.layoutManager = getLayoutManager()
-        adapterDifficulty = SearchAdapter()
+        adapterDifficulty = SearchAdapter(requireContext())
         adapterDifficulty!!.setClickListener(object : OnSearchItemClickListener {
             override fun onItemClick(item: StaticDataObject) {
                 item as CookingDifficulty

@@ -1,21 +1,22 @@
 package online.fatbook.fatbookapp.ui.search.adapters
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.rv_search.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
 import online.fatbook.fatbookapp.core.recipe.StaticDataObject
+import online.fatbook.fatbookapp.databinding.RvSearchBinding
 import online.fatbook.fatbookapp.ui.search.listeners.OnSearchItemClickListener
 import online.fatbook.fatbookapp.util.BindableAdapter
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
 
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
+class SearchAdapter(private val context: Context) :
+    RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>(),
     BindableAdapter<StaticDataObject> {
 
     private var data: List<StaticDataObject> = ArrayList()
@@ -23,18 +24,18 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
     var selectedItems: ArrayList<Int>? = ArrayList()
     var isAllSelected: Boolean = false
 
-    companion object{
+    companion object {
         private const val TAG = "SearchAdapter"
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.rv_search, parent, false)
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
+        val binding = RvSearchBinding.inflate(LayoutInflater.from(context), parent, false)
+        return SearchItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(data[position])
+    override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
+        val searchItem = data[position]
+        holder.bind(searchItem)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -45,6 +46,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setSelectAll(selectAll: StaticDataObject) {
         (data as ArrayList).add(0, selectAll)
         notifyDataSetChanged()
@@ -58,6 +60,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
         return data.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setSelected(arrayList: ArrayList<Int>) {
         selectedItems = arrayList
         notifyDataSetChanged()
@@ -73,20 +76,25 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
         notifyItemChanged(position)
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(value: StaticDataObject?) {
+    inner class SearchItemViewHolder(rvSearchBinding: RvSearchBinding) :
+        RecyclerView.ViewHolder(rvSearchBinding.root) {
+        private val binding = rvSearchBinding
+        fun bind(searchItem: StaticDataObject?) {
             if (selectedItems!!.contains(bindingAdapterPosition)) {
-                selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                selectItem(binding.cardviewRvSearch, binding.textviewItemTitleRvSearch)
             } else {
-                unselectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                unselectItem(binding.cardviewRvSearch, binding.textviewItemTitleRvSearch)
             }
-            itemView.textview_item_title_rv_search.text = value!!.title
-            itemView.cardview_rv_search.setOnClickListener {
+            binding.textviewItemTitleRvSearch.text = searchItem!!.title
+            binding.cardviewRvSearch.setOnClickListener {
 
-                if (value.tag == TAG_SELECT_ALL_BUTTON) {
-                    if (!itemView.textview_item_title_rv_search.isSelected) {
+                if (searchItem.tag == TAG_SELECT_ALL_BUTTON) {
+                    if (!binding.textviewItemTitleRvSearch.isSelected) {
                         isAllSelected = true
-                        selectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                        selectItem(
+                            binding.cardviewRvSearch,
+                            binding.textviewItemTitleRvSearch
+                        )
                         val list: ArrayList<Int> = ArrayList()
                         for (i in data.indices) {
                             list.add(i)
@@ -95,14 +103,17 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
                         setSelected(list)
                     } else {
                         isAllSelected = false
-                        unselectItem(itemView.cardview_rv_search, itemView.textview_item_title_rv_search)
+                        unselectItem(
+                            binding.cardviewRvSearch,
+                            binding.textviewItemTitleRvSearch
+                        )
                         setSelected(ArrayList())
                     }
                     listener!!.onSelectAllClick()
                 } else {
-                    if (!itemView.textview_item_title_rv_search.isSelected) {
+                    if (!binding.textviewItemTitleRvSearch.isSelected) {
                         addToSelected(bindingAdapterPosition)
-                        if (value !is CookingDifficulty) {
+                        if (searchItem !is CookingDifficulty) {
                             if (selectedItems!!.size == data.size - 1) {
                                 addToSelected(0)
                                 isAllSelected = true
@@ -115,7 +126,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(),
                             isAllSelected = false
                         }
                     }
-                    listener?.onItemClick(value)
+                    listener?.onItemClick(searchItem)
                 }
             }
         }
