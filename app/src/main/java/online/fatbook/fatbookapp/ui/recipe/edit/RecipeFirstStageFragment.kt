@@ -693,21 +693,4 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
             View.VISIBLE
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener(
-            KeyboardActionUtil(
-                binding.root, requireActivity()
-            ).listenerForAdjustResize
-        )
-    }
-
-    override fun onPause() {
-        super.onPause()
-        binding.root.viewTreeObserver.removeOnGlobalLayoutListener(
-            KeyboardActionUtil(
-                binding.root, requireActivity()
-            ).listenerForAdjustResize
-        )
-    }
 }
