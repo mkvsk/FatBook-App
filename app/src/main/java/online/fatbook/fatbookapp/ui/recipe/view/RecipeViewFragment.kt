@@ -348,6 +348,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
                 binding.textViewForksAvgViewRecipe.text = convertNumeric(it.forks!!)
                 binding.textViewCommentsAvgViewRecipe.text = convertNumeric(it.comments?.size ?: 0)
 
+//                TODO fix clcltr
                 portionQty = binding.textviewPortionsQtyRecipeView.text.toString().toInt()
                 if (portionQty == MIN_PORTIONS) {
                     binding.buttonRemovePortionRecipeView.isClickable = false
@@ -408,7 +409,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
 
     private fun setupIngredientAdapter(ingredients: ArrayList<RecipeIngredient>?) {
         val rv = binding.rvIngredientsRecipeView
-        ingredientAdapter = FullRecipeIngredientAdapter()
+        ingredientAdapter = FullRecipeIngredientAdapter(requireContext())
         ingredientAdapter!!.setData(ingredients)
         rv.adapter = ingredientAdapter
     }
