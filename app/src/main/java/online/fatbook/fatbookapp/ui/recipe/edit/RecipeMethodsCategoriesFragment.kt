@@ -78,7 +78,7 @@ class RecipeMethodsCategoriesFragment : Fragment(), OnStaticDataClickListener {
 
     private fun setupItemsAdapter() {
         val rv = binding.rvRecipeMethodsCategoriesItems
-        adapter = StaticDataAdapter()
+        adapter = StaticDataAdapter(requireContext())
         adapter!!.setClickListener(this)
         rv.adapter = adapter
     }
