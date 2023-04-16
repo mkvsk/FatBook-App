@@ -46,6 +46,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
 
@@ -219,7 +221,7 @@ class RecipeViewFragment : Fragment(), OnRecipeStepImageClickListener {
                     val newComment = RecipeComment()
                     newComment.comment = commentText
                     newComment.user = userViewModel.user.value?.convertToSimpleObject()
-                    newComment.timestamp = LocalDateTime.now().toString()
+                    newComment.timestamp = FormatUtils.dateFormat.format(Date())
                     recipe.comments?.add(0, newComment)
                     commentAdapter?.notifyItemInserted(0)
                     commentText = StringUtils.EMPTY

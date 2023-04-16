@@ -128,7 +128,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         ProgressBarUtil.set(this)
         RecipeUtils.setContext(this)
         Utils.setContext(this)
-        FormatUtils.setContext(this)
         FBAlertDialogBuilder.set(this, layoutInflater)
 
         binding.mainPager.addOnPageChangeListener(this)

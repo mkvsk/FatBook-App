@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -138,7 +139,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>(),
 
             itemView.rv_recipe_author.text = recipe.user!!.username
             Glide.with(itemView.context).load(recipe.user!!.profileImage)
-                .placeholder(itemView.context.getDrawable(R.drawable.ic_default_userphoto))
+                .placeholder(AppCompatResources.getDrawable(itemView.context, R.drawable.ic_default_userphoto))
                 .into(itemView.imageview_author_photo_rv_recipe_preview)
             itemView.rv_recipe_comments_qty.text = recipe.commentQty.toString()
             itemView.textView_rv_card_recipe_forks_avg.text =
@@ -218,7 +219,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder>(),
         }
     }
 
-    public fun toggleForks(fork: ImageView, selected: Boolean) {
+    private fun toggleForks(fork: ImageView, selected: Boolean) {
         if (selected) {
             fork.setImageResource(R.drawable.ic_fork_checked)
             fork.tag = TAG_FORK_CHECKED

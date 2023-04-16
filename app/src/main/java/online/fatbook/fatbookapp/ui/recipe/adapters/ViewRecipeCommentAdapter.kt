@@ -2,6 +2,7 @@ package online.fatbook.fatbookapp.ui.recipe.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
@@ -11,6 +12,7 @@ import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.RecipeComment
 import online.fatbook.fatbookapp.databinding.RvCommentRecipeViewBinding
 import online.fatbook.fatbookapp.util.BindableAdapter
+import online.fatbook.fatbookapp.util.FormatUtils
 
 class ViewRecipeCommentAdapter(
     private val context: Context
@@ -18,6 +20,10 @@ class ViewRecipeCommentAdapter(
     BindableAdapter<RecipeComment> {
 
     private var commentItemList: List<RecipeComment> = ArrayList()
+
+    companion object {
+        private const val TAG = "ViewRecipeCommentAdapter"
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentItemViewHolder {
         val binding =
@@ -35,6 +41,7 @@ class ViewRecipeCommentAdapter(
         commentItemList = data!!
         notifyDataSetChanged()
     }
+
     override fun getItemCount(): Int {
         return commentItemList.size
     }
@@ -58,7 +65,8 @@ class ViewRecipeCommentAdapter(
 
             //    TODO need fix
 //            binding.textviewDateRvComment.text =
-//                FormatUtils.getCreateDate(comment?.timestamp.toString())
+            Log.d("date parse comment", "${comment?.timestamp}")
+            FormatUtils.getCreateDate(comment?.timestamp.toString())
             binding.textviewDateRvComment.text = comment?.timestamp.toString()
             binding.textviewUserCommentRvComment.text = comment?.comment.toString()
         }
