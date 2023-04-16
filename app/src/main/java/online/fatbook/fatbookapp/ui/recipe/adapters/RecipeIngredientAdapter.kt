@@ -3,34 +3,33 @@ package online.fatbook.fatbookapp.ui.recipe.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.rv_recipe_ingredient.view.*
-import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.ingredient.RecipeIngredient
+import online.fatbook.fatbookapp.databinding.RvRecipeIngredientBinding
 import online.fatbook.fatbookapp.ui.recipe.listeners.OnRecipeIngredientItemClickListener
 import online.fatbook.fatbookapp.util.BindableAdapter
 import online.fatbook.fatbookapp.util.FormatUtils
 import org.apache.commons.lang3.StringUtils
 
-class RecipeIngredientAdapter :
-    RecyclerView.Adapter<RecipeIngredientAdapter.ViewHolder>(), BindableAdapter<RecipeIngredient> {
+class RecipeIngredientAdapter(private val context: Context) :
+    RecyclerView.Adapter<RecipeIngredientAdapter.RecipeIngredientItemViewHolder>(),
+    BindableAdapter<RecipeIngredient> {
 
     private var data: List<RecipeIngredient> = ArrayList()
     var listener: OnRecipeIngredientItemClickListener? = null
 
-    private lateinit var context: Context
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_recipe_ingredient, parent, false)
-        )
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): RecipeIngredientItemViewHolder {
+        val binding = RvRecipeIngredientBinding.inflate(LayoutInflater.from(context), parent, false)
+        return RecipeIngredientItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(data[position])
+    override fun onBindViewHolder(holder: RecipeIngredientItemViewHolder, position: Int) {
+        val ingredientItem = data[position]
+        holder.bind(ingredientItem)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -41,10 +40,6 @@ class RecipeIngredientAdapter :
         }
     }
 
-    fun setContext(context: Context) {
-        this.context = context
-    }
-
     fun setClickListener(listener: OnRecipeIngredientItemClickListener) {
         this.listener = listener
     }
@@ -53,28 +48,31 @@ class RecipeIngredientAdapter :
         return data.size
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(value: RecipeIngredient?) {
-            itemView.textview_ingredient_title_rv_added_ingredient.text = value!!.ingredient!!.title
+    inner class RecipeIngredientItemViewHolder(rvRecipeIngredientBinding: RvRecipeIngredientBinding) :
+        RecyclerView.ViewHolder(rvRecipeIngredientBinding.root) {
+        private val binding = rvRecipeIngredientBinding
+        fun bind(ingredientItem: RecipeIngredient?) {
+            binding.textviewIngredientTitleRvAddedIngredient.text =
+                ingredientItem!!.ingredient!!.title
 
-            value.kcal?.let {
-                if (value.kcal == 0.0 && value.fats == 0.0 && value.carbs == 0.0 && value.proteins == 0.0) {
-                    itemView.textview_ingredient_kcals_title_rv_added_ingredient.text =
+            ingredientItem.kcal.let {
+                if (ingredientItem.kcal == 0.0 && ingredientItem.fats == 0.0 && ingredientItem.carbs == 0.0 && ingredientItem.proteins == 0.0) {
+                    binding.textviewIngredientKcalsTitleRvAddedIngredient.text =
                         StringUtils.EMPTY
                 } else {
-                    itemView.textview_ingredient_kcals_title_rv_added_ingredient.text =
+                    binding.textviewIngredientKcalsTitleRvAddedIngredient.text =
                         String.format("%s kcal", FormatUtils.prettyCount(it))
                 }
             }
 
-            itemView.textview_ingredient_qty_title_rv_added_ingredient.text =
+            binding.textviewIngredientQtyTitleRvAddedIngredient.text =
                 String.format(
                     "%s %s",
-                    FormatUtils.prettyCount(value.quantity!!),
-                    value.unit!!.title
+                    FormatUtils.prettyCount(ingredientItem.quantity!!),
+                    ingredientItem.unit!!.title
                 )
 
-            itemView.button_remove_rv_added_ingredient.setOnClickListener {
+            binding.buttonRemoveRvAddedIngredient.setOnClickListener {
                 listener!!.onRecipeIngredientDelete(bindingAdapterPosition)
             }
         }

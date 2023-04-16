@@ -288,8 +288,7 @@ class RecipeSecondStageFragment : Fragment(), OnRecipeIngredientItemClickListene
 
     private fun setupIngredientsAdapter() {
         val rv = binding.rvIngredientsRecipeCreate2Stage
-        ingredientsAdapter = RecipeIngredientAdapter()
-        ingredientsAdapter!!.setContext(requireContext())
+        ingredientsAdapter = RecipeIngredientAdapter(requireContext())
         ingredientsAdapter!!.setClickListener(this)
         rv.adapter = ingredientsAdapter
     }
