@@ -40,10 +40,10 @@
         <action
             android:id="@+id/action_go_to_view_image_from_user_profile"
             app:destination="@id/image_view_dest" />
-
-        <fragment
-            android:id="@+id/image_view_dest"
-            android:name="online.fatbook.fatbookapp.ui.image.ImageViewFragment"
-            android:label="@null" />
     </fragment>
+
+    <fragment
+        android:id="@+id/image_view_dest"
+        android:name="online.fatbook.fatbookapp.ui.image.ImageViewFragment"
+        android:label="@null" />
 </navigation>
