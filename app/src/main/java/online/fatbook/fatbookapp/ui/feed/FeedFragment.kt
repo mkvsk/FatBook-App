@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
@@ -388,6 +389,11 @@ class FeedFragment : Fragment(), OnRecipeClickListener, OnRecipeRevertDeleteList
         Log.d(TAG, "scrollUpBase")
         binding.nsvUserprofile.smoothScrollTo(0, 0)
         binding.appBarLayoutFeed.setExpanded(true, false)
+    }
+
+    override fun openFragment() {
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
     }
 
     //===========================================================================================

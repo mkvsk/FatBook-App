@@ -5,19 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationBarView
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import com.google.firebase.remoteconfig.ktx.get
-import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import online.fatbook.fatbookapp.core.user.User
 import online.fatbook.fatbookapp.databinding.ActivityMainBinding
 import online.fatbook.fatbookapp.ui.authentication.viewmodel.AuthenticationViewModel
@@ -274,5 +267,9 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         super.onDestroy()
         Log.d("MAINACTIVITY", "onDestroy: state saved $backStack")
         _binding = null
+    }
+
+    fun navigateToFeed() {
+
     }
 }

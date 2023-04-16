@@ -32,6 +32,7 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import online.fatbook.fatbookapp.MainActivity
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
@@ -421,6 +422,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
                         findNavController().popBackStack()
                     }
                     clearForm()
+                    navigateToFeed()
                     dialogInterface.dismiss()
                 }
             },
@@ -429,6 +431,11 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
                     dialogInterface.dismiss()
                 }
             }).show()
+    }
+
+    private fun navigateToFeed() {
+        requireActivity().onBackPressed()
+//        (requireActivity() as MainActivity).onBackPressed()
     }
 
     private fun clearForm() {
@@ -666,6 +673,16 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     override fun scrollUpBase() {
         binding.nsvRecipe1Stage.scrollTo(0, 0)
         binding.appBarLayoutRecipe1Stage.setExpanded(true, false)
+    }
+
+    override fun openFragment() {
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.GONE
+    }
+
+    fun closeFragment() {
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
     }
 
     override fun onResume() {

@@ -21,6 +21,7 @@ import androidx.transition.Scene
 import androidx.transition.TransitionManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.SplashActivity
@@ -401,6 +402,11 @@ class UserProfileFragment : Fragment(), BaseFragmentActionsListener {
     override fun scrollUpBase() {
         binding.nsv.smoothScrollTo(0, 0)
         binding.appBarLayout.setExpanded(true, false)
+    }
+
+    override fun openFragment() {
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
     }
 
 }

@@ -27,6 +27,7 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import online.fatbook.fatbookapp.R
@@ -514,6 +515,11 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     override fun scrollUpBase() {
         binding.searchLayout.scrollTo(0, 0)
         binding.appBarLayout.setExpanded(true, false)
+    }
+
+    override fun openFragment() {
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
     }
 
     //    rv recipe listeners

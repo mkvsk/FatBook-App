@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.databinding.FragmentNotificationsBinding
 import online.fatbook.fatbookapp.ui.navigation.listeners.BaseFragmentActionsListener
 
@@ -40,5 +42,10 @@ class NotificationsFragment : Fragment(), BaseFragmentActionsListener {
     override fun scrollUpBase() {
         binding.nsvNotifications.scrollTo(0, 0)
         binding.appBarLayoutNotifications.setExpanded(true, false)
+    }
+
+    override fun openFragment() {
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
     }
 }

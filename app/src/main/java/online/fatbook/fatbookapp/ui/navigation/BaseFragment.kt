@@ -57,8 +57,11 @@ class BaseFragment : Fragment(), FragmentLifecycleListener {
         Log.d("BaseFragment", "onBackPressed: $navHostId, $layoutRes, $appBarConfig")
         when (val fragment = childFragmentManager.fragments[0].childFragmentManager.fragments[0]) {
             is FeedFragment -> fragment.onBackPressedBase()
-            is SearchFragment -> if (fragment.onBackPressedBase()) return true
-            is RecipeFirstStageFragment -> fragment.onBackPressedBase()
+            is SearchFragment -> fragment.onBackPressedBase()
+            is RecipeFirstStageFragment -> {
+                fragment.onBackPressedBase()
+                fragment.closeFragment()
+            }
             is NotificationsFragment -> fragment.onBackPressedBase()
             is UserProfileFragment -> fragment.onBackPressedBase()
         }
@@ -90,7 +93,6 @@ class BaseFragment : Fragment(), FragmentLifecycleListener {
         return requireActivity().findNavController(navHostId).handleDeepLink(intent)
     }
 
-
     override fun scrollFragmentToTop() {
         when (val fragment = childFragmentManager.fragments[0].childFragmentManager.fragments[0]) {
             is FeedFragment -> fragment.scrollUpBase()
@@ -98,6 +100,16 @@ class BaseFragment : Fragment(), FragmentLifecycleListener {
             is RecipeFirstStageFragment -> fragment.scrollUpBase()
             is NotificationsFragment -> fragment.scrollUpBase()
             is UserProfileFragment -> fragment.scrollUpBase()
+        }
+    }
+
+    override fun openFragment() {
+        when (val fragment = childFragmentManager.fragments[0].childFragmentManager.fragments[0]) {
+            is FeedFragment -> fragment.openFragment()
+            is SearchFragment -> fragment.openFragment()
+            is RecipeFirstStageFragment -> fragment.openFragment()
+            is NotificationsFragment -> fragment.openFragment()
+            is UserProfileFragment -> fragment.openFragment()
         }
     }
 
