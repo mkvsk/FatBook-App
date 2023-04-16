@@ -338,9 +338,8 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     private fun userAdapter() {
         rvUser = binding.searchRvFindUser.rvUserSearch
         mRecyclerView = rvUser
-        adapterUser = FollowAdapter()
+        adapterUser = FollowAdapter(requireContext())
         adapterUser!!.setRvFollowClickListener(this)
-        adapterUser!!.setContext(requireContext())
         rvUser!!.adapter = adapterUser
         rvUser!!.adapter?.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY

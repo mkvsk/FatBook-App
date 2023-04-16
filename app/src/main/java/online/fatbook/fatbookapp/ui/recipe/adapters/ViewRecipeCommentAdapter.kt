@@ -30,6 +30,11 @@ class ViewRecipeCommentAdapter(
         holder.bind(comment)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    override fun setData(data: List<RecipeComment>?) {
+        commentItemList = data!!
+        notifyDataSetChanged()
+    }
     override fun getItemCount(): Int {
         return commentItemList.size
     }
@@ -59,9 +64,5 @@ class ViewRecipeCommentAdapter(
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    override fun setData(data: List<RecipeComment>?) {
-        commentItemList = data!!
-        notifyDataSetChanged()
-    }
+
 }
