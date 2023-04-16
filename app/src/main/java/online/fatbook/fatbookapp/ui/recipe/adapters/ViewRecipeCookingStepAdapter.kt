@@ -7,33 +7,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.rv_cooking_step_preview.view.*
-import kotlinx.android.synthetic.main.rv_cooking_step_recipe_view.view.*
-import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingStep
+import online.fatbook.fatbookapp.databinding.RvCookingStepRecipeViewBinding
 import online.fatbook.fatbookapp.ui.recipe.listeners.OnRecipeStepImageClickListener
 import online.fatbook.fatbookapp.ui.recipe.listeners.OnCookingStepClickListener
 import online.fatbook.fatbookapp.util.BindableAdapter
 import online.fatbook.fatbookapp.util.Utils
 
 class ViewRecipeCookingStepAdapter(private val context: Context) :
-    RecyclerView.Adapter<ViewRecipeCookingStepAdapter.ViewHolder>(), BindableAdapter<CookingStep> {
+    RecyclerView.Adapter<ViewRecipeCookingStepAdapter.CookingStepItemViewHolder>(),
+    BindableAdapter<CookingStep> {
 
     private var data: ArrayList<CookingStep> = ArrayList()
-
     var listener: OnCookingStepClickListener? = null
 
     private lateinit var imageViewListener: OnRecipeStepImageClickListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_cooking_step_recipe_view, parent, false)
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CookingStepItemViewHolder {
+        val binding =
+            RvCookingStepRecipeViewBinding.inflate(LayoutInflater.from(context), parent, false)
+        return CookingStepItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(data[position])
+    override fun onBindViewHolder(holder: CookingStepItemViewHolder, position: Int) {
+        val cookingStepItem = data[position]
+        holder.bind(cookingStepItem)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -56,28 +54,30 @@ class ViewRecipeCookingStepAdapter(private val context: Context) :
         return data.size
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(value: CookingStep?) {
-            itemView.textview_description_rv_cooking_step_recipe_view.text = value?.description
+    inner class CookingStepItemViewHolder(rvCookingStepRecipeViewBinding: RvCookingStepRecipeViewBinding) :
+        RecyclerView.ViewHolder(rvCookingStepRecipeViewBinding.root) {
+        private val binding = rvCookingStepRecipeViewBinding
+        fun bind(cookingStepItem: CookingStep?) {
+            binding.textviewDescriptionRvCookingStepRecipeView.text = cookingStepItem?.description
 
-            itemView.rv_cooking_step_number_recipe_view.setBackgroundResource(
+            binding.rvCookingStepNumberRecipeView.setBackgroundResource(
                 Utils.getCookingStepNumeralIcon(
-                    value?.stepNumber!!
+                    cookingStepItem?.stepNumber!!
                 )
             )
 
-            if (!value.image.isNullOrEmpty()) {
+            if (!cookingStepItem.image.isNullOrEmpty()) {
                 Glide.with(context)
-                    .load(value.image)
-                    .into(itemView.imageview_photo_rv_cooking_step_recipe_view)
+                    .load(cookingStepItem.image)
+                    .into(binding.imageviewPhotoRvCookingStepRecipeView)
             } else {
-                itemView.imageview_photo_rv_cooking_step_recipe_view.visibility = View.GONE
-//                itemView.imageview_photo_rv_cooking_step_recipe_view.setImageResource(R.drawable.default_cooking_step_image)
+                binding.imageviewPhotoRvCookingStepRecipeView.visibility = View.GONE
+//                binding.imageviewPhotoRvCookingStepRecipeView.setImageResource(R.drawable.default_cooking_step_image)
             }
 
 
-            itemView.imageview_photo_rv_cooking_step_recipe_view.setOnClickListener {
-                val img = value.image
+            binding.imageviewPhotoRvCookingStepRecipeView.setOnClickListener {
+                val img = cookingStepItem.image
                 if (img != null) {
                     imageViewListener.onStepImageClick(img)
                 }
