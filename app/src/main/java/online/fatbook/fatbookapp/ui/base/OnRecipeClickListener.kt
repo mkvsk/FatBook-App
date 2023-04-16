@@ -11,7 +11,7 @@ interface OnRecipeClickListener {
         recipe: RecipeSimpleObject?,
         fork: Boolean,
         position: Int,
-        viewHolder: RecipeAdapter.ViewHolder
+        recipePreviewItemViewHolder: RecipeAdapter.RecipePreviewItemViewHolder
     )
     fun onUsernameClick(username: String)
 

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import kotlinx.android.synthetic.main.rv_feed_recipe_card_preview.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.RecipeSimpleObject
 import online.fatbook.fatbookapp.core.user.User
@@ -48,9 +47,8 @@ class UserRecipesPageFragment(val user: User) : Fragment(), OnRecipeClickListene
     }
 
     private fun setupAdapter() {
-        adapter = RecipeAdapter()
+        adapter = RecipeAdapter(requireContext())
         adapter!!.setClickListener(this)
-        adapter!!.setContext(requireContext())
         binding.rvUserRecipesPage.adapter = adapter
         setData(user)
     }
@@ -79,7 +77,7 @@ class UserRecipesPageFragment(val user: User) : Fragment(), OnRecipeClickListene
         recipe: RecipeSimpleObject?,
         fork: Boolean,
         position: Int,
-        viewHolder: RecipeAdapter.ViewHolder
+        recipePreviewItemViewHolder: RecipeAdapter.RecipePreviewItemViewHolder
     ) {
         recipeViewViewModel.recipeFork(recipe!!.pid!!, fork, object : ResultCallback<Int> {
             override fun onResult(value: Int?) {
@@ -88,7 +86,10 @@ class UserRecipesPageFragment(val user: User) : Fragment(), OnRecipeClickListene
                 } else {
                     userViewModel.user.value!!.recipesForked!!.removeIf { recipe.pid == it.pid }
                 }
-                viewHolder.itemView.textView_rv_card_recipe_forks_avg.text = value.toString()
+                adapter!!.notifyItemChanged(position)
+
+//                recipePreviewItemViewHolder.itemView.textView_rv_card_recipe_forks_avg.text =
+//                    value.toString()
 //                viewHolder.itemView.view_click_fork.tag = RecipeUtils.TAG_CLICK_FALSE
             }
 

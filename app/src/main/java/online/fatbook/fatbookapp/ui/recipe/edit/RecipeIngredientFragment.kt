@@ -290,8 +290,7 @@ class RecipeIngredientFragment : Fragment(), OnIngredientItemClickListener {
 
     private fun setupIngredientsAdapter() {
         rv = binding.rvIngredientsRecipeAddIngredients
-        adapter = IngredientAdapter()
-        adapter!!.setContext(requireContext())
+        adapter = IngredientAdapter(requireContext())
         adapter!!.setClickListener(this)
         rv.adapter = adapter
     }

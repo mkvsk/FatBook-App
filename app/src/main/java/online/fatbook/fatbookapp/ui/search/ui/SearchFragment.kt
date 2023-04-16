@@ -50,7 +50,6 @@ import online.fatbook.fatbookapp.ui.user.viewmodel.UserViewModel
 import online.fatbook.fatbookapp.util.Constants.TAG_SELECT_ALL_BUTTON
 import online.fatbook.fatbookapp.util.hideKeyboard
 import online.fatbook.fatbookapp.util.obtainViewModel
-import org.apache.commons.lang3.StringUtils
 
 
 class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickListener,
@@ -348,9 +347,8 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
     private fun recipeAdapter() {
         rvRecipe = binding.searchRvFindRecipe.rvRecipeSearch
         mRecyclerView = rvRecipe
-        adapterRecipe = RecipeAdapter()
+        adapterRecipe = RecipeAdapter(requireContext())
         adapterRecipe!!.setClickListener(this)
-        adapterRecipe!!.setContext(requireContext())
         rvRecipe!!.adapter = adapterRecipe
         rvRecipe!!.adapter?.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
@@ -542,7 +540,7 @@ class SearchFragment : Fragment(), BaseFragmentActionsListener, OnRecipeClickLis
         recipe: RecipeSimpleObject?,
         fork: Boolean,
         position: Int,
-        viewHolder: RecipeAdapter.ViewHolder
+        recipePreviewItemViewHolder: RecipeAdapter.RecipePreviewItemViewHolder
     ) {
         recipeViewViewModel.recipeFork(recipe!!.pid!!, fork, object : ResultCallback<Int> {
             override fun onResult(value: Int?) {

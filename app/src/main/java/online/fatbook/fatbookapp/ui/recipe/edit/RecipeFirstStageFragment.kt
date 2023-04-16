@@ -102,7 +102,7 @@ class RecipeFirstStageFragment : Fragment(), OnRecipeDifficultyClickListener,
     private fun setupDifficultyAdapter() {
         val rv = binding.rvSelectDifficultyRecipe1Stage
         rv.layoutManager = getLayoutManager()
-        adapter = RecipeCookingDifficultyAdapter()
+        adapter = RecipeCookingDifficultyAdapter(requireContext())
         adapter!!.setClickListener(this)
         rv.adapter = adapter
     }

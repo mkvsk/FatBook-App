@@ -1,35 +1,37 @@
 package online.fatbook.fatbookapp.ui.recipe.adapters
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.rv_difficulty.view.*
 import online.fatbook.fatbookapp.R
 import online.fatbook.fatbookapp.core.recipe.CookingDifficulty
+import online.fatbook.fatbookapp.databinding.RvDifficultyBinding
 import online.fatbook.fatbookapp.ui.recipe.listeners.OnRecipeDifficultyClickListener
 import online.fatbook.fatbookapp.util.BindableAdapter
 
-class RecipeCookingDifficultyAdapter :
-    RecyclerView.Adapter<RecipeCookingDifficultyAdapter.ViewHolder>(),
+class RecipeCookingDifficultyAdapter(private val context: Context) :
+    RecyclerView.Adapter<RecipeCookingDifficultyAdapter.CookingDifficultyItemViewHolder>(),
     BindableAdapter<CookingDifficulty> {
 
     private var data: List<CookingDifficulty> = ArrayList()
     var listener: OnRecipeDifficultyClickListener? = null
     var selectedDifficulty: CookingDifficulty? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.rv_difficulty, parent, false)
-        )
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): CookingDifficultyItemViewHolder {
+        val binding = RvDifficultyBinding.inflate(LayoutInflater.from(context), parent, false)
+        return CookingDifficultyItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(data[position])
+    override fun onBindViewHolder(holder: CookingDifficultyItemViewHolder, position: Int) {
+        val difficultyItem = data[position]
+        holder.bind(difficultyItem)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -48,28 +50,30 @@ class RecipeCookingDifficultyAdapter :
         return data.size
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(value: CookingDifficulty?) {
-            if (selectedDifficulty!!.title == value!!.title) {
+    inner class CookingDifficultyItemViewHolder(rvDifficultyBinding: RvDifficultyBinding) :
+        RecyclerView.ViewHolder(rvDifficultyBinding.root) {
+        private val binding = rvDifficultyBinding
+        fun bind(difficultyItem: CookingDifficulty?) {
+            if (selectedDifficulty!!.title == difficultyItem!!.title) {
                 selectItem(
-                    itemView.cardview_rv_difficulty,
-                    itemView.textview_item_title_rv_difficulty
+                    binding.cardviewRvDifficulty,
+                    binding.textviewItemTitleRvDifficulty
                 )
             } else {
                 unselectItem(
-                    itemView.cardview_rv_difficulty,
-                    itemView.textview_item_title_rv_difficulty
+                    binding.cardviewRvDifficulty,
+                    binding.textviewItemTitleRvDifficulty
                 )
             }
 
-            itemView.textview_item_title_rv_difficulty.text = value.title
+            binding.textviewItemTitleRvDifficulty.text = difficultyItem.title
 
-            if (itemView.cardview_rv_difficulty.isClickable) {
-                itemView.cardview_rv_difficulty.setOnClickListener {
+            if (binding.cardviewRvDifficulty.isClickable) {
+                binding.cardviewRvDifficulty.setOnClickListener {
                     listener!!.onRecipeDifficultyClick(
                         data.indexOf(selectedDifficulty),
                         bindingAdapterPosition,
-                        value
+                        difficultyItem
                     )
                 }
             }

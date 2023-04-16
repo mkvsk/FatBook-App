@@ -37,9 +37,8 @@ class FavouritesRecipesPageFragment(val user: User) : Fragment(), OnRecipeClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = RecipeAdapter()
+        adapter = RecipeAdapter(requireContext())
         adapter!!.setClickListener(this)
-        adapter!!.setContext(requireContext())
         binding.rvFavouritesRecipesPage.adapter = adapter
         setData(user)
     }
@@ -65,7 +64,7 @@ class FavouritesRecipesPageFragment(val user: User) : Fragment(), OnRecipeClickL
         recipe: RecipeSimpleObject?,
         fork: Boolean,
         position: Int,
-        viewHolder: RecipeAdapter.ViewHolder
+        recipePreviewItemViewHolder: RecipeAdapter.RecipePreviewItemViewHolder
     ) {
     }
 
